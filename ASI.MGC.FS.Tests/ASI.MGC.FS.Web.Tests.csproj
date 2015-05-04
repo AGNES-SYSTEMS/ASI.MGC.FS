@@ -92,9 +92,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ASI.MGC.FS\ASI.MGC.FS.csproj">
+    <ProjectReference Include="..\ASI.MGC.FS\ASI.MGC.FS.Web.csproj">
       <Project>{0177DB86-9A96-4D06-9567-E2A28DE30608}</Project>
-      <Name>ASI.MGC.FS</Name>
+      <Name>ASI.MGC.FS.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

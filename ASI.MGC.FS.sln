@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASI.MGC.FS", "ASI.MGC.FS\ASI.MGC.FS.csproj", "{0177DB86-9A96-4D06-9567-E2A28DE30608}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASI.MGC.FS.Web", "ASI.MGC.FS\ASI.MGC.FS.Web.csproj", "{0177DB86-9A96-4D06-9567-E2A28DE30608}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASI.MGC.FS.Tests", "ASI.MGC.FS.Tests\ASI.MGC.FS.Tests.csproj", "{0382F64E-A62E-4E9D-A3A1-66C3411AE831}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASI.MGC.FS.Web.Tests", "ASI.MGC.FS.Tests\ASI.MGC.FS.Web.Tests.csproj", "{0382F64E-A62E-4E9D-A3A1-66C3411AE831}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASI.MGC.FS.Model", "ASI.MGC.FS.Model\ASI.MGC.FS.Model.csproj", "{D21D31F6-8783-4060-B340-651A389CF09A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASI.MGC.FS.DataAccess", "ASI.MGC.FS.DataAccess\ASI.MGC.FS.DataAccess.csproj", "{16505B8D-E5BD-4E5C-8EBC-54C04BB327FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{0382F64E-A62E-4E9D-A3A1-66C3411AE831}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0382F64E-A62E-4E9D-A3A1-66C3411AE831}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0382F64E-A62E-4E9D-A3A1-66C3411AE831}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D21D31F6-8783-4060-B340-651A389CF09A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D21D31F6-8783-4060-B340-651A389CF09A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D21D31F6-8783-4060-B340-651A389CF09A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D21D31F6-8783-4060-B340-651A389CF09A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16505B8D-E5BD-4E5C-8EBC-54C04BB327FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16505B8D-E5BD-4E5C-8EBC-54C04BB327FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16505B8D-E5BD-4E5C-8EBC-54C04BB327FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16505B8D-E5BD-4E5C-8EBC-54C04BB327FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
