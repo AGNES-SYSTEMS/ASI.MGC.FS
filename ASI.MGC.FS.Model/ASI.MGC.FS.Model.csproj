@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D21D31F6-8783-4060-B340-651A389CF09A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ASI.MGC.FS.Model</RootNamespace>
+    <AssemblyName>ASI.MGC.FS.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ACSTATEMENT_RPT.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ALLOCATIONMASTER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ARMATCHING.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AR_AP_LEDGER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AR_AP_MASTER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ASI.MGC.FS.Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ASI.MGC.FS.Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ASI.MGC.FS.Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BALANCESHEET.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BANKMASTER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BANKMASTER1.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BANKTRANSACTION.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="COMPANYMASTER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CUSTOMEREPORT.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DELEVERYNOTE.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DELEVERYNOTE_RPT.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DELREPORT_MASTER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DOCCUMENTMASTER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EMPLOYEEMASTER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ENTRYMASTER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FINYEARMASTER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GLMASTER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GLTRANSACTION1.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="INVDETAIL.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="INVMASTER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JOBCARD_REPRT.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JOBDETAL.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JOBIDREFERENCE.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JOBMASTER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JOB_REPORT.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JVREPORT.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LOCATIONMASTER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MATERIALRECEIPTMASTER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MRVNO_REPORT.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MRVREFERENCE.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MRV_REPORT_CHD.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PANDL_SETTINGS.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PRODUCTMASTER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROFITANDLOSS_RPT.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QOTATION_REF.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QUOTATION_MASTER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QUOT_PROD_MASTER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="REPORT_JOBCARD.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SALEDETAIL.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SALESALLOCATIONMASTER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SALESMASTER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SLNOGENERATOR.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="STOCKLEDGER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="STOCKLEDGER_REPORT.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="STOCK_REPORT.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TELEPHONE_DIRECTORY.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TEMPREPORT.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TRIALBALANCE.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UNITMESSUREMENT.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="USER.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VOUCHERCHILD_RPT.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VOUCHERMASTER_RPT.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="ASI.MGC.FS.Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ASI.MGC.FS.Model.Context.cs</LastGenOutput>
+    </None>
+    <None Include="ASI.MGC.FS.Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ASI.MGC.FS.Model.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

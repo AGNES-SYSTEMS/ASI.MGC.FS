@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="83ad7ecb2dbd4e1d8af7cf3da4f12c92" Name="Diagram1">
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.ACSTATEMENT_RPT" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.ALLOCATIONMASTER" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.AR_AP_LEDGER" Width="1.5" PointX="10.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.AR_AP_MASTER" Width="1.5" PointX="0.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.ARMATCHING" Width="1.5" PointX="2.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.BALANCESHEET" Width="1.5" PointX="10.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.BANKMASTER" Width="1.5" PointX="8.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.BANKMASTER1" Width="1.5" PointX="4.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.BANKTRANSACTION" Width="1.5" PointX="11" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.COMPANYMASTER" Width="1.5" PointX="12.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.CUSTOMEREPORT" Width="1.5" PointX="5.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.DELEVERYNOTE" Width="1.5" PointX="6.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.DELEVERYNOTE_RPT" Width="1.5" PointX="12.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.DELREPORT_MASTER" Width="1.5" PointX="13.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.DOCCUMENTMASTER" Width="1.5" PointX="14.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.EMPLOYEEMASTER" Width="1.5" PointX="14.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.ENTRYMASTER" Width="1.5" PointX="14.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.FINYEARMASTER" Width="1.5" PointX="14.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.GLMASTER" Width="1.5" PointX="6.75" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.GLTRANSACTION1" Width="1.5" PointX="8.75" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.INVDETAIL" Width="1.5" PointX="10.75" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.INVMASTER" Width="1.5" PointX="16.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.JOB_REPORT" Width="1.5" PointX="0.75" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.JOBCARD_REPRT" Width="1.5" PointX="2.75" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.JOBDETAL" Width="1.5" PointX="16.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.JOBIDREFERENCE" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.JOBMASTER" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.JVREPORT" Width="1.5" PointX="16.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.LOCATIONMASTER" Width="1.5" PointX="16.75" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.MATERIALRECEIPTMASTER" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.MRV_REPORT_CHD" Width="1.5" PointX="16.75" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.MRVNO_REPORT" Width="1.5" PointX="18.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.MRVREFERENCE" Width="1.5" PointX="6" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.PANDL_SETTINGS" Width="1.5" PointX="18.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.PRODUCTMASTER" Width="1.5" PointX="3.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.PROFITANDLOSS_RPT" Width="1.5" PointX="18.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.QOTATION_REF" Width="1.5" PointX="18.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.QUOT_PROD_MASTER" Width="1.5" PointX="12.75" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.QUOTATION_MASTER" Width="1.5" PointX="18.75" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.REPORT_JOBCARD" Width="1.5" PointX="18.75" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.SALEDETAIL" Width="1.5" PointX="2.75" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.SALESALLOCATIONMASTER" Width="1.5" PointX="4.75" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.SALESMASTER" Width="1.5" PointX="6.75" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.SLNOGENERATOR" Width="1.5" PointX="8.75" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.STOCK_REPORT" Width="1.5" PointX="20.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.STOCKLEDGER" Width="1.5" PointX="8" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.STOCKLEDGER_REPORT" Width="1.5" PointX="20.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.sysdiagram" Width="1.5" PointX="20.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.TELEPHONE_DIRECTORY" Width="1.5" PointX="20.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.TEMPREPORT" Width="1.5" PointX="14.75" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.TRIALBALANCE" Width="1.5" PointX="20.75" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.UNITMESSUREMENT" Width="1.5" PointX="5.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.USER" Width="1.5" PointX="20.75" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.VOUCHERCHILD_RPT" Width="1.5" PointX="10.75" PointY="22.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.VOUCHERMASTER_RPT" Width="1.5" PointX="16.75" PointY="22.5" IsExpanded="true" />
+        <AssociationConnector Association="ASI_MGC_FSModel.BANKTRANSACTION_BANKMASTERBANKTRANSACTION" ManuallyRouted="false" />
+        <AssociationConnector Association="ASI_MGC_FSModel.MRVREFERENCE_JOBIDREFERENCEMRVREFERENCE" ManuallyRouted="false" />
+        <AssociationConnector Association="ASI_MGC_FSModel.JOBMASTER_MATERIALRECEIPTMASTERJOBMASTER" ManuallyRouted="false" />
+        <AssociationConnector Association="ASI_MGC_FSModel.MRVREFERENCE_MATERIALRECEIPTMASTERMRVREFERENCE" ManuallyRouted="false" />
+        <AssociationConnector Association="ASI_MGC_FSModel.MRVREFERENCE_PRODUCTMASTERMRVREFERENCE" ManuallyRouted="false" />
+        <AssociationConnector Association="ASI_MGC_FSModel.STOCKLEDGER_UNITMESSUREMENTSTOCKLEDGER" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
