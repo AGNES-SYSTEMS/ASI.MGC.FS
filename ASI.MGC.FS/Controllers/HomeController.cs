@@ -26,5 +26,10 @@ namespace ASI.MGC.FS.Controllers
 
             return View();
         }
+
+        private void function ()
+        {
+
+        }
     }
 }
