@@ -10,6 +10,7 @@
 
 </head>
 <body>
+    <!-- start:wrapper -->
     <div id="wrapper">
         <div class="header-top">
             <!-- start:navbar -->
@@ -252,7 +253,7 @@
                             </button>
                         </div>
 
-                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <!--Start - Main Header Menu -->
                         <div class="collapse navbar-collapse navbar-ex1-collapse">
                             <ul class="nav navbar-nav">
                                 <li class="dropdown">
@@ -517,38 +518,183 @@
                                         <li class="col-md-6">
                                             <ul class="paddingLeft0">
                                                 <li>
-                                                    <span class="menuHeadingStyle">MRV Voucher</span>
+                                                    <span class="menuHeadingStyle">
+                                                        <a href="#">MRV Voucher</a>
+                                                    </span>
                                                 </li>
                                                 <li>
-                                                    <span class="menuHeadingStyle">Sales Entry</span>
+                                                    <span class="menuHeadingStyle">
+                                                        <a href="#">Sales Entry</a>
+                                                    </span>
                                                 </li>
                                                 <li>
-                                                    <span class="menuHeadingStyle">Cash Memo</span>
+                                                    <span class="menuHeadingStyle">
+                                                        <a href="#">Cash Memo</a>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul>
+                                                <li>
+                                                    <span class="menuHeadingStyle">
+                                                        <a href="#">Invoice</a>
+                                                    </span>
                                                 </li>
                                                 <li>
-                                                    <span class="menuHeadingStyle">Invoice</span>
+                                                    <span class="menuHeadingStyle">
+                                                        <a href="#">Cash RV</a>
+                                                    </span>
                                                 </li>
                                                 <li>
-                                                    <span class="menuHeadingStyle">Cash RV</span>
-                                                </li>
-                                                <li>
-                                                    <span class="menuHeadingStyle">Bank RV</span>
+                                                    <span class="menuHeadingStyle">
+                                                        <a href="#">Bank RV</a>
+                                                    </span>
                                                 </li>
                                             </ul>
                                         </li>
                                     </ul>
-                        </div><!-- /.navbar-collapse -->
+                        </div>
+                        <!--End - Main Header Menu-->
+                        <!--Start - Quick Links Header -->
+                        <div class="collapse navbar-collapse navbar-ex1-collapse">
+                            <ul class="nav navbar-nav">
+                                <li class="active">
+                                    <a href="#">
+                                        <div class="text-center">
+                                            <i class="fa fa-dashboard fa-3x"></i><br>
+                                            Dashboard
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <div class="text-center">
+                                            <i class="fa fa-book fa-3x"></i><br>
+                                            MRVoucher
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <div class="text-center">
+                                            <i class="fa fa-pencil-square-o fa-3x"></i><br>
+                                            Sales Entery
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <div class="text-center">
+                                            <i class="fa fa-briefcase fa-3x"></i><br>
+                                            Cash Memo
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <div class="text-center">
+                                            <i class="fa fa-file-text-o fa-3x"></i><br>
+                                            Invoice
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <div class="text-center">
+                                            <i class="fa fa-list-ol fa-3x"></i><br>
+                                            Purchase
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <div class="text-center">
+                                            <i class="fa fa-credit-card fa-3x"></i><br>
+                                            Cash RV
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <div class="text-center">
+                                            <i class="fa fa-credit-card fa-3x"></i><br>
+                                            Bank RV
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <div class="text-center">
+                                            <i class="fa fa-check fa-3x"></i><br>
+                                            Cash Pay
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <div class="text-center">
+                                            <i class="fa fa-check-square-o fa-3x"></i><br>
+                                            Bank Pay
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <div class="text-center">
+                                            <i class="fa fa-sort-amount-desc fa-3x"></i><br>
+                                            Quotation
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--End - Quick Links Header -->
                     </div>
                 </nav>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
 
+        </div>
+        <div class="header-top">
+            <footer>
+                <div class="container">
+                </div>
+            </footer>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="footer-bottom-widget">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p>
+                                    <span class="sosmed-footer">
+                                        <a href="#"><i class="fa fa-facebook" data-toggle="tooltip" data-placement="top" title="Facebook"></i></a>
+                                        <a href="#"><i class="fa fa-twitter" data-toggle="tooltip" data-placement="top" title="Twitter"></i></a>
+                                    </span>
+                                    &copy; @System.DateTime.Now.Year <strong>Mehboob Electrical Services</strong>
+                                </p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="footer-bottom-links">
+                                    <a href="#">About <strong>Mehboob Electrical Services</strong></a>
+                                    <a href="#">Privacy Policy</a>
+                                    <a href="#">Terms & Conditions</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end:footer -->
     </div>
-
+    <!-- end:wrapper -->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
