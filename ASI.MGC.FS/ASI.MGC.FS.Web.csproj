@@ -171,14 +171,30 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-reset.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\GoogleFontFace.css" />
+    <Content Include="Content\Images\bg-header.jpg" />
+    <Content Include="Content\Images\blank-male.jpg" />
+    <Content Include="Content\jquery.easy-pie-chart.css" />
+    <Content Include="Content\owl.carousel.css" />
+    <Content Include="Content\owl.theme.css" />
+    <Content Include="Content\owl.transitions.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\table-responsive.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont862f.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="fonts\fontawesome-webfont862f.eot" />
+    <Content Include="fonts\fontawesome-webfont862f.ttf" />
+    <Content Include="fonts\fontawesome-webfont862f.woff" />
+    <Content Include="fonts\fontawesome-webfontd41d.eot" />
+    <Content Include="fonts\glyphicons-halflings-regulard41d.eot" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

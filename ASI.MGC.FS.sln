@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASI.MGC.FS.Model", "ASI.MGC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASI.MGC.FS.DataAccess", "ASI.MGC.FS.DataAccess\ASI.MGC.FS.DataAccess.csproj", "{16505B8D-E5BD-4E5C-8EBC-54C04BB327FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASI.MGC.FS.Domain", "ASI.MGC.FS.Domain\ASI.MGC.FS.Domain.csproj", "{D4E45DA1-1E84-4A52-BA8C-3EDD17B5219C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{16505B8D-E5BD-4E5C-8EBC-54C04BB327FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16505B8D-E5BD-4E5C-8EBC-54C04BB327FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16505B8D-E5BD-4E5C-8EBC-54C04BB327FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4E45DA1-1E84-4A52-BA8C-3EDD17B5219C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4E45DA1-1E84-4A52-BA8C-3EDD17B5219C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4E45DA1-1E84-4A52-BA8C-3EDD17B5219C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4E45DA1-1E84-4A52-BA8C-3EDD17B5219C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

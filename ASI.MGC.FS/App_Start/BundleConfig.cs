@@ -23,9 +23,31 @@ namespace ASI.MGC.FS
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            /** Start - Adding Custom CSS Files for Master Page Dated 23-05-2015 By Zeeshan Mahmood**/
+
+            bundles.UseCdn = true;
+
+            bundles.Add(new StyleBundle("~/fonts").Include(
+                "~/fonts/fontawesome-webfont862f.eot",
+                "~/fonts/fontawesome-webfont862f.ttf",
+                "~/fonts/fontawesome-webfont862f.woff",
+                "~/fonts/fontawesome-webfontd41d.eot",
+                "~/fonts/glyphicons-halflings-regular.eot",
+                "~/fonts/glyphicons-halflings-regular.ttf",
+                "~/fonts/glyphicons-halflings-regular.woff",
+                "~/fonts/glyphicons-halflings-regulard41d.eot"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/font-awesome.min.css",
+                      "~/Content/bootstrap.min.css",
+                      "~/Content/bootstrap-reset.css",
+                      "~/Content/GoogleFontFace.css",
+                      "~/Content/style.css",
+                      "~/Content/jquery.easy-pie-chart.css",
+                      "~/Content/owl.carousel.css",
+                      "~/Content/owl.theme.css",
+                      "~/Content/owl.transitions.css"));
+            /** End - Adding Custom CSS Files for Master Page Dated 23-05-2015 By Zeeshan Mahmood**/
         }
     }
 }
