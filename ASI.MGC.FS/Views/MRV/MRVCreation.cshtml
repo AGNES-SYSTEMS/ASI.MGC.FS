@@ -1,0 +1,191 @@
+﻿@{
+    ViewBag.Title = "MRVoucher Creation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/SlickGrid/slick.grid.css" rel="stylesheet" />
+<link href="~/Content/SlickGrid/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+@model ASI.MGC.FS.Model.MATERIALRECEIPTMASTER
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li href="#">Dashboard</li>
+            <li class="active">MRVoucher</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <div class="row">
+            <div class="container">
+                <div>
+                    <p class="headingStyle">Material Receipt Voucher</p>
+                </div>
+                @using (Html.BeginForm("MRVCreation", "MRV", null, FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+                {
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblCustCode" class="control-label col-md-4 small ">Cust Code:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.CUSTOMERCODE_MRV, null, new { ID = "txtCustCode", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.CUSTOMERCODE_MRV)
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblMRVNo" class="control-label col-md-4 small ">MRV No:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.MRVNO_MRV, null, new { ID = "txtMRVNo", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.MRVNO_MRV)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblCustName" class="control-label col-md-4 small ">Cust Name:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.CUSTOMERNAME_MRV, null, new { ID = "txtCustName", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.CUSTOMERNAME_MRV)
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblMRVDate" class="control-label col-md-4 small ">Date:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.MRVDATE_MRV, null, new { ID = "txtMRVDate", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.MRVDATE_MRV)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblMRVAddress" class="control-label col-md-4 small ">Address:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.ADDRESS1_MRV, null, new { ID = "txtMRVAddress", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.ADDRESS1_MRV)
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblMRVTel" class="control-label col-md-4 small ">Telephone No:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.PHONE_MRV, null, new { ID = "txtMRVTel", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.PHONE_MRV)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblDeleDate" class="control-label col-md-4 small ">DeleDate:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.DELE_DATE_MRV, null, new { ID = "txtDeleDate", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.DELE_DATE_MRV)
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblExeCode" class="control-label col-md-4 small ">Exe. Code:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.EXECODE_MRV, null, new { ID = "txtExeCode", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.EXECODE_MRV)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblLpoRemarks" class="control-label col-md-4 small ">Lpo/Remarks:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextAreaFor(d => d.NOTES_MRV, new { ID = "txtLpoRemarks", Class = "form-control" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10 form-group">
+                            <div class="col-md-8 paddingLeftRight0" style="width:700px;">
+                                <div id="Grid" style="width:100%;height:500px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblRgstNo" class="control-label col-md-4 small "></label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:main -->
+@section scripts
+{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/lib/firebugx.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/lib/jquery-ui-1.8.16.custom.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/lib/jquery.event.drag-2.2.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/slick.core.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/plugins/slick.cellrangedecorator.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/plugins/slick.cellrangeselector.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/plugins/slick.cellselectionmodel.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/slick.formatters.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/slick.editors.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/slick.grid.js")"></script>
+    <script>
+        $(document).ready(function () {
+            function requiredFieldValidator(value) {
+                if (value == null || value == undefined || !value.length) {
+                    return { valid: false, msg: "This is a required field" };
+                } else {
+                    return { valid: true, msg: null };
+                }
+            }
+
+            var grid;
+            var data = [];
+            var columns = [
+              { id: "title", name: "Title", field: "title", width: 120, cssClass: "cell-title", editor: Slick.Editors.Text, validator: requiredFieldValidator },
+              { id: "desc", name: "Description", field: "description", width: 100, editor: Slick.Editors.LongText },
+              { id: "duration", name: "Duration", field: "duration", editor: Slick.Editors.Text },
+              { id: "%", name: "% Complete", field: "percentComplete", width: 80, resizable: false, formatter: Slick.Formatters.PercentCompleteBar, editor: Slick.Editors.PercentComplete },
+              { id: "start", name: "Start", field: "start", minWidth: 60, editor: Slick.Editors.Date },
+              { id: "finish", name: "Finish", field: "finish", minWidth: 60, editor: Slick.Editors.Date },
+              { id: "effort-driven", name: "Effort Driven", width: 80, minWidth: 20, maxWidth: 80, cssClass: "cell-effort-driven", field: "effortDriven", formatter: Slick.Formatters.Checkmark, editor: Slick.Editors.Checkbox }
+            ];
+            var options = {
+                editable: true,
+                enableAddRow: true,
+                enableCellNavigation: true,
+                asyncEditorLoading: false,
+                autoEdit: false
+            };
+
+            $(function () {
+                for (var i = 0; i < 10; i++) {
+                    var d = (data[i] = {});
+
+                    d["title"] = "";
+                    d["description"] = "";
+                    d["duration"] = "";
+                    d["percentComplete"] = "";
+                    d["start"] = "";
+                    d["finish"] = "";
+                    d["effortDriven"] = "";
+                }
+
+                grid = new Slick.Grid("#Grid", data, columns, options);
+
+                grid.setSelectionModel(new Slick.CellSelectionModel());
+
+                grid.onAddNewRow.subscribe(function (e, args) {
+                    var item = args.item;
+                    grid.invalidateRow(data.length);
+                    data.push(item);
+                    grid.updateRowCount();
+                    grid.render();
+                });
+            });
+        });
+    </script>
+}

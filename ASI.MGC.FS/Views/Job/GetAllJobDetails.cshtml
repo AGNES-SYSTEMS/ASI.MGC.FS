@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Job Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables/css/jquery.dataTables_themeroller.css" rel="stylesheet" />
+@model ASI.MGC.FS.Model.JOBIDREFERENCE
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li href="#">Dashboard</li>
+            <li class="active">Job Details</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <div class="row">
+            <div class="container">
+                <div>
+                    <p class="headingStyle">Job Details</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <table id="tblJobS" class="display" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Job ID</th>
+                                    <th>Job Description</th>
+                                    <th>Job Rate(AED)</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/DataTables/jquery.dataTables.min.js")"></script>
+    <script>
+        $(document).ready(function(){
+            $('#tblJobS').dataTable({
+                "bServerSide": true,
+                "bLengthChange": true,
+                "sAjaxSource": '@Url.Action("GetAllJobs")',
+                "fnServerData": function (sSource, aoData, fnCallback) {
+                    $.ajax({
+                        dataType: 'json',
+                        type: "POST",
+                        url: sSource,
+                        data: aoData,
+                        success: fnCallback,
+                        error: function (jqXHR, textStatus, errorThrown) { alert('Error getting list of Jobs:' + errorThrown) }
+                    })
+                },
+                "bProcessing": true,
+                "aoColumnDefs": [
+                            { "sName": "JOBID_JR", "aTargets": [0], "mDataProp": "JOBID_JR" },
+                            { "sName": "JOBDESCRIPTION_JR", "aTargets": [1], "mDataProp": "JOBDESCRIPTION_JR" },
+                            { "sName": "RATE_RJ", "aTargets": [2], "mDataProp": "RATE_RJ" }
+                ]
+            });
+        });
+    </script>
+}
+
+
+

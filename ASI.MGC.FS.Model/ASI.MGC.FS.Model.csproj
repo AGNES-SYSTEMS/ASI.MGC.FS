@@ -118,6 +118,7 @@
     <Compile Include="GLTRANSACTION1.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="HelperClasses\jQueryDataTableParamModel.cs" />
     <Compile Include="INVDETAIL.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>

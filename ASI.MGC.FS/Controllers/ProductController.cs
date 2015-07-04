@@ -1,0 +1,79 @@
+﻿using ASI.MGC.FS.Domain;
+using ASI.MGC.FS.Model;
+using ASI.MGC.FS.Model.HelperClasses;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace ASI.MGC.FS.Controllers
+{
+    public class ProductController : Controller
+    {
+        IUnitOfWork _unitOfWork;
+
+        public ProductController()
+        {
+            _unitOfWork = new UnitOfWork();
+        }
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult GetAllProductDetails()
+        {
+            return View();
+        }
+
+        public JsonResult GetAllProducts(jQueryDataTableParamModel Param)
+        {
+            var totalProductRecords = (from totalPRDCount in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
+                                   select totalPRDCount);
+            IEnumerable<PRODUCTMASTER> filteredProducts;
+            if (!string.IsNullOrEmpty(Param.sSearch))
+            {
+                filteredProducts = (from totalPRDCount in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
+                                where totalPRDCount.PROD_CODE_PM.Contains(Param.sSearch) || totalPRDCount.DESCRIPTION_PM.Contains(Param.sSearch) 
+                                || totalPRDCount.CUR_QTY_PM.ToString().Contains(Param.sSearch) || totalPRDCount.RATE_PM.ToString().Contains(Param.sSearch)
+                                || totalPRDCount.SELLINGPRICE_RM.ToString().Contains(Param.sSearch) || totalPRDCount.STATUS_PM.Contains(Param.sSearch)
+                                select totalPRDCount);
+            }
+            else
+            {
+                filteredProducts = totalProductRecords;
+            }
+
+            var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
+
+            Func<PRODUCTMASTER, string> orderingFunction = (a => sortColumnIndex == 0 ? a.PROD_CODE_PM : sortColumnIndex == 1 ? a.DESCRIPTION_PM : sortColumnIndex == 2 ? Convert.ToString(a.CUR_QTY_PM)
+                                                            : sortColumnIndex == 3 ? Convert.ToString(a.RATE_PM) : sortColumnIndex == 4 ? Convert.ToString(a.SELLINGPRICE_RM) : sortColumnIndex == 5
+                                                            ? a.PURCHSEUNIT_PM : sortColumnIndex == 6 ? a.SALESUNIT_PM : a.STATUS_PM);
+
+            var sortDirection = Request["sSortDir_0"];
+            if (sortDirection == "asc")
+            {
+                filteredProducts = filteredProducts.OrderBy(orderingFunction);
+            }
+            else
+            {
+                filteredProducts = filteredProducts.OrderByDescending(orderingFunction);
+            }
+
+
+            int totalRecords = totalProductRecords.Count();
+            int totalDisplayedRecords = filteredProducts.Count();
+            var dislpayedPRDs = filteredProducts.Skip(Param.iDisplayStart)
+                                            .Take(Param.iDisplayLength);
+            var resultJobRecords = from PRD in dislpayedPRDs select new { PRD.PROD_CODE_PM, PRD.DESCRIPTION_PM, PRD.CUR_QTY_PM, PRD.RATE_PM, PRD.SELLINGPRICE_RM, PRD.PURCHSEUNIT_PM, PRD.SALESUNIT_PM, PRD.STATUS_PM};
+            return Json(new
+            {
+                sEcho = Param.sEcho,
+                iTotalRecords = totalRecords,
+                iTotalDisplayRecords = totalDisplayedRecords,
+                aaData = resultJobRecords
+            }, JsonRequestBehavior.AllowGet);
+        }
+    }
+}

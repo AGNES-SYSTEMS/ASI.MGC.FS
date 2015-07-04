@@ -7,7 +7,6 @@
     @Styles.Render("~/fonts")
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
     <!-- start:wrapper -->
@@ -697,6 +696,11 @@
     <!-- end:wrapper -->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/JqueryUi")
     @RenderSection("scripts", required: false)
+    @section scripts
+    {
+        @RenderSection("scripts", false)
+    }
 </body>
 </html>

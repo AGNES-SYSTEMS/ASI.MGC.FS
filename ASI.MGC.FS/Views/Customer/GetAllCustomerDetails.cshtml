@@ -1,0 +1,85 @@
+﻿@{
+    ViewBag.Title = "Customer Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables/css/jquery.dataTables_themeroller.css" rel="stylesheet" />
+@model ASI.MGC.FS.Model.AR_AP_MASTER
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li href="#">Dashboard</li>
+            <li class="active">Customer Details</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <div class="row">
+            <div class="container">
+                <div>
+                    <p class="headingStyle">Custoer Details</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <table id="tblCustomers" class="display" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Customer Code</th>
+                                    <th>Company Name</th>
+                                    <th>Conatct Person</th>
+                                    <th>Address</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
+                                    <th>Customer Type</th>
+                                    <th>Credit Days</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/DataTables/jquery.dataTables.min.js")"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tblCustomers').dataTable({
+                "bServerSide": true,
+                "bLengthChange": true,
+                "sAjaxSource": '@Url.Action("GetAllCustomers")',
+                "fnServerData": function (sSource, aoData, fnCallback) {
+                    $.ajax({
+                        dataType: 'json',
+                        type: "POST",
+                        url: sSource,
+                        data: aoData,
+                        success: fnCallback,
+                        error: function (jqXHR, textStatus, errorThrown) { alert('Error getting list of Customers:' + errorThrown) }
+                    })
+                },
+                "bProcessing": true,
+                "aoColumnDefs": [
+                            { "sName": "ARCODE_ARM", "aTargets": [0], "mDataProp": "ARCODE_ARM" },
+                            { "sName": "DESCRIPTION_ARM", "aTargets": [1], "mDataProp": "DESCRIPTION_ARM" },
+                            { "sName": "CONDACTPERSON_ARM", "aTargets": [2], "mDataProp": "CONDACTPERSON_ARM" },
+                            { "sName": "ADDRESS1_ARM", "aTargets": [3], "mDataProp": "ADDRESS1_ARM" },
+                            { "sName": "TELEPHONE_ARM", "aTargets": [4], "mDataProp": "TELEPHONE_ARM" },
+                            { "sName": "EMAIL_ARM", "aTargets": [5], "mDataProp": "EMAIL_ARM" },
+                            { "sName": "TYPE_ARM", "aTargets": [6], "mDataProp": "TYPE_ARM" },
+                            { "sName": "CREDITDAYS_ARM", "aTargets": [7], "mDataProp": "CREDITDAYS_ARM" }
+                ]
+            });
+        });
+    </script>
+}
+
+
+
+
+
+
+

@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Product Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables/css/jquery.dataTables_themeroller.css" rel="stylesheet" />
+@model ASI.MGC.FS.Model.PRODUCTMASTER
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li href="#">Dashboard</li>
+            <li class="active">Product Details</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <div class="row">
+            <div class="container">
+                <div>
+                    <p class="headingStyle">Product Details</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <table id="tblProducts" class="display" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Product Code</th>
+                                    <th>Description</th>
+                                    <th>Current Quantity</th>
+                                    <th>Rate(AED)</th>
+                                    <th>Selling Price(AED)</th>
+                                    <th>Purchase Unit</th>
+                                    <th>Sales Unit</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/DataTables/jquery.dataTables.min.js")"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tblProducts').dataTable({
+                "bServerSide": true,
+                "bLengthChange": true,
+                "sAjaxSource": '@Url.Action("GetAllProducts")',
+                "fnServerData": function (sSource, aoData, fnCallback) {
+                    $.ajax({
+                        dataType: 'json',
+                        type: "POST",
+                        url: sSource,
+                        data: aoData,
+                        success: fnCallback,
+                        error: function (jqXHR, textStatus, errorThrown) { alert('Error getting list of Products:' + errorThrown) }
+                    })
+                },
+                "bProcessing": true,
+                "aoColumnDefs": [
+                            { "sName": "PROD_CODE_PM", "aTargets": [0], "mDataProp": "PROD_CODE_PM" },
+                            { "sName": "DESCRIPTION_PM", "aTargets": [1], "mDataProp": "DESCRIPTION_PM" },
+                            { "sName": "CUR_QTY_PM", "aTargets": [2], "mDataProp": "CUR_QTY_PM" },
+                            { "sName": "RATE_PM", "aTargets": [3], "mDataProp": "RATE_PM" },
+                            { "sName": "SELLINGPRICE_RM", "aTargets": [4], "mDataProp": "SELLINGPRICE_RM" },
+                            { "sName": "PURCHSEUNIT_PM", "aTargets": [5], "mDataProp": "PURCHSEUNIT_PM" },
+                            { "sName": "SALESUNIT_PM", "aTargets": [6], "mDataProp": "SALESUNIT_PM" },
+                            { "sName": "STATUS_PM", "aTargets": [7], "mDataProp": "STATUS_PM" }
+                ]
+            });
+        });
+    </script>
+}
+
