@@ -1,8 +1,8 @@
 ﻿@{
-    ViewBag.Title = "Products List";
+    ViewBag.Title = "Customers List";
     Layout = null;
 }
-@model ASI.MGC.FS.Model.PRODUCTMASTER
+@model ASI.MGC.FS.Model.AR_AP_MASTER
 <!DOCTYPE html>
 
 <html>
@@ -20,21 +20,21 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            <label id="lblCustCode" class="control-label col-md-4 small ">Prod Code:</label>
+                            <label id="lblCustCode" class="control-label col-md-4 small ">Customer Code:</label>
                             <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.PROD_CODE_PM, null, new { ID = "txtProdID", Class = "form-control" })
-                                @Html.ValidationMessageFor(d => d.PROD_CODE_PM)
+                                @Html.TextBoxFor(d => d.ARCODE_ARM, null, new { ID = "txtARCODE", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.ARCODE_ARM)
                             </div>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label id="lblMRVNo" class="control-label col-md-4 small ">Prod Description:</label>
+                            <label id="lblMRVNo" class="control-label col-md-4 small ">Customer Details:</label>
                             <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.DESCRIPTION_PM, null, new { ID = "txtProdDesc", Class = "form-control" })
-                                @Html.ValidationMessageFor(d => d.DESCRIPTION_PM)
+                                @Html.TextBoxFor(d => d.DESCRIPTION_ARM, null, new { ID = "txtARDesc", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.DESCRIPTION_ARM)
                             </div>
                         </div>
                         <div id="grid" class="col-md-10">
-                            <table id="tblProdList"></table>
+                            <table id="tblCustList"></table>
                             <div id="Pager"></div>
                         </div>
                     </div>
@@ -42,7 +42,6 @@
             </div>
         </div>
     </div>
-
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/i18n/grid.locale-en.js"></script>
@@ -50,13 +49,13 @@
     <script>
         $(document).ready(function () {
             alert("I am in Jquery!");
-            $("#tblProdList").jqGrid({
-                url: '/Product/getProdsList',
+            $("#tblCustList").jqGrid({
+                url: '/Customer/getCustList',
                 datatype: "json",
-                colNames: ['Product ID', 'Product Description'],
+                colNames: ['Customer Code', 'Customer Details'],
                 colModel: [
-                { key: true, name: 'PROD_CODE_PM', index: 'PROD_CODE_PM', width: 65 },
-                { key: false, name: 'DESCRIPTION_PM', index: 'DESCRIPTION_PM', width: 150 }
+                { key: true, name: 'ARCODE_ARM', index: 'ARCODE_ARM', width: 65 },
+                { key: false, name: 'DESCRIPTION_ARM', index: 'DESCRIPTION_ARM', width: 150 }
                 ],
                 rowNum: 10,
                 rowList: [10, 20, 30, 40],
@@ -66,8 +65,8 @@
                 autowidth: true,
                 viewrecords: true,
                 pager: jQuery('#Pager'),
-                caption: "Products List",
-                emptyrecords: "No Products to Display",
+                caption: "Customers List",
+                emptyrecords: "No Customers to Display",
                 jsonReader: {
                     root: "rows",
                     page: "page",
@@ -81,7 +80,7 @@
 
             $(window).resize(function () {
                 var outerwidth = $('#grid').width();
-                $('#tblProdList').setGridWidth(outerwidth);
+                $('#tblCustList').setGridWidth(outerwidth);
             });
         });
     </script>

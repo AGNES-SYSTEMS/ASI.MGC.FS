@@ -21,6 +21,40 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
+        public JsonResult getCustList(string sidx, string sord, int page, int rows)
+        {
+            var CustList = (from prodList in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                            select prodList).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
+            int pageIndex = Convert.ToInt32(page) - 1;
+            int pageSize = rows;
+            int totalRecords = CustList.Count();
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+            if (sord.ToUpper() == "DESC")
+            {
+                CustList = CustList.OrderByDescending(a => a.ARCODE_ARM);
+                CustList = CustList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            else
+            {
+                CustList = CustList.OrderBy(a => a.ARCODE_ARM);
+                CustList = CustList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            var jsonData = new
+            {
+                total = totalPages,
+                page,
+                records = totalRecords,
+                rows = CustList
+
+            };
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CustomerList()
+        {
+            return View();
+        }
+
         public ActionResult GetAllCustomerDetails()
         {
             return View();

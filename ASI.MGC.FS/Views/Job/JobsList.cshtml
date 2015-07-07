@@ -7,19 +7,33 @@
 
 <html>
 <head>
+    <meta name="viewport" content="width=device-width" />
     <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
     <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
-    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <title>Jobs List</title>
 </head>
 <body>
     <div class="container">
         <div id="main">
-
             <div class="row">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-10">
+                        <div class="col-md-6 form-group">
+                            <label id="lblCustCode" class="control-label col-md-4 small ">Job ID:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.JOBID_JR, null, new { ID = "txtJobID", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.JOBID_JR)
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblMRVNo" class="control-label col-md-4 small ">Job Description:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.JOBDESCRIPTION_JR, null, new { ID = "txtJobDesc", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.JOBDESCRIPTION_JR)
+                            </div>
+                        </div>
+                        <div id="grid" class="col-md-10">
                             <table id="tblJobsList"></table>
                             <div id="Pager"></div>
                         </div>
@@ -30,6 +44,7 @@
     </div>
 
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/i18n/grid.locale-en.js"></script>
     <script src="~/Scripts/jquery.jqGrid.min.js"></script>
     <script>
@@ -38,17 +53,19 @@
             $("#tblJobsList").jqGrid({
                 url: '/Job/getJobsList',
                 datatype: "json",
-                mtype: 'GET',
                 colNames: ['Job ID', 'Job Description'],
                 colModel: [
-                { key: true, name: 'JOBID_JR', index: 'JOBID_JR' },
-                { key: false, name: 'JOBDESCRIPTION_JR', index: 'JOBDESCRIPTION_JR' }
+                { key: true, name: 'JOBID_JR', index: 'JOBID_JR', width: 65 },
+                { key: false, name: 'JOBDESCRIPTION_JR', index: 'JOBDESCRIPTION_JR', width: 150 }
                 ],
-                pager: jQuery('#Pager'),
                 rowNum: 10,
                 rowList: [10, 20, 30, 40],
-                height: '100%',
+                mtype: 'GET',
+                gridview: true,
+                shrinkToFit: true,
+                autowidth: true,
                 viewrecords: true,
+                pager: jQuery('#Pager'),
                 caption: "Job Details List",
                 emptyrecords: "No Jobs to Display",
                 jsonReader: {
@@ -60,6 +77,11 @@
                 },
                 autowidth: true,
                 multiselect: false
+            });
+
+            $(window).resize(function () {
+                var outerwidth = $('#grid').width();
+                $('#tblJobsList').setGridWidth(outerwidth);
             });
         });
     </script>

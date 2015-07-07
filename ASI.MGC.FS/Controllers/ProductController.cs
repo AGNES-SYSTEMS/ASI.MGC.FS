@@ -22,6 +22,40 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
+        public ActionResult ProductList()
+        {
+            return View();
+        }
+
+        public JsonResult getProdsList(string sidx, string sord, int page, int rows)
+        {
+            var ProdList = (from prodList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
+                           select prodList).Select(a => new { a.PROD_CODE_PM, a.DESCRIPTION_PM });
+            int pageIndex = Convert.ToInt32(page) - 1;
+            int pageSize = rows;
+            int totalRecords = ProdList.Count();
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+            if (sord.ToUpper() == "DESC")
+            {
+                ProdList = ProdList.OrderByDescending(a => a.PROD_CODE_PM);
+                ProdList = ProdList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            else
+            {
+                ProdList = ProdList.OrderBy(a => a.PROD_CODE_PM);
+                ProdList = ProdList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            var jsonData = new
+            {
+                total = totalPages,
+                page,
+                records = totalRecords,
+                rows = ProdList
+
+            };
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult GetAllProductDetails()
         {
             return View();
