@@ -2,8 +2,9 @@
     ViewBag.Title = "MRVoucher Creation";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="~/Content/SlickGrid/slick.grid.css" rel="stylesheet" />
-<link href="~/Content/SlickGrid/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 @model ASI.MGC.FS.Model.MATERIALRECEIPTMASTER
 <!-- start:main -->
 <div class="container">
@@ -20,7 +21,7 @@
                 <div>
                     <p class="headingStyle">Material Receipt Voucher</p>
                 </div>
-                @using (Html.BeginForm("MRVCreation", "MRV", null, FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("SaveMRVCreation", "MRV", null, FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
                 {
                     <div class="row">
                         <div class="col-md-6 form-group">
@@ -33,7 +34,7 @@
                         <div class="col-md-6 form-group">
                             <label id="lblMRVNo" class="control-label col-md-4 small ">MRV No:</label>
                             <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.MRVNO_MRV, null, new { ID = "txtMRVNo", Class = "form-control" })
+                                @Html.TextBoxFor(d => d.MRVNO_MRV, null, new { ID = "txtMRVNo", @Value = @ViewBag.MRVCode, Class = "form-control", @readonly = "readonly" })
                                 @Html.ValidationMessageFor(d => d.MRVNO_MRV)
                             </div>
                         </div>
@@ -49,7 +50,7 @@
                         <div class="col-md-6 form-group">
                             <label id="lblMRVDate" class="control-label col-md-4 small ">Date:</label>
                             <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.MRVDATE_MRV, null, new { ID = "txtMRVDate", Class = "form-control" })
+                                @Html.TextBoxFor(d => d.MRVDATE_MRV, null, new { ID = "txtMRVDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control datepicker" })
                                 @Html.ValidationMessageFor(d => d.MRVDATE_MRV)
                             </div>
                         </div>
@@ -64,10 +65,26 @@
                             </div>
                         </div>
                         <div class="col-md-6 form-group">
+                            <label id="lblMRVAddress2" class="control-label col-md-4 small ">Address2:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.ADDRESS2_MRV, null, new { ID = "txtMRVAddress2", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.ADDRESS1_MRV)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
                             <label id="lblMRVTel" class="control-label col-md-4 small ">Telephone No:</label>
                             <div class="col-md-8 paddingLeftRight0">
                                 @Html.TextBoxFor(d => d.PHONE_MRV, null, new { ID = "txtMRVTel", Class = "form-control" })
                                 @Html.ValidationMessageFor(d => d.PHONE_MRV)
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblDocDate" class="control-label col-md-4 small ">DocDate:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.DOC_DATE_MRV, null, new { ID = "txtDocDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(d => d.DOC_DATE_MRV)
                             </div>
                         </div>
                     </div>
@@ -75,7 +92,7 @@
                         <div class="col-md-6 form-group">
                             <label id="lblDeleDate" class="control-label col-md-4 small ">DeleDate:</label>
                             <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.DELE_DATE_MRV, null, new { ID = "txtDeleDate", Class = "form-control" })
+                                @Html.TextBoxFor(d => d.DELE_DATE_MRV, null, new { ID = "txtDeleDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control" })
                                 @Html.ValidationMessageFor(d => d.DELE_DATE_MRV)
                             </div>
                         </div>
@@ -93,14 +110,22 @@
                             <label id="lblLpoRemarks" class="control-label col-md-4 small ">Lpo/Remarks:</label>
                             <div class="col-md-8 paddingLeftRight0">
                                 @Html.TextAreaFor(d => d.NOTES_MRV, new { ID = "txtLpoRemarks", Class = "form-control" })
-
                             </div>
+                            <input id="mrvProds" name="mrvProds" type="hidden" />
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-10 form-group">
-                            <div class="col-md-8 paddingLeftRight0" style="width:700px;">
-                                <div id="Grid" style="width:100%;height:500px;"></div>
+                        <div class="col-lg-12">
+                            <header class="panel-heading">
+                                Product Details
+                            </header>
+                            <div id="grid" class="panel-body">
+                                <section id="unseen">
+                                    <a href="#" data-toggle="modal" id="dlgAddPrd" class="btn btn-drop btn-success">
+                                        Add Product
+                                    </a>
+                                    <table id="tblMetarials"></table>
+                                </section>
                             </div>
                         </div>
                     </div>
@@ -108,7 +133,7 @@
                         <div class="col-md-6 form-group">
                         </div>
                         <div class="col-md-6 form-group">
-                            <label id="lblRgstNo" class="control-label col-md-4 small "></label>
+                            <label></label>
                             <div class="col-md-8 paddingLeftRight0">
                                 <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
                             </div>
@@ -118,74 +143,187 @@
             </div>
         </div>
     </div>
+    <div id="productDetailsAdd" title="Add Product" style="display:none;">
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label id="lblPrCode" for="prcode" class="control-label col-md-4 small ">PrCode:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    <input type="text" name="prcode" class="form-control" id="txtPrCode">
+                </div>
+            </div>
+            <div class="col-md-6 form-group">
+                <label id="lblPrDesc" for="prdesc" class="control-label col-md-4 small ">PrDesc:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    <input type="text" class="form-control" name="prdesc" id="txtPrDesc">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label id="lblJobID" for="jobid" class="control-label col-md-4 small ">JobID:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    <input type="text" class="form-control" name="jobid" id="txtJobID">
+                </div>
+            </div>
+            <div class="col-md-6 form-group">
+                <label id="lblJobDesc" for="jobdesc" class="control-label col-md-4 small ">JobDesc:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    <input type="text" class="form-control" name="jobdesc" id="txtJobDesc">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label id="lblQuantity" for="quantity" class="control-label col-md-4 small ">Quantity:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    <input type="text" class="form-control" name="quantity" id="txtQuantity">
+                </div>
+            </div>
+            <div class="col-md-6 form-group">
+                <label id="lblRate" for="rate" class="control-label col-md-4 small ">Rate:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    <input type="text" class="form-control" name="rate" id="txtRate">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label id="lblAmount" for="amount" class="control-label col-md-4 small ">Amount:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    <input type="text" class="form-control" name="amount" id="txtAmount" disabled>
+                </div>
+            </div>
+            <div class="col-md-6 form-group">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+            </div>
+            <div class="col-md-6 form-group">
+                <div class="col-md-8 paddingLeftRight0">
+                    <label></label>
+                    <button type="submit" id="btnSubmit" class="btn btn-success col-md-3 pull-right">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <!-- end:main -->
 @section scripts
 {
-    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/lib/firebugx.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/lib/jquery-ui-1.8.16.custom.min.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/lib/jquery.event.drag-2.2.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/slick.core.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/plugins/slick.cellrangedecorator.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/plugins/slick.cellrangeselector.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/plugins/slick.cellselectionmodel.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/slick.formatters.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/slick.editors.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/SlickGrid/slick.grid.js")"></script>
+    <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
     <script>
         $(document).ready(function () {
-            function requiredFieldValidator(value) {
-                if (value == null || value == undefined || !value.length) {
-                    return { valid: false, msg: "This is a required field" };
-                } else {
-                    return { valid: true, msg: null };
+            var arrMetarials = [];
+            $('#txtDeleDate').datepicker();
+            $('#txtMRVDate').datepicker();
+            jQuery("#tblMetarials").jqGrid({
+                datatype: "local",
+                height: 150,
+                colNames: ['PrCode', 'Product Description', 'Job ID', 'Job Description', 'Quantity', 'Rate', 'Amount'],
+                colModel: [
+                    { name: 'PRODID_MRR', index: 'PRODID_MRR', width: 80, align: "center", sortable: false },
+                    { name: 'prdesc', index: 'prdesc', width: 300, align: "left", sortable: false },
+                    { name: 'JOBID_MRR', index: 'JOBID_MRR', width: 80, align: "center", sortable: false },
+                    { name: 'jobdesc', index: 'jobdesc', width: 300, align: "left", sortable: false },
+                    { name: 'QTY_MRR', index: 'QTY_MRR', width: 90, align: "right", sortable: false },
+                    { name: 'RATE_MRR', index: 'RATE_MRR', width: 100, align: "right", sortable: false },
+                    { name: 'AMOUNT_MRR', index: 'AMOUNT_MRR', width: 100, align: "right", sortable: false }
+                ],
+                multiselect: false,
+                caption: "Materials Details"
+            });
+
+            $("#btnSubmit").click(function (e) {
+                e.preventDefault();
+                var arrIndex = arrMetarials.length;
+                arrMetarials[arrIndex] = {
+                    PRODID_MRR: $("#txtPrCode").val(), prdesc: $("#txtPrDesc").val(), JOBID_MRR: $("#txtJobID").val(),
+                    jobdesc: $("#txtJobDesc").val(), QTY_MRR: $("#txtQuantity").val(), RATE_MRR: $("#txtRate").val(),
+                    AMOUNT_MRR: $("#txtAmount").val()
+                };
+                var su = jQuery("#tblMetarials").jqGrid('addRowData', arrIndex, arrMetarials[arrIndex]);
+                if (su) {
+                    var mrvPrds = $('#tblMetarials').jqGrid('getGridParam', 'data');
+                    var jsonMrvPrds = JSON.stringify(mrvPrds);
+                    $('#mrvProds').val(jsonMrvPrds);
                 }
-            }
+            });
+            $(window).resize(function () {
+                var outerwidth = $('#grid').width();
+                $('#tblMetarials').setGridWidth(outerwidth);
+            });
 
-            var grid;
-            var data = [];
-            var columns = [
-              { id: "title", name: "Title", field: "title", width: 120, cssClass: "cell-title", editor: Slick.Editors.Text, validator: requiredFieldValidator },
-              { id: "desc", name: "Description", field: "description", width: 100, editor: Slick.Editors.LongText },
-              { id: "duration", name: "Duration", field: "duration", editor: Slick.Editors.Text },
-              { id: "%", name: "% Complete", field: "percentComplete", width: 80, resizable: false, formatter: Slick.Formatters.PercentCompleteBar, editor: Slick.Editors.PercentComplete },
-              { id: "start", name: "Start", field: "start", minWidth: 60, editor: Slick.Editors.Date },
-              { id: "finish", name: "Finish", field: "finish", minWidth: 60, editor: Slick.Editors.Date },
-              { id: "effort-driven", name: "Effort Driven", width: 80, minWidth: 20, maxWidth: 80, cssClass: "cell-effort-driven", field: "effortDriven", formatter: Slick.Formatters.Checkmark, editor: Slick.Editors.Checkbox }
-            ];
-            var options = {
-                editable: true,
-                enableAddRow: true,
-                enableCellNavigation: true,
-                asyncEditorLoading: false,
-                autoEdit: false
-            };
-
-            $(function () {
-                for (var i = 0; i < 10; i++) {
-                    var d = (data[i] = {});
-
-                    d["title"] = "";
-                    d["description"] = "";
-                    d["duration"] = "";
-                    d["percentComplete"] = "";
-                    d["start"] = "";
-                    d["finish"] = "";
-                    d["effortDriven"] = "";
-                }
-
-                grid = new Slick.Grid("#Grid", data, columns, options);
-
-                grid.setSelectionModel(new Slick.CellSelectionModel());
-
-                grid.onAddNewRow.subscribe(function (e, args) {
-                    var item = args.item;
-                    grid.invalidateRow(data.length);
-                    data.push(item);
-                    grid.updateRowCount();
-                    grid.render();
+            $("#txtCustCode").autocomplete({
+                source: '@Url.Action("GetCustomersCode","Customer")'
+            });
+            $("#txtCustName").autocomplete({
+                source: '@Url.Action("GetCustomersName","Customer")',
+                minLength: 3
+            });
+            $("#dlgAddPrd").click(function (e) {
+                $('#productDetailsAdd').dialog({
+                    closeOnEscape: true,
+                    model: true,
+                    minHeight: 400,
+                    maxHeight: 500,
+                    minWidth: 1000,
+                    maxWidth: 1100,
+                    overlay: {
+                        opacity: 0.5,
+                        background: "black"
+                    }
                 });
             });
+
+            $("#txtPrCode").autocomplete({
+                source: '@Url.Action("getProductCode", "Product")'
+            }).autocomplete("option", "appendTo", "#productDetailsAdd");
+
+            $("#txtPrDesc").autocomplete({
+                source: '@Url.Action("getProductDetail", "Product")'
+            }).autocomplete("option", "appendTo", "#productDetailsAdd");
+
+            $("#txtJobID").autocomplete({
+                source: '@Url.Action("getJobIDs", "Job")'
+            }).autocomplete("option", "appendTo", "#productDetailsAdd");
+
+            $("#txtJobDesc").autocomplete({
+                source: '@Url.Action("getJobDetails", "Job")'
+            }).autocomplete("option", "appendTo", "#productDetailsAdd");
+
+            $("#txtCustCode").blur(function (e) {
+                getCustRecord();
+            });
+            $("#txtCustName").blur(function (e) {
+                getCustRecord();
+            });
+
+            function getCustRecord() {
+                var _custCode = $('#txtCustCode').val();
+                var _custName = $('#txtCustName').val();
+                var data = JSON.stringify({ custCode: _custCode, custName: _custName });
+                $.ajax({
+                    url: '@Url.Action("getCustomerRecord", "Customer")',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: data,
+                    type: "POST",
+                    success: function (custDetails) {
+                        $('#txtCustCode').val(custDetails.ARCODE_ARM);
+                        $('#txtCustName').val(custDetails.DESCRIPTION_ARM);
+                        $('#txtMRVAddress').val(custDetails.ADDRESS1_ARM);
+                        $('#txtMRVTel').val(custDetails.TELEPHONE_ARM);
+                        $('#txtMRVAddress2').val(custDetails.ADDRESS2_ARM);
+                    },
+                    complete: function () {
+                    },
+                    error: function (custDetails) {
+                    }
+                });
+            }
         });
     </script>
 }

@@ -104,5 +104,21 @@ namespace ASI.MGC.FS.Controllers
                 aaData = resultJobRecords
             }, JsonRequestBehavior.AllowGet);
        }
+
+        public JsonResult getJobIDs(string term)
+        {
+            IList<string> lstJobCodes = (from jobsList in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
+                                         where jobsList.JOBID_JR.StartsWith(term)
+                                         select jobsList).Distinct().Select(x => x.JOBID_JR).ToList();
+            return Json(lstJobCodes, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getJobDetails(string term)
+        {
+            IList<string> lstJobDetail = (from jobsList in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
+                                         where jobsList.JOBDESCRIPTION_JR.Contains(term)
+                                         select jobsList).Distinct().Select(x => x.JOBDESCRIPTION_JR).ToList();
+            return Json(lstJobDetail, JsonRequestBehavior.AllowGet);
+        }
     }
 }

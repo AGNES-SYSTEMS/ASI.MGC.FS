@@ -109,5 +109,21 @@ namespace ASI.MGC.FS.Controllers
                 aaData = resultJobRecords
             }, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult getProductCode(string term)
+        {
+            IList<string> lstPrDCode = (from productList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
+                                              where productList.PROD_CODE_PM.StartsWith(term)
+                                              select productList).Distinct().Select(x => x.PROD_CODE_PM).ToList();
+            return Json(lstPrDCode, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getProductDetail(string term)
+        {
+            IList<string> lstPrDetail = (from productList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
+                                        where productList.DESCRIPTION_PM.Contains(term)
+                                        select productList).Distinct().Select(x => x.DESCRIPTION_PM).ToList();
+            return Json(lstPrDetail, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -63,7 +63,7 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult GetAllCustomers(jQueryDataTableParamModel Param)
         {
             var totalCustRecords = (from totalCustCount in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                                   select totalCustCount);
+                                    select totalCustCount);
             IEnumerable<AR_AP_MASTER> filteredCust;
             if (!string.IsNullOrEmpty(Param.sSearch))
             {
@@ -82,7 +82,7 @@ namespace ASI.MGC.FS.Controllers
             var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
 
             Func<AR_AP_MASTER, string> orderingFunction = (a => sortColumnIndex == 0 ? a.ARCODE_ARM : sortColumnIndex == 1 ? a.DESCRIPTION_ARM : sortColumnIndex == 2 ? a.CONDACTPERSON_ARM
-                                                            : sortColumnIndex == 3 ? a.ADDRESS1_ARM : sortColumnIndex == 6 ? a.TYPE_ARM: Convert.ToString(a.CREDITDAYS_ARM));
+                                                            : sortColumnIndex == 3 ? a.ADDRESS1_ARM : sortColumnIndex == 6 ? a.TYPE_ARM : Convert.ToString(a.CREDITDAYS_ARM));
 
             var sortDirection = Request["sSortDir_0"];
             if (sortDirection == "asc")
@@ -99,8 +99,19 @@ namespace ASI.MGC.FS.Controllers
             int totalDisplayedRecords = filteredCust.Count();
             var dislpayedJobs = filteredCust.Skip(Param.iDisplayStart)
                                             .Take(Param.iDisplayLength);
-            var resultCustRecords = from Cust in dislpayedJobs select new { Cust.ARCODE_ARM, Cust.DESCRIPTION_ARM, Cust.CONDACTPERSON_ARM, Cust.ADDRESS1_ARM, Cust.TELEPHONE_ARM
-                                                                            ,Cust.EMAIL_ARM, Cust.TYPE_ARM, Cust.CREDITDAYS_ARM};
+            var resultCustRecords = from Cust in dislpayedJobs
+                                    select new
+                                    {
+                                        Cust.ARCODE_ARM,
+                                        Cust.DESCRIPTION_ARM,
+                                        Cust.CONDACTPERSON_ARM,
+                                        Cust.ADDRESS1_ARM,
+                                        Cust.TELEPHONE_ARM
+                                      ,
+                                        Cust.EMAIL_ARM,
+                                        Cust.TYPE_ARM,
+                                        Cust.CREDITDAYS_ARM
+                                    };
             return Json(new
             {
                 sEcho = Param.sEcho,
@@ -108,6 +119,40 @@ namespace ASI.MGC.FS.Controllers
                 iTotalDisplayRecords = totalDisplayedRecords,
                 aaData = resultCustRecords
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetCustomersCode(string term)
+        {
+            IList<string> lstCustCode = (from custList in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                                         where custList.ARCODE_ARM.StartsWith(term) && custList.TYPE_ARM.Equals("AR")
+                                         select custList).Distinct().Select(x => x.ARCODE_ARM).ToList();
+            return Json(lstCustCode, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetCustomersName(string term)
+        {
+            IList<string> lstCustName = (from custList in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                                         where custList.DESCRIPTION_ARM.Contains(term) && custList.TYPE_ARM.Equals("AR")
+                                         select custList).Distinct().Select(x => x.DESCRIPTION_ARM).ToList();
+            return Json(lstCustName, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getCustomerRecord(string custCode, string custName)
+        {
+            AR_AP_MASTER objCustomer = null;
+            if (!string.IsNullOrEmpty(custCode) && !string.IsNullOrWhiteSpace(custCode))
+            {
+                objCustomer = (from custList in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                               where custList.ARCODE_ARM.Equals(custCode)
+                               select custList).FirstOrDefault();
+            }
+            else if (!string.IsNullOrEmpty(custName) && !string.IsNullOrWhiteSpace(custName))
+            {
+                objCustomer = (from custList in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                               where custList.DESCRIPTION_ARM.Equals(custName)
+                               select custList).FirstOrDefault();
+            }
+            return Json(objCustomer, JsonRequestBehavior.AllowGet);
         }
     }
 }
