@@ -41,23 +41,12 @@ namespace ASI.MGC.FS.Controllers
                 string jsonProductDetails = form["mrvProds"];
                 string mrvNo = objMRV.MRVNO_MRV.ToString();
                 var serializer = new JavaScriptSerializer();
-                //DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(MRVREFERENCE));
                 var lstMrvProducts = serializer.Deserialize<List<MRVREFERENCE>>(jsonProductDetails);
-                foreach (var prd in lstMrvProducts)
-                {
-                    MRVREFERENCE objMrvRef = new MRVREFERENCE();
-                    objMrvRef.MRVNO_MRR = mrvNo;
-                    objMrvRef.PRODID_MRR = prd.PRODID_MRR;
-                    objMrvRef.JOBID_MRR = prd.JOBID_MRR;
-                    objMrvRef.QTY_MRR = prd.QTY_MRR;
-                    objMrvRef.RATE_MRR = prd.RATE_MRR;
-                    objMrvRef.AMOUNT_MRR = prd.AMOUNT_MRR;
-                    objMrvRef.JOBSTATUS_MRR = "N";
-                    _unitOfWork.Repository<MRVREFERENCE>().Insert(objMrvRef);
-                    _unitOfWork.Save();
-                }
                 objMRV.DOC_DATE_MRV = Convert.ToDateTime(System.DateTime.Now.ToShortDateString());
                 objMRV.STATUS_MRV = "N";
+                _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Insert(objMRV);
+                _unitOfWork.Save();
+                saveMRVProducts(lstMrvProducts, mrvNo);
                 return RedirectToAction("MRVCreation");
             }
             catch (Exception e)
@@ -65,6 +54,17 @@ namespace ASI.MGC.FS.Controllers
 
             }
             return RedirectToAction("MRVCreation");
+        }
+
+        private void saveMRVProducts(List<MRVREFERENCE> lstMrvProducts, string mrvNo)
+        {
+            foreach (var prd in lstMrvProducts)
+            {
+                prd.MRVNO_MRR = mrvNo;
+                prd.JOBSTATUS_MRR = "N";
+                _unitOfWork.Repository<MRVREFERENCE>().Insert(prd);
+                _unitOfWork.Save();
+            }
         }
     }
 }

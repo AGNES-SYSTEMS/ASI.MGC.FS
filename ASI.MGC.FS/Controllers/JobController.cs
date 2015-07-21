@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using ASI.MGC.FS.Model;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Model.HelperClasses;
+using ASI.MGC.FS.WebCommon;
 
 namespace ASI.MGC.FS.Controllers
 {
@@ -119,6 +120,32 @@ namespace ASI.MGC.FS.Controllers
                                          where jobsList.JOBDESCRIPTION_JR.Contains(term)
                                          select jobsList).Distinct().Select(x => x.JOBDESCRIPTION_JR).ToList();
             return Json(lstJobDetail, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getPrdRecord(string jobCode, string jobName)
+        {
+            JOBIDREFERENCE objJob = null;
+            if (!string.IsNullOrEmpty(jobCode) && !string.IsNullOrWhiteSpace(jobCode))
+            {
+                objJob = (from jobList in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
+                               where jobList.JOBID_JR.Equals(jobCode)
+                               select jobList).FirstOrDefault();
+            }
+            else if (!string.IsNullOrEmpty(jobName) && !string.IsNullOrWhiteSpace(jobName))
+            {
+                objJob = (from jobList in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
+                               where jobList.JOBDESCRIPTION_JR.Equals(jobName)
+                               select jobList).FirstOrDefault();
+            }
+            return Json(objJob, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult JobEntry()
+        {
+            ViewBag.PayModeList = CommonModelAccessUtility.getPaymentMethodList();
+            ViewBag.SaleTypeList = CommonModelAccessUtility.getSaleTypeList();
+            var objSaleEntry = new SALEDETAIL();
+            return View(objSaleEntry);
         }
     }
 }

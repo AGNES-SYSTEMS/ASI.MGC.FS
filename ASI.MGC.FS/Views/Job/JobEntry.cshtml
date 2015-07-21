@@ -1,0 +1,175 @@
+﻿@model ASI.MGC.FS.Model.SALEDETAIL
+
+@{
+    ViewBag.Title = "JobEntry";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li href="#">Dashboard</li>
+            <li class="active">Job Entry</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <div class="row">
+            <div class="container">
+                <div>
+                    <p class="headingStyle">Material Receipt Voucher</p>
+                </div>
+                @using (Html.BeginForm("SaveJobEntry", "Job", null, FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+                {
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblJobID" class="control-label col-md-4 small ">Job ID:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.JOBID_SD, null, new { ID = "txtJobID", Class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(d => d.JOBID_SD)
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblMRVNo" class="control-label col-md-4 small ">MRV No:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.MRVNO_SD, null, new { ID = "txtMRVNo", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.MRVNO_SD)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblCustCode" class="control-label col-md-4 small ">Cust Code:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("CustCode", null, new { ID = "txtCustCode", Class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblCustName" class="control-label col-md-4 small ">Cust Name:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("CustName", null, new { ID = "txtCustName", Class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblMRVProdCode" class="control-label col-md-4 small ">MRV Prod. Code:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("MRVProdCode", null, new { ID = "txtMRVProdCode", Class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblMRVProdDetail" class="control-label col-md-4 small ">MRV Prod. Detail:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("MRVProdDetail", null, new { ID = "txtMRVProdDetail", Class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblEmpCode" class="control-label col-md-4 small ">Emp Code:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("EmpCode", null, new { ID = "txtEmpCode", Class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblEmpName" class="control-label col-md-4 small ">Emp Name:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("EmpName", null, new { ID = "txtDocDate", Class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblSaleDate" class="control-label col-md-4 small ">Sale Date:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.SALEDATE_SD, null, new { ID = "txtSaleDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.SALEDATE_SD)
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblType" class="control-label col-md-4 small ">Type:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.DropDownList("SaleType", (IList<SelectListItem>)ViewBag.SaleTypeList, new { id = "ddlSaleType", Class = "form-control" })
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblPrCode" class="control-label col-md-4 small ">Pr. SowCode:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.PRCODE_SD, null, new { ID = "txtPrCode", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.PRCODE_SD)
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblQty" class="control-label col-md-4 small ">Quantity:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.QTY_SD, null, new { ID = "txtQty", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.QTY_SD)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblPrRate" class="control-label col-md-4 small ">Rate:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.RATE_SD, null, new { ID = "txtPrRate", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.RATE_SD)
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblPrAmount" class="control-label col-md-4 small ">Amount:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("Amount", null, new { ID = "txtPrAmount", Class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblDiscount" class="control-label col-md-4 small ">Discount:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.DISCOUNT_SD, null, new { ID = "txtDiscount", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.DISCOUNT_SD)
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblShipCharge" class="control-label col-md-4 small ">Shipping Charges:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.SHIPPINGCHARGES_SD, null, new { ID = "txtShipCharge", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.SHIPPINGCHARGES_SD)
+                            </div>
+                        </div>
+                    </div>
+
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label id="lblPayMode" class="control-label col-md-4 small ">Pay Mode:</label>
+            <div class="col-md-8 paddingLeftRight0">
+                @Html.DropDownList("PayMode", (IList<SelectListItem>)ViewBag.PayModeList, new { id = "ddlPayMode", Class = "form-control" })
+            </div>
+        </div>
+        <div class="col-md-6 form-group">
+            <label id="lblCashAmount" class="control-label col-md-4 small ">Cash Amount:</label>
+            <div class="col-md-8 paddingLeftRight0">
+                @Html.TextBoxFor(d => d.CASHTOTAL_SD, new { ID = "txtCashAmount", Class = "form-control" })
+                @Html.ValidationMessageFor(d => d.CASHTOTAL_SD)
+            </div>
+        </div>
+    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label></label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

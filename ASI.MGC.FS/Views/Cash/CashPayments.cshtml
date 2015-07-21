@@ -1,0 +1,253 @@
+﻿@model ASI.MGC.FS.Model.VOUCHERMASTER_RPT
+
+@{
+    ViewBag.Title = "Cash Payments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.currPage = "Cash Payments";
+}
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li href="#">Dashboard</li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>Cash Payment</legend>
+            <div class="row">
+                <div class="container">
+                    @using (Html.BeginForm("SaveCashPayment", "Cash", null, FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblDocType" class="control-label col-md-4 small ">Doc Type:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(model => model.SLNO_VRPT, null, new { ID = "txtDocType", Class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.SLNO_VRPT)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDocNo" class="control-label col-md-4 small ">Doc No:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(model => model.GLDATE_VRPT, null, new { ID = "txtDocNo", @Value = @ViewBag.MRVCode, Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.GLDATE_VRPT)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblDocDetails" class="control-label col-md-4 small ">Doc Details:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("DocDetails", null, new { ID = "txtDocDetails", Class = "form-control", @readonly = "Readonly" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDocDate" class="control-label col-md-4 small ">Doc Date:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(model => model.BANKCODE_VRT, null, new { ID = "txtDocDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control datepicker" })
+                                    @Html.ValidationMessageFor(model => model.BANKCODE_VRT)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblBankCode" class="control-label col-md-4 small ">Bank Code:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(model => model.BANKAMOUNT_VRT, null, new { ID = "txtBankCode", Class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.BANKAMOUNT_VRT)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblGLDate" class="control-label col-md-4 small ">GL Date:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(model => model.ACCDESCRIPTION_VRPT, null, new { ID = "txtGLDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ACCDESCRIPTION_VRPT)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblBankName" class="control-label col-md-4 small ">Bank Name</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(model => model.PARTICULARS_VRPT, null, new { ID = "txtBankName", Class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.PARTICULARS_VRPT)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblotherRef" class="control-label col-md-4 small ">Other Ref</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(model => model.PARTICULARS_VRPT, null, new { ID = "txtDocDate", Class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.PARTICULARS_VRPT)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblAmount" class="control-label col-md-4 small ">Amount</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(model => model.DEBITAMOUT_VRPT, null, new { ID = "txtAmount", Class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.DEBITAMOUT_VRPT)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblPaidTo" class="control-label col-md-4 small ">Paid To</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(model => model.CREDITAMOUNT_VRPT, null, new { ID = "txtPaidTo", Class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.CREDITAMOUNT_VRPT)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblNarration" class="control-label col-md-4 small ">Narration</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(model => model.STATUS_VRPT, new { ID = "txtNarration", Class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblAllocation" class="control-label col-md-4 small ">Allocation</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(model => model.CHQNO_VRPT, new { ID = "txtAllocation", Class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <fieldset>
+                                    <legend>Product Details</legend>
+                                    <div id="grid" class="panel-body">
+                                        <section id="unseen">
+                                            <a href="#" data-toggle="modal" id="dlgAddAlloc" class="btn btn-drop btn-success">
+                                                Add Allocation Detail
+                                            </a>
+                                            <table id="tblAllocDetails"></table>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label></label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div id="productDetailsAdd" title="Add Product" style="display:none;">
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label id="lblPrCode" for="prcode" class="control-label col-md-4 small ">PrCode:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    @Html.TextBox("PrCode", null, new { ID = "txtPrCode", Class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-6 form-group">
+                <label id="lblPrDesc" for="prdesc" class="control-label col-md-4 small ">PrDesc:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    @Html.TextBox("prdesc", null, new { ID = "txtPrDesc", Class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label id="lblJobID" for="jobid" class="control-label col-md-4 small ">JobID:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    @Html.TextBox("jobid", null, new { ID = "txtJobID", Class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-6 form-group">
+                <label id="lblJobDesc" for="jobdesc" class="control-label col-md-4 small ">JobDesc:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    @Html.TextBox("jobdesc", null, new { ID = "txtJobDesc", Class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label id="lblQuantity" for="quantity" class="control-label col-md-4 small ">Quantity:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    @Html.TextBox("quantity", null, new { ID = "txtQuantity", Class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-6 form-group">
+                <label id="lblRate" for="rate" class="control-label col-md-4 small ">Rate:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    @Html.TextBox("rate", null, new { Class = "form-control", ID = "txtRate" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label id="lblAmount" for="amount" class="control-label col-md-4 small ">Amount:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    @Html.TextBox("amount", null, new { Class = "form-control", ID = "txtAmount", @Readonly = "readonly" })
+                </div>
+            </div>
+            <div class="col-md-6 form-group">
+                <label id="lblNetAmount" for="amount" class="control-label col-md-4 small ">Net Amount:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    @Html.TextBox("netamount", null, new { Class = "form-control", ID = "txtNetAmount", @Readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+            </div>
+            <div class="col-md-6 form-group">
+                <div class="col-md-8 paddingLeftRight0">
+                    <label></label>
+                    <button type="submit" id="btnSubmit" class="btn btn-success col-md-3 pull-right">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
+    <script>
+        $(document).ready(function () {
+            var arrAllocDetails = [];
+            $('#txtDocDate').datepicker();
+            $('#txtGLDate').datepicker();
+            jQuery("#tblAllocDetails").jqGrid({
+                datatype: "local",
+                height: 150,
+                colNames: ['AL Code', 'Account Code', 'Account Description', 'Amount', 'Narration'],
+                colModel: [
+                    { name: 'ALLCODE_VCD', index: 'ALLCODE_VCD', width: 150, align: "center", sortable: false },
+                    { name: 'ACCODE_VCD', index: 'ACCODE_VCD', width: 150, align: "left", sortable: false },
+                    { name: 'ACDESCRIPTION_VCD', index: 'ACDESCRIPTION_VCD', width: 320, align: "center", sortable: false },
+                    { name: 'DEBITAMOUNT_VCD', index: 'DEBITAMOUNT_VCD', width: 150, align: "left", sortable: false },
+                    { name: 'NARRATION_VCD', index: 'NARRATION_VCD', width: 300, align: "right", sortable: false }
+                ],
+                multiselect: false,
+                caption: "Product Details"
+            });
+        });
+        $(window).resize(function () {
+            var outerwidth = $('#grid').width();
+            $('#tblAllocDetails').setGridWidth(outerwidth);
+        });
+    </script>
+}

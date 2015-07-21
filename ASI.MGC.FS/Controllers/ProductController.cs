@@ -125,5 +125,17 @@ namespace ASI.MGC.FS.Controllers
                                         select productList).Distinct().Select(x => x.DESCRIPTION_PM).ToList();
             return Json(lstPrDetail, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult getProductRecord(string productID, string productDesc)
+        {
+            PRODUCTMASTER objProduct = null;
+            if (!string.IsNullOrEmpty(productID) && !string.IsNullOrWhiteSpace(productID))
+            {
+                objProduct = (from lstProducts in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
+                              where lstProducts.PROD_CODE_PM.Equals(productID)
+                              select lstProducts).SingleOrDefault();
+            }
+            return Json(objProduct, JsonRequestBehavior.AllowGet);
+        }
     }
 }
