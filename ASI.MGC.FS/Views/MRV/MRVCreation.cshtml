@@ -7,7 +7,94 @@
 <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.typeahead.css" rel="stylesheet" />
+<link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+<script>
+    function fillJobDataByID() {
+        var _jobCode = document.getElementById("txtJobID").value;
+        var data = JSON.stringify({ jobCode: _jobCode });
+        $.ajax({
+            url: '@Url.Action("getJobRecordByID", "Job")',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: data,
+            type: "POST",
+            success: function (jobDetails) {
+                alert("Job Code OnBlur fired!");
+                $("#txtJobID").val(jobDetails.JOBID_JR);
+                $("#txtJobDesc").val(jobDetails.JOBDESCRIPTION_JR);
+                $("#txtRate").val(jobDetails.RATE_RJ);
+            },
+            complete: function () {
+            },
+            error: function (jobDetails) {
+            }
+        });
+    }
 
+    function fillJobDataByName() {
+        var _jobName = document.getElementById("txtJobDesc").value;
+        var data = JSON.stringify({ jobName: _jobName });
+        $.ajax({
+            url: '@Url.Action("getJobRecordByName", "Job")',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: data,
+            type: "POST",
+            success: function (jobDetails) {
+                alert("Job Code OnBlur fired!");
+                $("#txtJobID").val(jobDetails.JOBID_JR);
+                $("#txtJobDesc").val(jobDetails.JOBDESCRIPTION_JR);
+                $("#txtRate").val(jobDetails.RATE_RJ);
+            },
+            complete: function () {
+            },
+            error: function (jobDetails) {
+            }
+        });
+    }
+
+    function fillPrdDataByID() {
+        var _prdCode = document.getElementById("txtPrCode").value;
+        var data = JSON.stringify({ prdCode: _prdCode });
+        $.ajax({
+            url: '@Url.Action("getPrdRecordByID", "Product")',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: data,
+            type: "POST",
+            success: function (prdDetails) {
+                alert("Prd Code OnBlur fired!");
+                $("#txtPrCode").val(prdDetails.productID);
+                $("#txtPrDesc").val(prdDetails.productDesc);
+            },
+            complete: function () {
+            },
+            error: function (prdDetails) {
+            }
+        });
+    }
+
+    function fillPrdDataByName() {
+        var _prdName = document.getElementById("txtPrDesc").value;
+        var data = JSON.stringify({ prdName: _prdName });
+        $.ajax({
+            url: '@Url.Action("getPrdRecordByName", "Product")',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: data,
+            type: "POST",
+            success: function (prdDetails) {
+                alert("Prd Code OnBlur fired!");
+                $("#txtPrCode").val(prdDetails.productID);
+                $("#txtPrDesc").val(prdDetails.productDesc);
+            },
+            complete: function () {
+            },
+            error: function (prdDetails) {
+            }
+        });
+    }
+</script>
 @model ASI.MGC.FS.Model.MATERIALRECEIPTMASTER
 <!-- start:main -->
 <div class="container">
@@ -22,14 +109,14 @@
             <legend>Material Receipt Voucher</legend>
             <div class="row">
                 <div class="container">
-                    @using (Html.BeginForm("SaveMRVCreation", "MRV", null, FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("SaveMRVCreation", "MRV", null, FormMethod.Post, new { id = "formMRVCreation", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
+                        @Html.AntiForgeryToken()
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label id="lblCustCode" class="control-label col-md-4 small ">Cust Code:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBoxFor(d => d.CUSTOMERCODE_MRV, null, new { ID = "txtCustCode", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.CUSTOMERCODE_MRV)
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
@@ -45,14 +132,12 @@
                                 <label id="lblCustName" class="control-label col-md-4 small ">Cust Name:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBoxFor(d => d.CUSTOMERNAME_MRV, null, new { ID = "txtCustName", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.CUSTOMERNAME_MRV)
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblMRVDate" class="control-label col-md-4 small ">Date:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBoxFor(d => d.MRVDATE_MRV, null, new { ID = "txtMRVDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control datepicker" })
-                                    @Html.ValidationMessageFor(d => d.MRVDATE_MRV)
                                 </div>
                             </div>
                         </div>
@@ -134,6 +219,16 @@
                             <div class="col-md-6 form-group">
                             </div>
                             <div class="col-md-6 form-group">
+                                <label id="lblNetPrdAmount" class="control-label col-md-4 small">Net Amount:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="text" id="txtNetPrdAmount" class="form-control" value="0" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
                                 <label></label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
@@ -145,74 +240,6 @@
             </div>
         </fieldset>
     </div>
-    @*<div id="productDetailsAdd" title="Add Product" style="display:none;">
-            <div class="row">
-                <div class="col-md-6 form-group">
-                    <label id="lblPrCode" for="prcode" class="control-label col-md-4 small ">PrCode:</label>
-                    <div class="col-md-8 paddingLeftRight0">
-                        @Html.TextBox("PrCode", null, new { ID = "txtPrCode", Class = "form-control" })
-                    </div>
-                </div>
-                <div class="col-md-6 form-group">
-                    <label id="lblPrDesc" for="prdesc" class="control-label col-md-4 small ">PrDesc:</label>
-                    <div class="col-md-8 paddingLeftRight0">
-                        @Html.TextBox("prdesc", null, new { ID = "txtPrDesc", Class = "form-control" })
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 form-group">
-                    <label id="lblJobID" for="jobid" class="control-label col-md-4 small ">JobID:</label>
-                    <div class="col-md-8 paddingLeftRight0">
-                        @Html.TextBox("jobid", null, new { ID = "txtJobID", Class = "form-control" })
-                    </div>
-                </div>
-                <div class="col-md-6 form-group">
-                    <label id="lblJobDesc" for="jobdesc" class="control-label col-md-4 small ">JobDesc:</label>
-                    <div class="col-md-8 paddingLeftRight0">
-                        @Html.TextBox("jobdesc", null, new { ID = "txtJobDesc", Class = "form-control" })
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 form-group">
-                    <label id="lblQuantity" for="quantity" class="control-label col-md-4 small ">Quantity:</label>
-                    <div class="col-md-8 paddingLeftRight0">
-                        @Html.TextBox("quantity", null, new { ID = "txtQuantity", Class = "form-control" })
-                    </div>
-                </div>
-                <div class="col-md-6 form-group">
-                    <label id="lblRate" for="rate" class="control-label col-md-4 small ">Rate:</label>
-                    <div class="col-md-8 paddingLeftRight0">
-                        @Html.TextBox("rate", null, new { Class = "form-control", ID = "txtRate" })
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 form-group">
-                    <label id="lblAmount" for="amount" class="control-label col-md-4 small ">Amount:</label>
-                    <div class="col-md-8 paddingLeftRight0">
-                        @Html.TextBox("amount", null, new { Class = "form-control", ID = "txtAmount", @Readonly = "readonly" })
-                    </div>
-                </div>
-                <div class="col-md-6 form-group">
-                    <label id="lblNetAmount" for="amount" class="control-label col-md-4 small ">Net Amount:</label>
-                    <div class="col-md-8 paddingLeftRight0">
-                        @Html.TextBox("netamount", null, new { Class = "form-control", ID = "txtNetAmount", @Readonly = "readonly" })
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 form-group">
-                </div>
-                <div class="col-md-6 form-group">
-                    <div class="col-md-8 paddingLeftRight0">
-                        <label></label>
-                        <button type="submit" id="btnSubmit" class="btn btn-success col-md-3 pull-right">Save</button>
-                    </div>
-                </div>
-            </div>
-        </div>*@
     <div class="modal fade" id="mrvProductModel" tabindex="-1" role="dialog" aria-labelledby="mrvProductModelLabel" aria-hidden="true" data-backdrop="false">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -225,61 +252,64 @@
                         Add Product To Material Receipt Voucher
                     </h4>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label id="lblPrCode" for="prcode" class="control-label col-md-4 small ">PrCode:</label>
-                        <div class="col-md-8 paddingLeftRight0" id="scrollable-dropdown-menu1">
-                            <input type="text" id="txtPrCode" data-provide="typeahead" class="form-control" placeholder="Enter Product Code" autocomplete="off" />
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblPrCode" for="prcode" class="control-label col-md-4 small ">PrCode:</label>
+                            <div class="col-md-8 paddingLeftRight0" id="scrollable-dropdown-menu1">
+                                <input type="text" id="txtPrCode" data-provide="typeahead" name="PrCode" class="form-control" placeholder="Product Code" autocomplete="off" required onblur="fillPrdDataByID();" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblPrDesc" for="prdesc" class="control-label col-md-4 small ">PrDesc:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                <input type="text" id="txtPrDesc" data-provide="typeahead" name="PrDesc" class="form-control" placeholder="Product Name" autocomplete="off" required onblur="fillPrdDataByName();" />
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6 form-group">
-                        <label id="lblPrDesc" for="prdesc" class="control-label col-md-4 small ">PrDesc:</label>
-                        <div class="col-md-8 paddingLeftRight0">
-                            <input type="text" id="txtPrDesc" data-provide="typeahead" class="form-control" placeholder="Enter Product Name" autocomplete="off" />
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblJobID" for="jobid" class="control-label col-md-4 small ">JobID:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                <input type="text" id="txtJobID" data-provide="typeahead" name="JobID" class="form-control" placeholder="Job ID" autocomplete="off" required onblur="fillJobDataByID();" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblJobDesc" for="jobdesc" class="control-label col-md-4 small ">JobDesc:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                <input type="text" id="txtJobDesc" data-provide="typeahead" name="JobDesc" class="form-control" placeholder="Job Details" autocomplete="off" required onblur="fillJobDataByName();" />
+
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label id="lblJobID" for="jobid" class="control-label col-md-4 small ">JobID:</label>
-                        <div class="col-md-8 paddingLeftRight0">
-                            @Html.TextBox("Jobid", null, new { ID = "txtJobID", Class = "form-control" })
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblQuantity" for="quantity" class="control-label col-md-4 small ">Quantity:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                <input type="text" id="txtQuantity" name="Quantity" class="form-control" placeholder="Quantity" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblRate" for="rate" class="control-label col-md-4 small ">Rate:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                <input type="text" id="txtRate" name="Rate" class="form-control" placeholder="Rate" required />
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6 form-group">
-                        <label id="lblJobDesc" for="jobdesc" class="control-label col-md-4 small ">JobDesc:</label>
-                        <div class="col-md-8 paddingLeftRight0">
-                            @Html.TextBox("Jobdesc", null, new { ID = "txtJobDesc", Class = "form-control" })
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label id="lblQuantity" for="quantity" class="control-label col-md-4 small ">Quantity:</label>
-                        <div class="col-md-8 paddingLeftRight0">
-                            @Html.TextBox("Quantity", null, new { ID = "txtQuantity", Class = "form-control" })
-                        </div>
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label id="lblRate" for="rate" class="control-label col-md-4 small ">Rate:</label>
-                        <div class="col-md-8 paddingLeftRight0">
-                            @Html.TextBox("Rate", null, new { Class = "form-control", ID = "txtRate" })
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label id="lblAmount" for="amount" class="control-label col-md-4 small ">Amount:</label>
-                        <div class="col-md-8 paddingLeftRight0">
-                            @Html.TextBox("Amount", null, new { Class = "form-control", ID = "txtAmount", @Readonly = "readonly" })
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblAmount" for="amount" class="control-label col-md-4 small ">Amount:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                <input type="text" id="txtAmount" name="Amount" class="form-control" value="0" readonly />
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success">
+                    <button type="button" id="btnSave" class="btn btn-success">
                         Save
                     </button>
-                    <button type="button" class="btn btn-warning">
+                    <button type="button" id="btnCancel" class="btn btn-warning">
                         Cancel
                     </button>
                     <button type="button" class="btn btn-default"
@@ -297,6 +327,7 @@
     <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.typeahead.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
     <script>
         $(document).ready(function () {
             $("#txtPrCode").typeahead({
@@ -342,6 +373,49 @@
                 minLength: 3
             });
 
+            $("#txtJobID").typeahead({
+                source: function (query, process) {
+                    var arrJobCode = [];
+                    map = {};
+
+                    // This is going to make an HTTP post request to the controller
+                    return $.post('/Job/getJobCode', { query: query }, function (data) {
+
+                        // Loop through and push to the array
+                        $.each(data, function (i, Job) {
+                            map[Job] = Job;
+                            arrJobCode.push(Job);
+                        });
+
+                        // Process the details
+                        process(arrJobCode);
+                    });
+                },
+                items: 9999
+            });
+
+            $("#txtJobDesc").typeahead({
+                source: function (query, process) {
+                    var arrJobDetail = [];
+                    map = {};
+
+                    // This is going to make an HTTP post request to the controller
+                    return $.post('/Job/getJobDesc', { query: query }, function (data) {
+
+                        // Loop through and push to the array
+                        $.each(data, function (i, Job) {
+                            map[Job] = Job;
+                            arrJobDetail.push(Job);
+                        });
+
+                        // Process the details
+                        process(arrJobDetail);
+                    });
+                },
+                items: 9999,
+                minLength: 3
+            });
+
             var arrMetarials = [];
             $('#txtDeleDate').datepicker();
             $('#txtMRVDate').datepicker();
@@ -362,7 +436,20 @@
                 caption: "Materials Details"
             });
 
-            $("#btnSubmit").click(function (e) {
+            function clearModalForm() {
+                $("#txtPrCode").val("");
+                $("#txtPrDesc").val("");
+                $("#txtJobID").val("");
+                $("#txtJobDesc").val("");
+                $("#txtQuantity").val("");
+                $("#txtRate").val("")
+                $("#txtAmount").val("0");
+            }
+
+            $("#btnCancel").click(function (e) {
+                clearModalForm();
+            });
+            $("#btnSave").click(function (e) {
                 e.preventDefault();
                 var arrIndex = arrMetarials.length;
                 arrMetarials[arrIndex] = {
@@ -375,13 +462,22 @@
                     var mrvPrds = $('#tblMetarials').jqGrid('getGridParam', 'data');
                     var jsonMrvPrds = JSON.stringify(mrvPrds);
                     $('#mrvProds').val(jsonMrvPrds);
+                    clearModalForm();
                 }
             });
             $(window).resize(function () {
                 var outerwidth = $('#grid').width();
                 $('#tblMetarials').setGridWidth(outerwidth);
             });
-
+            $("#mrvProductModel").on('hide.bs.modal', function () {
+                clearModalForm();
+                var totalGridPrdAmount = 0.0;
+                for (i = 0; i < arrMetarials.length; i++) {
+                    totalGridPrdAmount += parseFloat(arrMetarials[i]["AMOUNT_MRR"]);
+                }
+                $("#txtNetPrdAmount").val(totalGridPrdAmount);
+                //alert('The modal is about to be hidden with amount: ' + totalGridPrdAmount);
+            });
             $("#txtCustCode").autocomplete({
                 source: '@Url.Action("GetCustomersCode","Customer")'
             });
@@ -391,22 +487,13 @@
             });
 
             $("#txtExeCode").autocomplete({
-                source: '@Url.Action("getEmployeeIDs", "EmployeeMaster")'
-            });
-
-            $("#dlgAddPrd").click(function (e) {
-                $('#productDetailsAdd').dialog({
-                    closeOnEscape: true,
-                    model: true,
-                    minHeight: 400,
-                    maxHeight: 500,
-                    minWidth: 1000,
-                    maxWidth: 1100,
-                    overlay: {
-                        opacity: 0.5,
-                        background: "black"
-                    }
-                });
+                source: '@Url.Action("getEmployeeIDs", "EmployeeMaster")',
+                minLength: 0,
+                change: function () {
+                    $('#formMRVCreation').bootstrapValidator('revalidateField', 'EXECODE_MRV');
+                }
+            }).bind('focus', function () {
+                $(this).autocomplete("search");
             });
 
             $("#txtCustCode").blur(function (e) {
@@ -429,6 +516,19 @@
                 $("#txtAmount").val(totalAmount);
             });
 
+            $('#txtCustCode').on('change', function () {
+                $('#formMRVCreation').bootstrapValidator('revalidateField', 'CUSTOMERCODE_MRV');
+            });
+            $('#txtCustName').on('change', function () {
+                $('#formMRVCreation').bootstrapValidator('revalidateField', 'CUSTOMERNAME_MRV');
+            });
+            $('#txtMRVAddress').on('change', function () {
+                $('#formMRVCreation').bootstrapValidator('revalidateField', 'ADDRESS1_MRV');
+            });
+            $('#txtMRVTel').on('change', function () {
+                $('#formMRVCreation').bootstrapValidator('revalidateField', 'PHONE_MRV');
+            });
+
             function getCustRecord() {
                 var _custCode = $('#txtCustCode').val();
                 var _custName = $('#txtCustName').val();
@@ -440,10 +540,10 @@
                     data: data,
                     type: "POST",
                     success: function (custDetails) {
-                        $('#txtCustCode').val(custDetails.ARCODE_ARM);
-                        $('#txtCustName').val(custDetails.DESCRIPTION_ARM);
-                        $('#txtMRVAddress').val(custDetails.ADDRESS1_ARM);
-                        $('#txtMRVTel').val(custDetails.TELEPHONE_ARM);
+                        $('#txtCustCode').val(custDetails.ARCODE_ARM).change();
+                        $('#txtCustName').val(custDetails.DESCRIPTION_ARM).change();
+                        $('#txtMRVAddress').val(custDetails.ADDRESS1_ARM).change();
+                        $('#txtMRVTel').val(custDetails.TELEPHONE_ARM).change();
                         $('#txtMRVAddress2').val(custDetails.ADDRESS2_ARM);
                     },
                     complete: function () {
@@ -452,6 +552,76 @@
                     }
                 });
             }
+            $('#formMRVCreation').bootstrapValidator({
+                container: '#messages',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    CUSTOMERCODE_MRV: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Customer Code is required'
+                            }
+                        }
+                    },
+                    CUSTOMERNAME_MRV: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Customer Name is required'
+                            }
+                        }
+                    },
+                    MRVDATE_MRV: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Date is required'
+                            },
+                            date: {
+                                format: 'MM/DD/YYYY',
+                                message: 'Enter Valid Date'
+                            }
+                        }
+                    },
+                    ADDRESS1_MRV: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Address is required'
+                            }
+                        }
+                    },
+                    PHONE_MRV: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Phone Number is required'
+                            },
+                            digit: {
+                                message: 'Enter Valid Phone Number'
+                            }
+                        }
+                    },
+                    DELE_DATE_MRV: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Date is required'
+                            },
+                            date: {
+                                format: 'MM/DD/YYYY',
+                                message: 'Enter Valid Date'
+                            }
+                        }
+                    },
+                    EXECODE_MRV: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Exe. Code is required'
+                            }
+                        }
+                    }
+                }
+            });
         });
     </script>
 }

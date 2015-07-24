@@ -106,23 +106,7 @@ namespace ASI.MGC.FS.Controllers
             }, JsonRequestBehavior.AllowGet);
        }
 
-        public JsonResult getJobIDs(string term)
-        {
-            IList<string> lstJobCodes = (from jobsList in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
-                                         where jobsList.JOBID_JR.StartsWith(term)
-                                         select jobsList).Distinct().Select(x => x.JOBID_JR).ToList();
-            return Json(lstJobCodes, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult getJobDetails(string term)
-        {
-            IList<string> lstJobDetail = (from jobsList in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
-                                         where jobsList.JOBDESCRIPTION_JR.Contains(term)
-                                         select jobsList).Distinct().Select(x => x.JOBDESCRIPTION_JR).ToList();
-            return Json(lstJobDetail, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult getPrdRecord(string jobCode, string jobName)
+        public ActionResult getJobRecordByID(string jobCode)
         {
             JOBIDREFERENCE objJob = null;
             if (!string.IsNullOrEmpty(jobCode) && !string.IsNullOrWhiteSpace(jobCode))
@@ -131,21 +115,39 @@ namespace ASI.MGC.FS.Controllers
                                where jobList.JOBID_JR.Equals(jobCode)
                                select jobList).FirstOrDefault();
             }
-            else if (!string.IsNullOrEmpty(jobName) && !string.IsNullOrWhiteSpace(jobName))
+            return Json(objJob, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult getJobRecordByName(string jobName)
+        {
+            JOBIDREFERENCE objJob = null;
+            if (!string.IsNullOrEmpty(jobName) && !string.IsNullOrWhiteSpace(jobName))
             {
                 objJob = (from jobList in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
-                               where jobList.JOBDESCRIPTION_JR.Equals(jobName)
-                               select jobList).FirstOrDefault();
+                          where jobList.JOBDESCRIPTION_JR.Equals(jobName)
+                          select jobList).FirstOrDefault();
             }
             return Json(objJob, JsonRequestBehavior.AllowGet);
         }
-
         public ActionResult JobEntry()
         {
             ViewBag.PayModeList = CommonModelAccessUtility.getPaymentMethodList();
             ViewBag.SaleTypeList = CommonModelAccessUtility.getSaleTypeList();
             var objSaleEntry = new SALEDETAIL();
             return View(objSaleEntry);
+        }
+
+        public ActionResult getJobCode()
+        {
+            IList<string> lstJobCodes = (from jobsList in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
+                                         select jobsList).Distinct().Select(x => x.JOBID_JR).ToList();
+            return Json(lstJobCodes, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult getJobDesc()
+        {
+            IList<string> lstJobDetail = (from jobsList in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
+                                          select jobsList).Distinct().Select(x => x.JOBDESCRIPTION_JR).ToList();
+            return Json(lstJobDetail, JsonRequestBehavior.AllowGet);
         }
     }
 }

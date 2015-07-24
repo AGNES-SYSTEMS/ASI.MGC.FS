@@ -110,32 +110,28 @@ namespace ASI.MGC.FS.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getProductCode(string searchTterm)
-        {
-            IList<string> lstPrDCode = (from productList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
-                                              where productList.PROD_CODE_PM.Contains(searchTterm)
-                                              select productList).Distinct().Select(x => x.PROD_CODE_PM).ToList();
-            return Json(lstPrDCode, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult getProductDetail(string term)
-        {
-            IList<string> lstPrDetail = (from productList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
-                                        where productList.DESCRIPTION_PM.Contains(term)
-                                        select productList).Distinct().Select(x => x.DESCRIPTION_PM).ToList();
-            return Json(lstPrDetail, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult getProductRecord(string productID, string productDesc)
+        public ActionResult getPrdRecordByID(string prdCode)
         {
             PRODUCTMASTER objProduct = null;
-            if (!string.IsNullOrEmpty(productID) && !string.IsNullOrWhiteSpace(productID))
+            if (!string.IsNullOrEmpty(prdCode) && !string.IsNullOrWhiteSpace(prdCode))
             {
-                objProduct = (from lstProducts in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
-                              where lstProducts.PROD_CODE_PM.Equals(productID)
+               objProduct = (from lstProducts in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
+                              where lstProducts.PROD_CODE_PM.Equals(prdCode)
                               select lstProducts).FirstOrDefault();
             }
-            return Json(objProduct, JsonRequestBehavior.AllowGet);
+            return Json(new { productID = objProduct.PROD_CODE_PM, productDesc = objProduct.DESCRIPTION_PM }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult getPrdRecordByName(string prdName)
+        {
+            PRODUCTMASTER objProduct = null;
+            if (!string.IsNullOrEmpty(prdName) && !string.IsNullOrWhiteSpace(prdName))
+            {
+                objProduct = (from lstProducts in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
+                              where lstProducts.DESCRIPTION_PM.Equals(prdName)
+                              select lstProducts).FirstOrDefault();
+            }
+            return Json(new { productID = objProduct.PROD_CODE_PM, productDesc = objProduct.DESCRIPTION_PM }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult getProductCodes()
