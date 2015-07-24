@@ -110,10 +110,10 @@ namespace ASI.MGC.FS.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getProductCode(string term)
+        public JsonResult getProductCode(string searchTterm)
         {
             IList<string> lstPrDCode = (from productList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
-                                              where productList.PROD_CODE_PM.StartsWith(term)
+                                              where productList.PROD_CODE_PM.Contains(searchTterm)
                                               select productList).Distinct().Select(x => x.PROD_CODE_PM).ToList();
             return Json(lstPrDCode, JsonRequestBehavior.AllowGet);
         }
@@ -133,9 +133,23 @@ namespace ASI.MGC.FS.Controllers
             {
                 objProduct = (from lstProducts in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
                               where lstProducts.PROD_CODE_PM.Equals(productID)
-                              select lstProducts).SingleOrDefault();
+                              select lstProducts).FirstOrDefault();
             }
             return Json(objProduct, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult getProductCodes()
+        {
+            IList<string> lstPrDCode = (from productList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
+                                        select productList).Distinct().Select(x => x.PROD_CODE_PM).ToList();
+            return Json(lstPrDCode, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult getProductDetails()
+        {
+            IList<string> lstPrDetail = (from productList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
+                                         select productList).Distinct().Select(x => x.DESCRIPTION_PM).ToList();
+            return Json(lstPrDetail, JsonRequestBehavior.AllowGet);
         }
     }
 }

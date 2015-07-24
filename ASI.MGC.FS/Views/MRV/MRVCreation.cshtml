@@ -6,6 +6,8 @@
 <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
 <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.typeahead.css" rel="stylesheet" />
+
 @model ASI.MGC.FS.Model.MATERIALRECEIPTMASTER
 <!-- start:main -->
 <div class="container">
@@ -13,7 +15,6 @@
         <!-- start:breadcrumb -->
         <ol class="breadcrumb">
             <li><a href="#">Home</a></li>
-            <li href="#">Dashboard</li>
             <li class="active">@ViewBag.currPage</li>
         </ol>
         <!-- end:breadcrumb -->
@@ -120,9 +121,9 @@
                                 <div class="col-lg-12">
                                     <div id="grid" class="panel-body">
                                         <section id="unseen">
-                                            <a href="#" data-toggle="modal" id="dlgAddPrd" class="btn btn-drop btn-success">
+                                            <button class="btn btn-primary" data-toggle="modal" data-target="#mrvProductModel">
                                                 Add Product
-                                            </a>
+                                            </button>
                                             <table id="tblMetarials"></table>
                                         </section>
                                     </div>
@@ -144,83 +145,203 @@
             </div>
         </fieldset>
     </div>
-    <div id="productDetailsAdd" title="Add Product" style="display:none;">
-        <div class="row">
-            <div class="col-md-6 form-group">
-                <label id="lblPrCode" for="prcode" class="control-label col-md-4 small ">PrCode:</label>
-                <div class="col-md-8 paddingLeftRight0">
-                    @Html.TextBox("PrCode", null, new { ID = "txtPrCode", Class = "form-control" })
+    @*<div id="productDetailsAdd" title="Add Product" style="display:none;">
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label id="lblPrCode" for="prcode" class="control-label col-md-4 small ">PrCode:</label>
+                    <div class="col-md-8 paddingLeftRight0">
+                        @Html.TextBox("PrCode", null, new { ID = "txtPrCode", Class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label id="lblPrDesc" for="prdesc" class="control-label col-md-4 small ">PrDesc:</label>
+                    <div class="col-md-8 paddingLeftRight0">
+                        @Html.TextBox("prdesc", null, new { ID = "txtPrDesc", Class = "form-control" })
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 form-group">
-                <label id="lblPrDesc" for="prdesc" class="control-label col-md-4 small ">PrDesc:</label>
-                <div class="col-md-8 paddingLeftRight0">
-                    @Html.TextBox("prdesc", null, new { ID = "txtPrDesc", Class = "form-control" })
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label id="lblJobID" for="jobid" class="control-label col-md-4 small ">JobID:</label>
+                    <div class="col-md-8 paddingLeftRight0">
+                        @Html.TextBox("jobid", null, new { ID = "txtJobID", Class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label id="lblJobDesc" for="jobdesc" class="control-label col-md-4 small ">JobDesc:</label>
+                    <div class="col-md-8 paddingLeftRight0">
+                        @Html.TextBox("jobdesc", null, new { ID = "txtJobDesc", Class = "form-control" })
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 form-group">
-                <label id="lblJobID" for="jobid" class="control-label col-md-4 small ">JobID:</label>
-                <div class="col-md-8 paddingLeftRight0">
-                    @Html.TextBox("jobid", null, new { ID = "txtJobID", Class = "form-control" })
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label id="lblQuantity" for="quantity" class="control-label col-md-4 small ">Quantity:</label>
+                    <div class="col-md-8 paddingLeftRight0">
+                        @Html.TextBox("quantity", null, new { ID = "txtQuantity", Class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label id="lblRate" for="rate" class="control-label col-md-4 small ">Rate:</label>
+                    <div class="col-md-8 paddingLeftRight0">
+                        @Html.TextBox("rate", null, new { Class = "form-control", ID = "txtRate" })
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 form-group">
-                <label id="lblJobDesc" for="jobdesc" class="control-label col-md-4 small ">JobDesc:</label>
-                <div class="col-md-8 paddingLeftRight0">
-                    @Html.TextBox("jobdesc", null, new { ID = "txtJobDesc", Class = "form-control" })
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label id="lblAmount" for="amount" class="control-label col-md-4 small ">Amount:</label>
+                    <div class="col-md-8 paddingLeftRight0">
+                        @Html.TextBox("amount", null, new { Class = "form-control", ID = "txtAmount", @Readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label id="lblNetAmount" for="amount" class="control-label col-md-4 small ">Net Amount:</label>
+                    <div class="col-md-8 paddingLeftRight0">
+                        @Html.TextBox("netamount", null, new { Class = "form-control", ID = "txtNetAmount", @Readonly = "readonly" })
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 form-group">
-                <label id="lblQuantity" for="quantity" class="control-label col-md-4 small ">Quantity:</label>
-                <div class="col-md-8 paddingLeftRight0">
-                    @Html.TextBox("quantity", null, new { ID = "txtQuantity", Class = "form-control" })
+            <div class="row">
+                <div class="col-md-6 form-group">
+                </div>
+                <div class="col-md-6 form-group">
+                    <div class="col-md-8 paddingLeftRight0">
+                        <label></label>
+                        <button type="submit" id="btnSubmit" class="btn btn-success col-md-3 pull-right">Save</button>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 form-group">
-                <label id="lblRate" for="rate" class="control-label col-md-4 small ">Rate:</label>
-                <div class="col-md-8 paddingLeftRight0">
-                    @Html.TextBox("rate", null, new { Class = "form-control", ID = "txtRate" })
+        </div>*@
+    <div class="modal fade" id="mrvProductModel" tabindex="-1" role="dialog" aria-labelledby="mrvProductModelLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">
+                        ×
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Add Product To Material Receipt Voucher
+                    </h4>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 form-group">
-                <label id="lblAmount" for="amount" class="control-label col-md-4 small ">Amount:</label>
-                <div class="col-md-8 paddingLeftRight0">
-                    @Html.TextBox("amount", null, new { Class = "form-control", ID = "txtAmount", @Readonly = "readonly" })
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label id="lblPrCode" for="prcode" class="control-label col-md-4 small ">PrCode:</label>
+                        <div class="col-md-8 paddingLeftRight0" id="scrollable-dropdown-menu1">
+                            <input type="text" id="txtPrCode" data-provide="typeahead" class="form-control" placeholder="Enter Product Code" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label id="lblPrDesc" for="prdesc" class="control-label col-md-4 small ">PrDesc:</label>
+                        <div class="col-md-8 paddingLeftRight0">
+                            <input type="text" id="txtPrDesc" data-provide="typeahead" class="form-control" placeholder="Enter Product Name" autocomplete="off" />
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-6 form-group">
-                <label id="lblNetAmount" for="amount" class="control-label col-md-4 small ">Net Amount:</label>
-                <div class="col-md-8 paddingLeftRight0">
-                    @Html.TextBox("netamount", null, new { Class = "form-control", ID = "txtNetAmount", @Readonly = "readonly" })
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label id="lblJobID" for="jobid" class="control-label col-md-4 small ">JobID:</label>
+                        <div class="col-md-8 paddingLeftRight0">
+                            @Html.TextBox("Jobid", null, new { ID = "txtJobID", Class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label id="lblJobDesc" for="jobdesc" class="control-label col-md-4 small ">JobDesc:</label>
+                        <div class="col-md-8 paddingLeftRight0">
+                            @Html.TextBox("Jobdesc", null, new { ID = "txtJobDesc", Class = "form-control" })
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 form-group">
-            </div>
-            <div class="col-md-6 form-group">
-                <div class="col-md-8 paddingLeftRight0">
-                    <label></label>
-                    <button type="submit" id="btnSubmit" class="btn btn-success col-md-3 pull-right">Save</button>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label id="lblQuantity" for="quantity" class="control-label col-md-4 small ">Quantity:</label>
+                        <div class="col-md-8 paddingLeftRight0">
+                            @Html.TextBox("Quantity", null, new { ID = "txtQuantity", Class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label id="lblRate" for="rate" class="control-label col-md-4 small ">Rate:</label>
+                        <div class="col-md-8 paddingLeftRight0">
+                            @Html.TextBox("Rate", null, new { Class = "form-control", ID = "txtRate" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label id="lblAmount" for="amount" class="control-label col-md-4 small ">Amount:</label>
+                        <div class="col-md-8 paddingLeftRight0">
+                            @Html.TextBox("Amount", null, new { Class = "form-control", ID = "txtAmount", @Readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success">
+                        Save
+                    </button>
+                    <button type="button" class="btn btn-warning">
+                        Cancel
+                    </button>
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">
+                        Close
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
 <!-- end:main -->
 @section scripts
 {
     <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.typeahead.js")"></script>
     <script>
         $(document).ready(function () {
+            $("#txtPrCode").typeahead({
+                source: function (query, process) {
+                    var arrProductCode = [];
+                    map = {};
+
+                    // This is going to make an HTTP post request to the controller
+                    return $.post('/Product/getProductCodes', { query: query }, function (data) {
+
+                        // Loop through and push to the array
+                        $.each(data, function (i, Prd) {
+                            map[Prd] = Prd;
+                            arrProductCode.push(Prd);
+                        });
+
+                        // Process the details
+                        process(arrProductCode);
+                    });
+                },
+                items: 9999
+            });
+
+            $("#txtPrDesc").typeahead({
+                source: function (query, process) {
+                    var arrProductDetail = [];
+                    map = {};
+
+                    // This is going to make an HTTP post request to the controller
+                    return $.post('/Product/getProductDetails', { query: query }, function (data) {
+
+                        // Loop through and push to the array
+                        $.each(data, function (i, Prd) {
+                            map[Prd] = Prd;
+                            arrProductDetail.push(Prd);
+                        });
+
+                        // Process the details
+                        process(arrProductDetail);
+                    });
+                },
+                items: 9999,
+                minLength: 3
+            });
+
             var arrMetarials = [];
             $('#txtDeleDate').datepicker();
             $('#txtMRVDate').datepicker();
@@ -288,22 +409,6 @@
                 });
             });
 
-            $("#txtPrCode").autocomplete({
-                source: '@Url.Action("getProductCode", "Product")'
-            }).autocomplete("option", "appendTo", "#productDetailsAdd");
-
-            $("#txtPrDesc").autocomplete({
-                source: '@Url.Action("getProductDetail", "Product")'
-            }).autocomplete("option", "appendTo", "#productDetailsAdd");
-
-            $("#txtJobID").autocomplete({
-                source: '@Url.Action("getJobIDs", "Job")'
-            }).autocomplete("option", "appendTo", "#productDetailsAdd");
-
-            $("#txtJobDesc").autocomplete({
-                source: '@Url.Action("getJobDetails", "Job")'
-            }).autocomplete("option", "appendTo", "#productDetailsAdd");
-
             $("#txtCustCode").blur(function (e) {
                 $('#txtCustName').val("");
                 getCustRecord();
@@ -313,36 +418,6 @@
                 $('#txtCustCode').val("");
                 getCustRecord();
             });
-
-            $('#txtPrCode').blur(function (e) {
-                $('#txtPrDesc').val("");
-                getProductRecord();
-                e.preventDefault();
-            });
-
-            function getProductRecord() {
-                var _productID = $('#txtPrCode').val();
-                var _productDesc = $('#txtPrDesc').val();
-                var data = JSON.stringify({ productID: _productID, productDesc: _productDesc });
-                $.ajax({
-                    url: "Product/getProductRecord",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: data,
-                    type: "POST",
-                    context: $(this),
-                    cache: false,
-                    success: function (prdData) {
-                        alert('I am in Success!');
-                        $('#txtPrDesc').val(prdData.DESCRIPTION_PM);
-                    },
-                    complete: function () {
-                    },
-                    error: function (prdData) {
-                        alert(prdData);
-                    }
-                });
-            }
 
             $("#txtQuantity").change(function (e) {
                 var totalAmount = $("#txtQuantity").val() * $("#txtRate").val();
