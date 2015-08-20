@@ -80,5 +80,10 @@ namespace ASI.MGC.FS.Model
         public virtual DbSet<USER> USERs { get; set; }
         public virtual DbSet<VOUCHERCHILD_RPT> VOUCHERCHILD_RPT { get; set; }
         public virtual DbSet<VOUCHERMASTER_RPT> VOUCHERMASTER_RPT { get; set; }
+        public virtual DbSet<MESRole> MESRoles { get; set; }
+        public virtual DbSet<MESUser> MESUsers { get; set; }
+        public virtual DbSet<MESUserLoginDetail> MESUserLoginDetails { get; set; }
+        public virtual DbSet<MESUserProfile> MESUserProfiles { get; set; }
+        public virtual DbSet<MESUserRole> MESUserRoles { get; set; }
     }
 }

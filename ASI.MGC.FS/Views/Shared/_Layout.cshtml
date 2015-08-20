@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Mehboob Electrical Services</title>
+    <title>@ViewBag.Title - Mahboob Electrical Services</title>
     @Styles.Render("~/fonts")
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -17,7 +17,7 @@
                 <div class="container">
                     <!-- start:navbar-header -->
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#"><i class="fa fa-cubes"></i> <strong>Mehboob Electrical Services</strong></a>
+                        <a class="navbar-brand" href="#"><i class="fa fa-cubes"></i> <strong>Mahboob Electrical Services</strong></a>
                     </div>
                     <!-- end:navbar-header -->
                     <ul class="nav navbar-nav navbar-left top-menu">
@@ -217,26 +217,32 @@
                         </li>
                         <!-- end dropdown 3 -->
                     </ul>
-                    <ul class="nav navbar-nav navbar-right top-menu">
-                        <li>
-                            <input type="text" class="form-control input-sm search" placeholder="Search">
-                        </li>
-                        <!-- user login dropdown start-->
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <img alt="" src="~/Content/Images/blank-male.jpg">
-                                <span class="username">Mohammad Yaqoob</span>
-                                <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <div class="log-arrow-up"></div>
-                                <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                                <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                                <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
-                                <li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
+                    @{
+                        if (Request.IsAuthenticated)
+                        {
+                            <ul class="nav navbar-nav navbar-right top-menu">
+                                <!-- user login dropdown start-->
+                                <li class="dropdown">
+                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                        <span class="username"><strong>Welcome @Html.Encode(User.Identity.Name)</strong></span>
+                                        <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <div class="log-arrow-up"></div>
+                                        <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                                        <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                                        <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
+                                        <li><a href="@Href("~/AccountManagement/LogOut")"><i class="fa fa-key"></i>Log Out</a></li>
+                                    </ul>
+                                </li>
                             </ul>
-                        </li>
-                    </ul>
+                        }
+                        else
+                        {
+                            
+                            Response.Redirect("~/AccountManagement/LogIn");
+                        }
+                    }
                 </div>
             </nav>
             <!-- end:navbar -->
@@ -557,8 +563,8 @@
                         <!--End - Main Header Menu-->
                         <!--Start - Quick Links Header -->
                         <div class="collapse navbar-collapse navbar-ex1-collapse">
-                            <ul class="nav navbar-nav">
-                                <li class="active">
+                            <ul id="quickLinks" class="nav navbar-nav">
+                                <li id="liDashboard" class="active">
                                     <a href="#">
                                         <div class="text-center">
                                             <i class="fa fa-dashboard fa-3x"></i><br>
@@ -566,86 +572,91 @@
                                         </div>
                                     </a>
                                 </li>
-
-                                <li>
-                                    <a href="#">
+                                <li id="liMrv">
+                                    <a href="@Href("~/MRV/MRVCreation")">
                                         <div class="text-center">
                                             <i class="fa fa-book fa-3x"></i><br>
                                             MRVoucher
                                         </div>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
+                                <li id="liSalesEntry">
+                                    <a href="@Href("~/Job/JobEntry")">
                                         <div class="text-center">
                                             <i class="fa fa-pencil-square-o fa-3x"></i><br>
                                             Sales Entery
                                         </div>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
+                                <li id="liCashMemo">
+                                    <a href="@Href("~/Cash/CashMemo")">
                                         <div class="text-center">
                                             <i class="fa fa-briefcase fa-3x"></i><br>
                                             Cash Memo
                                         </div>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
+                                <li id="liInvoicePrep">
+                                    <a href="@Href("~/Invoice/InvoicePreparation")">
                                         <div class="text-center">
                                             <i class="fa fa-file-text-o fa-3x"></i><br>
                                             Invoice
                                         </div>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
+                                <li id="liPurchaseEntry">
+                                    <a href="@Href("~/Purchase/PurchaseEntry")">
                                         <div class="text-center">
                                             <i class="fa fa-list-ol fa-3x"></i><br>
                                             Purchase
                                         </div>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
+                                <li id="liCashReceipt">
+                                    <a href="@Href("~/Cash/CashReceipt")">
                                         <div class="text-center">
                                             <i class="fa fa-credit-card fa-3x"></i><br>
                                             Cash RV
                                         </div>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
+                                <li id="liBankReceipt">
+                                    <a href="@Href("~/Bank/BankReceipt")">
                                         <div class="text-center">
                                             <i class="fa fa-credit-card fa-3x"></i><br>
                                             Bank RV
                                         </div>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="text-center">
+                                <li id="liCashPayments">
+                                    <a href="@Href("~/Cash/CashPayments")">
+                                        <div class="t;ext-center">
                                             <i class="fa fa-check fa-3x"></i><br>
                                             Cash Pay
                                         </div>
                                     </a>
                                 </li>
-
-                                <li>
-                                    <a href="#">
+                                <li id="liBankPayment">
+                                    <a href="@Href("~/Bank/BankPayment")">
                                         <div class="text-center">
                                             <i class="fa fa-check-square-o fa-3x"></i><br>
                                             Bank Pay
                                         </div>
                                     </a>
                                 </li>
-
-                                <li>
-                                    <a href="#">
+                                <li id="liQuotation">
+                                    <a href="@Href("~/Quotation/QuotationEntry")">
                                         <div class="text-center">
                                             <i class="fa fa-sort-amount-desc fa-3x"></i><br>
                                             Quotation
+                                        </div>
+                                    </a>
+                                </li>
+                                <li id="liSearch">
+                                    <a href="@Href("~/Search/Search")">
+                                        <div class="text-center">
+                                            <i class="fa fa-search fa-3x"></i><br>
+                                            Search
                                         </div>
                                     </a>
                                 </li>
@@ -676,12 +687,12 @@
                                         <a href="#"><i class="fa fa-facebook" data-toggle="tooltip" data-placement="top" title="Facebook"></i></a>
                                         <a href="#"><i class="fa fa-twitter" data-toggle="tooltip" data-placement="top" title="Twitter"></i></a>
                                     </span>
-                                    &copy; @System.DateTime.Now.Year <strong>Mehboob Electrical Services</strong>
+                                    &copy; @System.DateTime.Now.Year <strong>Mahboob Electrical Services</strong>
                                 </p>
                             </div>
                             <div class="col-sm-6">
                                 <p class="footer-bottom-links">
-                                    <a href="#">About <strong>Mehboob Electrical Services</strong></a>
+                                    <a href="#">About <strong>Mahboob Electrical Services</strong></a>
                                     <a href="#">Privacy Policy</a>
                                     <a href="#">Terms & Conditions</a>
                                 </p>

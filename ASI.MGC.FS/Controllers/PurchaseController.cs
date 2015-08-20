@@ -13,5 +13,10 @@ namespace ASI.MGC.FS.Controllers
         {
             return View();
         }
+
+        public ActionResult PurchaseEntry()
+        {
+            return View();
+        }
     }
 }

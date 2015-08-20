@@ -6,6 +6,7 @@
 <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
 <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
 <!-- start:main -->
 <div class="container">
     <div id="main">
@@ -16,10 +17,10 @@
         </ol>
         <!-- end:breadcrumb -->
         <fieldset>
-            <legend>Cash Payment</legend>
+            <legend>Cash Receipt</legend>
             <div class="row">
                 <div class="container">
-                    @using (Html.BeginForm("SaveCashPayment", "Cash", null, FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("SaveCashReceipt", "Cash", null, FormMethod.Post, new { id = "formCashReceipt", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
@@ -34,7 +35,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblDocNo" class="control-label col-md-4 small ">Doc No:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DocNo", null, new { ID = "txtDocNo", @Value = @ViewBag.MRVCode, Class = "form-control"})
+                                    @Html.TextBox("DocNo", null, new { ID = "txtDocNo", @Value = @ViewBag.MRVCode, Class = "form-control" })
                                     @Html.ValidationMessage("DocNo")
                                 </div>
                             </div>
@@ -43,7 +44,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblDocDetails" class="control-label col-md-4 small ">Doc Details:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DocDetails", null, new { ID = "txtDocDetails", Class = "form-control"})
+                                    @Html.TextBox("DocDetails", null, new { ID = "txtDocDetails", Class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
@@ -96,10 +97,10 @@
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label id="lblPaidTo" class="control-label col-md-4 small ">Paid To</label>
+                                <label id="lblReceiveFrom" class="control-label col-md-4 small ">Received From</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("ReceiveFrom", null, new { ID = "txtReceiveFrom", Class = "form-control" })
-                                    @Html.ValidationMessage("ReceiveFrom")
+                                    @Html.TextBox("ReceivedFrom", null, new { ID = "txtReceivedFrom", Class = "form-control" })
+                                    @Html.ValidationMessage("ReceivedFrom")
                                 </div>
                             </div>
                         </div>
@@ -108,13 +109,13 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblNarration" class="control-label col-md-4 small ">Narration</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("CRNarration",null, new { ID = "txtCRNarration", Class = "form-control" })
+                                    @Html.TextBox("CRNarration", null, new { ID = "txtCRNarration", Class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblAllocation" class="control-label col-md-4 small ">Allocation</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("CRAllocation",null, new { ID = "txtCRAllocation", Class = "form-control" })
+                                    @Html.TextBox("CRAllocation", null, new { ID = "txtCRAllocation", Class = "form-control", @readonly = "readonly" })
                                 </div>
                             </div>
                         </div>
@@ -222,6 +223,8 @@
 @section Scripts {
     <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
     <script>
         $(document).ready(function () {
             var arrAllocDetails = [];
@@ -245,6 +248,83 @@
         $(window).resize(function () {
             var outerwidth = $('#grid').width();
             $('#tblAllocDetails').setGridWidth(outerwidth);
+        });
+        $('#formCashReceipt').bootstrapValidator({
+            container: '#messages',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                DocType: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Document Type is required'
+                        }
+                    }
+                },
+                DocDetails: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Document Detail is required'
+                        }
+                    }
+                },
+                DocDate: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Document Date is required'
+                        },
+                        date: {
+                            format: 'MM/DD/YYYY',
+                            message: 'Enter Valid Date'
+                        }
+                    }
+                },
+                GLDate: {
+                    validators: {
+                        notEmpty: {
+                            message: 'GL Date is required'
+                        },
+                        date: {
+                            format: 'MM/DD/YYYY',
+                            message: 'Enter Valid Date'
+                        }
+                    }
+                },
+                BankCode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Bank Code is required'
+                        }
+                    }
+                },
+                ReceivedFrom: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Received From is required'
+                        }
+                    }
+                },
+                BankName: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Bank Name is required'
+                        }
+                    }
+                },
+                CRAmount: {
+                    validators: {
+                        notEmpty: {
+                            message: 'CR Amount is required'
+                        },
+                        integer: {
+                            message: 'Integer Only'
+                        }
+                    }
+                }
+            }
         });
     </script>
 }

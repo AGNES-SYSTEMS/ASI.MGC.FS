@@ -149,5 +149,25 @@ namespace ASI.MGC.FS.Controllers
                                           select jobsList).Distinct().Select(x => x.JOBDESCRIPTION_JR).ToList();
             return Json(lstJobDetail, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult SaveJobEntry( SALEDETAIL objSaleDetail)
+        {
+            try
+            {
+                objSaleDetail.STATUS_SD = "N";
+                _unitOfWork.Repository<SALEDETAIL>().Insert(objSaleDetail);
+                _unitOfWork.Save();
+            }
+            catch(Exception ex)
+            {
+            }
+
+            return RedirectToAction("JobEntry");
+        }
+
+        public ActionResult getAllJobDetails(string MRVCode, string JobCode)
+        {
+            return null;
+        }
     }
 }

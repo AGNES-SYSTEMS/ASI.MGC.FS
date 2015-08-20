@@ -51,11 +51,13 @@ namespace ASI.MGC.FS.Models
         [Required]
         [Display(Name = "Email")]
         [EmailAddress]
+        [StringLength(250)]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
+        [StringLength(25,MinimumLength=8)]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
@@ -64,6 +66,11 @@ namespace ASI.MGC.FS.Models
 
     public class RegisterViewModel
     {
+        [Required]
+        [Display(Name = "User Name")]
+        [StringLength(250)]
+        public string UserName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

@@ -21,7 +21,7 @@
             <legend>Cash Payment</legend>
             <div class="row">
                 <div class="container">
-                    @using (Html.BeginForm("SaveCashPayment", "Cash", null, FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("SaveCashPayment", "Cash", null, FormMethod.Post, new { id="formCashPayments", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
@@ -247,6 +247,83 @@
         $(window).resize(function () {
             var outerwidth = $('#grid').width();
             $('#tblAllocDetails').setGridWidth(outerwidth);
+        });
+        $('#formCashPayments').bootstrapValidator({
+            container: '#messages',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                SLNO_VRPT: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Document Type is required'
+                        }
+                    }
+                },
+                DocDetails: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Document Detail is required'
+                        }
+                    }
+                },
+                DocDate: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Document Date is required'
+                        },
+                        date: {
+                            format: 'MM/DD/YYYY',
+                            message: 'Enter Valid Date'
+                        }
+                    }
+                },
+                GLDATE_VRPT: {
+                    validators: {
+                        notEmpty: {
+                            message: 'GL Date is required'
+                        },
+                        date: {
+                            format: 'MM/DD/YYYY',
+                            message: 'Enter Valid Date'
+                        }
+                    }
+                },
+                BankCode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Bank Code is required'
+                        }
+                    }
+                },
+                ReceivedFrom: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Received From is required'
+                        }
+                    }
+                },
+                BankName: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Bank Name is required'
+                        }
+                    }
+                },
+                CRAmount: {
+                    validators: {
+                        notEmpty: {
+                            message: 'CR Amount is required'
+                        },
+                        integer: {
+                            message: 'Integer Only'
+                        }
+                    }
+                }
+            }
         });
     </script>
 }

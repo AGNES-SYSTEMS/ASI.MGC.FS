@@ -1,0 +1,306 @@
+﻿@{
+    ViewBag.Title = "PurchaseEntry";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>Purchase Entry</legend>
+            <div class="row">
+                <div class="container">
+                    @using (Html.BeginForm("SavePurchaseEntry", "Purchase", null, FormMethod.Post, new { id = "formPurchaseEntry", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblAPCode" class="control-label col-md-4 small ">AP Code</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("APCode", null, new { ID = "txtAPCode", Class = "form-control" })
+                                    @Html.ValidationMessage("APCode")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDocNo" class="control-label col-md-4 small ">Doc No</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("DocNo", null, new { ID = "txtDocNo", Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessage("DocNo")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblAPDetail" class="control-label col-md-4 small ">AP Code Detail</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("APDetail", null, new { ID = "txtAPDetail", Class = "form-control" })
+                                    @Html.ValidationMessage("APDetail")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDocDate" class="control-label col-md-4 small ">Doc Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("DocDate", null, new { ID = "txtDocDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control" })
+                                    @Html.ValidationMessage("DocDate")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblSettleMode" class="control-label col-md-4 small ">Settle Mode</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("SettleMode", null, new { ID = "txtSettleMode", Class = "form-control" })
+                                    @Html.ValidationMessage("SettleMode")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblPurDate" class="control-label col-md-4 small ">Purchase Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("PurDate", null, new { ID = "txtPurDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control" })
+                                    @Html.ValidationMessage("PurDate")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblBankCode" class="control-label col-md-4 small ">Bank Code</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("BankCode", null, new { ID = "txtBankCode", Class = "form-control" })
+                                    @Html.ValidationMessage("BankCode")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblInvoice" class="control-label col-md-4 small ">Invoice</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("Invoice", null, new { ID = "txtInvoice", Class = "form-control" })
+                                    @Html.ValidationMessage("Invoice")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblBankDetail" class="control-label col-md-4 small ">Bank Detail</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("BankDetail", null, new { ID = "txtBankDetail", Class = "form-control" })
+                                    @Html.ValidationMessage("BankDetail")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblCash" class="control-label col-md-4 small ">Cash</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("Cash", null, new { ID = "txtCash", Class = "form-control" })
+                                    @Html.ValidationMessage("Cash")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblShipChrg" class="control-label col-md-4 small ">Shipping Charges</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("ShipChrg", null, new { ID = "txtShipChrg", Class = "form-control" })
+                                    @Html.ValidationMessage("ShipChrg")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDiscount" class="control-label col-md-4 small ">Discount</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("Discount", null, new { ID = "txtDiscount", Class = "form-control" })
+                                    @Html.ValidationMessage("Discount")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblNote" class="control-label col-md-4 small ">Note</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextArea("Note", null, new { ID = "txtNote", Class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <fieldset>
+                                    <legend>Product Details</legend>
+                                    <div id="gridProduct" class="panel-body">
+                                        <section>
+                                            <table id="tblPrdDetails"></table>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustDetail" class="control-label col-md-4 small ">Net Payable</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("NetAmount", null, new { ID = "txtNetAmount", Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessage("NetAMount")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustDetail" class="control-label col-md-4 small ">Total Amount</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("TotalAmount", null, new { ID = "txtTotalAmount", Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessage("TotalAmount")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label></label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
+    <script>
+        $(document).ready(function () {
+            $("#quickLinks").children("li.active").removeClass("active");
+            $("#liPurchaseEntry").addClass("active");
+            var arrMRVDetails = [];
+            var arrSaleDetails = [];
+            $('#txtDocDate').datepicker();
+            $('#txtPurDate').datepicker();
+            jQuery("#tblPrdDetails").jqGrid({
+                datatype: "local",
+                height: 100,
+                colNames: ['Product Code', 'Product Description', 'Qty', 'Unit', 'Rate', 'Amount'],
+                colModel: [
+                    { name: 'PrdCode', index: 'PrdCode', width: 100, align: "center", sortable: false },
+                    { name: 'PrdDesc', index: 'PrdDesc', width: 350, align: "left", sortable: false },
+                    { name: 'Qty', index: 'Qty', width: 100, align: "center", sortable: false },
+                    { name: 'Unit', index: 'Unit', width: 100, align: "center", sortable: false },
+                    { name: 'Rate', index: 'Rate', width: 100, align: "center", sortable: false },
+                    { name: 'Amount', index: 'Amount', width: 150, align: "center", sortable: false }
+                ],
+                multiselect: false,
+                caption: "Product Details"
+            });
+        });
+        $(window).resize(function () {
+            var outerwidthMRV = $('#gridProduct').width();
+            $('#tblPrdDetails').setGridWidth(outerwidthMRV);
+        });
+        $('#formPurchaseEntry').bootstrapValidator({
+            container: '#messages',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                APCode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'AP Code is required'
+                        }
+                    }
+                },
+                APDetail: {
+                    validators: {
+                        notEmpty: {
+                            message: 'AP Code Detail is required'
+                        }
+                    }
+                },
+                DocDate: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Document Date is required'
+                        },
+                        date: {
+                            format: 'MM/DD/YYYY',
+                            message: 'Enter Valid Date'
+                        }
+                    }
+                },
+                PurDate: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Purchase Date is required'
+                        },
+                        date: {
+                            format: 'MM/DD/YYYY',
+                            message: 'Enter Valid Date'
+                        }
+                    }
+                },
+                BankCode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Bank Code is required'
+                        }
+                    }
+                },
+                Invoice: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Invoice is required'
+                        }
+                    }
+                },
+                BankDetail: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Bank Detail is required'
+                        }
+                    }
+                },
+                Cash: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Cash Detail is required'
+                        },
+                        integer: {
+                            message: 'Integer Only'
+                        }
+                    }
+                },
+                ShipChrg: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Ship Charges Detail is required'
+                        },
+                        integer: {
+                            message: 'Integer Only'
+                        }
+                    }
+                },
+                Discount: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Discount Detail is required'
+                        },
+                        integer: {
+                            message: 'Integer Only'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}
+

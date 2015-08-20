@@ -8,6 +8,7 @@
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.typeahead.css" rel="stylesheet" />
 <link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+<link href="~/Content/formValidation.min.css" rel="stylesheet" />
 <script>
     function fillJobDataByID() {
         var _jobCode = document.getElementById("txtJobID").value;
@@ -19,10 +20,10 @@
             data: data,
             type: "POST",
             success: function (jobDetails) {
-                alert("Job Code OnBlur fired!");
-                $("#txtJobID").val(jobDetails.JOBID_JR);
-                $("#txtJobDesc").val(jobDetails.JOBDESCRIPTION_JR);
-                $("#txtRate").val(jobDetails.RATE_RJ);
+                //alert("Job Code OnBlur fired!");
+                $("#txtJobID").val(jobDetails.JOBID_JR).change();
+                $("#txtJobDesc").val(jobDetails.JOBDESCRIPTION_JR).change();
+                $("#txtRate").val(jobDetails.RATE_RJ).change();
             },
             complete: function () {
             },
@@ -41,10 +42,10 @@
             data: data,
             type: "POST",
             success: function (jobDetails) {
-                alert("Job Code OnBlur fired!");
-                $("#txtJobID").val(jobDetails.JOBID_JR);
-                $("#txtJobDesc").val(jobDetails.JOBDESCRIPTION_JR);
-                $("#txtRate").val(jobDetails.RATE_RJ);
+                //alert("Job Code OnBlur fired!");
+                $("#txtJobID").val(jobDetails.JOBID_JR).change();
+                $("#txtJobDesc").val(jobDetails.JOBDESCRIPTION_JR).change();
+                $("#txtRate").val(jobDetails.RATE_RJ).change();;
             },
             complete: function () {
             },
@@ -64,8 +65,8 @@
             type: "POST",
             success: function (prdDetails) {
                 alert("Prd Code OnBlur fired!");
-                $("#txtPrCode").val(prdDetails.productID);
-                $("#txtPrDesc").val(prdDetails.productDesc);
+                $("#txtPrCode").val(prdDetails.productID).change();
+                $("#txtPrDesc").val(prdDetails.productDesc).change();
             },
             complete: function () {
             },
@@ -85,14 +86,20 @@
             type: "POST",
             success: function (prdDetails) {
                 alert("Prd Code OnBlur fired!");
-                $("#txtPrCode").val(prdDetails.productID);
-                $("#txtPrDesc").val(prdDetails.productDesc);
+                $("#txtPrCode").val(prdDetails.productID).change();
+                $("#txtPrDesc").val(prdDetails.productDesc).change();
             },
             complete: function () {
             },
             error: function (prdDetails) {
             }
         });
+    }
+
+
+
+    function saveModalData() {
+        //alert("I am Modal Submit!");
     }
 </script>
 @model ASI.MGC.FS.Model.MATERIALRECEIPTMASTER
@@ -111,130 +118,130 @@
                 <div class="container">
                     @using (Html.BeginForm("SaveMRVCreation", "MRV", null, FormMethod.Post, new { id = "formMRVCreation", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
-                        @Html.AntiForgeryToken()
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblCustCode" class="control-label col-md-4 small ">Cust Code:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.CUSTOMERCODE_MRV, null, new { ID = "txtCustCode", Class = "form-control" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblMRVNo" class="control-label col-md-4 small ">MRV No:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.MRVNO_MRV, null, new { ID = "txtMRVNo", @Value = @ViewBag.MRVCode, Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessageFor(d => d.MRVNO_MRV)
-                                </div>
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblCustCode" class="control-label col-md-4 small ">Cust Code:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.CUSTOMERCODE_MRV, null, new { ID = "txtCustCode", Class = "form-control" })
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblCustName" class="control-label col-md-4 small ">Cust Name:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.CUSTOMERNAME_MRV, null, new { ID = "txtCustName", Class = "form-control" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblMRVDate" class="control-label col-md-4 small ">Date:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.MRVDATE_MRV, null, new { ID = "txtMRVDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control datepicker" })
-                                </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblMRVNo" class="control-label col-md-4 small ">MRV No:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.MRVNO_MRV, null, new { ID = "txtMRVNo", @Value = @ViewBag.MRVCode, Class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(d => d.MRVNO_MRV)
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblCustName" class="control-label col-md-4 small ">Cust Name:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.CUSTOMERNAME_MRV, null, new { ID = "txtCustName", Class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblMRVDate" class="control-label col-md-4 small ">Date:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.MRVDATE_MRV, null, new { ID = "txtMRVDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control datepicker" })
+                            </div>
+                        </div>
+                    </div>
 
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblMRVAddress" class="control-label col-md-4 small ">Address:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.ADDRESS1_MRV, null, new { ID = "txtMRVAddress", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.ADDRESS1_MRV)
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblMRVAddress2" class="control-label col-md-4 small ">Address2:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.ADDRESS2_MRV, null, new { ID = "txtMRVAddress2", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.ADDRESS1_MRV)
-                                </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblMRVAddress" class="control-label col-md-4 small ">Address:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.ADDRESS1_MRV, null, new { ID = "txtMRVAddress", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.ADDRESS1_MRV)
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblMRVTel" class="control-label col-md-4 small ">Telephone No:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.PHONE_MRV, null, new { ID = "txtMRVTel", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.PHONE_MRV)
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblDocDate" class="control-label col-md-4 small ">DocDate:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.DOC_DATE_MRV, null, new { ID = "txtDocDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessageFor(d => d.DOC_DATE_MRV)
-                                </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblMRVAddress2" class="control-label col-md-4 small ">Address2:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.ADDRESS2_MRV, null, new { ID = "txtMRVAddress2", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.ADDRESS1_MRV)
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblDeleDate" class="control-label col-md-4 small ">DeleDate:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.DELE_DATE_MRV, null, new { ID = "txtDeleDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.DELE_DATE_MRV)
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblExeCode" class="control-label col-md-4 small ">Exe. Code:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.EXECODE_MRV, null, new { ID = "txtExeCode", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.EXECODE_MRV)
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblMRVTel" class="control-label col-md-4 small ">Telephone No:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.PHONE_MRV, null, new { ID = "txtMRVTel", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.PHONE_MRV)
                             </div>
                         </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblDocDate" class="control-label col-md-4 small ">DocDate:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.DOC_DATE_MRV, null, new { ID = "txtDocDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(d => d.DOC_DATE_MRV)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblDeleDate" class="control-label col-md-4 small ">DeleDate:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.DELE_DATE_MRV, null, new { ID = "txtDeleDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.DELE_DATE_MRV)
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblExeCode" class="control-label col-md-4 small ">Exe. Code:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.EXECODE_MRV, null, new { ID = "txtExeCode", Class = "form-control" })
+                                @Html.ValidationMessageFor(d => d.EXECODE_MRV)
+                            </div>
+                        </div>
+                    </div>
 
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblLpoRemarks" class="control-label col-md-4 small ">Lpo/Remarks:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextAreaFor(d => d.NOTES_MRV, new { ID = "txtLpoRemarks", Class = "form-control" })
-                                </div>
-                                <input id="mrvProds" name="mrvProds" type="hidden" />
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblLpoRemarks" class="control-label col-md-4 small ">Lpo/Remarks:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextAreaFor(d => d.NOTES_MRV, new { ID = "txtLpoRemarks", Class = "form-control" })
                             </div>
+                            <input id="mrvProds" name="mrvProds" type="hidden" />
                         </div>
-                        <fieldset>
-                            <legend>Product Details</legend>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div id="grid" class="panel-body">
-                                        <section id="unseen">
-                                            <button class="btn btn-primary" data-toggle="modal" data-target="#mrvProductModel">
-                                                Add Product
-                                            </button>
-                                            <table id="tblMetarials"></table>
-                                        </section>
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
+                    </div>
+                    <fieldset>
+                        <legend>Product Details</legend>
                         <div class="row">
-                            <div class="col-md-6 form-group">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblNetPrdAmount" class="control-label col-md-4 small">Net Amount:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    <input type="text" id="txtNetPrdAmount" class="form-control" value="0" readonly />
+                            <div class="col-lg-12">
+                                <div id="grid" class="panel-body">
+                                    <section id="unseen">
+                                        <button class="btn btn-primary" data-toggle="modal" data-target="#mrvProductModel">
+                                            Add Product
+                                        </button>
+                                        <table id="tblMetarials"></table>
+                                    </section>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label></label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
-                                </div>
+                    </fieldset>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblNetPrdAmount" class="control-label col-md-4 small">Net Amount:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                <input type="text" id="txtNetPrdAmount" class="form-control" value="0" readonly />
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label></label>
+                            <div class="col-md-8"> 
+                                <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save"> &nbsp;                              
+                            </div>
+                        </div>
+                    </div>
                     }
                 </div>
             </div>
@@ -243,80 +250,86 @@
     <div class="modal fade" id="mrvProductModel" tabindex="-1" role="dialog" aria-labelledby="mrvProductModelLabel" aria-hidden="true" data-backdrop="false">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-hidden="true">
-                        ×
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        Add Product To Material Receipt Voucher
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label id="lblPrCode" for="prcode" class="control-label col-md-4 small ">PrCode:</label>
-                            <div class="col-md-8 paddingLeftRight0" id="scrollable-dropdown-menu1">
-                                <input type="text" id="txtPrCode" data-provide="typeahead" name="PrCode" class="form-control" placeholder="Product Code" autocomplete="off" required onblur="fillPrdDataByID();" />
-                            </div>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label id="lblPrDesc" for="prdesc" class="control-label col-md-4 small ">PrDesc:</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                <input type="text" id="txtPrDesc" data-provide="typeahead" name="PrDesc" class="form-control" placeholder="Product Name" autocomplete="off" required onblur="fillPrdDataByName();" />
-                            </div>
-                        </div>
+                <form class="form-horizontal" id="mrvProductModelform" method="post" data-fv-framework="bootstrap"
+                      data-fv-message="This value is not valid"
+                      data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
+                      data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                      data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            Add Product To Material Receipt Voucher
+                        </h4>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label id="lblJobID" for="jobid" class="control-label col-md-4 small ">JobID:</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                <input type="text" id="txtJobID" data-provide="typeahead" name="JobID" class="form-control" placeholder="Job ID" autocomplete="off" required onblur="fillJobDataByID();" />
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label id="lblPrCode" for="prcode" class="control-label col-md-4 small ">PrCode:</label>
+                                <div class="col-md-8 paddingLeftRight0" id="scrollable-dropdown-menu1">
+                                    <input type="text" id="txtPrCode" data-provide="typeahead" name="PrCode" class="form-control" placeholder="Product Code" autocomplete="off" required onblur="fillPrdDataByID();"/>
+                                </div>
+                            </div>
+                            <div class="col-md-8 form-group">
+                                <label id="lblPrDesc" for="prdesc" class="control-label col-md-4 small ">PrDesc:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="text" id="txtPrDesc" data-provide="typeahead" name="PrDesc" class="form-control" placeholder="Product Name" autocomplete="off" required onblur="fillPrdDataByName();"/>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6 form-group">
-                            <label id="lblJobDesc" for="jobdesc" class="control-label col-md-4 small ">JobDesc:</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                <input type="text" id="txtJobDesc" data-provide="typeahead" name="JobDesc" class="form-control" placeholder="Job Details" autocomplete="off" required onblur="fillJobDataByName();" />
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblJobID" for="jobid" class="control-label col-md-4 small ">JobID:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="text" id="txtJobID" data-provide="typeahead" name="JobID" class="form-control" placeholder="Job ID" autocomplete="off" required onblur="fillJobDataByID();" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblJobDesc" for="jobdesc" class="control-label col-md-4 small ">JobDesc:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="text" id="txtJobDesc" data-provide="typeahead" name="JobDesc" class="form-control" placeholder="Job Details" autocomplete="off" required onblur="fillJobDataByName();"/>
 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblQuantity" for="quantity" class="control-label col-md-4 small ">Quantity:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="text" id="txtQuantity" name="Quantity" class="form-control" placeholder="Quantity" required />
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblRate" for="rate" class="control-label col-md-4 small ">Rate:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="text" id="txtRate" name="Rate" class="form-control" placeholder="Rate" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblAmount" for="amount" class="control-label col-md-4 small ">Amount:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="text" id="txtAmount" name="Amount" class="form-control" value="0" readonly />
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label id="lblQuantity" for="quantity" class="control-label col-md-4 small ">Quantity:</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                <input type="text" id="txtQuantity" name="Quantity" class="form-control" placeholder="Quantity" required />
-                            </div>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label id="lblRate" for="rate" class="control-label col-md-4 small ">Rate:</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                <input type="text" id="txtRate" name="Rate" class="form-control" placeholder="Rate" required />
-                            </div>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnSave" class="btn btn-success">
+                            Save
+                        </button>
+                        <button type="button" id="btnCancel" class="btn btn-warning">
+                            Cancel
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Close
+                        </button>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label id="lblAmount" for="amount" class="control-label col-md-4 small ">Amount:</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                <input type="text" id="txtAmount" name="Amount" class="form-control" value="0" readonly />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="btnSave" class="btn btn-success">
-                        Save
-                    </button>
-                    <button type="button" id="btnCancel" class="btn btn-warning">
-                        Cancel
-                    </button>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">
-                        Close
-                    </button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -328,8 +341,13 @@
     <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.typeahead.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/formValidation.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.framework.js")"></script>
     <script>
         $(document).ready(function () {
+            $("#quickLinks").children("li.active").removeClass("active");
+            $("#liMrv").addClass("active");
             $("#txtPrCode").typeahead({
                 source: function (query, process) {
                     var arrProductCode = [];
@@ -436,13 +454,120 @@
                 caption: "Materials Details"
             });
 
+            $("#txtPrCode").change(function (e) {
+                $('#mrvProductModelform').bootstrapValidator('revalidateField', 'PrCode');
+            });
+
+            $("#txtPrDesc").change(function (e) {
+                $('#mrvProductModelform').bootstrapValidator('revalidateField', 'PrDesc');
+            });
+
+            $("#txtJobID").change(function (e) {
+                $('#mrvProductModelform').bootstrapValidator('revalidateField', 'JobID');
+            });
+
+            $("#txtJobDesc").change(function (e) {
+                $('#mrvProductModelform').bootstrapValidator('revalidateField', 'JobDesc');
+            });
+
+            $("#txtQuantity").change(function (e) {
+                $('#mrvProductModelform').bootstrapValidator('revalidateField', 'Quantity');
+            });
+
+            $("#txtRate").change(function (e) {
+                $('#mrvProductModelform').bootstrapValidator('revalidateField', 'Rate');
+            });
+
+            @*$("#txtPrCode").blur(function (e) {
+                var _prdCode = document.getElementById("txtPrCode").value;
+                var data = JSON.stringify({ prdCode: _prdCode });
+                $.ajax({
+                    url: '@Url.Action("getPrdRecordByID", "Product")',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: data,
+                    type: "POST",
+                    success: function (prdDetails) {
+                        $("#txtPrCode").val(prdDetails.productID).change();
+                        $("#txtPrDesc").val(prdDetails.productDesc).change();
+                    },
+                    complete: function () {
+                    },
+                    error: function (prdDetails) {
+                    }
+                });
+            });
+
+            $("#txtPrDesc").blur(function (e) {
+                var _prdName = document.getElementById("txtPrDesc").value;
+                var data = JSON.stringify({ prdName: _prdName });
+                $.ajax({
+                    url: '@Url.Action("getPrdRecordByName", "Product")',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: data,
+                    type: "POST",
+                    success: function (prdDetails) {
+                        $("#txtPrCode").val(prdDetails.productID).change();
+                        $("#txtPrDesc").val(prdDetails.productDesc).change();
+                    },
+                    complete: function () {
+                    },
+                    error: function (prdDetails) {
+                    }
+                });
+            });
+
+            $("#txtJobID").blur(function (e) {
+                var _jobCode = document.getElementById("txtJobID").value;
+                var data = JSON.stringify({ jobCode: _jobCode });
+                $.ajax({
+                    url: '@Url.Action("getJobRecordByID", "Job")',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: data,
+                    type: "POST",
+                    success: function (jobDetails) {
+                        $("#txtJobID").val(jobDetails.JOBID_JR).change();
+                        $("#txtJobDesc").val(jobDetails.JOBDESCRIPTION_JR).change();
+                        $("#txtRate").val(jobDetails.RATE_RJ).change();
+                    },
+                    complete: function () {
+                    },
+                    error: function (jobDetails) {
+                    }
+                });
+            });
+
+            $("#txtJobDesc").blur(function (e) {
+                var _jobName = document.getElementById("txtJobDesc").value;
+                var data = JSON.stringify({ jobName: _jobName });
+                $.ajax({
+                    url: '@Url.Action("getJobRecordByName", "Job")',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: data,
+                    type: "POST",
+                    success: function (jobDetails) {
+                        $("#txtJobID").val(jobDetails.JOBID_JR).change();
+                        $("#txtJobDesc").val(jobDetails.JOBDESCRIPTION_JR).change();
+                        $("#txtRate").val(jobDetails.RATE_RJ).change();
+                    },
+                    complete: function () {
+                    },
+                    error: function (jobDetails) {
+                    }
+                });
+            });*@
+
+
             function clearModalForm() {
                 $("#txtPrCode").val("");
                 $("#txtPrDesc").val("");
                 $("#txtJobID").val("");
                 $("#txtJobDesc").val("");
                 $("#txtQuantity").val("");
-                $("#txtRate").val("")
+                $("#txtRate").val("");
                 $("#txtAmount").val("0");
             }
 
@@ -450,19 +575,31 @@
                 clearModalForm();
             });
             $("#btnSave").click(function (e) {
-                e.preventDefault();
-                var arrIndex = arrMetarials.length;
-                arrMetarials[arrIndex] = {
-                    PRODID_MRR: $("#txtPrCode").val(), prdesc: $("#txtPrDesc").val(), JOBID_MRR: $("#txtJobID").val(),
-                    jobdesc: $("#txtJobDesc").val(), QTY_MRR: $("#txtQuantity").val(), RATE_MRR: $("#txtRate").val(),
-                    AMOUNT_MRR: $("#txtAmount").val()
-                };
-                var su = jQuery("#tblMetarials").jqGrid('addRowData', arrIndex, arrMetarials[arrIndex]);
-                if (su) {
-                    var mrvPrds = $('#tblMetarials').jqGrid('getGridParam', 'data');
-                    var jsonMrvPrds = JSON.stringify(mrvPrds);
-                    $('#mrvProds').val(jsonMrvPrds);
-                    clearModalForm();
+                if ($("#mrvProductModelform").valid()) {
+                    //alert("I am validated!");
+                    e.preventDefault();
+                    var arrIndex = arrMetarials.length;
+                    arrMetarials[arrIndex] = {
+                        PRODID_MRR: $("#txtPrCode").val(), prdesc: $("#txtPrDesc").val(), JOBID_MRR: $("#txtJobID").val(),
+                        jobdesc: $("#txtJobDesc").val(), QTY_MRR: $("#txtQuantity").val(), RATE_MRR: $("#txtRate").val(),
+                        AMOUNT_MRR: $("#txtAmount").val()
+                    };
+                    var su = jQuery("#tblMetarials").jqGrid('addRowData', arrIndex, arrMetarials[arrIndex]);
+                    if (su) {
+                        var mrvPrds = $('#tblMetarials').jqGrid('getGridParam', 'data');
+                        var jsonMrvPrds = JSON.stringify(mrvPrds);
+                        $('#mrvProds').val(jsonMrvPrds);
+                        clearModalForm();
+                    }
+                }
+                else {
+                    $("#mrvProductModelform").bootstrapValidator('revalidateField', 'PrCode');
+                    $("#mrvProductModelform").bootstrapValidator('revalidateField', 'PrDesc');
+                    $("#mrvProductModelform").bootstrapValidator('revalidateField', 'JobID');
+                    $("#mrvProductModelform").bootstrapValidator('revalidateField', 'JobDesc');
+                    $("#mrvProductModelform").bootstrapValidator('revalidateField', 'Quantity');
+                    $("#mrvProductModelform").bootstrapValidator('revalidateField', 'Rate');
+                    $("#mrvProductModelform").bootstrapValidator('revalidateField', 'Amount');
                 }
             });
             $(window).resize(function () {
@@ -483,7 +620,9 @@
             });
             $("#txtCustName").autocomplete({
                 source: '@Url.Action("GetCustomersName","Customer")',
-                minLength: 3
+                minLength: 0
+            }).bind('focus', function () {
+                $(this).autocomplete("search");
             });
 
             $("#txtExeCode").autocomplete({
@@ -555,12 +694,14 @@
             $('#formMRVCreation').bootstrapValidator({
                 container: '#messages',
                 feedbackIcons: {
+                    required: 'fa fa-asterisk',
                     valid: 'glyphicon glyphicon-ok',
                     invalid: 'glyphicon glyphicon-remove',
                     validating: 'glyphicon glyphicon-refresh'
                 },
                 fields: {
                     CUSTOMERCODE_MRV: {
+                        required: true,
                         validators: {
                             notEmpty: {
                                 message: 'Customer Code is required'
@@ -614,14 +755,12 @@
                         }
                     },
                     EXECODE_MRV: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Exe. Code is required'
-                            }
+                        validators:{
                         }
                     }
                 }
             });
+            $("#mrvProductModelform").formValidation();
         });
     </script>
 }

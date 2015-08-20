@@ -60,6 +60,11 @@ namespace ASI.MGC.FS.Domain.Repositories
             dbSet.Add(entity);
         }
 
+        public virtual TEntity Create()
+        {
+            return dbSet.Create();
+        }
+
         public void Save()
         {
             dbContext.SaveChanges();

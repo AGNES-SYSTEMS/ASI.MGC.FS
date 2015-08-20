@@ -13,6 +13,7 @@ namespace ASI.MGC.FS.Domain.Repositories
         void Delete(object id);
         void Delete(TEntity entity);
         void Insert(TEntity entity);
+        TEntity Create();
         RepositoryQuery<TEntity> Query();
     }
 }

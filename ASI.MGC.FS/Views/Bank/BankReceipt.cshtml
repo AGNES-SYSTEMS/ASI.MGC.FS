@@ -1,0 +1,397 @@
+﻿@{
+    ViewBag.Title = "BankReceipt";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.currPage = "Bank Receipt";
+}
+
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>Bank Receipt</legend>
+            <div class="row">
+                <div class="container">
+                    @using (Html.BeginForm("SaveBankReceipt", "Bank", null, FormMethod.Post, new { id = "formBankReceipt", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblDocType" class="control-label col-md-4 small ">Doc Type:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("DocType", null, new { ID = "txtDocType", Class = "form-control" })
+                                    @Html.ValidationMessage("DocType")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDocNo" class="control-label col-md-4 small ">Doc No:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("DocNo", null, new { ID = "txtDocNo", @Value = @ViewBag.MRVCode, Class = "form-control" })
+                                    @Html.ValidationMessage("DocNo")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblDocDetails" class="control-label col-md-4 small ">Doc Details:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("DocDetails", null, new { ID = "txtDocDetails", Class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDocDate" class="control-label col-md-4 small ">Doc Date:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("DocDate", null, new { ID = "txtDocDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control datepicker" })
+                                    @Html.ValidationMessage("DocDate")
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblBankCode" class="control-label col-md-4 small ">Bank Code:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("BankCode", null, new { ID = "txtBankCode", Class = "form-control" })
+                                    @Html.ValidationMessage("BankCode")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblGLDate" class="control-label col-md-4 small ">GL Date:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("GLDate", null, new { ID = "txtGLDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control" })
+                                    @Html.ValidationMessage("GLDate")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblBankName" class="control-label col-md-4 small ">Bank Name</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("BankName", null, new { ID = "txtBankName", Class = "form-control" })
+                                    @Html.ValidationMessage("BankName")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblotherRef" class="control-label col-md-4 small ">Other Ref</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("OtherRef", null, new { ID = "txtOtherRef", Class = "form-control" })
+                                    @Html.ValidationMessage("OtherRef")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblAmount" class="control-label col-md-4 small ">Amount</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("BRAmount", null, new { ID = "txtBRAmount", Class = "form-control" })
+                                    @Html.ValidationMessage("BRAmount")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblReceiveFrom" class="control-label col-md-4 small ">Received From</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("ReceivedFrom", null, new { ID = "txtReceivedFrom", Class = "form-control" })
+                                    @Html.ValidationMessage("ReceivedFrom")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblNarration" class="control-label col-md-4 small ">Narration</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("BRNarration", null, new { ID = "txtBRNarration", Class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblChequeNo" class="control-label col-md-4 small ">Cheque No</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("ChequeNo", null, new { ID = "txtChequeNo", Class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblChequeDate" class="control-label col-md-4 small ">Cheque Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("ChequeDate", null, new { ID = "txtChequeDate", Class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblClearanceDate" class="control-label col-md-4 small ">Clearance Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("ClearanceDate", null, new { ID = "txtClearanceDate", Class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblChequeDate" class="control-label col-md-4 small ">Drawer Br.</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("DrawerBr", null, new { ID = "txtDrawerBr", Class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblClearanceDate" class="control-label col-md-4 small ">Drw AC No</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("DrwACNo", null, new { ID = "txtDrwACNo", Class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblChequeDate" class="control-label col-md-4 small ">Allocation Total</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("AllocationTotal", null, new { ID = "txtAllocationTotal", Class = "form-control", @readonly="readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <fieldset>
+                                    <legend>Allocation Details</legend>
+                                    <div id="grid" class="panel-body">
+                                        <section id="unseen">
+                                            <a href="#AllocationDetailsAdd" data-toggle="modal" id="dlgAddAlloc" class="btn btn-drop btn-success">
+                                                Add Allocation Detail
+                                            </a>
+                                            <table id="tblAllocDetails"></table>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label></label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div id="AllocationDetailsAdd" title="Add Product" style="display:none;">
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label id="lblPrCode" for="prcode" class="control-label col-md-4 small ">AL Code:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    @Html.TextBox("AlCode", null, new { ID = "txtAlCode", Class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-6 form-group">
+                <label id="lblPrDesc" for="prdesc" class="control-label col-md-4 small ">Account Code:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    @Html.TextBox("AccountCode", null, new { ID = "txtAccountCode", Class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label id="lblJobID" for="jobid" class="control-label col-md-4 small ">Account Description:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    @Html.TextBox("AccountDesc", null, new { ID = "txtAccountDesc", Class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-6 form-group">
+                <label id="lblJobDesc" for="jobdesc" class="control-label col-md-4 small ">Amount:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    @Html.TextBox("Amount", null, new { ID = "txtAmount", Class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label id="lblQuantity" for="quantity" class="control-label col-md-4 small ">Narration:</label>
+                <div class="col-md-8 paddingLeftRight0">
+                    @Html.TextBox("Narration", null, new { ID = "txtNarration", Class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+            </div>
+            <div class="col-md-6 form-group">
+                <div class="col-md-8 paddingLeftRight0">
+                    <label></label>
+                    <button type="submit" id="btnSubmit" class="btn btn-success col-md-3 pull-right">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
+    <script>
+        $(document).ready(function () {
+            var arrAllocDetails = [];
+            $('#txtDocDate').datepicker();
+            $('#txtGLDate').datepicker();
+            $('#txtChequeDate').datepicker();
+            $('#txtClearanceDate').datepicker();
+            jQuery("#tblAllocDetails").jqGrid({
+                datatype: "local",
+                height: 150,
+                colNames: ['AL Code', 'Account Code', 'Account Description', 'Amount', 'Narration'],
+                colModel: [
+                    { name: 'ALLCODE_VCD', index: 'ALLCODE_VCD', width: 150, align: "center", sortable: false },
+                    { name: 'ACCODE_VCD', index: 'ACCODE_VCD', width: 150, align: "left", sortable: false },
+                    { name: 'ACDESCRIPTION_VCD', index: 'ACDESCRIPTION_VCD', width: 320, align: "center", sortable: false },
+                    { name: 'DEBITAMOUNT_VCD', index: 'DEBITAMOUNT_VCD', width: 150, align: "left", sortable: false },
+                    { name: 'NARRATION_VCD', index: 'NARRATION_VCD', width: 300, align: "right", sortable: false }
+                ],
+                multiselect: false,
+                caption: "Allocation Details"
+            });
+        });
+        $(window).resize(function () {
+            var outerwidth = $('#grid').width();
+            $('#tblAllocDetails').setGridWidth(outerwidth);
+        });
+        $('#formBankReceipt').bootstrapValidator({
+            container: '#messages',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                DocType: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Document Type is required'
+                        }
+                    }
+                },
+                DocNo: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Document No is required'
+                        }
+                    }
+                },
+                DocDate: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Document Date is required'
+                        },
+                        date: {
+                            format: 'MM/DD/YYYY',
+                            message: 'Enter Valid Date'
+                        }
+                    }
+                },
+                GLDate: {
+                    validators: {
+                        notEmpty: {
+                            message: 'GL Date is required'
+                        },
+                        date: {
+                            format: 'MM/DD/YYYY',
+                            message: 'Enter Valid Date'
+                        }
+                    }
+                },
+                DocDetails: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Document Details is required'
+                        }
+                    }
+                },
+                ReceivedFrom: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Received From is required'
+                        }
+                    }
+                },
+                BankCode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Bank Code is required'
+                        }
+                    }
+                },
+                BankName: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Bank Name is required'
+                        }
+                    }
+                },
+                BRAmount: {
+                    validators: {
+                        notEmpty: {
+                            message: 'BR Amount is required'
+                        },
+                        integer: {
+                            message: 'Integer Only'
+                        }
+                    }
+                },
+                ChequeNo: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Cheque No is required'
+                        }
+                    }
+                },
+                ChequeDate: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Cheque Date is required'
+                        },
+                        date: {
+                            format: 'MM/DD/YYYY',
+                            message: 'Enter Valid Date'
+                        }
+                    }
+                },
+                ClearanceDate: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Clearance Date is required'
+                        },
+                        date: {
+                            format: 'MM/DD/YYYY',
+                            message: 'Enter Valid Date'
+                        }
+                    }
+                },
+                DrawerBr: {
+                    validators: {
+                        notEmpty: {
+                            message: 'DrawerBr is required'
+                        }
+                    }
+                },
+                DrwACNo: {
+                    validators: {
+                        notEmpty: {
+                            message: 'DrwAC Number is required'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}

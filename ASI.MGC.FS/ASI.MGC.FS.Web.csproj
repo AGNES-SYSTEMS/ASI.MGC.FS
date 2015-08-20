@@ -40,6 +40,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="SimpleCrypto">
+      <HintPath>..\packages\SimpleCrypto.0.3.30.26\lib\SimpleCrypto.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -156,12 +159,14 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs">
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccountController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\AccountManagementController.cs" />
     <Compile Include="Controllers\BankController.cs" />
     <Compile Include="Controllers\CashController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
@@ -169,18 +174,22 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\JobController.cs" />
-    <Compile Include="Controllers\ManageController.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Controllers\MRVController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
+    <Compile Include="Controllers\QuotationController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="ExtendedAPI\MESAuthorize.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Views\Models\AccountViewModels.cs" />
-    <Compile Include="Views\Models\IdentityModels.cs" />
-    <Compile Include="Views\Models\ManageViewModels.cs" />
+    <Compile Include="Models\AccountManagementModel.cs" />
+    <Compile Include="Models\AccountViewModels.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\IdentityModels.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="WebCommon\CommonModelAccessUtility.cs" />
@@ -246,8 +255,11 @@
     <Content Include="Content\DataTables\swf\copy_csv_xls.swf" />
     <Content Include="Content\DataTables\swf\copy_csv_xls_pdf.swf" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\formValidation.min.css" />
     <Content Include="Content\GoogleFontFace.css" />
+    <Content Include="Content\Images\75.png" />
     <Content Include="Content\Images\bg-header.jpg" />
+    <Content Include="Content\Images\bg.jpg" />
     <Content Include="Content\Images\blank-male.jpg" />
     <Content Include="Content\Images\collapse.gif" />
     <Content Include="Content\Images\down.gif" />
@@ -267,6 +279,7 @@
     <Content Include="Content\jquery-ui.structure.min.css" />
     <Content Include="Content\jquery.easy-pie-chart.css" />
     <Content Include="Content\jquery.jqGrid\ui.jqgrid.css" />
+    <Content Include="Content\LoginPageStyle.css" />
     <Content Include="Content\owl.carousel.css" />
     <Content Include="Content\owl.theme.css" />
     <Content Include="Content\owl.transitions.css" />
@@ -310,6 +323,7 @@
     <Content Include="fonts\fontawesome-webfont862f.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\bootstrap.framework.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\fontawesome-webfont862f.eot" />
@@ -319,6 +333,7 @@
     <Content Include="fonts\glyphicons-halflings-regulard41d.eot" />
     <Content Include="Content\DataTables\css\dataTables.responsive.scss" />
     <Content Include="Content\DataTables\css\dataTables.jqueryui.scss" />
+    <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.typeahead.js" />
     <Content Include="Scripts\bootstrapValidator.min.js" />
@@ -345,6 +360,8 @@
     <Content Include="Scripts\DataTables\dataTables.tableTools.min.js" />
     <Content Include="Scripts\DataTables\jquery.dataTables.js" />
     <Content Include="Scripts\DataTables\jquery.dataTables.min.js" />
+    <Content Include="Scripts\formValidation.min.js" />
+    <Content Include="Scripts\html5shiv.js" />
     <Content Include="Scripts\i18n\grid.locale-ar.js" />
     <Content Include="Scripts\i18n\grid.locale-bg.js" />
     <Content Include="Scripts\i18n\grid.locale-bg1251.js" />
@@ -399,6 +416,8 @@
     <Content Include="Scripts\jquery.event.drag.min.js" />
     <Content Include="Scripts\jquery.jqGrid.min.js" />
     <Content Include="Scripts\jquery.jqGrid.src.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -475,12 +494,21 @@
     <Content Include="Views\Cash\CashPayments.cshtml" />
     <Content Include="Views\Cash\CashMemo.cshtml" />
     <Content Include="Views\Cash\CashReceipt.cshtml" />
+    <Content Include="Views\AccountManagement\Index.cshtml" />
+    <Content Include="Views\AccountManagement\LogIn.cshtml" />
+    <Content Include="Views\AccountManagement\Registration.cshtml" />
+    <Content Include="Views\AccountManagement\LogOut.cshtml" />
+    <Content Include="Views\Purchase\PurchaseEntry.cshtml" />
+    <Content Include="Views\Bank\BankReceipt.cshtml" />
+    <Content Include="Views\Bank\BankPayment.cshtml" />
+    <Content Include="Views\Invoice\InvoicePreparation.cshtml" />
+    <Content Include="Views\Quotation\Index.cshtml" />
+    <Content Include="Views\Quotation\QuotationEntry.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Search\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Bank\" />
-    <Folder Include="Views\Invoice\" />
-    <Folder Include="Views\Purchase\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

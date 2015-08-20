@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="83ad7ecb2dbd4e1d8af7cf3da4f12c92" Name="Diagram1">
+      <Diagram DiagramId="83ad7ecb2dbd4e1d8af7cf3da4f12c92" Name="Diagram1" ZoomLevel="21">
         <EntityTypeShape EntityType="ASI_MGC_FSModel.ACSTATEMENT_RPT" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ASI_MGC_FSModel.ALLOCATIONMASTER" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ASI_MGC_FSModel.AR_AP_LEDGER" Width="1.5" PointX="10.75" PointY="7.5" IsExpanded="true" />
@@ -66,6 +66,16 @@
         <AssociationConnector Association="ASI_MGC_FSModel.MRVREFERENCE_MATERIALRECEIPTMASTERMRVREFERENCE" ManuallyRouted="false" />
         <AssociationConnector Association="ASI_MGC_FSModel.MRVREFERENCE_PRODUCTMASTERMRVREFERENCE" ManuallyRouted="false" />
         <AssociationConnector Association="ASI_MGC_FSModel.STOCKLEDGER_UNITMESSUREMENTSTOCKLEDGER" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.MESRole" Width="1.5" PointX="23.375" PointY="0.875" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.MESUserRole" Width="1.5" PointX="25.625" PointY="1.125" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.MESUser" Width="1.5" PointX="23.375" PointY="4.75" />
+        <AssociationConnector Association="ASI_MGC_FSModel.FK_Table_1_MESRoles" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.MESUserLoginDetail" Width="1.5" PointX="23.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.MESUserProfile" Width="1.5" PointX="23.375" PointY="3.75" />
+        <AssociationConnector Association="ASI_MGC_FSModel.FK_MESUserRoles_MESRoles" />
+        <AssociationConnector Association="ASI_MGC_FSModel.FK_MESUserLoginDetails_MESUsers" />
+        <AssociationConnector Association="ASI_MGC_FSModel.FK_MESUserProfile_MESUsers" />
+        <AssociationConnector Association="ASI_MGC_FSModel.FK_MESUserRoles_MESUsers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -4,7 +4,7 @@
 }
 
 .dropdown-menu {
-    max-height: 200px;
+    max-height: 300px;
     overflow-y: auto;
 }
 .tt-hint {
@@ -52,4 +52,11 @@ height: 124px;
 }
 .tt-suggestion p {
 	margin: 0;
+}
+
+.ui-autocomplete {
+    max-height: 250px;
+    overflow-y: auto;   /* prevent horizontal scrollbar */
+    overflow-x: hidden; /* add padding to account for vertical scrollbar */
+    z-index:1000 !important;
 }

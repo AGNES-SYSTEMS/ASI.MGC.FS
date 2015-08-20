@@ -13,5 +13,15 @@ namespace ASI.MGC.FS.Controllers
         {
             return View();
         }
+
+        public ActionResult BankReceipt()
+        {
+            return View();
+        }
+
+        public ActionResult BankPayment()
+        {
+            return View();
+        }
     }
 }

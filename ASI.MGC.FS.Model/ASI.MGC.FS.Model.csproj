@@ -149,6 +149,21 @@
     <Compile Include="MATERIALRECEIPTMASTER.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="MESRole.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MESUser.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MESUserLoginDetail.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MESUserProfile.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MESUserRole.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="MRVNO_REPORT.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>

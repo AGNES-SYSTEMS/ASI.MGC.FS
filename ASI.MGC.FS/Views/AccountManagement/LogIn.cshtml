@@ -1,0 +1,105 @@
+﻿@model ASI.MGC.FS.Models.UserLoginViewModel
+@{
+    ViewBag.Title = "LogIn";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    <title>Mahboob Electrical Services</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/LoginPageStyle.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link media="screen" rel="stylesheet" href="~/Content/GoogleFontFace.css" />
+    <link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="~/Scripts/html5shiv.js"></script>
+        <script src="~/Scripts/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div id="mainWrap">
+        <div id="loggit">
+            <h1><i class="fa fa-lock"></i> Mahboob Electrical Services</h1>
+            <h3>Please <strong>Login</strong></h3>
+            @using (Html.BeginForm("LogIn", "AccountManagement", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "formLogin", @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "Login Failed. Check your login details.", new { @class = "text-danger" })
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-lg", @placeholder = "Email", @autocomplete = "off" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control input-lg", @placeholder = "Password", @autocomplete = "off" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group formSubmit">
+                    <div class="col-sm-7">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                Keep me logged in
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 submitWrap">
+                        <button type="submit" class="btn btn-primary btn-lg">Log In</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <footer class="clearfix">
+        <p>Copyright &copy; @DateTime.Now.Year Mahboob Electrical Services. All Rights Reserved</p>
+    </footer>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
+    <script>
+        $('#formLogin').bootstrapValidator({
+            container: '#messages',
+            feedbackIcons: {
+                required: 'fa fa-asterisk',
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                Email: {
+                    required: true,
+                    validators: {
+                        notEmpty: {
+                            message: 'Customer Code is required'
+                        }
+                    }
+                },
+                Password: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Customer Name is required'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

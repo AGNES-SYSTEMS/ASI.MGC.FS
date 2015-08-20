@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ASI_MGC_FSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ASI_MGC_FSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ACSTATEMENT_RPT">
           <Key>
             <PropertyRef Name="SLNO_SAC" />
@@ -407,6 +407,59 @@
           <Property Name="NOTES_MRV" Type="nvarchar" MaxLength="50" />
           <Property Name="STATUS_MRV" Type="nvarchar" MaxLength="1" />
         </EntityType>
+        <EntityType Name="MESRoles">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="isActive" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MESUserLoginDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="LoginDate" Type="date" Nullable="false" />
+          <Property Name="LoginTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="LoginDuration" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MESUserProfile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="256" />
+          <Property Name="SecondaryAddress" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="MESUserRoles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MESUsers">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="PasswordSalt" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="MRV_REPORT_CHD">
           <Key>
             <PropertyRef Name="SLNO" />
@@ -771,6 +824,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MESUserLoginDetails_MESUsers">
+          <End Role="MESUsers" Type="Self.MESUsers" Multiplicity="1" />
+          <End Role="MESUserLoginDetails" Type="Self.MESUserLoginDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MESUsers">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="MESUserLoginDetails">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MESUserProfile_MESUsers">
+          <End Role="MESUsers" Type="Self.MESUsers" Multiplicity="1" />
+          <End Role="MESUserProfile" Type="Self.MESUserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MESUsers">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="MESUserProfile">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MESUserRoles_MESRoles">
+          <End Role="MESRoles" Type="Self.MESRoles" Multiplicity="1" />
+          <End Role="MESUserRoles" Type="Self.MESUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MESRoles">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="MESUserRoles">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MESUserRoles_MESUsers">
+          <End Role="MESUsers" Type="Self.MESUsers" Multiplicity="1" />
+          <End Role="MESUserRoles" Type="Self.MESUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MESUsers">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="MESUserRoles">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="JOBMASTER$MATERIALRECEIPTMASTERJOBMASTER">
           <End Role="MATERIALRECEIPTMASTER" Type="Self.MATERIALRECEIPTMASTER" Multiplicity="0..1" />
           <End Role="JOBMASTER" Type="Self.JOBMASTER" Multiplicity="*" />
@@ -862,6 +963,11 @@
           <EntitySet Name="JVREPORT" EntityType="Self.JVREPORT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOCATIONMASTER" EntityType="Self.LOCATIONMASTER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MATERIALRECEIPTMASTER" EntityType="Self.MATERIALRECEIPTMASTER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MESRoles" EntityType="Self.MESRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MESUserLoginDetails" EntityType="Self.MESUserLoginDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MESUserProfile" EntityType="Self.MESUserProfile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MESUserRoles" EntityType="Self.MESUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MESUsers" EntityType="Self.MESUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MRV_REPORT_CHD" EntityType="Self.MRV_REPORT_CHD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MRVNO_REPORT" EntityType="Self.MRVNO_REPORT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MRVREFERENCE" EntityType="Self.MRVREFERENCE" Schema="dbo" store:Type="Tables" />
@@ -891,6 +997,22 @@
             <End Role="BANKMASTER" EntitySet="BANKMASTER" />
             <End Role="BANKTRANSACTION" EntitySet="BANKTRANSACTION" />
           </AssociationSet>
+          <AssociationSet Name="FK_MESUserLoginDetails_MESUsers" Association="Self.FK_MESUserLoginDetails_MESUsers">
+            <End Role="MESUsers" EntitySet="MESUsers" />
+            <End Role="MESUserLoginDetails" EntitySet="MESUserLoginDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MESUserProfile_MESUsers" Association="Self.FK_MESUserProfile_MESUsers">
+            <End Role="MESUsers" EntitySet="MESUsers" />
+            <End Role="MESUserProfile" EntitySet="MESUserProfile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MESUserRoles_MESRoles" Association="Self.FK_MESUserRoles_MESRoles">
+            <End Role="MESRoles" EntitySet="MESRoles" />
+            <End Role="MESUserRoles" EntitySet="MESUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MESUserRoles_MESUsers" Association="Self.FK_MESUserRoles_MESUsers">
+            <End Role="MESUsers" EntitySet="MESUsers" />
+            <End Role="MESUserRoles" EntitySet="MESUserRoles" />
+          </AssociationSet>
           <AssociationSet Name="JOBMASTER$MATERIALRECEIPTMASTERJOBMASTER" Association="Self.JOBMASTER$MATERIALRECEIPTMASTERJOBMASTER">
             <End Role="MATERIALRECEIPTMASTER" EntitySet="MATERIALRECEIPTMASTER" />
             <End Role="JOBMASTER" EntitySet="JOBMASTER" />
@@ -912,8 +1034,7 @@
             <End Role="STOCKLEDGER" EntitySet="STOCKLEDGER" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ASI_MGC_FSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1835,7 +1956,137 @@
             <End Role="UNITMESSUREMENT" EntitySet="UNITMESSUREMENTs" />
             <End Role="STOCKLEDGER" EntitySet="STOCKLEDGERs" />
           </AssociationSet>
+          <EntitySet Name="MESRoles" EntityType="ASI_MGC_FSModel.MESRole" />
+          <EntitySet Name="MESUsers" EntityType="ASI_MGC_FSModel.MESUser" />
+          <EntitySet Name="MESUserLoginDetails" EntityType="ASI_MGC_FSModel.MESUserLoginDetail" />
+          <EntitySet Name="MESUserProfiles" EntityType="ASI_MGC_FSModel.MESUserProfile" />
+          <EntitySet Name="MESUserRoles" EntityType="ASI_MGC_FSModel.MESUserRole" />
+          <AssociationSet Name="FK_MESUserRoles_MESRoles" Association="ASI_MGC_FSModel.FK_MESUserRoles_MESRoles">
+            <End Role="MESRole" EntitySet="MESRoles" />
+            <End Role="MESUserRole" EntitySet="MESUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MESUserLoginDetails_MESUsers" Association="ASI_MGC_FSModel.FK_MESUserLoginDetails_MESUsers">
+            <End Role="MESUser" EntitySet="MESUsers" />
+            <End Role="MESUserLoginDetail" EntitySet="MESUserLoginDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MESUserProfile_MESUsers" Association="ASI_MGC_FSModel.FK_MESUserProfile_MESUsers">
+            <End Role="MESUser" EntitySet="MESUsers" />
+            <End Role="MESUserProfile" EntitySet="MESUserProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MESUserRoles_MESUsers" Association="ASI_MGC_FSModel.FK_MESUserRoles_MESUsers">
+            <End Role="MESUser" EntitySet="MESUsers" />
+            <End Role="MESUserRole" EntitySet="MESUserRoles" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="MESRole">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Guid" Nullable="false" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isActive" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MESUserRoles" Relationship="ASI_MGC_FSModel.FK_MESUserRoles_MESRoles" FromRole="MESRole" ToRole="MESUserRole" />
+        </EntityType>
+        <EntityType Name="MESUser">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="MESUserLoginDetails" Relationship="ASI_MGC_FSModel.FK_MESUserLoginDetails_MESUsers" FromRole="MESUser" ToRole="MESUserLoginDetail" />
+          <NavigationProperty Name="MESUserProfiles" Relationship="ASI_MGC_FSModel.FK_MESUserProfile_MESUsers" FromRole="MESUser" ToRole="MESUserProfile" />
+          <NavigationProperty Name="MESUserRoles" Relationship="ASI_MGC_FSModel.FK_MESUserRoles_MESUsers" FromRole="MESUser" ToRole="MESUserRole" />
+        </EntityType>
+        <EntityType Name="MESUserLoginDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <Property Name="LoginDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LoginTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="LoginDuration" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MESUser" Relationship="ASI_MGC_FSModel.FK_MESUserLoginDetails_MESUsers" FromRole="MESUserLoginDetail" ToRole="MESUser" />
+        </EntityType>
+        <EntityType Name="MESUserProfile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="SecondaryAddress" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MESUser" Relationship="ASI_MGC_FSModel.FK_MESUserProfile_MESUsers" FromRole="MESUserProfile" ToRole="MESUser" />
+        </EntityType>
+        <EntityType Name="MESUserRole">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <Property Name="RoleID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="MESRole" Relationship="ASI_MGC_FSModel.FK_MESUserRoles_MESRoles" FromRole="MESUserRole" ToRole="MESRole" />
+          <NavigationProperty Name="MESUser" Relationship="ASI_MGC_FSModel.FK_MESUserRoles_MESUsers" FromRole="MESUserRole" ToRole="MESUser" />
+        </EntityType>
+        <Association Name="FK_MESUserRoles_MESRoles">
+          <End Type="ASI_MGC_FSModel.MESRole" Role="MESRole" Multiplicity="1" />
+          <End Type="ASI_MGC_FSModel.MESUserRole" Role="MESUserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MESRole">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="MESUserRole">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MESUserLoginDetails_MESUsers">
+          <End Type="ASI_MGC_FSModel.MESUser" Role="MESUser" Multiplicity="1" />
+          <End Type="ASI_MGC_FSModel.MESUserLoginDetail" Role="MESUserLoginDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MESUser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="MESUserLoginDetail">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MESUserProfile_MESUsers">
+          <End Type="ASI_MGC_FSModel.MESUser" Role="MESUser" Multiplicity="1" />
+          <End Type="ASI_MGC_FSModel.MESUserProfile" Role="MESUserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MESUser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="MESUserProfile">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MESUserRoles_MESUsers">
+          <End Type="ASI_MGC_FSModel.MESUser" Role="MESUser" Multiplicity="1" />
+          <End Type="ASI_MGC_FSModel.MESUserRole" Role="MESUserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MESUser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="MESUserRole">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2648,6 +2899,64 @@
                 <ScalarProperty Name="CHQDATE_VRPT" ColumnName="CHQDATE_VRPT" />
                 <ScalarProperty Name="USER_VRPT" ColumnName="USER_VRPT" />
                 <ScalarProperty Name="DOCNO_VRPT" ColumnName="DOCNO_VRPT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MESRoles">
+            <EntityTypeMapping TypeName="ASI_MGC_FSModel.MESRole">
+              <MappingFragment StoreEntitySet="MESRoles">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MESUsers">
+            <EntityTypeMapping TypeName="ASI_MGC_FSModel.MESUser">
+              <MappingFragment StoreEntitySet="MESUsers">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MESUserLoginDetails">
+            <EntityTypeMapping TypeName="ASI_MGC_FSModel.MESUserLoginDetail">
+              <MappingFragment StoreEntitySet="MESUserLoginDetails">
+                <ScalarProperty Name="LoginDuration" ColumnName="LoginDuration" />
+                <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
+                <ScalarProperty Name="LoginDate" ColumnName="LoginDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MESUserProfiles">
+            <EntityTypeMapping TypeName="ASI_MGC_FSModel.MESUserProfile">
+              <MappingFragment StoreEntitySet="MESUserProfile">
+                <ScalarProperty Name="SecondaryAddress" ColumnName="SecondaryAddress" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MESUserRoles">
+            <EntityTypeMapping TypeName="ASI_MGC_FSModel.MESUserRole">
+              <MappingFragment StoreEntitySet="MESUserRoles">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

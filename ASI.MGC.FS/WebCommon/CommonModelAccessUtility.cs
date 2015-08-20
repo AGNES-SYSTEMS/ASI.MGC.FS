@@ -24,6 +24,15 @@ namespace ASI.MGC.FS.WebCommon
             return mrvCount;
         }
 
+        public static int getJobMasterCount(IUnitOfWork _iUnitOfWork)
+        {
+            string currYear = System.DateTime.Now.Year.ToString();
+            int jobCount = (from objMRV in _iUnitOfWork.Repository<JOBMASTER>().Query().Get()
+                            where objMRV.JOBCODE_JM.EndsWith(currYear)
+                            select objMRV).Count();
+            return jobCount;
+        }
+
         public static IList<SelectListItem> getPaymentMethodList()
         {
             IList<SelectListItem> lstPaymentMethods = new List<SelectListItem>();
