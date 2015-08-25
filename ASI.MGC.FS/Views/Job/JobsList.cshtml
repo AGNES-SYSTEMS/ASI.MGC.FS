@@ -22,8 +22,7 @@
                         <div class="col-md-6 form-group">
                             <label id="lblCustCode" class="control-label col-md-4 small ">Job ID:</label>
                             <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.JOBID_JR, null, new { ID = "txtJobID", Class = "form-control" })
-                                @Html.ValidationMessageFor(d => d.JOBID_JR)
+                                <input type="text" name="JobID" id="txtJobID" value="ALFN" />
                             </div>
                         </div>
                         <div class="col-md-6 form-group">
@@ -49,7 +48,7 @@
     <script src="~/Scripts/jquery.jqGrid.min.js"></script>
     <script>
         $(document).ready(function () {
-            alert("I am in Jquery!");
+            //alert("I am in Jquery!");
             $("#tblJobsList").jqGrid({
                 url: '/Job/getJobsList',
                 datatype: "json",
@@ -75,14 +74,27 @@
                     records: "records",
                     repeatitems: false
                 },
+                loadComplete: function(data) {
+                    alert('load complete');
+                    reloadGridByJobID();
+                },
                 autowidth: true,
                 multiselect: false
-            });
-
+            }).navGrid("#Pager", { edit: false, add: false, del: false });
+            //reloadGridByJobID();
             $(window).resize(function () {
                 var outerwidth = $('#grid').width();
                 $('#tblJobsList').setGridWidth(outerwidth);
             });
+            function reloadGridByJobID() {
+                var filterValues = $("#tblJobsList").jqGrid("getGridParam", "postData");
+                var $JobID = $("#txtJobID").val();
+                var $tbID = $("#txtJobID").attr("name");
+                filterValues[$tbID] = $JobID;
+                jQuery('#tblJobsList').clearGridData();
+                jQuery("#tblJobsList").jqGrid('setGridParam', { postData: filterValues }).trigger('reloadGrid');
+                //jQuery("#tblJobsList").trigger('reloadGrid');
+            }
         });
     </script>
 </body>

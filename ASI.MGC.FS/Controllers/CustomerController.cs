@@ -154,5 +154,88 @@ namespace ASI.MGC.FS.Controllers
             }
             return Json(objCustomer, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetCustomerDetailsList(string sidx, string sord, int page, int rows, string custID, string custName)
+        {
+            var custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                           where customers.TYPE_ARM.Equals("AR")
+                           select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM});
+            if (!string.IsNullOrEmpty(custID))
+            {
+                custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                           where customers.ARCODE_ARM.Contains(custID) && customers.TYPE_ARM.Equals("AR")
+                           select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
+            }
+            if (!string.IsNullOrEmpty(custName))
+            {
+                custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                           where customers.DESCRIPTION_ARM.Contains(custName) && customers.TYPE_ARM.Equals("AR")
+                           select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM});
+            }
+            int pageIndex = Convert.ToInt32(page) - 1;
+            int pageSize = rows;
+            int totalRecords = custList.Count();
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+            if (sord.ToUpper() == "DESC")
+            {
+                custList = custList.OrderByDescending(a => a.ARCODE_ARM);
+                custList = custList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            else
+            {
+                custList = custList.OrderBy(a => a.ARCODE_ARM);
+                custList = custList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            var jsonData = new
+            {
+                total = totalPages,
+                page,
+                records = totalRecords,
+                rows = custList
+
+            };
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetAPCustomerDetailsList(string sidx, string sord, int page, int rows, string custID, string custName)
+        {
+            var custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                            where customers.TYPE_ARM.Equals("AP")
+                            select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
+            if (!string.IsNullOrEmpty(custID))
+            {
+                custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                            where customers.ARCODE_ARM.Contains(custID) && customers.TYPE_ARM.Equals("AP")
+                            select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
+            }
+            if (!string.IsNullOrEmpty(custName))
+            {
+                custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                            where customers.DESCRIPTION_ARM.Contains(custName) && customers.TYPE_ARM.Equals("AP")
+                            select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
+            }
+            int pageIndex = Convert.ToInt32(page) - 1;
+            int pageSize = rows;
+            int totalRecords = custList.Count();
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+            if (sord.ToUpper() == "DESC")
+            {
+                custList = custList.OrderByDescending(a => a.ARCODE_ARM);
+                custList = custList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            else
+            {
+                custList = custList.OrderBy(a => a.ARCODE_ARM);
+                custList = custList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            var jsonData = new
+            {
+                total = totalPages,
+                page,
+                records = totalRecords,
+                rows = custList
+
+            };
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
     }
 }

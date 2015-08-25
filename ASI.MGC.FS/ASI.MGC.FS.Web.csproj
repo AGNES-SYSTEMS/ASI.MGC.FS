@@ -187,6 +187,7 @@
     <Compile Include="Models\AccountViewModels.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\CustomSaleDetails.cs" />
     <Compile Include="Models\IdentityModels.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -261,13 +262,6 @@
     <Content Include="Content\Images\bg-header.jpg" />
     <Content Include="Content\Images\bg.jpg" />
     <Content Include="Content\Images\blank-male.jpg" />
-    <Content Include="Content\Images\collapse.gif" />
-    <Content Include="Content\Images\down.gif" />
-    <Content Include="Content\Images\expand.gif" />
-    <Content Include="Content\Images\header-columns-bg.gif" />
-    <Content Include="Content\Images\header-columns-over-bg.gif" />
-    <Content Include="Content\Images\sort-asc.gif" />
-    <Content Include="Content\Images\sort-desc.gif" />
     <Content Include="Content\Images\sort_asc.png" />
     <Content Include="Content\Images\sort_asc_disabled.png" />
     <Content Include="Content\Images\sort_both.png" />
@@ -283,12 +277,6 @@
     <Content Include="Content\owl.carousel.css" />
     <Content Include="Content\owl.theme.css" />
     <Content Include="Content\owl.transitions.css" />
-    <Content Include="Content\slick-default-theme.css" />
-    <Content Include="Content\slick.columnpicker.css" />
-    <Content Include="Content\slick.grid.css" />
-    <Content Include="Content\slick.headerbuttons.css" />
-    <Content Include="Content\slick.headermenu.css" />
-    <Content Include="Content\slick.pager.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\table-responsive.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -337,6 +325,11 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.typeahead.js" />
     <Content Include="Scripts\bootstrapValidator.min.js" />
+    <Content Include="Scripts\Custom\Cash\CashMemo.js" />
+    <Content Include="Scripts\Custom\Invoice\InvoicePreparation.js" />
+    <Content Include="Scripts\Custom\Job\JobEntry.js" />
+    <Content Include="Scripts\Custom\MRV\MRVCreation.js" />
+    <Content Include="Scripts\Custom\Purchase\PurchaseEntry.js" />
     <Content Include="Scripts\DataTables\dataTables.autoFill.js" />
     <Content Include="Scripts\DataTables\dataTables.autoFill.min.js" />
     <Content Include="Scripts\DataTables\dataTables.bootstrap.js" />
@@ -410,10 +403,6 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery-ui.min.js" />
-    <Content Include="Scripts\jquery.event.drag.js" />
-    <Content Include="Scripts\jquery.event.drag.live.js" />
-    <Content Include="Scripts\jquery.event.drag.live.min.js" />
-    <Content Include="Scripts\jquery.event.drag.min.js" />
     <Content Include="Scripts\jquery.jqGrid.min.js" />
     <Content Include="Scripts\jquery.jqGrid.src.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -425,25 +414,6 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\SlickGrid\Controls\slick.columnpicker.js" />
-    <Content Include="Scripts\SlickGrid\Controls\slick.pager.js" />
-    <Content Include="Scripts\SlickGrid\Plugins\slick.autotooltips.js" />
-    <Content Include="Scripts\SlickGrid\Plugins\slick.cellcopymanager.js" />
-    <Content Include="Scripts\SlickGrid\Plugins\slick.cellrangedecorator.js" />
-    <Content Include="Scripts\SlickGrid\Plugins\slick.cellrangeselector.js" />
-    <Content Include="Scripts\SlickGrid\Plugins\slick.cellselectionmodel.js" />
-    <Content Include="Scripts\SlickGrid\Plugins\slick.checkboxselectcolumn.js" />
-    <Content Include="Scripts\SlickGrid\Plugins\slick.headerbuttons.js" />
-    <Content Include="Scripts\SlickGrid\Plugins\slick.headermenu.js" />
-    <Content Include="Scripts\SlickGrid\Plugins\slick.rowmovemanager.js" />
-    <Content Include="Scripts\SlickGrid\Plugins\slick.rowselectionmodel.js" />
-    <Content Include="Scripts\SlickGrid\slick.core.js" />
-    <Content Include="Scripts\SlickGrid\slick.dataview.js" />
-    <Content Include="Scripts\SlickGrid\slick.editors.js" />
-    <Content Include="Scripts\SlickGrid\slick.formatters.js" />
-    <Content Include="Scripts\SlickGrid\slick.grid.js" />
-    <Content Include="Scripts\SlickGrid\slick.groupitemmetadataprovider.js" />
-    <Content Include="Scripts\SlickGrid\slick.remotemodel.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -483,7 +453,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\MRV\MRVCreation.cshtml" />
-    <Content Include="Views\Job\GetAllJobDetails.cshtml" />
+    <Content Include="Views\Job\GetAllJobsView.cshtml" />
     <Content Include="Views\Product\GetAllProductDetails.cshtml" />
     <Content Include="Views\Customer\GetAllCustomerDetails.cshtml" />
     <Content Include="Views\Product\ProductList.cshtml" />

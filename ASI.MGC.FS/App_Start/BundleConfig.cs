@@ -22,8 +22,8 @@ namespace ASI.MGC.FS
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                        "~/Scripts/bootstrap.js",
+                        "~/Scripts/respond.js"));
 
             /** Start - Adding Custom CSS Files for Master Page Dated 23-05-2015 By Zeeshan Mahmood**/
 
@@ -44,6 +44,7 @@ namespace ASI.MGC.FS
                       "~/Content/bootstrap.min.css",
                       "~/Content/bootstrap-reset.css",
                       "~/Content/GoogleFontFace.css",
+                      "~/Content/bootstrap.typeahead.css",
                       "~/Content/style.css",
                       "~/Content/jquery.easy-pie-chart.css",
                       "~/Content/owl.carousel.css",

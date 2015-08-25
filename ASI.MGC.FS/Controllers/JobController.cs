@@ -23,7 +23,7 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
-        public ActionResult GetAllJobDetails()
+        public ActionResult GetAllJobsView()
         {
             return View();
         }
@@ -33,25 +33,67 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
-        public JsonResult getJobsList(string sidx, string sord, int page, int rows)
+        public JsonResult GetJobDetailsList(string sidx, string sord, int page, int rows, string jobID, string jobDetails)
         {
-            var JobList = (from jobList in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
-                           select jobList).Select(a => new {a.JOBID_JR,a.JOBDESCRIPTION_JR });
+            var jobList = (from jobs in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
+                           select jobs).Select(a => new { a.JOBID_JR, a.JOBDESCRIPTION_JR, a.RATE_RJ });
+            if (!string.IsNullOrEmpty(jobID))
+            {
+                jobList = (from jobs in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
+                               where jobs.JOBID_JR.Contains(jobID)
+                               select jobs).Select(a => new { a.JOBID_JR, a.JOBDESCRIPTION_JR, a.RATE_RJ });
+            }
+            if (!string.IsNullOrEmpty(jobDetails))
+            {
+                jobList = (from jobs in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
+                           where jobs.JOBID_JR.Contains(jobDetails)
+                           select jobs).Select(a => new { a.JOBID_JR, a.JOBDESCRIPTION_JR, a.RATE_RJ });
+            }
+            int pageIndex = Convert.ToInt32(page) - 1;
+            int pageSize = rows;
+            int totalRecords = jobList.Count();
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+            if (sord.ToUpper() == "DESC")
+            {
+                jobList = jobList.OrderByDescending(a => a.JOBID_JR);
+                jobList = jobList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            else
+            {
+                jobList = jobList.OrderBy(a => a.JOBID_JR);
+                jobList = jobList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            var jsonData = new
+            {
+                total = totalPages,
+                page,
+                records = totalRecords,
+                rows = jobList
+
+            };
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getJobMRVList(string sidx, string sord, int page, int rows)
+        {
+            var JobList = (from jobMaster in _unitOfWork.Repository<JOBMASTER>().Query().Get()
+                           select jobMaster).Select(a => new { a.JOBNO_JM, a.MRVNO_JM });
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
             int totalRecords = JobList.Count();
             int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
-            if (sord.ToUpper() == "DESC")
+            if (sord.ToUpper() == "ASC")
             {
-                JobList = JobList.OrderByDescending(a => a.JOBID_JR);
+                JobList = JobList.OrderBy(a => a.JOBNO_JM);
                 JobList = JobList.Skip(pageIndex * pageSize).Take(pageSize);
             }
             else
             {
-                JobList = JobList.OrderBy(a => a.JOBID_JR);
+                JobList = JobList.OrderByDescending(a => a.JOBNO_JM);
                 JobList = JobList.Skip(pageIndex * pageSize).Take(pageSize);
             }
-            var jsonData = new {
+            var jsonData = new
+            {
                 total = totalPages,
                 page,
                 records = totalRecords,
@@ -61,6 +103,25 @@ namespace ASI.MGC.FS.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetJobMRVData(string JobID, string MRVNo)
+        {
+            var JobDetails = (from jobList in _unitOfWork.Repository<JOBMASTER>().Query().Get()
+                              where jobList.JOBNO_JM.Equals(JobID)
+                              select jobList).FirstOrDefault();
+            var productDetails = (from prdList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
+                                  where prdList.PROD_CODE_PM.Equals(JobDetails.PRODID_JIM)
+                                  select prdList).FirstOrDefault();
+            var mrvDetails = (from mrvList in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                              where mrvList.MRVNO_MRV.Equals(MRVNo)
+                              select mrvList).FirstOrDefault();
+            return Json(new
+            {
+                custCode = mrvDetails.CUSTOMERCODE_MRV,
+                custName = mrvDetails.CUSTOMERNAME_MRV,
+                prdCode = productDetails.PROD_CODE_PM,
+                prdDetail = productDetails.DESCRIPTION_PM
+            }, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult GetAllJobs(jQueryDataTableParamModel Param)
         {
             var totalJobRecords = (from totalJobCount in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
@@ -104,20 +165,20 @@ namespace ASI.MGC.FS.Controllers
                 iTotalDisplayRecords = totalDisplayedRecords,
                 aaData = resultJobRecords
             }, JsonRequestBehavior.AllowGet);
-       }
+        }
 
-        public ActionResult getJobRecordByID(string jobCode)
+        public JsonResult getJobRecordByID(string jobCode)
         {
             JOBIDREFERENCE objJob = null;
             if (!string.IsNullOrEmpty(jobCode) && !string.IsNullOrWhiteSpace(jobCode))
             {
                 objJob = (from jobList in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
-                               where jobList.JOBID_JR.Equals(jobCode)
-                               select jobList).FirstOrDefault();
+                          where jobList.JOBID_JR.Equals(jobCode)
+                          select jobList).FirstOrDefault();
             }
             return Json(objJob, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult getJobRecordByName(string jobName)
+        public JsonResult getJobRecordByName(string jobName)
         {
             JOBIDREFERENCE objJob = null;
             if (!string.IsNullOrEmpty(jobName) && !string.IsNullOrWhiteSpace(jobName))
@@ -150,7 +211,7 @@ namespace ASI.MGC.FS.Controllers
             return Json(lstJobDetail, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult SaveJobEntry( SALEDETAIL objSaleDetail)
+        public ActionResult SaveJobEntry(FormCollection form,SALEDETAIL objSaleDetail)
         {
             try
             {
@@ -158,7 +219,7 @@ namespace ASI.MGC.FS.Controllers
                 _unitOfWork.Repository<SALEDETAIL>().Insert(objSaleDetail);
                 _unitOfWork.Save();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
             }
 
@@ -169,5 +230,7 @@ namespace ASI.MGC.FS.Controllers
         {
             return null;
         }
+
+
     }
 }
