@@ -167,6 +167,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\AccountManagementController.cs" />
+    <Compile Include="Controllers\AllocationMasterController.cs" />
     <Compile Include="Controllers\BankController.cs" />
     <Compile Include="Controllers\CashController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
@@ -325,6 +326,8 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.typeahead.js" />
     <Content Include="Scripts\bootstrapValidator.min.js" />
+    <Content Include="Scripts\Custom\Bank\BankPayment.js" />
+    <Content Include="Scripts\Custom\Bank\BankReceipt.js" />
     <Content Include="Scripts\Custom\Cash\CashMemo.js" />
     <Content Include="Scripts\Custom\Invoice\InvoicePreparation.js" />
     <Content Include="Scripts\Custom\Job\JobEntry.js" />
@@ -476,6 +479,16 @@
     <Content Include="Views\Quotation\QuotationEntry.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Search\Search.cshtml" />
+    <Content Include="Views\AllocationMaster\Index.cshtml" />
+    <Content Include="Views\MRV\Index.cshtml" />
+    <Content Include="Views\Job\Index.cshtml" />
+    <Content Include="Views\Cash\Index.cshtml" />
+    <Content Include="Views\Bank\Index.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\EmployeeMaster\Index.cshtml" />
+    <Content Include="Views\Invoice\Index.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Purchase\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

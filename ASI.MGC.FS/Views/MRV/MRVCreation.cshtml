@@ -23,7 +23,7 @@
             <legend>Material Receipt Voucher</legend>
             <div class="row">
                 <div class="container">
-                    @using (Html.BeginForm("SaveMRVCreation", "MRV", null, FormMethod.Post, new { id = "formMRVCreation", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("SaveMrvCreation", "Mrv", null, FormMethod.Post, new { id = "formMRVCreation", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
                         <div class="row">
@@ -176,7 +176,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-5 form-group">
-                                <label id="lblPrCode" for="prcode" class="control-label col-md-4 small ">PrCode:</label>
+                                <label id="lblPrCode" class="control-label col-md-4 small ">PrCode:</label>
                                 <div class="col-md-6 paddingLeftRight0">
                                     <input type="text" id="txtPrCode" data-provide="typeahead" name="PrCode" class="form-control" autocomplete="off" required readonly/>
                                 </div>
@@ -185,7 +185,7 @@
                                 </button>
                             </div>
                             <div class="col-md-7 form-group">
-                                <label id="lblPrDesc" for="prdesc" class="control-label col-md-4 small ">PrDesc:</label>
+                                <label id="lblPrDesc" class="control-label col-md-4 small ">PrDesc:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     <input type="text" id="txtPrDesc" data-provide="typeahead" name="PrDesc" class="form-control" autocomplete="off" required readonly/>
                                 </div>
@@ -193,7 +193,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-5 form-group">
-                                <label id="lblJobID" for="jobid" class="control-label col-md-4 small ">JobID:</label>
+                                <label id="lblJobID" class="control-label col-md-4 small ">JobID:</label>
                                 <div class="col-md-6 paddingLeftRight0">
                                     <input type="text" id="txtJobID" data-provide="typeahead" name="JobID" class="form-control" autocomplete="off" required readonly/>
                                 </div>
@@ -202,7 +202,7 @@
                                 </button>
                             </div>
                             <div class="col-md-7 form-group">
-                                <label id="lblJobDesc" for="jobdesc" class="control-label col-md-4 small ">JobDesc:</label>
+                                <label id="lblJobDesc" class="control-label col-md-4 small ">JobDesc:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     <input type="text" id="txtJobDesc" data-provide="typeahead" name="JobDesc" class="form-control" autocomplete="off" required readonly/>
 
@@ -211,21 +211,21 @@
                         </div>
                         <div class="row">
                             <div class="col-md-5 form-group">
-                                <label id="lblQuantity" for="quantity" class="control-label col-md-4 small ">Quantity:</label>
+                                <label id="lblQuantity" class="control-label col-md-4 small ">Quantity:</label>
                                 <div class="col-md-6 paddingLeftRight0">
-                                    <input type="text" id="txtQuantity" name="Quantity" class="form-control" required />
+                                    <input type="number" id="txtQuantity" data-fv-notempty="true" pattern="\d{1,5}" name="Quantity" class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-md-7 form-group">
-                                <label id="lblRate" for="rate" class="control-label col-md-4 small ">Rate:</label>
+                                <label id="lblRate" class="control-label col-md-4 small ">Rate:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    <input type="text" id="txtRate" name="Rate" class="form-control" required />
+                                    <input type="text" id="txtRate" data-fv-notempty="true" pattern="\d{1,5}" name="Rate" class="form-control" required />
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-5 form-group">
-                                <label id="lblAmount" for="amount" class="control-label col-md-4 small ">Amount:</label>
+                                <label class="control-label col-md-4 small ">Amount:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     <input type="text" id="txtAmount" name="Amount" class="form-control" value="0" readonly />
                                 </div>

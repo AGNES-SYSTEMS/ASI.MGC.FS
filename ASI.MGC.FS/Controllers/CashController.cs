@@ -1,16 +1,16 @@
-﻿using ASI.MGC.FS.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using ASI.MGC.FS.Domain;
+using ASI.MGC.FS.Model;
+using ASI.MGC.FS.WebCommon;
 
 namespace ASI.MGC.FS.Controllers
 {
     public class CashController : Controller
     {
-        IUnitOfWork _unitOfWork;
+        readonly IUnitOfWork _unitOfWork;
         public CashController()
         {
             _unitOfWork = new UnitOfWork();
@@ -28,7 +28,12 @@ namespace ASI.MGC.FS.Controllers
 
         public ActionResult CashMemo()
         {
-            return View();
+            var cmCount = (1001 + CommonModelAccessUtility.GetCashSaleCount(_unitOfWork));
+            string currYear = DateTime.Now.Year.ToString();
+            string cashMemoCode = Convert.ToString("RCT/" + Convert.ToString(cmCount) + "/" + currYear);
+            ViewBag.cashMemoCode = cashMemoCode;
+            var objBankTransaction = new BANKTRANSACTION();
+            return View(objBankTransaction);
         }
 
         public ActionResult CashReceipt()
@@ -36,65 +41,79 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
-        public ActionResult SaveCashMemo()
+        public ActionResult SaveCashMemo(FormCollection frm, BANKTRANSACTION objBankTransaction)
         {
-            return View();
-        }
+            var mrvNumber = Convert.ToString(frm["MRVNo"]);
+            var cashMemoNumber = objBankTransaction.DOCNUMBER_BT;
+            string jsonProductDetails = frm["saleDetails"];
+            var serializer = new JavaScriptSerializer();
+            var lstSaleDetails = serializer.Deserialize<List<SALEDETAIL>>(jsonProductDetails);
+            objBankTransaction.CHQDATE_BT = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+            objBankTransaction.CLEARANCEDATE_BT = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+            objBankTransaction.STATUS_BT = "P";
+            _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBankTransaction);
+            _unitOfWork.Save();
 
-        public JsonResult getBankCodes(string term)
-        {
-            IList<string> lstBankCodes = (from bankList in _unitOfWork.Repository<BANKMASTER>().Query().Get()
-                                         where bankList.BANKCODE_BM.StartsWith(term)
-                                         select bankList).Distinct().Select(x => x.BANKCODE_BM).ToList();
-            return Json(lstBankCodes, JsonRequestBehavior.AllowGet);
-        }
-        public JsonResult getBankName(string term)
-        {
-            IList<string> lstBankName = (from bankList in _unitOfWork.Repository<BANKMASTER>().Query().Get()
-                                          where bankList.BANKNAME_BM.StartsWith(term)
-                                          select bankList).Distinct().Select(x => x.BANKNAME_BM).ToList();
-            return Json(lstBankName, JsonRequestBehavior.AllowGet);
-        }
+            var objInvoiceMaster = _unitOfWork.Repository<INVMASTER>().Create();
+            objInvoiceMaster.INVNO_IPM = cashMemoNumber;
+            objInvoiceMaster.INVDATE_IPM = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+            objInvoiceMaster.CUSTNAME_IPM = Convert.ToString(frm["CustDetail"]);
+            objInvoiceMaster.SHIPPING_IPM = Convert.ToInt32(frm["TotalShipCharges"]);
+            objInvoiceMaster.DISCOUNT_IPM = Convert.ToInt32(frm["TotalDiscount"]);
+            _unitOfWork.Repository<INVMASTER>().Insert(objInvoiceMaster);
+            _unitOfWork.Save();
 
-        public JsonResult GetBankDetailsList(string sidx, string sord, int page, int rows, string bankCode, string bankName)
-        {
-            var bankList = (from banks in _unitOfWork.Repository<BANKMASTER>().Query().Get()
-                           select banks).Select(a => new { a.BANKCODE_BM, a.BANKNAME_BM});
-            if (!string.IsNullOrEmpty(bankCode))
+            foreach (SALEDETAIL sale in lstSaleDetails)
             {
-                bankList = (from jobs in _unitOfWork.Repository<BANKMASTER>().Query().Get()
-                           where jobs.BANKCODE_BM.Contains(bankCode)
-                            select jobs).Select(a => new { a.BANKCODE_BM, a.BANKNAME_BM });
-            }
-            if (!string.IsNullOrEmpty(bankName))
-            {
-                bankList = (from jobs in _unitOfWork.Repository<BANKMASTER>().Query().Get()
-                           where jobs.BANKCODE_BM.Contains(bankName)
-                            select jobs).Select(a => new { a.BANKCODE_BM, a.BANKNAME_BM });
-            }
-            int pageIndex = Convert.ToInt32(page) - 1;
-            int pageSize = rows;
-            int totalRecords = bankList.Count();
-            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
-            if (sord.ToUpper() == "DESC")
-            {
-                bankList = bankList.OrderByDescending(a => a.BANKCODE_BM);
-                bankList = bankList.Skip(pageIndex * pageSize).Take(pageSize);
-            }
-            else
-            {
-                bankList = bankList.OrderBy(a => a.BANKCODE_BM);
-                bankList = bankList.Skip(pageIndex * pageSize).Take(pageSize);
-            }
-            var jsonData = new
-            {
-                total = totalPages,
-                page,
-                records = totalRecords,
-                rows = bankList
+                if (!string.IsNullOrEmpty(sale.PRCODE_SD))
+                {
+                    var objStockLedger = _unitOfWork.Repository<STOCKLEDGER>().Create();
+                    objStockLedger.DOC_DATE_SL = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+                    objStockLedger.LEDGER_DATE_SL = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+                    objStockLedger.VOUCHERNO_SL = cashMemoNumber;
+                    objStockLedger.OTHERREF_SL = mrvNumber;
+                    objStockLedger.PRODID_SL = sale.PRCODE_SD;
+                    objStockLedger.ISSUE_QTY_SL = sale.QTY_SD;
+                    objStockLedger.ISSUE_RATE_SL = sale.RATE_SD;
+                    objStockLedger.UNIT_SL = sale.UNIT_SD;
+                    objStockLedger.STATUS_SL = "P";
 
-            };
-            return Json(jsonData, JsonRequestBehavior.AllowGet);
+                }
+
+                var objInvoiceDetail = _unitOfWork.Repository<INVDETAIL>().Create();
+                if (!string.IsNullOrEmpty(sale.PRCODE_SD))
+                {
+                    objInvoiceDetail.CODE_INVD = sale.PRCODE_SD;
+                    var objPrDetail = _unitOfWork.Repository<PRODUCTMASTER>().FindByID(sale.PRCODE_SD).DESCRIPTION_PM;
+                    objInvoiceDetail.DESCRIPTION_INVD = objPrDetail;
+                }
+                else
+                {
+                    objInvoiceDetail.CODE_INVD = sale.JOBID_SD;
+                    var objJobDetail = _unitOfWork.Repository<JOBIDREFERENCE>().FindByID(sale.JOBID_SD).JOBDESCRIPTION_JR;
+                    objInvoiceDetail.DESCRIPTION_INVD = objJobDetail;
+                }
+                objInvoiceDetail.QTY_INVD = sale.QTY_SD;
+                objInvoiceDetail.RATE_INVD = sale.RATE_SD;
+                objInvoiceDetail.AMOUNT_INVNO = (objInvoiceDetail.QTY_INVD*objInvoiceDetail.RATE_INVD);
+                objInvoiceDetail.JOBNO_INVD = sale.JOBNO_SD;
+                objInvoiceDetail.UNIT_INVD = sale.UNIT_SD;
+
+                var objSaleDetails = _unitOfWork.Repository<SALEDETAIL>().FindByID(sale.SLNO_SD);
+                objSaleDetails.CASHRVNO_SD = Convert.ToString(cashMemoNumber);
+                    objSaleDetails.STATUS_SD = "P";
+                    _unitOfWork.Repository<SALEDETAIL>().Update(objSaleDetails);
+                    _unitOfWork.Save();
+
+                    var objJobMaster = _unitOfWork.Repository<JOBMASTER>().FindByID(sale.JOBNO_SD);
+                    objJobMaster.DELEVERNOTENO_JM = Convert.ToString(frm["DLNNo"]);
+                    objJobMaster.JOBSTATUS_JM = "P";
+                    _unitOfWork.Repository<JOBMASTER>().Update(objJobMaster);
+                    _unitOfWork.Save();
+            }
+
+
+            return View("CashMemo");
         }
     }
 }

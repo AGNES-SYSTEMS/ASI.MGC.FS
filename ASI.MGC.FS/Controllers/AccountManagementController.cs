@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using ASI.MGC.FS.Models;
+using System.Web.Security;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Model;
-using System.Web.Security;
+using ASI.MGC.FS.Models;
+using SimpleCrypto;
 
 namespace ASI.MGC.FS.Controllers
 {
     public class AccountManagementController : Controller
     {
-        IUnitOfWork _unitOfWork;
+        readonly IUnitOfWork _unitOfWork;
         public AccountManagementController()
         {
             _unitOfWork = new UnitOfWork();
@@ -35,7 +34,7 @@ namespace ASI.MGC.FS.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (isValid(model.Email, model.Password))
+                if (IsValid(model.Email, model.Password))
                 {
                     FormsAuthentication.SetAuthCookie(model.Email, false);
                     return RedirectToAction("Index","Home");
@@ -59,7 +58,7 @@ namespace ASI.MGC.FS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var crypto = new SimpleCrypto.PBKDF2();
+                var crypto = new PBKDF2();
                 var encrypPassword = crypto.Compute(model.Password);
                 var mesUser = _unitOfWork.Repository<MESUser>().Create();
                 mesUser.UserID = Guid.NewGuid();
@@ -81,9 +80,9 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
-        private bool isValid(string email, string password)
+        private bool IsValid(string email, string password)
         {
-            var crypto = new SimpleCrypto.PBKDF2();
+            var crypto = new PBKDF2();
             bool isValid = false;
 
             var user = (from mesUsers in _unitOfWork.Repository<MESUser>().Query().Get()

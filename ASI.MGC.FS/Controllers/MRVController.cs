@@ -1,24 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Model;
-using System.Web.Script.Serialization;
-using System.Runtime.Serialization.Json;
-using ASI.MGC.FS.WebCommon;
-using ASI.MGC.FS.ExtendedAPI;
 using ASI.MGC.FS.Models;
+using ASI.MGC.FS.WebCommon;
 
 namespace ASI.MGC.FS.Controllers
 {
-    [MESAuthorize]
-    public class MRVController : Controller
+    public class MrvController : Controller
     {
-        IUnitOfWork _unitOfWork;
+        readonly IUnitOfWork _unitOfWork;
 
-        public MRVController()
+        public MrvController()
         {
             _unitOfWork = new UnitOfWork();
         }
@@ -27,60 +23,61 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
-        public ActionResult MRVCreation()
+        public ActionResult MrvCreation()
         {
-            int mrvCountCode = (1001 + CommonModelAccessUtility.getCurrMRVCount(_unitOfWork));
-            string currYear = System.DateTime.Now.Year.ToString();
+            int mrvCountCode = (1001 + CommonModelAccessUtility.GetCurrMrvCount(_unitOfWork));
+            string currYear = DateTime.Now.Year.ToString();
             string mrvCode = "MRV/" + Convert.ToString(mrvCountCode) + "/" + currYear;
             ViewBag.MRVCode = mrvCode;
-            var objMRV = new MATERIALRECEIPTMASTER();
-            return View(objMRV);
+            var objMrv = new MATERIALRECEIPTMASTER();
+            return View(objMrv);
         }
 
-        public ActionResult SaveMRVCreation(FormCollection form, MATERIALRECEIPTMASTER objMRV)
+        [HttpPost]
+        public ActionResult SaveMrvCreation(FormCollection form, MATERIALRECEIPTMASTER objMrv)
         {
             try
             {
                 string jsonProductDetails = form["mrvProds"];
-                string mrvNo = objMRV.MRVNO_MRV.ToString();
                 var serializer = new JavaScriptSerializer();
                 var lstMrvProducts = serializer.Deserialize<List<MRVREFERENCE>>(jsonProductDetails);
-                objMRV.DOC_DATE_MRV = Convert.ToDateTime(System.DateTime.Now.ToShortDateString());
-                objMRV.STATUS_MRV = "N";
-                _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Insert(objMRV);
+                objMrv.DOC_DATE_MRV = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+                objMrv.STATUS_MRV = "N";
+                _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Insert(objMrv);
                 _unitOfWork.Save();
-                saveMRVProducts(lstMrvProducts, objMRV);
-                return RedirectToAction("MRVCreation");
-            }
-            catch (Exception e)
-            {
 
+                SaveMrvProducts(lstMrvProducts, objMrv);
+                return RedirectToAction("MrvCreation");
             }
-            return RedirectToAction("MRVCreation");
+            catch (Exception)
+            {
+                // ignored
+            }
+            return RedirectToAction("MrvCreation");
         }
 
-        private void saveMRVProducts(List<MRVREFERENCE> lstMrvProducts, MATERIALRECEIPTMASTER objMRV)
+        private void SaveMrvProducts(List<MRVREFERENCE> lstMrvProducts, MATERIALRECEIPTMASTER objMrv)
         {
             foreach (var prd in lstMrvProducts)
             {
-                prd.MRVNO_MRR = objMRV.MRVNO_MRV;
+                prd.MRVNO_MRR = objMrv.MRVNO_MRV;
                 prd.JOBSTATUS_MRR = "N";
-                insertJobData(prd, objMRV);
                 _unitOfWork.Repository<MRVREFERENCE>().Insert(prd);
                 _unitOfWork.Save();
+                InsertJobData(prd, objMrv);
             }
         }
 
-        private void insertJobData(MRVREFERENCE prd, MATERIALRECEIPTMASTER objMRV)
+        private void InsertJobData(MRVREFERENCE prd, MATERIALRECEIPTMASTER objMrv)
         {
-            int jobCount = (1001 + CommonModelAccessUtility.getJobMasterCount(_unitOfWork));
-            string currYear = System.DateTime.Now.Year.ToString();
-            string jobCode = "JOB/" + Convert.ToString(jobCount) + "/" + currYear;
+            var jobCount = (1001 + CommonModelAccessUtility.GetJobMasterCount(_unitOfWork));
+            string currYear = DateTime.Now.Year.ToString();
+            string jobCode = Convert.ToString("JOB/" + Convert.ToString(jobCount) + "/" + currYear);
             var jobMasterObj = _unitOfWork.Repository<JOBMASTER>().Create();
             jobMasterObj.JOBNO_JM = jobCode;
-            jobMasterObj.DOCDATE_JM = objMRV.DOC_DATE_MRV;
-            jobMasterObj.MRVNO_JM = objMRV.MRVNO_MRV;
-            jobMasterObj.EMPCODE_JM = objMRV.EXECODE_MRV;
+            jobMasterObj.DOCDATE_JM = objMrv.DOC_DATE_MRV;
+            jobMasterObj.MRVNO_JM = objMrv.MRVNO_MRV;
+            jobMasterObj.EMPCODE_JM = objMrv.EXECODE_MRV;
             jobMasterObj.JOBCODE_JM = prd.JOBID_MRR;
             jobMasterObj.JOBSTATUS_JM = prd.JOBSTATUS_MRR;
             jobMasterObj.PRODID_JIM = prd.PRODID_MRR;
@@ -89,14 +86,14 @@ namespace ASI.MGC.FS.Controllers
             _unitOfWork.Save();
         }
 
-        public JsonResult getMRVList(string sidx, string sord, int page, int rows)
+        public JsonResult GetMrvList(string sidx, string sord, int page, int rows)
         {
             var mrvList = (from mrvMaster in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
                            select mrvMaster).Select(a => new { a.MRVNO_MRV, a.CUSTOMERCODE_MRV, a.CUSTOMERNAME_MRV });
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
             int totalRecords = mrvList.Count();
-            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+            int totalPages = (int)Math.Ceiling((float)totalRecords / pageSize);
             if (sord.ToUpper() == "ASC")
             {
                 mrvList = mrvList.OrderBy(a => a.MRVNO_MRV);
@@ -118,44 +115,47 @@ namespace ASI.MGC.FS.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getJobDetailByMRV(string MRVID)
+        public JsonResult GetJobDetailByMrv(string mrvid)
         {
-            var JobData = (from JobDetails in _unitOfWork.Repository<JOBMASTER>().Query().Get()
+            var jobData = (from jobDetails in _unitOfWork.Repository<JOBMASTER>().Query().Get()
                            join prdMaster in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
-                           on JobDetails.PRODID_JIM equals prdMaster.PROD_CODE_PM
-                           where JobDetails.MRVNO_JM.Equals(MRVID)
-                           select new { JobNo = JobDetails.JOBNO_JM, PrdCode = prdMaster.DESCRIPTION_PM, JobStatus = JobDetails.JOBSTATUS_JM }).ToList();
+                           on jobDetails.PRODID_JIM equals prdMaster.PROD_CODE_PM
+                           where jobDetails.MRVNO_JM.Equals(mrvid)
+                           select new { JobNo = jobDetails.JOBNO_JM, PrdCode = prdMaster.DESCRIPTION_PM, JobStatus = jobDetails.JOBSTATUS_JM }).ToList();
             return Json(new
             {
-                JobData
+                JobData = jobData
             }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult getSaleDetailByMRV(string MRVID)
+        public JsonResult GetSaleDetailByMrv(string mrvid)
         {
             IList<CustomSaleDetails> lstSales = new List<CustomSaleDetails>();
 
-            var SaleDetails = (from saleDetails in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
-                               where saleDetails.MRVNO_SD.Equals(MRVID) && saleDetails.STATUS_SD.Equals("N")
-                               select saleDetails).ToList();
-            foreach (var sale in SaleDetails)
+            var lstSaleDetails = (from saleDetails in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                where saleDetails.MRVNO_SD.Equals(mrvid) && saleDetails.STATUS_SD.Equals("N")
+                select saleDetails).ToList();
+            foreach (var sale in lstSaleDetails)
             {
-                CustomSaleDetails objSales = new CustomSaleDetails();
-                objSales.JobNo = sale.JOBNO_SD;
-                objSales.PRCode = sale.PRCODE_SD;
-                objSales.SWCode = sale.JOBID_SD;
+                CustomSaleDetails objSales = new CustomSaleDetails
+                {
+                    SaleNo = sale.SLNO_SD,
+                    JobNo = sale.JOBNO_SD,
+                    PrCode = sale.PRCODE_SD,
+                    SwCode = sale.JOBID_SD
+                };
                 if (!string.IsNullOrEmpty(sale.PRCODE_SD))
                 {
                     var objPrd = (from prdDetails in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
                                   where prdDetails.PROD_CODE_PM.Equals(sale.PRCODE_SD)
                                   select prdDetails).SingleOrDefault();
-                    objSales.Description = objPrd.DESCRIPTION_PM;
+                    if (objPrd != null) objSales.Description = objPrd.DESCRIPTION_PM;
                 }
                 else if (!string.IsNullOrEmpty(sale.JOBID_SD))
                 {
-                    var objJob = (from JobDetails in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
-                                  where JobDetails.JOBID_JR.Equals(sale.JOBID_SD)
-                                  select JobDetails).SingleOrDefault();
-                    objSales.Description = objJob.JOBDESCRIPTION_JR;
+                    var objJob = (from jobDetails in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
+                                  where jobDetails.JOBID_JR.Equals(sale.JOBID_SD)
+                                  select jobDetails).SingleOrDefault();
+                    if (objJob != null) objSales.Description = objJob.JOBDESCRIPTION_JR;
                 }
                 else
                 {

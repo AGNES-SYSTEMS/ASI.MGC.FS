@@ -1,8 +1,6 @@
 ﻿$(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liInvoicePrep").addClass("active");
-    var arrMRVDetails = [];
-    var arrSaleDetails = [];
     $('#txtGLDate').datepicker();
     jQuery("#tblMRVJobDetails").jqGrid({
         datatype: "local",
@@ -37,8 +35,8 @@
         caption: "Sale Details"
     });
     $(window).resize(function () {
-        var outerwidthMRV = $('#gridMRV').width();
-        $('#tblMRVDetails').setGridWidth(outerwidthMRV);
+        var outerwidthMrv = $('#gridMRV').width();
+        $('#tblMRVDetails').setGridWidth(outerwidthMrv);
         var outerwidthSale = $('#gridSale').width();
         $('#tblSaleDetails').setGridWidth(outerwidthSale);
     });
@@ -58,7 +56,6 @@
             mtype: 'GET',
             gridview: true,
             shrinkToFit: true,
-            autowidth: true,
             viewrecords: true,
             sortorder: "desc",
             pager: jQuery('#Pager'),
@@ -81,9 +78,9 @@
     });
     var arrMrvJobDetails = [];
     var arrMrvSaleDetails = [];
-    function getJobDetailByMRV() {
-        var _MrvCode = $("#txtMRVNo").val();
-        var data = JSON.stringify({ MRVID: _MrvCode });
+    function getJobDetailByMrv() {
+        var mrvCode = $("#txtMRVNo").val();
+        var data = JSON.stringify({ MRVID: mrvCode });
         $.ajax({
             url: '/MRV/getJobDetailByMRV',
             contentType: "application/json; charset=utf-8",
@@ -92,22 +89,21 @@
             type: "POST",
             success: function (jobDetails) {
                 arrMrvJobDetails = [];
-                var i = 0;
-                for (i = 0; i < jobDetails.JobData.length; i++) {
+                for (var i = 0; i < jobDetails.JobData.length; i++) {
                     arrMrvJobDetails[i] = { JobNo: jobDetails.JobData[i].JobNo, PrdDesc: jobDetails.JobData[i].PrdCode, JobStatus: jobDetails.JobData[i].JobStatus };
                     jQuery("#tblMRVJobDetails").jqGrid('addRowData', i + 1, arrMrvJobDetails[i]);
                 }
             },
             complete: function () {
             },
-            error: function (jobDetails) {
+            error: function () {
             }
         });
     }
 
-    function getSaleDetailByMRV() {
-        var _MrvCode = $("#txtMRVNo").val();
-        var data = JSON.stringify({ MRVID: _MrvCode });
+    function getSaleDetailByMrv() {
+        var mrvCode = $("#txtMRVNo").val();
+        var data = JSON.stringify({ MRVID: mrvCode });
         $.ajax({
             url: '/MRV/getSaleDetailByMRV',
             contentType: "application/json; charset=utf-8",
@@ -117,22 +113,21 @@
             success: function (saleDetails) {
                 arrMrvSaleDetails = [];
                 var sales = saleDetails.lstSales;
-                var NetAmount = 0;
+                var netAmount = 0;
                 var totalDiscount = 0;
                 var totalShipChrg = 0;
-                var i = 0;
-                for (i = 0; i < sales.length; i++) {
+                for (var i = 0; i < sales.length; i++) {
                     arrMrvSaleDetails[i] = {
                         JobNo: sales[i].JobNo, PRCode: sales[i].PRCode, SWCode: sales[i].SWCode,
                         Description: sales[i].Description, Qty: sales[i].Qty,
                         Unit: sales[i].Unit, Rate: sales[i].Rate, CreditAmount: sales[i].CashAmount,
                         Discount: sales[i].Discount, ShipChrg: sales[i].ShipChrg
                     };
-                    NetAmount = NetAmount + arrMrvSaleDetails[i]["CreditAmount"];
+                    netAmount = netAmount + arrMrvSaleDetails[i]["CreditAmount"];
                     totalDiscount = totalDiscount + arrMrvSaleDetails[i]["Discount"];
                     totalShipChrg = totalShipChrg + arrMrvSaleDetails[i]["ShipChrg"];
-                    $("#txtTotalCreditAmount").val(NetAmount);
-                    $("#txtNetAmount").val(NetAmount);
+                    $("#txtTotalCreditAmount").val(netAmount);
+                    $("#txtNetAmount").val(netAmount);
                     $("#txtTotalDiscount").val(totalDiscount);
                     $("#txtTotalShipCharges").val(totalShipChrg);
                     jQuery("#tblSaleDetails").jqGrid('addRowData', i + 1, arrMrvSaleDetails[i]);
@@ -141,7 +136,7 @@
             },
             complete: function () {
             },
-            error: function (saleDetails) {
+            error: function () {
             }
         });
     }
@@ -153,11 +148,9 @@
             $("#txtMRVNo").val(ret.MRVNO_MRV);
             $("#txtCustCode").val(ret.CUSTOMERCODE_MRV);
             $("#txtCustDetail").val(ret.CUSTOMERNAME_MRV);
-            getJobDetailByMRV();
-            getSaleDetailByMRV();
+            getJobDetailByMrv();
+            getSaleDetailByMrv();
             $('#mrvSearchModel').modal('toggle');
-        } else {
-
         }
         e.preventDefault();
     });

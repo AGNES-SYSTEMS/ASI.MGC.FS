@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace ASI.MGC.FS.Models
+﻿namespace ASI.MGC.FS.Models
 {
     public class CustomSaleDetails
     {
+        public int SaleNo { get; set; }
         public string JobNo { get; set; }
-        public string PRCode { get; set; }
-        public string SWCode { get; set; }
+        public string PrCode { get; set; }
+        public string SwCode { get; set; }
         public string Description { get; set; }
         public int Qty { get; set; }
         public string Unit { get; set; }

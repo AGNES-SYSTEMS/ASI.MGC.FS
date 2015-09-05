@@ -30,7 +30,10 @@ namespace ASI.MGC.FS.ExtendedAPI
             return authorize;
         }
         public override void OnAuthorization(AuthorizationContext filterContext)
-        { }
+        {
+            base.OnAuthorization(filterContext);
+
+        }
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
             filterContext.Result = new HttpUnauthorizedResult();

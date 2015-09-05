@@ -1,17 +1,16 @@
-﻿using ASI.MGC.FS.Domain;
-using ASI.MGC.FS.Model;
-using ASI.MGC.FS.Model.HelperClasses;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using ASI.MGC.FS.Domain;
+using ASI.MGC.FS.Model;
+using ASI.MGC.FS.Model.HelperClasses;
 
 namespace ASI.MGC.FS.Controllers
 {
     public class ProductController : Controller
     {
-        IUnitOfWork _unitOfWork;
+        readonly IUnitOfWork _unitOfWork;
 
         public ProductController()
         {
@@ -27,30 +26,30 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
-        public JsonResult getProdsList(string sidx, string sord, int page, int rows)
+        public JsonResult GetProdsList(string sidx, string sord, int page, int rows)
         {
-            var ProdList = (from prodList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
+            var lstProducts = (from prodList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
                            select prodList).Select(a => new { a.PROD_CODE_PM, a.DESCRIPTION_PM });
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
-            int totalRecords = ProdList.Count();
-            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+            int totalRecords = lstProducts.Count();
+            int totalPages = (int)Math.Ceiling(totalRecords / (float)pageSize);
             if (sord.ToUpper() == "DESC")
             {
-                ProdList = ProdList.OrderByDescending(a => a.PROD_CODE_PM);
-                ProdList = ProdList.Skip(pageIndex * pageSize).Take(pageSize);
+                lstProducts = lstProducts.OrderByDescending(a => a.PROD_CODE_PM);
+                lstProducts = lstProducts.Skip(pageIndex * pageSize).Take(pageSize);
             }
             else
             {
-                ProdList = ProdList.OrderBy(a => a.PROD_CODE_PM);
-                ProdList = ProdList.Skip(pageIndex * pageSize).Take(pageSize);
+                lstProducts = lstProducts.OrderBy(a => a.PROD_CODE_PM);
+                lstProducts = lstProducts.Skip(pageIndex * pageSize).Take(pageSize);
             }
             var jsonData = new
             {
                 total = totalPages,
                 page,
                 records = totalRecords,
-                rows = ProdList
+                rows = lstProducts
 
             };
             return Json(jsonData, JsonRequestBehavior.AllowGet);
@@ -61,18 +60,18 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
-        public JsonResult GetAllProducts(jQueryDataTableParamModel Param)
+        public JsonResult GetAllProducts(jQueryDataTableParamModel param)
         {
-            var totalProductRecords = (from totalPRDCount in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
-                                   select totalPRDCount);
+            var totalProductRecords = (from totalPrdCount in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
+                                   select totalPrdCount);
             IEnumerable<PRODUCTMASTER> filteredProducts;
-            if (!string.IsNullOrEmpty(Param.sSearch))
+            if (!string.IsNullOrEmpty(param.sSearch))
             {
-                filteredProducts = (from totalPRDCount in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
-                                where totalPRDCount.PROD_CODE_PM.Contains(Param.sSearch) || totalPRDCount.DESCRIPTION_PM.Contains(Param.sSearch) 
-                                || totalPRDCount.CUR_QTY_PM.ToString().Contains(Param.sSearch) || totalPRDCount.RATE_PM.ToString().Contains(Param.sSearch)
-                                || totalPRDCount.SELLINGPRICE_RM.ToString().Contains(Param.sSearch) || totalPRDCount.STATUS_PM.Contains(Param.sSearch)
-                                select totalPRDCount);
+                filteredProducts = (from totalPrdCount in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
+                                where totalPrdCount.PROD_CODE_PM.Contains(param.sSearch) || totalPrdCount.DESCRIPTION_PM.Contains(param.sSearch) 
+                                || totalPrdCount.CUR_QTY_PM.ToString().Contains(param.sSearch) || totalPrdCount.RATE_PM.ToString().Contains(param.sSearch)
+                                || totalPrdCount.SELLINGPRICE_RM.ToString().Contains(param.sSearch) || totalPrdCount.STATUS_PM.Contains(param.sSearch)
+                                select totalPrdCount);
             }
             else
             {
@@ -86,31 +85,22 @@ namespace ASI.MGC.FS.Controllers
                                                             ? a.PURCHSEUNIT_PM : sortColumnIndex == 6 ? a.SALESUNIT_PM : a.STATUS_PM);
 
             var sortDirection = Request["sSortDir_0"];
-            if (sortDirection == "asc")
-            {
-                filteredProducts = filteredProducts.OrderBy(orderingFunction);
-            }
-            else
-            {
-                filteredProducts = filteredProducts.OrderByDescending(orderingFunction);
-            }
-
-
+            filteredProducts = sortDirection == "asc" ? filteredProducts.OrderBy(orderingFunction) : filteredProducts.OrderByDescending(orderingFunction);
             int totalRecords = totalProductRecords.Count();
             int totalDisplayedRecords = filteredProducts.Count();
-            var dislpayedPRDs = filteredProducts.Skip(Param.iDisplayStart)
-                                            .Take(Param.iDisplayLength);
-            var resultJobRecords = from PRD in dislpayedPRDs select new { PRD.PROD_CODE_PM, PRD.DESCRIPTION_PM, PRD.CUR_QTY_PM, PRD.RATE_PM, PRD.SELLINGPRICE_RM, PRD.PURCHSEUNIT_PM, PRD.SALESUNIT_PM, PRD.STATUS_PM};
+            var dislpayedPrDs = filteredProducts.Skip(param.iDisplayStart)
+                                            .Take(param.iDisplayLength);
+            var resultJobRecords = from prd in dislpayedPrDs select new { prd.PROD_CODE_PM, prd.DESCRIPTION_PM, prd.CUR_QTY_PM, prd.RATE_PM, prd.SELLINGPRICE_RM, prd.PURCHSEUNIT_PM, prd.SALESUNIT_PM, prd.STATUS_PM};
             return Json(new
             {
-                sEcho = Param.sEcho,
+                param.sEcho,
                 iTotalRecords = totalRecords,
                 iTotalDisplayRecords = totalDisplayedRecords,
                 aaData = resultJobRecords
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getPrdRecordByID(string prdCode)
+        public void GetPrdRecordById(string prdCode)
         {
             PRODUCTMASTER objProduct = null;
             if (!string.IsNullOrEmpty(prdCode) && !string.IsNullOrWhiteSpace(prdCode))
@@ -119,10 +109,13 @@ namespace ASI.MGC.FS.Controllers
                               where lstProducts.PROD_CODE_PM.Equals(prdCode)
                               select lstProducts).FirstOrDefault();
             }
-            return Json(new { productID = objProduct.PROD_CODE_PM, productDesc = objProduct.DESCRIPTION_PM, productRate = objProduct.RATE_PM }, JsonRequestBehavior.AllowGet);
+            if (objProduct != null)
+            {
+                Json(new { productID = objProduct.PROD_CODE_PM, productDesc = objProduct.DESCRIPTION_PM, productRate = objProduct.RATE_PM }, JsonRequestBehavior.AllowGet);
+            }
         }
 
-        public JsonResult getPrdRecordByName(string prdName)
+        public void GetPrdRecordByName(string prdName)
         {
             PRODUCTMASTER objProduct = null;
             if (!string.IsNullOrEmpty(prdName) && !string.IsNullOrWhiteSpace(prdName))
@@ -131,10 +124,13 @@ namespace ASI.MGC.FS.Controllers
                               where lstProducts.DESCRIPTION_PM.Equals(prdName)
                               select lstProducts).FirstOrDefault();
             }
-            return Json(new { productID = objProduct.PROD_CODE_PM, productDesc = objProduct.DESCRIPTION_PM, productRate = objProduct.RATE_PM }, JsonRequestBehavior.AllowGet);
+            if (objProduct != null)
+            {
+                Json(new { productID = objProduct.PROD_CODE_PM, productDesc = objProduct.DESCRIPTION_PM, productRate = objProduct.RATE_PM }, JsonRequestBehavior.AllowGet);
+            }
         }
 
-        public JsonResult getProductCodes()
+        public JsonResult GetProductCodes()
         {
             IList<string> lstPrDCode = (from productList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
                                         where productList.STATUS_PM.Equals("SP")
@@ -142,7 +138,7 @@ namespace ASI.MGC.FS.Controllers
             return Json(lstPrDCode, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getProductDetails()
+        public JsonResult GetProductDetails()
         {
             IList<string> lstPrDetail = (from productList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
                                          where productList.STATUS_PM.Equals("SP")
@@ -150,7 +146,7 @@ namespace ASI.MGC.FS.Controllers
             return Json(lstPrDetail, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getProductCodeByIP(string term)
+        public JsonResult GetProductCodeByIp(string term)
         {
             IList<string> lstPrDCode = (from productList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
                                         where productList.PROD_CODE_PM.StartsWith(term) && productList.STATUS_PM.Equals("IP")
@@ -158,7 +154,7 @@ namespace ASI.MGC.FS.Controllers
             return Json(lstPrDCode, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getProductDetailByIP(string term)
+        public JsonResult GetProductDetailByIp(string term)
         {
             IList<string> lstPrDetail = (from productList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
                                          where productList.DESCRIPTION_PM.StartsWith(term) && productList.STATUS_PM.Equals("IP")
@@ -166,7 +162,7 @@ namespace ASI.MGC.FS.Controllers
             return Json(lstPrDetail, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getUnitlist(string term)
+        public JsonResult GetUnitlist(string term)
         {
             IList<string> lstUnits = (from unitList in _unitOfWork.Repository<UNITMESSUREMENT>().Query().Get()
                                       where unitList.UNIT_UM.StartsWith(term)
@@ -193,7 +189,7 @@ namespace ASI.MGC.FS.Controllers
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
             int totalRecords = prdList.Count();
-            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+            int totalPages = (int)Math.Ceiling(totalRecords / (float)pageSize);
             if (sord.ToUpper() == "DESC")
             {
                 prdList = prdList.OrderByDescending(a => a.PROD_CODE_PM);
@@ -215,7 +211,7 @@ namespace ASI.MGC.FS.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetIPProductDetailsList(string sidx, string sord, int page, int rows, string prdCode, string prdName)
+        public JsonResult GetIpProductDetailsList(string sidx, string sord, int page, int rows, string prdCode, string prdName)
         {
             var prdList = (from products in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
                            where products.STATUS_PM.Equals("IP")
@@ -235,7 +231,7 @@ namespace ASI.MGC.FS.Controllers
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
             int totalRecords = prdList.Count();
-            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+            int totalPages = (int)Math.Ceiling(totalRecords / (float)pageSize);
             if (sord.ToUpper() == "DESC")
             {
                 prdList = prdList.OrderByDescending(a => a.PROD_CODE_PM);

@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.currPage = "Invoice Preparation";
 }
-
+@model ASI.MGC.FS.Model.AR_AP_LEDGER
 <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
 <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
@@ -55,7 +55,7 @@
                         <div class="col-md-6 form-group">
                             <label id="lblDocNo" class="control-label col-md-4 small ">Doc No.</label>
                             <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBox("DocNo", null, new { ID = "txtDocNo", Class = "form-control", @readonly = "readonly" })
+                                @Html.TextBox("DocNo", null, new { ID = "txtDocNo", @Value = ViewBag.invoiceCode, Class = "form-control", @readonly = "readonly" })
                                 @Html.ValidationMessage("DocNo")
                             </div>
                         </div>

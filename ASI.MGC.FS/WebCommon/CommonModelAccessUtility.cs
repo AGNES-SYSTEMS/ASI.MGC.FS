@@ -1,39 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Web.Mvc;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Model;
-using System.Web.Mvc;
 
 namespace ASI.MGC.FS.WebCommon
 {
     public class CommonModelAccessUtility
     {
-        static CommonModelAccessUtility()
+        public static int GetCurrMrvCount(IUnitOfWork iUnitOfWork)
         {
-
-        }
-
-        public static int getCurrMRVCount(IUnitOfWork _iUnitOfWork)
-        {
-            string currYear = System.DateTime.Now.Year.ToString();
-            int mrvCount = (from objMRV in _iUnitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
-                            where objMRV.MRVNO_MRV.EndsWith(currYear)
-                            select objMRV).Count();
+            string currYear = DateTime.Now.Year.ToString();
+            int mrvCount = (from objMrv in iUnitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                            where objMrv.MRVNO_MRV.EndsWith(currYear)
+                            select objMrv).Count();
             return mrvCount;
         }
 
-        public static int getJobMasterCount(IUnitOfWork _iUnitOfWork)
+        public static int GetJobMasterCount(IUnitOfWork iUnitOfWork)
         {
-            string currYear = System.DateTime.Now.Year.ToString();
-            int jobCount = (from objMRV in _iUnitOfWork.Repository<JOBMASTER>().Query().Get()
-                            where objMRV.JOBCODE_JM.EndsWith(currYear)
-                            select objMRV).Count();
+            string currYear = DateTime.Now.Year.ToString();
+            var jobCount = (from objMrv in iUnitOfWork.Repository<JOBMASTER>().Query().Get()
+                            where objMrv.JOBNO_JM.EndsWith(currYear)
+                            select objMrv).Count();
             return jobCount;
         }
 
-        public static IList<SelectListItem> getPaymentMethodList()
+        public static int GetCashSaleCount(IUnitOfWork iUnitOfWork)
+        {
+            string currYear = DateTime.Now.Year.ToString();
+            var cashSaleCount = (from lstBankTransaction in iUnitOfWork.Repository<BANKTRANSACTION>().Query().Get()
+                            where lstBankTransaction.DOCNUMBER_BT.Contains("RCT") && lstBankTransaction.DOCNUMBER_BT.EndsWith(currYear)
+                            select lstBankTransaction).Count();
+            return cashSaleCount;
+        }
+
+        public static int GetInvoiceCount(IUnitOfWork iUnitOfWork)
+        {
+            string currYear = DateTime.Now.Year.ToString();
+            var invoiceCount = (from lstArApLedger in iUnitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
+                                 where lstArApLedger.DOCNUMBER_ART.Contains("INV") && lstArApLedger.DOCNUMBER_ART.EndsWith(currYear)
+                                 select lstArApLedger).Count();
+            return invoiceCount;
+        }
+
+        public static IList<SelectListItem> GetPaymentMethodList()
         {
             IList<SelectListItem> lstPaymentMethods = new List<SelectListItem>();
             lstPaymentMethods.Add(new SelectListItem { Text = "Cash", Value = "Cash", Selected = true });
@@ -41,7 +53,7 @@ namespace ASI.MGC.FS.WebCommon
             return lstPaymentMethods;
         }
 
-        public static IList<SelectListItem> getSaleTypeList()
+        public static IList<SelectListItem> GetSaleTypeList()
         {
             IList<SelectListItem> lstSaleType = new List<SelectListItem>();
             lstSaleType.Add(new SelectListItem { Text = "Product", Value = "Product", Selected = true });
@@ -49,5 +61,20 @@ namespace ASI.MGC.FS.WebCommon
             return lstSaleType;
         }
 
+        public static SALEDETAIL GetSaleDetailByMrv(string mrvNumber, IUnitOfWork iUnitOfWork)
+        {
+            var objSaleDetail = (from saleDetails in iUnitOfWork.Repository<SALEDETAIL>().Query().Get()
+                                 where saleDetails.MRVNO_SD.Equals(mrvNumber)
+                                 select saleDetails).FirstOrDefault();
+            return objSaleDetail;
+        }
+
+        public static JOBMASTER GetJobDetailByMrv(string mrvNumber, IUnitOfWork iUnitOfWork)
+        {
+            var objJobMaster = (from jobMaster in iUnitOfWork.Repository<JOBMASTER>().Query().Get()
+                                 where jobMaster.MRVNO_JM.Equals(mrvNumber)
+                                 select jobMaster).FirstOrDefault();
+            return objJobMaster;
+        }
     }
 }

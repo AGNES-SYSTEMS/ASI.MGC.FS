@@ -1,16 +1,15 @@
-﻿using ASI.MGC.FS.Domain;
-using ASI.MGC.FS.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using ASI.MGC.FS.Domain;
+using ASI.MGC.FS.Model;
 
 namespace ASI.MGC.FS.Controllers
 {
     public class EmployeeMasterController : Controller
     {
-        IUnitOfWork _unitOfWork;
+        readonly IUnitOfWork _unitOfWork;
 
         public EmployeeMasterController()
         {
@@ -26,14 +25,14 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
-        public JsonResult getEmployeeIDs(string term)
+        public JsonResult GetEmployeeIDs(string term)
         {
             IList<string> lstEmpCodes = (from empList in _unitOfWork.Repository<EMPLOYEEMASTER>().Query().Get()
                                          where empList.EMPCODE_EM.Contains(term)
                                          select empList).Distinct().Select(x => x.EMPCODE_EM).ToList();
             return Json(lstEmpCodes, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult getEmployeeNames(string term)
+        public JsonResult GetEmployeeNames(string term)
         {
             IList<string> lstEmpCodes = (from empList in _unitOfWork.Repository<EMPLOYEEMASTER>().Query().Get()
                                          where empList.EMPCODE_EM.Contains(term)
@@ -41,7 +40,7 @@ namespace ASI.MGC.FS.Controllers
             return Json(lstEmpCodes, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getEmployeeDetails(string empCode, string empName)
+        public JsonResult GetEmployeeDetails(string empCode, string empName)
         {
             EMPLOYEEMASTER objEmployee = null;
             if (!string.IsNullOrEmpty(empCode) && !string.IsNullOrWhiteSpace(empCode))
@@ -78,7 +77,7 @@ namespace ASI.MGC.FS.Controllers
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
             int totalRecords = empList.Count();
-            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+            int totalPages = (int)Math.Ceiling(totalRecords / (float)pageSize);
             if (sord.ToUpper() == "DESC")
             {
                 empList = empList.OrderByDescending(a => a.EMPCODE_EM);

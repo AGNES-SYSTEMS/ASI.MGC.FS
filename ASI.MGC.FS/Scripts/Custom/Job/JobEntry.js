@@ -2,26 +2,30 @@
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liSalesEntry").addClass("active");
     $("#txtSaleDate").datepicker();
-    $('#ddlSaleType').on("change", function (e) {
-        if ($('#ddlSaleType').val() == "Product") {
+    $('#ddlSaleType').on("change", function () {
+        if ($('#ddlSaleType').val() === "Product") {
             $("#divSowCode").hide();
             $("#divSowDetail").hide();
+            $("#txtSowID").val("");
+            $("#txtSowDetail").val("");
             $("#divPrCode").show();
             $("#divPrDetail").show();
         }
-        else if ($('#ddlSaleType').val() == "SOW") {
+        else if ($('#ddlSaleType').val() === "SOW") {
             $("#divPrCode").hide();
             $("#divPrDetail").hide();
+            $("#txtPrCode").val("");
+            $("#txtPrDetail").val("");
             $("#divSowCode").show();
             $("#divSowDetail").show();
         }
     });
-    $('#ddlPayMode').on("change", function (e) {
-        var TotalAmount = $("#txtQty").val() * $("#txtPrRate").val();
-        var $finalAmount = null;
-        $("#txtPrAmount").val(TotalAmount);
-        if ($('#ddlPayMode').val() == "Cash") {
-            $finalAmount = $("#txtShipCharge").val() * 1 + TotalAmount - $("#txtDiscount").val() * 1;
+    $('#ddlPayMode').on("change", function () {
+        var totalAmount = $("#txtQty").val() * $("#txtPrRate").val();
+        var $finalAmount;
+        $("#txtPrAmount").val(totalAmount);
+        if ($('#ddlPayMode').val() === "Cash") {
+            $finalAmount = $("#txtShipCharge").val() * 1 + totalAmount - $("#txtDiscount").val() * 1;
             $("#txtCreditAmount").val("0");
             $("#txtCreditCustCode").val("");
             $("#txtCreditCustName").val("");
@@ -30,8 +34,8 @@
             $('#txtCashAmount').val($finalAmount);
             $("#divCashAmount").show();
         }
-        else if ($('#ddlPayMode').val() == "Credit") {
-            $finalAmount = $("#txtShipCharge").val() * 1 + TotalAmount - $("#txtDiscount").val() * 1;
+        else if ($('#ddlPayMode').val() === "Credit") {
+            $finalAmount = $("#txtShipCharge").val() * 1 + totalAmount - $("#txtDiscount").val() * 1;
             $("#txtCashAmount").val("0");
             $("#divCashAmount").hide();
             $('#txtCreditAmount').val($finalAmount);
@@ -40,21 +44,21 @@
         }
     });
     $("#txtQty").on("blur", function () {
-        if ($("#txtQty").val() == "") {
+        if ($("#txtQty").val() === "") {
             $("#txtQty").val("1");
         }
-        var TotalAmount = $("#txtQty").val() * $("#txtPrRate").val();
-        var $finalAmount = null;
-        $("#txtPrAmount").val(TotalAmount);
-        if ($('#ddlPayMode').val() == "Cash") {
-            $finalAmount = $("#txtShipCharge").val() - $("#txtDiscount").val() + TotalAmount;
+        var totalAmount = $("#txtQty").val() * $("#txtPrRate").val();
+        var $finalAmount;
+        $("#txtPrAmount").val(totalAmount);
+        if ($('#ddlPayMode').val() === "Cash") {
+            $finalAmount = $("#txtShipCharge").val() - $("#txtDiscount").val() + totalAmount;
             $("#txtCreditAmount").val("0");
             $("#divCreditAmount").hide();
             $('#txtCashAmount').val($finalAmount);
             $("#divCashAmount").show();
         }
-        else if ($('#ddlPayMode').val() == "Credit") {
-            $finalAmount = $("#txtShipCharge").val() - $("#txtDiscount").val() + TotalAmount;
+        else if ($('#ddlPayMode').val() === "Credit") {
+            $finalAmount = $("#txtShipCharge").val() - $("#txtDiscount").val() + totalAmount;
             $("#txtCashAmount").val("0");
             $("#divCashAmount").hide();
             $('#txtCreditAmount').val($finalAmount);
@@ -62,21 +66,21 @@
         }
     });
     $("#txtPrRate").on("blur", function () {
-        if ($("#txtPrRate").val() == "") {
+        if ($("#txtPrRate").val() === "") {
             $("#txtPrRate").val(0);
         }
-        var TotalAmount = $("#txtQty").val() * $("#txtPrRate").val();
-        var $finalAmount = null;
-        $("#txtPrAmount").val(TotalAmount);
-        if ($('#ddlPayMode').val() == "Cash") {
-            $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + TotalAmount;
+        var totalAmount = $("#txtQty").val() * $("#txtPrRate").val();
+        var $finalAmount;
+        $("#txtPrAmount").val(totalAmount);
+        if ($('#ddlPayMode').val() === "Cash") {
+            $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + totalAmount;
             $("#txtCreditAmount").val("0");
             $("#divCreditAmount").hide();
             $('#txtCashAmount').val($finalAmount);
             $("#divCashAmount").show();
         }
-        else if ($('#ddlPayMode').val() == "Credit") {
-            $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + TotalAmount;
+        else if ($('#ddlPayMode').val() === "Credit") {
+            $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + totalAmount;
             $("#txtCashAmount").val("0");
             $("#divCashAmount").hide();
             $('#txtCreditAmount').val($finalAmount);
@@ -84,21 +88,21 @@
         }
     });
     $("#txtDiscount").on("blur", function () {
-        if ($("#txtDiscount").val() == "") {
+        if ($("#txtDiscount").val() === "") {
             $("#txtDiscount").val("0");
         }
-        var TotalAmount = $("#txtQty").val() * $("#txtPrRate").val();
-        var $finalAmount = null;
-        $("#txtPrAmount").val(TotalAmount);
-        if ($('#ddlPayMode').val() == "Cash") {
-            $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + TotalAmount;
+        var totalAmount = $("#txtQty").val() * $("#txtPrRate").val();
+        var $finalAmount;
+        $("#txtPrAmount").val(totalAmount);
+        if ($('#ddlPayMode').val() === "Cash") {
+            $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + totalAmount;
             $("#divCreditAmount").val("0");
             $("#divCreditAmount").hide();
             $('#txtCashAmount').val($finalAmount);
             $("#divCashAmount").show();
         }
-        else if ($('#ddlPayMode').val() == "Credit") {
-            $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + TotalAmount;
+        else if ($('#ddlPayMode').val() === "Credit") {
+            $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + totalAmount;
             $("#divCashAmount").val("0");
             $("#divCashAmount").hide();
             $('#txtCreditAmount').val($finalAmount);
@@ -106,32 +110,32 @@
         }
     });
     $("#txtShipCharge").on("blur", function () {
-        if ($("#txtShipCharge").val() == "") {
+        if ($("#txtShipCharge").val() === "") {
             $("#txtShipCharge").val("0");
         }
-        var TotalAmount = $("#txtQty").val() * $("#txtPrRate").val();
-        var $finalAmount = null;
-        $("#txtPrAmount").val(TotalAmount);
-        if ($('#ddlPayMode').val() == "Cash") {
-            $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + TotalAmount;
+        var totalAmount = $("#txtQty").val() * $("#txtPrRate").val();
+        var $finalAmount;
+        $("#txtPrAmount").val(totalAmount);
+        if ($('#ddlPayMode').val() === "Cash") {
+            $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + totalAmount;
             $("#divCreditAmount").val("0");
             $("#divCreditAmount").hide();
             $('#txtCashAmount').val($finalAmount);
             $("#divCashAmount").show();
         }
-        else if ($('#ddlPayMode').val() == "Credit") {
-            $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + TotalAmount;
+        else if ($('#ddlPayMode').val() === "Credit") {
+            $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + totalAmount;
             $("#divCashAmount").val("0");
             $("#divCashAmount").hide();
             $('#txtCreditAmount').val($finalAmount);
             $("#divCreditAmount").show();
         }
     });
-
+    var $mrvJobStatus = "N";
     /***** Start - Adding JQGRID Code For Searching Job Number and MRV Number****/
     $("#mrvJobSearchModel").on('show.bs.modal', function () {
         $("#tblJobSearch").jqGrid({
-            url: '/Job/getJobMRVList',
+            url: '/Job/GetJobMrvList?jobStatus=' + $mrvJobStatus,
             datatype: "json",
             colNames: ['Job No', 'MRV No'],
             colModel: [
@@ -143,7 +147,7 @@
             mtype: 'GET',
             gridview: true,
             shrinkToFit: true,
-            autowidth: true,
+            autowidth:true,
             viewrecords: true,
             sortorder: "desc",
             pager: jQuery('#Pager'),
@@ -156,7 +160,6 @@
                 records: "records",
                 repeatitems: false
             },
-            autowidth: true,
             multiselect: false
         });
     });
@@ -172,32 +175,30 @@
             $("#txtJobID").val(ret.JOBNO_JM);
             $("#txtMRVNo").val(ret.MRVNO_JM);
             $('#mrvJobSearchModel').modal('toggle');
-        } else {
-
         }
         e.preventDefault();
     });
 
     $("#mrvJobSearchModel").on('hide.bs.modal', function () {
-        var _jobCode = $("#txtJobID").val();
-        var _MRVNo = $("#txtMRVNo").val();
-        if (_jobCode != "" && _MRVNo != "") {
-            var data = JSON.stringify({ JobID: _jobCode, MRVNo: _MRVNo });
+        var jobCode = $("#txtJobID").val();
+        var mrvNo = $("#txtMRVNo").val();
+        if (jobCode !== "" && mrvNo !== "") {
+            var data = JSON.stringify({ jobId: jobCode, mrvNo: mrvNo });
             $.ajax({
-                url: '/Job/GetJobMRVData',
+                url: '/Job/GetJobMrvData',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 data: data,
                 type: "POST",
-                success: function (jobMRVDetails) {
-                    $("#txtCustCode").val(jobMRVDetails.custCode);
-                    $("#txtCustName").val(jobMRVDetails.custName);
-                    $("#txtMRVProdCode").val(jobMRVDetails.prdCode);
-                    $("#txtMRVProdDetail").val(jobMRVDetails.prdDetail);
+                success: function (jobMrvDetails) {
+                    $("#txtCustCode").val(jobMrvDetails.custCode);
+                    $("#txtCustName").val(jobMrvDetails.custName);
+                    $("#txtMRVProdCode").val(jobMrvDetails.prdCode);
+                    $("#txtMRVProdDetail").val(jobMrvDetails.prdDetail);
                 },
                 complete: function () {
                 },
-                error: function (jobMRVDetails) {
+                error: function () {
                 }
             });
         }
