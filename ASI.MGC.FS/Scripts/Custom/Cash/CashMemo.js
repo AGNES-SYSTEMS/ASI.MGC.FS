@@ -108,7 +108,7 @@ function getJobDetailByMRV() {
 
 function getSaleDetailByMRV() {
     var mrvCode = $("#txtMRVNo").val();
-    var data = JSON.stringify({ MRVID: mrvCode });
+    var data = JSON.stringify({ MRVID: mrvCode, statusId: "N" });
     $.ajax({
         url: '/MRV/getSaleDetailByMRV',
         contentType: "application/json; charset=utf-8",

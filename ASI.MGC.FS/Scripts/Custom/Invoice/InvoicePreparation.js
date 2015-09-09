@@ -17,18 +17,19 @@
     jQuery("#tblSaleDetails").jqGrid({
         datatype: "local",
         height: 100,
-        colNames: ['Job No', 'PR Code', 'S W Code', 'Description', 'Qty', 'Unit', 'Rate', 'Credit Amount', 'Discount', 'Ship. Chrg'],
+        colNames: ['Sale ID','Job No', 'PR Code', 'S W Code', 'Description', 'Qty', 'Unit', 'Rate', 'Credit Amount', 'Discount', 'Ship. Chrg'],
         colModel: [
-            { name: 'JobNo', index: 'JobNo', width: 80, align: "center", sortable: false },
-            { name: 'PRCode', index: 'PRCode', width: 80, align: "center", sortable: false },
-            { name: 'SWCode', index: 'SWCode', width: 80, align: "center", sortable: false },
-            { name: 'Description', index: 'Description', width: 250, align: "left", sortable: false },
-            { name: 'Qty', index: 'Qty', width: 80, align: "center", sortable: false },
-            { name: 'Unit', index: 'Unit', width: 80, align: "center", sortable: false },
-            { name: 'Rate', index: 'Rate', width: 80, align: "center", sortable: false },
-            { name: 'CreditAmount', index: 'CreditAmount', width: 100, align: "center", sortable: false },
-            { name: 'Discount', index: 'Discount', width: 100, align: "center", sortable: false },
-            { name: 'ShipChrg', index: 'ShipChrg', width: 100, align: "center", sortable: false }
+            { name: 'SLNO_SD', index: 'SLNO_SD', width: 50, align: "center", sortable: false },
+            { name: 'JOBNO_SD', index: 'JOBNO_SD', width: 80, align: "center", sortable: false },
+            { name: 'PRCODE_SD', index: 'PRCODE_SD', width: 80, align: "center", sortable: false },
+            { name: 'JOBID_SD', index: 'JOBID_SD', width: 80, align: "center", sortable: false },
+            { name: 'Description', index: 'Description', width: 200, align: "left", sortable: false },
+            { name: 'QTY_SD', index: 'QTY_SD', width: 80, align: "center", sortable: false },
+            { name: 'UNIT_SD', index: 'UNIT_SD', width: 80, align: "center", sortable: false },
+            { name: 'RATE_SD', index: 'RATE_SD', width: 80, align: "center", sortable: false },
+            { name: 'CREDITTOTAL_SD', index: 'CREDITTOTAL_SD', width: 100, align: "center", sortable: false },
+            { name: 'DISCOUNT_SD', index: 'DISCOUNT_SD', width: 100, align: "center", sortable: false },
+            { name: 'SHIPPINGCHARGES_SD', index: 'SHIPPINGCHARGES_SD', width: 100, align: "center", sortable: false }
 
         ],
         multiselect: false,
@@ -103,7 +104,7 @@
 
     function getSaleDetailByMrv() {
         var mrvCode = $("#txtMRVNo").val();
-        var data = JSON.stringify({ MRVID: mrvCode });
+        var data = JSON.stringify({ MRVID: mrvCode,statusId:"P" });
         $.ajax({
             url: '/MRV/getSaleDetailByMRV',
             contentType: "application/json; charset=utf-8",
@@ -118,21 +119,22 @@
                 var totalShipChrg = 0;
                 for (var i = 0; i < sales.length; i++) {
                     arrMrvSaleDetails[i] = {
-                        JobNo: sales[i].JobNo, PRCode: sales[i].PRCode, SWCode: sales[i].SWCode,
-                        Description: sales[i].Description, Qty: sales[i].Qty,
-                        Unit: sales[i].Unit, Rate: sales[i].Rate, CreditAmount: sales[i].CashAmount,
-                        Discount: sales[i].Discount, ShipChrg: sales[i].ShipChrg
+                        SLNO_SD: sales[i].SaleNo, JOBNO_SD: sales[i].JobNo, PRCODE_SD: sales[i].PrCode,
+                        JOBID_SD: sales[i].SwCode, Description: sales[i].Description, QTY_SD: sales[i].Qty,
+                        UNIT_SD: sales[i].Unit, RATE_SD: sales[i].Rate, CREDITTOTAL_SD: sales[i].CashAmount,
+                        DISCOUNT_SD: sales[i].Discount, SHIPPINGCHARGES_SD: sales[i].ShipChrg
                     };
-                    netAmount = netAmount + arrMrvSaleDetails[i]["CreditAmount"];
-                    totalDiscount = totalDiscount + arrMrvSaleDetails[i]["Discount"];
-                    totalShipChrg = totalShipChrg + arrMrvSaleDetails[i]["ShipChrg"];
+                    netAmount = netAmount + arrMrvSaleDetails[i]["CREDITTOTAL_SD"];
+                    totalDiscount = totalDiscount + arrMrvSaleDetails[i]["DISCOUNT_SD"];
+                    totalShipChrg = totalShipChrg + arrMrvSaleDetails[i]["SHIPPINGCHARGES_SD"];
                     $("#txtTotalCreditAmount").val(netAmount);
                     $("#txtNetAmount").val(netAmount);
                     $("#txtTotalDiscount").val(totalDiscount);
                     $("#txtTotalShipCharges").val(totalShipChrg);
                     jQuery("#tblSaleDetails").jqGrid('addRowData', i + 1, arrMrvSaleDetails[i]);
                 }
-
+                var jsonMrvPrds = JSON.stringify(arrMrvSaleDetails);
+                $('#hdnSaleDetail').val(jsonMrvPrds);
             },
             complete: function () {
             },

@@ -98,6 +98,8 @@ namespace ASI.MGC.FS.Controllers
                 objInvoiceDetail.AMOUNT_INVNO = (objInvoiceDetail.QTY_INVD*objInvoiceDetail.RATE_INVD);
                 objInvoiceDetail.JOBNO_INVD = sale.JOBNO_SD;
                 objInvoiceDetail.UNIT_INVD = sale.UNIT_SD;
+                _unitOfWork.Repository<INVDETAIL>().Insert(objInvoiceDetail);
+                _unitOfWork.Save();
 
                 var objSaleDetails = _unitOfWork.Repository<SALEDETAIL>().FindByID(sale.SLNO_SD);
                 objSaleDetails.CASHRVNO_SD = Convert.ToString(cashMemoNumber);

@@ -127,12 +127,12 @@ namespace ASI.MGC.FS.Controllers
                 JobData = jobData
             }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetSaleDetailByMrv(string mrvid)
+        public JsonResult GetSaleDetailByMrv(string mrvid, string statusId)
         {
             IList<CustomSaleDetails> lstSales = new List<CustomSaleDetails>();
 
             var lstSaleDetails = (from saleDetails in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
-                where saleDetails.MRVNO_SD.Equals(mrvid) && saleDetails.STATUS_SD.Equals("N")
+                where saleDetails.MRVNO_SD.Equals(mrvid) && saleDetails.STATUS_SD.Equals(statusId)
                 select saleDetails).ToList();
             foreach (var sale in lstSaleDetails)
             {
