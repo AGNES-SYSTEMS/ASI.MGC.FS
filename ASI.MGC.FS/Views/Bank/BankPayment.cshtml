@@ -3,6 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.currPage = "Bank Payment";
 }
+@model ASI.MGC.FS.Model.BANKTRANSACTION
 <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
 <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
@@ -25,19 +26,20 @@
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
+                        <input id="hdnAllocDetails" name="allocDetails" type="hidden" />
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label id="lblDocType" class="control-label col-md-4 small ">Doc Type:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DocType", null, new { ID = "txtDocType", Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBox("DocType", null, new { ID = "txtDocType", Class = "form-control", @Value = "BPA", @readonly = "readonly" })
                                     @Html.ValidationMessage("DocType")
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblDocNo" class="control-label col-md-4 small ">Doc No:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DocNo", null, new { ID = "txtDocNo", Class = "form-control" })
-                                    @Html.ValidationMessage("DocNo")
+                                    @Html.TextBoxFor(m => m.DOCNUMBER_BT, null, new { ID = "txtDocNo", Class = "form-control", @Value = ViewBag.BPACode, @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(m => m.DOCNUMBER_BT)
                                 </div>
                             </div>
                         </div>
@@ -45,14 +47,14 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblDocDetails" class="control-label col-md-4 small ">Doc Details:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DocDetails", null, new { ID = "txtDocDetails", Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBox("DocDetails", null, new { ID = "txtDocDetails", Class = "form-control", @Value = "BANK PAYMENTS", @readonly = "readonly" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblDocDate" class="control-label col-md-4 small ">Doc Date:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DocDate", null, new { ID = "txtDocDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control datepicker" })
-                                    @Html.ValidationMessage("DocDate")
+                                    @Html.TextBoxFor(m => m.DOCDATE_BT, null, new { ID = "txtDocDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control datepicker" })
+                                    @Html.ValidationMessageFor(m => m.DOCDATE_BT)
                                 </div>
                             </div>
                         </div>
@@ -61,8 +63,8 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblBankCode" class="control-label col-md-4 small ">Bank Code:</label>
                                 <div class="col-md-7 paddingLeftRight0">
-                                    @Html.TextBox("BankCode", null, new { ID = "txtBankCode", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessage("BankCode")
+                                    @Html.TextBoxFor(m => m.BANKCODE_BT, null, new { ID = "txtBankCode", Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(m => m.BANKCODE_BT)
                                 </div>
                                 <button type="button" id="btnBankSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#BankSearchModel">
                                     <i class="fa fa-search"></i>
@@ -71,8 +73,8 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblGLDate" class="control-label col-md-4 small ">GL Date:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("GLDate", null, new { ID = "txtGLDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control" })
-                                    @Html.ValidationMessage("GLDate")
+                                    @Html.TextBoxFor(m => m.GLDATE_BT, null, new { ID = "txtGLDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.GLDATE_BT)
                                 </div>
                             </div>
                         </div>
@@ -87,8 +89,8 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblotherRef" class="control-label col-md-4 small ">Other Ref</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("OtherRef", null, new { ID = "txtOtherRef", Class = "form-control" })
-                                    @Html.ValidationMessage("OtherRef")
+                                    @Html.TextBoxFor(m => m.OTHERREF_BT, null, new { ID = "txtOtherRef", Class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.OTHERREF_BT)
                                 </div>
                             </div>
                         </div>
@@ -96,15 +98,15 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblAmount" class="control-label col-md-4 small ">Amount</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("BRAmount", null, new { ID = "txtBRAmount", Class = "form-control" })
-                                    @Html.ValidationMessage("BRAmount")
+                                    @Html.TextBoxFor(m => m.CREDITAMOUT_BT, null, new { ID = "txtBRAmount", Class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.CREDITAMOUT_BT)
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblReceiveFrom" class="control-label col-md-4 small ">Paid To</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("PaidTo", null, new { ID = "txtPaidTo", Class = "form-control" })
-                                    @Html.ValidationMessage("PaidTo")
+                                    @Html.TextBoxFor(m => m.NOTE_BT, null, new { ID = "txtPaidTo", Class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.NOTE_BT)
                                 </div>
                             </div>
                         </div>
@@ -112,13 +114,13 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblNarration" class="control-label col-md-4 small ">Narration</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("BRNarration", null, new { ID = "txtBRNarration", Class = "form-control" })
+                                    @Html.TextBoxFor(m => m.NARRATION_BT, null, new { ID = "txtBRNarration", Class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblChequeNo" class="control-label col-md-4 small ">Cheque No</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("ChequeNo", null, new { ID = "txtChequeNo", Class = "form-control" })
+                                    @Html.TextBoxFor(m => m.CHQNO_BT, null, new { ID = "txtChequeNo", Class = "form-control" })
                                 </div>
                             </div>
                         </div>
@@ -126,13 +128,13 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblChequeDate" class="control-label col-md-4 small ">Cheque Date</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("ChequeDate", null, new { ID = "txtChequeDate", Class = "form-control" })
+                                    @Html.TextBoxFor(m => m.CHQDATE_BT, null, new { ID = "txtChequeDate", Class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblClearanceDate" class="control-label col-md-4 small ">Clearance Date</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("ClearanceDate", null, new { ID = "txtClearanceDate", Class = "form-control" })
+                                    @Html.TextBoxFor(m => m.CLEARANCEDATE_BT, null, new { ID = "txtClearanceDate", Class = "form-control" })
                                 </div>
                             </div>
                         </div>
@@ -140,13 +142,13 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblBeneBr" class="control-label col-md-4 small ">Bene Br.</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("BeneBr", null, new { ID = "txtBeneBr", Class = "form-control" })
+                                    @Html.TextBoxFor(m => m.BENACCOUNT_BT, null, new { ID = "txtBeneBr", Class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblDrwBenNo" class="control-label col-md-4 small ">Drw AC No</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DrwBenNo", null, new { ID = "txtBenACNo", Class = "form-control" })
+                                    @Html.TextBoxFor(m => m.BENACNO_BT, null, new { ID = "txtBenACNo", Class = "form-control" })
                                 </div>
                             </div>
                         </div>
@@ -188,55 +190,6 @@
             </div>
         </fieldset>
     </div>
-    <div id="AllocationDetailsAdd" title="Add Product" style="display:none;">
-        <div class="row">
-            <div class="col-md-6 form-group">
-                <label id="lblPrCode" for="prcode" class="control-label col-md-4 small ">AL Code:</label>
-                <div class="col-md-8 paddingLeftRight0">
-                    @Html.TextBox("AlCode", null, new { ID = "txtAlCode", Class = "form-control" })
-                </div>
-            </div>
-            <div class="col-md-6 form-group">
-                <label id="lblPrDesc" for="prdesc" class="control-label col-md-4 small ">Account Code:</label>
-                <div class="col-md-8 paddingLeftRight0">
-                    @Html.TextBox("AccountCode", null, new { ID = "txtAccountCode", Class = "form-control" })
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 form-group">
-                <label id="lblJobID" for="jobid" class="control-label col-md-4 small ">Account Description:</label>
-                <div class="col-md-8 paddingLeftRight0">
-                    @Html.TextBox("AccountDesc", null, new { ID = "txtAccountDesc", Class = "form-control" })
-                </div>
-            </div>
-            <div class="col-md-6 form-group">
-                <label id="lblJobDesc" for="jobdesc" class="control-label col-md-4 small ">Amount:</label>
-                <div class="col-md-8 paddingLeftRight0">
-                    @Html.TextBox("Amount", null, new { ID = "txtAmount", Class = "form-control" })
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 form-group">
-                <label id="lblQuantity" for="quantity" class="control-label col-md-4 small ">Narration:</label>
-                <div class="col-md-8 paddingLeftRight0">
-                    @Html.TextBox("Narration", null, new { ID = "txtNarration", Class = "form-control" })
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 form-group">
-            </div>
-            <div class="col-md-6 form-group">
-                <div class="col-md-8 paddingLeftRight0">
-                    <label></label>
-                    <button type="submit" id="btnSubmit" class="btn btn-success col-md-3 pull-right">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>
 <div class="container">
     <div class="modal fade" id="allocationDetailsModel" tabindex="-1" role="dialog" aria-labelledby="allocationDetailsModelLabel" aria-hidden="true">
@@ -259,7 +212,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <label id="lblAlCode" for="AlCode" class="control-label col-md-4 small ">AL Code:</label>
+                                <label class="control-label col-md-4 small ">AL Code:</label>
                                 <div class="col-md-7 paddingLeftRight0">
                                     <input type="text" name="AlCode" id="txtAlCode" data-fv-notempty="true" class="form-control" readonly required />
                                 </div>
@@ -268,7 +221,7 @@
                                 </button>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label id="lblAlDesc" for="AlDesc" class="control-label col-md-4 small ">AL Description:</label>
+                                <label class="control-label col-md-4 small ">AL Description:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     <input type="text" name="AlDesc" id="txtAlDesc" data-fv-notempty="true" class="form-control" readonly required />
                                 </div>
@@ -276,7 +229,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <label id="lblAccountCode" for="AccountCode" class="control-label col-md-4 small ">Account Code:</label>
+                                <label class="control-label col-md-4 small ">Account Code:</label>
                                 <div class="col-md-7 paddingLeftRight0">
                                     <input type="text" name="AccountCode" data-fv-notempty="true" id="txtAccountCode" class="form-control" readonly required />
                                 </div>
@@ -285,7 +238,7 @@
                                 </button>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label id="lblAccountDesc" for="AccountDesc" class="control-label col-md-4 small ">Account Description:</label>
+                                <label class="control-label col-md-4 small ">Account Description:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     <input type="text" name="AccountDesc" id="txtAccountDesc" data-fv-notempty="true" class="form-control" readonly required />
                                 </div>
@@ -293,13 +246,13 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <label id="lblAmount" for="Amount" class="control-label col-md-4 small ">Amount:</label>
+                                <label class="control-label col-md-4 small ">Amount:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     <input type="text" name="Amount" id="txtAmount" data-fv-notempty="true" pattern="\d{1,5}" class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label id="lblNarration" for="Narration" class="control-label col-md-4 small ">Narration:</label>
+                                <label class="control-label col-md-4 small ">Narration:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     <input type="text" name="Narration" id="txtNarration" class="form-control" />
                                 </div>

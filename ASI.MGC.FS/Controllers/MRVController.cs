@@ -132,8 +132,8 @@ namespace ASI.MGC.FS.Controllers
             IList<CustomSaleDetails> lstSales = new List<CustomSaleDetails>();
 
             var lstSaleDetails = (from saleDetails in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
-                where saleDetails.MRVNO_SD.Equals(mrvid) && saleDetails.STATUS_SD.Equals(statusId)
-                select saleDetails).ToList();
+                                  where saleDetails.MRVNO_SD.Equals(mrvid) && saleDetails.STATUS_SD.Equals(statusId)
+                                  select saleDetails).ToList();
             foreach (var sale in lstSaleDetails)
             {
                 CustomSaleDetails objSales = new CustomSaleDetails

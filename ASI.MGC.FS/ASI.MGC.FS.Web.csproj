@@ -188,6 +188,7 @@
     <Compile Include="Models\AccountViewModels.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\CustomAllocationDetails.cs" />
     <Compile Include="Models\CustomSaleDetails.cs" />
     <Compile Include="Models\IdentityModels.cs">
       <SubType>Code</SubType>

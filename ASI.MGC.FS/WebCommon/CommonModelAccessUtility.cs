@@ -11,37 +11,37 @@ namespace ASI.MGC.FS.WebCommon
     {
         public static int GetCurrMrvCount(IUnitOfWork iUnitOfWork)
         {
-            string currYear = DateTime.Now.Year.ToString();
-            int mrvCount = (from objMrv in iUnitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+            var currYear = DateTime.Now.Year.ToString();
+            var mrvCount = (from objMrv in iUnitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
                             where objMrv.MRVNO_MRV.EndsWith(currYear)
-                            select objMrv).Count();
+                            select objMrv.MRVNO_MRV).Distinct().Count();
             return mrvCount;
         }
 
         public static int GetJobMasterCount(IUnitOfWork iUnitOfWork)
         {
-            string currYear = DateTime.Now.Year.ToString();
+            var currYear = DateTime.Now.Year.ToString();
             var jobCount = (from objMrv in iUnitOfWork.Repository<JOBMASTER>().Query().Get()
                             where objMrv.JOBNO_JM.EndsWith(currYear)
-                            select objMrv).Count();
+                            select objMrv.JOBNO_JM).Distinct().Count();
             return jobCount;
         }
 
         public static int GetCashSaleCount(IUnitOfWork iUnitOfWork)
         {
-            string currYear = DateTime.Now.Year.ToString();
+            var currYear = DateTime.Now.Year.ToString();
             var cashSaleCount = (from lstBankTransaction in iUnitOfWork.Repository<BANKTRANSACTION>().Query().Get()
-                            where lstBankTransaction.DOCNUMBER_BT.Contains("RCT") && lstBankTransaction.DOCNUMBER_BT.EndsWith(currYear)
-                            select lstBankTransaction).Count();
+                                 where lstBankTransaction.DOCNUMBER_BT.Contains("RCT") && lstBankTransaction.DOCNUMBER_BT.EndsWith(currYear)
+                                 select lstBankTransaction.DOCNUMBER_BT).Distinct().Count();
             return cashSaleCount;
         }
 
         public static int GetInvoiceCount(IUnitOfWork iUnitOfWork)
         {
-            string currYear = DateTime.Now.Year.ToString();
+            var currYear = DateTime.Now.Year.ToString();
             var invoiceCount = (from lstArApLedger in iUnitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
-                                 where lstArApLedger.DOCNUMBER_ART.Contains("INV") && lstArApLedger.DOCNUMBER_ART.EndsWith(currYear)
-                                 select lstArApLedger).Count();
+                                where lstArApLedger.DOCNUMBER_ART.Contains("INV") && lstArApLedger.DOCNUMBER_ART.EndsWith(currYear)
+                                select lstArApLedger.DOCNUMBER_ART).Distinct().Count();
             return invoiceCount;
         }
 
@@ -72,9 +72,27 @@ namespace ASI.MGC.FS.WebCommon
         public static JOBMASTER GetJobDetailByMrv(string mrvNumber, IUnitOfWork iUnitOfWork)
         {
             var objJobMaster = (from jobMaster in iUnitOfWork.Repository<JOBMASTER>().Query().Get()
-                                 where jobMaster.MRVNO_JM.Equals(mrvNumber)
-                                 select jobMaster).FirstOrDefault();
+                                where jobMaster.MRVNO_JM.Equals(mrvNumber)
+                                select jobMaster).FirstOrDefault();
             return objJobMaster;
+        }
+
+        public static int GetBankReceiptCount(IUnitOfWork iUnitOfWork)
+        {
+            var currYear = DateTime.Now.Year.ToString();
+            var brvCount = (from objMrv in iUnitOfWork.Repository<BANKTRANSACTION>().Query().Get()
+                            where objMrv.DOCNUMBER_BT.Contains("BRV") && objMrv.DOCNUMBER_BT.EndsWith(currYear)
+                            select objMrv.DOCNUMBER_BT).Distinct().Count();
+            return brvCount;
+        }
+
+        public static int GetBankPaymentCount(IUnitOfWork iUnitOfWork)
+        {
+            var currYear = DateTime.Now.Year.ToString();
+            var bpaCount = (from objMrv in iUnitOfWork.Repository<BANKTRANSACTION>().Query().Get()
+                            where objMrv.DOCNUMBER_BT.Contains("BPA") && objMrv.DOCNUMBER_BT.EndsWith(currYear)
+                            select objMrv.DOCNUMBER_BT).Distinct().Count();
+            return bpaCount;
         }
     }
 }

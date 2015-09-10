@@ -9,15 +9,50 @@
         height: 150,
         colNames: ['AL Code', 'Account Code', 'Account Description', 'Amount', 'Narration'],
         colModel: [
-            { name: 'ALLCODE_VCD', index: 'ALLCODE_VCD', width: 150, align: "center", sortable: false },
-            { name: 'ACCODE_VCD', index: 'ACCODE_VCD', width: 150, align: "left", sortable: false },
-            { name: 'ACDESCRIPTION_VCD', index: 'ACDESCRIPTION_VCD', width: 320, align: "center", sortable: false },
-            { name: 'AMOUNT_VCD', index: 'AMOUNT_VCD', width: 150, align: "left", sortable: false },
-            { name: 'NARRATION_VCD', index: 'NARRATION_VCD', width: 300, align: "right", sortable: false }
+            { name: 'AlCode', index: 'AlCode', width: 150, align: "center", sortable: false },
+            { name: 'AccountCode', index: 'AccountCode', width: 150, align: "left", sortable: false },
+            { name: 'Description', index: 'Description', width: 320, align: "center", sortable: false },
+            { name: 'Amount', index: 'Amount', width: 150, align: "right", sortable: false },
+            { name: 'Narration', index: 'Narration', width: 300, align: "left", sortable: false }
         ],
         multiselect: false,
         caption: "Allocation Details"
     });
+    var counter = 0;
+    function populateAccountGrid() {
+        jQuery("#tblAccountSearch").jqGrid({
+            url: '/AllocationMaster/GetAccountDetailsList?accountType=' + $("#txtAlCode").val(),
+            datatype: "json",
+            colNames: ['Account Code', 'Account Description'],
+            colModel: [
+                { name: 'AccountCode', index: 'AccountCode', width: 400 },
+                { name: 'AccountDetail', index: 'AccountDetail', width: 400 }
+            ],
+            rowNum: 20,
+            rowList: [20, 30, 40],
+            mtype: 'GET',
+            gridview: true,
+            shrinkToFit: true,
+            viewrecords: true,
+            sortorder: "asc",
+            pager: jQuery('#accPager'),
+            caption: "Allocation Master List",
+            emptyrecords: "No Data to Display",
+            jsonReader: {
+                root: "rows",
+                page: "page",
+                total: "total",
+                records: "records",
+                repeatitems: false
+            },
+            autowidth: true,
+            multiselect: false
+        });
+        $(window).resize(function () {
+            var outerwidth = $('#accgrid').width();
+            $('#tblAccountSearch').setGridWidth(outerwidth);
+        });
+    }
     $('#btnAlCodeSearch').click(function () {
         $('#alCodeSearchModel').modal({
             show: true
@@ -64,7 +99,6 @@
                 records: "records",
                 repeatitems: false
             },
-            autowidth: true,
             multiselect: false
         });
         $(window).resize(function () {
@@ -73,39 +107,7 @@
         });
     });
     $("#accountSearchModel").on('show.bs.modal', function () {
-        jQuery("#tblAccountSearch").jqGrid({
-            url: '/AllocationMaster/GetAccountDetailsList?accountType=' + $("#txtAlCode").val(),
-            datatype: "json",
-            colNames: ['Account Code', 'Account Description'],
-            colModel: [
-                { name: 'AccountCode', index: 'AccountCode', width: 400 },
-                { name: 'AccountDetail', index: 'AccountDetail', width: 400 }
-            ],
-            rowNum: 20,
-            rowList: [20, 30, 40],
-            mtype: 'GET',
-            gridview: true,
-            shrinkToFit: true,
-            autowidth: true,
-            viewrecords: true,
-            sortorder: "asc",
-            pager: jQuery('#accPager'),
-            caption: "Allocation Master List",
-            emptyrecords: "No Data to Display",
-            jsonReader: {
-                root: "rows",
-                page: "page",
-                total: "total",
-                records: "records",
-                repeatitems: false
-            },
-            autowidth: true,
-            multiselect: false
-        });
-        $(window).resize(function () {
-            var outerwidth = $('#accgrid').width();
-            $('#tblAccountSearch').setGridWidth(outerwidth);
-        });
+        populateAccountGrid();
     });
     $("#btnAlCodeSelect").on("click", function (e) {
         var id = jQuery("#tblAlCodeSearch").jqGrid('getGridParam', 'selrow');
@@ -130,6 +132,17 @@
     $("#txtAlCode").on("change", function () {
         $("#btnAccountSearch").prop('disabled', false);
         $("#allocationDetailsModelform").formValidation('revalidateField', 'AlCode');
+        if (counter > 0) {
+            counter += 1;
+            $('#tblAccountSearch').setGridParam({ url: '/AllocationMaster/GetAccountDetailsList?accountType=' + $("#txtAlCode").val() });
+            $('#tblAccountSearch').jqGrid('GridUnload');
+        } else {
+            counter += 1;
+        }
+        $("#txtAccountCode").val("");
+        $("#txtAccountDesc").val("");
+        $("#txtAmount").val("");
+        $("#txtNarration").val("");
     });
     $("#txtAlDesc").on("change", function () {
         $("#allocationDetailsModelform").formValidation('revalidateField', 'AlDesc');
@@ -191,18 +204,17 @@
         $("#allocationDetailsModelform").formValidation('revalidateField', 'BankName');
     });
     $('#txtChequeDate').on("blur", function () {
-        if ($('#txtChequeDate').val() == "")
-        {
+        if ($('#txtChequeDate').val() === "") {
             var currDate = new Date();
             currDate = (currDate.getMonth() + 1) + '/' + currDate.getDate() + '/' + currDate.getFullYear();
-            $('#txtChequeDate').val(currDate)
+            $('#txtChequeDate').val(currDate);
         }
     });
     $('#txtClearanceDate').on("blur", function () {
-        if ($('#txtClearanceDate').val() == "") {
+        if ($('#txtClearanceDate').val() === "") {
             var currDate = new Date();
             currDate = (currDate.getMonth() + 1) + '/' + currDate.getDate() + '/' + currDate.getFullYear();
-            $('#txtClearanceDate').val(currDate)
+            $('#txtClearanceDate').val(currDate);
         }
     });
     function clearModalForm() {
@@ -212,16 +224,17 @@
         $("#txtAccountDesc").val("");
         $("#txtAmount").val("");
         $("#txtNarration").val("");
+        $("#btnAccountSearch").prop('disabled', true);
     }
     $("#allocationDetailsModel").on('hide.bs.modal', function () {
         clearModalForm();
         var totalGridPrdAmount = 0.0;
-        for (i = 0; i < arrAllocDetails.length; i++) {
-            totalGridPrdAmount += parseFloat(arrAllocDetails[i]["AMOUNT_VCD"]);
+        for (var i = 0; i < arrAllocDetails.length; i++) {
+            totalGridPrdAmount += parseFloat(arrAllocDetails[i]["Amount"]);
         }
         $("#txtAllocationTotal").val(totalGridPrdAmount);
     });
-    $("#btnCancel").click(function (e) {
+    $("#btnCancel").click(function () {
         clearModalForm();
     });
     $("#btnSave").click(function (e) {
@@ -229,8 +242,8 @@
             e.preventDefault();
             var arrIndex = arrAllocDetails.length;
             arrAllocDetails[arrIndex] = {
-                ALLCODE_VCD: $("#txtAlCode").val(), ACCODE_VCD: $("#txtAccountCode").val(), ACDESCRIPTION_VCD: $("#txtAccountDesc").val(),
-                AMOUNT_VCD: $("#txtAmount").val(), NARRATION_VCD: $("#txtNarration").val()
+                AlCode: $("#txtAlCode").val(), AccountCode: $("#txtAccountCode").val(), Description: $("#txtAccountDesc").val(),
+                Amount: $("#txtAmount").val(), Narration: $("#txtNarration").val()
             };
             var su = jQuery("#tblAllocDetails").jqGrid('addRowData', arrIndex, arrAllocDetails[arrIndex]);
             if (su) {
