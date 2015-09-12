@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Model;
+using Microsoft.Ajax.Utilities;
 
 namespace ASI.MGC.FS.WebCommon
 {
@@ -77,22 +78,5 @@ namespace ASI.MGC.FS.WebCommon
             return objJobMaster;
         }
 
-        public static int GetBankReceiptCount(IUnitOfWork iUnitOfWork)
-        {
-            var currYear = DateTime.Now.Year.ToString();
-            var brvCount = (from objMrv in iUnitOfWork.Repository<BANKTRANSACTION>().Query().Get()
-                            where objMrv.DOCNUMBER_BT.Contains("BRV") && objMrv.DOCNUMBER_BT.EndsWith(currYear)
-                            select objMrv.DOCNUMBER_BT).Distinct().Count();
-            return brvCount;
-        }
-
-        public static int GetBankPaymentCount(IUnitOfWork iUnitOfWork)
-        {
-            var currYear = DateTime.Now.Year.ToString();
-            var bpaCount = (from objMrv in iUnitOfWork.Repository<BANKTRANSACTION>().Query().Get()
-                            where objMrv.DOCNUMBER_BT.Contains("BPA") && objMrv.DOCNUMBER_BT.EndsWith(currYear)
-                            select objMrv.DOCNUMBER_BT).Distinct().Count();
-            return bpaCount;
-        }
     }
 }

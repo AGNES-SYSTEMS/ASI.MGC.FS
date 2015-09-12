@@ -20,7 +20,7 @@
                         <a class="navbar-brand" href="#"><i class="fa fa-cubes"></i> <strong>Mahboob Electrical Services</strong></a>
                     </div>
                     <!-- end:navbar-header -->
-                    <ul class="nav navbar-nav navbar-left top-menu">
+                    @*<ul class="nav navbar-nav navbar-left top-menu">
                         <!-- start dropdown 1 -->
                         <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -216,7 +216,7 @@
                             </ul>
                         </li>
                         <!-- end dropdown 3 -->
-                    </ul>
+                    </ul>*@
                     @{
                         if (Request.IsAuthenticated)
                         {
@@ -239,7 +239,7 @@
                         }
                         else
                         {
-                            
+
                             Response.Redirect("~/AccountManagement/LogIn");
                         }
                     }
@@ -559,6 +559,7 @@
                                             </ul>
                                         </li>
                                     </ul>
+                            </ul>
                         </div>
                         <!--End - Main Header Menu-->
                         <!--Start - Quick Links Header -->
@@ -630,8 +631,8 @@
                                 </li>
                                 <li id="liCashPayments">
                                     <a href="@Href("~/Cash/CashPayments")">
-                                        <div class="t;ext-center">
-                                            <i class="fa fa-check fa-3x"></i><br>
+                                        <div class="text-center">
+                                            <i class="fa fa-check-square-o fa-3x"></i><br>
                                             Cash Pay
                                         </div>
                                     </a>

@@ -24,6 +24,7 @@ namespace ASI.MGC.FS.Models
 
     public class UserRegistartionViewModal
     {
+        private const string Pattern = @"^[a-zA-Z][a-zA-Z0-9]{5,11}$";
         [Required]
         [StringLength(250)]
         [RegularExpression(@"^[a-zA-Z\s]+$")]
@@ -38,7 +39,7 @@ namespace ASI.MGC.FS.Models
 
         [Required]
         [StringLength(250)]
-        [RegularExpression(@"/^[a-zA-Z0-9_\.]+$/")]
+        [RegularExpression(Pattern)]
         public string UserName { get; set; }
 
         [Required]

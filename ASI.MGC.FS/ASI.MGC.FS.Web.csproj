@@ -168,6 +168,7 @@
     <Compile Include="Controllers\BankController.cs" />
     <Compile Include="Controllers\CashController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\DocumentMasterController.cs" />
     <Compile Include="Controllers\EmployeeMasterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
@@ -327,6 +328,8 @@
     <Content Include="Scripts\Custom\Bank\BankPayment.js" />
     <Content Include="Scripts\Custom\Bank\BankReceipt.js" />
     <Content Include="Scripts\Custom\Cash\CashMemo.js" />
+    <Content Include="Scripts\Custom\Cash\CashPayment.js" />
+    <Content Include="Scripts\Custom\Cash\CashReceipt.js" />
     <Content Include="Scripts\Custom\Invoice\InvoicePreparation.js" />
     <Content Include="Scripts\Custom\Job\JobEntry.js" />
     <Content Include="Scripts\Custom\MRV\MRVCreation.js" />
@@ -433,18 +436,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\MRV\MRVCreation.cshtml" />
@@ -481,6 +472,7 @@
     <Content Include="Views\Invoice\Index.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Purchase\Index.cshtml" />
+    <Content Include="Views\DocumentMaster\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

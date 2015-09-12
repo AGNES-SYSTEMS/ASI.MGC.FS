@@ -6,7 +6,6 @@ using System.Web.Script.Serialization;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Model;
 using ASI.MGC.FS.Models;
-using ASI.MGC.FS.WebCommon;
 
 namespace ASI.MGC.FS.Controllers
 {
@@ -25,20 +24,12 @@ namespace ASI.MGC.FS.Controllers
 
         public ActionResult BankReceipt()
         {
-            var brvCountCode = (1001 + CommonModelAccessUtility.GetBankReceiptCount(_unitOfWork));
-            var currYear = DateTime.Now.Year.ToString();
-            var brvCode = "BRV/" + Convert.ToString(brvCountCode) + "/" + currYear;
-            ViewBag.BRVCode = brvCode;
             var objBankTransaction = new BANKTRANSACTION();
             return View(objBankTransaction);
         }
 
         public ActionResult BankPayment()
         {
-            var brvCountCode = (1001 + CommonModelAccessUtility.GetBankPaymentCount(_unitOfWork));
-            var currYear = DateTime.Now.Year.ToString();
-            var bpaCode = "BPA/" + Convert.ToString(brvCountCode) + "/" + currYear;
-            ViewBag.BPACode = bpaCode;
             var objBankTransaction = new BANKTRANSACTION();
             return View(objBankTransaction);
         }

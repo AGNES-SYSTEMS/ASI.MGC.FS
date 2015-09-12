@@ -1,4 +1,6 @@
 ﻿$(document).ready(function () {
+    $("#quickLinks").children("li.active").removeClass("active");
+    $("#liBankReceipt").addClass("active");
     var arrAllocDetails = [];
     $('#txtDocDate').datepicker();
     $('#txtGLDate').datepicker();
@@ -17,6 +19,10 @@
         ],
         multiselect: false,
         caption: "Allocation Details"
+    });
+    $(window).resize(function () {
+        var outerwidth = $('#grid').width();
+        $('#tblAllocDetails').setGridWidth(outerwidth);
     });
     var counter = 0;
     function populateAccountGrid() {
@@ -71,6 +77,74 @@
     $(window).resize(function () {
         var outerwidth = $('#grid').width();
         $('#tblAllocDetails').setGridWidth(outerwidth);
+    });
+    $("#docTypeSearchModel").on('show.bs.modal', function () {
+        var $docType = "BRV";
+        $("#tblDocSearch").jqGrid({
+            url: '/DocumentMaster/GetByDocType?docType=' + $docType,
+            datatype: "json",
+            colNames: ['Document Type', 'Document Name'],
+            colModel: [
+            { key: true, name: 'DOCABBREVIATION_DM', index: 'DOCABBREVIATION_DM', width: 400 },
+            { key: false, name: 'DESCRIPTION_DM', index: 'DESCRIPTION_DM', width: 400 }],
+            rowNum: 20,
+            rowList: [20, 30, 40],
+            mtype: 'GET',
+            gridview: true,
+            shrinkToFit: true,
+            autowidth: true,
+            viewrecords: true,
+            sortorder: "asc",
+            pager: jQuery('#docPager'),
+            caption: "Bank Details List",
+            emptyrecords: "No Data to Display",
+            jsonReader: {
+                root: "rows",
+                page: "page",
+                total: "total",
+                records: "records",
+                repeatitems: false
+            },
+            multiselect: false
+        });
+        $(window).resize(function () {
+            var outerwidth = $('#docGrid').width();
+            $('#tblDocSearch').setGridWidth(outerwidth);
+        });
+    });
+    $("#docTypeSearchModel").on('hide.bs.modal', function () {
+        var docType = $("#txtDocType").val();
+        var data = JSON.stringify({ docType: docType });
+        $.ajax({
+            url: '/DocumentMaster/GetDocNo',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: data,
+            type: "POST",
+            success: function (docNumber) {
+                $("#txtDocNo").val(docNumber);
+            },
+            complete: function () {
+            },
+            error: function () {
+            }
+        });
+    });
+    $("#btnDocSelect").on("click", function (e) {
+        var id = jQuery("#tblDocSearch").jqGrid('getGridParam', 'selrow');
+        if (id) {
+            var ret = jQuery("#tblDocSearch").jqGrid('getRowData', id);
+            $("#txtDocType").val(ret.DOCABBREVIATION_DM).change();
+            $("#txtDocDetails").val(ret.DESCRIPTION_DM).change();
+            $('#docTypeSearchModel').modal('toggle');
+        }
+        e.preventDefault();
+    });
+    $("#txtDocType").on("change", function () {
+        $("#formBankReceipt").formValidation('revalidateField', 'DocType');
+    });
+    $("#txtDocDetails").on("change", function () {
+        $("#formBankReceipt").formValidation('revalidateField', 'DocDetails');
     });
     $("#alCodeSearchModel").on('show.bs.modal', function () {
         jQuery("#tblAlCodeSearch").jqGrid({
@@ -182,10 +256,10 @@
             },
             multiselect: false
         });
-    });
-    $(window).resize(function () {
-        var outerwidth = $('#bankGrid').width();
-        $('#tblBankSearch').setGridWidth(outerwidth);
+        $(window).resize(function () {
+            var outerwidth = $('#bankGrid').width();
+            $('#tblBankSearch').setGridWidth(outerwidth);
+        });
     });
     $("#btnBankSelect").on("click", function (e) {
         var id = jQuery("#tblBankSearch").jqGrid('getGridParam', 'selrow');

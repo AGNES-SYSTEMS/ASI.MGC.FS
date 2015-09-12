@@ -1,11 +1,9 @@
 ﻿$(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
-    $("#liBankPayment").addClass("active");
+    $("#liCashPayments").addClass("active");
     var arrAllocDetails = [];
     $('#txtDocDate').datepicker();
     $('#txtGLDate').datepicker();
-    $('#txtChequeDate').datepicker();
-    $('#txtClearanceDate').datepicker();
     jQuery("#tblAllocDetails").jqGrid({
         datatype: "local",
         height: 150,
@@ -97,7 +95,7 @@
         populateAccountGrid();
     });
     $("#BankSearchModel").on('show.bs.modal', function () {
-        var $bankType = "1.Bank";
+        var $bankType = "2.Cash";
         $("#tblBankSearch").jqGrid({
             url: '/Bank/GetBankDetailsByType?bankType=' + $bankType,
             datatype: "json",
@@ -131,7 +129,7 @@
         });
     });
     $("#docTypeSearchModel").on('show.bs.modal', function () {
-        var $docType = "BPAY";
+        var $docType = "CPAY";
         $("#tblDocSearch").jqGrid({
             url: '/DocumentMaster/GetByDocType?docType=' + $docType,
             datatype: "json",
@@ -193,10 +191,10 @@
         e.preventDefault();
     });
     $("#txtDocType").on("change", function () {
-        $("#formBankPayment").formValidation('revalidateField', 'DocType');
+        $("#formCashPayments").formValidation('revalidateField', 'DocType');
     });
     $("#txtDocDetails").on("change", function () {
-        $("#formBankPayment").formValidation('revalidateField', 'DocDetails');
+        $("#formCashPayments").formValidation('revalidateField', 'DocDetails');
     });
     $("#btnBankSelect").on("click", function (e) {
         var id = jQuery("#tblBankSearch").jqGrid('getGridParam', 'selrow');
@@ -213,20 +211,6 @@
     });
     $("#txtBankName").on("change", function () {
         $("#allocationDetailsModelform").formValidation('revalidateField', 'BankName');
-    });
-    $('#txtChequeDate').on("blur", function () {
-        if ($('#txtChequeDate').val() === "") {
-            var currDate = new Date();
-            currDate = (currDate.getMonth() + 1) + '/' + currDate.getDate() + '/' + currDate.getFullYear();
-            $('#txtChequeDate').val(currDate);
-        }
-    });
-    $('#txtClearanceDate').on("blur", function () {
-        if ($('#txtClearanceDate').val() === "") {
-            var currDate = new Date();
-            currDate = (currDate.getMonth() + 1) + '/' + currDate.getDate() + '/' + currDate.getFullYear();
-            $('#txtClearanceDate').val(currDate);
-        }
     });
     $("#btnAlCodeSelect").on("click", function (e) {
         var id = jQuery("#tblAlCodeSearch").jqGrid('getGridParam', 'selrow');
@@ -317,7 +301,7 @@
             $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'Narration');
         }
     });
-    $('#formBankPayment').bootstrapValidator({
+    $('#formCashPayments').bootstrapValidator({
         container: '#messages',
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -332,10 +316,10 @@
                     }
                 }
             },
-            DocNo: {
+            DocDetails: {
                 validators: {
                     notEmpty: {
-                        message: 'Document No is required'
+                        message: 'Document Detail is required'
                     }
                 }
             },
@@ -350,7 +334,7 @@
                     }
                 }
             },
-            GLDate: {
+            GLDATE_VRPT: {
                 validators: {
                     notEmpty: {
                         message: 'GL Date is required'
@@ -361,24 +345,17 @@
                     }
                 }
             },
-            DocDetails: {
-                validators: {
-                    notEmpty: {
-                        message: 'Document Details is required'
-                    }
-                }
-            },
-            PaidTo: {
-                validators: {
-                    notEmpty: {
-                        message: 'Paid To is required'
-                    }
-                }
-            },
             BankCode: {
                 validators: {
                     notEmpty: {
                         message: 'Bank Code is required'
+                    }
+                }
+            },
+            ReceivedFrom: {
+                validators: {
+                    notEmpty: {
+                        message: 'Received From is required'
                     }
                 }
             },
@@ -389,46 +366,16 @@
                     }
                 }
             },
-            BRAmount: {
+            CRAmount: {
                 validators: {
                     notEmpty: {
-                        message: 'BR Amount is required'
+                        message: 'CR Amount is required'
                     },
                     integer: {
                         message: 'Integer Only'
-                    }
-                }
-            },
-            ChequeNo: {
-                validators: {
-                    notEmpty: {
-                        message: 'Cheque No is required'
-                    }
-                }
-            },
-            ChequeDate: {
-                validators: {
-                    notEmpty: {
-                        message: 'Cheque Date is required'
-                    },
-                    date: {
-                        format: 'MM/DD/YYYY',
-                        message: 'Enter Valid Date'
-                    }
-                }
-            },
-            ClearanceDate: {
-                validators: {
-                    notEmpty: {
-                        message: 'Clearance Date is required'
-                    },
-                    date: {
-                        format: 'MM/DD/YYYY',
-                        message: 'Enter Valid Date'
                     }
                 }
             }
         }
     });
 });
-

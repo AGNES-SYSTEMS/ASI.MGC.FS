@@ -71,7 +71,7 @@ namespace ASI.MGC.FS.Controllers
 
                 _unitOfWork.Repository<MESUser>().Insert(mesUser);
                 _unitOfWork.Save();
-                return RedirectToAction("LogIn", "AccountManagement");
+                return RedirectToAction("Registration", "AccountManagement");
             }
             else
             {
