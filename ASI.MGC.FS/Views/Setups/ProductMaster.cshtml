@@ -18,7 +18,7 @@
         </ol>
         <!-- end:breadcrumb -->
         <fieldset>
-            <legend>Customer Details</legend>
+            <legend>Product Details</legend>
             <div class="row">
                 <div class="container">
                     <div class="row">
@@ -62,15 +62,63 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Product Code</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.PROD_CODE_PM, null, new { ID = "txtPrdId", Class = "form-control" })
+                                    @Html.TextBoxFor(d => d.PROD_CODE_PM, null, new {ID = "txtPrdId", Class = "form-control"})
                                     @Html.ValidationMessageFor(d => d.PROD_CODE_PM)
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Product Name</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.DESCRIPTION_PM, null, new { ID = "txtPrdName", Class = "form-control" })
+                                    @Html.TextBoxFor(d => d.DESCRIPTION_PM, null, new {ID = "txtPrdName", Class = "form-control"})
                                     @Html.ValidationMessageFor(d => d.DESCRIPTION_PM)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Quantity</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.CUR_QTY_PM, null, new { ID = "txtPrdQty", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.CUR_QTY_PM)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Rate</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.RATE_PM, null, new { ID = "txtPrdRate", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.RATE_PM)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Selling Price</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.SELLINGPRICE_RM, null, new {ID = "txtSellingPrice", Class = "form-control"})
+                                    @Html.ValidationMessageFor(d => d.SELLINGPRICE_RM)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Purchase Unit</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.PURCHSEUNIT_PM, null, new {ID = "txtPurchaseUnit", Class = "form-control"})
+                                    @Html.ValidationMessageFor(d => d.PURCHSEUNIT_PM)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Sale Unit</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.SALESUNIT_PM, null, new { ID = "txtSaleUnit", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.SALESUNIT_PM)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Unit</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.UNIT_PR, null, new { ID = "txtUnit", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.UNIT_PR)
                                 </div>
                             </div>
                         </div>

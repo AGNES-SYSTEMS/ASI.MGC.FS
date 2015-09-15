@@ -342,9 +342,11 @@
     <Content Include="Scripts\Custom\Setups\CustomerMaster.js" />
     <Content Include="Scripts\Custom\Search\Search.js" />
     <Content Include="Scripts\Custom\Setups\EmployeeMaster.js" />
+    <Content Include="Scripts\Custom\Setups\ItemsMaster.js" />
     <Content Include="Scripts\Custom\Setups\JobCreation.js" />
     <Content Include="Scripts\Custom\Setups\ProductMaster.js" />
     <Content Include="Scripts\Custom\Setups\SupplierMaster.js" />
+    <Content Include="Scripts\Custom\Setups\UnitMeasurement.js" />
     <Content Include="Scripts\DataTables\dataTables.autoFill.js" />
     <Content Include="Scripts\DataTables\dataTables.autoFill.min.js" />
     <Content Include="Scripts\DataTables\dataTables.bootstrap.js" />
@@ -488,13 +490,13 @@
     <Content Include="Views\Purchase\Index.cshtml" />
     <Content Include="Views\DocumentMaster\Index.cshtml" />
     <Content Include="Views\Setups\JobCreation.cshtml" />
-    <Content Include="Views\Setups\ProductMaster.cshtml" />
+    <Content Include="Views\Setups\ItemsMaster.cshtml" />
     <Content Include="Views\Setups\EmployeeMaster.cshtml" />
     <Content Include="Views\Setups\CustomerMaster.cshtml" />
     <Content Include="Views\Setups\SupplierMaster.cshtml" />
-    <Content Include="Views\Setups\ItemsMaster.cshtml" />
     <Content Include="Views\Setups\UnitCreation.cshtml" />
     <Content Include="Views\Setups\Period.cshtml" />
+    <Content Include="Views\Setups\ProductMaster.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
