@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web.Mvc;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Model;
-using Microsoft.Ajax.Utilities;
 
 namespace ASI.MGC.FS.WebCommon
 {
@@ -46,6 +45,15 @@ namespace ASI.MGC.FS.WebCommon
             return invoiceCount;
         }
 
+        public static int GetQuotationCount(IUnitOfWork iUnitOfWork)
+        {
+            var currYear = DateTime.Now.Year.ToString();
+            var quotCount = (from quotations in iUnitOfWork.Repository<QUOTATION_MASTER>().Query().Get()
+                                where quotations.QUOTNO_QM.Contains("QOT") && quotations.QUOTNO_QM.EndsWith(currYear)
+                                select quotations.QUOTNO_QM).Distinct().Count();
+            return quotCount;
+        }
+
         public static IList<SelectListItem> GetPaymentMethodList()
         {
             IList<SelectListItem> lstPaymentMethods = new List<SelectListItem>();
@@ -78,5 +86,12 @@ namespace ASI.MGC.FS.WebCommon
             return objJobMaster;
         }
 
+        public static IList<SelectListItem> GetSearchTypeList()
+        {
+            IList<SelectListItem> lstSearchType = new List<SelectListItem>();
+            lstSearchType.Add(new SelectListItem { Text = "AR Details", Value = "ArDetails", Selected = true });
+            lstSearchType.Add(new SelectListItem { Text = "Others", Value = "other" });
+            return lstSearchType;
+        }
     }
 }

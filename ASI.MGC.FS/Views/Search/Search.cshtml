@@ -1,8 +1,90 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Search";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.currPage = "Search";
 }
-
-<h2>Search</h2>
-
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>Search</legend>
+            <div class="row">
+                <div class="container">
+                    <form id="formSearch" class="form-horizontal" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Search For</label>
+                                <div class="col-md-7 paddingLeftRight0">
+                                    @Html.DropDownList("SearchType", (IList<SelectListItem>)ViewBag.SearchTypeList, new { id = "ddlSearchType", Class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Customer Code</label>
+                                <div class="col-md-7 paddingLeftRight0">
+                                    @Html.TextBox("CustCode", null, new { ID = "txtCustCode", Class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Customer Name</label>
+                                <div class="col-md-7 paddingLeftRight0">
+                                    @Html.TextBox("CustName", null, new { ID = "txtCustName", Class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Telephone</label>
+                                <div class="col-md-7 paddingLeftRight0">
+                                    @Html.TextBox("Telephone", null, new { ID = "txtTelephone", Class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label></label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="button" id="btnSearch" class="btn btn-success col-md-3 pull-right" value="Search">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <fieldset>
+                                    <legend>Search Details</legend>
+                                    <div id="grid" class="panel-body">
+                                        <section>
+                                            <table id="tblSearchDetails"></table>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<!-- end:main -->
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/formValidation.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.framework.js")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/Search/Search.js")"></script>
+}

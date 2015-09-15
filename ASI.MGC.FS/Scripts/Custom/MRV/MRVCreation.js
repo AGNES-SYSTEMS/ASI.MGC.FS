@@ -22,27 +22,27 @@
         caption: "Materials Details"
     });
 
-    $("#txtPrCode").change(function (e) {
+    $("#txtPrCode").change(function () {
         $('#mrvProductModelform').bootstrapValidator('revalidateField', 'PrCode');
     });
 
-    $("#txtPrDesc").change(function (e) {
+    $("#txtPrDesc").change(function () {
         $('#mrvProductModelform').bootstrapValidator('revalidateField', 'PrDesc');
     });
 
-    $("#txtJobID").change(function (e) {
+    $("#txtJobID").change(function () {
         $('#mrvProductModelform').bootstrapValidator('revalidateField', 'JobID');
     });
 
-    $("#txtJobDesc").change(function (e) {
+    $("#txtJobDesc").change(function () {
         $('#mrvProductModelform').bootstrapValidator('revalidateField', 'JobDesc');
     });
 
-    $("#txtQuantity").change(function (e) {
+    $("#txtQuantity").change(function () {
         $('#mrvProductModelform').bootstrapValidator('revalidateField', 'Quantity');
     });
 
-    $("#txtRate").change(function (e) {
+    $("#txtRate").change(function () {
         $('#mrvProductModelform').bootstrapValidator('revalidateField', 'Rate');
     });
 
@@ -56,7 +56,7 @@
         $("#txtAmount").val("0");
     }
 
-    $("#btnCancel").click(function (e) {
+    $("#btnCancel").click(function () {
         clearModalForm();
     });
     $("#btnSave").click(function (e) {
@@ -93,7 +93,7 @@
     $("#mrvProductModel").on('hide.bs.modal', function () {
         clearModalForm();
         var totalGridPrdAmount = 0.0;
-        for (i = 0; i < arrMetarials.length; i++) {
+        for (var i = 0; i < arrMetarials.length; i++) {
             totalGridPrdAmount += parseFloat(arrMetarials[i]["AMOUNT_MRR"]);
         }
         $("#txtNetPrdAmount").val(totalGridPrdAmount);
@@ -120,40 +120,6 @@
     }).bind('focus', function () {
         $(this).autocomplete("search");
     });
-
-    $("#txtCustCode").blur(function (e) {
-        $('#txtCustName').val("");
-        getCustRecord();
-    });
-
-    $("#txtCustName").blur(function (e) {
-        $('#txtCustCode').val("");
-        getCustRecord();
-    });
-
-    $("#txtQuantity").change(function (e) {
-        var totalAmount = $("#txtQuantity").val() * $("#txtRate").val();
-        $("#txtAmount").val(totalAmount);
-    });
-
-    $("#txtRate").change(function (e) {
-        var totalAmount = $("#txtQuantity").val() * $("#txtRate").val();
-        $("#txtAmount").val(totalAmount);
-    });
-
-    $('#txtCustCode').on('change', function () {
-        $('#formMRVCreation').bootstrapValidator('revalidateField', 'CUSTOMERCODE_MRV');
-    });
-    $('#txtCustName').on('change', function () {
-        $('#formMRVCreation').bootstrapValidator('revalidateField', 'CUSTOMERNAME_MRV');
-    });
-    $('#txtMRVAddress').on('change', function () {
-        $('#formMRVCreation').bootstrapValidator('revalidateField', 'ADDRESS1_MRV');
-    });
-    $('#txtMRVTel').on('change', function () {
-        $('#formMRVCreation').bootstrapValidator('revalidateField', 'PHONE_MRV');
-    });
-
     function getCustRecord() {
         var custCode = $('#txtCustCode').val();
         var custName = $('#txtCustName').val();
@@ -173,11 +139,42 @@
             },
             complete: function () {
             },
-            error: function (custDetails) {
+            error: function () {
             }
         });
     }
+    $("#txtCustCode").blur(function () {
+        $('#txtCustName').val("");
+        getCustRecord();
+    });
 
+    $("#txtCustName").blur(function () {
+        $('#txtCustCode').val("");
+        getCustRecord();
+    });
+
+    $("#txtQuantity").change(function () {
+        var totalAmount = $("#txtQuantity").val() * $("#txtRate").val();
+        $("#txtAmount").val(totalAmount);
+    });
+
+    $("#txtRate").change(function () {
+        var totalAmount = $("#txtQuantity").val() * $("#txtRate").val();
+        $("#txtAmount").val(totalAmount);
+    });
+
+    $('#txtCustCode').on('change', function () {
+        $('#formMRVCreation').bootstrapValidator('revalidateField', 'CUSTOMERCODE_MRV');
+    });
+    $('#txtCustName').on('change', function () {
+        $('#formMRVCreation').bootstrapValidator('revalidateField', 'CUSTOMERNAME_MRV');
+    });
+    $('#txtMRVAddress').on('change', function () {
+        $('#formMRVCreation').bootstrapValidator('revalidateField', 'ADDRESS1_MRV');
+    });
+    $('#txtMRVTel').on('change', function () {
+        $('#formMRVCreation').bootstrapValidator('revalidateField', 'PHONE_MRV');
+    });
     $("#mrvPrdSearchModel").on('show.bs.modal', function () {
         $("#tblProductSearch").jqGrid({
             url: '/Product/GetProductDetailsList',
@@ -219,7 +216,7 @@
         $('.filterProduct').each(function (index, item) {
             $postDataValues[$(item).attr("id")] = $(item).val();
         });
-        $("tblProductSearch").jqGrid().setGridParam({ postData: $postDataValues, page:1}).trigger('reloadGrid');
+        $("tblProductSearch").jqGrid().setGridParam({ postData: $postDataValues, page: 1 }).trigger('reloadGrid');
     });
 
     $("#mrvJobSearchModel").on('show.bs.modal', function () {

@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "ProductMaster";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.currPage = "Product Master";
+}
+@model ASI.MGC.FS.Model.PRODUCTMASTER
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>Customer Details</legend>
+            <div class="row">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-11">
+                            <div id="grid" class="panel-body">
+                                <section>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#ProductMasterModel">
+                                        Add New Product
+                                    </button>
+                                </section>
+                                <br /> <br />
+                                <section>
+                                    <table id="tblPrdDetails"></table>
+                                    <div id="Pager"></div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<div class="container">
+    <div class="modal fade" id="ProductMasterModel" tabindex="-1" role="dialog" aria-labelledby="ProductMasterModelLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-lg" style="width: 85%">
+            <div class="modal-content">
+                @using (Html.BeginForm("SaveProductMaster", "Setups", FormMethod.Post, new { id = "formProductMaster", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                {
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title">
+                            Add Product Details
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Product Code</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.PROD_CODE_PM, null, new { ID = "txtPrdId", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.PROD_CODE_PM)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Product Name</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.DESCRIPTION_PM, null, new { ID = "txtPrdName", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.DESCRIPTION_PM)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">
+                            Save
+                        </button>
+                        <button type="button" id="btnCancel" class="btn btn-warning">
+                            Cancel
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:main -->
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/formValidation.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.framework.js")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/Setups/ProductMaster.js")"></script>
+}

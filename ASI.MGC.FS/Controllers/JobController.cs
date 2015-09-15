@@ -128,7 +128,7 @@ namespace ASI.MGC.FS.Controllers
                         custName = mrvDetails.CUSTOMERNAME_MRV,
                         prdCode = productDetails.PROD_CODE_PM,
                         prdDetail = productDetails.DESCRIPTION_PM
-                    }, JsonRequestBehavior.AllowGet);       
+                    }, JsonRequestBehavior.AllowGet);
             }
             return null;
         }

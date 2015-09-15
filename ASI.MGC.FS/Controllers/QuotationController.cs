@@ -1,9 +1,22 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using ASI.MGC.FS.Domain;
+using ASI.MGC.FS.Model;
+using ASI.MGC.FS.Models;
+using ASI.MGC.FS.WebCommon;
 
 namespace ASI.MGC.FS.Controllers
 {
     public class QuotationController : Controller
     {
+        readonly IUnitOfWork _unitOfWork;
+
+        public QuotationController()
+        {
+            _unitOfWork = new UnitOfWork();
+        }
         // GET: Quotation
         public ActionResult Index()
         {
@@ -12,7 +25,44 @@ namespace ASI.MGC.FS.Controllers
 
         public ActionResult QuotationEntry()
         {
-            return View();
+            var currYear = DateTime.Now.Year.ToString();
+            var qotCount = 1001 + CommonModelAccessUtility.GetQuotationCount(_unitOfWork);
+            var qotNumber = Convert.ToString("QOT" + "/" + qotCount + "/" + currYear);
+            ViewBag.QotNumber = qotNumber;
+            var objQuotationMaster = new QUOTATION_MASTER();
+            return View(objQuotationMaster);
+        }
+
+        public ActionResult SaveQuotation(FormCollection form, QUOTATION_MASTER objQuotationMaster)
+        {
+            _unitOfWork.Repository<QUOTATION_MASTER>().Insert(objQuotationMaster);
+            _unitOfWork.Save();
+
+            string jsonPrdDetails = form["quotProds"];
+            var serializer = new JavaScriptSerializer();
+            var lstPrdDetails = serializer.Deserialize<List<QuotationCustom>>(jsonPrdDetails);
+            foreach (var prd in lstPrdDetails)
+            {
+                var objQuotProduct = _unitOfWork.Repository<QUOT_PROD_MASTER>().Create();
+                objQuotProduct.QUOTNO_QPRM = Convert.ToString(objQuotationMaster.QUOTNO_QM);
+                objQuotProduct.PRODID_QPRM = Convert.ToString(prd.PrCode);
+                objQuotProduct.QTY_QPRM = Convert.ToInt32(prd.Qty);
+                objQuotProduct.SLNO_QPRM = Convert.ToInt32(prd.Qty);
+                _unitOfWork.Repository<QUOT_PROD_MASTER>().Insert(objQuotProduct);
+                _unitOfWork.Save();
+
+                var objQuotationRef = _unitOfWork.Repository<QOTATION_REF>().Create();
+                objQuotationRef.QUOTNO_QREF = Convert.ToString(objQuotationMaster.QUOTNO_QM);
+                objQuotationRef.CODE_QREF = Convert.ToString(prd.JobId);
+                objQuotationRef.DESCRIPTION_QREF = Convert.ToString(prd.JobDesc);
+                objQuotationRef.QTY_QREF = Convert.ToInt32(prd.Qty);
+                objQuotationRef.RATE_QREF = Convert.ToDecimal(prd.Rate);
+                objQuotationRef.AMOUNT_QREF = Convert.ToDecimal(prd.Rate*prd.Qty);
+                objQuotationRef.ID_QREF = Convert.ToInt32(prd.Qty);
+                _unitOfWork.Repository<QOTATION_REF>().Insert(objQuotationRef);
+                _unitOfWork.Save();
+            }
+            return RedirectToAction("QuotationEntry");
         }
     }
 }

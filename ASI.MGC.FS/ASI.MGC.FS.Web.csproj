@@ -178,6 +178,7 @@
     <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\QuotationController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\SetupsController.cs" />
     <Compile Include="ExtendedAPI\MESAuthorize.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -191,6 +192,7 @@
     <Compile Include="Models\IdentityModels.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\QuotationCustom.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="WebCommon\CommonModelAccessUtility.cs" />
@@ -307,6 +309,8 @@
     <Content Include="Content\themes\base\jquery.ui.tabs.css" />
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
     <Content Include="Content\bootstrap.typeahead.css" />
+    <Content Include="Content\ui.jqgrid-bootstrap-ui.css" />
+    <Content Include="Content\ui.jqgrid-bootstrap.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont862f.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -334,6 +338,13 @@
     <Content Include="Scripts\Custom\Job\JobEntry.js" />
     <Content Include="Scripts\Custom\MRV\MRVCreation.js" />
     <Content Include="Scripts\Custom\Purchase\PurchaseEntry.js" />
+    <Content Include="Scripts\Custom\Quotation\QuotationEntry.js" />
+    <Content Include="Scripts\Custom\Setups\CustomerMaster.js" />
+    <Content Include="Scripts\Custom\Search\Search.js" />
+    <Content Include="Scripts\Custom\Setups\EmployeeMaster.js" />
+    <Content Include="Scripts\Custom\Setups\JobCreation.js" />
+    <Content Include="Scripts\Custom\Setups\ProductMaster.js" />
+    <Content Include="Scripts\Custom\Setups\SupplierMaster.js" />
     <Content Include="Scripts\DataTables\dataTables.autoFill.js" />
     <Content Include="Scripts\DataTables\dataTables.autoFill.min.js" />
     <Content Include="Scripts\DataTables\dataTables.bootstrap.js" />
@@ -358,6 +369,7 @@
     <Content Include="Scripts\DataTables\jquery.dataTables.js" />
     <Content Include="Scripts\DataTables\jquery.dataTables.min.js" />
     <Content Include="Scripts\formValidation.min.js" />
+    <Content Include="Scripts\grid.bootstrapLocale-en.js" />
     <Content Include="Scripts\html5shiv.js" />
     <Content Include="Scripts\i18n\grid.locale-ar.js" />
     <Content Include="Scripts\i18n\grid.locale-bg.js" />
@@ -405,8 +417,10 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.11.0.min.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery-ui.min.js" />
+    <Content Include="Scripts\jquery.bootstrapJqGrid.min.js" />
     <Content Include="Scripts\jquery.jqGrid.min.js" />
     <Content Include="Scripts\jquery.jqGrid.src.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -473,6 +487,14 @@
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Purchase\Index.cshtml" />
     <Content Include="Views\DocumentMaster\Index.cshtml" />
+    <Content Include="Views\Setups\JobCreation.cshtml" />
+    <Content Include="Views\Setups\ProductMaster.cshtml" />
+    <Content Include="Views\Setups\EmployeeMaster.cshtml" />
+    <Content Include="Views\Setups\CustomerMaster.cshtml" />
+    <Content Include="Views\Setups\SupplierMaster.cshtml" />
+    <Content Include="Views\Setups\ItemsMaster.cshtml" />
+    <Content Include="Views\Setups\UnitCreation.cshtml" />
+    <Content Include="Views\Setups\Period.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

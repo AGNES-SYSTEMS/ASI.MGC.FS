@@ -20,10 +20,57 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
-        public JsonResult GetCustList(string sidx, string sord, int page, int rows)
+        public JsonResult GetAllCustomers(string sidx, string sord, int page, int rows, string custType)
         {
-            var custList = (from prodList in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                            select prodList).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
+            var custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                            where customers.TYPE_ARM.Equals(custType)
+                            select customers).Select(a => new
+                            {
+                                a.ARCODE_ARM,
+                                a.DESCRIPTION_ARM,
+                                a.ADDRESS1_ARM,
+                                a.POBOX_ARM,
+                                a.TELEPHONE_ARM,
+                                a.FAX_ARM,
+                                a.EMAIL_ARM,
+                                a.CONDACTPERSON_ARM
+
+                            });
+            int pageIndex = Convert.ToInt32(page) - 1;
+            int pageSize = rows;
+            int totalRecords = custList.Count();
+            int totalPages = (int)Math.Ceiling(totalRecords / (float)pageSize);
+            if (sord.ToUpper() == "DESC")
+            {
+                custList = custList.OrderByDescending(a => a.ARCODE_ARM);
+                custList = custList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            else
+            {
+                custList = custList.OrderBy(a => a.ARCODE_ARM);
+                custList = custList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            var jsonData = new
+            {
+                total = totalPages,
+                page,
+                records = totalRecords,
+                rows = custList
+
+            };
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetCustList(string sidx, string sord, int page, int rows, string custType)
+        {
+            var custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                            select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
+            if (!string.IsNullOrEmpty(custType))
+            {
+                custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                            where customers.TYPE_ARM.Equals(custType)
+                            select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
+            }
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
             int totalRecords = custList.Count();
@@ -59,59 +106,59 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
-        public JsonResult GetAllCustomers(jQueryDataTableParamModel param)
-        {
-            var totalCustRecords = (from totalCustCount in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                                    select totalCustCount);
-            IEnumerable<AR_AP_MASTER> filteredCust;
-            if (!string.IsNullOrEmpty(param.sSearch))
-            {
-                filteredCust = (from totalCustCount in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                                where totalCustCount.ARCODE_ARM.Contains(param.sSearch) || totalCustCount.DESCRIPTION_ARM.Contains(param.sSearch)
-                                    || totalCustCount.CONDACTPERSON_ARM.Contains(param.sSearch) || totalCustCount.ADDRESS1_ARM.Contains(param.sSearch)
-                                    || totalCustCount.TELEPHONE_ARM.Contains(param.sSearch) || totalCustCount.EMAIL_ARM.Contains(param.sSearch) || totalCustCount.TYPE_ARM.Contains(param.sSearch)
-                                    || totalCustCount.CREDITDAYS_ARM.ToString().Contains(param.sSearch)
-                                select totalCustCount);
-            }
-            else
-            {
-                filteredCust = totalCustRecords;
-            }
+        //public JsonResult GetAllCustomers(jQueryDataTableParamModel param)
+        //{
+        //    var totalCustRecords = (from totalCustCount in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+        //                            select totalCustCount);
+        //    IEnumerable<AR_AP_MASTER> filteredCust;
+        //    if (!string.IsNullOrEmpty(param.sSearch))
+        //    {
+        //        filteredCust = (from totalCustCount in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+        //                        where totalCustCount.ARCODE_ARM.Contains(param.sSearch) || totalCustCount.DESCRIPTION_ARM.Contains(param.sSearch)
+        //                            || totalCustCount.CONDACTPERSON_ARM.Contains(param.sSearch) || totalCustCount.ADDRESS1_ARM.Contains(param.sSearch)
+        //                            || totalCustCount.TELEPHONE_ARM.Contains(param.sSearch) || totalCustCount.EMAIL_ARM.Contains(param.sSearch) || totalCustCount.TYPE_ARM.Contains(param.sSearch)
+        //                            || totalCustCount.CREDITDAYS_ARM.ToString().Contains(param.sSearch)
+        //                        select totalCustCount);
+        //    }
+        //    else
+        //    {
+        //        filteredCust = totalCustRecords;
+        //    }
 
-            var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
+        //    var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
 
-            Func<AR_AP_MASTER, string> orderingFunction = (a => sortColumnIndex == 0 ? a.ARCODE_ARM : sortColumnIndex == 1 ? a.DESCRIPTION_ARM : sortColumnIndex == 2 ? a.CONDACTPERSON_ARM
-                                                            : sortColumnIndex == 3 ? a.ADDRESS1_ARM : sortColumnIndex == 6 ? a.TYPE_ARM : Convert.ToString(a.CREDITDAYS_ARM));
+        //    Func<AR_AP_MASTER, string> orderingFunction = (a => sortColumnIndex == 0 ? a.ARCODE_ARM : sortColumnIndex == 1 ? a.DESCRIPTION_ARM : sortColumnIndex == 2 ? a.CONDACTPERSON_ARM
+        //                                                    : sortColumnIndex == 3 ? a.ADDRESS1_ARM : sortColumnIndex == 6 ? a.TYPE_ARM : Convert.ToString(a.CREDITDAYS_ARM));
 
-            var sortDirection = Request["sSortDir_0"];
-            filteredCust = sortDirection == "asc" ? filteredCust.OrderBy(orderingFunction) : filteredCust.OrderByDescending(orderingFunction);
+        //    var sortDirection = Request["sSortDir_0"];
+        //    filteredCust = sortDirection == "asc" ? filteredCust.OrderBy(orderingFunction) : filteredCust.OrderByDescending(orderingFunction);
 
 
-            int totalRecords = totalCustRecords.Count();
-            int totalDisplayedRecords = filteredCust.Count();
-            var dislpayedJobs = filteredCust.Skip(param.iDisplayStart)
-                                            .Take(param.iDisplayLength);
-            var resultCustRecords = from cust in dislpayedJobs
-                                    select new
-                                    {
-                                        cust.ARCODE_ARM,
-                                        cust.DESCRIPTION_ARM,
-                                        cust.CONDACTPERSON_ARM,
-                                        cust.ADDRESS1_ARM,
-                                        cust.TELEPHONE_ARM
-                                      ,
-                                        cust.EMAIL_ARM,
-                                        cust.TYPE_ARM,
-                                        cust.CREDITDAYS_ARM
-                                    };
-            return Json(new
-            {
-                param.sEcho,
-                iTotalRecords = totalRecords,
-                iTotalDisplayRecords = totalDisplayedRecords,
-                aaData = resultCustRecords
-            }, JsonRequestBehavior.AllowGet);
-        }
+        //    int totalRecords = totalCustRecords.Count();
+        //    int totalDisplayedRecords = filteredCust.Count();
+        //    var dislpayedJobs = filteredCust.Skip(param.iDisplayStart)
+        //                                    .Take(param.iDisplayLength);
+        //    var resultCustRecords = from cust in dislpayedJobs
+        //                            select new
+        //                            {
+        //                                cust.ARCODE_ARM,
+        //                                cust.DESCRIPTION_ARM,
+        //                                cust.CONDACTPERSON_ARM,
+        //                                cust.ADDRESS1_ARM,
+        //                                cust.TELEPHONE_ARM
+        //                              ,
+        //                                cust.EMAIL_ARM,
+        //                                cust.TYPE_ARM,
+        //                                cust.CREDITDAYS_ARM
+        //                            };
+        //    return Json(new
+        //    {
+        //        param.sEcho,
+        //        iTotalRecords = totalRecords,
+        //        iTotalDisplayRecords = totalDisplayedRecords,
+        //        aaData = resultCustRecords
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
 
         public JsonResult GetCustomersCode(string term)
         {
@@ -150,19 +197,19 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult GetCustomerDetailsList(string sidx, string sord, int page, int rows, string custId, string custName)
         {
             var custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                           where customers.TYPE_ARM.Equals("AR")
-                           select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM});
+                            where customers.TYPE_ARM.Equals("AR")
+                            select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
             if (!string.IsNullOrEmpty(custId))
             {
                 custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                           where customers.ARCODE_ARM.Contains(custId) && customers.TYPE_ARM.Equals("AR")
-                           select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
+                            where customers.ARCODE_ARM.Contains(custId) && customers.TYPE_ARM.Equals("AR")
+                            select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
             }
             if (!string.IsNullOrEmpty(custName))
             {
                 custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                           where customers.DESCRIPTION_ARM.Contains(custName) && customers.TYPE_ARM.Equals("AR")
-                           select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM});
+                            where customers.DESCRIPTION_ARM.Contains(custName) && customers.TYPE_ARM.Equals("AR")
+                            select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
             }
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
