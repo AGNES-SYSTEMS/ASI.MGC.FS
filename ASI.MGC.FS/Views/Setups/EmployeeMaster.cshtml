@@ -1,0 +1,169 @@
+﻿@{
+    ViewBag.Title = "EmployeeMaster";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.currPage = "Employee Master";
+}
+@model ASI.MGC.FS.Model.EMPLOYEEMASTER
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>Employee Details</legend>
+            <div class="row">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-11">
+                            <div id="grid" class="panel-body">
+                                <section>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#EmployeeMasterModel">
+                                        Add New Employee
+                                    </button>
+                                </section>
+                                <br /> <br />
+                                <section>
+                                    <table id="tblEmpDetails"></table>
+                                    <div id="Pager"></div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<div class="container">
+    <div class="modal fade" id="EmployeeMasterModel" tabindex="-1" role="dialog" aria-labelledby="EmployeeMasterModelLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-lg" style="width: 85%">
+            <div class="modal-content">
+                @using (Html.BeginForm("SaveEmployeeMaster", "Setups", FormMethod.Post, new { id = "formEmployeeMaster", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                {
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title">
+                            Add Employee Details
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Employee Code</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.EMPCODE_EM, null, new { ID = "txtEmpCode", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.EMPCODE_EM)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">First Name</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.EMPFNAME_EM, null, new { ID = "txtFirstName", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.EMPFNAME_EM)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Last Name</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.EMPSNAME_EM, null, new { ID = "txtLastName", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.EMPSNAME_EM)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Passport No</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.PASSPORTNO_EM, null, new { ID = "txtPassportNo", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.PASSPORTNO_EM)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Designation</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.DESIGNATION_EM, null, new { ID = "txtDesignation", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.DESIGNATION_EM)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Phone</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.PHONE_EM, null, new { ID = "txtPhone", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.PHONE_EM)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Passport Issue Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.PASSPORTISSUEDATE_EM, null, new { ID = "txtPassIssue", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.PASSPORTISSUEDATE_EM)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Passport Expiry Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.PASSPORTEXPDATE_EM, null, new { ID = "txtPassExp", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.PASSPORTEXPDATE_EM)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Visa Issue Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.VISAISSUEDATE_EM, null, new { ID = "txtVisaIssue", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.VISAISSUEDATE_EM)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Visa Expiry Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.VISAEXPIEARYDATE_EM, null, new { ID = "txtVisaExp", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.VISAEXPIEARYDATE_EM)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">
+                            Save
+                        </button>
+                        <button type="button" id="btnCancel" class="btn btn-warning">
+                            Cancel
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:main -->
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/formValidation.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.framework.js")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/Setups/EmployeeMaster.js")"></script>
+}

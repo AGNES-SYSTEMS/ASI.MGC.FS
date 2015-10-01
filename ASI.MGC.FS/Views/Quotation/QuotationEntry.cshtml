@@ -30,7 +30,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblMRVNo" class="control-label col-md-4 small ">Customer Code</label>
                                 <div class="col-md-7 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.CUSTNAME_QM, null, new { ID = "txtCustCode", Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBoxFor(m => m.CUSTNAME_QM, null, new { ID = "txtCustCode", Class = "form-control"})
                                     @Html.ValidationMessageFor(m => m.CUSTNAME_QM)
                                 </div>
                                 <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#CustomerSearchModel">
@@ -49,7 +49,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblCustCode" class="control-label col-md-4 small ">Customer Name</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("CustName", null, new { ID = "txtCustName", Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBox("CustName", null, new { ID = "txtCustName", Class = "form-control"})
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">

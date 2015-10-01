@@ -99,6 +99,11 @@
     $('#txtCustCode').on('change', function () {
         $('#formMRVCreation').bootstrapValidator('revalidateField', 'CUSTNAME_QM');
     });
+    $('#txtCustCode').on('blur', function() {
+        if ($('#txtCustCode').val() === "") {
+            $('#txtCustCode').val("CASH").change();
+        }
+    });
     $('#txtCustName').on('change', function () {
         $('#formMRVCreation').bootstrapValidator('revalidateField', 'CustName');
     });
