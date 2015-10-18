@@ -309,6 +309,8 @@
     <Content Include="Content\themes\base\jquery.ui.tabs.css" />
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
     <Content Include="Content\bootstrap.typeahead.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="Content\ui.jqgrid-bootstrap-ui.css" />
     <Content Include="Content\ui.jqgrid-bootstrap.css" />
     <Content Include="favicon.ico" />
@@ -325,6 +327,8 @@
     <Content Include="fonts\glyphicons-halflings-regulard41d.eot" />
     <Content Include="Content\DataTables\css\dataTables.responsive.scss" />
     <Content Include="Content\DataTables\css\dataTables.jqueryui.scss" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.typeahead.js" />
@@ -342,6 +346,7 @@
     <Content Include="Scripts\Custom\Setups\CustomerMaster.js" />
     <Content Include="Scripts\Custom\Search\Search.js" />
     <Content Include="Scripts\Custom\Setups\EmployeeMaster.js" />
+    <Content Include="Scripts\Custom\Setups\FinancialYearPeriod.js" />
     <Content Include="Scripts\Custom\Setups\ItemsMaster.js" />
     <Content Include="Scripts\Custom\Setups\JobCreation.js" />
     <Content Include="Scripts\Custom\Setups\ProductMaster.js" />
@@ -434,6 +439,8 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -456,9 +463,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\MRV\MRVCreation.cshtml" />
     <Content Include="Views\Job\GetAllJobsView.cshtml" />
-    <Content Include="Views\Product\GetAllProductDetails.cshtml" />
     <Content Include="Views\Customer\GetAllCustomerDetails.cshtml" />
-    <Content Include="Views\Product\ProductList.cshtml" />
     <Content Include="Views\Job\JobsList.cshtml" />
     <Content Include="Views\Customer\CustomerList.cshtml" />
     <Content Include="Views\EmployeeMaster\EmployeeList.cshtml" />
@@ -495,8 +500,15 @@
     <Content Include="Views\Setups\CustomerMaster.cshtml" />
     <Content Include="Views\Setups\SupplierMaster.cshtml" />
     <Content Include="Views\Setups\UnitCreation.cshtml" />
-    <Content Include="Views\Setups\Period.cshtml" />
+    <Content Include="Views\Setups\FinancialYearPeriod.cshtml" />
     <Content Include="Views\Setups\ProductMaster.cshtml" />
+    <Content Include="Views\Job\JobCancellation.cshtml" />
+    <Content Include="Views\Invoice\InvoiceRevesal.cshtml" />
+    <Content Include="Views\Cash\CashMemoReversal.cshtml" />
+    <Content Include="Views\Purchase\PurchaseReturn.cshtml" />
+    <Content Include="Views\Invoice\InvoicePendings.cshtml" />
+    <Content Include="Views\Invoice\PendingInvoices.cshtml" />
+    <Content Include="Views\MRV\MrvSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

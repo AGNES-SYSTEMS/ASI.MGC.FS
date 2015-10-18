@@ -93,5 +93,25 @@ namespace ASI.MGC.FS.Controllers
 
             return View("InvoicePreparation");
         }
+
+        public ActionResult InvoiceRevesal()
+        {
+            return View();
+        }
+
+        public ActionResult InvoicePendings()
+        {
+            return View();
+        }
+
+        public ActionResult SaveInvoiceReversal()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ActionResult PendingInvoices()
+        {
+            return View();
+        }
     }
 }

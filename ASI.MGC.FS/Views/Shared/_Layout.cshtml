@@ -365,9 +365,9 @@
                                     <ul class="dropdown-menu col-md-12 container " style="width:660px;" role="menu">
                                         <li class="col-md-4">
                                             <ul class="paddingLeft0">
-                                                <li><a href="#">Quotation</a></li>
-                                                <li><a href="#">MaterialRV</a></li>
-                                                <li><a href="#">Sales Entry</a></li>
+                                                <li><a href="@Href("~/Quotation/QuotationEntry")">Quotation</a></li>
+                                                <li><a href="@Href("~/MRV/MRVCreation")">MaterialRV</a></li>
+                                                <li><a href="@Href("~/Job/JobEntry")">Sales Entry</a></li>
 
                                                 <li class="dropdown">
                                                     <span class="menuHeadingStyle">Cancel</span>
@@ -375,7 +375,7 @@
                                                         <li><a href="#">Job Cancellation</a></li>
                                                     </ul>
                                                 </li>
-                                                <li><a href="#">Cash Memo</a></li>
+                                                <li><a href="@Href("~/Cash/CashMemo")">Cash Memo</a></li>
                                                 <li class="dropdown">
                                                     <span class="menuHeadingStyle">Invoice</span>
                                                     <ul>
@@ -434,7 +434,7 @@
                                     <ul class="dropdown-menu col-md-12 container" style="width:660px;" role="menu">
                                         <li class="col-md-4">
                                             <ul class="paddingLeft0">
-                                                <li><a href="@Href("~/Setups/Period")">Period</a></li>
+                                                <li><a href="@Href("~/Setups/FinancialYearPeriod")">Period</a></li>
                                                 <li><a href="@Href("~/Setups/JobCreation")">JobIDCreate</a></li>
                                                 <li><a href="@Href("~/Setups/EmployeeMaster")">EmpMaster</a></li>
                                                 <li><a href="@Href("~/Setups/ProductMaster")">Product Master (Inventory)</a></li>
@@ -707,7 +707,7 @@
     </div>
     <!-- end:wrapper -->
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/libraries")
     @Scripts.Render("~/bundles/JqueryUi")
     @RenderSection("scripts", required: false)
     @section scripts

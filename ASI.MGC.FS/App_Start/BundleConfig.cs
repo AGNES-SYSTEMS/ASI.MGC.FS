@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace ASI.MGC.FS
 {
@@ -21,8 +20,15 @@ namespace ASI.MGC.FS
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+            bundles.Add(new ScriptBundle("~/bundles/libraries").Include(
                         "~/Scripts/bootstrap.js",
+                        "~/Scripts/toastr.min.js",
+                        "~/Scripts/i18n/grid.locale-en.js",
+                        "~/Scripts/jquery.jqGrid.min.js",
+                        "~/Scripts/bootstrapValidator.min.js",
+                        "~/Scripts/jquery.validate.min.js",
+                        "~/Scripts/formValidation.min.js",
+                        "~/Scripts/bootstrap.framework.js",
                         "~/Scripts/respond.js"));
 
             /** Start - Adding Custom CSS Files for Master Page Dated 23-05-2015 By Zeeshan Mahmood**/
@@ -49,7 +55,11 @@ namespace ASI.MGC.FS
                       "~/Content/jquery.easy-pie-chart.css",
                       "~/Content/owl.carousel.css",
                       "~/Content/owl.theme.css",
-                      "~/Content/owl.transitions.css"));
+                      "~/Content/owl.transitions.css",
+                      "~/Content/themes/base/jquery.ui.all.css",
+                      "~/Content/jquery.jqGrid/ui.jqgrid.css",
+                      "~/Content/bootstrap.min.css",
+                      "~/Content/bootstrapValidator.min.css"));
             /** End - Adding Custom CSS Files for Master Page Dated 23-05-2015 By Zeeshan Mahmood**/
         }
     }

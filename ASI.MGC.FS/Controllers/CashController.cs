@@ -364,5 +364,15 @@ namespace ASI.MGC.FS.Controllers
             }
             return RedirectToAction("CashPayments");
         }
+
+        public ActionResult CashMemoReversal()
+        {
+            return View();
+        }
+
+        public ActionResult SaveCashMemoReversal()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

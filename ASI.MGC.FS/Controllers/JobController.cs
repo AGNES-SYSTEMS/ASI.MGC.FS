@@ -249,6 +249,14 @@ namespace ASI.MGC.FS.Controllers
             return null;
         }
 
+        public ActionResult JobCancellation()
+        {
+            return View();
+        }
 
+        public ActionResult SaveJobCancellation()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

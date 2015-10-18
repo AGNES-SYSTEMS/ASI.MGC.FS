@@ -175,5 +175,10 @@ namespace ASI.MGC.FS.Controllers
                 lstSales
             }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult MrvSearch()
+        {
+            return View();
+        }
     }
 }

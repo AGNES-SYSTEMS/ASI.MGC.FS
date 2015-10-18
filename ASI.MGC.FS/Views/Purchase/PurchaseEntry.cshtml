@@ -2,11 +2,6 @@
     ViewBag.Title = "PurchaseEntry";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
-<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-<link href="~/Content/formValidation.min.css" rel="stylesheet" />
-<link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
 <!-- start:main -->
 <div class="container">
     <div id="main">
@@ -236,7 +231,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-5 form-group">
-                                <label id="lblPrCode" for="prcode" class="control-label col-md-4 small ">PrCode:</label>
+                                <label id="lblPrCode" class="control-label col-md-4 small ">PrCode:</label>
                                 <div class="col-md-6 paddingLeftRight0">
                                     <input type="text" id="txtPrCode" name="PrCode" class="form-control" required readonly />
                                 </div>
@@ -245,7 +240,7 @@
                                 </button>
                             </div>
                             <div class="col-md-7 form-group">
-                                <label id="lblPrDesc" for="prdesc" class="control-label col-md-4 small ">PrDesc:</label>
+                                <label id="lblPrDesc" class="control-label col-md-4 small ">PrDesc:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     <input type="text" id="txtPrDesc" name="PrDesc" class="form-control" required readonly />
                                 </div>
@@ -253,13 +248,13 @@
                         </div>
                         <div class="row">
                             <div class="col-md-5 form-group">
-                                <label id="lblQuantity" for="quantity" class="control-label col-md-4 small ">Quantity:</label>
+                                <label id="lblQuantity" class="control-label col-md-4 small ">Quantity:</label>
                                 <div class="col-md-7 paddingLeftRight0">
                                     <input type="text" id="txtQuantity" name="Quantity" value="1" class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-md-7 form-group">
-                                <label id="lblUnit" for="unit" class="control-label col-md-4 small ">Unit:</label>
+                                <label id="lblUnit" class="control-label col-md-4 small ">Unit:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     <input type="text" id="txtUnit" name="Unit" class="form-control" readonly />
                                 </div>
@@ -267,13 +262,13 @@
                         </div>
                         <div class="row">
                             <div class="col-md-5 form-group">
-                                <label id="lblRate" for="rate" class="control-label col-md-4 small ">Rate:</label>
+                                <label id="lblRate" class="control-label col-md-4 small ">Rate:</label>
                                 <div class="col-md-7 paddingLeftRight0">
                                     <input type="text" id="txtRate" name="Rate" class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-md-7 form-group">
-                                <label id="lblAmount" for="amount" class="control-label col-md-4 small ">Amount:</label>
+                                <label id="lblAmount" class="control-label col-md-4 small ">Amount:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     <input type="text" id="txtAmount" name="Amount" class="form-control" value="0" readonly />
                                 </div>
@@ -355,12 +350,6 @@
     </div>
 </div>
 @section Scripts {
-    <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
-    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/formValidation.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Purchase/PurchaseEntry.js")"></script>
 }
 

@@ -32,5 +32,10 @@ namespace ASI.MGC.FS.Controllers
             _unitOfWork.Save();
             return View("PurchaseEntry");
         }
+
+        public ActionResult PurchaseReturn()
+        {
+            return View();
+        }
     }
 }
