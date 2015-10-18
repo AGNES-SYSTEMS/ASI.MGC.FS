@@ -1,0 +1,112 @@
+﻿@model ASI.MGC.FS.Model.JOBMASTER
+@{
+    ViewBag.Title = "JobCancellation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">Job Cancellation</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>Job Cancellation</legend>
+            <div class="row">
+                <div class="container">
+                    @using (Html.BeginForm("SaveJobCancellation", "Job", FormMethod.Post, new { id = "formJobEntry", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    {
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblJobID" class="control-label col-md-4 small ">Job No:</label>
+                                <div class="col-md-7 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.JOBNO_JM, null, new { ID = "txtJobID", Class = "form-control"})
+                                    @Html.ValidationMessageFor(d => d.JOBNO_JM)
+                                </div>
+                                <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#mrvJobSearchModel">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblMRVNo" class="control-label col-md-4 small ">MRV No:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.MRVNO_JM, null, new { ID = "txtMRVNo", Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(d => d.MRVNO_JM)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustCode" class="control-label col-md-4 small ">Cust Code:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("CustCode", null, new { ID = "txtCustCode", Class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustName" class="control-label col-md-4 small ">Cust Name:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("CustName", null, new { ID = "txtCustName", Class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblMRVProdCode" class="control-label col-md-4 small ">MRV Prod. Code:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(m=>m.PRODID_JIM, null, new { ID = "txtProdCode", Class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblMRVProdDetail" class="control-label col-md-4 small ">MRV Prod. Detail:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("MRVProdDetail", null, new { ID = "txtMRVProdDetail", Class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblEmpCode" class="control-label col-md-4 small ">Emp Code:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(m => m.EMPCODE_JM, null, new { ID = "txtEmpCode", Class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblEmpName" class="control-label col-md-4 small ">Emp Name:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("EmpName", null, new { ID = "txtEmpName", Class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Doc Date:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.DOCDATE_JM, null, new { ID = "txtDocDate", Class = "form-control", @readonly="readonly" })
+                                    @Html.ValidationMessageFor(d => d.DOCDATE_JM)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Remarks:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.REMARIKS_JM, null, new { ID = "txtRemarks", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.REMARIKS_JM)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label></label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>

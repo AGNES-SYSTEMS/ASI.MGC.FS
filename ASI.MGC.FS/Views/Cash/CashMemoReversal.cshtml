@@ -1,0 +1,76 @@
+﻿@model ASI.MGC.FS.Model.BANKTRANSACTION
+@{
+    ViewBag.Title = "CashMemoReversal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">Cash Memo Reversal</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>Cash Memo Reversal</legend>
+            <div class="row">
+                <div class="container">
+                    @using (Html.BeginForm("SaveCashMemoReversal", "Cash", FormMethod.Post, new { id = "formJobEntry", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    {
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Doc No:</label>
+                                <div class="col-md-7 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.DOCNUMBER_BT, null, new { ID = "txtDocNo", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.DOCNUMBER_BT)
+                                </div>
+                                <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#mrvJobSearchModel">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Doc Date:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.DOCDATE_BT, null, new { ID = "txtDocDate", Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(d => d.DOCDATE_BT)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Other Ref:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("OtherRef", null, new { ID = "txtOtherRef", Class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Bank Code:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d=>d.BANKCODE_BT, null, new { ID = "txtBankCode", Class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Amount:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("Amount", null, new { ID = "txtAmount", Class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label></label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
