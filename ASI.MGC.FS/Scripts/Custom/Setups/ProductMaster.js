@@ -4,10 +4,14 @@
         url: '/Product/GetProdsList?status=' + $status,
         datatype: "json",
         height: 450,
+        shrinkToFit: true,
+        autoheight: true,
         autowidth: true,
+        styleUI: "Bootstrap",
+        loadonce:true,
         colNames: [
             'Product Code', 'Product Name', 'Current Qty', 'Rate', 'Selling Price',
-        'Purchase Unit', 'Sale Unit', 'Unit', 'Product Status'],
+        'Purchase Unit', 'Sale Unit', 'Unit', 'Product Status', 'Edit Actions'],
         colModel: [
             { key: true, name: 'PROD_CODE_PM', index: 'PROD_CODE_PM', width: 80, align: "center", sortable: false },
             { key: false, name: 'DESCRIPTION_PM', index: 'DESCRIPTION_PM', width: 150, align: "left", sortable: false },
@@ -17,15 +21,25 @@
             { key: false, name: 'PURCHSEUNIT_PM', index: 'PURCHSEUNIT_PM', width: 80, align: "left", sortable: false },
             { key: false, name: 'SALESUNIT_PM', index: 'SALESUNIT_PM', width: 80, align: "left", sortable: false },
             { key: false, name: 'UNIT_PR', index: 'UNIT_PR', width: 80, align: "left", sortable: false },
-            { key: false, name: 'STATUS_PM', index: 'STATUS_PM', width: 80, align: "left", sortable: false }
+            { key: false, name: 'STATUS_PM', index: 'STATUS_PM', width: 80, align: "left", sortable: false },
+            {
+                name: "actions",
+                width: 100,
+                formatter: "actions",
+                formatoptions: {
+                    keys: true,
+                    editOptions: {},
+                    addOptions: {},
+                    delOptions: {}
+                }
+            }
         ],
-        rowNum: 20,
-        rowList: [20, 30, 40],
+        rowNum: 40,
+        rowList: [40, 100, 500, 1000],
         mtype: 'GET',
         gridview: true,
-        shrinkToFit: true,
         viewrecords: true,
-        sortorder: "asc",
+        sortorder: "desc",
         pager: jQuery('#Pager'),
         caption: "Product Details",
         emptyrecords: "No Data to Display",
@@ -37,7 +51,7 @@
             repeatitems: false
         },
         multiselect: false
-    }).navGrid("#Pager", { edit: false, add: false, del: false });
+    }).navGrid("#Pager", {search:false, edit: false, add: false, del: false });
     $(window).resize(function () {
         var outerwidth = $('#grid').width();
         $('#tblPrdDetails').setGridWidth(outerwidth);

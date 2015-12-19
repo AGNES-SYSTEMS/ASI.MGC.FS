@@ -37,5 +37,10 @@ namespace ASI.MGC.FS.Controllers
         {
             return View();
         }
+
+        public ActionResult SavePurchaseReturn()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

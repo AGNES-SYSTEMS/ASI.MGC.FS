@@ -1,4 +1,26 @@
-﻿$(document).ready(function () {
+﻿var mrvSelect = function (mrvNo) {
+    if (mrvNo) {
+        var ret = jQuery("#tblMRVSearch").jqGrid('getRowData', mrvNo);
+        $("#txtMRVNo").val(ret.MRVNO_MRV);
+        $("#txtCustCode").val(ret.CUSTOMERCODE_MRV);
+        $("#txtCustDetail").val(ret.CUSTOMERNAME_MRV);
+        getJobDetailByMRV();
+        getSaleDetailByMRV();
+        $('#mrvSearchModel').modal('toggle');
+    }
+};
+
+var bankSelect = function (bankId) {
+    if (bankId) {
+        var ret = jQuery("#tblBankSearch").jqGrid('getRowData', bankId);
+        $("#txtBankCode").val(ret.BANKCODE_BM).change();
+        $("#txtBankDetails").val(ret.BANKNAME_BM).change();
+        $('#BankSearchModel').modal('toggle');
+    }
+};
+
+
+$(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liCashMemo").addClass("active");
     $("#txtNetAmount").val("");
@@ -9,6 +31,10 @@
     jQuery("#tblMRVJobDetails").jqGrid({
         datatype: "local",
         height: 100,
+        shrinkToFit: true,
+        autoheight: true,
+        autowidth: true,
+        styleUI: "Bootstrap",
         colNames: ['Job No', 'Product Description', 'Job Status'],
         colModel: [
             { name: 'JobNo', index: 'JobNo', width: 150, align: "center", sortable: false },
@@ -22,6 +48,10 @@
 jQuery("#tblSaleDetails").jqGrid({
     datatype: "local",
     height: 100,
+    shrinkToFit: true,
+    autoheight: true,
+    autowidth: true,
+    styleUI: "Bootstrap",
     colNames: ['Sale ID', 'Job No', 'PR Code', 'S W Code', 'Description', 'Qty', 'Unit', 'Rate', 'Cash Amount', 'Discount', 'Ship. Chrg'],
     colModel: [
         { name: 'SLNO_SD', index: 'SLNO_SD', width: 50, align: "center", sortable: false },
@@ -50,20 +80,42 @@ $("#mrvSearchModel").on('show.bs.modal', function () {
     $("#tblMRVSearch").jqGrid({
         url: '/MRV/getMRVList',
         datatype: "json",
-        colNames: ['MRV No', 'Customer', 'Customer Details'],
+        styleUI: "Bootstrap",
+        colNames: ['MRV No', 'Customer', 'Customer Details',''],
         colModel: [
         { key: true, name: 'MRVNO_MRV', index: 'MRVNO_MRV', width: 200 },
         { key: false, name: 'CUSTOMERCODE_MRV', index: 'CUSTOMERCODE_MRV', width: 200 },
-        { key: false, name: 'CUSTOMERNAME_MRV', index: 'CUSTOMERNAME_MRV', width: 400 }
+        { key: false, name: 'CUSTOMERNAME_MRV', index: 'CUSTOMERNAME_MRV', width: 400 },
+            {
+                name: "action",
+                align: "center",
+
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options, rowObject) {
+
+                    var markup = "<a %Href%> <i class='fa fa-check-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:mrvSelect(&apos;" + rowObject.MRVNO_MRV + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
         ],
-        rowNum: 20,
-        rowList: [20, 30, 40],
+        rowNum: 40,
+        rowList: [40, 100, 500, 1000],
         mtype: 'GET',
         gridview: true,
         shrinkToFit: true,
         autowidth: true,
         viewrecords: true,
-        sortorder: "desc",
+        sortorder: "asc",
         pager: jQuery('#Pager'),
         caption: "MRV No List",
         emptyrecords: "No Data to Display",
@@ -151,12 +203,36 @@ $("#BankSearchModel").on('show.bs.modal', function () {
     $("#tblBankSearch").jqGrid({
         url: '/Bank/GetBankDetailsList',
         datatype: "json",
-        colNames: ['Bank Code', 'Bank Name'],
+        autoheight: true,
+        styleUI: "Bootstrap",
+        colNames: ['Bank Code', 'Bank Name',''],
         colModel: [
         { key: true, name: 'BANKCODE_BM', index: 'BANKCODE_BM', width: 400 },
-        { key: false, name: 'BANKNAME_BM', index: 'BANKNAME_BM', width: 400 }],
-        rowNum: 20,
-        rowList: [20, 30, 40],
+        { key: false, name: 'BANKNAME_BM', index: 'BANKNAME_BM', width: 400 },
+            {
+                name: "action",
+                align: "center",
+
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options, rowObject) {
+
+                    var markup = "<a %Href%> <i class='fa fa-check-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:bankSelect(&apos;" + rowObject.BANKCODE_BM + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
+        ],
+        rowNum: 40,
+        rowList: [40, 100, 500, 1000],
         mtype: 'GET',
         gridview: true,
         shrinkToFit: true,

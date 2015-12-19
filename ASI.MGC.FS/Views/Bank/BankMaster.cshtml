@@ -1,0 +1,152 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.currPage = "Bank Master";
+    ViewBag.Title = "BankMaster";
+}
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>Bank Master</legend>
+            <div class="row">
+                <div class="container">
+                    @using (Ajax.BeginForm("SaveBankMaster", "Bank", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formBankMaster", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Bank Code</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("BankCode", null, new { ID = "txtBankCode", Class = "form-control"})
+                                    @Html.ValidationMessage("BankCode")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDate" class="control-label col-md-4 small ">Bank Name</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("BankName", null, new { ID = "txtBankName", Class = "form-control" })
+                                    @Html.ValidationMessage("BankName")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblGLDate" class="control-label col-md-4 small ">Receipt Loc</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("ReceiptLoc", null, new { ID = "txtReceiptLoc", Class = "form-control" })
+                                    @Html.ValidationMessage("ReceiptLoc")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDocNo" class="control-label col-md-4 small ">Mode</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("Mode", null, new { ID = "txtMode", Class = "form-control"})
+                                    @Html.ValidationMessage("Mode")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustCode" class="control-label col-md-4 small ">Account No</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("AccNo", null, new { ID = "txtAccNo", Class = "form-control" })
+                                    @Html.ValidationMessage("AccNo")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDLNNo" class="control-label col-md-4 small ">Currency Code</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("CurrCode", null, new { ID = "txtCurrCode", @Value=ViewBag.CurrCode, Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessage("CurrCode")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustDetail" class="control-label col-md-4 small ">Currency Name</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("CurrName", null, new { ID = "txtCurrName", @Value = ViewBag.CurrName, Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessage("CurrName")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Bank Status</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("BankStatus", null, new { ID = "txtBankStatus", Class = "form-control" })
+                                    @Html.ValidationMessage("BankStatus")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustDetail" class="control-label col-md-4 small ">Bank Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("BankDate", null, new {ID = "txtBankDate", Class = "form-control"})
+                                    @Html.ValidationMessage("BankDate")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustDetail" class="control-label col-md-4 small ">Opening Balance</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("OpenBalance", null, new {ID = "txtOpenBalance", Class = "form-control"})
+                                    @Html.ValidationMessage("OpenBalance")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustDetail" class="control-label col-md-4 small ">OD Limit</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("ODLimit", null, new { ID = "txtODLimit", Class = "form-control" })
+                                    @Html.ValidationMessage("ODLimit")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustDetail" class="control-label col-md-4 small ">Note (If Any)</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("Note", null, new { ID = "txtNote", Class = "form-control" })
+                                    @Html.ValidationMessage("Note")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label></label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/Custom/Bank/BankMaster.js")"></script>
+    <script type="text/javascript">
+
+        function OnSuccess(response) {
+            alert(response);
+        }
+
+        function OnFailure() {
+            alert("Whoops! That didn't go so well did it?");
+        }
+
+    </script>
+}

@@ -1,0 +1,122 @@
+﻿@{
+    ViewBag.Title = "DayEndOperation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.currPage = "Day End Operation";
+}
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>Day End Operation</legend>
+            <div class="row">
+                <div class="container">
+                    @using (Ajax.BeginForm("SaveDayEndOperation", "Finance", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formDayEndProcess", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    {
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Day From</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("DayFrom", null, new { ID = "txtDayFrom",@Value=DateTime.Now.ToShortDateString(), Class = "form-control" })
+                                    @Html.ValidationMessage("DayFrom")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("Date", null, new { ID = "txtDate", @Value = DateTime.Now.ToShortDateString(), Class = "form-control" })
+                                    @Html.ValidationMessage("Date")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Day To</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("DayTo", null, new { ID = "txtDayTo", @Value = DateTime.Now.ToShortDateString(), Class = "form-control" })
+                                    @Html.ValidationMessage("DayTo")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Doc No</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("DocNo", null, new { ID = "txtDocNo", Class = "form-control" })
+                                    @Html.ValidationMessage("DocNo")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Last Updated Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("LastUpdatedDate", null, new { ID = "txtLastUpdatedDate", Class = "form-control" })
+                                    @Html.ValidationMessage("LastUpdatedDate")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Last Doc No</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("LastDocNo", null, new { ID = "txtLastDocNo", Class = "form-control" })
+                                    @Html.ValidationMessage("LastDocNo")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Job Total</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("JobTotal", null, new {ID = "txtJobTotal", Class = "form-control"})
+                                    @Html.ValidationMessage("JobTotal")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Sales Total</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("SalesTotal", null, new {ID = "txtSalesTotal", Class = "form-control"})
+                                    @Html.ValidationMessage("SalesTotal")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Shipping Total</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("ShippingTotal", null, new { ID = "txtShippingTotal", Class = "form-control" })
+                                    @Html.ValidationMessage("ShippingTotal")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Discount Total</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("DiscountTotal", null, new { ID = "txtDiscountTotal", Class = "form-control" })
+                                    @Html.ValidationMessage("DiscountTotal")
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<!-- end:main -->
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/Custom/Finance/DayEndOperation.js")"></script>
+    <script type="text/javascript">
+
+        function OnSuccess(response) {
+            alert(response);
+        }
+
+        function OnFailure() {
+            alert("Whoops! That didn't go so well did it?");
+        }
+
+    </script>
+}

@@ -27,6 +27,14 @@
                                 </section>
                                 <br /> <br />
                                 <section>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <div class="col-md-12 input-group paddingLeftRight0">
+                                                @Html.TextBox("searchSupplier", null, new { ID = "txtSupplierSearch", Class = "form-control" })
+                                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <table id="tblSupplierDetails"></table>
                                     <div id="Pager"></div>
                                 </section>
@@ -42,7 +50,7 @@
     <div class="modal fade" id="SupplierMasterModel" tabindex="-1" role="dialog" aria-labelledby="SupplierMasterModelLabel" aria-hidden="true" data-backdrop="false">
         <div class="modal-dialog modal-lg" style="width: 85%">
             <div class="modal-content">
-                @using (Html.BeginForm("SaveSupplierMaster", "Setups", FormMethod.Post, new { id = "formSupplierMaster", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                @using (Ajax.BeginForm("SaveSupplierMaster", "Setups", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formSupplierMaster", @class = "form-horizontal", enctype = "multipart/form-data" }))
                 {
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"
@@ -211,4 +219,15 @@
 @section scripts
 {
     <script src="@Url.Content("~/Scripts/Custom/Setups/SupplierMaster.js")"></script>
+<script type="text/javascript">
+
+    function OnSuccess(response) {
+        alert(response);
+    }
+
+    function OnFailure(response) {
+        alert("Whoops! That didn't go so well did it?");
+    }
+
+</script>
 }

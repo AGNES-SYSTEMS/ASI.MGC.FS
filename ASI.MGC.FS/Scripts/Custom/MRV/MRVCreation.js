@@ -1,4 +1,23 @@
-﻿$(document).ready(function () {
+﻿var jobSelect = function (jobId) {
+    if (jobId) {
+        var ret = jQuery("#tblJobSearch").jqGrid('getRowData', jobId);
+        $("#txtJobID").val(ret.JOBID_JR).change();
+        $("#txtJobDesc").val(ret.JOBDESCRIPTION_JR).change();
+        $("#txtRate").val(ret.RATE_RJ).change();
+        $('#mrvJobSearchModel').modal('toggle');
+    }
+};
+
+var productSelect = function (prdId) {
+    if (prdId) {
+        var ret = jQuery("#tblProductSearch").jqGrid('getRowData', prdId);
+        $("#txtPrCode").val(ret.PROD_CODE_PM).change();
+        $("#txtPrDesc").val(ret.DESCRIPTION_PM).change();
+        $('#mrvPrdSearchModel').modal('toggle');
+    }
+};
+
+$(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liMrv").addClass("active");
 
@@ -8,6 +27,10 @@
     jQuery("#tblMetarials").jqGrid({
         datatype: "local",
         height: 150,
+        shrinkToFit: true,
+        autoheight: true,
+        autowidth: true,
+        styleUI: "Bootstrap",
         colNames: ['PrCode', 'Product Description', 'Job ID', 'Job Description', 'Quantity', 'Rate', 'Amount'],
         colModel: [
             { name: 'PRODID_MRR', index: 'PRODID_MRR', width: 80, align: "center", sortable: false },
@@ -179,13 +202,35 @@
         $("#tblProductSearch").jqGrid({
             url: '/Product/GetProductDetailsList',
             datatype: "json",
-            colNames: ['Product Code', 'Product Details'],
+            autoheight: true,
+            styleUI: "Bootstrap",
+            colNames: ['Product Code', 'Product Details', ''],
             colModel: [
-            { key: true, name: 'PROD_CODE_PM', index: 'PROD_CODE_PM', width: 400 },
-            { key: false, name: 'DESCRIPTION_PM', index: 'DESCRIPTION_PM', width: 400 }
+            { key: true, name: 'PROD_CODE_PM', index: 'PROD_CODE_PM', width: 250 },
+            { key: false, name: 'DESCRIPTION_PM', index: 'DESCRIPTION_PM', width: 700 },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options, rowObject) {
+
+                    var markup = "<a %Href%> <i class='fa fa-check-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:productSelect(&apos;" + rowObject.PROD_CODE_PM + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
             ],
-            rowNum: 20,
-            rowList: [20, 30, 40],
+            rowNum: 40,
+            rowList: [40, 100, 500, 1000],
             mtype: 'GET',
             gridview: true,
             shrinkToFit: true,
@@ -223,14 +268,36 @@
         $("#tblJobSearch").jqGrid({
             url: '/Job/GetJobDetailsList',
             datatype: "json",
-            colNames: ['Product Code', 'Product Details', 'Rate'],
+            autoheight: true,
+            styleUI: "Bootstrap",
+            colNames: ['Product Code', 'Product Details', 'Rate', ''],
             colModel: [
             { key: true, name: 'JOBID_JR', index: 'JOBID_JR', width: 250 },
-            { key: false, name: 'JOBDESCRIPTION_JR', index: 'JOBDESCRIPTION_JR', width: 400 },
-            { key: false, name: 'RATE_RJ', index: 'RATE_RJ', width: 150 }
+            { key: false, name: 'JOBDESCRIPTION_JR', index: 'JOBDESCRIPTION_JR', width: 550 },
+            { key: false, name: 'RATE_RJ', index: 'RATE_RJ', width: 150},
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options, rowObject) {
+
+                    var markup = "<a %Href%> <i class='fa fa-check-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:jobSelect(&apos;" + rowObject.JOBID_JR + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
             ],
-            rowNum: 20,
-            rowList: [20, 30, 40],
+            rowNum: 40,
+            rowList: [40, 100, 500, 1000],
             mtype: 'GET',
             gridview: true,
             shrinkToFit: true,
@@ -249,7 +316,9 @@
             },
             multiselect: false
         });
+        jQuery("#tblJobSearch").jqGrid('filterToolbar');
     });
+
     $(window).resize(function () {
         var outerwidth = $('#jobGrid').width();
         $('#tblJobSearch').setGridWidth(outerwidth);

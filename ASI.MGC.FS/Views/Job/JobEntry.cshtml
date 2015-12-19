@@ -20,7 +20,7 @@
             <legend>Sales Entry</legend>
             <div class="row">
                 <div class="container">
-                    @using (Html.BeginForm("SaveJobEntry", "Job", FormMethod.Post, new { id = "formJobEntry", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @using (Ajax.BeginForm("SaveJobEntry", "Job", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formJobEntry", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
                         <div class="row">
                             <div class="col-md-6 form-group">
@@ -431,4 +431,15 @@
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Job/JobEntry.js")"></script>
+<script type="text/javascript">
+
+    function OnSuccess(response) {
+        alert(response);
+    }
+
+    function OnFailure(response) {
+        alert("Whoops! That didn't go so well did it?");
+    }
+
+</script>
 }

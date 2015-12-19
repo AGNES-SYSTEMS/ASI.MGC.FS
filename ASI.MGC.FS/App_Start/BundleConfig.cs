@@ -8,11 +8,16 @@ namespace ASI.MGC.FS
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery.unobtrusive-ajax.min.js"));
+                        "~/Scripts/jquery-{version}.js"//,
+                        //"~/Scripts/jquery.unobtrusive-ajax.min.js"
+                        ));
 
+            //bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
+            //            "~/Scripts/jquery.validate*"));
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                "~/Scripts/jquery.validate*",
+                "~/Scripts/jquery.unobtrusive*"));
+
             bundles.Add(new ScriptBundle("~/bundles/JqueryUi").Include(
                 "~/Scripts/jquery-ui.min.js"));
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -23,8 +28,8 @@ namespace ASI.MGC.FS
             bundles.Add(new ScriptBundle("~/bundles/libraries").Include(
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/toastr.min.js",
-                        "~/Scripts/i18n/grid.locale-en.js",
-                        "~/Scripts/jquery.jqGrid.min.js",
+                       "~/Scripts/i18n/grid.locale-en.js",
+                "~/Scripts/jquery.jqGrid.min.js",
                         "~/Scripts/bootstrapValidator.min.js",
                         "~/Scripts/jquery.validate.min.js",
                         "~/Scripts/formValidation.min.js",
@@ -56,6 +61,7 @@ namespace ASI.MGC.FS
                       "~/Content/owl.carousel.css",
                       "~/Content/owl.theme.css",
                       "~/Content/owl.transitions.css",
+                      "~/Content/ui.jqgrid-bootstrap.css",
                       "~/Content/themes/base/jquery.ui.all.css",
                       "~/Content/jquery.jqGrid/ui.jqgrid.css",
                       "~/Content/bootstrap.min.css",

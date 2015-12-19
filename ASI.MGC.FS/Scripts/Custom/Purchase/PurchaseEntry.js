@@ -1,4 +1,23 @@
-﻿$(document).ready(function () {
+﻿var customerSelect = function (custId) {
+    if (custId) {
+        var ret = jQuery("#tblCustomerSearch").jqGrid('getRowData', custId);
+        $("#txtAPCode").val(ret.ARCODE_ARM).change();
+        $("#txtAPDetail").val(ret.DESCRIPTION_ARM).change();
+        $('#CustomerSearchModel').modal('toggle');
+    }
+};
+
+var productSelect = function (prdId) {
+    if (prdId) {
+        var ret = jQuery("#tblProductSearch").jqGrid('getRowData', prdId);
+        $("#txtPrCode").val(ret.PROD_CODE_PM).change();
+        $("#txtPrDesc").val(ret.DESCRIPTION_PM).change();
+        $("#txtUnit").val(ret.PURCHSEUNIT_PM).change();
+        $('#PrdSearchModel').modal('toggle');
+    }
+};
+
+$(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liPurchaseEntry").addClass("active");
     var arrPrdDetails = [];
@@ -7,6 +26,11 @@
     jQuery("#tblPrdDetails").jqGrid({
         datatype: "local",
         height: 100,
+        autoheight: true,
+        styleUI: "Bootstrap",
+        gridview: true,
+        shrinkToFit: true,
+        viewrecords: true,
         colNames: ['Product Code', 'Product Description', 'Qty', 'Unit', 'Rate', 'Amount'],
         colModel: [
             { name: 'PrdCode', index: 'PrdCode', width: 100, align: "center", sortable: false },
@@ -21,25 +45,47 @@
     });
 
     $(window).resize(function () {
-        var outerwidthMRV = $('#gridProduct').width();
-        $('#tblPrdDetails').setGridWidth(outerwidthMRV);
+        var outerwidthMrv = $('#gridProduct').width();
+        $('#tblPrdDetails').setGridWidth(outerwidthMrv);
     });
 
     $("#CustomerSearchModel").on('show.bs.modal', function () {
         $("#tblCustomerSearch").jqGrid({
             url: '/Customer/GetAPCustomerDetailsList',
             datatype: "json",
-            colNames: ['Customer Code', 'Customer Name'],
+            height: 150,
+            autoheight: true,
+            styleUI: "Bootstrap",
+            colNames: ['Customer Code', 'Customer Name', ''],
             colModel: [
             { key: true, name: 'ARCODE_ARM', index: 'ARCODE_ARM', width: 400 },
-            { key: false, name: 'DESCRIPTION_ARM', index: 'DESCRIPTION_ARM', width: 400 }
+            { key: false, name: 'DESCRIPTION_ARM', index: 'DESCRIPTION_ARM', width: 400 },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options, rowObject) {
+
+                    var markup = "<a %Href%> <i class='fa fa-check-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:customerSelect(&apos;" + rowObject.ARCODE_ARM + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
             ],
-            rowNum: 20,
-            rowList: [20, 30, 40],
+            rowNum: 40,
+            rowList: [40, 100, 500, 1000],
             mtype: 'GET',
             gridview: true,
             shrinkToFit: true,
-            autowidth: true,
             viewrecords: true,
             sortorder: "asc",
             pager: jQuery('#custPager'),
@@ -73,19 +119,41 @@
         $("#tblProductSearch").jqGrid({
             url: '/Product/GetIPProductDetailsList',
             datatype: "json",
-            colNames: ['Product Code', 'Product Details', 'Purchase Unit', 'Sales Unit'],
+            height: 150,
+            autoheight: true,
+            styleUI: "Bootstrap",
+            colNames: ['Product Code', 'Product Details', 'Purchase Unit', 'Sales Unit', ''],
             colModel: [
             { key: true, name: 'PROD_CODE_PM', index: 'PROD_CODE_PM', width: 200 },
             { key: false, name: 'DESCRIPTION_PM', index: 'DESCRIPTION_PM', width: 250 },
             { key: false, name: 'PURCHSEUNIT_PM', index: 'PURCHSEUNIT_PM', width: 175 },
-            { key: false, name: 'SALESUNIT_PM', index: 'SALESUNIT_PM', width: 175 }
+            { key: false, name: 'SALESUNIT_PM', index: 'SALESUNIT_PM', width: 175 },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options, rowObject) {
+
+                    var markup = "<a %Href%> <i class='fa fa-check-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:productSelect(&apos;" + rowObject.PROD_CODE_PM + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
             ],
-            rowNum: 20,
-            rowList: [20, 30, 40],
+            rowNum: 40,
+            rowList: [40, 100, 500, 1000],
             mtype: 'GET',
             gridview: true,
             shrinkToFit: true,
-            autowidth: true,
             viewrecords: true,
             sortorder: "asc",
             pager: jQuery('#prdPager'),
@@ -134,7 +202,7 @@
         $("#txtAmount").val("0");
     }
 
-    $("#btnCancel").click(function (e) {
+    $("#btnCancel").click(function () {
         clearModalForm();
     });
     $("#btnSave").click(function (e) {
@@ -148,8 +216,6 @@
             };
             var su = jQuery("#tblPrdDetails").jqGrid('addRowData', arrIndex, arrPrdDetails[arrIndex]);
             if (su) {
-                var mrvPrds = $('#tblPrdDetails').jqGrid('getGridParam', 'data');
-                var jsonMrvPrds = JSON.stringify(mrvPrds);
                 clearModalForm();
             }
         }
@@ -165,7 +231,7 @@
     $("#purchaseProductModel").on('hide.bs.modal', function () {
         clearModalForm();
         var totalGridPrdAmount = 0.0;
-        for (i = 0; i < arrPrdDetails.length; i++) {
+        for (var i = 0; i < arrPrdDetails.length; i++) {
             totalGridPrdAmount += parseFloat(arrPrdDetails[i]["Amount"]);
         }
         $("#txtNetAmount").val(totalGridPrdAmount);

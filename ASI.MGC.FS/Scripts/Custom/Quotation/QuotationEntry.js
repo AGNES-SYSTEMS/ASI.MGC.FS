@@ -1,4 +1,33 @@
-﻿$(document).ready(function () {
+﻿var jobSelect = function (jobId) {
+    if (jobId) {
+        var ret = jQuery("#tblJobSearch").jqGrid('getRowData', jobId);
+        $("#txtJobID").val(ret.JOBID_JR).change();
+        $("#txtJobDesc").val(ret.JOBDESCRIPTION_JR).change();
+        $("#txtRate").val(ret.RATE_RJ).change();
+        $('#QuotJobSearchModel').modal('toggle');
+    }
+};
+
+var productSelect = function (prdId) {
+    if (prdId) {
+        var ret = jQuery("#tblProductSearch").jqGrid('getRowData', prdId);
+        $("#txtPrCode").val(ret.PROD_CODE_PM).change();
+        $("#txtPrDesc").val(ret.DESCRIPTION_PM).change();
+        $('#QuotPrdSearchModel').modal('toggle');
+    }
+};
+
+var customerSelect = function(customerId)
+{
+    if (customerId) {
+        var ret = jQuery("#tblCustomerSearch").jqGrid('getRowData', customerId);
+        $("#txtCustCode").val(ret.ARCODE_ARM).change();
+        $("#txtCustName").val(ret.DESCRIPTION_ARM).change();
+        $('#CustomerSearchModel').modal('toggle');
+    }
+}
+
+$(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liQuotation").addClass("active");
     var quotProducts = [];
@@ -6,6 +35,10 @@
     jQuery("#tblQuotDetails").jqGrid({
         datatype: "local",
         height: 150,
+        shrinkToFit: true,
+        autoheight: true,
+        autowidth: true,
+        styleUI: "Bootstrap",
         colNames: ['PrCode', 'Product Description', 'Job ID', 'Job Description', 'Quantity', 'Rate', 'Amount'],
         colModel: [
             { name: 'PrCode', index: 'PrCode', width: 80, align: "center", sortable: false },
@@ -99,7 +132,7 @@
     $('#txtCustCode').on('change', function () {
         $('#formMRVCreation').bootstrapValidator('revalidateField', 'CUSTNAME_QM');
     });
-    $('#txtCustCode').on('blur', function() {
+    $('#txtCustCode').on('blur', function () {
         if ($('#txtCustCode').val() === "") {
             $('#txtCustCode').val("CASH").change();
         }
@@ -118,18 +151,42 @@
         jQuery("#tblCustomerSearch").jqGrid({
             url: '/Customer/GetCustList?custType=' + $CustType,
             datatype: "json",
-            colNames: ['Customer Code', 'Customer Name'],
+            height: 150,
+            shrinkToFit: true,
+            autoheight: true,
+            autowidth: true,
+            styleUI: "Bootstrap",
+            colNames: ['Customer Code', 'Customer Name', ''],
             colModel: [
-                { name: 'ARCODE_ARM', index: 'ARCODE_ARM', width: 400 },
-                { name: 'DESCRIPTION_ARM', index: 'DESCRIPTION_ARM', width: 400 }
+                {key:true, name: 'ARCODE_ARM', index: 'ARCODE_ARM', width: 400 },
+                {key:false, name: 'DESCRIPTION_ARM', index: 'DESCRIPTION_ARM', width: 400 },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options, rowObject) {
+
+                    var markup = "<a %Href%> <i class='fa fa-check-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:customerSelect(&apos;" + rowObject.ARCODE_ARM + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
             ],
-            rowNum: 20,
-            rowList: [20, 30, 40],
+            rowNum: 40,
+            rowList: [40, 100, 500, 1000],
             mtype: 'GET',
             gridview: true,
-            shrinkToFit: true,
             viewrecords: true,
-            sortorder: "asc",
+            sortorder: "desc",
             pager: jQuery('#custPager'),
             caption: "Customer Details",
             emptyrecords: "No Data to Display",
@@ -140,7 +197,6 @@
                 records: "records",
                 repeatitems: false
             },
-            autowidth: true,
             multiselect: false
         });
         $(window).resize(function () {
@@ -164,19 +220,42 @@
         $("#tblProductSearch").jqGrid({
             url: '/Product/GetProductDetailsList',
             datatype: "json",
-            colNames: ['Product Code', 'Product Details'],
+            height: 150,
+            shrinkToFit: true,
+            autoheight: true,
+            autowidth: true,
+            styleUI: "Bootstrap",
+            colNames: ['Product Code', 'Product Details', ''],
             colModel: [
             { key: true, name: 'PROD_CODE_PM', index: 'PROD_CODE_PM', width: 400 },
-            { key: false, name: 'DESCRIPTION_PM', index: 'DESCRIPTION_PM', width: 400 }
+            { key: false, name: 'DESCRIPTION_PM', index: 'DESCRIPTION_PM', width: 400 },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options, rowObject) {
+
+                    var markup = "<a %Href%> <i class='fa fa-check-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:productSelect(&apos;" + rowObject.PROD_CODE_PM + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
             ],
-            rowNum: 20,
-            rowList: [20, 30, 40],
+            rowNum: 40,
+            rowList: [40, 100, 500, 1000],
             mtype: 'GET',
             gridview: true,
-            shrinkToFit: true,
-            autowidth: true,
             viewrecords: true,
-            sortorder: "asc",
+            sortorder: "desc",
             pager: jQuery('#prdPager'),
             caption: "Product Details List",
             emptyrecords: "No Data to Display",
@@ -198,20 +277,43 @@
         $("#tblJobSearch").jqGrid({
             url: '/Job/GetJobDetailsList',
             datatype: "json",
-            colNames: ['Product Code', 'Product Details', 'Rate'],
+            height: 150,
+            shrinkToFit: true,
+            autoheight: true,
+            autowidth: true,
+            styleUI: "Bootstrap",
+            colNames: ['Product Code', 'Product Details', 'Rate', ''],
             colModel: [
             { key: true, name: 'JOBID_JR', index: 'JOBID_JR', width: 250 },
             { key: false, name: 'JOBDESCRIPTION_JR', index: 'JOBDESCRIPTION_JR', width: 400 },
-            { key: false, name: 'RATE_RJ', index: 'RATE_RJ', width: 150 }
+            { key: false, name: 'RATE_RJ', index: 'RATE_RJ', width: 150 },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options, rowObject) {
+
+                    var markup = "<a %Href%> <i class='fa fa-check-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:jobSelect(&apos;" + rowObject.JOBID_JR + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
             ],
-            rowNum: 20,
-            rowList: [20, 30, 40],
+            rowNum: 40,
+            rowList: [40, 100, 500, 1000],
             mtype: 'GET',
             gridview: true,
-            shrinkToFit: true,
-            autowidth: true,
             viewrecords: true,
-            sortorder: "asc",
+            sortorder: "desc",
             pager: jQuery('#jobPager'),
             caption: "Job Details List",
             emptyrecords: "No Data to Display",

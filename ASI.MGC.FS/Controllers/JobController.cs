@@ -32,20 +32,14 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
-        public JsonResult GetJobDetailsList(string sidx, string sord, int page, int rows, string jobId, string jobDetails)
+        public JsonResult GetJobDetailsList(string sidx, string sord, int page, int rows, string jobSearch)
         {
             var jobList = (from jobs in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
                            select jobs).Select(a => new { a.JOBID_JR, a.JOBDESCRIPTION_JR, a.RATE_RJ });
-            if (!string.IsNullOrEmpty(jobId))
+            if (!string.IsNullOrEmpty(jobSearch))
             {
                 jobList = (from jobs in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
-                           where jobs.JOBID_JR.Contains(jobId)
-                           select jobs).Select(a => new { a.JOBID_JR, a.JOBDESCRIPTION_JR, a.RATE_RJ });
-            }
-            if (!string.IsNullOrEmpty(jobDetails))
-            {
-                jobList = (from jobs in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
-                           where jobs.JOBID_JR.Contains(jobDetails)
+                           where jobs.JOBID_JR.Contains(jobSearch) || jobs.JOBDESCRIPTION_JR.Contains(jobSearch) || jobs.RATE_RJ.Equals(Convert.ToDecimal(jobSearch))
                            select jobs).Select(a => new { a.JOBID_JR, a.JOBDESCRIPTION_JR, a.RATE_RJ });
             }
             int pageIndex = Convert.ToInt32(page) - 1;
@@ -73,7 +67,7 @@ namespace ASI.MGC.FS.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetJobMrvList(string sidx, string sord, int page, int rows, string jobStatus)
+        public JsonResult GetJobMrvList(string sidx, string sord, int page, int rows,string _search,string filters, string jobStatus)
         {
             var jobList = (from jobMaster in _unitOfWork.Repository<JOBMASTER>().Query().Get()
                            select jobMaster).Select(a => new { a.JOBNO_JM, a.MRVNO_JM });

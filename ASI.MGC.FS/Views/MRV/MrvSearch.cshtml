@@ -1,8 +1,133 @@
-﻿
-@{
-    ViewBag.Title = "MrvSearch";
+﻿@{
+    ViewBag.Title = "MRVSearchDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>MRV Search Details</legend>
+            <div class="row">
+                <div class="container">
+                    @using (Ajax.BeginForm("SearchMRVDetails", "MRV", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formPurchaseReturn", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">AP Code</label>
+                                <div class="col-md-7 paddingLeftRight0">
+                                    @Html.TextBox("APCode", null, new { ID = "txtAPCode", Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessage("APCode")
+                                </div>
+                                <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#CustomerSearchModel">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">MRV/ Job No</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("MRVJobNo", null, new { ID = "txtMRVJobNo", Class = "form-control" })
+                                    @Html.ValidationMessage("MRVJobNo")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Customer Code</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("CustCode", null, new { ID = "txtCustCode", Class = "form-control" })
+                                    @Html.ValidationMessage("CustCode")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Customer Name</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("CustName", null, new { ID = "txtCustName", Class = "form-control" })
+                                    @Html.ValidationMessage("CustName")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Address</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("Address", null, new { ID = "txtAddress", Class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Telephone No</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("PhoneNo", null, new { ID = "txtPhoneNo", Class = "form-control" })
+                                    @Html.ValidationMessage("PhoneNo")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Emp Code</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("EmpCode", null, new { ID = "txtEmpCode",Class = "form-control" })
+                                    @Html.ValidationMessage("EmpCode")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <fieldset>
+                                    <legend>Product Details</legend>
+                                    <div id="gridProduct" class="panel-body">
+                                        <section id="unseen">
+                                            <button class="btn btn-primary" data-toggle="modal" data-target="#purchaseProductModel">
+                                                Add Product
+                                            </button>
+                                            <table id="tblPrdDetails"></table>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label></label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/MRV/MRVSearchDetails.js")"></script>
+    <script type="text/javascript">
 
-<h2>MrvSearch</h2>
+        function OnSuccess(response) {
+            alert(response);
+        }
 
+        function OnFailure() {
+            alert("Whoops! That didn't go so well did it?");
+        }
+
+    </script>
+}

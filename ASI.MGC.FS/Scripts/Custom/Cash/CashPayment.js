@@ -1,4 +1,40 @@
-﻿$(document).ready(function () {
+﻿var alCodeSelect = function (alCodeId) {
+    if (alCodeId) {
+        var ret = jQuery("#tblAlCodeSearch").jqGrid('getRowData', alCodeId);
+        $("#txtAlCode").val(ret.ALCODE_ALD).change();
+        $("#txtAlDesc").val(ret.ALDESCRIPTION).change();
+        $('#alCodeSearchModel').modal('toggle');
+    }
+};
+
+var docSelect = function (docId) {
+    if (docId) {
+        var ret = jQuery("#tblDocSearch").jqGrid('getRowData', docId);
+        $("#txtDocType").val(ret.DOCABBREVIATION_DM).change();
+        $("#txtDocDetails").val(ret.DESCRIPTION_DM).change();
+        $('#docTypeSearchModel').modal('toggle');
+    }
+};
+
+var bankSelect = function (bankId) {
+    if (bankId) {
+        var ret = jQuery("#tblBankSearch").jqGrid('getRowData', bankId);
+        $("#txtBankCode").val(ret.BANKCODE_BM).change();
+        $("#txtBankName").val(ret.BANKNAME_BM).change();
+        $('#BankSearchModel').modal('toggle');
+    }
+};
+
+var accountSelect = function (accountId) {
+    if (accountId) {
+        var ret = jQuery("#tblAccountSearch").jqGrid('getRowData', accountId);
+        $("#txtAccountCode").val(ret.AccountCode).change();
+        $("#txtAccountDesc").val(ret.AccountDetail).change();
+        $('#accountSearchModel').modal('toggle');
+    }
+};
+
+$(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liCashPayments").addClass("active");
     var arrAllocDetails = [];
@@ -7,6 +43,10 @@
     jQuery("#tblAllocDetails").jqGrid({
         datatype: "local",
         height: 150,
+        shrinkToFit: true,
+        autoheight: true,
+        autowidth: true,
+        styleUI: "Bootstrap",
         colNames: ['AL Code', 'Account Code', 'Account Description', 'Amount', 'Narration'],
         colModel: [
             { name: 'AlCode', index: 'AlCode', width: 150, align: "center", sortable: false },
@@ -27,13 +67,36 @@
         jQuery("#tblAccountSearch").jqGrid({
             url: '/AllocationMaster/GetAccountDetailsList?accountType=' + $("#txtAlCode").val(),
             datatype: "json",
-            colNames: ['Account Code', 'Account Description'],
+            height: 150,
+            autoheight: true,
+            styleUI: "Bootstrap",
+            colNames: ['Account Code', 'Account Description', ''],
             colModel: [
-                { name: 'AccountCode', index: 'AccountCode', width: 400 },
-                { name: 'AccountDetail', index: 'AccountDetail', width: 400 }
+                { key: true, name: 'AccountCode', index: 'AccountCode', width: 400 },
+                { key: false, name: 'AccountDetail', index: 'AccountDetail', width: 400 },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options, rowObject) {
+
+                    var markup = "<a %Href%> <i class='fa fa-check-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:accountSelect(&apos;" + rowObject.AccountCode + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
             ],
-            rowNum: 20,
-            rowList: [20, 30, 40],
+            rowNum: 40,
+            rowList: [40, 100, 500, 1000],
             mtype: 'GET',
             gridview: true,
             shrinkToFit: true,
@@ -61,13 +124,35 @@
         jQuery("#tblAlCodeSearch").jqGrid({
             url: '/AllocationMaster/GetAllocationMasterList',
             datatype: "json",
-            colNames: ['AL Code', 'AL Code Description'],
+            autoheight: true,
+            styleUI: "Bootstrap",
+            colNames: ['AL Code', 'AL Code Description', ''],
             colModel: [
-                { name: 'ALCODE_ALD', index: 'ALCODE_ALD', width: 400 },
-                { name: 'ALDESCRIPTION', index: 'ALDESCRIPTION', width: 400 }
+                {key:true, name: 'ALCODE_ALD', index: 'ALCODE_ALD', width: 400 },
+                {key:false, name: 'ALDESCRIPTION', index: 'ALDESCRIPTION', width: 400 },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options, rowObject) {
+
+                    var markup = "<a %Href%> <i class='fa fa-check-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:alCodeSelect(&apos;" + rowObject.ALCODE_ALD + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
             ],
-            rowNum: 20,
-            rowList: [20, 30, 40],
+            rowNum: 40,
+            rowList: [40, 100, 500, 1000],
             mtype: 'GET',
             gridview: true,
             shrinkToFit: true,
@@ -99,12 +184,35 @@
         $("#tblBankSearch").jqGrid({
             url: '/Bank/GetBankDetailsByType?bankType=' + $bankType,
             datatype: "json",
-            colNames: ['Bank Code', 'Bank Name'],
+            autoheight: true,
+            styleUI: "Bootstrap",
+            colNames: ['Bank Code', 'Bank Name', ''],
             colModel: [
             { key: true, name: 'BANKCODE_BM', index: 'BANKCODE_BM', width: 400 },
-            { key: false, name: 'BANKNAME_BM', index: 'BANKNAME_BM', width: 400 }],
-            rowNum: 20,
-            rowList: [20, 30, 40],
+            { key: false, name: 'BANKNAME_BM', index: 'BANKNAME_BM', width: 400 },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options, rowObject) {
+
+                    var markup = "<a %Href%> <i class='fa fa-check-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:bankSelect(&apos;" + rowObject.BANKCODE_BM + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
+            ],
+            rowNum: 40,
+            rowList: [40, 100, 500, 1000],
             mtype: 'GET',
             gridview: true,
             shrinkToFit: true,
@@ -133,12 +241,35 @@
         $("#tblDocSearch").jqGrid({
             url: '/DocumentMaster/GetByDocType?docType=' + $docType,
             datatype: "json",
-            colNames: ['Document Type', 'Document Name'],
+            autoheight: true,
+            styleUI: "Bootstrap",
+            colNames: ['Document Type', 'Document Name', ''],
             colModel: [
             { key: true, name: 'DOCABBREVIATION_DM', index: 'DOCABBREVIATION_DM', width: 400 },
-            { key: false, name: 'DESCRIPTION_DM', index: 'DESCRIPTION_DM', width: 400 }],
-            rowNum: 20,
-            rowList: [20, 30, 40],
+            { key: false, name: 'DESCRIPTION_DM', index: 'DESCRIPTION_DM', width: 400 },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options, rowObject) {
+
+                    var markup = "<a %Href%> <i class='fa fa-check-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:docSelect(&apos;" + rowObject.DOCABBREVIATION_DM + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
+            ],
+            rowNum: 40,
+            rowList: [40, 100, 500, 1000],
             mtype: 'GET',
             gridview: true,
             shrinkToFit: true,
@@ -238,7 +369,7 @@
         if (counter > 0) {
             counter += 1;
             $('#tblAccountSearch').setGridParam({ url: '/AllocationMaster/GetAccountDetailsList?accountType=' + $("#txtAlCode").val() });
-            $('#tblAccountSearch').jqGrid('GridUnload');
+            $.jgrid.gridUnload('#tblAccountSearch');
         } else {
             counter += 1;
         }

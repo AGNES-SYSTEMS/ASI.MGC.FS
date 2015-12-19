@@ -1,0 +1,99 @@
+﻿@{
+    ViewBag.Title = "DocumentReversal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.currPage = "Document Reversal";
+}
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>Document Reversal</legend>
+            <div class="row">
+                <div class="container">
+                    @using (Ajax.BeginForm("SaveDocumentReversal", "Finance", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formDocumentReversal", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    {
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Doc Type</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("DocType", null, new { ID = "txtDocType", Class = "form-control" })
+                                    @Html.ValidationMessage("DocType")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Invoice Number</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("InvNumber", null, new { ID = "txtInvNumber", Class = "form-control" })
+                                    @Html.ValidationMessage("InvNumber")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Doc Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("DocDate", null, new { ID = "txtDocDate", Class = "form-control" })
+                                    @Html.ValidationMessage("DocDate")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">OtherRef</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("OtherRef", null, new { ID = "txtOtherRef", Class = "form-control" })
+                                    @Html.ValidationMessage("OtherRef")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Acc. Code</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("AccCode", null, new { ID = "txtAccCode", Class = "form-control" })
+                                    @Html.ValidationMessage("AccCode")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Amount</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("Amount", null, new { ID = "txtAmount", Class = "form-control" })
+                                    @Html.ValidationMessage("Amount")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Status</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("Status", null, new { ID = "txtStatus", Class = "form-control" })
+                                    @Html.ValidationMessage("Status")
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<!-- end:main -->
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/Custom/Finance/DocumentReversal.js")"></script>
+    <script type="text/javascript">
+
+        function OnSuccess(response) {
+            alert(response);
+        }
+
+        function OnFailure() {
+            alert("Whoops! That didn't go so well did it?");
+        }
+
+    </script>
+}

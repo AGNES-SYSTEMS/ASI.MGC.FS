@@ -22,7 +22,7 @@
             <legend>Bank Receipt</legend>
             <div class="row">
                 <div class="container">
-                    @using (Html.BeginForm("SaveBankReceipt", "Bank", null, FormMethod.Post, new { id = "formBankReceipt", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @using (Ajax.BeginForm("SaveBankReceipt", "Bank", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formBankReceipt", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
@@ -195,7 +195,7 @@
 </div>
 <div class="container">
     <div class="modal fade" id="allocationDetailsModel" tabindex="-1" role="dialog" aria-labelledby="allocationDetailsModelLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" style="width: 85%">
+        <div class="modal-dialog modal-lg modal-sm" style="width: 85%">
             <div class="modal-content">
                 <form class="form-horizontal" id="allocationDetailsModelform" method="post" data-fv-framework="bootstrap"
                       data-fv-message="This value is not valid"
@@ -280,7 +280,7 @@
 </div>
 <div class="container">
     <div class="modal fade" id="alCodeSearchModel" tabindex="-1" role="dialog" aria-labelledby="alCodeSearchModelLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-sm">
             <div class="modal-content">
                 <form class="form-horizontal" id="alCodeSearchModelform" method="post" data-fv-framework="bootstrap"
                       data-fv-message="This value is not valid"
@@ -318,7 +318,7 @@
 </div>
 <div class="container">
     <div class="modal fade" id="accountSearchModel" tabindex="-1" role="dialog" aria-labelledby="accountSearchModelLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-sm">
             <div class="modal-content">
                 <form class="form-horizontal" id="accountSearchModelform" method="post" data-fv-framework="bootstrap"
                       data-fv-message="This value is not valid"
@@ -336,12 +336,20 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-lg-12">
-                                <div id="accGrid" class="panel-body">
-                                    <table id="tblAccountSearch" style="width: 100%"></table>
-                                    <div id="accPager"></div>
+                            <section>
+                                <div class="row">
+                                    <div class="col-md-12 form-group input-group paddingLeftRight">
+                                        @Html.TextBox("searchAccount", null, new { ID = "txtAccountSearch", Class = "form-control" })
+                                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="col-lg-12">
+                                    <div id="accGrid" class="panel-body">
+                                        <table id="tblAccountSearch" style="width: 100%"></table>
+                                        <div id="accPager"></div>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -356,7 +364,7 @@
 </div>
 <div class="container">
     <div class="modal fade" id="BankSearchModel" tabindex="-1" role="dialog" aria-labelledby="BankSearchModelLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-sm">
             <div class="modal-content">
                 <form class="form-horizontal" id="BankSearchModelform" method="post" data-fv-framework="bootstrap"
                       data-fv-message="This value is not valid"
@@ -374,12 +382,20 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-lg-12">
-                                <div id="bankGrid" class="panel-body">
-                                    <table id="tblBankSearch" style="width: 100%"></table>
-                                    <div id="bankPager"></div>
+                            <section>
+                                <div class="row">
+                                    <div class="col-md-12 form-group input-group paddingLeftRight">
+                                        @Html.TextBox("searchBank", null, new { ID = "txtBankSearch", Class = "form-control" })
+                                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="col-md-12 col-sm-12">
+                                    <div id="bankGrid" class="panel-body">
+                                        <table id="tblBankSearch" style="width: 100%"></table>
+                                        <div id="bankPager"></div>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -394,7 +410,7 @@
 </div>
 <div class="container">
     <div class="modal fade" id="docTypeSearchModel" tabindex="-1" role="dialog" aria-labelledby="docTypeSearchModelLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-sm">
             <div class="modal-content">
                 <form class="form-horizontal" id="docTypeSearchModelform" method="post" data-fv-framework="bootstrap"
                       data-fv-message="This value is not valid"
@@ -438,4 +454,15 @@
     <script src="@Url.Content("~/Scripts/formValidation.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.framework.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Bank/BankReceipt.js")"></script>
+<script type="text/javascript">
+
+    function OnSuccess(response) {
+        alert(response);
+    }
+
+    function OnFailure(response) {
+        alert("Whoops! That didn't go so well did it?");
+    }
+
+</script>
 }

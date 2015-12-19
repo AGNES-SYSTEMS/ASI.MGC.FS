@@ -15,7 +15,7 @@
             <legend>Invoice Reversal</legend>
             <div class="row">
                 <div class="container">
-                    @using (Html.BeginForm("SaveInvoiceReversal", "Invoice", FormMethod.Post, new { id = "formJobEntry", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @using (Ajax.BeginForm("SaveInvoiceReversal", "Invoice", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formJobEntry", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
                         <div class="row">
                             <div class="col-md-6 form-group">

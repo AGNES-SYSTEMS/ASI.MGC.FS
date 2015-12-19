@@ -180,5 +180,10 @@ namespace ASI.MGC.FS.Controllers
         {
             return View();
         }
+
+        public ActionResult SearchMrvDetails()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

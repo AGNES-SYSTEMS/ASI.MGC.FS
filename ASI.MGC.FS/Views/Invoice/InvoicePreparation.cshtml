@@ -21,7 +21,7 @@
             <legend>Invoice Preparation</legend>
             <div class="row">
                 <div class="container">
-                    @using (Html.BeginForm("SaveInvoice", "Invoice", null, FormMethod.Post, new { id = "formInvoicePrep", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @using (Ajax.BeginForm("SaveInvoice", "Invoice", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formInvoicePrep", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
@@ -213,5 +213,16 @@
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Invoice/InvoicePreparation.js")"></script>
+<script type="text/javascript">
+
+    function OnSuccess(response) {
+        alert(response);
+    }
+
+    function OnFailure(response) {
+        alert("Whoops! That didn't go so well did it?");
+    }
+
+</script>
 }
 

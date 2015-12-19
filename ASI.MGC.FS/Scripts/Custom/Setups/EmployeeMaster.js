@@ -6,10 +6,13 @@
     jQuery("#tblEmpDetails").jqGrid({
         url: '/EmployeeMaster/GetEmployeeDetailsList',
         datatype: "json",
-        height: 250,
+        height: 450,
+        shrinkToFit: true,
+        autoheight: true,
         autowidth: true,
+        styleUI: "Bootstrap",
         colNames: [
-            'Employee Code', 'First Name', 'Last Name','Designation','Passport No','Phone', 'Pass Issue Date','Pass Exp Date', 'Visa Issue Date', 'Visa Exp Date'],
+            'Employee Code', 'First Name', 'Last Name', 'Designation', 'Passport No', 'Phone', 'Pass Issue Date', 'Pass Exp Date', 'Visa Issue Date', 'Visa Exp Date', 'Edit Actions'],
         colModel: [
             { key: true, name: 'EMPCODE_EM', index: 'EMPCODE_EM', width: 80, align: "lefy", sortable: false },
             { key: false, name: 'EMPFNAME_EM', index: 'EMPFNAME_EM', width: 100, align: "left", sortable: false },
@@ -21,14 +24,24 @@
             { key: false, name: 'PASSPORTEXPDATE_EM', index: 'PASSPORTEXPDATE_EM', width: 80, formatter: 'date', align: "left", sortable: false },
             { key: false, name: 'VISAISSUEDATE_EM', index: 'VISAISSUEDATE_EM', width: 80, formatter: 'date', align: "left", sortable: false },
             { key: false, name: 'VISAEXPIEARYDATE_EM', index: 'VISAEXPIEARYDATE_EM', width: 80, formatter: 'date', align: "left", sortable: false },
+            {
+                name: "actions",
+                width: 100,
+                formatter: "actions",
+                formatoptions: {
+                    keys: true,
+                    editOptions: {},
+                    addOptions: {},
+                    delOptions: {}
+                }
+            }
         ],
-        rowNum: 20,
-        rowList: [20, 30, 40],
+        rowNum: 40,
+        rowList: [40, 100, 500, 1000],
         mtype: 'GET',
         gridview: true,
-        shrinkToFit: true,
         viewrecords: true,
-        sortorder: "asc",
+        sortorder: "desc",
         pager: jQuery('#Pager'),
         caption: "Employee Details",
         emptyrecords: "No Data to Display",

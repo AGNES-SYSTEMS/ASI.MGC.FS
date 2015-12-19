@@ -4,6 +4,11 @@
     ViewBag.currPage = "Quotation Entry";
 }
 @model ASI.MGC.FS.Model.QUOTATION_MASTER
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+<link href="~/Content/formValidation.min.css" rel="stylesheet" />
 <!-- start:main -->
 <div class="container">
     <div id="main">
@@ -17,7 +22,7 @@
             <legend>Quotation Entry</legend>
             <div class="row">
                 <div class="container">
-                    @using (Html.BeginForm("SaveQuotation", "Quotation", null, FormMethod.Post, new { id = "formQuotationEntry", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @using (Ajax.BeginForm("SaveQuotation", "Quotation", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formQuotationEntry", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
@@ -26,7 +31,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblMRVNo" class="control-label col-md-4 small ">Customer Code</label>
                                 <div class="col-md-7 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.CUSTNAME_QM, null, new { ID = "txtCustCode", Class = "form-control"})
+                                    @Html.TextBoxFor(m => m.CUSTNAME_QM, null, new { ID = "txtCustCode", Class = "form-control" })
                                     @Html.ValidationMessageFor(m => m.CUSTNAME_QM)
                                 </div>
                                 <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#CustomerSearchModel">
@@ -36,7 +41,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblDate" class="control-label col-md-4 small ">Quotation No</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.QUOTNO_QM, null, new { ID = "txtQuotationNo",@Value=ViewBag.QotNumber, Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBoxFor(m => m.QUOTNO_QM, null, new { ID = "txtQuotationNo", @Value = ViewBag.QotNumber, Class = "form-control", @readonly = "readonly" })
                                     @Html.ValidationMessageFor(m => m.QUOTNO_QM)
                                 </div>
                             </div>
@@ -45,7 +50,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblCustCode" class="control-label col-md-4 small ">Customer Name</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("CustName", null, new { ID = "txtCustName", Class = "form-control"})
+                                    @Html.TextBox("CustName", null, new { ID = "txtCustName", Class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
@@ -332,5 +337,23 @@
 <!-- end:main -->
 @section scripts
 {
+    <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/formValidation.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.framework.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Quotation/QuotationEntry.js")"></script>
+    <script type="text/javascript">
+
+        function OnSuccess(response) {
+            alert(response);
+        }
+
+        function OnFailure(response) {
+            alert("Whoops! That didn't go so well did it?");
+        }
+
+    </script>
 }

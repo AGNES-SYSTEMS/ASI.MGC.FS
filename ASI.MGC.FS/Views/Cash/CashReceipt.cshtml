@@ -22,7 +22,7 @@
             <legend>Cash Receipt</legend>
             <div class="row">
                 <div class="container">
-                    @using (Html.BeginForm("SaveCashReceipt", "Cash", null, FormMethod.Post, new { id = "formCashReceipt", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @using (Ajax.BeginForm("SaveCashReceipt", "Cash", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formCashReceipt", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
@@ -404,5 +404,16 @@
     <script src="@Url.Content("~/Scripts/formValidation.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.framework.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Cash/CashReceipt.js")"></script>
+<script type="text/javascript">
+
+    function OnSuccess(response) {
+        alert(response);
+    }
+
+    function OnFailure(response) {
+        alert("Whoops! That didn't go so well did it?");
+    }
+
+</script>
 }
 

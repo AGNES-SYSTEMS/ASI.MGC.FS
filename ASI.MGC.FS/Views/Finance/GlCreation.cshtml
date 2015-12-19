@@ -1,0 +1,145 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.currPage = "GL Creation";
+    ViewBag.Title = "GLCreation";
+}
+
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>GL Creation</legend>
+            <div class="row">
+                <div class="container">
+                    @using (Ajax.BeginForm("SaveGLCreation", "Finance", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formGLCreation", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">GL Code</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("GLCode", null, new { ID = "txtGLCode", Class = "form-control" })
+                                    @Html.ValidationMessage("GLCode")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">GL Description</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("GLDesc", null, new { ID = "txtGLDesc", Class = "form-control" })
+                                    @Html.ValidationMessage("GLDesc")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblGLDate" class="control-label col-md-4 small ">Loc Code</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("LocCode", null, new { ID = "txtLocCode", Class = "form-control" })
+                                    @Html.ValidationMessage("LocCode")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDocNo" class="control-label col-md-4 small ">Main Code</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("MainCode", null, new { ID = "txtMainCode", Class = "form-control" })
+                                    @Html.ValidationMessage("MainCode")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustCode" class="control-label col-md-4 small ">Sub GL Code</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("SubGLCode", null, new { ID = "txtSubGLCode", Class = "form-control" })
+                                    @Html.ValidationMessage("SubGLCode")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDLNNo" class="control-label col-md-4 small ">Sub GL Desc</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("SubGLDesc", null, new { ID = "txtSubGLDesc", Class = "form-control" })
+                                    @Html.ValidationMessage("SubGLDesc")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustDetail" class="control-label col-md-4 small ">GL Type</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("GLType", null, new { ID = "txtGLType", Class = "form-control"})
+                                    @Html.ValidationMessage("GLType")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">GL Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("GLDate", null, new { ID = "txtGLDate", Class = "form-control" })
+                                    @Html.ValidationMessage("GLDate")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustDetail" class="control-label col-md-4 small ">Bank Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("BankDate", null, new { ID = "txtBankDate", Class = "form-control" })
+                                    @Html.ValidationMessage("BankDate")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustDetail" class="control-label col-md-4 small ">Opening Balance</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("OpenBalance", null, new { ID = "txtOpenBalance", Class = "form-control" })
+                                    @Html.ValidationMessage("OpenBalance")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustDetail" class="control-label col-md-4 small ">Note (If Any)</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("Note", null, new { ID = "txtNote", Class = "form-control" })
+                                    @Html.ValidationMessage("Note")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label></label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/Custom/Finance/GlCreation.js")"></script>
+    <script type="text/javascript">
+
+    function OnSuccess(response) {
+        alert(response);
+    }
+
+    function OnFailure() {
+        alert("Whoops! That didn't go so well did it?");
+    }
+
+    </script>
+}

@@ -27,6 +27,14 @@
                                 </section>
                                 <br /> <br />
                                 <section>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <div class="col-md-12 input-group paddingLeftRight0">
+                                                @Html.TextBox("searchProduct", null, new { ID = "txtPrdSearch", Class = "form-control" })
+                                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <table id="tblPrdDetails"></table>
                                     <div id="Pager"></div>
                                 </section>
@@ -42,7 +50,7 @@
     <div class="modal fade" id="ProductMasterModel" tabindex="-1" role="dialog" aria-labelledby="ProductMasterModelLabel" aria-hidden="true" data-backdrop="false">
         <div class="modal-dialog modal-lg" style="width: 85%">
             <div class="modal-content">
-                @using (Html.BeginForm("SaveProductMaster", "Setups", FormMethod.Post, new { id = "formProductMaster", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                @using (Ajax.BeginForm("SaveProductMaster", "Setups", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formProductMaster", @class = "form-horizontal", enctype = "multipart/form-data" }))
                 {
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"
@@ -58,14 +66,14 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Product Code</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.PROD_CODE_PM, null, new {ID = "txtPrdId", Class = "form-control"})
+                                    @Html.TextBoxFor(d => d.PROD_CODE_PM, null, new { ID = "txtPrdId", Class = "form-control" })
                                     @Html.ValidationMessageFor(d => d.PROD_CODE_PM)
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Product Name</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.DESCRIPTION_PM, null, new {ID = "txtPrdName", Class = "form-control"})
+                                    @Html.TextBoxFor(d => d.DESCRIPTION_PM, null, new { ID = "txtPrdName", Class = "form-control" })
                                     @Html.ValidationMessageFor(d => d.DESCRIPTION_PM)
                                 </div>
                             </div>
@@ -90,14 +98,14 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Selling Price</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.SELLINGPRICE_RM, null, new {ID = "txtSellingPrice", Class = "form-control"})
+                                    @Html.TextBoxFor(d => d.SELLINGPRICE_RM, null, new { ID = "txtSellingPrice", Class = "form-control" })
                                     @Html.ValidationMessageFor(d => d.SELLINGPRICE_RM)
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Purchase Unit</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.PURCHSEUNIT_PM, null, new {ID = "txtPurchaseUnit", Class = "form-control"})
+                                    @Html.TextBoxFor(d => d.PURCHSEUNIT_PM, null, new { ID = "txtPurchaseUnit", Class = "form-control" })
                                     @Html.ValidationMessageFor(d => d.PURCHSEUNIT_PM)
                                 </div>
                             </div>
@@ -140,4 +148,15 @@
 @section scripts
 {
     <script src="@Url.Content("~/Scripts/Custom/Setups/ProductMaster.js")"></script>
+<script type="text/javascript">
+
+    function OnSuccess(response) {
+        alert(response);
+    }
+
+    function OnFailure(response) {
+        alert("Whoops! That didn't go so well did it?");
+    }
+
+</script>
 }

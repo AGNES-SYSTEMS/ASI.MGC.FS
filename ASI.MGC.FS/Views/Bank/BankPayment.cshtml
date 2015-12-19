@@ -22,7 +22,7 @@
             <legend>Bank Payment</legend>
             <div class="row">
                 <div class="container">
-                    @using (Html.BeginForm("SaveBankPayment", "Bank", null, FormMethod.Post, new { id = "formBankPayment", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @using (Ajax.BeginForm("SaveBankPayment", "Bank", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formBankPayment", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
@@ -337,7 +337,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-sm-12">
                                 <div id="accGrid" class="panel-body">
                                     <table id="tblAccountSearch" style="width: 100%"></table>
                                     <div id="accPager"></div>
@@ -357,7 +357,7 @@
 </div>
 <div class="container">
     <div class="modal fade" id="BankSearchModel" tabindex="-1" role="dialog" aria-labelledby="BankSearchModelLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <form class="form-horizontal" id="BankSearchModelform" method="post" data-fv-framework="bootstrap"
                       data-fv-message="This value is not valid"
@@ -375,12 +375,20 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-lg-12">
-                                <div id="bankGrid" class="panel-body">
-                                    <table id="tblBankSearch" style="width: 100%"></table>
-                                    <div id="bankPager"></div>
+                            <section>
+                                <div class="row">
+                                    <div class="col-md-12 form-group input-group paddingLeftRight">
+                                        @Html.TextBox("searchBank", null, new { ID = "txtBankSearch", Class = "form-control" })
+                                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="col-md-12">
+                                    <div id="bankGrid" class="panel-body">
+                                        <table id="tblBankSearch" style="width: 100%"></table>
+                                        <div id="bankPager"></div>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -439,5 +447,16 @@
     <script src="@Url.Content("~/Scripts/formValidation.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.framework.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Bank/BankPayment.js")"></script>
+<script type="text/javascript">
+
+    function OnSuccess(response) {
+        alert(response);
+    }
+
+    function OnFailure(response) {
+        alert("Whoops! That didn't go so well did it?");
+    }
+
+</script>
 }
 

@@ -15,7 +15,7 @@
             <legend>Job Cancellation</legend>
             <div class="row">
                 <div class="container">
-                    @using (Html.BeginForm("SaveJobCancellation", "Job", FormMethod.Post, new { id = "formJobEntry", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @using (Ajax.BeginForm("SaveJobCancellation", "Job", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formJobEntry", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
                         <div class="row">
                             <div class="col-md-6 form-group">

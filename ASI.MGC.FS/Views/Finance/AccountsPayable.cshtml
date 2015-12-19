@@ -1,0 +1,233 @@
+﻿@{
+    ViewBag.Title = "AccountsPayable";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.currPage = "Accounts Payable";
+}
+@model ASI.MGC.FS.Model.AR_AP_MASTER
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>Accounts Payable</legend>
+            <div class="row">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-11">
+                            <div id="grid" class="panel-body">
+                                <section>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#CustomerMasterModel">
+                                        Add New Customer
+                                    </button>
+                                </section>
+                                <br /> <br />
+                                <section>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <div class="col-md-12 input-group paddingLeftRight0">
+                                                @Html.TextBox("searchCustomer", null, new { ID = "txtCustSearch", Class = "form-control" })
+                                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table id="tblCustomerDetails"></table>
+                                    <div id="Pager"></div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<div class="container">
+    <div class="modal fade" id="CustomerMasterModel" tabindex="-1" role="dialog" aria-labelledby="CustomerMasterModelLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-lg" style="width: 85%">
+            <div class="modal-content">
+                @using (Ajax.BeginForm("SaveAccountsPayable", "Finance", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formAccountsPayable", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                {
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title">
+                            Add Account Payable
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">AP Code</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.ARCODE_ARM, null, new { ID = "txtAPCode", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.ARCODE_ARM)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Customer Name</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.DESCRIPTION_ARM, null, new { ID = "txtCustName", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.DESCRIPTION_ARM)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">P.O.Box No</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.POBOX_ARM, null, new { ID = "txtPoBox", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.POBOX_ARM)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Address 1</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.ADDRESS1_ARM, null, new { ID = "txtAddress1", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.ADDRESS1_ARM)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Address 2</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.ADDRESS2_ARM, null, new { ID = "txtAddress2", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.ADDRESS2_ARM)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Address 3</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.ADDRESS3_ARM, null, new { ID = "txtAddress3", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.ADDRESS3_ARM)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Telephone</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.TELEPHONE_ARM, null, new { ID = "txtTelephone", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.TELEPHONE_ARM)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Fax</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.FAX_ARM, null, new { ID = "txtFax", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.FAX_ARM)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Email</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.EMAIL_ARM, null, new { ID = "txtEmail", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.EMAIL_ARM)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Conatct person:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.CONDACTPERSON_ARM, null, new { ID = "txtContactPerson", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.CONDACTPERSON_ARM)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Sales Exe</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.SALESEXE_ARM, null, new { ID = "txtSaleExe", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.SALESEXE_ARM)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Status</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.STATUS_ARM, null, new { ID = "txtStatus", @Value = "Normal", Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(d => d.STATUS_ARM)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Payable Type</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.RECEIVABLETYPE_ARM, null, new { ID = "txtReceiveable", @Value = "Credit", Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(d => d.RECEIVABLETYPE_ARM)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">GL Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("GLDate", null, new { ID = "txtGlDate", @Value = DateTime.Now.ToShortDateString(), Class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Limit Amount</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.LIMITAMOUNT_ARM, null, new { ID = "txtLimitAmount", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.LIMITAMOUNT_ARM)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Credit Days</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.CREDITDAYS_ARM, null, new { ID = "txtCreditDays", Class = "form-control" })
+                                    @Html.ValidationMessageFor(d => d.CREDITDAYS_ARM)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Opening Balance</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("OpeningBalance", null, new { ID = "txtOpenBalance", Class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">
+                            Save
+                        </button>
+                        <button type="button" id="btnCancel" class="btn btn-warning">
+                            Cancel
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:main -->
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/Custom/Finance/AccountsPayable.js")"></script>
+    <script type="text/javascript">
+
+        function OnSuccess(response) {
+            alert(response);
+        }
+
+        function OnFailure() {
+            alert("Whoops! That didn't go so well did it?");
+        }
+
+    </script>
+}

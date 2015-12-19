@@ -6,7 +6,7 @@
     <title>@ViewBag.Title - Mahboob Electrical Services</title>
     @Styles.Render("~/fonts")
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @*@Scripts.Render("~/bundles/modernizr")*@
 </head>
 <body>
     <!-- start:wrapper -->
@@ -272,7 +272,7 @@
                                     <ul class="dropdown-menu col-md-12 container" style="width:660px;" role="menu">
                                         <li class="col-md-4">
                                             <ul class="paddingLeft0">
-                                                <li><a href="#">GLCreation</a></li>
+                                                <li><a href="#">GlCreation</a></li>
                                                 <li><a href="#">ARCreation</a></li>
                                                 <li><a href="#">APCreation</a></li>
                                                 <li><a href="#">Bank Creation</a></li>
@@ -372,25 +372,25 @@
                                                 <li class="dropdown">
                                                     <span class="menuHeadingStyle">Cancel</span>
                                                     <ul>
-                                                        <li><a href="#">Job Cancellation</a></li>
+                                                        <li><a href="@Href("~/Job/JobCancellation")">Job Cancellation</a></li>
                                                     </ul>
                                                 </li>
                                                 <li><a href="@Href("~/Cash/CashMemo")">Cash Memo</a></li>
                                                 <li class="dropdown">
                                                     <span class="menuHeadingStyle">Invoice</span>
                                                     <ul>
-                                                        <li><a href="#">Preparation</a></li>
-                                                        <li><a href="#">Reversal</a></li>
+                                                        <li><a href="@Href("~/Invoice/InvoicePreparation")">Preparation</a></li>
+                                                        <li><a href="@Href("~/Invoice/InvoiceReversal")">Reversal</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
                                         </li>
                                         <li class="col-md-4">
                                             <ul class="paddingLeft0">
-                                                <li><a href="#">Purchase</a></li>
-                                                <li><a href="#">Purchase Return</a></li>
+                                                <li><a href="@Href("~/Purchase/PurchaseEntry")">Purchase</a></li>
+                                                <li><a href="@Href("~/Purchase/PurchaseReturn")">Purchase Return</a></li>
 
-                                                <li><a href="#">CashMemo Reversal</a></li>
+                                                <li><a href="@Href("~/Cash/CashMemoReversal")">CashMemo Reversal</a></li>
 
                                                 <li class="dropdown">
                                                     <span class="menuHeadingStyle">Report</span>
@@ -709,6 +709,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/libraries")
     @Scripts.Render("~/bundles/JqueryUi")
+    @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("scripts", required: false)
     @section scripts
     {

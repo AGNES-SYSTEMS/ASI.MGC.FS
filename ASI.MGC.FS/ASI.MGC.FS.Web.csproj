@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="SimpleCrypto">
       <HintPath>..\packages\SimpleCrypto.0.3.30.26\lib\SimpleCrypto.dll</HintPath>
@@ -170,6 +173,7 @@
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DocumentMasterController.cs" />
     <Compile Include="Controllers\EmployeeMasterController.cs" />
+    <Compile Include="Controllers\FinanceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\JobController.cs" />
@@ -177,6 +181,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\QuotationController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SetupsController.cs" />
     <Compile Include="ExtendedAPI\MESAuthorize.cs" />
@@ -194,6 +199,12 @@
     </Compile>
     <Compile Include="Models\QuotationCustom.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\CrystalReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CrystalReport1.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="WebCommon\CommonModelAccessUtility.cs" />
   </ItemGroup>
@@ -333,15 +344,27 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.typeahead.js" />
     <Content Include="Scripts\bootstrapValidator.min.js" />
+    <Content Include="Scripts\Custom\Bank\BankMaster.js" />
     <Content Include="Scripts\Custom\Bank\BankPayment.js" />
     <Content Include="Scripts\Custom\Bank\BankReceipt.js" />
     <Content Include="Scripts\Custom\Cash\CashMemo.js" />
     <Content Include="Scripts\Custom\Cash\CashPayment.js" />
     <Content Include="Scripts\Custom\Cash\CashReceipt.js" />
+    <Content Include="Scripts\Custom\Finance\AccountsPayable.js" />
+    <Content Include="Scripts\Custom\Finance\AccountsReceivable.js" />
+    <Content Include="Scripts\Custom\Finance\ArApMatching.js" />
+    <Content Include="Scripts\Custom\Finance\DayEndOperation.js" />
+    <Content Include="Scripts\Custom\Finance\DocumentReversal.js" />
+    <Content Include="Scripts\Custom\Finance\GlCreation.js" />
+    <Content Include="Scripts\Custom\Finance\JvCreation.js" />
+    <Content Include="Scripts\Custom\Finance\PdcReceipt.js" />
+    <Content Include="Scripts\Custom\Finance\ArUnMatching.js" />
     <Content Include="Scripts\Custom\Invoice\InvoicePreparation.js" />
     <Content Include="Scripts\Custom\Job\JobEntry.js" />
     <Content Include="Scripts\Custom\MRV\MRVCreation.js" />
+    <Content Include="Scripts\Custom\MRV\MRVSearchDetails.js" />
     <Content Include="Scripts\Custom\Purchase\PurchaseEntry.js" />
+    <Content Include="Scripts\Custom\Purchase\PurchaseReturn.js" />
     <Content Include="Scripts\Custom\Quotation\QuotationEntry.js" />
     <Content Include="Scripts\Custom\Setups\CustomerMaster.js" />
     <Content Include="Scripts\Custom\Search\Search.js" />
@@ -503,15 +526,26 @@
     <Content Include="Views\Setups\FinancialYearPeriod.cshtml" />
     <Content Include="Views\Setups\ProductMaster.cshtml" />
     <Content Include="Views\Job\JobCancellation.cshtml" />
-    <Content Include="Views\Invoice\InvoiceRevesal.cshtml" />
+    <Content Include="Views\Invoice\InvoiceReversal.cshtml" />
     <Content Include="Views\Cash\CashMemoReversal.cshtml" />
     <Content Include="Views\Purchase\PurchaseReturn.cshtml" />
     <Content Include="Views\Invoice\InvoicePendings.cshtml" />
     <Content Include="Views\Invoice\PendingInvoices.cshtml" />
     <Content Include="Views\MRV\MrvSearch.cshtml" />
+    <Content Include="Views\Bank\BankMaster.cshtml" />
+    <Content Include="Views\Finance\GlCreation.cshtml" />
+    <Content Include="Views\Finance\AccountsReceivable.cshtml" />
+    <Content Include="Views\Finance\AccountsPayable.cshtml" />
+    <Content Include="Views\Finance\DayEndOperation.cshtml" />
+    <Content Include="Views\Finance\DocumentReversal.cshtml" />
+    <Content Include="Views\Finance\ArUnmatching.cshtml" />
+    <Content Include="Views\Finance\ArapMatching.cshtml" />
+    <Content Include="Views\Finance\JvCreation.cshtml" />
+    <Content Include="Views\Finance\PdcReceipt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Reports\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -529,6 +563,15 @@
       <Project>{d21d31f6-8783-4060-b340-651a389cf09a}</Project>
       <Name>ASI.MGC.FS.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reports\CrystalReport1.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CrystalReport1.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -354,5 +354,17 @@ namespace ASI.MGC.FS.Controllers
             }
             return RedirectToAction("BankPayment");
         }
+
+        public ActionResult BankMaster()
+        {
+            @ViewBag.CurrCode = "AED";
+            @ViewBag.CurrName = "UAE DHIRHAM";
+            return View();
+        }
+
+        public ActionResult SaveBankMaster()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

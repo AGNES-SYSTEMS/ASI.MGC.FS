@@ -27,6 +27,14 @@
                                 </section>
                                 <br /> <br />
                                 <section>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <div class="col-md-12 input-group paddingLeftRight0">
+                                                @Html.TextBox("searchFinYear", null, new { ID = "txtFYSearch", Class = "form-control" })
+                                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <table id="tblFinancialYearDetails"></table>
                                     <div id="Pager"></div>
                                 </section>
@@ -42,7 +50,7 @@
     <div class="modal fade" id="FinancialYearModel" tabindex="-1" role="dialog" aria-labelledby="FinancialYearModelLabel" aria-hidden="true" data-backdrop="false">
         <div class="modal-dialog modal-lg" style="width: 85%">
             <div class="modal-content">
-                @using (Html.BeginForm("SaveNewFinancialYear", "Setups", FormMethod.Post, new { id = "formFinancialYear", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                @using (Ajax.BeginForm("SaveNewFinancialYear", "Setups", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formFinancialYear", @class = "form-horizontal", enctype = "multipart/form-data" }))
                 {
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"
@@ -106,5 +114,16 @@
 @section scripts
 {
     <script src="@Url.Content("~/Scripts/Custom/Setups/FinancialYearPeriod.js")"></script>
+<script type="text/javascript">
+
+    function OnSuccess(response) {
+        alert(response);
+    }
+
+    function OnFailure(response) {
+        alert("Whoops! That didn't go so well did it?");
+    }
+
+</script>
 }
 

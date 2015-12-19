@@ -27,6 +27,14 @@
                                 </section>
                                 <br /> <br />
                                 <section>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <div class="col-md-12 input-group paddingLeftRight0">
+                                                @Html.TextBox("searchItem", null, new { ID = "txtItemSearch", Class = "form-control" })
+                                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <table id="tblItemDetails"></table>
                                     <div id="Pager"></div>
                                 </section>
@@ -42,7 +50,7 @@
     <div class="modal fade" id="ItemMasterModel" tabindex="-1" role="dialog" aria-labelledby="ItemMasterModelLabel" aria-hidden="true" data-backdrop="false">
         <div class="modal-dialog modal-lg" style="width: 85%">
             <div class="modal-content">
-                @using (Html.BeginForm("SaveItemMaster", "Setups", FormMethod.Post, new { id = "formProductMaster", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                @using (Ajax.BeginForm("SaveItemMaster", "Setups", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formProductMaster", @class = "form-horizontal", enctype = "multipart/form-data" }))
                 {
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"
@@ -92,4 +100,15 @@
 @section scripts
 {
     <script src="@Url.Content("~/Scripts/Custom/Setups/ItemsMaster.js")"></script>
+<script type="text/javascript">
+
+    function OnSuccess(response) {
+        alert(response);
+    }
+
+    function OnFailure(response) {
+        alert("Whoops! That didn't go so well did it?");
+    }
+
+</script>
 }
