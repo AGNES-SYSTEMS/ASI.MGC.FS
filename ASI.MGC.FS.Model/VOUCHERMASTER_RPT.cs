@@ -29,5 +29,6 @@ namespace ASI.MGC.FS.Model
         public Nullable<System.DateTime> CHQDATE_VRPT { get; set; }
         public string USER_VRPT { get; set; }
         public string DOCNO_VRPT { get; set; }
+        public string VOUCHER_TYPE { get; set; }
     }
 }

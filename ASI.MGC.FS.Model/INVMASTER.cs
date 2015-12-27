@@ -24,5 +24,6 @@ namespace ASI.MGC.FS.Model
         public Nullable<decimal> DISCOUNT_IPM { get; set; }
         public string LPONO_IPM { get; set; }
         public string SALESFIGURE_IPM { get; set; }
+        public string INVTYPE_IPM { get; set; }
     }
 }

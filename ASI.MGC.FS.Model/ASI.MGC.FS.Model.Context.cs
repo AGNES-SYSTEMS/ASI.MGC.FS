@@ -12,6 +12,8 @@ namespace ASI.MGC.FS.Model
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class ASI_MGC_FSEntities : DbContext
     {
@@ -85,5 +87,128 @@ namespace ASI.MGC.FS.Model
         public virtual DbSet<MESUserLoginDetail> MESUserLoginDetails { get; set; }
         public virtual DbSet<MESUserProfile> MESUserProfiles { get; set; }
         public virtual DbSet<MESUserRole> MESUserRoles { get; set; }
+    
+        public virtual ObjectResult<rpt_BankPayment_Result> rpt_BankPayment(string vTYPE, string vCODE)
+        {
+            var vTYPEParameter = vTYPE != null ?
+                new ObjectParameter("VTYPE", vTYPE) :
+                new ObjectParameter("VTYPE", typeof(string));
+    
+            var vCODEParameter = vCODE != null ?
+                new ObjectParameter("VCODE", vCODE) :
+                new ObjectParameter("VCODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_BankPayment_Result>("rpt_BankPayment", vTYPEParameter, vCODEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_BankReceipt_Result> rpt_BankReceipt(string vTYPE, string vCODE)
+        {
+            var vTYPEParameter = vTYPE != null ?
+                new ObjectParameter("VTYPE", vTYPE) :
+                new ObjectParameter("VTYPE", typeof(string));
+    
+            var vCODEParameter = vCODE != null ?
+                new ObjectParameter("VCODE", vCODE) :
+                new ObjectParameter("VCODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_BankReceipt_Result>("rpt_BankReceipt", vTYPEParameter, vCODEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_CashPayment_Result> rpt_CashPayment(string vTYPE, string vCODE)
+        {
+            var vTYPEParameter = vTYPE != null ?
+                new ObjectParameter("VTYPE", vTYPE) :
+                new ObjectParameter("VTYPE", typeof(string));
+    
+            var vCODEParameter = vCODE != null ?
+                new ObjectParameter("VCODE", vCODE) :
+                new ObjectParameter("VCODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_CashPayment_Result>("rpt_CashPayment", vTYPEParameter, vCODEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_CashReceipt_Result> rpt_CashReceipt(string vTYPE, string vCODE)
+        {
+            var vTYPEParameter = vTYPE != null ?
+                new ObjectParameter("VTYPE", vTYPE) :
+                new ObjectParameter("VTYPE", typeof(string));
+    
+            var vCODEParameter = vCODE != null ?
+                new ObjectParameter("VCODE", vCODE) :
+                new ObjectParameter("VCODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_CashReceipt_Result>("rpt_CashReceipt", vTYPEParameter, vCODEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_CashMemo_Result> rpt_CashMemo(string iNVNO, string iNVTYPE)
+        {
+            var iNVNOParameter = iNVNO != null ?
+                new ObjectParameter("INVNO", iNVNO) :
+                new ObjectParameter("INVNO", typeof(string));
+    
+            var iNVTYPEParameter = iNVTYPE != null ?
+                new ObjectParameter("INVTYPE", iNVTYPE) :
+                new ObjectParameter("INVTYPE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_CashMemo_Result>("rpt_CashMemo", iNVNOParameter, iNVTYPEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_CompanyDetails_Result> rpt_CompanyDetails()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_CompanyDetails_Result>("rpt_CompanyDetails");
+        }
+    
+        public virtual ObjectResult<rpt_DeliveryNote_Result> rpt_DeliveryNote(string dLNO, string dLNTYPE)
+        {
+            var dLNOParameter = dLNO != null ?
+                new ObjectParameter("DLNO", dLNO) :
+                new ObjectParameter("DLNO", typeof(string));
+    
+            var dLNTYPEParameter = dLNTYPE != null ?
+                new ObjectParameter("DLNTYPE", dLNTYPE) :
+                new ObjectParameter("DLNTYPE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_DeliveryNote_Result>("rpt_DeliveryNote", dLNOParameter, dLNTYPEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_Invoice_Result> rpt_Invoice(string iNV_NO, string iNVTYPE)
+        {
+            var iNV_NOParameter = iNV_NO != null ?
+                new ObjectParameter("INV_NO", iNV_NO) :
+                new ObjectParameter("INV_NO", typeof(string));
+    
+            var iNVTYPEParameter = iNVTYPE != null ?
+                new ObjectParameter("INVTYPE", iNVTYPE) :
+                new ObjectParameter("INVTYPE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_Invoice_Result>("rpt_Invoice", iNV_NOParameter, iNVTYPEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_JobCardFormat_Result> rpt_JobCardFormat(string jOBNO)
+        {
+            var jOBNOParameter = jOBNO != null ?
+                new ObjectParameter("JOBNO", jOBNO) :
+                new ObjectParameter("JOBNO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_JobCardFormat_Result>("rpt_JobCardFormat", jOBNOParameter);
+        }
+    
+        public virtual ObjectResult<rpt_MaterialReceiptVcoucher_Result> rpt_MaterialReceiptVcoucher(string mRVNO)
+        {
+            var mRVNOParameter = mRVNO != null ?
+                new ObjectParameter("MRVNO", mRVNO) :
+                new ObjectParameter("MRVNO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_MaterialReceiptVcoucher_Result>("rpt_MaterialReceiptVcoucher", mRVNOParameter);
+        }
+    
+        public virtual ObjectResult<rpt_Quotation_Result> rpt_Quotation(string quotNo)
+        {
+            var quotNoParameter = quotNo != null ?
+                new ObjectParameter("QuotNo", quotNo) :
+                new ObjectParameter("QuotNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_Quotation_Result>("rpt_Quotation", quotNoParameter);
+        }
     }
 }

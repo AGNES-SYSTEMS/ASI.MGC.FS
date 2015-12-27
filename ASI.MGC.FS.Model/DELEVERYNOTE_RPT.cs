@@ -21,5 +21,6 @@ namespace ASI.MGC.FS.Model
         public Nullable<int> QTY_DLNRPT { get; set; }
         public string JOBNO_DLNRPT { get; set; }
         public string SERVICEPROID_DLNRPT { get; set; }
+        public string DLNTYPE_DLNRPT { get; set; }
     }
 }
