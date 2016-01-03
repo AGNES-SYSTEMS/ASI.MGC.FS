@@ -70,6 +70,12 @@ namespace ASI.MGC.FS.Domain.Repositories
             dbContext.SaveChanges();
         }
 
+        public void Truncate(string tableName)
+        {
+            string command = "TRUNCATE TABLE[" + tableName + "]";
+            dbContext.Database.ExecuteSqlCommand(command);
+        }
+
         public virtual RepositoryQuery<TEntity> Query()
         {
             var repositoryGetFluentHelper =

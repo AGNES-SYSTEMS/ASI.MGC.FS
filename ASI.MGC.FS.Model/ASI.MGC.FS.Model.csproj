@@ -307,7 +307,13 @@
     <Compile Include="rpt_JournalVoucher_Result.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="rpt_MaterialReceiptVcoucher1_Result.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="rpt_MaterialReceiptVcoucher_Result.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="rpt_MaterialReceiptVoucher_Result.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>
     <Compile Include="rpt_MrvStatement_Result.cs">

@@ -47,7 +47,7 @@ var ZeroClipboard_TableTools = {
 	version: "1.0.4-TableTools2",
 	clients: {}, // registered upload clients on page, indexed by id
 	moviePath: '', // URL to movie
-	nextId: 1, // ID of next movie
+	nextId: 1, // id of next movie
 
 	$: function(thingy) {
 		// simple DOM lookup utility function
@@ -117,7 +117,7 @@ var ZeroClipboard_TableTools = {
 		// constructor for new simple upload client
 		this.handlers = {};
 
-		// unique ID
+		// unique id
 		this.id = ZeroClipboard_TableTools.nextId++;
 		this.movieId = 'ZeroClipboard_TableToolsMovie_' + this.id;
 
@@ -133,7 +133,7 @@ var ZeroClipboard_TableTools = {
 
 ZeroClipboard_TableTools.Client.prototype = {
 
-	id: 0, // unique ID for us
+	id: 0, // unique id for us
 	ready: false, // whether movie is ready to receive events or not
 	movie: null, // reference to movie object
 	clipText: '', // text to copy to clipboard
@@ -146,7 +146,7 @@ ZeroClipboard_TableTools.Client.prototype = {
 
 	glue: function(elem, title) {
 		// glue to DOM element
-		// elem can be ID or actual DOM element object
+		// elem can be id or actual DOM element object
 		this.domElement = ZeroClipboard_TableTools.$(elem);
 
 		// float just above object, or zIndex 99 if dom element isn't set
@@ -534,7 +534,7 @@ TableTools = function( oDT, oOpts )
 		},
 
 		/**
-		 * A unique ID is assigned to each button in each instance
+		 * A unique id is assigned to each button in each instance
 		 * @property buttonCounter
 		 *  @type	 int
 		 * @default  0
@@ -2724,7 +2724,7 @@ TableTools.fnGetMasters = function ()
 /**
  * Get the master instance for a table node (or id if a string is given)
  *  @method  fnGetInstance
- *  @returns {Object} ID of table OR table node, for which we want the TableTools instance
+ *  @returns {Object} id of table OR table node, for which we want the TableTools instance
  *  @static
  */
 TableTools.fnGetInstance = function ( node )

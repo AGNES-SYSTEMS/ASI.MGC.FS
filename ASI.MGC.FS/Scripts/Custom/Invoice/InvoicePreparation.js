@@ -35,7 +35,7 @@ function getJobDetailByMrv() {
 
 function getSaleDetailByMrv() {
     var mrvCode = $("#txtMRVNo").val();
-    var data = JSON.stringify({ MRVID: mrvCode, statusId: "P" });
+    var data = JSON.stringify({ MRVID: mrvCode, statusId: "N" });
     $.ajax({
         url: '/MRV/getSaleDetailByMRV',
         contentType: "application/json; charset=utf-8",
@@ -101,7 +101,7 @@ $(document).ready(function () {
         autoheight: true,
         autowidth: true,
         styleUI: "Bootstrap",
-        colNames: ['Sale ID','Job No', 'PR Code', 'S W Code', 'Description', 'Qty', 'Unit', 'Rate', 'Credit Amount', 'Discount', 'Ship. Chrg'],
+        colNames: ['Sale id','Job No', 'PR Code', 'S W Code', 'Description', 'Qty', 'Unit', 'Rate', 'Credit Amount', 'Discount', 'Ship. Chrg'],
         colModel: [
             { name: 'SLNO_SD', index: 'SLNO_SD', width: 50, align: "center", sortable: false },
             { name: 'JOBNO_SD', index: 'JOBNO_SD', width: 80, align: "center", sortable: false },

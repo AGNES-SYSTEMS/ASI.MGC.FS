@@ -413,14 +413,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="QTY_DLMASTER">
+                    <Textbox Name="PRODQTY_JM">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!QTY_DLMASTER.Value)</Value>
+                              <Value>=Fields!PRODQTY_JM.Value</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -431,7 +431,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>QTY_DLMASTER</rd:DefaultName>
+                      <rd:DefaultName>PRODQTY_JM</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -1764,8 +1764,8 @@
           <DataField>UNIT_INVD</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="QTY_DLMASTER">
-          <DataField>QTY_DLMASTER</DataField>
+        <Field Name="PRODQTY_JM">
+          <DataField>PRODQTY_JM</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>

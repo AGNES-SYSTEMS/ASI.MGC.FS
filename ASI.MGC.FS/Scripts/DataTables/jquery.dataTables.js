@@ -1,4 +1,4 @@
-/*! DataTables 1.10.7
+﻿/*! DataTables 1.10.7
  * ©2008-2014 SpryMedia Ltd - datatables.net/license
  */
 
@@ -6153,7 +6153,7 @@
 					}
 				}
 			
-				/* If the element we are initialising has the same ID as a table which was previously
+				/* If the element we are initialising has the same id as a table which was previously
 				 * initialised, but the table nodes don't match (from before) then we destroy the old
 				 * instance by simply deleting it. This is under the assumption that the table has been
 				 * destroyed by other methods. Anyone using non-id selectors will need to do this manually
@@ -6165,7 +6165,7 @@
 				}
 			}
 			
-			/* Ensure the table has an ID - required for accessibility */
+			/* Ensure the table has an id - required for accessibility */
 			if ( sId === null || sId === "" )
 			{
 				sId = "DataTables_Table_"+(DataTable.ext._unique++);
@@ -11546,7 +11546,7 @@
 		 *       <ul>
 		 *         <li>'&lt;' and '&gt;' - div elements</li>
 		 *         <li>'&lt;"class" and '&gt;' - div with a class</li>
-		 *         <li>'&lt;"#id" and '&gt;' - div with an ID</li>
+		 *         <li>'&lt;"#id" and '&gt;' - div with an id</li>
 		 *       </ul>
 		 *     </li>
 		 *     <li>Examples:
@@ -13033,7 +13033,7 @@
 		"aoStateLoaded": [],
 	
 		/**
-		 * Cache the table ID for quick access
+		 * Cache the table id for quick access
 		 *  @type string
 		 *  @default <i>Empty string</i>
 		 */
@@ -13443,7 +13443,7 @@
 	
 		/**
 		 * Unique identifier for each instance of the DataTables object. If there
-		 * is an ID on the table node, then it takes that value, otherwise an
+		 * is an id on the table node, then it takes that value, otherwise an
 		 * incrementing internal counter is used.
 		 *  @type string
 		 *  @default null

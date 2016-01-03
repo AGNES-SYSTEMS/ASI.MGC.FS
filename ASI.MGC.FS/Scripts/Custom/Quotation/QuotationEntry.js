@@ -39,7 +39,7 @@ $(document).ready(function () {
         autoheight: true,
         autowidth: true,
         styleUI: "Bootstrap",
-        colNames: ['PrCode', 'Product Description', 'Job ID', 'Job Description', 'Quantity', 'Rate', 'Amount'],
+        colNames: ['PrCode', 'Product Description', 'Job id', 'Job Description', 'Quantity', 'Rate', 'Amount'],
         colModel: [
             { name: 'PrCode', index: 'PrCode', width: 80, align: "center", sortable: false },
             { name: 'PrDesc', index: 'PrDesc', width: 300, align: "left", sortable: false },

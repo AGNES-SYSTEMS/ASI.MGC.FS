@@ -31,7 +31,7 @@ $(document).ready(function () {
         autoheight: true,
         autowidth: true,
         styleUI: "Bootstrap",
-        colNames: ['PrCode', 'Product Description', 'Job ID', 'Job Description', 'Quantity', 'Rate', 'Amount'],
+        colNames: ['PrCode', 'Product Description', 'Job id', 'Job Description', 'Quantity', 'Rate', 'Amount'],
         colModel: [
             { name: 'PRODID_MRR', index: 'PRODID_MRR', width: 80, align: "center", sortable: false },
             { name: 'prdesc', index: 'prdesc', width: 300, align: "left", sortable: false },
@@ -274,7 +274,7 @@ $(document).ready(function () {
             colModel: [
             { key: true, name: 'JOBID_JR', index: 'JOBID_JR', width: 250 },
             { key: false, name: 'JOBDESCRIPTION_JR', index: 'JOBDESCRIPTION_JR', width: 550 },
-            { key: false, name: 'RATE_RJ', index: 'RATE_RJ', width: 150},
+            { key: false, name: 'RATE_RJ', index: 'RATE_RJ', width: 150 },
             {
                 name: "action",
                 align: "center",
@@ -316,7 +316,6 @@ $(document).ready(function () {
             },
             multiselect: false
         });
-        jQuery("#tblJobSearch").jqGrid('filterToolbar');
     });
 
     $(window).resize(function () {

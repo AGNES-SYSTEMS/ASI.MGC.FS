@@ -753,5 +753,14 @@ namespace ASI.MGC.FS.DataAccess
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TST_Result>("TST");
         }
+    
+        public virtual ObjectResult<rpt_MaterialReceiptVoucher_Result> rpt_MaterialReceiptVoucher(string mRVNO)
+        {
+            var mRVNOParameter = mRVNO != null ?
+                new ObjectParameter("MRVNO", mRVNO) :
+                new ObjectParameter("MRVNO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_MaterialReceiptVoucher_Result>("rpt_MaterialReceiptVoucher", mRVNOParameter);
+        }
     }
 }

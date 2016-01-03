@@ -647,7 +647,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=First(Fields!PRODUCTNAME_JRP.Value, "DS_JobCardFormat")</Value>
+                  <Value>=First(Fields!DESCRIPTION_PM.Value, "DS_JobCardFormat")</Value>
                   <Style />
                 </TextRun>
               </TextRuns>
@@ -1143,8 +1143,8 @@
           <DataField>PRODID_JRP</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="PRODUCTNAME_JRP">
-          <DataField>PRODUCTNAME_JRP</DataField>
+        <Field Name="DESCRIPTION_PM">
+          <DataField>DESCRIPTION_PM</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>

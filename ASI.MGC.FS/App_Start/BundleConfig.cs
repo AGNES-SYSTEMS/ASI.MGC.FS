@@ -61,6 +61,7 @@ namespace ASI.MGC.FS
                       "~/Content/owl.carousel.css",
                       "~/Content/owl.theme.css",
                       "~/Content/owl.transitions.css",
+                      "~/Content/toastr.min.css",
                       "~/Content/ui.jqgrid-bootstrap.css",
                       "~/Content/themes/base/jquery.ui.all.css",
                       "~/Content/jquery.jqGrid/ui.jqgrid.css",

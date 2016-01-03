@@ -16,7 +16,7 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
-                var invNo = "RCT/1462/2007";
+                var invNo = Request.QueryString["cmNo"];
                 var invType = "CM";
                 DataTable dtCashMemo = uMethods.ConvertTo(repo.RptCashMemo(invNo,invType));
 

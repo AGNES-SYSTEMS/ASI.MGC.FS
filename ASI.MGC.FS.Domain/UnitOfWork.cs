@@ -40,6 +40,12 @@ namespace ASI.MGC.FS.Domain
             _dbContext.SaveChanges();
         }
 
+        public void Truncate(string tableName)
+        {
+            string command = "TRUNCATE TABLE[" + tableName + "]";
+            _dbContext.Database.ExecuteSqlCommand(command);
+        }
+
         public void Dispose(bool disposing)
         {
             if (!_disposed)

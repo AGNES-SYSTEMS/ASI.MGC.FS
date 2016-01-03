@@ -904,7 +904,7 @@
         <DataSetName>DS_EmpWiseJobDetails</DataSetName>
         <Top>0.09722in</Top>
         <Height>1in</Height>
-        <Width>7.27083in</Width>
+        <Width>7.27084in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1103,10 +1103,10 @@
     <Height>2in</Height>
     <Style />
   </Body>
-  <Width>7.27083in</Width>
+  <Width>7.27084in</Width>
   <Page>
     <PageHeader>
-      <Height>1.5in</Height>
+      <Height>1.58333in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>

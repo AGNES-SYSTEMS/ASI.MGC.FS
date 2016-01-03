@@ -24,9 +24,9 @@
                     {
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <label id="lblJobID" class="control-label col-md-4 small ">Job ID:</label>
+                                <label id="lblJobID" class="control-label col-md-4 small ">Job id:</label>
                                 <div class="col-md-7 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.JOBNO_SD, null, new { ID = "txtJobID", Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBoxFor(d => d.JOBNO_SD, null, new { ID = "txtJobid", Class = "form-control", @readonly = "readonly" })
                                     @Html.ValidationMessageFor(d => d.JOBNO_SD)
                                 </div>
                                 <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#mrvJobSearchModel">
@@ -114,7 +114,7 @@
                             <div id="divSowCode" style="display:none;" class="col-md-6 form-group">
                                 <label id="lblSowCode" class="control-label col-md-4 small ">Sow Code:</label>
                                 <div class="col-md-7 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.JOBID_SD, null, new { ID = "txtSowID", Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBoxFor(d => d.JOBid_SD, null, new { ID = "txtSowid", Class = "form-control", @readonly = "readonly" })
                                 </div>
                                 <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#JobSearchModel">
                                     <i class="fa fa-search"></i>
@@ -431,15 +431,18 @@
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Job/JobEntry.js")"></script>
-<script type="text/javascript">
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
+    <script type="text/javascript">
 
-    function OnSuccess(response) {
-        alert(response);
-    }
+        function OnSuccess(success) {
+            if (success) {
+                toastr.success("Sales entry is added Successfully.");
+            }
+        }
 
-    function OnFailure(response) {
-        alert("Whoops! That didn't go so well did it?");
-    }
+        function OnFailure(response) {
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
 
-</script>
+    </script>
 }

@@ -57,6 +57,11 @@ namespace ASI.MGC.FS.Model
         public virtual DbSet<JVREPORT> JVREPORTs { get; set; }
         public virtual DbSet<LOCATIONMASTER> LOCATIONMASTERs { get; set; }
         public virtual DbSet<MATERIALRECEIPTMASTER> MATERIALRECEIPTMASTERs { get; set; }
+        public virtual DbSet<MESRole> MESRoles { get; set; }
+        public virtual DbSet<MESUserLoginDetail> MESUserLoginDetails { get; set; }
+        public virtual DbSet<MESUserProfile> MESUserProfiles { get; set; }
+        public virtual DbSet<MESUserRole> MESUserRoles { get; set; }
+        public virtual DbSet<MESUser> MESUsers { get; set; }
         public virtual DbSet<MRV_REPORT_CHD> MRV_REPORT_CHD { get; set; }
         public virtual DbSet<MRVNO_REPORT> MRVNO_REPORT { get; set; }
         public virtual DbSet<MRVREFERENCE> MRVREFERENCEs { get; set; }
@@ -82,11 +87,6 @@ namespace ASI.MGC.FS.Model
         public virtual DbSet<USER> USERs { get; set; }
         public virtual DbSet<VOUCHERCHILD_RPT> VOUCHERCHILD_RPT { get; set; }
         public virtual DbSet<VOUCHERMASTER_RPT> VOUCHERMASTER_RPT { get; set; }
-        public virtual DbSet<MESRole> MESRoles { get; set; }
-        public virtual DbSet<MESUser> MESUsers { get; set; }
-        public virtual DbSet<MESUserLoginDetail> MESUserLoginDetails { get; set; }
-        public virtual DbSet<MESUserProfile> MESUserProfiles { get; set; }
-        public virtual DbSet<MESUserRole> MESUserRoles { get; set; }
     
         public virtual ObjectResult<rpt_BankPayment_Result> rpt_BankPayment(string vTYPE, string vCODE)
         {
@@ -209,6 +209,556 @@ namespace ASI.MGC.FS.Model
                 new ObjectParameter("QuotNo", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_Quotation_Result>("rpt_Quotation", quotNoParameter);
+        }
+    
+        public virtual ObjectResult<Cash_Payment_Voucher1_Result> Cash_Payment_Voucher1()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Cash_Payment_Voucher1_Result>("Cash_Payment_Voucher1");
+        }
+    
+        public virtual ObjectResult<Invoice1_Result> Invoice1()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Invoice1_Result>("Invoice1");
+        }
+    
+        public virtual ObjectResult<Job_Card_Format1_Result> Job_Card_Format1()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Job_Card_Format1_Result>("Job_Card_Format1");
+        }
+    
+        public virtual ObjectResult<Job_Card10_Result> Job_Card10()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Job_Card10_Result>("Job_Card10");
+        }
+    
+        public virtual ObjectResult<Report_BankStatement1_Result> Report_BankStatement1()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Report_BankStatement1_Result>("Report_BankStatement1");
+        }
+    
+        public virtual ObjectResult<rpt_AR_Statement_Result> rpt_AR_Statement(string aRCODE_ARM)
+        {
+            var aRCODE_ARMParameter = aRCODE_ARM != null ?
+                new ObjectParameter("ARCODE_ARM", aRCODE_ARM) :
+                new ObjectParameter("ARCODE_ARM", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_AR_Statement_Result>("rpt_AR_Statement", aRCODE_ARMParameter);
+        }
+    
+        public virtual ObjectResult<rpt_ARStatement_Result> rpt_ARStatement(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_ARStatement_Result>("rpt_ARStatement", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_ARStatementOutstanding_Result> rpt_ARStatementOutstanding(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_ARStatementOutstanding_Result>("rpt_ARStatementOutstanding", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_ARSummary_Result> rpt_ARSummary(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_ARSummary_Result>("rpt_ARSummary", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_BalanceSheet_Result> rpt_BalanceSheet(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_BalanceSheet_Result>("rpt_BalanceSheet", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_BankStatement_Result> rpt_BankStatement(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_BankStatement_Result>("rpt_BankStatement", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_BankStatement1_Result> rpt_BankStatement1(string bANKCODE, Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var bANKCODEParameter = bANKCODE != null ?
+                new ObjectParameter("BANKCODE", bANKCODE) :
+                new ObjectParameter("BANKCODE", typeof(string));
+    
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_BankStatement1_Result>("rpt_BankStatement1", bANKCODEParameter, sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_CancelledJobs_Result> rpt_CancelledJobs(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_CancelledJobs_Result>("rpt_CancelledJobs", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_CashMemoReverse_Result> rpt_CashMemoReverse(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_CashMemoReverse_Result>("rpt_CashMemoReverse", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_CashMemoWiseReport_Result> rpt_CashMemoWiseReport(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_CashMemoWiseReport_Result>("rpt_CashMemoWiseReport", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<RPT_DELEVERYNOTE1_Result> RPT_DELEVERYNOTE1()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<RPT_DELEVERYNOTE1_Result>("RPT_DELEVERYNOTE1");
+        }
+    
+        public virtual ObjectResult<rpt_DeliveredMrv_Result> rpt_DeliveredMrv(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_DeliveredMrv_Result>("rpt_DeliveredMrv", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_Delivery_Note_Result> rpt_Delivery_Note()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_Delivery_Note_Result>("rpt_Delivery_Note");
+        }
+    
+        public virtual ObjectResult<rpt_DeliveryDetails_Result> rpt_DeliveryDetails(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_DeliveryDetails_Result>("rpt_DeliveryDetails", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_DeliveryNoteDetails_Result> rpt_DeliveryNoteDetails(string dLNNO)
+        {
+            var dLNNOParameter = dLNNO != null ?
+                new ObjectParameter("DLNNO", dLNNO) :
+                new ObjectParameter("DLNNO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_DeliveryNoteDetails_Result>("rpt_DeliveryNoteDetails", dLNNOParameter);
+        }
+    
+        public virtual ObjectResult<rpt_EmpSales_Result> rpt_EmpSales(string eMPCODE, Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var eMPCODEParameter = eMPCODE != null ?
+                new ObjectParameter("EMPCODE", eMPCODE) :
+                new ObjectParameter("EMPCODE", typeof(string));
+    
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_EmpSales_Result>("rpt_EmpSales", eMPCODEParameter, sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_EmpWiseJobDetails_Result> rpt_EmpWiseJobDetails(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_EmpWiseJobDetails_Result>("rpt_EmpWiseJobDetails", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_GLStatement_Result> rpt_GLStatement(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_GLStatement_Result>("rpt_GLStatement", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_Invoice3_Result> rpt_Invoice3(string iNV_NO, string iNVTYPE)
+        {
+            var iNV_NOParameter = iNV_NO != null ?
+                new ObjectParameter("INV_NO", iNV_NO) :
+                new ObjectParameter("INV_NO", typeof(string));
+    
+            var iNVTYPEParameter = iNVTYPE != null ?
+                new ObjectParameter("INVTYPE", iNVTYPE) :
+                new ObjectParameter("INVTYPE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_Invoice3_Result>("rpt_Invoice3", iNV_NOParameter, iNVTYPEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_InvWiseReprot_Result> rpt_InvWiseReprot(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_InvWiseReprot_Result>("rpt_InvWiseReprot", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_JobCardDetails_Result> rpt_JobCardDetails(string jOBNO)
+        {
+            var jOBNOParameter = jOBNO != null ?
+                new ObjectParameter("JOBNO", jOBNO) :
+                new ObjectParameter("JOBNO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_JobCardDetails_Result>("rpt_JobCardDetails", jOBNOParameter);
+        }
+    
+        public virtual ObjectResult<rpt_JobWiseStatement_Result> rpt_JobWiseStatement(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_JobWiseStatement_Result>("rpt_JobWiseStatement", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_JournalVoucher_Result> rpt_JournalVoucher()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_JournalVoucher_Result>("rpt_JournalVoucher");
+        }
+    
+        public virtual ObjectResult<rpt_MrvStatement_Result> rpt_MrvStatement(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_MrvStatement_Result>("rpt_MrvStatement", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_PandLStatement_Result> rpt_PandLStatement(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_PandLStatement_Result>("rpt_PandLStatement", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<RPT_PANDLSTATEMENT1_Result> RPT_PANDLSTATEMENT1()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<RPT_PANDLSTATEMENT1_Result>("RPT_PANDLSTATEMENT1");
+        }
+    
+        public virtual ObjectResult<rpt_PendingMrvDetails_Result> rpt_PendingMrvDetails(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_PendingMrvDetails_Result>("rpt_PendingMrvDetails", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_PurchaseRegister_Result> rpt_PurchaseRegister(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_PurchaseRegister_Result>("rpt_PurchaseRegister", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_ReversedInvoice_Result> rpt_ReversedInvoice(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_ReversedInvoice_Result>("rpt_ReversedInvoice", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_SalesInvoice_Result> rpt_SalesInvoice(string iNVNO, string iNVTYPE)
+        {
+            var iNVNOParameter = iNVNO != null ?
+                new ObjectParameter("INVNO", iNVNO) :
+                new ObjectParameter("INVNO", typeof(string));
+    
+            var iNVTYPEParameter = iNVTYPE != null ?
+                new ObjectParameter("INVTYPE", iNVTYPE) :
+                new ObjectParameter("INVTYPE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_SalesInvoice_Result>("rpt_SalesInvoice", iNVNOParameter, iNVTYPEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_ServiceItems_Result> rpt_ServiceItems()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_ServiceItems_Result>("rpt_ServiceItems");
+        }
+    
+        public virtual ObjectResult<rpt_StockJournal_Result> rpt_StockJournal(string vOUCHERNO)
+        {
+            var vOUCHERNOParameter = vOUCHERNO != null ?
+                new ObjectParameter("VOUCHERNO", vOUCHERNO) :
+                new ObjectParameter("VOUCHERNO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_StockJournal_Result>("rpt_StockJournal", vOUCHERNOParameter);
+        }
+    
+        public virtual ObjectResult<rpt_StockLedger_Result> rpt_StockLedger(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_StockLedger_Result>("rpt_StockLedger", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_StockReceipt_Result> rpt_StockReceipt(string vOUCHERNO)
+        {
+            var vOUCHERNOParameter = vOUCHERNO != null ?
+                new ObjectParameter("VOUCHERNO", vOUCHERNO) :
+                new ObjectParameter("VOUCHERNO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_StockReceipt_Result>("rpt_StockReceipt", vOUCHERNOParameter);
+        }
+    
+        public virtual ObjectResult<rpt_StockReport_Result> rpt_StockReport()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_StockReport_Result>("rpt_StockReport");
+        }
+    
+        public virtual ObjectResult<rpt_TrialBalance_Result> rpt_TrialBalance(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_TrialBalance_Result>("rpt_TrialBalance", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var new_diagramnameParameter = new_diagramname != null ?
+                new ObjectParameter("new_diagramname", new_diagramname) :
+                new ObjectParameter("new_diagramname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
+        }
+    
+        public virtual int sp_upgraddiagrams()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        public virtual ObjectResult<TST_Result> TST()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TST_Result>("TST");
+        }
+    
+        public virtual ObjectResult<rpt_MaterialReceiptVoucher_Result> rpt_MaterialReceiptVoucher(string mRVNO)
+        {
+            var mRVNOParameter = mRVNO != null ?
+                new ObjectParameter("MRVNO", mRVNO) :
+                new ObjectParameter("MRVNO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_MaterialReceiptVoucher_Result>("rpt_MaterialReceiptVoucher", mRVNOParameter);
         }
     }
 }

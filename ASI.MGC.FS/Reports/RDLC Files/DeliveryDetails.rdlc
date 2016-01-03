@@ -636,7 +636,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>CASH MEMO REVERSE</Value>
+                  <Value>DELIVERY DETAILS</Value>
                   <Style>
                     <FontFamily>Arial Black</FontFamily>
                   </Style>
@@ -648,7 +648,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.34881in</Top>
+          <Top>0.36269in</Top>
           <Left>2.44791in</Left>
           <Height>0.25in</Height>
           <Width>2.88542in</Width>

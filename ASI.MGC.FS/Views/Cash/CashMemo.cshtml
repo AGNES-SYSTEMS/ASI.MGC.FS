@@ -4,293 +4,305 @@
     ViewBag.Title = "CashMemo";
 }
 @model ASI.MGC.FS.Model.BANKTRANSACTION
-    <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
-    <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
-    <!-- start:main -->
-    <div class="container">
-        <div id="main">
-            <!-- start:breadcrumb -->
-            <ol class="breadcrumb">
-                <li><a href="#">Home</a></li>
-                <li class="active">@ViewBag.currPage</li>
-            </ol>
-            <!-- end:breadcrumb -->
-            <fieldset>
-                <legend>Cash Memo</legend>
-                <div class="row">
-                    <div class="container">
-                        @using (Ajax.BeginForm("SaveCashMemo", "Cash", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formCashMemo", @class = "form-horizontal", enctype = "multipart/form-data" }))
-                        {
-                            <input type="hidden" id="hdnSaleDetails" name="saleDetails"/>
-                            @Html.AntiForgeryToken()
-                            @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
+<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>Cash Memo</legend>
+            <div class="row">
+                <div class="container">
+                    @using (Ajax.BeginForm("SaveCashMemo", "Cash", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formCashMemo", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    {
+                        <input type="hidden" id="hdnSaleDetails" name="saleDetails" />
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblMRVNo" class="control-label col-md-4 small ">MRV No.</label>
+                                <div class="col-md-7 paddingLeftRight0">
+                                    @Html.TextBox("MRVNo", null, new { ID = "txtMRVNo", Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessage("MRVNo")
+                                </div>
+                                <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#mrvSearchModel">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDate" class="control-label col-md-4 small ">Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(m => m.DOCDATE_BT, null, new { ID = "txtDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(m => m.DOCDATE_BT)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblGLDate" class="control-label col-md-4 small ">GL Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(m => m.GLDATE_BT, null, new { ID = "txtGLDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.GLDATE_BT)
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDocNo" class="control-label col-md-4 small ">Doc No.</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(m => m.DOCNUMBER_BT, null, new { ID = "txtDocNo", @Value = ViewBag.cashMemoCode, Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(m => m.DOCNUMBER_BT)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustCode" class="control-label col-md-4 small ">Cust Code</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("CustCode", null, new { ID = "txtCustCode", Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessage("CustCode")
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDLNNo" class="control-label col-md-4 small ">DLN No.</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("DLNNo", null, new { ID = "txtDLNNo", Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessage("DLNNo")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustDetail" class="control-label col-md-4 small ">Cust Details</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("CustDetail", null, new { ID = "txtCustDetail", Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessage("CustDetail")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <fieldset>
+                                    <legend>MRV Details</legend>
+                                    <div id="gridMRV" class="panel-body">
+                                        <section>
+                                            <table id="tblMRVJobDetails"></table>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small "></label>
+                                <div class="col-md-8 paddingLeftRight0"></div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustDetail" class="control-label col-md-4 small ">Net</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(m => m.DEBITAMOUT_BT, null, new { ID = "txtNetAmount", Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(m => m.DEBITAMOUT_BT)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <fieldset>
+                                    <legend>Sale Details</legend>
+                                    <div id="gridSale" class="panel-body">
+                                        <section>
+                                            <table id="tblSaleDetails"></table>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 form-group">
+                                    <label id="lblTotalCashAmount" class="control-label col-md-4 small ">Cash Amount</label>
+                                    <div class="col-md-8 paddingLeftRight0">
+                                        @Html.TextBox("TotalCashAmount", null, new { ID = "txtTotalCashAmount", Class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessage("TotalCashAmount")
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label id="lblTotalDiscount" class="control-label col-md-4 small ">Discount</label>
+                                    <div class="col-md-8 paddingLeftRight0">
+                                        @Html.TextBox("TotalDiscount", null, new { ID = "txtTotalDiscount", Class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessage("TotalDiscount")
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label id="lblTotalShipCharges" class="control-label col-md-4 small ">Ship. Charges</label>
+                                    <div class="col-md-8 paddingLeftRight0">
+                                        @Html.TextBox("TotalShipCharges", null, new { ID = "txtTotalShipCharges", Class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessage("TotalShipCharges")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <fieldset>
+                            <legend>Reciept Details</legend>
                             <div class="row">
                                 <div class="col-md-6 form-group">
-                                    <label id="lblMRVNo" class="control-label col-md-4 small ">MRV No.</label>
+                                    <label id="lblBankCode" class="control-label col-md-4 small ">Bank Code</label>
                                     <div class="col-md-7 paddingLeftRight0">
-                                        @Html.TextBox("MRVNo", null, new { ID = "txtMRVNo", Class = "form-control", @readonly = "readonly" })
-                                        @Html.ValidationMessage("MRVNo")
+                                        @Html.TextBoxFor(m => m.BANKCODE_BT, null, new { ID = "txtBankCode", Class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessage("BankCode")
                                     </div>
-                                    <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#mrvSearchModel">
+                                    <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#BankSearchModel">
                                         <i class="fa fa-search"></i>
                                     </button>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label id="lblDate" class="control-label col-md-4 small ">Date</label>
+                                    <label id="lblBankDetails" class="control-label col-md-4 small ">BankDetails</label>
                                     <div class="col-md-8 paddingLeftRight0">
-                                        @Html.TextBoxFor(m=>m.DOCDATE_BT, null, new { ID = "txtDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @readonly = "readonly" })
-                                        @Html.ValidationMessageFor(m=>m.DOCDATE_BT)
+                                        @Html.TextBox("BankDetails", null, new { ID = "txtBankDetails", Class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessage("BankDetails")
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 form-group">
-                                    <label id="lblGLDate" class="control-label col-md-4 small ">GL Date</label>
+                                    <label id="lblBankAmount" class="control-label col-md-4 small ">Amount</label>
                                     <div class="col-md-8 paddingLeftRight0">
-                                        @Html.TextBoxFor(m=>m.GLDATE_BT, null, new { ID = "txtGLDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control" })
-                                        @Html.ValidationMessageFor(m=>m.GLDATE_BT)
+                                        @Html.TextBox("BankAmount", null, new { ID = "txtBankAmount", Class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessage("BankAmount")
                                     </div>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label id="lblDocNo" class="control-label col-md-4 small ">Doc No.</label>
+                                    <label id="lblCustDetail" class="control-label col-md-4 small ">Notes</label>
                                     <div class="col-md-8 paddingLeftRight0">
-                                        @Html.TextBoxFor(m=>m.DOCNUMBER_BT, null, new { ID = "txtDocNo", @Value = ViewBag.cashMemoCode, Class = "form-control", @readonly = "readonly" })
-                                        @Html.ValidationMessageFor(m=>m.DOCNUMBER_BT)
+                                        @Html.TextBoxFor(m => m.NOTE_BT, null, new { ID = "txtBankNote", Class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.NOTE_BT)
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 form-group">
-                                    <label id="lblCustCode" class="control-label col-md-4 small ">Cust Code</label>
-                                    <div class="col-md-8 paddingLeftRight0">
-                                        @Html.TextBox("CustCode", null, new { ID = "txtCustCode", Class = "form-control", @readonly = "readonly" })
-                                        @Html.ValidationMessage("CustCode")
-                                    </div>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label id="lblDLNNo" class="control-label col-md-4 small ">DLN No.</label>
-                                    <div class="col-md-8 paddingLeftRight0">
-                                        @Html.TextBox("DLNNo", null, new { ID = "txtDLNNo", Class = "form-control", @readonly = "readonly" })
-                                        @Html.ValidationMessage("DLNNo")
-                                    </div>
+                        </fieldset>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label></label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 form-group">
-                                    <label id="lblCustDetail" class="control-label col-md-4 small ">Cust Details</label>
-                                    <div class="col-md-8 paddingLeftRight0">
-                                        @Html.TextBox("CustDetail", null, new { ID = "txtCustDetail", Class = "form-control", @readonly = "readonly" })
-                                        @Html.ValidationMessage("CustDetail")
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-10">
-                                    <fieldset>
-                                        <legend>MRV Details</legend>
-                                        <div id="gridMRV" class="panel-body">
-                                            <section>
-                                                <table id="tblMRVJobDetails"></table>
-                                            </section>
-                                        </div>
-                                    </fieldset>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 form-group">
-                                    <label class="control-label col-md-4 small "></label>
-                                    <div class="col-md-8 paddingLeftRight0"></div>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label id="lblCustDetail" class="control-label col-md-4 small ">Net</label>
-                                    <div class="col-md-8 paddingLeftRight0">
-                                        @Html.TextBoxFor(m=>m.DEBITAMOUT_BT, null, new { ID = "txtNetAmount", Class = "form-control", @readonly = "readonly" })
-                                        @Html.ValidationMessageFor(m => m.DEBITAMOUT_BT)
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-10">
-                                    <fieldset>
-                                        <legend>Sale Details</legend>
-                                        <div id="gridSale" class="panel-body">
-                                            <section>
-                                                <table id="tblSaleDetails"></table>
-                                            </section>
-                                        </div>
-                                    </fieldset>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 form-group">
-                                        <label id="lblTotalCashAmount" class="control-label col-md-4 small ">Cash Amount</label>
-                                        <div class="col-md-8 paddingLeftRight0">
-                                            @Html.TextBox("TotalCashAmount", null, new { ID = "txtTotalCashAmount", Class = "form-control", @readonly = "readonly" })
-                                            @Html.ValidationMessage("TotalCashAmount")
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 form-group">
-                                        <label id="lblTotalDiscount" class="control-label col-md-4 small ">Discount</label>
-                                        <div class="col-md-8 paddingLeftRight0">
-                                            @Html.TextBox("TotalDiscount", null, new { ID = "txtTotalDiscount", Class = "form-control", @readonly = "readonly" })
-                                            @Html.ValidationMessage("TotalDiscount")
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 form-group">
-                                        <label id="lblTotalShipCharges" class="control-label col-md-4 small ">Ship. Charges</label>
-                                        <div class="col-md-8 paddingLeftRight0">
-                                            @Html.TextBox("TotalShipCharges", null, new { ID = "txtTotalShipCharges", Class = "form-control", @readonly = "readonly" })
-                                            @Html.ValidationMessage("TotalShipCharges")
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <fieldset>
-                                <legend>Reciept Details</legend>
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <label id="lblBankCode" class="control-label col-md-4 small ">Bank Code</label>
-                                        <div class="col-md-7 paddingLeftRight0">
-                                            @Html.TextBoxFor(m=>m.BANKCODE_BT, null, new { ID = "txtBankCode", Class = "form-control", @readonly = "readonly" })
-                                            @Html.ValidationMessage("BankCode")
-                                        </div>
-                                        <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#BankSearchModel">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label id="lblBankDetails" class="control-label col-md-4 small ">BankDetails</label>
-                                        <div class="col-md-8 paddingLeftRight0">
-                                            @Html.TextBox("BankDetails", null, new { ID = "txtBankDetails", Class = "form-control", @readonly = "readonly" })
-                                            @Html.ValidationMessage("BankDetails")
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <label id="lblBankAmount" class="control-label col-md-4 small ">Amount</label>
-                                        <div class="col-md-8 paddingLeftRight0">
-                                            @Html.TextBox("BankAmount", null, new { ID = "txtBankAmount", Class = "form-control", @readonly = "readonly" })
-                                            @Html.ValidationMessage("BankAmount")
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label id="lblCustDetail" class="control-label col-md-4 small ">Notes</label>
-                                        <div class="col-md-8 paddingLeftRight0">
-                                            @Html.TextBoxFor(m=>m.NOTE_BT, null, new { ID = "txtBankNote", Class = "form-control" })
-                                            @Html.ValidationMessageFor(m=>m.NOTE_BT)
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <div class="row">
-                                <div class="col-md-6 form-group">
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label></label>
-                                    <div class="col-md-8 paddingLeftRight0">
-                                        <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
-                                    </div>
-                                </div>
-                            </div>
-                        }
+                        </div>
+                    }
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<div class="container">
+    <div class="modal fade" id="mrvSearchModel" tabindex="-1" role="dialog" aria-labelledby="mrvSearchModelLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form class="form-horizontal" id="mrvProductModelform" method="post" data-fv-framework="bootstrap"
+                      data-fv-message="This value is not valid"
+                      data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
+                      data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                      data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            MRV Search
+                        </h4>
                     </div>
-                </div>
-            </fieldset>
-        </div>
-    </div>
-    <div class="container">
-        <div class="modal fade" id="mrvSearchModel" tabindex="-1" role="dialog" aria-labelledby="mrvSearchModelLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <form class="form-horizontal" id="mrvProductModelform" method="post" data-fv-framework="bootstrap"
-                          data-fv-message="This value is not valid"
-                          data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
-                          data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
-                          data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"
-                                    aria-hidden="true">
-                                ×
-                            </button>
-                            <h4 class="modal-title" id="myModalLabel">
-                                MRV Search
-                            </h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div id="MrvGrid" class="panel-body">
-                                        <table id="tblMRVSearch" style="width:100%"></table>
-                                        <div id="Pager"></div>
-                                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="MrvGrid" class="panel-body">
+                                    <table id="tblMRVSearch" style="width:100%"></table>
+                                    <div id="Pager"></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
+                    </div>
+                    <div class="modal-footer">
 
-                            <a href="#" id="btnMRVSelect" class="btn btn-success">Select</a>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </form>
-                </div>
+                        <a href="#" id="btnMRVSelect" class="btn btn-success">Select</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="modal fade" id="BankSearchModel" tabindex="-1" role="dialog" aria-labelledby="BankSearchModelLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <form class="form-horizontal" id="BankSearchModelform" method="post" data-fv-framework="bootstrap"
-                          data-fv-message="This value is not valid"
-                          data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
-                          data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
-                          data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"
-                                    aria-hidden="true">
-                                ×
-                            </button>
-                            <h4 class="modal-title">
-                                Bank Details Search
-                            </h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div id="bankGrid" class="panel-body">
-                                        <table id="tblBankSearch" style="width:100%"></table>
-                                        <div id="bankPager"></div>
-                                    </div>
+</div>
+<div class="container">
+    <div class="modal fade" id="BankSearchModel" tabindex="-1" role="dialog" aria-labelledby="BankSearchModelLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form class="form-horizontal" id="BankSearchModelform" method="post" data-fv-framework="bootstrap"
+                      data-fv-message="This value is not valid"
+                      data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
+                      data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                      data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title">
+                            Bank Details Search
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="bankGrid" class="panel-body">
+                                    <table id="tblBankSearch" style="width:100%"></table>
+                                    <div id="bankPager"></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
+                    </div>
+                    <div class="modal-footer">
 
-                            <a href="#" id="btnBankSelect" class="btn btn-success">Select</a>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </form>
-                </div>
+                        <a href="#" id="btnBankSelect" class="btn btn-success">Select</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    @section Scripts {
-        <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
-        <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
-        <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
-        <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
-        <script src="@Url.Content("~/Scripts/Custom/Cash/CashMemo.js")"></script>
-<script type="text/javascript">
+</div>
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/Cash/CashMemo.js")"></script>
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
+    <script type="text/javascript">
+        var isReportGenerated = false;
+        function OnSuccess(cashMemoNo) {
+            debugger;
+            if (cashMemoNo !== "" && !isReportGenerated) {
+                toastr.success("Cash Memo is saved Successfully.");
+                openCashMemoReport(cashMemoNo);
+            }
+        }
 
-    function OnSuccess(response) {
-        alert(response);
-    }
+        function OnFailure() {
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
 
-    function OnFailure(response) {
-        alert("Whoops! That didn't go so well did it?");
-    }
+        function openCashMemoReport(cmNo) {
+            var mrvReportUrl = "/MgcReports/CashMemo?cmNo=" + cmNo;
+            window.open(mrvReportUrl);
+            isReportGenerated = true;
+            toastr.info("Cash Memo Report is generated in new window.");
+        }
 
-</script>
-    }
+    </script>
+}

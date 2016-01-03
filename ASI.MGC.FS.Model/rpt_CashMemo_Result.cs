@@ -30,6 +30,6 @@ namespace ASI.MGC.FS.Model
         public string PRODID_JIM { get; set; }
         public string DESCRIPTION_PM { get; set; }
         public string UNIT_INVD { get; set; }
-        public Nullable<int> QTY_DLMASTER { get; set; }
+        public Nullable<int> PRODQTY_JM { get; set; }
     }
 }

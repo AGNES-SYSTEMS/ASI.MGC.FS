@@ -21,7 +21,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblJobID" class="control-label col-md-4 small ">Job No:</label>
                                 <div class="col-md-7 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.JOBNO_JM, null, new { ID = "txtJobID", Class = "form-control"})
+                                    @Html.TextBoxFor(d => d.JOBNO_JM, null, new { ID = "txtJobid", Class = "form-control"})
                                     @Html.ValidationMessageFor(d => d.JOBNO_JM)
                                 </div>
                                 <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#mrvJobSearchModel">
@@ -54,7 +54,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblMRVProdCode" class="control-label col-md-4 small ">MRV Prod. Code:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m=>m.PRODID_JIM, null, new { ID = "txtProdCode", Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBoxFor(m=>m.PRODid_JIM, null, new { ID = "txtProdCode", Class = "form-control", @readonly = "readonly" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">

@@ -21,7 +21,7 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
-                var mrvNo = "MRV/2037/2007";
+                var mrvNo = Request.QueryString["MRVNO"];
                 DataTable dtMaterialReceiptVoucher = uMethods.ConvertTo(repo.RptMaterialReceiptVoucher(mrvNo));
 
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\MetarialReceiptVocher.rdlc";

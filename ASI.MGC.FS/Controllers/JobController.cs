@@ -126,41 +126,41 @@ namespace ASI.MGC.FS.Controllers
             }
             return null;
         }
-        public JsonResult GetAllJobs(jQueryDataTableParamModel param)
-        {
-            var totalJobRecords = (from totalJobCount in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
-                                   select totalJobCount);
-            IEnumerable<JOBIDREFERENCE> filteredJobs;
-            if (!string.IsNullOrEmpty(param.sSearch))
-            {
-                filteredJobs = (from totalJobCount in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
-                                where totalJobCount.JOBID_JR.Contains(param.sSearch) || totalJobCount.JOBDESCRIPTION_JR.Contains(param.sSearch)
-                                select totalJobCount);
-            }
-            else
-            {
-                filteredJobs = totalJobRecords;
-            }
+        //public JsonResult GetAllJobs(jQueryDataTableParamModel param)
+        //{
+        //    var totalJobRecords = (from totalJobCount in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
+        //                           select totalJobCount);
+        //    IEnumerable<JOBIDREFERENCE> filteredJobs;
+        //    if (!string.IsNullOrEmpty(param.sSearch))
+        //    {
+        //        filteredJobs = (from totalJobCount in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
+        //                        where totalJobCount.JOBID_JR.Contains(param.sSearch) || totalJobCount.JOBDESCRIPTION_JR.Contains(param.sSearch)
+        //                        select totalJobCount);
+        //    }
+        //    else
+        //    {
+        //        filteredJobs = totalJobRecords;
+        //    }
 
-            var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
+        //    var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
 
-            Func<JOBIDREFERENCE, string> orderingFunction = (a => sortColumnIndex == 0 ? a.JOBID_JR : sortColumnIndex == 1 ? a.JOBDESCRIPTION_JR : Convert.ToString(a.RATE_RJ));
+        //    Func<JOBIDREFERENCE, string> orderingFunction = (a => sortColumnIndex == 0 ? a.JOBID_JR : sortColumnIndex == 1 ? a.JOBDESCRIPTION_JR : Convert.ToString(a.RATE_RJ));
 
-            var sortDirection = Request["sSortDir_0"];
-            filteredJobs = sortDirection == "asc" ? filteredJobs.OrderBy(orderingFunction) : filteredJobs.OrderByDescending(orderingFunction);
-            int totalRecords = totalJobRecords.Count();
-            int totalDisplayedRecords = filteredJobs.Count();
-            var dislpayedJobs = filteredJobs.Skip(param.iDisplayStart)
-                                            .Take(param.iDisplayLength);
-            var resultJobRecords = from job in dislpayedJobs select new { job.JOBID_JR, job.JOBDESCRIPTION_JR, job.RATE_RJ };
-            return Json(new
-            {
-                param.sEcho,
-                iTotalRecords = totalRecords,
-                iTotalDisplayRecords = totalDisplayedRecords,
-                aaData = resultJobRecords
-            }, JsonRequestBehavior.AllowGet);
-        }
+        //    var sortDirection = Request["sSortDir_0"];
+        //    filteredJobs = sortDirection == "asc" ? filteredJobs.OrderBy(orderingFunction) : filteredJobs.OrderByDescending(orderingFunction);
+        //    int totalRecords = totalJobRecords.Count();
+        //    int totalDisplayedRecords = filteredJobs.Count();
+        //    var dislpayedJobs = filteredJobs.Skip(param.iDisplayStart)
+        //                                    .Take(param.iDisplayLength);
+        //    var resultJobRecords = from job in dislpayedJobs select new { job.JOBID_JR, job.JOBDESCRIPTION_JR, job.RATE_RJ };
+        //    return Json(new
+        //    {
+        //        param.sEcho,
+        //        iTotalRecords = totalRecords,
+        //        iTotalDisplayRecords = totalDisplayedRecords,
+        //        aaData = resultJobRecords
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
 
         public JsonResult GetJobRecordById(string jobCode)
         {
@@ -207,7 +207,7 @@ namespace ASI.MGC.FS.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveJobEntry(FormCollection form, SALEDETAIL objSaleDetail)
+        public JsonResult SaveJobEntry(FormCollection form, SALEDETAIL objSaleDetail)
         {
             try
             {
@@ -235,7 +235,7 @@ namespace ASI.MGC.FS.Controllers
                 // ignored
             }
 
-            return RedirectToAction("JobEntry");
+            return Json(new {success = true},JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetAllJobDetails(string mrvCode, string jobCode)

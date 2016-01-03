@@ -17,6 +17,6 @@ namespace ASI.MGC.FS.Model
         public string MRVNO_JRP { get; set; }
         public Nullable<System.DateTime> JOBDATE_JRP { get; set; }
         public string PRODID_JRP { get; set; }
-        public string PRODUCTNAME_JRP { get; set; }
+        public string DESCRIPTION_PM { get; set; }
     }
 }

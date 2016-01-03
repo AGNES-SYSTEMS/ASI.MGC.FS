@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ASI.MGC.FS.Domain.Repositories
+﻿namespace ASI.MGC.FS.Domain.Repositories
 {
     public interface IRepository<TEntity> where TEntity:class
     {
@@ -13,6 +7,7 @@ namespace ASI.MGC.FS.Domain.Repositories
         void Delete(object id);
         void Delete(TEntity entity);
         void Insert(TEntity entity);
+        void Truncate(string tableName);
         TEntity Create();
         RepositoryQuery<TEntity> Query();
     }

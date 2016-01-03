@@ -20,9 +20,9 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            <label id="lblCustCode" class="control-label col-md-4 small ">Job ID:</label>
+                            <label id="lblCustCode" class="control-label col-md-4 small ">Job id:</label>
                             <div class="col-md-8 paddingLeftRight0">
-                                <input type="text" name="JobID" id="txtJobID" value="ALFN" />
+                                <input type="text" name="Jobid" id="txtJobID" value="ALFN" />
                             </div>
                         </div>
                         <div class="col-md-6 form-group">
@@ -52,9 +52,9 @@
             $("#tblJobsList").jqGrid({
                 url: '/Job/getJobsList',
                 datatype: "json",
-                colNames: ['Job ID', 'Job Description'],
+                colNames: ['Job id', 'Job Description'],
                 colModel: [
-                { key: true, name: 'JOBID_JR', index: 'JOBID_JR', width: 65 },
+                { key: true, name: 'JOBid_JR', index: 'JOBid_JR', width: 65 },
                 { key: false, name: 'JOBDESCRIPTION_JR', index: 'JOBDESCRIPTION_JR', width: 150 }
                 ],
                 rowNum: 10,
@@ -81,7 +81,7 @@
                 autowidth: true,
                 multiselect: false
             }).navGrid("#Pager", { edit: false, add: false, del: false });
-            //reloadGridByJobID();
+            //reloadGridByJobid();
             $(window).resize(function () {
                 var outerwidth = $('#grid').width();
                 $('#tblJobsList').setGridWidth(outerwidth);

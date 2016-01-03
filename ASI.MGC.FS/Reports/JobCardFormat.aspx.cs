@@ -16,12 +16,12 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
-                var jobNo = "JOB/2563/2007";
-                DataTable dtQuotation = uMethods.ConvertTo(repo.RptJobCardFormat(jobNo));
+                var jobNo = Request.QueryString["jobNo"];
+                DataTable dtJobCardFormat = uMethods.ConvertTo(repo.RptJobCardFormat(jobNo));
 
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\JobCardFormat.rdlc";
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("JOBNO", jobNo));
-                var rds = new ReportDataSource("DS_JobCardFormat", dtQuotation);
+                var rds = new ReportDataSource("DS_JobCardFormat", dtJobCardFormat);
                 ReportViewer1.LocalReport.DataSources.Clear();
                 ReportViewer1.LocalReport.DataSources.Add(rds);
                 ReportViewer1.DataBind();

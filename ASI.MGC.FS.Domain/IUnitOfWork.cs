@@ -12,6 +12,7 @@ namespace ASI.MGC.FS.Domain
         T ExtRepositoryFor<T>() where T : class;
         void Dispose();
         void Save();
+        void Truncate(string tableName);
         void Dispose(bool disposing);
         IRepository<T> Repository<T>() where T : class;
     }

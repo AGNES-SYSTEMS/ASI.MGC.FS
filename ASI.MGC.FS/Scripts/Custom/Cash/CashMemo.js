@@ -52,7 +52,7 @@ jQuery("#tblSaleDetails").jqGrid({
     autoheight: true,
     autowidth: true,
     styleUI: "Bootstrap",
-    colNames: ['Sale ID', 'Job No', 'PR Code', 'S W Code', 'Description', 'Qty', 'Unit', 'Rate', 'Cash Amount', 'Discount', 'Ship. Chrg'],
+    colNames: ['Sale id', 'Job No', 'PR Code', 'S W Code', 'Description', 'Qty', 'Unit', 'Rate', 'Cash Amount', 'Discount', 'Ship. Chrg'],
     colModel: [
         { name: 'SLNO_SD', index: 'SLNO_SD', width: 50, align: "center", sortable: false },
         { name: 'JOBNO_SD', index: 'JOBNO_SD', width: 80, align: "center", sortable: false },

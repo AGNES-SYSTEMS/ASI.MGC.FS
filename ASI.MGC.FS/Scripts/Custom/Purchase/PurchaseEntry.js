@@ -33,11 +33,11 @@ $(document).ready(function () {
         viewrecords: true,
         colNames: ['Product Code', 'Product Description', 'Qty', 'Unit', 'Rate', 'Amount'],
         colModel: [
-            { name: 'PrdCode', index: 'PrdCode', width: 100, align: "center", sortable: false },
+            { name: 'PRODID_SL', index: 'PRODID_SL', width: 100, align: "center", sortable: false },
             { name: 'PrdDesc', index: 'PrdDesc', width: 350, align: "left", sortable: false },
-            { name: 'Qty', index: 'Qty', width: 100, align: "center", sortable: false },
+            { name: 'RECEPT_QTY_SL', index: 'RECEPT_QTY_SL', width: 100, align: "center", sortable: false },
             { name: 'Unit', index: 'Unit', width: 100, align: "center", sortable: false },
-            { name: 'Rate', index: 'Rate', width: 100, align: "center", sortable: false },
+            { name: 'RECEPT_RATE_SL', index: 'RECEPT_RATE_SL', width: 100, align: "center", sortable: false },
             { name: 'Amount', index: 'Amount', width: 150, align: "center", sortable: false }
         ],
         multiselect: false,
@@ -210,12 +210,15 @@ $(document).ready(function () {
             e.preventDefault();
             var arrIndex = arrPrdDetails.length;
             arrPrdDetails[arrIndex] = {
-                PrdCode: $("#txtPrCode").val(), PrdDesc: $("#txtPrDesc").val(),
-                Qty: $("#txtQuantity").val(), Rate: $("#txtRate").val(), Unit: $("#txtUnit").val(),
+                PRODID_SL: $("#txtPrCode").val(), PrdDesc: $("#txtPrDesc").val(),
+                RECEPT_QTY_SL: $("#txtQuantity").val(), RECEPT_RATE_SL: $("#txtRate").val(), Unit: $("#txtUnit").val(),
                 Amount: $("#txtAmount").val()
             };
             var su = jQuery("#tblPrdDetails").jqGrid('addRowData', arrIndex, arrPrdDetails[arrIndex]);
             if (su) {
+                var prdDetails = $('#tblPrdDetails').jqGrid('getGridParam', 'data');
+                var jsonPrdDetails = JSON.stringify(prdDetails);
+                $('#prdDetails').val(jsonPrdDetails);
                 clearModalForm();
             }
         }
@@ -234,7 +237,8 @@ $(document).ready(function () {
         for (var i = 0; i < arrPrdDetails.length; i++) {
             totalGridPrdAmount += parseFloat(arrPrdDetails[i]["Amount"]);
         }
-        $("#txtNetAmount").val(totalGridPrdAmount);
+        var netAmount = parseFloat(totalGridPrdAmount) + parseFloat($("#txtShipChrg").val()) - parseFloat($("#txtDiscount").val());
+        $("#txtNetAmount").val(netAmount);
         $("#txtTotalAmount").val(totalGridPrdAmount);
     });
 
@@ -251,10 +255,14 @@ $(document).ready(function () {
     });
 
     $("#txtShipChrg").on("change", function () {
+        var netAmount = $("#txtNetAmount").val() + $("#txtShipChrg").val();
+        $("#txtNetAmount").val(netAmount);
         $('#formPurchaseEntry').bootstrapValidator('revalidateField', 'ShipChrg');
     });
 
     $("#txtDiscount").on("change", function () {
+        var netAmount = $("#txtNetAmount").val() - $("#txtDiscount").val();
+        $("#txtNetAmount").val(netAmount);
         $('#formPurchaseEntry').bootstrapValidator('revalidateField', 'Discount');
     });
 

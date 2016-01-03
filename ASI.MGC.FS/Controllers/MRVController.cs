@@ -34,29 +34,31 @@ namespace ASI.MGC.FS.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveMrvCreation(FormCollection form, MATERIALRECEIPTMASTER objMrv)
+        public JsonResult SaveMrvCreation(FormCollection form, MATERIALRECEIPTMASTER objMrv)
         {
+            List<string> listMrvJobCode = new List<string>();
             try
             {
-                string jsonProductDetails = form["mrvProds"];
+                var jsonProductDetails = form["mrvProds"];
                 var serializer = new JavaScriptSerializer();
                 var lstMrvProducts = serializer.Deserialize<List<MRVREFERENCE>>(jsonProductDetails);
                 objMrv.DOC_DATE_MRV = Convert.ToDateTime(DateTime.Now.ToShortDateString());
                 objMrv.STATUS_MRV = "N";
                 _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Insert(objMrv);
                 _unitOfWork.Save();
-
-                SaveMrvProducts(lstMrvProducts, objMrv);
-                return RedirectToAction("MrvCreation");
+                listMrvJobCode.Add(objMrv.MRVNO_MRV);
+                SaveMrvReportObject(objMrv);
+                SaveMrvProducts(lstMrvProducts, objMrv, listMrvJobCode);
             }
             catch (Exception)
             {
                 // ignored
             }
-            return RedirectToAction("MrvCreation");
+            return Json(listMrvJobCode, JsonRequestBehavior.AllowGet);
+            //return View("MrvCreation");
         }
 
-        private void SaveMrvProducts(List<MRVREFERENCE> lstMrvProducts, MATERIALRECEIPTMASTER objMrv)
+        private void SaveMrvProducts(List<MRVREFERENCE> lstMrvProducts, MATERIALRECEIPTMASTER objMrv, List<string> listMrvJobCode)
         {
             foreach (var prd in lstMrvProducts)
             {
@@ -64,11 +66,11 @@ namespace ASI.MGC.FS.Controllers
                 prd.JOBSTATUS_MRR = "N";
                 _unitOfWork.Repository<MRVREFERENCE>().Insert(prd);
                 _unitOfWork.Save();
-                InsertJobData(prd, objMrv);
+                InsertJobData(prd, objMrv, listMrvJobCode);
             }
         }
 
-        private void InsertJobData(MRVREFERENCE prd, MATERIALRECEIPTMASTER objMrv)
+        private void InsertJobData(MRVREFERENCE prd, MATERIALRECEIPTMASTER objMrv, List<string> listMrvJobCode)
         {
             var jobCount = (1001 + CommonModelAccessUtility.GetJobMasterCount(_unitOfWork));
             string currYear = DateTime.Now.Year.ToString();
@@ -84,6 +86,9 @@ namespace ASI.MGC.FS.Controllers
             jobMasterObj.PRODQTY_JM = prd.QTY_MRR;
             _unitOfWork.Repository<JOBMASTER>().Insert(jobMasterObj);
             _unitOfWork.Save();
+            SaveMrvReportChildObject(prd);
+            SaveJobReortObject(jobMasterObj);
+            listMrvJobCode.Add(jobMasterObj.JOBNO_JM);
         }
 
         public JsonResult GetMrvList(string sidx, string sord, int page, int rows)
@@ -166,7 +171,7 @@ namespace ASI.MGC.FS.Controllers
                 objSales.Rate = Convert.ToInt32(sale.RATE_SD);
                 objSales.Discount = Convert.ToDouble(sale.DISCOUNT_SD);
                 objSales.ShipChrg = Convert.ToDouble(sale.SHIPPINGCHARGES_SD);
-                objSales.CashAmount = (Convert.ToInt32(sale.QTY_SD) * Convert.ToInt32(sale.RATE_SD)) + Convert.ToDouble(sale.DISCOUNT_SD) + Convert.ToDouble(sale.SHIPPINGCHARGES_SD);
+                objSales.CashAmount = (Convert.ToInt32(sale.QTY_SD) * Convert.ToInt32(sale.RATE_SD)) - Convert.ToDouble(sale.DISCOUNT_SD) + Convert.ToDouble(sale.SHIPPINGCHARGES_SD);
                 lstSales.Add(objSales);
             }
 
@@ -184,6 +189,44 @@ namespace ASI.MGC.FS.Controllers
         public ActionResult SearchMrvDetails()
         {
             throw new NotImplementedException();
+        }
+
+        private void SaveMrvReportObject(MATERIALRECEIPTMASTER objMrv)
+        {
+            var mrvReportObj = _unitOfWork.Repository<MRVNO_REPORT>().Create();
+            mrvReportObj.MRVNO_RPT = objMrv.MRVNO_MRV;
+            mrvReportObj.MRVDATE_RPT = objMrv.DOC_DATE_MRV;
+            mrvReportObj.MRVDELEDATE_RPT = objMrv.DELE_DATE_MRV;
+            mrvReportObj.CUSTCODE_RPT = objMrv.CUSTOMERCODE_MRV;
+            mrvReportObj.CUSTNAME_RPT = objMrv.CUSTOMERNAME_MRV;
+            mrvReportObj.CUSTADD_RPT = string.Concat(objMrv.ADDRESS1_MRV, " ", objMrv.ADDRESS2_MRV);
+            mrvReportObj.PHONE_RPT = objMrv.PHONE_MRV;
+            _unitOfWork.Repository<MRVNO_REPORT>().Insert(mrvReportObj);
+            _unitOfWork.Save();
+        }
+
+        private void SaveMrvReportChildObject(MRVREFERENCE productDetails)
+        {
+            var mrvReportChildObj = _unitOfWork.Repository<MRV_REPORT_CHD>().Create();
+            mrvReportChildObj.MRVNO_CHD = productDetails.MRVNO_MRR;
+            mrvReportChildObj.PCODE_CHD = productDetails.PRODID_MRR;
+            mrvReportChildObj.JOBID_CHD = productDetails.JOBID_MRR;
+            mrvReportChildObj.QTY_CHD = productDetails.QTY_MRR;
+            mrvReportChildObj.RATE_CHD = productDetails.RATE_MRR;
+            mrvReportChildObj.AMOUNT = productDetails.AMOUNT_MRR;
+            _unitOfWork.Repository<MRV_REPORT_CHD>().Insert(mrvReportChildObj);
+            _unitOfWork.Save();
+        }
+
+        private void SaveJobReortObject(JOBMASTER jobDetails)
+        {
+            var jobReportObj = _unitOfWork.Repository<JOBCARD_REPRT>().Create();
+            jobReportObj.JOBNO_JRP = jobDetails.JOBNO_JM;
+            jobReportObj.JOBDATE_JRP = Convert.ToDateTime(jobDetails.DOCNUMBER_JM);
+            jobReportObj.MRVNO_JRP = jobDetails.MRVNO_JM;
+            jobReportObj.PRODID_JRP = jobDetails.PRODID_JIM;
+            _unitOfWork.Repository<JOBCARD_REPRT>().Insert(jobReportObj);
+            _unitOfWork.Save();
         }
     }
 }

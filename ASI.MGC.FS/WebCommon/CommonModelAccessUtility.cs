@@ -36,6 +36,15 @@ namespace ASI.MGC.FS.WebCommon
             return cashSaleCount;
         }
 
+        public static int GetCurrPurchaseCount(IUnitOfWork iUnitOfWork)
+        {
+            var currYear = DateTime.Now.Year.ToString();
+            var purCount = (from lstArApLedger in iUnitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
+                            where lstArApLedger.DOCNUMBER_ART.Contains("CRP") && lstArApLedger.DOCNUMBER_ART.EndsWith(currYear)
+                            select lstArApLedger.DOCNUMBER_ART).Distinct().Count();
+            return purCount;
+        }
+
         public static int GetInvoiceCount(IUnitOfWork iUnitOfWork)
         {
             var currYear = DateTime.Now.Year.ToString();

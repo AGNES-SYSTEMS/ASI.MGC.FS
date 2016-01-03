@@ -179,7 +179,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\QuotationController.cs" />
-    <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\MgcReportsController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SetupsController.cs" />
     <Compile Include="ExtendedAPI\MESAuthorize.cs" />
@@ -656,6 +656,7 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.typeahead.js" />
     <Content Include="Scripts\bootstrapValidator.min.js" />
+    <Content Include="Scripts\common.js" />
     <Content Include="Scripts\Custom\Bank\BankMaster.js" />
     <Content Include="Scripts\Custom\Bank\BankPayment.js" />
     <Content Include="Scripts\Custom\Bank\BankReceipt.js" />
@@ -854,10 +855,49 @@
     <Content Include="Views\Finance\ArapMatching.cshtml" />
     <Content Include="Views\Finance\JvCreation.cshtml" />
     <Content Include="Views\Finance\PdcReceipt.cshtml" />
+    <Content Include="Views\MgcReports\ArStatement.cshtml" />
+    <Content Include="Views\MgcReports\ArStatementOutstanding.cshtml" />
+    <Content Include="Views\MgcReports\ArSummary.cshtml" />
+    <Content Include="Views\MgcReports\BalanceSheet.cshtml" />
+    <Content Include="Views\MgcReports\BankPayment.cshtml" />
+    <Content Include="Views\MgcReports\BankReceipt.cshtml" />
+    <Content Include="Views\MgcReports\BankStatement.cshtml" />
+    <Content Include="Views\MgcReports\CancelledJobs.cshtml" />
+    <Content Include="Views\MgcReports\CashMemo.cshtml" />
+    <Content Include="Views\MgcReports\CashMemoReverse.cshtml" />
+    <Content Include="Views\MgcReports\CashMemoWiseReport.cshtml" />
+    <Content Include="Views\MgcReports\CashPayment.cshtml" />
+    <Content Include="Views\MgcReports\CashReceipt.cshtml" />
+    <Content Include="Views\MgcReports\DeliveredMrvDetails.cshtml" />
+    <Content Include="Views\MgcReports\DeliveryDetails.cshtml" />
+    <Content Include="Views\MgcReports\DeliveryNote.cshtml" />
+    <Content Include="Views\MgcReports\DeliveryNoteDetails.cshtml" />
+    <Content Include="Views\MgcReports\EmpSales.cshtml" />
+    <Content Include="Views\MgcReports\EmpWiseJobDetails.cshtml" />
+    <Content Include="Views\MgcReports\GlStatement.cshtml" />
+    <Content Include="Views\MgcReports\Invoice.cshtml" />
+    <Content Include="Views\MgcReports\InvoiceWiseReport.cshtml" />
+    <Content Include="Views\MgcReports\JobCardDetails.cshtml" />
+    <Content Include="Views\MgcReports\JobCardFormat.cshtml" />
+    <Content Include="Views\MgcReports\JobWiseStatement.cshtml" />
+    <Content Include="Views\MgcReports\JournalVoucher.cshtml" />
+    <Content Include="Views\MgcReports\MetarialReceiptVoucher.cshtml" />
+    <Content Include="Views\MgcReports\MrvStatement.cshtml" />
+    <Content Include="Views\MgcReports\PendingMrvDetails.cshtml" />
+    <Content Include="Views\MgcReports\ProfitLossStatement.cshtml" />
+    <Content Include="Views\MgcReports\PurchaseRegister.cshtml" />
+    <Content Include="Views\MgcReports\Quotation.cshtml" />
+    <Content Include="Views\MgcReports\ReversedInvoice.cshtml" />
+    <Content Include="Views\MgcReports\SalesInvoice.cshtml" />
+    <Content Include="Views\MgcReports\ServiceItems.cshtml" />
+    <Content Include="Views\MgcReports\StockJournal.cshtml" />
+    <Content Include="Views\MgcReports\TrialBalance.cshtml" />
+    <Content Include="Views\MgcReports\StockReport.cshtml" />
+    <Content Include="Views\MgcReports\StockLedgerReport.cshtml" />
+    <Content Include="Views\MgcReports\StockReceipt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Reports\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

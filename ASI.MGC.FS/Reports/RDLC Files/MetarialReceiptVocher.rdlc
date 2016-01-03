@@ -250,14 +250,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="PRODUCTNAME_CHD">
+                    <Textbox Name="DESCRIPTION_PM">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!PRODUCTNAME_CHD.Value</Value>
+                              <Value>=Fields!DESCRIPTION_PM.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -266,7 +266,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>PRODUCTNAME_CHD</rd:DefaultName>
+                      <rd:DefaultName>DESCRIPTION_PM</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -314,14 +314,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="JOBDIES_CHD">
+                    <Textbox Name="JOBDESCRIPTION_JR">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!JOBDIES_CHD.Value</Value>
+                              <Value>=Fields!JOBDESCRIPTION_JR.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -330,7 +330,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>JOBDIES_CHD</rd:DefaultName>
+                      <rd:DefaultName>JOBDESCRIPTION_JR</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -1308,8 +1308,8 @@ Produce this Receipt at the time of delivery.</Value>
           <DataField>CUSTADD_RPT</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="PRODUCTNAME_CHD">
-          <DataField>PRODUCTNAME_CHD</DataField>
+        <Field Name="DESCRIPTION_PM">
+          <DataField>DESCRIPTION_PM</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="QTY_CHD">
@@ -1320,8 +1320,8 @@ Produce this Receipt at the time of delivery.</Value>
           <DataField>AMOUNT</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="JOBDIES_CHD">
-          <DataField>JOBDIES_CHD</DataField>
+        <Field Name="JOBDESCRIPTION_JR">
+          <DataField>JOBDESCRIPTION_JR</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="PHONE_RPT">
