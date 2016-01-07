@@ -36,7 +36,7 @@ namespace ASI.MGC.FS.Controllers
             {
                 if (IsValid(model.Email, model.Password))
                 {
-                    FormsAuthentication.SetAuthCookie(model.Email, false);
+                    FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
                     return RedirectToAction("Index","Home");
                 }
                 else

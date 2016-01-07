@@ -91,8 +91,8 @@ namespace ASI.MGC.FS.Controllers
                     objDiscount.DOCDATE_GLT = Convert.ToDateTime(frm["DocDate"]);
                     objDiscount.GLDATE_GLT = Convert.ToDateTime(frm["PurDate"]);
                     objDiscount.GLACCODE_GLT = "3501";
-                    objDiscount.CREDITAMOUNT_GLT = 0;
-                    objDiscount.DEBITAMOUNT_GLT = Convert.ToDecimal(frm["Discount"]);
+                    objDiscount.CREDITAMOUNT_GLT = Convert.ToDecimal(frm["Discount"]);
+                    objDiscount.DEBITAMOUNT_GLT = 0;
                     objDiscount.OTHERREF_GLT = Convert.ToString(frm["Invoice"]);
                     objDiscount.NARRATION_GLT = Convert.ToString(frm["Note"]);
                     objDiscount.GLSTATUS_GLT = "P";

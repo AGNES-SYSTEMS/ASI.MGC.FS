@@ -341,19 +341,29 @@
     <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/formValidation.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.framework.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Quotation/QuotationEntry.js")"></script>
-    <script type="text/javascript">
-
-        function OnSuccess(response) {
-            alert(response);
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
+<script type="text/javascript">
+    var isAlreadyOpen = false;
+    function OnSuccess(quotNumber) {
+        if (quotNumber !== "" && !isAlreadyOpen) {
+            toastr.success("Quotation Entry is added Successfully.");
+            isAlreadyOpen = true;
+            openInvReport(quotNumber);
         }
+    }
 
-        function OnFailure(response) {
-            alert("Whoops! That didn't go so well did it?");
-        }
+    function OnFailure() {
+        toastr.error("Sorry! Something went wrong, please try again.");
+    }
 
-    </script>
+    function openInvReport(quotNo) {
+        var quotReportUrl = "/MgcReports/Quotation?quotNo=" + quotNo;
+        window.open(quotReportUrl);
+        toastr.info("Quotation Report is open in new window.");
+    }
+
+</script>
+
 }

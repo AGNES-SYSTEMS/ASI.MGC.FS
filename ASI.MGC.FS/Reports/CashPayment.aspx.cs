@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Data;
+using System.Web.UI;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Domain.Repositories;
 using ASI.MGC.FS.Model.HelperClasses;
 using Microsoft.Reporting.WebForms;
 
-
 namespace ASI.MGC.FS.Reports
 {
-    public partial class CashPayment : System.Web.UI.Page
+    public partial class CashPayment : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -17,8 +17,8 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
-                var voucherType = "CP";
-                var voucherCode = "PPA/1001/2015";
+                const string voucherType = "CP";
+                var voucherCode = Request.QueryString["cpNo"];
                 DataTable dtCashPayment = uMethods.ConvertTo(repo.RptCashPayment(voucherType, voucherCode));
 
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\CashpaymentVoucher.rdlc";

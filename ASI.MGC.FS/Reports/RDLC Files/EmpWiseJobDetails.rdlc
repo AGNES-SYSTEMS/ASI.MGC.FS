@@ -1440,7 +1440,6 @@
     <DataSource Name="DataSource">
       <Transaction>true</Transaction>
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
-      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>d9cfc6c7-ff38-4aa8-b627-2e30a0f2ba17</rd:DataSourceID>
     </DataSource>
   </DataSources>

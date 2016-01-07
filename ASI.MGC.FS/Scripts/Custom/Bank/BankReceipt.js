@@ -542,7 +542,7 @@ $(document).ready(function () {
                     }
                 }
             },
-            BRAmount: {
+            DEBITAMOUT_BT: {
                 validators: {
                     notEmpty: {
                         message: 'BR Amount is required'
@@ -552,7 +552,17 @@ $(document).ready(function () {
                     }
                 }
             },
-            ChequeNo: {
+            AllocationTotal: {
+                validators: {
+                    notEmpty: {
+                        message: 'Allocation Amount is required'
+                    },
+                    integer: {
+                        message: 'Integer Only'
+                    }
+                }
+            },
+            CHQNO_BT: {
                 validators: {
                     notEmpty: {
                         message: 'Cheque No is required'
@@ -583,5 +593,5 @@ $(document).ready(function () {
             }
         }
     });
-    $("#allocationDetailsModelform").formValidation();
+    $("#formBankReceipt").formValidation();
 });

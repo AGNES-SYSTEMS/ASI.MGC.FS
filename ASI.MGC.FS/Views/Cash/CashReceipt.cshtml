@@ -400,20 +400,28 @@
     <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/formValidation.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/bootstrap.framework.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Cash/CashReceipt.js")"></script>
-<script type="text/javascript">
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
+    <script type="text/javascript">
+        var isReportOpened = false;
+        function OnSuccess(crNo) {
+            if (crNo !== "" && !isReportOpened) {
+                toastr.success("Cash Receipt is added Successfully.");
+                isReportOpened = true;
+                openCashReceipt(crNo);
+            }
+        }
 
-    function OnSuccess(response) {
-        alert(response);
-    }
+        function OnFailure() {
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
 
-    function OnFailure(response) {
-        alert("Whoops! That didn't go so well did it?");
-    }
+        function openCashReceipt(crNo) {
+            var cashReceiptUrl = "/MgcReports/CashReceipt?crNo=" + crNo;
+            window.open(cashReceiptUrl);
+            toastr.info("Cash Receipt is open in new window.");
+        }
 
-</script>
+    </script>
 }
 

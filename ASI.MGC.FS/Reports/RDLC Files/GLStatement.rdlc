@@ -533,7 +533,7 @@
         <Top>0.08333in</Top>
         <Left>0.06833in</Left>
         <Height>0.5in</Height>
-        <Width>7.77667in</Width>
+        <Width>7.77666in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1249,7 +1249,6 @@
     <DataSource Name="DataSource">
       <Transaction>true</Transaction>
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
-      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>d5707995-3f0a-4706-9543-4965a546325b</rd:DataSourceID>
     </DataSource>
   </DataSources>

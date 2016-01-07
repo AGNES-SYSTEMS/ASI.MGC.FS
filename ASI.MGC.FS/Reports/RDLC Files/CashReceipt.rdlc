@@ -837,7 +837,6 @@
     <DataSource Name="DataSource">
       <Transaction>true</Transaction>
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
-      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>21dce647-c607-4c06-8dcb-878b75c7c9b2</rd:DataSourceID>
     </DataSource>
   </DataSources>

@@ -930,7 +930,6 @@
   <DataSources>
     <DataSource Name="DataSource">
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
-      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>f9b1b0cc-791f-4df6-ad3a-50fe8f827410</rd:DataSourceID>
     </DataSource>
   </DataSources>

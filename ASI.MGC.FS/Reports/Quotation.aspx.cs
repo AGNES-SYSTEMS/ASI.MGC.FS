@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Domain.Repositories;
 using ASI.MGC.FS.Model.HelperClasses;
@@ -12,7 +8,7 @@ using Microsoft.Reporting.WebForms;
 
 namespace ASI.MGC.FS.Reports
 {
-    public partial class Quotation : System.Web.UI.Page
+    public partial class Quotation : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -21,7 +17,7 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
-                var quotNo = "QOT/1006/2007";
+                var quotNo = Request.QueryString["quotNo"];
                 DataTable dtQuotation = uMethods.ConvertTo(repo.RptQuotation(quotNo));
 
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\Quotation.rdlc";

@@ -4,7 +4,6 @@
     <ReportItems>
       <Line Name="Line1">
         <Top>0.02778in</Top>
-        <Left>0in</Left>
         <Height>0in</Height>
         <Width>7.79167in</Width>
         <Style>
@@ -1116,7 +1115,6 @@
   <DataSources>
     <DataSource Name="DataSource">
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
-      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>919dacab-d01a-4ae8-a3c7-c7ebb60a3189</rd:DataSourceID>
     </DataSource>
   </DataSources>

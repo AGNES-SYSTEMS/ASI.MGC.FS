@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Web.UI;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Domain.Repositories;
 using ASI.MGC.FS.Model.HelperClasses;
@@ -7,7 +8,7 @@ using Microsoft.Reporting.WebForms;
 
 namespace ASI.MGC.FS.Reports
 {
-    public partial class CashReceipt : System.Web.UI.Page
+    public partial class CashReceipt : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -16,8 +17,8 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
-                var voucherType = "CR";
-                var voucherCode = "CRV/1001/2015";
+                const string voucherType = "CR";
+                var voucherCode = Request.QueryString["crNo"];
                 DataTable dtCashReceipt = uMethods.ConvertTo(repo.RptCashReceipt(voucherType, voucherCode));
 
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\CashReceipt.rdlc";

@@ -1,12 +1,10 @@
-﻿@model dynamic
-
-@{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+﻿@{
+    ViewBag.Title = @ViewBag.crNo;
+    Layout = null;
 }
 
 <div class="row">
     <div class="col-md-12 iframeStyling" style="overflow-x:hidden; overflow-y:no-display">
-        <iframe id="iframeReport" style="overflow-x:hidden; overflow-y:hidden" src="../Reports/MetarialReceiptVoucher.aspx?MRVNO=@ViewBag.mrvNo"></iframe>
+        <iframe id="iframeReport" style="overflow-x:hidden; overflow-y:hidden" height="786" width="1366" src="~/Reports/CashReceipt.aspx?crNo=@ViewBag.crNo"></iframe>
     </div>
 </div>

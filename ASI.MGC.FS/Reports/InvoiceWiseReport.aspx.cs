@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Domain.Repositories;
 using ASI.MGC.FS.Model.HelperClasses;
@@ -12,7 +8,7 @@ using Microsoft.Reporting.WebForms;
 
 namespace ASI.MGC.FS.Reports
 {
-    public partial class InvoiceWiseReport : System.Web.UI.Page
+    public partial class InvoiceWiseReport : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

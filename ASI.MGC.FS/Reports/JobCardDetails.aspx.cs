@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Web.UI;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Domain.Repositories;
 using ASI.MGC.FS.Model.HelperClasses;
@@ -7,7 +8,7 @@ using Microsoft.Reporting.WebForms;
 
 namespace ASI.MGC.FS.Reports
 {
-    public partial class JobCardDetails : System.Web.UI.Page
+    public partial class JobCardDetails : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
