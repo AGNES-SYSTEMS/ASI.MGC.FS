@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "ASI.MGC.FS.Reports", "ASI.MGC.FS.Reports\ASI.MGC.FS.Reports.rptproj", "{EDF23FAA-B820-421E-BF9D-39BFE751F80C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDF23FAA-B820-421E-BF9D-39BFE751F80C}.Debug|Default.ActiveCfg = Debug
+		{EDF23FAA-B820-421E-BF9D-39BFE751F80C}.Debug|Default.Build.0 = DebugLocal
+		{EDF23FAA-B820-421E-BF9D-39BFE751F80C}.Debug|Default.Deploy.0 = DebugLocal
+		{EDF23FAA-B820-421E-BF9D-39BFE751F80C}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{EDF23FAA-B820-421E-BF9D-39BFE751F80C}.DebugLocal|Default.Build.0 = DebugLocal
+		{EDF23FAA-B820-421E-BF9D-39BFE751F80C}.Release|Default.ActiveCfg = Release
+		{EDF23FAA-B820-421E-BF9D-39BFE751F80C}.Release|Default.Build.0 = Release
+		{EDF23FAA-B820-421E-BF9D-39BFE751F80C}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
