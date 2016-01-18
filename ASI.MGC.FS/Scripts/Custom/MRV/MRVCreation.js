@@ -346,7 +346,7 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
-    $('#formMRVCreation').bootstrapValidator({
+    $('#formMRVCreation').formValidation({
         container: '#messages',
         feedbackIcons: {
             required: 'fa fa-asterisk',

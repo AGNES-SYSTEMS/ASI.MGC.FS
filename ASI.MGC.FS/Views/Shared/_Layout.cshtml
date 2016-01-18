@@ -272,36 +272,34 @@
                                     <ul class="dropdown-menu col-md-12 container" style="width:660px;" role="menu">
                                         <li class="col-md-4">
                                             <ul class="paddingLeft0">
-                                                <li><a href="#">GlCreation</a></li>
-                                                <li><a href="#">ARCreation</a></li>
-                                                <li><a href="#">APCreation</a></li>
-                                                <li><a href="#">Bank Creation</a></li>
+                                                <li><a href="@Href("~/Finance/GlCreation")">GlCreation</a></li>
+                                                <li><a href="@Href("~/Setups/CustomerMaster")">ARCreation</a></li>
+                                                <li><a href="@Href("~/Setups/SupplierMaster")">APCreation</a></li>
+                                                <li><a href="@Href("~/Bank/BankMaster")">Bank Creation</a></li>
 
                                                 <li class="dropdown">
                                                     <span class="menuHeadingStyle">Payments</span>
                                                     <ul>
-                                                        <li><a href="#">APCreation</a></li>
-                                                        <li><a href="#">Bank Creation</a></li>
+                                                        <li><a href="@Href("~/Cash/CashPayments")">Cash Payments</a></li>
+                                                        <li><a href="@Href("~/Bank/BankPayment")">Bank Payments</a></li>
                                                     </ul>
                                                 </li>
                                                 <li class="dropdown">
                                                     <span class="menuHeadingStyle">Receipt</span>
                                                     <ul>
-                                                        <li><a href="#">Cash Receipt</a></li>
-                                                        <li><a href="#">Bank Receipt</a></li>
-                                                        <li><a href="#">Pdc Receipt</a></li>
+                                                        <li><a href="@Href("~/Cash/CashReceipt")">Cash Receipt</a></li>
+                                                        <li><a href="@Href("~/Bank/BankReceipt")">Bank Receipt</a></li>
+                                                        <li><a href="@Href("~/Finance/PdcReceipt")">Pdc Receipt</a></li>
                                                     </ul>
                                                 </li>
-                                                <li><a href="#">Stock Jurnal</a></li>
-                                                <li><a href="#">JV Creation</a></li>
-                                                <li><a href="#">AR/AP Matching</a></li>
-                                                <li><a href="#">AR UnMatching</a></li>
+                                                @*<li><a href="@Href("~/Finance/PdcReceipt")">Stock Jurnal</a></li>*@
+                                                <li><a href="@Href("~/Finance/JvCreation")">JV Creation</a></li>
+                                                <li><a href="@Href("~/Finance/ArapMatching")">AR/AP Matching</a></li>
+                                                <li><a href="@Href("~/Finance/ArUnmatching")">AR UnMatching</a></li>
                                             </ul>
                                         </li>
                                         <li class="col-md-4">
                                             <ul class="paddingLeft0">
-
-
                                                 <li class="dropdown">
                                                     <span class="menuHeadingStyle">Sales Report</span>
                                                     <ul>
@@ -335,7 +333,7 @@
                                                         <li><a href="#">Accounts payable</a></li>
                                                     </ul>
                                                 </li>
-                                                <li><a href="#">Reversal</a></li>
+                                                <li><a href="@Href("~/Finance/DocumentReversal")">Reversal</a></li>
                                                 <li class="dropdown">
                                                     <span class="menuHeadingStyle">Duplicate Printing</span>
                                                     <ul>
@@ -343,13 +341,12 @@
                                                         <li><a href="#">Voucher Print</a></li>
                                                     </ul>
                                                 </li>
-                                                <li><a href="#">Day End Process</a></li>
+                                                <li><a href="@Href("~/Finance/DayEndOperation")">Day End Process</a></li>
                                                 <li class="dropdown">
                                                     <span class="menuHeadingStyle">User Admin</span>
                                                     <ul>
-                                                        <li><a href="#">User Creation</a></li>
+                                                        <li><a href="@Href("~/AccountManagement/Registration")">User Creation</a></li>
                                                         <li><a href="#">Change Password</a></li>
-                                                        <li><a href="#">Product Master Update</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>

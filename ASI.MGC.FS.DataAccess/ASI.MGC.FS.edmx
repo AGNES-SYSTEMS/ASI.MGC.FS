@@ -32,7 +32,7 @@
             <PropertyRef Name="SlNo_ART" />
           </Key>
           <Property Name="SlNo_ART" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DOCNUMBER_ART" Type="nvarchar" MaxLength="15" />
+          <Property Name="DOCNUMBER_ART" Type="nvarchar" MaxLength="20" />
           <Property Name="DODATE_ART" Type="datetime2" Precision="0" />
           <Property Name="GLDATE_ART" Type="datetime2" Precision="0" />
           <Property Name="ARAPCODE_ART" Type="nvarchar" MaxLength="10" />
@@ -120,7 +120,7 @@
             <PropertyRef Name="SLNo_BT" />
           </Key>
           <Property Name="SLNo_BT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DOCNUMBER_BT" Type="nvarchar" MaxLength="15" />
+          <Property Name="DOCNUMBER_BT" Type="nvarchar" MaxLength="20" />
           <Property Name="BANKCODE_BT" Type="nvarchar" MaxLength="5" />
           <Property Name="DOCDATE_BT" Type="datetime2" Precision="0" />
           <Property Name="GLDATE_BT" Type="datetime2" Precision="0" />
@@ -262,7 +262,7 @@
             <PropertyRef Name="SLNO_GLT" />
           </Key>
           <Property Name="SLNO_GLT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DOCNUMBER_GLT" Type="nvarchar" MaxLength="15" />
+          <Property Name="DOCNUMBER_GLT" Type="nvarchar" MaxLength="20" />
           <Property Name="DOCDATE_GLT" Type="datetime2" Precision="0" />
           <Property Name="GLDATE_GLT" Type="datetime2" Precision="0" />
           <Property Name="GLACCODE_GLT" Type="nvarchar" MaxLength="15" />
@@ -1437,6 +1437,9 @@
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
           <FunctionImport Name="TST" ReturnType="Collection(ASI_MGC_FSModel.TST_Result)" />
+          <FunctionImport Name="rpt_MaterialReceiptVoucher" ReturnType="Collection(ASI_MGC_FSModel.rpt_MaterialReceiptVoucher_Result)">
+          <Parameter Name="MRVNO" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="ACSTATEMENT_RPT" EntityType="ASI_MGC_FSModel.ACSTATEMENT_RPT" />
           <EntitySet Name="ALLOCATIONMASTERs" EntityType="ASI_MGC_FSModel.ALLOCATIONMASTER" />
           <EntitySet Name="AR_AP_LEDGER" EntityType="ASI_MGC_FSModel.AR_AP_LEDGER" />
@@ -1537,9 +1540,6 @@
             <End Role="UNITMESSUREMENT" EntitySet="UNITMESSUREMENTs" />
             <End Role="STOCKLEDGER" EntitySet="STOCKLEDGERs" />
           </AssociationSet>
-          <FunctionImport Name="rpt_MaterialReceiptVoucher" ReturnType="Collection(ASI_MGC_FSModel.rpt_MaterialReceiptVoucher_Result)">
-          <Parameter Name="MRVNO" Mode="In" Type="String" />
-          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="rpt_BankPayment_Result">
           <Property Type="String" Name="COMPANYNAME_CM" Nullable="true" MaxLength="50" />
@@ -2128,6 +2128,28 @@
           <Property Type="Decimal" Name="SHIPPING_IPM" Nullable="true" Precision="19" />
           <Property Type="Decimal" Name="AMOUNT_INVNO" Nullable="true" Precision="19" />
         </ComplexType>
+        <ComplexType Name="rpt_MaterialReceiptVcoucher1_Result">
+          <Property Type="String" Name="MRVNO_RPT" Nullable="false" MaxLength="15" />
+          <Property Type="DateTime" Name="MRVDATE_RPT" Nullable="true" />
+          <Property Type="String" Name="CUSTNAME_RPT" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CUSTADD_RPT" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DESCRIPTION_PM" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="QTY_CHD" Nullable="true" />
+          <Property Type="Decimal" Name="AMOUNT" Nullable="true" Precision="19" />
+          <Property Type="String" Name="JOBDESCRIPTION_JR" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PHONE_RPT" Nullable="true" MaxLength="15" />
+        </ComplexType>
+        <ComplexType Name="rpt_MaterialReceiptVoucher_Result">
+          <Property Type="String" Name="MRVNO_RPT" Nullable="false" MaxLength="15" />
+          <Property Type="DateTime" Name="MRVDATE_RPT" Nullable="true" />
+          <Property Type="String" Name="CUSTNAME_RPT" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CUSTADD_RPT" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DESCRIPTION_PM" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="QTY_CHD" Nullable="true" />
+          <Property Type="Decimal" Name="AMOUNT" Nullable="true" Precision="19" />
+          <Property Type="String" Name="JOBDESCRIPTION_JR" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PHONE_RPT" Nullable="true" MaxLength="15" />
+        </ComplexType>
         <EntityType Name="ACSTATEMENT_RPT">
           <Key>
             <PropertyRef Name="SLNO_SAC" />
@@ -2155,7 +2177,7 @@
             <PropertyRef Name="SlNo_ART" />
           </Key>
           <Property Name="SlNo_ART" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DOCNUMBER_ART" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="DOCNUMBER_ART" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="DODATE_ART" Type="DateTime" Precision="0" />
           <Property Name="GLDATE_ART" Type="DateTime" Precision="0" />
           <Property Name="ARAPCODE_ART" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
@@ -2244,7 +2266,7 @@
             <PropertyRef Name="SLNo_BT" />
           </Key>
           <Property Name="SLNo_BT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DOCNUMBER_BT" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="DOCNUMBER_BT" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="BANKCODE_BT" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="DOCDATE_BT" Type="DateTime" Precision="0" />
           <Property Name="GLDATE_BT" Type="DateTime" Precision="0" />
@@ -2387,7 +2409,7 @@
             <PropertyRef Name="SLNO_GLT" />
           </Key>
           <Property Name="SLNO_GLT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DOCNUMBER_GLT" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="DOCNUMBER_GLT" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="DOCDATE_GLT" Type="DateTime" Precision="0" />
           <Property Name="GLDATE_GLT" Type="DateTime" Precision="0" />
           <Property Name="GLACCODE_GLT" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
@@ -3078,28 +3100,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="rpt_MaterialReceiptVcoucher1_Result">
-          <Property Type="String" Name="MRVNO_RPT" Nullable="false" MaxLength="15" />
-          <Property Type="DateTime" Name="MRVDATE_RPT" Nullable="true" />
-          <Property Type="String" Name="CUSTNAME_RPT" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CUSTADD_RPT" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="DESCRIPTION_PM" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="QTY_CHD" Nullable="true" />
-          <Property Type="Decimal" Name="AMOUNT" Nullable="true" Precision="19" />
-          <Property Type="String" Name="JOBDESCRIPTION_JR" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="PHONE_RPT" Nullable="true" MaxLength="15" />
-        </ComplexType>
-        <ComplexType Name="rpt_MaterialReceiptVoucher_Result">
-          <Property Type="String" Name="MRVNO_RPT" Nullable="false" MaxLength="15" />
-          <Property Type="DateTime" Name="MRVDATE_RPT" Nullable="true" />
-          <Property Type="String" Name="CUSTNAME_RPT" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CUSTADD_RPT" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="DESCRIPTION_PM" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="QTY_CHD" Nullable="true" />
-          <Property Type="Decimal" Name="AMOUNT" Nullable="true" Precision="19" />
-          <Property Type="String" Name="JOBDESCRIPTION_JR" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="PHONE_RPT" Nullable="true" MaxLength="15" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3900,6 +3900,21 @@
                 <ScalarProperty Name="DISCOUNT_IPM" ColumnName="DISCOUNT_IPM" />
                 <ScalarProperty Name="SHIPPING_IPM" ColumnName="SHIPPING_IPM" />
                 <ScalarProperty Name="AMOUNT_INVNO" ColumnName="AMOUNT_INVNO" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="rpt_MaterialReceiptVoucher" FunctionName="ASI_MGC_FSModel.Store.rpt_MaterialReceiptVoucher">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.rpt_MaterialReceiptVoucher_Result">
+                <ScalarProperty Name="MRVNO_RPT" ColumnName="MRVNO_RPT" />
+                <ScalarProperty Name="MRVDATE_RPT" ColumnName="MRVDATE_RPT" />
+                <ScalarProperty Name="CUSTNAME_RPT" ColumnName="CUSTNAME_RPT" />
+                <ScalarProperty Name="CUSTADD_RPT" ColumnName="CUSTADD_RPT" />
+                <ScalarProperty Name="DESCRIPTION_PM" ColumnName="DESCRIPTION_PM" />
+                <ScalarProperty Name="QTY_CHD" ColumnName="QTY_CHD" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="JOBDESCRIPTION_JR" ColumnName="JOBDESCRIPTION_JR" />
+                <ScalarProperty Name="PHONE_RPT" ColumnName="PHONE_RPT" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -4773,22 +4788,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="rpt_MaterialReceiptVoucher" FunctionName="ASI_MGC_FSModel.Store.rpt_MaterialReceiptVoucher">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.rpt_MaterialReceiptVoucher_Result">
-                <ScalarProperty Name="MRVNO_RPT" ColumnName="MRVNO_RPT" />
-                <ScalarProperty Name="MRVDATE_RPT" ColumnName="MRVDATE_RPT" />
-                <ScalarProperty Name="CUSTNAME_RPT" ColumnName="CUSTNAME_RPT" />
-                <ScalarProperty Name="CUSTADD_RPT" ColumnName="CUSTADD_RPT" />
-                <ScalarProperty Name="DESCRIPTION_PM" ColumnName="DESCRIPTION_PM" />
-                <ScalarProperty Name="QTY_CHD" ColumnName="QTY_CHD" />
-                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-                <ScalarProperty Name="JOBDESCRIPTION_JR" ColumnName="JOBDESCRIPTION_JR" />
-                <ScalarProperty Name="PHONE_RPT" ColumnName="PHONE_RPT" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

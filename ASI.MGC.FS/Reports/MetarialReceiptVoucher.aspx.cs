@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Web.UI;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Domain.Repositories;
@@ -18,7 +17,7 @@ namespace ASI.MGC.FS.Reports
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
                 var mrvNo = Request.QueryString["MRVNO"];
-                DataTable dtMaterialReceiptVoucher = uMethods.ConvertTo(repo.RptMaterialReceiptVoucher(mrvNo));
+                var dtMaterialReceiptVoucher = uMethods.ConvertTo(repo.RptMaterialReceiptVoucher(mrvNo));
 
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\MetarialReceiptVocher.rdlc";
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("MRVNO", mrvNo));

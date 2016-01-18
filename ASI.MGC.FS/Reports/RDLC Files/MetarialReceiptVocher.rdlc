@@ -1275,6 +1275,7 @@ Produce this Receipt at the time of delivery.</Value>
     <DataSource Name="DataSource">
       <Transaction>true</Transaction>
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>e5e0d282-43b9-49c0-81b2-06d7721bbda8</rd:DataSourceID>
     </DataSource>
   </DataSources>
@@ -1288,7 +1289,7 @@ Produce this Receipt at the time of delivery.</Value>
           </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
-        <CommandText>rpt_materialReceiptVcoucher</CommandText>
+        <CommandText>rpt_MaterialReceiptVoucher</CommandText>
       </Query>
       <Fields>
         <Field Name="MRVNO_RPT">

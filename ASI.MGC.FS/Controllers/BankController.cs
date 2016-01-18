@@ -33,21 +33,15 @@ namespace ASI.MGC.FS.Controllers
             var objBankTransaction = new BANKTRANSACTION();
             return View(objBankTransaction);
         }
-        public JsonResult GetBankDetailsList(string sidx, string sord, int page, int rows, string bankCode, string bankName)
+        public JsonResult GetBankDetailsList(string sidx, string sord, int page, int rows, string bankName = "")
         {
             var bankList = (from banks in _unitOfWork.Repository<BANKMASTER>().Query().Get()
                             select banks).Select(a => new { a.BANKCODE_BM, a.BANKNAME_BM });
-            if (!string.IsNullOrEmpty(bankCode))
-            {
-                bankList = (from jobs in _unitOfWork.Repository<BANKMASTER>().Query().Get()
-                            where jobs.BANKCODE_BM.Contains(bankCode)
-                            select jobs).Select(a => new { a.BANKCODE_BM, a.BANKNAME_BM });
-            }
             if (!string.IsNullOrEmpty(bankName))
             {
-                bankList = (from jobs in _unitOfWork.Repository<BANKMASTER>().Query().Get()
-                            where jobs.BANKCODE_BM.Contains(bankName)
-                            select jobs).Select(a => new { a.BANKCODE_BM, a.BANKNAME_BM });
+                bankList = (from banks in _unitOfWork.Repository<BANKMASTER>().Query().Get()
+                            where banks.BANKNAME_BM.Contains(bankName)
+                            select banks).Select(a => new { a.BANKCODE_BM, a.BANKNAME_BM });
             }
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
@@ -240,7 +234,7 @@ namespace ASI.MGC.FS.Controllers
             {
                 // ignored
             }
-            return Json(brNo,JsonRequestBehavior.AllowGet);
+            return Json(brNo, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -381,12 +375,95 @@ namespace ASI.MGC.FS.Controllers
         {
             @ViewBag.CurrCode = "AED";
             @ViewBag.CurrName = "UAE DHIRHAM";
+            @ViewBag.bankModeTypes = WebCommon.CommonModelAccessUtility.GetBankModes();
+            @ViewBag.bankStatus = WebCommon.CommonModelAccessUtility.GetBankStatus();
             return View();
         }
 
-        public ActionResult SaveBankMaster()
+        [HttpPost]
+        public JsonResult SaveBankMaster(FormCollection frm, BANKMASTER objBankmaster)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _unitOfWork.Repository<BANKMASTER>().Insert(objBankmaster);
+                _unitOfWork.Save();
+
+                var objBankTransaction = _unitOfWork.Repository<BANKTRANSACTION>().Create();
+                objBankTransaction.BANKCODE_BT = objBankmaster.BANKCODE_BM;
+                objBankTransaction.DOCNUMBER_BT = objBankmaster.BANKCODE_BM;
+                objBankTransaction.DOCDATE_BT = DateTime.Now;
+                objBankTransaction.GLDATE_BT = Convert.ToDateTime(frm["BankDate"]);
+                objBankTransaction.DEBITAMOUT_BT = Convert.ToDecimal(frm["OpenBalance"]);
+                objBankTransaction.CREDITAMOUT_BT = 0;
+                objBankTransaction.CHQDATE_BT = DateTime.Now;
+                objBankTransaction.CLEARANCEDATE_BT = DateTime.Now;
+                objBankTransaction.NARRATION_BT = "Opening Balance";
+                objBankTransaction.NOTE_BT = frm["Note"];
+                objBankTransaction.STATUS_BT = "OP";
+
+                _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBankTransaction);
+                _unitOfWork.Save();
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetBankCodeDetails(string bankCode = "")
+        {
+            Dictionary<string, string> bankData = new Dictionary<string, string>();
+            try
+            {
+                var glCodeData = (from bankMaster in _unitOfWork.Repository<BANKMASTER>().Query().Get()
+                                  where (bankMaster.BANKCODE_BM == bankCode)
+                                  select new
+                                  {
+                                      bankMaster.BANKCODE_BM,
+                                      bankMaster.BANKNAME_BM,
+                                      bankMaster.ACCOUNTNUMBER_BM,
+                                      bankMaster.ODLIMIT_BM,
+                                      bankMaster.MODE_BM,
+                                      bankMaster.BANKSTTUS_BM
+                                  }).SingleOrDefault();
+                var bankCodeDetails = (from bankTransaction in _unitOfWork.Repository<BANKTRANSACTION>().Query().Get()
+                                       where (bankTransaction.BANKCODE_BT == bankCode && bankTransaction.STATUS_BT == "OP")
+                                       select new
+                                       {
+                                           bankTransaction.DEBITAMOUT_BT,
+                                           bankTransaction.CREDITAMOUT_BT,
+                                           bankTransaction.GLDATE_BT,
+                                           bankTransaction.NOTE_BT
+                                       }).SingleOrDefault();
+
+                if (glCodeData != null)
+                {
+                    bankData.Add("bankCode", glCodeData.BANKCODE_BM);
+                    bankData.Add("bankDesc", glCodeData.BANKNAME_BM);
+                    bankData.Add("accountNo", glCodeData.ACCOUNTNUMBER_BM);
+                    bankData.Add("ODLimit", Convert.ToString(glCodeData.ODLIMIT_BM));
+                    bankData.Add("Mode", glCodeData.MODE_BM);
+                    bankData.Add("bankStatus", glCodeData.BANKSTTUS_BM);
+                }
+                if (bankCodeDetails != null)
+                {
+                    bankData.Add("debitAmount", Convert.ToString(bankCodeDetails.DEBITAMOUT_BT));
+                    bankData.Add("Notes", bankCodeDetails.NOTE_BT);
+                    bankData.Add("bankDate", Convert.ToDateTime(bankCodeDetails.GLDATE_BT).ToShortDateString());
+                }
+                else
+                {
+                    bankData.Add("debitAmount", "");
+                    bankData.Add("Notes", "");
+                    bankData.Add("bankDate", DateTime.Now.ToShortDateString());
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            return Json(bankData, JsonRequestBehavior.AllowGet);
         }
     }
 }

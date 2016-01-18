@@ -470,7 +470,7 @@ $(document).ready(function () {
             $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'Narration');
         }
     });
-    $('#formBankReceipt').bootstrapValidator({
+    $('#formBankReceipt').formValidation({
         container: '#messages',
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',

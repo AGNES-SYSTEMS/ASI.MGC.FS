@@ -22,8 +22,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Doc Type</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DocType", null, new { ID = "txtDocType", Class = "form-control" })
-                                    @Html.ValidationMessage("DocType")
+                                    @Html.DropDownList("DocType", new SelectList(@ViewBag.DocType, "Key", "Value", "1"), new { ID = "ddlDocType", @class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
@@ -38,14 +37,14 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Doc Date</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DocDate", null, new { ID = "txtDocDate", Class = "form-control" })
+                                    @Html.TextBox("DocDate", null, new { ID = "txtDocDate", Class = "form-control", @readonly = "readonly" })
                                     @Html.ValidationMessage("DocDate")
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">OtherRef</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("OtherRef", null, new { ID = "txtOtherRef", Class = "form-control" })
+                                    @Html.TextBox("OtherRef", null, new { ID = "txtOtherRef", Class = "form-control", @readonly = "readonly" })
                                     @Html.ValidationMessage("OtherRef")
                                 </div>
                             </div>
@@ -54,14 +53,14 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Acc. Code</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("AccCode", null, new { ID = "txtAccCode", Class = "form-control" })
+                                    @Html.TextBox("AccCode", null, new { ID = "txtAccCode", Class = "form-control", @readonly = "readonly" })
                                     @Html.ValidationMessage("AccCode")
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Amount</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("Amount", null, new { ID = "txtAmount", Class = "form-control" })
+                                    @Html.TextBox("Amount", null, new { ID = "txtAmount", Class = "form-control", @readonly = "readonly" })
                                     @Html.ValidationMessage("Amount")
                                 </div>
                             </div>
@@ -70,8 +69,18 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Status</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("Status", null, new { ID = "txtStatus", Class = "form-control" })
+                                    @Html.TextBox("Status", null, new { ID = "txtStatus", Class = "form-control", @readonly = "readonly" })
                                     @Html.ValidationMessage("Status")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label></label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
                                 </div>
                             </div>
                         </div>
@@ -85,6 +94,8 @@
 @section scripts
 {
     <script src="@Url.Content("~/Scripts/Custom/Finance/DocumentReversal.js")"></script>
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
+
     <script type="text/javascript">
 
         function OnSuccess(response) {

@@ -1,12 +1,53 @@
-﻿@model dynamic
-
-@{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+﻿@{
+    ViewBag.Title = "AR Statement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.currPage = "ArStatement";
 }
 
-<div class="row">
-    <div class="col-md-12 iframeStyling" style="overflow-x:hidden; overflow-y:no-display">
-        <iframe id="iframeReport" style="overflow-x:hidden; overflow-y:hidden" src="../Reports/MetarialReceiptVoucher.aspx?MRVNO=@ViewBag.mrvNo"></iframe>
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>AR Statement</legend>
+            <div class="row">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Start Date:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("startDate", null, new { ID = "txtStartDate", Class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">End Date:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("endDate", null, new { ID = "txtEndDate", Class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label></label>
+                            <div class="col-md-8">
+                                <input type="button" id="btnReportSubmit" class="btn btn-success col-md-3 pull-right" value="Submit"> &nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 iframeStyling" style="overflow-x: hidden; overflow-y: no-display">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
     </div>
 </div>

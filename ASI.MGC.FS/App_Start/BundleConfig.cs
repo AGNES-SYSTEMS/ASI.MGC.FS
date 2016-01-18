@@ -66,7 +66,8 @@ namespace ASI.MGC.FS
                       "~/Content/themes/base/jquery.ui.all.css",
                       "~/Content/jquery.jqGrid/ui.jqgrid.css",
                       "~/Content/bootstrap.min.css",
-                      "~/Content/bootstrapValidator.min.css"));
+                      "~/Content/bootstrapValidator.min.css",
+                      "~/Content/formValidation.min.css"));
             /** End - Adding Custom CSS Files for Master Page Dated 23-05-2015 By Zeeshan Mahmood**/
         }
     }

@@ -30,13 +30,15 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label id="lblDocType" class="control-label col-md-4 small ">Doc Type:</label>
-                                <div class="col-md-7 paddingLeftRight0">
+                                <div class="col-md-8 input-group icon-style">
                                     @Html.TextBox("DocType", null, new { ID = "txtDocType", Class = "form-control", @readonly = "readonly" })
                                     @Html.ValidationMessage("DocType")
+                                    <span class="input-group-btn">
+                                        <button type="button" id="btnDocTypeSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#docTypeSearchModel">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
                                 </div>
-                                <button type="button" id="btnDocTypeSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#docTypeSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblDocNo" class="control-label col-md-4 small ">Doc No:</label>
@@ -64,13 +66,15 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label id="lblBankCode" class="control-label col-md-4 small ">Bank Code:</label>
-                                <div class="col-md-7 paddingLeftRight0">
+                                <div class="col-md-8 input-group icon-style">
                                     @Html.TextBoxFor(m => m.BANKCODE_BT, null, new { ID = "txtBankCode", Class = "form-control", @readonly = "readonly" })
                                     @Html.ValidationMessageFor(m => m.BANKCODE_BT)
+                                    <span class="input-group-btn">
+                                        <button type="button" id="btnBankSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#BankSearchModel">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
                                 </div>
-                                <button type="button" id="btnBankSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#BankSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblGLDate" class="control-label col-md-4 small ">GL Date:</label>
@@ -183,7 +187,7 @@
                             <div class="col-md-6 form-group">
                                 <label></label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
+                                    <input type="submit" id="btnSubmit" class="btn btn-success col-md-3 pull-right" value="Save">
                                 </div>
                             </div>
                         </div>
@@ -215,12 +219,15 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">AL Code:</label>
-                                <div class="col-md-7 paddingLeftRight0">
+                                <div class="col-md-8 input-group icon-style">
                                     <input type="text" name="AlCode" id="txtAlCode" data-fv-notempty="true" class="form-control" readonly required />
+
+                                    <span class="input-group-btn">
+                                        <button type="button" id="btnAlCodeSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#alCodeSearchModel">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
                                 </div>
-                                <button type="button" id="btnAlCodeSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#alCodeSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">AL Description:</label>
@@ -232,12 +239,15 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Account Code:</label>
-                                <div class="col-md-7 paddingLeftRight0">
+                                <div class="col-md-8 input-group icon-style">
                                     <input type="text" name="AccountCode" data-fv-notempty="true" id="txtAccountCode" class="form-control" readonly required />
+
+                                    <span class="input-group-btn">
+                                        <button type="button" id="btnAccountSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" disabled data-target="#accountSearchModel">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
                                 </div>
-                                <button type="button" id="btnAccountSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" disabled data-target="#accountSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Account Description:</label>
@@ -450,19 +460,27 @@
     <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/formValidation.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/bootstrap.framework.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Finance/PdcReceipt.js")"></script>
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
+        var isReportOpened = false;
+        function OnSuccess(brNo) {
+            if (brNo !== "" && !isReportOpened) {
+                toastr.success("PDC Receipt is added Successfully.");
+                isReportOpened = true;
+                openBankPayment(brNo);
+            }
+        }
 
-    function OnSuccess(response) {
-        alert(response);
-    }
+        function OnFailure() {
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
 
-    function OnFailure() {
-        alert("Whoops! That didn't go so well did it?");
-    }
+        function openBankPayment(brNo) {
+            var pdcPaymentUrl = "/MgcReports/BankReceipt?brNo=" + brNo;
+            window.open(pdcPaymentUrl);
+            toastr.info("PDC Receipt voucher is open in new window.");
+        }
 
     </script>
 }

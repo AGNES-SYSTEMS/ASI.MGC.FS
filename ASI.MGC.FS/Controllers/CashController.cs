@@ -154,7 +154,7 @@ namespace ASI.MGC.FS.Controllers
                 objVoucherMaster.CHQNO_VRPT = objBankTransaction.CHQNO_BT;
                 objVoucherMaster.CHQDATE_VRPT = objBankTransaction.CHQDATE_BT;
                 objVoucherMaster.DOCNO_VRPT = objBankTransaction.DOCNUMBER_BT;
-                objVoucherMaster.VOUCHER_TYPE = "CR";
+                objVoucherMaster.VOUCHER_TYPE = "BR";
                 _unitOfWork.Repository<VOUCHERMASTER_RPT>().Insert(objVoucherMaster);
                 _unitOfWork.Save();
 

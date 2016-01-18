@@ -102,5 +102,77 @@ namespace ASI.MGC.FS.WebCommon
             lstSearchType.Add(new SelectListItem { Text = "Others", Value = "other" });
             return lstSearchType;
         }
+        public static Dictionary<int, string> GetDocTypes(IUnitOfWork iUnitOfWork)
+        {
+            var docTypes = (from jobMaster in iUnitOfWork.Repository<DOCCUMENTMASTER>().Query().Get()
+                select jobMaster).Select(o => o.DOCABBREVIATION_DM);
+            var docDictionary = new Dictionary<int, string>();
+            int count = 1;
+            foreach (var doc in docTypes)
+            {
+                docDictionary.Add(count,doc);
+                count += 1;
+            }
+
+            return docDictionary;
+        }
+        public static Dictionary<int, string> GetAccountsType()
+        {
+            var accountsDictionary = new Dictionary<int, string>
+            {
+                {1, "Asset"},
+                {2,"Liability" },
+                {3,"Income" },
+                {4,"Expense" }
+            };
+
+            return accountsDictionary;
+        }
+        public static Dictionary<int, string> GetBalanceType()
+        {
+            var balanceDictionary = new Dictionary<int, string>
+            {
+                {1, "Debit"},
+                {2,"Credit" }
+            };
+
+            return balanceDictionary;
+        }
+        public static Dictionary<string, string> GetGlType()
+        {
+            var accountsDictionary = new Dictionary<string, string>
+            {
+                {"P", "Posting"},
+                {"T","Title" }
+            };
+
+            return accountsDictionary;
+        }
+        public static Dictionary<int, string> GetBankModes()
+        {
+            var bankModeDictionary = new Dictionary<int, string>
+            {
+                {1, "Bank"},
+                {2,"Cash" },
+                {3,"Collection Cash" },
+                {4,"PDC" },
+                {5,"Collection Cheque" },
+                {6,"Collection PDC" }
+            };
+
+            return bankModeDictionary;
+        }
+        public static Dictionary<int, string> GetBankStatus()
+        {
+            var bankStatusDictionary = new Dictionary<int, string>
+            {
+                {1, "Active"},
+                {2,"Closed" },
+                {3,"Temp Closed" },
+                {4,"Limit Full" }
+            };
+
+            return bankStatusDictionary;
+        }
     }
 }

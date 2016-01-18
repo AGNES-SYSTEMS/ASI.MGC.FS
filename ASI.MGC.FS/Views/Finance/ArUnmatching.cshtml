@@ -3,6 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.currPage = "UnMatching";
 }
+@model ASI.MGC.FS.Model.ARMATCHING
 <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
 <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
@@ -30,14 +31,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Doc Type:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DocType", null, new { ID = "txtDocType", Class = "form-control"})
-                                    @Html.ValidationMessage("DocType")
+                                 @Html.DropDownList("DocType", new SelectList(@ViewBag.DocType, "Key", "Value", "1"), new { ID = "ddlDocType", @class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblDocNo" class="control-label col-md-4 small ">Invoice Number:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("InvoiceNumber", null, new { ID = "txtInvoiceNumber", Class = "form-control" })
+                                    @Html.TextBoxFor(o=>o.DOCCNUMBER_ARM, null, new { ID = "txtInvoiceNumber", Class = "form-control" })
                                     @Html.ValidationMessage("InvoiceNumber")
                                 </div>
                             </div>

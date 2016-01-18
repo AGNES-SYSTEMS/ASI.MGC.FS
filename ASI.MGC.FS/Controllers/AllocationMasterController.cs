@@ -50,14 +50,22 @@ namespace ASI.MGC.FS.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetAccountDetailsList(string sidx, string sord, int page, int rows, string accountType)
+        public JsonResult GetAccountDetailsList(string sidx, string sord, int page, int rows, string accountType, string searchValue = "")
         {
             switch (accountType)
             {
                 case "AP":
                     var allocationMasterApList = (from allocationMaster in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                                                where allocationMaster.TYPE_ARM.Equals("AP")
-                                                select allocationMaster).Select(a => new {AccountCode = a.ARCODE_ARM, AccountDetail = a.DESCRIPTION_ARM });
+                                                  where allocationMaster.TYPE_ARM.Equals("AP")
+                                                  select allocationMaster).Select(a => new { AccountCode = a.ARCODE_ARM, AccountDetail = a.DESCRIPTION_ARM });
+
+                    if (!string.IsNullOrEmpty(searchValue))
+                    {
+                        allocationMasterApList = (from allocationMaster in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                                                  where allocationMaster.TYPE_ARM.Equals("AP") && allocationMaster.DESCRIPTION_ARM.Contains(searchValue)
+                                                  select allocationMaster).Select(a => new { AccountCode = a.ARCODE_ARM, AccountDetail = a.DESCRIPTION_ARM });
+                    }
+
                     int pageApIndex = Convert.ToInt32(page) - 1;
                     int pageApSize = rows;
                     int totalApRecords = allocationMasterApList.Count();
@@ -82,8 +90,15 @@ namespace ASI.MGC.FS.Controllers
                     return Json(jsonApData, JsonRequestBehavior.AllowGet);
                 case "AR":
                     var allocationMasterArList = (from allocationMaster in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                                                where allocationMaster.TYPE_ARM.Equals("AR")
-                                                select allocationMaster).Select(a => new { AccountCode = a.ARCODE_ARM, AccountDetail = a.DESCRIPTION_ARM });
+                                                  where allocationMaster.TYPE_ARM.Equals("AR")
+                                                  select allocationMaster).Select(a => new { AccountCode = a.ARCODE_ARM, AccountDetail = a.DESCRIPTION_ARM });
+
+                    if (!string.IsNullOrEmpty(searchValue))
+                    {
+                        allocationMasterArList = (from allocationMaster in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                                                  where allocationMaster.TYPE_ARM.Equals("AR") && allocationMaster.DESCRIPTION_ARM.Contains(searchValue)
+                                                  select allocationMaster).Select(a => new { AccountCode = a.ARCODE_ARM, AccountDetail = a.DESCRIPTION_ARM });
+                    }
                     int pageArIndex = Convert.ToInt32(page) - 1;
                     int pageArSize = rows;
                     int totalArRecords = allocationMasterArList.Count();
@@ -109,7 +124,13 @@ namespace ASI.MGC.FS.Controllers
                     return Json(jsonArData, JsonRequestBehavior.AllowGet);
                 case "GL":
                     var allocationMasterGlList = (from allocationMaster in _unitOfWork.Repository<GLMASTER>().Query().Get()
-                                                select allocationMaster).Select(a => new { AccountCode = a.GLCODE_LM, AccountDetail = a.GLDESCRIPTION_LM });
+                                                  select allocationMaster).Select(a => new { AccountCode = a.GLCODE_LM, AccountDetail = a.GLDESCRIPTION_LM });
+                    if (!string.IsNullOrEmpty(searchValue))
+                    {
+                        allocationMasterGlList = (from allocationMaster in _unitOfWork.Repository<GLMASTER>().Query().Get()
+                                                  where allocationMaster.GLDESCRIPTION_LM.Contains(searchValue)
+                                                  select allocationMaster).Select(a => new { AccountCode = a.GLCODE_LM, AccountDetail = a.GLDESCRIPTION_LM });
+                    }
                     int pageGlIndex = Convert.ToInt32(page) - 1;
                     int pageGlSize = rows;
                     int totalGlRecords = allocationMasterGlList.Count();
@@ -135,7 +156,13 @@ namespace ASI.MGC.FS.Controllers
                     return Json(jsonGlData, JsonRequestBehavior.AllowGet);
                 case "BA":
                     var allocationMasterList = (from allocationMaster in _unitOfWork.Repository<BANKMASTER>().Query().Get()
-                                                select allocationMaster).Select(a => new {AccountCode= a.BANKCODE_BM,AccountDetail= a.BANKNAME_BM });
+                                                select allocationMaster).Select(a => new { AccountCode = a.BANKCODE_BM, AccountDetail = a.BANKNAME_BM });
+                    if (!string.IsNullOrEmpty(searchValue))
+                    {
+                        allocationMasterList = (from allocationMaster in _unitOfWork.Repository<BANKMASTER>().Query().Get()
+                                                where allocationMaster.BANKNAME_BM.Contains(searchValue)
+                                                select allocationMaster).Select(a => new { AccountCode = a.BANKCODE_BM, AccountDetail = a.BANKNAME_BM });
+                    }
                     int pageIndex = Convert.ToInt32(page) - 1;
                     int pageSize = rows;
                     int totalRecords = allocationMasterList.Count();

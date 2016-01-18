@@ -1821,6 +1821,10 @@ a {
     margin: -10px -15px -11px;
 }
 
+.icon-style {
+    padding: 0 15px !important;
+}
+
 .tab-bg-dark-navy-blue {
     background: #7087A3;
     border-radius: 5px 5px 0 0;

@@ -127,12 +127,12 @@ namespace ASI.MGC.FS.Domain.Repositories
             return lst;
         }
 
-        public List<rpt_MaterialReceiptVcoucher_Result> RptMaterialReceiptVoucher(string mrvNo)
+        public List<rpt_MaterialReceiptVoucher_Result> RptMaterialReceiptVoucher(string mrvNo)
         {
-            List<rpt_MaterialReceiptVcoucher_Result> lst = null;
+            List<rpt_MaterialReceiptVoucher_Result> lst = null;
             try
             {
-                lst = _context.rpt_MaterialReceiptVcoucher(mrvNo).ToList();
+                lst = _context.rpt_MaterialReceiptVoucher(mrvNo).ToList();
             }
             catch (Exception)
             {

@@ -1289,7 +1289,7 @@ Produce this Receipt at the time of delivery.</Value>
           </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
-        <CommandText>rpt_materialReceiptVcoucher</CommandText>
+        <CommandText>rpt_MaterialReceiptVoucher</CommandText>
       </Query>
       <Fields>
         <Field Name="MRVNO_RPT">

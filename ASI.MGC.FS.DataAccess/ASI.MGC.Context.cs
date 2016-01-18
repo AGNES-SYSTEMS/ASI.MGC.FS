@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using ASI.MGC.FS.Model;
-
 namespace ASI.MGC.FS.DataAccess
 {
     using System;
@@ -16,6 +14,7 @@ namespace ASI.MGC.FS.DataAccess
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
+    using ASI.MGC.FS.Model;
     
     public partial class ASI_MGC_FSEntities : DbContext
     {

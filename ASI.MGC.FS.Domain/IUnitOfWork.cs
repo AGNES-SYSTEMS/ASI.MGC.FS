@@ -10,7 +10,7 @@ namespace ASI.MGC.FS.Domain
     public interface IUnitOfWork: IDisposable
     {
         T ExtRepositoryFor<T>() where T : class;
-        void Dispose();
+        new void Dispose();
         void Save();
         void Truncate(string tableName);
         void Dispose(bool disposing);
