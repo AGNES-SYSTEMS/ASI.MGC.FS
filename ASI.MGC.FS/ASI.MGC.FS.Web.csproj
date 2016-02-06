@@ -633,6 +633,7 @@
     <Content Include="Content\Images\bg-header.jpg" />
     <Content Include="Content\Images\bg.jpg" />
     <Content Include="Content\Images\blank-male.jpg" />
+    <Content Include="Content\Images\Loader.gif" />
     <Content Include="Content\Images\sort_asc.png" />
     <Content Include="Content\Images\sort_asc_disabled.png" />
     <Content Include="Content\Images\sort_both.png" />
@@ -842,6 +843,7 @@
     <Content Include="Scripts\Custom\Finance\ArUnMatching.js" />
     <Content Include="Scripts\Custom\Invoice\InvoicePreparation.js" />
     <Content Include="Scripts\Custom\Job\JobEntry.js" />
+    <Content Include="Scripts\Custom\MgcReports\BalanceSheet.js" />
     <Content Include="Scripts\Custom\MRV\MRVCreation.js" />
     <Content Include="Scripts\Custom\MRV\MRVSearchDetails.js" />
     <Content Include="Scripts\Custom\Purchase\PurchaseEntry.js" />

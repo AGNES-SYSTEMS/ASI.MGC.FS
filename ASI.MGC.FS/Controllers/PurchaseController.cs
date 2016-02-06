@@ -128,7 +128,7 @@ namespace ASI.MGC.FS.Controllers
                             select prdList);
             foreach (var product in products.ToList())
             {
-                product.CUR_QTY_PM = product.CUR_QTY_PM + prd.RECEPT_QTY_SL;
+                product.CUR_QTY_PM = product.CUR_QTY_PM + prd.RECEPT_QTY_SL - prd.ISSUE_QTY_SL;
                 _unitOfWork.Repository<PRODUCTMASTER>().Update(product);
                 _unitOfWork.Save();
             }
@@ -136,12 +136,68 @@ namespace ASI.MGC.FS.Controllers
 
         public ActionResult PurchaseReturn()
         {
+            int retCount = (1001 + CommonModelAccessUtility.GetReturnPurchaseCount(_unitOfWork));
+            string currYear = DateTime.Now.Year.ToString();
+            string revPurCode = "RPC/" + Convert.ToString(retCount) + "/" + currYear;
+            ViewBag.RevPurCode = revPurCode;
             return View();
         }
 
-        public ActionResult SavePurchaseReturn()
+        [HttpPost]
+        public JsonResult SavePurchaseReturn(FormCollection frm)
         {
-            throw new NotImplementedException();
+            string purchaseReturnNo = "";
+            try
+            {
+                purchaseReturnNo = Convert.ToString(frm["DocNo"]);
+                var jsonProductDetails = frm["prdDetails"];
+                var serializer = new JavaScriptSerializer();
+                var lstProducts = serializer.Deserialize<List<STOCKLEDGER>>(jsonProductDetails);
+                var objArApLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
+                objArApLedger.DOCNUMBER_ART = Convert.ToString(frm["DocNo"]);
+                objArApLedger.ARAPCODE_ART = Convert.ToString(frm["APCode"]);
+                objArApLedger.DODATE_ART = Convert.ToDateTime(frm["DocDate"]);
+                objArApLedger.GLDATE_ART = Convert.ToDateTime(frm["PurDate"]);
+                objArApLedger.OTHERREF_ART = Convert.ToString(frm["Invoice"]);
+                objArApLedger.NARRATION_ART = Convert.ToString(frm["Note"]);
+                objArApLedger.CREDITAMOUNT_ART = 0;
+                objArApLedger.DEBITAMOUNT_ART = Convert.ToInt32(frm["NetAmount"]);
+                objArApLedger.STATUS_ART = "P";
+                _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArApLedger);
+                _unitOfWork.Save();
+
+                var objPurchase = _unitOfWork.Repository<GLTRANSACTION1>().Create();
+                objPurchase.DOCNUMBER_GLT = Convert.ToString(frm["DocNo"]);
+                objPurchase.DOCDATE_GLT = Convert.ToDateTime(frm["DocDate"]);
+                objPurchase.GLDATE_GLT = Convert.ToDateTime(frm["PurDate"]);
+                objPurchase.GLACCODE_GLT = "4001";
+                objPurchase.CREDITAMOUNT_GLT = Convert.ToDecimal(frm["TotalAmount"]);
+                objPurchase.DEBITAMOUNT_GLT = 0;
+                objPurchase.OTHERREF_GLT = Convert.ToString(frm["Invoice"]);
+                objPurchase.NARRATION_GLT = Convert.ToString(frm["Note"]);
+                objPurchase.GLSTATUS_GLT = "P";
+                _unitOfWork.Repository<GLTRANSACTION1>().Insert(objPurchase);
+                _unitOfWork.Save();
+
+                foreach (var prd in lstProducts)
+                {
+                    prd.VOUCHERNO_SL = Convert.ToString(frm["DocNo"]);
+                    prd.OTHERREF_SL = Convert.ToString(frm["Invoice"]);
+                    prd.DOC_DATE_SL = Convert.ToDateTime(frm["DocDate"]);
+                    prd.LEDGER_DATE_SL = Convert.ToDateTime(frm["PurDate"]);
+                    prd.STATUS_SL = "P";
+                    _unitOfWork.Repository<STOCKLEDGER>().Insert(prd);
+                    _unitOfWork.Save();
+
+                    UpdateProductMaster(prd);
+                }
+
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            return Json(purchaseReturnNo, JsonRequestBehavior.AllowGet);
         }
     }
 }

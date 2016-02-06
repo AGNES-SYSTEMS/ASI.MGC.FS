@@ -31,11 +31,11 @@ $(document).ready(function () {
         viewrecords: true,
         colNames: ['Product Code', 'Product Description', 'Qty', 'Unit', 'Rate', 'Amount'],
         colModel: [
-            { name: 'PrdCode', index: 'PrdCode', width: 100, align: "center", sortable: false },
+            { name: 'PRODID_SL', index: 'PRODID_SL', width: 100, align: "center", sortable: false },
             { name: 'PrdDesc', index: 'PrdDesc', width: 350, align: "left", sortable: false },
-            { name: 'Qty', index: 'Qty', width: 100, align: "center", sortable: false },
-            { name: 'Unit', index: 'Unit', width: 100, align: "center", sortable: false },
-            { name: 'Rate', index: 'Rate', width: 100, align: "center", sortable: false },
+            { name: 'ISSUE_QTY_SL', index: 'ISSUE_QTY_SL', width: 100, align: "center", sortable: false },
+            { name: 'UNIT_SL', index: 'UNIT_SL', width: 100, align: "center", sortable: false },
+            { name: 'ISSUE_RATE_SL', index: 'ISSUE_RATE_SL', width: 100, align: "center", sortable: false },
             { name: 'Amount', index: 'Amount', width: 150, align: "center", sortable: false }
         ],
         multiselect: false,
@@ -219,7 +219,6 @@ $(document).ready(function () {
         var $amount = $("#txtRate").val() * $("#txtQuantity").val();
         $("#txtAmount").val($amount);
     });
-
     $("#txtQuantity").on("blur", function () {
         var $amount = $("#txtRate").val() * $("#txtQuantity").val();
         $("#txtAmount").val($amount);
@@ -232,7 +231,6 @@ $(document).ready(function () {
         $("#txtRate").val("");
         $("#txtAmount").val("0");
     }
-
     $("#btnCancel").click(function () {
         clearModalForm();
     });
@@ -241,12 +239,15 @@ $(document).ready(function () {
             e.preventDefault();
             var arrIndex = arrPrdDetails.length;
             arrPrdDetails[arrIndex] = {
-                PrdCode: $("#txtPrCode").val(), PrdDesc: $("#txtPrDesc").val(),
-                Qty: $("#txtQuantity").val(), Rate: $("#txtRate").val(), Unit: $("#txtUnit").val(),
+                PRODID_SL: $("#txtPrCode").val(), PrdDesc: $("#txtPrDesc").val(),
+                ISSUE_QTY_SL: $("#txtQuantity").val(), ISSUE_RATE_SL: $("#txtRate").val(), UNIT_SL: $("#txtUnit").val(),
                 Amount: $("#txtAmount").val()
             };
             var su = jQuery("#tblPrdDetails").jqGrid('addRowData', arrIndex, arrPrdDetails[arrIndex]);
             if (su) {
+                var prdDetails = $('#tblPrdDetails').jqGrid('getGridParam', 'data');
+                var jsonPrdDetails = JSON.stringify(prdDetails);
+                $('#prdDetails').val(jsonPrdDetails);
                 clearModalForm();
             }
         }
@@ -270,26 +271,26 @@ $(document).ready(function () {
     });
 
     $("#txtAPCode").on("change", function () {
-        $('#formPurchaseReturn').bootstrapValidator('revalidateField', 'APCode');
+        $('#formPurchaseReturn').formValidation('revalidateField', 'APCode');
     });
 
     $("#txtAPDetail").on("change", function () {
-        $('#formPurchaseReturn').bootstrapValidator('revalidateField', 'APDetail');
+        $('#formPurchaseReturn').formValidation('revalidateField', 'APDetail');
     });
 
     $("#txtCash").on("change", function () {
-        $('#formPurchaseReturn').bootstrapValidator('revalidateField', 'Cash');
+        $('#formPurchaseReturn').formValidation('revalidateField', 'Cash');
     });
 
     $("#txtShipChrg").on("change", function () {
-        $('#formPurchaseReturn').bootstrapValidator('revalidateField', 'ShipChrg');
+        $('#formPurchaseReturn').formValidation('revalidateField', 'ShipChrg');
     });
 
     $("#txtDiscount").on("change", function () {
-        $('#formPurchaseReturn').bootstrapValidator('revalidateField', 'Discount');
+        $('#formPurchaseReturn').formValidation('revalidateField', 'Discount');
     });
 
-    $('#formPurchaseReturn').bootstrapValidator({
+    $('#formPurchaseReturn').formValidation({
         container: '#messages',
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -339,37 +340,11 @@ $(document).ready(function () {
                         message: 'Invoice is required'
                     }
                 }
-            },
-            Cash: {
-                validators: {
-                    notEmpty: {
-                        message: 'Cash Detail is required'
-                    },
-                    integer: {
-                        message: 'Integer Only'
-                    }
-                }
-            },
-            ShipChrg: {
-                validators: {
-                    notEmpty: {
-                        message: 'Ship Charges Detail is required'
-                    },
-                    integer: {
-                        message: 'Integer Only'
-                    }
-                }
-            },
-            Discount: {
-                validators: {
-                    notEmpty: {
-                        message: 'Discount Detail is required'
-                    },
-                    integer: {
-                        message: 'Integer Only'
-                    }
-                }
             }
         }
+    }).on('success.form.fv', function (e) {
+        debugger;
+        // Prevent form submission
+        e.preventDefault();
     });
 });

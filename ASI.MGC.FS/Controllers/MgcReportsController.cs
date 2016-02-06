@@ -124,8 +124,6 @@ namespace ASI.MGC.FS.Controllers
         {
             try
             {
-
-
                 if (!string.IsNullOrEmpty(voucherNo))
                 {
                     _unitOfWork.Truncate("JVREPORT");
@@ -250,6 +248,12 @@ namespace ASI.MGC.FS.Controllers
                               where arApMasterList.ARCODE_ARM.Equals(arApCode)
                               select arApMasterList).ToList();
             return arApMaster[0];
+        }
+
+        [HttpPost]
+        public JsonResult GenerateBalanceSheet(FormCollection frm)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -58,8 +58,8 @@ namespace ASI.MGC.FS.WebCommon
         {
             var currYear = DateTime.Now.Year.ToString();
             var quotCount = (from quotations in iUnitOfWork.Repository<QUOTATION_MASTER>().Query().Get()
-                                where quotations.QUOTNO_QM.Contains("QOT") && quotations.QUOTNO_QM.EndsWith(currYear)
-                                select quotations.QUOTNO_QM).Distinct().Count();
+                             where quotations.QUOTNO_QM.Contains("QOT") && quotations.QUOTNO_QM.EndsWith(currYear)
+                             select quotations.QUOTNO_QM).Distinct().Count();
             return quotCount;
         }
 
@@ -105,12 +105,12 @@ namespace ASI.MGC.FS.WebCommon
         public static Dictionary<int, string> GetDocTypes(IUnitOfWork iUnitOfWork)
         {
             var docTypes = (from jobMaster in iUnitOfWork.Repository<DOCCUMENTMASTER>().Query().Get()
-                select jobMaster).Select(o => o.DOCABBREVIATION_DM);
+                            select jobMaster).Select(o => o.DOCABBREVIATION_DM);
             var docDictionary = new Dictionary<int, string>();
             int count = 1;
             foreach (var doc in docTypes)
             {
-                docDictionary.Add(count,doc);
+                docDictionary.Add(count, doc);
                 count += 1;
             }
 
@@ -173,6 +173,15 @@ namespace ASI.MGC.FS.WebCommon
             };
 
             return bankStatusDictionary;
+        }
+
+        public static int GetReturnPurchaseCount(IUnitOfWork iUnitOfWork)
+        {
+            var currYear = DateTime.Now.Year.ToString();
+            var revCount = (from lstArApLedger in iUnitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
+                            where lstArApLedger.DOCNUMBER_ART.Contains("RPC") && lstArApLedger.DOCNUMBER_ART.EndsWith(currYear)
+                            select lstArApLedger.DOCNUMBER_ART).Distinct().Count();
+            return revCount;
         }
     }
 }

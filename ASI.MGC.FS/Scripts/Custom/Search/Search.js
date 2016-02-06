@@ -46,7 +46,7 @@
             }
         });
     });
-    $('#formSearch').bootstrapValidator({
+    $('#formSearch').formValidation({
         container: '#messages',
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -60,5 +60,9 @@
                 }
             }
         }
+    }).on('success.form.fv', function (e) {
+        debugger;
+        // Prevent form submission
+        e.preventDefault();
     });
 });

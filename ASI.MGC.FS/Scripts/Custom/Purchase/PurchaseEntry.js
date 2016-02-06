@@ -36,7 +36,7 @@ $(document).ready(function () {
             { name: 'PRODID_SL', index: 'PRODID_SL', width: 100, align: "center", sortable: false },
             { name: 'PrdDesc', index: 'PrdDesc', width: 350, align: "left", sortable: false },
             { name: 'RECEPT_QTY_SL', index: 'RECEPT_QTY_SL', width: 100, align: "center", sortable: false },
-            { name: 'Unit', index: 'Unit', width: 100, align: "center", sortable: false },
+            { name: 'UNIT_SL', index: 'UNIT_SL', width: 100, align: "center", sortable: false },
             { name: 'RECEPT_RATE_SL', index: 'RECEPT_RATE_SL', width: 100, align: "center", sortable: false },
             { name: 'Amount', index: 'Amount', width: 150, align: "center", sortable: false }
         ],
@@ -211,7 +211,7 @@ $(document).ready(function () {
             var arrIndex = arrPrdDetails.length;
             arrPrdDetails[arrIndex] = {
                 PRODID_SL: $("#txtPrCode").val(), PrdDesc: $("#txtPrDesc").val(),
-                RECEPT_QTY_SL: $("#txtQuantity").val(), RECEPT_RATE_SL: $("#txtRate").val(), Unit: $("#txtUnit").val(),
+                RECEPT_QTY_SL: $("#txtQuantity").val(), RECEPT_RATE_SL: $("#txtRate").val(), UNIT_SL: $("#txtUnit").val(),
                 Amount: $("#txtAmount").val()
             };
             var su = jQuery("#tblPrdDetails").jqGrid('addRowData', arrIndex, arrPrdDetails[arrIndex]);
@@ -266,7 +266,7 @@ $(document).ready(function () {
         $('#formPurchaseEntry').bootstrapValidator('revalidateField', 'Discount');
     });
 
-    $('#formPurchaseEntry').bootstrapValidator({
+    $('#formPurchaseEntry').formValidation({
         container: '#messages',
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -348,5 +348,9 @@ $(document).ready(function () {
                 }
             }
         }
+    }).on('success.form.fv', function (e) {
+        debugger;
+        // Prevent form submission
+        e.preventDefault();
     });
 });

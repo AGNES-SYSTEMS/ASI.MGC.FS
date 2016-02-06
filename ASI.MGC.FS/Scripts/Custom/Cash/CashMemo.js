@@ -281,7 +281,7 @@ $("#btnMRVSelect").click(function (e) {
     e.preventDefault();
 });
 /***** End - Adding JQGRID Code For Searching Job Number and MRV Number****/
-$('#formCashMemo').bootstrapValidator({
+$('#formCashMemo').formValidation({
     container: '#messages',
     feedbackIcons: {
         valid: 'glyphicon glyphicon-ok',
@@ -297,4 +297,8 @@ $('#formCashMemo').bootstrapValidator({
             }
         }
     }
+}).on('success.form.fv', function (e) {
+    debugger;
+    // Prevent form submission
+    e.preventDefault();
 });

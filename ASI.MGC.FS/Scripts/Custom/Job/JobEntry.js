@@ -565,7 +565,7 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
-    $('#formJobEntry').bootstrapValidator({
+    $('#formJobEntry').formValidation({
         container: '#messages',
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -653,5 +653,9 @@ $(document).ready(function () {
                 }
             }
         }
+    }).on('success.form.fv', function (e) {
+        debugger;
+        // Prevent form submission
+        e.preventDefault();
     });
 });

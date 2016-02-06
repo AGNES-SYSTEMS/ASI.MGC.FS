@@ -25,19 +25,21 @@
                         @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <label id="lblAPCode" class="control-label col-md-4 small ">AP Code</label>
-                                <div class="col-md-7 paddingLeftRight0">
+                                <label class="control-label col-md-4 small ">AP Code</label>
+                                <div class="col-md-8 input-group icon-style">
                                     @Html.TextBox("APCode", null, new { ID = "txtAPCode", Class = "form-control", @readonly = "readonly" })
                                     @Html.ValidationMessage("APCode")
+                                    <span class="input-group-btn">
+                                        <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#CustomerSearchModel">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
                                 </div>
-                                <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#CustomerSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label id="lblDocNo" class="control-label col-md-4 small ">Doc No</label>
+                                <label class="control-label col-md-4 small ">Doc No</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DocNo", null, new { ID = "txtDocNo", Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBox("DocNo", null, new { ID = "txtDocNo", Class = "form-control", @readonly = "readonly", @Value = @ViewBag.RevPurCode })
                                     @Html.ValidationMessage("DocNo")
                                 </div>
                             </div>
@@ -51,7 +53,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label id="lblDocDate" class="control-label col-md-4 small ">Doc Date</label>
+                                <label class="control-label col-md-4 small ">Doc Date</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBox("DocDate", null, new { ID = "txtDocDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control" })
                                     @Html.ValidationMessage("DocDate")
@@ -60,13 +62,13 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <label id="lblSettleMode" class="control-label col-md-4 small ">Settle Mode</label>
+                                <label class="control-label col-md-4 small ">Settle Mode</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBox("SettleMode", null, new { ID = "txtSettleMode", @Value = "Credit", Class = "form-control", @readonly = "readonly" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label id="lblPurDate" class="control-label col-md-4 small ">Purchase Date</label>
+                                <label class="control-label col-md-4 small ">Purchase Date</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBox("PurDate", null, new { ID = "txtPurDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control" })
                                     @Html.ValidationMessage("PurDate")
@@ -75,14 +77,14 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <label id="lblBankCode" class="control-label col-md-4 small ">Bank Code</label>
+                                <label class="control-label col-md-4 small ">Bank Code</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBox("BankCode", null, new { ID = "txtBankCode", @Value = "CSHAN", Class = "form-control", @readonly = "readonly" })
                                     @Html.ValidationMessage("BankCode")
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label id="lblInvoice" class="control-label col-md-4 small ">Invoice</label>
+                                <label class="control-label col-md-4 small ">Invoice</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBox("Invoice", null, new { ID = "txtInvoice", Class = "form-control" })
                                     @Html.ValidationMessage("Invoice")
@@ -91,7 +93,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <label id="lblBankDetail" class="control-label col-md-4 small ">Bank Detail</label>
+                                <label class="control-label col-md-4 small ">Bank Detail</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBox("BankDetail", null, new { ID = "txtBankDetail", @Value = "CASH IN HAND", Class = "form-control", @readonly = "readonly" })
                                     @Html.ValidationMessage("BankDetail")
@@ -100,34 +102,35 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblCash" class="control-label col-md-4 small ">Cash</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("Cash", null, new { ID = "txtCash", Class = "form-control" })
+                                    @Html.TextBox("Cash", null, new { ID = "txtCash", Class = "form-control", @readonly = "readonly" })
                                     @Html.ValidationMessage("Cash")
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <label id="lblShipChrg" class="control-label col-md-4 small ">Shipping Charges</label>
+                                <label class="control-label col-md-4 small ">Shipping Charges</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("ShipChrg", null, new { ID = "txtShipChrg", Class = "form-control" })
+                                    @Html.TextBox("ShipChrg", null, new { ID = "txtShipChrg", Class = "form-control", @readonly = "readonly" })
                                     @Html.ValidationMessage("ShipChrg")
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label id="lblDiscount" class="control-label col-md-4 small ">Discount</label>
+                                <label class="control-label col-md-4 small ">Discount</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("Discount", null, new { ID = "txtDiscount", Class = "form-control" })
+                                    @Html.TextBox("Discount", null, new { ID = "txtDiscount", Class = "form-control", @readonly = "readonly" })
                                     @Html.ValidationMessage("Discount")
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <label id="lblNote" class="control-label col-md-4 small ">Note</label>
+                                <label class="control-label col-md-4 small ">Note</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextArea("Note", null, new { ID = "txtNote", Class = "form-control" })
                                 </div>
                             </div>
+                            <input id="prdDetails" name="prdDetails" type="hidden" />
                         </div>
                         <div class="row">
                             <div class="col-lg-10">
@@ -237,16 +240,18 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-5 form-group">
-                                <label id="lblPrCode" class="control-label col-md-4 small ">PrCode:</label>
-                                <div class="col-md-6 paddingLeftRight0">
+                                <label class="control-label col-md-4 small ">PrCode:</label>
+                                <div class="col-md-6 input-group icon-style-modal">
                                     <input type="text" id="txtPrCode" name="PrCode" class="form-control" required readonly />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#PrdSearchModel">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
                                 </div>
-                                <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#PrdSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div class="col-md-7 form-group">
-                                <label id="lblPrDesc" class="control-label col-md-4 small ">PrDesc:</label>
+                                <label class="control-label col-md-4 small ">PrDesc:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     <input type="text" id="txtPrDesc" name="PrDesc" class="form-control" required readonly />
                                 </div>
@@ -254,13 +259,13 @@
                         </div>
                         <div class="row">
                             <div class="col-md-5 form-group">
-                                <label id="lblQuantity" class="control-label col-md-4 small ">Quantity:</label>
+                                <label class="control-label col-md-4 small ">Quantity:</label>
                                 <div class="col-md-7 paddingLeftRight0">
                                     <input type="text" id="txtQuantity" name="Quantity" value="1" class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-md-7 form-group">
-                                <label id="lblUnit" class="control-label col-md-4 small ">Unit:</label>
+                                <label class="control-label col-md-4 small ">Unit:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     <input type="text" id="txtUnit" name="Unit" class="form-control" readonly />
                                 </div>
@@ -268,13 +273,13 @@
                         </div>
                         <div class="row">
                             <div class="col-md-5 form-group">
-                                <label id="lblRate" class="control-label col-md-4 small ">Rate:</label>
+                                <label class="control-label col-md-4 small ">Rate:</label>
                                 <div class="col-md-7 paddingLeftRight0">
                                     <input type="text" id="txtRate" name="Rate" class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-md-7 form-group">
-                                <label id="lblAmount" class="control-label col-md-4 small ">Amount:</label>
+                                <label class="control-label col-md-4 small ">Amount:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     <input type="text" id="txtAmount" name="Amount" class="form-control" value="0" readonly />
                                 </div>
@@ -320,8 +325,8 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div id="prdGrid" class="panel-body">
-                                    <input type="text" id="prdSearch" name="SearchPrCode" placeholder="Enter Product Name to filter the Products" class="form-control"/>
-                                    <br/>
+                                    <input type="text" id="prdSearch" name="SearchPrCode" placeholder="Enter Product Name to filter the Products" class="form-control" />
+                                    <br />
                                     <table id="tblProductSearch" style="width: 100%"></table>
                                     <div id="prdPager"></div>
                                 </div>
@@ -344,14 +349,25 @@
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Purchase/PurchaseReturn.js")"></script>
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
-
-        function OnSuccess(response) {
-            alert(response);
+        var isReportOpened = false;
+        function OnSuccess(rpcNo) {
+            if (rpcNo !== "" && !isReportOpened) {
+                toastr.success("Return Purchase is added Successfully.");
+                isReportOpened = true;
+                openPurchaseReturn(rpcNo);
+            }
         }
 
         function OnFailure() {
-            alert("Whoops! That didn't go so well did it?");
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
+
+        function openPurchaseReturn(rpcNo) {
+            var purchaseReturnUrl = "/MgcReports/JournalVoucher?voucherNo=" + rpcNo;
+            window.open(purchaseReturnUrl);
+            toastr.info("Purchase Return voucher is open in new window.");
         }
 
     </script>

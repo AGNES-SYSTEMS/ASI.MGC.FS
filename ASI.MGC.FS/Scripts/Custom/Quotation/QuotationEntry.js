@@ -352,7 +352,7 @@ $(document).ready(function () {
         }
         e.preventDefault();
     });
-    $('#formQuotationEntry').bootstrapValidator({
+    $('#formQuotationEntry').formValidation({
         container: '#messages',
         feedbackIcons: {
             required: 'fa fa-asterisk',
@@ -402,6 +402,10 @@ $(document).ready(function () {
                 }
             }
         }
+    }).on('success.form.fv', function (e) {
+        debugger;
+        // Prevent form submission
+        e.preventDefault();
     });
     $("#formQuotationEntry").formValidation();
 });

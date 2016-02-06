@@ -30,8 +30,17 @@ $(document).ready(function () {
                             $("#txtAmount").val(invDetails.DEBITAMOUT_BT).change();
                         }
                         $("#txtStatus").val(invDetails.STATUS_BT).change();
+
+                        if (invDetails.STATUS_BT === "R") {
+                            toastr.info("Document already reversed.");
+                            $("#btnSubmit").prop("disabled", true);
+                        } else {
+                            $("#btnSubmit").prop("disabled", false);
+                        }
+
                     } else {
                         toastr.error("Invalid Document Number.");
+
                     }
                 },
                 complete: function () {

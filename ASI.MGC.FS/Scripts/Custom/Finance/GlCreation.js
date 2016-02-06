@@ -225,5 +225,9 @@ $(document).ready(function () {
                 }
             }
         }
+    }).on('success.form.fv', function (e) {
+        debugger;
+        // Prevent form submission
+        e.preventDefault();
     });
 });
