@@ -10,17 +10,18 @@
 </head>
 <body>
     <!-- start:wrapper -->
-    <div id="wrapper">
-        <div class="header-top">
-            <!-- start:navbar -->
-            <nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0">
-                <div class="container">
-                    <!-- start:navbar-header -->
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="#"><i class="fa fa-cubes"></i> <strong>Mahboob Electrical Services</strong></a>
-                    </div>
-                    <!-- end:navbar-header -->
-                    @*<ul class="nav navbar-nav navbar-left top-menu">
+<div id="wrapper">
+    <span id="showHideMenu"><i class="fa fa-bars fa-2x"></i></span>
+<div class="header-top">
+<!-- start:navbar -->
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0">
+<div class="container">
+<!-- start:navbar-header -->
+<div class="navbar-header">
+    <a class="navbar-brand" href="#"><i class="fa fa-cubes"></i> <strong>Mahboob Electrical Services</strong></a>
+</div>
+<!-- end:navbar-header -->
+@*<ul class="nav navbar-nav navbar-left top-menu">
                         <!-- start dropdown 1 -->
                         <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -217,499 +218,648 @@
                         </li>
                         <!-- end dropdown 3 -->
                     </ul>*@
-                    @{
-                        if (Request.IsAuthenticated)
-                        {
-                            <ul class="nav navbar-nav navbar-right top-menu">
-                                <!-- user login dropdown start-->
-                                <li class="dropdown">
-                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                        <span class="username"><strong>Welcome @Html.Encode(User.Identity.Name)</strong></span>
-                                        <b class="caret"></b>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <div class="log-arrow-up"></div>
-                                        <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                                        <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                                        <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
-                                        <li><a href="@Href("~/AccountManagement/LogOut")"><i class="fa fa-key"></i>Log Out</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        }
-                        else
-                        {
+@{
+    if (Request.IsAuthenticated)
+    {
+        <ul class="nav navbar-nav navbar-right top-menu">
+            <!-- user login dropdown start-->
+            <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    <span class="username"><strong>Welcome @Html.Encode(User.Identity.Name)</strong></span>
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <div class="log-arrow-up"></div>
+                    <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                    <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                    <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
+                    <li><a href="@Href("~/AccountManagement/LogOut")"><i class="fa fa-key"></i>Log Out</a></li>
+                </ul>
+            </li>
+        </ul>
+    }
+    else
+    {
 
-                            Response.Redirect("~/AccountManagement/LogIn");
-                        }
-                    }
-                </div>
-            </nav>
-            <!-- end:navbar -->
+        Response.Redirect("~/AccountManagement/LogIn");
+    }
+}
+</div>
+</nav>
+<!-- end:navbar -->
+</div>
+<div id="header">
+<div class="overlay">
+<nav class="navbar" role="navigation">
+<div class="container">
+<!-- Brand and toggle get grouped for better mobile display -->
+<div class="navbar-header">
+    <button type="button" class="btn-block btn-drop navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <strong>MENU</strong>
+    </button>
+</div>
+
+<!--Start - Main Header Menu -->
+<div class="collapse navbar-collapse navbar-ex1-collapse">
+<ul class="nav navbar-nav" style="float: right">
+<li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        <div class="text-center">
+
+            Finance <span class="caret"></span>
         </div>
-        <div id="header">
-            <div class="overlay">
-                <nav class="navbar" role="navigation">
-                    <div class="container">
-                        <!-- Brand and toggle get grouped for better mobile display -->
-                        <div class="navbar-header">
-                            <button type="button" class="btn-block btn-drop navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                                <strong>MENU</strong>
-                            </button>
-                        </div>
+    </a>
 
-                        <!--Start - Main Header Menu -->
-                        <div class="collapse navbar-collapse navbar-ex1-collapse">
-                            <ul class="nav navbar-nav">
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                        <div class="text-center">
+    <ul class="dropdown-menu col-md-12 container" style="width: 660px;" role="menu">
+        <li class="col-md-4">
+            <ul class="paddingLeft0">
+                <li><a href="@Href("~/Finance/GlCreation")">GlCreation</a></li>
+                <li><a href="@Href("~/Setups/CustomerMaster")">ARCreation</a></li>
+                <li><a href="@Href("~/Setups/SupplierMaster")">APCreation</a></li>
+                <li><a href="@Href("~/Bank/BankMaster")">Bank Creation</a></li>
 
-                                            Finance <span class="caret"></span>
-                                        </div>
-                                    </a>
+                <li class="dropdown">
+                    <span class="menuHeadingStyle">Payments</span>
+                    <ul>
+                        <li><a href="@Href("~/Cash/CashPayments")">Cash Payments</a></li>
+                        <li><a href="@Href("~/Bank/BankPayment")">Bank Payments</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <span class="menuHeadingStyle">Receipt</span>
+                    <ul>
+                        <li><a href="@Href("~/Cash/CashReceipt")">Cash Receipt</a></li>
+                        <li><a href="@Href("~/Bank/BankReceipt")">Bank Receipt</a></li>
+                        <li><a href="@Href("~/Finance/PdcReceipt")">Pdc Receipt</a></li>
+                    </ul>
+                </li>
+                @*<li><a href="@Href("~/Finance/PdcReceipt")">Stock Jurnal</a></li>*@
+                <li><a href="@Href("~/Finance/JvCreation")">JV Creation</a></li>
+                <li><a href="@Href("~/Finance/ArapMatching")">AR/AP Matching</a></li>
+                <li><a href="@Href("~/Finance/ArUnmatching")">AR UnMatching</a></li>
+            </ul>
+        </li>
+        <li class="col-md-4">
+            <ul class="paddingLeft0">
+                <li class="dropdown">
+                    <span class="menuHeadingStyle">Sales Report</span>
+                    <ul>
+                        <li><a href="@Href("~/MgcReports/EmpSales")">Sales Report</a></li>
+                        <li><a href="@Href("~/MgcReports/EmpWiseJobDetails")">Empwise Sales Report</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <span class="menuHeadingStyle">Statement</span>
+                    <ul>
+                        <li><a href="@Href("~/MgcReports/ArStatement")">AR Detailed Statement</a></li>
+                        <li><a href="@Href("~/MgcReports/ArStatementOutstanding")">AR OutStanding Statement</a></li>
+                        <li><a href="#">AP Detailed Statement</a></li>
+                        <li><a href="@Href("~/MgcReports/BankStatement")">Bank Statement</a></li>
+                        <li><a href="@Href("~/MgcReports/StockReport")">Stock Report</a></li>
+                        <li><a href="@Href("~/MgcReports/StockLedgerReport")">Stock Ledger</a></li>
+                        <li><a href="@Href("~/MgcReports/GlStatement")">GL Statement</a></li>
+                        <li><a href="@Href("~/MgcReports/TrialBalance")">Trial Balance</a></li>
+                        <li><a href="@Href("~/MgcReports/ProfitLossStatement")">Profit/Loss Statement</a></li>
+                        <li><a href="@Href("~/MgcReports/BalanceSheet")">Balance Sheet</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li class="col-md-4">
+            <ul class="paddingLeft0">
+                <li class="dropdown">
+                    <span class="menuHeadingStyle">List</span>
+                    <ul>
+                        <li><a href="#">General Ledgers</a></li>
+                        <li><a href="#">Accounts Receivable</a></li>
+                        <li><a href="#">Accounts payable</a></li>
+                    </ul>
+                </li>
+                <li><a href="@Href("~/Finance/DocumentReversal")">Reversal</a></li>
+                <li class="dropdown">
+                    <span class="menuHeadingStyle">Duplicate Printing</span>
+                    <ul>
+                        <li><a href="#">Jv Printing</a></li>
+                        <li><a href="#">Voucher Print</a></li>
+                    </ul>
+                </li>
+                <li><a href="@Href("~/Finance/DayEndOperation")">Day End Process</a></li>
+                <li class="dropdown">
+                    <span class="menuHeadingStyle">User Admin</span>
+                    <ul>
+                        <li><a href="@Href("~/AccountManagement/Registration")">User Creation</a></li>
+                        <li><a href="#">Change Password</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</li>
+<li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        <div class="text-center">
+            DailyTrans <span class="caret"></span>
+        </div>
+    </a>
+    <ul class="dropdown-menu col-md-12 container " style="width: 660px;" role="menu">
+        <li class="col-md-4">
+            <ul class="paddingLeft0">
+                <li><a href="@Href("~/Quotation/QuotationEntry")">Quotation</a></li>
+                <li><a href="@Href("~/MRV/MRVCreation")">MaterialRV</a></li>
+                <li><a href="@Href("~/Job/JobEntry")">Sales Entry</a></li>
 
-                                    <ul class="dropdown-menu col-md-12 container" style="width:660px;" role="menu">
-                                        <li class="col-md-4">
-                                            <ul class="paddingLeft0">
-                                                <li><a href="@Href("~/Finance/GlCreation")">GlCreation</a></li>
-                                                <li><a href="@Href("~/Setups/CustomerMaster")">ARCreation</a></li>
-                                                <li><a href="@Href("~/Setups/SupplierMaster")">APCreation</a></li>
-                                                <li><a href="@Href("~/Bank/BankMaster")">Bank Creation</a></li>
+                <li class="dropdown">
+                    <span class="menuHeadingStyle">Cancel</span>
+                    <ul>
+                        <li><a href="@Href("~/Job/JobCancellation")">Job Cancellation</a></li>
+                    </ul>
+                </li>
+                <li><a href="@Href("~/Cash/CashMemo")">Cash Memo</a></li>
+                <li class="dropdown">
+                    <span class="menuHeadingStyle">Invoice</span>
+                    <ul>
+                        <li><a href="@Href("~/Invoice/InvoicePreparation")">Preparation</a></li>
+                        <li><a href="@Href("~/Invoice/InvoiceReversal")">Reversal</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li class="col-md-4">
+            <ul class="paddingLeft0">
+                <li><a href="@Href("~/Purchase/PurchaseEntry")">Purchase</a></li>
+                <li><a href="@Href("~/Purchase/PurchaseReturn")">Purchase Return</a></li>
 
-                                                <li class="dropdown">
-                                                    <span class="menuHeadingStyle">Payments</span>
-                                                    <ul>
-                                                        <li><a href="@Href("~/Cash/CashPayments")">Cash Payments</a></li>
-                                                        <li><a href="@Href("~/Bank/BankPayment")">Bank Payments</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="dropdown">
-                                                    <span class="menuHeadingStyle">Receipt</span>
-                                                    <ul>
-                                                        <li><a href="@Href("~/Cash/CashReceipt")">Cash Receipt</a></li>
-                                                        <li><a href="@Href("~/Bank/BankReceipt")">Bank Receipt</a></li>
-                                                        <li><a href="@Href("~/Finance/PdcReceipt")">Pdc Receipt</a></li>
-                                                    </ul>
-                                                </li>
-                                                @*<li><a href="@Href("~/Finance/PdcReceipt")">Stock Jurnal</a></li>*@
-                                                <li><a href="@Href("~/Finance/JvCreation")">JV Creation</a></li>
-                                                <li><a href="@Href("~/Finance/ArapMatching")">AR/AP Matching</a></li>
-                                                <li><a href="@Href("~/Finance/ArUnmatching")">AR UnMatching</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="col-md-4">
-                                            <ul class="paddingLeft0">
-                                                <li class="dropdown">
-                                                    <span class="menuHeadingStyle">Sales Report</span>
-                                                    <ul>
-                                                        <li><a href="@Href("~/MgcReports/EmpSales")">Sales Report</a></li>
-                                                        <li><a href="@Href("~/MgcReports/EmpWiseJobDetails")">Empwise Sales Report</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="dropdown">
-                                                    <span class="menuHeadingStyle">Statement</span>
-                                                    <ul>
-                                                        <li><a href="@Href("~/MgcReports/ArStatement")">AR Detailed Statement</a></li>
-                                                        <li><a href="@Href("~/MgcReports/ArStatementOutstanding")">AR OutStanding Statement</a></li>
-                                                        <li><a href="#">AP Detailed Statement</a></li>
-                                                        <li><a href="@Href("~/MgcReports/BankStatement")">Bank Statement</a></li>
-                                                        <li><a href="@Href("~/MgcReports/StockReport")">Stock Report</a></li>
-                                                        <li><a href="@Href("~/MgcReports/StockLedgerReport")">Stock Ledger</a></li>
-                                                        <li><a href="@Href("~/MgcReports/GlStatement")">GL Statement</a></li>
-                                                        <li><a href="@Href("~/MgcReports/TrialBalance")">Trial Balance</a></li>
-                                                        <li><a href="@Href("~/MgcReports/ProfitLossStatement")">Profit/Loss Statement</a></li>
-                                                        <li><a href="@Href("~/MgcReports/BalanceSheet")">Balance Sheet</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="col-md-4">
-                                            <ul class="paddingLeft0">
-                                                <li class="dropdown">
-                                                    <span class="menuHeadingStyle">List</span>
-                                                    <ul>
-                                                        <li><a href="#">General Ledgers</a></li>
-                                                        <li><a href="#">Accounts Receivable</a></li>
-                                                        <li><a href="#">Accounts payable</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="@Href("~/Finance/DocumentReversal")">Reversal</a></li>
-                                                <li class="dropdown">
-                                                    <span class="menuHeadingStyle">Duplicate Printing</span>
-                                                    <ul>
-                                                        <li><a href="#">Jv Printing</a></li>
-                                                        <li><a href="#">Voucher Print</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="@Href("~/Finance/DayEndOperation")">Day End Process</a></li>
-                                                <li class="dropdown">
-                                                    <span class="menuHeadingStyle">User Admin</span>
-                                                    <ul>
-                                                        <li><a href="@Href("~/AccountManagement/Registration")">User Creation</a></li>
-                                                        <li><a href="#">Change Password</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                        <div class="text-center">
-                                            DailyTrans <span class="caret"></span>
-                                        </div>
-                                    </a>
-                                    <ul class="dropdown-menu col-md-12 container " style="width:660px;" role="menu">
-                                        <li class="col-md-4">
-                                            <ul class="paddingLeft0">
-                                                <li><a href="@Href("~/Quotation/QuotationEntry")">Quotation</a></li>
-                                                <li><a href="@Href("~/MRV/MRVCreation")">MaterialRV</a></li>
-                                                <li><a href="@Href("~/Job/JobEntry")">Sales Entry</a></li>
+                <li><a href="@Href("~/Cash/CashMemoReversal")">CashMemo Reversal</a></li>
 
-                                                <li class="dropdown">
-                                                    <span class="menuHeadingStyle">Cancel</span>
-                                                    <ul>
-                                                        <li><a href="@Href("~/Job/JobCancellation")">Job Cancellation</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="@Href("~/Cash/CashMemo")">Cash Memo</a></li>
-                                                <li class="dropdown">
-                                                    <span class="menuHeadingStyle">Invoice</span>
-                                                    <ul>
-                                                        <li><a href="@Href("~/Invoice/InvoicePreparation")">Preparation</a></li>
-                                                        <li><a href="@Href("~/Invoice/InvoiceReversal")">Reversal</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="col-md-4">
-                                            <ul class="paddingLeft0">
-                                                <li><a href="@Href("~/Purchase/PurchaseEntry")">Purchase</a></li>
-                                                <li><a href="@Href("~/Purchase/PurchaseReturn")">Purchase Return</a></li>
+                <li class="dropdown">
+                    <span class="menuHeadingStyle">Report</span>
+                    <ul>
+                        <li><a href="@Href("~/MgcReports/PendingMrvDetails")">Pending Mrv Details</a></li>
+                        <li><a href="@Href("~/MgcReports/DeliveredMrvDetails")">Delivered Mrv Details</a></li>
+                        <li><a href="@Href("~/MgcReports/ServiceItems")">Service Items</a></li>
+                        <li><a href="@Href("~/MgcReports/JobWiseStatement")">Job Wise Report</a></li>
+                        <li><a href="@Href("~/MgcReports/PurchaseRegister")">Purchase Report</a></li>
+                        <li><a href="@Href("~/MgcReports/DeliveryDetails")">Delivery Note Details</a></li>
+                        <li><a href="@Href("~/MgcReports/InvoiceWiseReport")">Invoice Wise Delivery Report</a></li>
+                        <li><a href="@Href("~/MgcReports/CashMemoWiseReport")">CashMemo Wise Report</a></li>
+                        <li><a href="@Href("~/MgcReports/CancelledJobs")">Cancelled Jobs Details</a></li>
+                        <li><a href="@Href("~/MgcReports/ReversedInvoice")">Reversed Invoice Statement</a></li>
+                        <li><a href="@Href("~/MgcReports/CashMemoReverse")">Reversed RV Statement</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Cash Memo</a></li>
 
-                                                <li><a href="@Href("~/Cash/CashMemoReversal")">CashMemo Reversal</a></li>
+            </ul>
+        </li>
+        <li class="col-md-4">
+            <ul class="paddingLeft0">
+                <li class="dropdown">
+                    <span class="menuHeadingStyle">Duplicate Printing</span>
+                    <ul>
+                        <li><a href="#">Document Printing</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <span class="menuHeadingStyle">Search</span>
+                    <ul>
+                        <li><a href="#">Search Mrv Details</a></li>
+                        <li><a href="#"> Mrv Details</a></li>
+                    </ul>
+                </li>
+                <li><a> Bill/Invoice Pending</a> </li>
+            </ul>
+        </li>
+    </ul>
+</li>
+<li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        <div class="text-center">
+            Settings <span class="caret"></span>
+        </div>
+    </a>
+    <ul class="dropdown-menu col-md-12 container" style="width: 660px;" role="menu">
+        <li class="col-md-4">
+            <ul class="paddingLeft0">
+                <li><a href="@Href("~/Setups/FinancialYearPeriod")">Period</a></li>
+                <li><a href="@Href("~/Setups/JobCreation")">JobidCreate</a></li>
+                <li><a href="@Href("~/Setups/EmployeeMaster")">EmpMaster</a></li>
+                <li><a href="@Href("~/Setups/ProductMaster")">Product Master (Inventory)</a></li>
 
-                                                <li class="dropdown">
-                                                    <span class="menuHeadingStyle">Report</span>
-                                                    <ul>
-                                                        <li><a href="@Href("~/MgcReports/PendingMrvDetails")">Pending Mrv Details</a></li>
-                                                        <li><a href="@Href("~/MgcReports/DeliveredMrvDetails")">Delivered Mrv Details</a></li>
-                                                        <li><a href="@Href("~/MgcReports/ServiceItems")">Service Items</a></li>
-                                                        <li><a href="@Href("~/MgcReports/JobWiseStatement")">Job Wise Report</a></li>
-                                                        <li><a href="@Href("~/MgcReports/PurchaseRegister")">Purchase Report</a></li>
-                                                        <li><a href="@Href("~/MgcReports/DeliveryDetails")">Delivery Note Details</a></li>
-                                                        <li><a href="@Href("~/MgcReports/InvoiceWiseReport")">Invoice Wise Delivery Report</a></li>
-                                                        <li><a href="@Href("~/MgcReports/CashMemoWiseReport")">CashMemo Wise Report</a></li>
-                                                        <li><a href="@Href("~/MgcReports/CancelledJobs")">Cancelled Jobs Details</a></li>
-                                                        <li><a href="@Href("~/MgcReports/ReversedInvoice")">Reversed Invoice Statement</a></li>
-                                                        <li><a href="@Href("~/MgcReports/CashMemoReverse")">Reversed RV Statement</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">Cash Memo</a></li>
+            </ul>
+        </li>
+        <li class="col-md-4">
+            <ul class="paddingLeft0">
+                <li><a href="@Href("~/Setups/CustomerMaster")">Customer Master</a></li>
+                <li><a href="@Href("~/Setups/SupplierMaster")">Supplier Master</a></li>
+                <li><a href="@Href("~/Setups/ItemsMaster")">Item Master Service</a></li>
+                <li><a href="@Href("~/Setups/UnitCreation")">Unit Creation</a></li>
+            </ul>
+        </li>
+    </ul>
+</li>
+<li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        <div class="text-center">
+            Admin <span class="caret"></span>
+        </div>
+    </a>
+    <ul class="dropdown-menu col-md-12 container" style="width: 400px;" role="menu">
+        <li class="col-md-6">
+            <ul class="paddingLeft0">
+                <li><a href="#">Backup</a></li>
+                <li><a href="#">Employee Management</a></li>
+            </ul>
+        </li>
+    </ul>
+</li>
+<li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        <div class="text-center">
+            Report <span class="caret"></span>
+        </div>
+    </a>
+    <ul class="dropdown-menu col-md-12 container" style="width: 500px;" role="menu">
+        <li class="col-md-6">
+            <ul class="paddingLeft0">
+                <li>
+                    <span class="menuHeadingStyle">Mrv Details</span>
+                    <ul>
+                        <li><a href="#">Pending Mrv Details</a></li>
+                        <li><a href="#">Delivered Mrv Details</a></li>
+                        <li><a href="#">Custom Reports</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="menuHeadingStyle">Sales Report</span>
+                    <ul>
+                        <li><a href="#">Empwise Report</a></li>
+                        <li><a href="#">General Report</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Customer Statement</a></li>
 
-                                            </ul>
-                                        </li>
-                                        <li class="col-md-4">
-                                            <ul class="paddingLeft0">
-                                                <li class="dropdown">
-                                                    <span class="menuHeadingStyle">Duplicate Printing</span>
-                                                    <ul>
-                                                        <li><a href="#">Document Printing</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="dropdown">
-                                                    <span class="menuHeadingStyle">Search</span>
-                                                    <ul>
-                                                        <li><a href="#">Search Mrv Details</a></li>
-                                                        <li><a href="#">    Mrv Details</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a> Bill/Invoice Pending</a> </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                        <div class="text-center">
-                                            Settings <span class="caret"></span>
-                                        </div>
-                                    </a>
-                                    <ul class="dropdown-menu col-md-12 container" style="width:660px;" role="menu">
-                                        <li class="col-md-4">
-                                            <ul class="paddingLeft0">
-                                                <li><a href="@Href("~/Setups/FinancialYearPeriod")">Period</a></li>
-                                                <li><a href="@Href("~/Setups/JobCreation")">JobidCreate</a></li>
-                                                <li><a href="@Href("~/Setups/EmployeeMaster")">EmpMaster</a></li>
-                                                <li><a href="@Href("~/Setups/ProductMaster")">Product Master (Inventory)</a></li>
+            </ul>
+        </li>
+        <li class="col-md-6">
+            <ul class="paddingLeft0">
+                <li><a href="#">Supplier Statement</a></li>
+                <li><a href="#">AR/AP Summary</a></li>
+                <li>
+                    <span class="menuHeadingStyle">Finance</span>
+                    <ul>
+                        <li><a href="#">Bank Statement</a></li>
+                        <li><a href="#">GL Statement</a></li>
+                        <li><a href="#">Trial Balance</a></li>
+                        <li><a href="#">P and L Statement</a></li>
+                        <li><a href="#">Balance Sheet</a></li>
+                    </ul>
+                </li>
 
-                                            </ul>
-                                        </li>
-                                        <li class="col-md-4">
-                                            <ul class="paddingLeft0">
-                                                <li><a href="@Href("~/Setups/CustomerMaster")">Customer Master</a></li>
-                                                <li><a href="@Href("~/Setups/SupplierMaster")">Supplier Master</a></li>
-                                                <li><a href="@Href("~/Setups/ItemsMaster")">Item Master Service</a></li>
-                                                <li><a href="@Href("~/Setups/UnitCreation")">Unit Creation</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                        <div class="text-center">
-                                            Admin <span class="caret"></span>
-                                        </div>
-                                    </a>
-                                    <ul class="dropdown-menu col-md-12 container" style="width:400px;" role="menu">
-                                        <li class="col-md-6">
-                                            <ul class="paddingLeft0">
-                                                <li><a href="#">Backup</a></li>
-                                                <li><a href="#">Employee Management</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                        <div class="text-center">
-                                            Report <span class="caret"></span>
-                                        </div>
-                                    </a>
-                                    <ul class="dropdown-menu col-md-12 container" style="width:500px;" role="menu">
-                                        <li class="col-md-6">
-                                            <ul class="paddingLeft0">
-                                                <li>
-                                                    <span class="menuHeadingStyle">Mrv Details</span>
-                                                    <ul>
-                                                        <li><a href="#">Pending Mrv Details</a></li>
-                                                        <li><a href="#">Delivered Mrv Details</a></li>
-                                                        <li><a href="#">Custom Reports</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <span class="menuHeadingStyle">Sales Report</span>
-                                                    <ul>
-                                                        <li><a href="#">Empwise Report</a></li>
-                                                        <li><a href="#">General Report</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">Customer Statement</a></li>
-
-                                            </ul>
-                                        </li>
-                                        <li class="col-md-6">
-                                            <ul class="paddingLeft0">
-                                                <li><a href="#">Supplier Statement</a></li>
-                                                <li><a href="#">AR/AP Summary</a></li>
-                                                <li>
-                                                    <span class="menuHeadingStyle">Finance</span>
-                                                    <ul>
-                                                        <li><a href="#">Bank Statement</a></li>
-                                                        <li><a href="#">GL Statement</a></li>
-                                                        <li><a href="#">Trial Balance</a></li>
-                                                        <li><a href="#">P and L Statement</a></li>
-                                                        <li><a href="#">Balance Sheet</a></li>
-                                                    </ul>
-                                                </li>
-
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                        <div class="text-center">
-                                            Search <span class="caret"></span>
-                                        </div>
-                                    </a>
-                                    <ul class="dropdown-menu col-md-12 container" style="width:500px;" role="menu">
-                                        <li class="col-md-6">
-                                            <ul class="paddingLeft0">
-                                                <li>
-                                                    <span class="menuHeadingStyle">
+            </ul>
+        </li>
+    </ul>
+</li>
+<li class="dropdown">
+<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+    <div class="text-center">
+        Search <span class="caret"></span>
+    </div>
+</a>
+<ul class="dropdown-menu col-md-12 container" style="width: 500px;" role="menu">
+    <li class="col-md-6">
+        <ul class="paddingLeft0">
+            <li>
+                <span class="menuHeadingStyle">
                                                         <a href="#">MRV Voucher</a>
                                                     </span>
-                                                </li>
-                                                <li>
-                                                    <span class="menuHeadingStyle">
+            </li>
+            <li>
+                <span class="menuHeadingStyle">
                                                         <a href="#">Sales Entry</a>
                                                     </span>
-                                                </li>
-                                                <li>
-                                                    <span class="menuHeadingStyle">
+            </li>
+            <li>
+                <span class="menuHeadingStyle">
                                                         <a href="#">Cash Memo</a>
                                                     </span>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <ul>
-                                                <li>
-                                                    <span class="menuHeadingStyle">
+            </li>
+        </ul>
+    </li>
+    <li>
+        <ul>
+            <li>
+                <span class="menuHeadingStyle">
                                                         <a href="#">Invoice</a>
                                                     </span>
-                                                </li>
-                                                <li>
-                                                    <span class="menuHeadingStyle">
+            </li>
+            <li>
+                <span class="menuHeadingStyle">
                                                         <a href="#">Cash RV</a>
                                                     </span>
-                                                </li>
-                                                <li>
-                                                    <span class="menuHeadingStyle">
+            </li>
+            <li>
+                <span class="menuHeadingStyle">
                                                         <a href="#">Bank RV</a>
                                                     </span>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                            </ul>
-                        </div>
-                        <!--End - Main Header Menu-->
-                        <!--Start - Quick Links Header -->
-                        <div class="collapse navbar-collapse navbar-ex1-collapse">
-                            <ul id="quickLinks" class="nav navbar-nav">
-                                <li id="liDashboard" class="active">
-                                    <a href="#">
-                                        <div class="text-center">
-                                            <i class="fa fa-dashboard fa-3x"></i><br>
-                                            Dashboard
-                                        </div>
-                                    </a>
-                                </li>
-                                <li id="liMrv">
-                                    <a href="@Href("~/MRV/MRVCreation")">
-                                        <div class="text-center">
-                                            <i class="fa fa-book fa-3x"></i><br>
-                                            MRVoucher
-                                        </div>
-                                    </a>
-                                </li>
-                                <li id="liSalesEntry">
-                                    <a href="@Href("~/Job/JobEntry")">
-                                        <div class="text-center">
-                                            <i class="fa fa-pencil-square-o fa-3x"></i><br>
-                                            Sales Entery
-                                        </div>
-                                    </a>
-                                </li>
-                                <li id="liCashMemo">
-                                    <a href="@Href("~/Cash/CashMemo")">
-                                        <div class="text-center">
-                                            <i class="fa fa-briefcase fa-3x"></i><br>
-                                            Cash Memo
-                                        </div>
-                                    </a>
-                                </li>
-                                <li id="liInvoicePrep">
-                                    <a href="@Href("~/Invoice/InvoicePreparation")">
-                                        <div class="text-center">
-                                            <i class="fa fa-file-text-o fa-3x"></i><br>
-                                            Invoice
-                                        </div>
-                                    </a>
-                                </li>
-                                <li id="liPurchaseEntry">
-                                    <a href="@Href("~/Purchase/PurchaseEntry")">
-                                        <div class="text-center">
-                                            <i class="fa fa-list-ol fa-3x"></i><br>
-                                            Purchase
-                                        </div>
-                                    </a>
-                                </li>
-                                <li id="liCashReceipt">
-                                    <a href="@Href("~/Cash/CashReceipt")">
-                                        <div class="text-center">
-                                            <i class="fa fa-credit-card fa-3x"></i><br>
-                                            Cash RV
-                                        </div>
-                                    </a>
-                                </li>
-                                <li id="liBankReceipt">
-                                    <a href="@Href("~/Bank/BankReceipt")">
-                                        <div class="text-center">
-                                            <i class="fa fa-credit-card fa-3x"></i><br>
-                                            Bank RV
-                                        </div>
-                                    </a>
-                                </li>
-                                <li id="liCashPayments">
-                                    <a href="@Href("~/Cash/CashPayments")">
-                                        <div class="text-center">
-                                            <i class="fa fa-check-square-o fa-3x"></i><br>
-                                            Cash Pay
-                                        </div>
-                                    </a>
-                                </li>
-                                <li id="liBankPayment">
-                                    <a href="@Href("~/Bank/BankPayment")">
-                                        <div class="text-center">
-                                            <i class="fa fa-check-square-o fa-3x"></i><br>
-                                            Bank Pay
-                                        </div>
-                                    </a>
-                                </li>
-                                <li id="liQuotation">
-                                    <a href="@Href("~/Quotation/QuotationEntry")">
-                                        <div class="text-center">
-                                            <i class="fa fa-sort-amount-desc fa-3x"></i><br>
-                                            Quotation
-                                        </div>
-                                    </a>
-                                </li>
-                                <li id="liSearch">
-                                    <a href="@Href("~/Search/Search")">
-                                        <div class="text-center">
-                                            <i class="fa fa-search fa-3x"></i><br>
-                                            Search
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!--End - Quick Links Header -->
-                    </div>
-                </nav>
-            </div>
-        </div>
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-
-        </div>
-        <div class="header-top">
-            <footer>
-                <div class="container">
+            </li>
+        </ul>
+    </li>
+</ul>
+</ul>
+</div>
+<!--End - Main Header Menu-->
+<!--Start - Quick Links Header -->
+<div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul id="quickLinks" class="nav navbar-nav">
+        <li id="liDashboard" class="active">
+            <a href="#">
+                <div class="text-center">
+                    <i class="fa fa-dashboard fa-3x"></i><br>
+                    Dashboard
                 </div>
-            </footer>
-            <div class="footer-bottom">
-                <div class="container">
-                    <div class="footer-bottom-widget">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <p>
-                                    <span class="sosmed-footer">
+            </a>
+        </li>
+        <li id="liMrv">
+            <a href="@Href("~/MRV/MRVCreation")">
+                <div class="text-center">
+                    <i class="fa fa-book fa-3x"></i><br>
+                    MRVoucher
+                </div>
+            </a>
+        </li>
+        <li id="liSalesEntry">
+            <a href="@Href("~/Job/JobEntry")">
+                <div class="text-center">
+                    <i class="fa fa-pencil-square-o fa-3x"></i><br>
+                    Sales Entery
+                </div>
+            </a>
+        </li>
+        <li id="liCashMemo">
+            <a href="@Href("~/Cash/CashMemo")">
+                <div class="text-center">
+                    <i class="fa fa-briefcase fa-3x"></i><br>
+                    Cash Memo
+                </div>
+            </a>
+        </li>
+        <li id="liInvoicePrep">
+            <a href="@Href("~/Invoice/InvoicePreparation")">
+                <div class="text-center">
+                    <i class="fa fa-file-text-o fa-3x"></i><br>
+                    Invoice
+                </div>
+            </a>
+        </li>
+        <li id="liPurchaseEntry">
+            <a href="@Href("~/Purchase/PurchaseEntry")">
+                <div class="text-center">
+                    <i class="fa fa-list-ol fa-3x"></i><br>
+                    Purchase
+                </div>
+            </a>
+        </li>
+        <li id="liCashReceipt">
+            <a href="@Href("~/Cash/CashReceipt")">
+                <div class="text-center">
+                    <i class="fa fa-credit-card fa-3x"></i><br>
+                    Cash RV
+                </div>
+            </a>
+        </li>
+        <li id="liBankReceipt">
+            <a href="@Href("~/Bank/BankReceipt")">
+                <div class="text-center">
+                    <i class="fa fa-credit-card fa-3x"></i><br>
+                    Bank RV
+                </div>
+            </a>
+        </li>
+        <li id="liCashPayments">
+            <a href="@Href("~/Cash/CashPayments")">
+                <div class="text-center">
+                    <i class="fa fa-check-square-o fa-3x"></i><br>
+                    Cash Pay
+                </div>
+            </a>
+        </li>
+        <li id="liBankPayment">
+            <a href="@Href("~/Bank/BankPayment")">
+                <div class="text-center">
+                    <i class="fa fa-check-square-o fa-3x"></i><br>
+                    Bank Pay
+                </div>
+            </a>
+        </li>
+        <li id="liQuotation">
+            <a href="@Href("~/Quotation/QuotationEntry")">
+                <div class="text-center">
+                    <i class="fa fa-sort-amount-desc fa-3x"></i><br>
+                    Quotation
+                </div>
+            </a>
+        </li>
+        <li id="liSearch">
+            <a href="@Href("~/Search/Search")">
+                <div class="text-center">
+                    <i class="fa fa-search fa-3x"></i><br>
+                    Search
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>
+<!--End - Quick Links Header -->
+</div>
+</nav>
+</div>
+</div>
+
+
+@*sidebar*@
+
+
+<div class="nav-side-menu" id="left-menu-wrap">
+    @*<div class="brand">Brand Logo</div>*@
+    <i class="fa fa-bars fa-2x toggle-btn collapsed" data-toggle="collapse" data-target="#menu-content" aria-expanded="false"></i>
+
+    <div class="menu-list">
+
+        <ul id="menu-content" class="menu-content out collapse" aria-expanded="false" style="height: 0px;">
+
+            @*finance section*@
+            <li data-toggle="collapse" data-target="#finance" class="collapsed active">
+                <a href="#"><i class="fa fa-dashboard fa-lg"></i> Finance <span class="arrow"></span></a>
+            </li>
+            <ul class="sub-menu collapse" id="finance">
+                <li class="active"><a href="#">GICreation</a></li>
+                <li class="active"><a href="#">APCreation</a></li>
+                <li class="active"><a href="#">Bank Creation</a></li>
+                @*secondlevel*@
+                <li data-toggle="collapse" data-target="#Paments" class="collapsed">
+                    <a href="#">Paments <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse second-level-childs" id="Paments">
+                    <li class="active"><a href="#">Cash Payments</a></li>
+                    <li class="active"><a href="#">Bank Payments</a></li>
+                </ul>
+
+                <li data-toggle="collapse" data-target="#Receipt" class="collapsed">
+                    <a href="#">Receipts <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse second-level-childs" id="Receipt">
+                    <li class="active"><a href="#">Cash Receipt</a></li>
+                    <li class="active"><a href="#">Bank Receipt</a></li>
+                    <li class="active"><a href="#">PDC Receipt</a></li>
+                </ul>
+                <li class="active"><a href="#">JV Creation</a></li>
+                <li class="active"><a href="#">AR/AP Matching</a></li>
+                <li class="active"><a href="#">AR UnMatching</a></li>
+
+                <li data-toggle="collapse" data-target="#SalesReports" class="collapsed">
+                    <a href="#">Sales Reports <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse second-level-childs" id="SalesReports">
+                    <li class="active"><a href="#">Sales Report</a></li>
+                    <li class="active"><a href="#">Empwise Sales Report</a></li>
+                </ul>
+
+                <li data-toggle="collapse" data-target="#Statement" class="collapsed">
+                    <a href="#">Statement <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse second-level-childs" id="Statement">
+                    <li class="active"><a href="#">AR Detailed Statement</a></li>
+                    <li class="active"><a href="#">AR Outstanding</a></li>
+                    <li class="active"><a href="#">AR Outstanding Statement</a></li>
+                    <li class="active"><a href="#">AP Detailed Statement</a></li>
+                    <li class="active"><a href="#">Bank Statement</a></li>
+                    <li class="active"><a href="#">Stock Report</a></li>
+                    <li class="active"><a href="#">Stock Ledger </a></li>
+                    <li class="active"><a href="#">GL Statement</a></li>
+                    <li class="active"><a href="#">Trial balance</a></li>
+                    <li class="active"><a href="#">Proft/Loss Statement</a></li>
+                    <li class="active"><a href="#">Balance Sheet</a></li>
+                </ul>
+
+                <li data-toggle="collapse" data-target="#List" class="collapsed">
+                    <a href="#">List <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse second-level-childs" id="List">
+                    <li class="active"><a href="#">General Ledgers</a></li>
+                    <li class="active"><a href="#">Accounts Receivable</a></li>
+                    <li class="active"><a href="#">Accounts Payable</a></li>
+                </ul>
+                <li class="active"><a href="#">Reversal</a></li>
+                <li data-toggle="collapse" data-target="#DuplicatePrinting" class="collapsed">
+                    <a href="#">Duplicate Printing <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse second-level-childs" id="DuplicatePrinting">
+                    <li class="active"><a href="#">JV Printing</a></li>
+                    <li class="active"><a href="#">Voucher Print</a></li>
+                </ul>
+                <li class="active"><a href="#">Day End Process</a></li>
+
+                <li data-toggle="collapse" data-target="#UserAdmin" class="collapsed">
+                    <a href="#">User Admin<span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse second-level-childs" id="UserAdmin">
+                    <li class="active"><a href="#">User Creation</a></li>
+                    <li class="active"><a href="#">Change Password</a></li>
+                </ul>
+                @*secondlevel*@
+
+
+            </ul>
+            @*Daily Trans section*@
+            <li data-toggle="collapse" data-target="#products" class="collapsed">
+                <a href="#"><i class="fa fa-gift fa-lg"></i> Daily Transactions<span class="arrow"></span></a>
+            </li>
+            <ul class="sub-menu collapse" id="products">
+                @*secondlevel*@
+                <li data-toggle="collapse" data-target="#cancel" class="collapsed">
+                    <a href="#">Cancel <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse second-level-childs" id="cancel">
+                    <li class="active"><a href="#">Job Cancellation </a></li>
+                </ul>
+                @*secondlevel*@
+                <li class="active"><a href="#">CSS3</a></li>
+            </ul>
+
+            @*setting section*@
+            <li data-toggle="collapse" data-target="#settings" class="collapsed">
+                <a href="#"><i class="fa fa-gift fa-lg"></i> Setting <span class="arrow"></span></a>
+            </li>
+            <ul class="sub-menu collapse" id="settings">
+                <li class="active"><a href="#">CSS3</a></li>
+            </ul>
+
+            @*Admin section*@
+            <li data-toggle="collapse" data-target="#admin" class="collapsed">
+                <a href="#"><i class="fa fa-gift fa-lg"></i> Admin <span class="arrow"></span></a>
+            </li>
+            <ul class="sub-menu collapse" id="admin">
+                <li class="active"><a href="#">CSS3</a></li>
+            </ul>
+
+            @*REPORT section*@
+            <li data-toggle="collapse" data-target="#report" class="collapsed">
+                <a href="#"><i class="fa fa-gift fa-lg"></i> Report <span class="arrow"></span></a>
+            </li>
+            <ul class="sub-menu collapse" id="report">
+                <li class="active"><a href="#">CSS3</a></li>
+            </ul>
+
+            @*REPORT section*@
+            <li data-toggle="collapse" data-target="#search" class="collapsed">
+                <a href="#"><i class="fa fa-gift fa-lg"></i>Reports<span class="arrow"></span></a>
+            </li>
+            <ul class="sub-menu collapse" id="search">
+                <li class="active"><a href="#">CSS3</a></li>
+            </ul>
+        </ul>
+    </div>
+</div>
+@*#sidebar*@
+
+<div class="container body-content">
+
+    @RenderBody()
+    <hr/>
+
+</div>
+<div class="header-top">
+    <footer>
+        <div class="container">
+        </div>
+    </footer>
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="footer-bottom-widget">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p>
+                            <span class="sosmed-footer">
                                         <a href="#"><i class="fa fa-facebook" data-toggle="tooltip" data-placement="top" title="Facebook"></i></a>
                                         <a href="#"><i class="fa fa-twitter" data-toggle="tooltip" data-placement="top" title="Twitter"></i></a>
                                     </span>
-                                    &copy; @System.DateTime.Now.Year <strong>Mahboob Electrical Services</strong>
-                                </p>
-                            </div>
-                            <div class="col-sm-6">
-                                <p class="footer-bottom-links">
-                                    <a href="#">About <strong>Mahboob Electrical Services</strong></a>
-                                    <a href="#">Privacy Policy</a>
-                                    <a href="#">Terms & Conditions</a>
-                                </p>
-                            </div>
-                        </div>
+                            &copy; @System.DateTime.Now.Year <strong>Mahboob Electrical Services</strong>
+                        </p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="footer-bottom-links">
+                            <a href="#">About <strong>Mahboob Electrical Services</strong></a>
+                            <a href="#">Privacy Policy</a>
+                            <a href="#">Terms & Conditions</a>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- end:footer -->
     </div>
+</div>
+<!-- end:footer -->
+</div>
     <!-- end:wrapper -->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/libraries")
@@ -720,5 +870,14 @@
     {
         @RenderSection("scripts", false)
     }
+
+<script>
+    $('#showHideMenu').click(function () {
+        var toggleWidth = $(".nav-side-menu").width() == 0 ? "270px" : "0";
+        $('.nav-side-menu').animate({ width: toggleWidth });
+    });
+
+    
+</script>
 </body>
 </html>
