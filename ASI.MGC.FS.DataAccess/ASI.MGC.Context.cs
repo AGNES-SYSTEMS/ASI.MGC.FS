@@ -761,5 +761,100 @@ namespace ASI.MGC.FS.DataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_MaterialReceiptVoucher_Result>("rpt_MaterialReceiptVoucher", mRVNOParameter);
         }
+    
+        public virtual ObjectResult<rpt_Purchase_Invoice_Result> rpt_Purchase_Invoice(string purchaseNo)
+        {
+            var purchaseNoParameter = purchaseNo != null ?
+                new ObjectParameter("PurchaseNo", purchaseNo) :
+                new ObjectParameter("PurchaseNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_Purchase_Invoice_Result>("rpt_Purchase_Invoice", purchaseNoParameter);
+        }
+    
+        public virtual ObjectResult<sp_ARAPListTB_Result> sp_ARAPListTB(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ARAPListTB_Result>("sp_ARAPListTB", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<sp_BMBTListTB_Result> sp_BMBTListTB(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_BMBTListTB_Result>("sp_BMBTListTB", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual int sp_GetBankStatementData(Nullable<int> bankCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        {
+            var bankCodeParameter = bankCode.HasValue ?
+                new ObjectParameter("BankCode", bankCode) :
+                new ObjectParameter("BankCode", typeof(int));
+    
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetBankStatementData", bankCodeParameter, startDateParameter, endDateParameter);
+        }
+    
+        public virtual int sp_GetGLStatementData(Nullable<int> gLCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        {
+            var gLCodeParameter = gLCode.HasValue ?
+                new ObjectParameter("GLCode", gLCode) :
+                new ObjectParameter("GLCode", typeof(int));
+    
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetGLStatementData", gLCodeParameter, startDateParameter, endDateParameter);
+        }
+    
+        public virtual int sp_GetTrialBalanceData(Nullable<System.DateTime> startdate, Nullable<System.DateTime> endDate)
+        {
+            var startdateParameter = startdate.HasValue ?
+                new ObjectParameter("Startdate", startdate) :
+                new ObjectParameter("Startdate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetTrialBalanceData", startdateParameter, endDateParameter);
+        }
+    
+        public virtual ObjectResult<sp_GLMGLTListTB_Result> sp_GLMGLTListTB(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GLMGLTListTB_Result>("sp_GLMGLTListTB", sTARTDATEParameter, eNDDATEParameter);
+        }
     }
 }

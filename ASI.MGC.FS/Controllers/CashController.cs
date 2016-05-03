@@ -400,7 +400,6 @@ namespace ASI.MGC.FS.Controllers
             return Json(cpNo, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
         public ActionResult CashMemoReversal()
         {
             return View();

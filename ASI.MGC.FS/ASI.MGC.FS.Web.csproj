@@ -633,7 +633,7 @@
     <Content Include="Content\Images\bg-header.jpg" />
     <Content Include="Content\Images\bg.jpg" />
     <Content Include="Content\Images\blank-male.jpg" />
-    <Content Include="Content\Images\Loader.gif" />
+    <Content Include="Content\Images\loader.gif" />
     <Content Include="Content\Images\sort_asc.png" />
     <Content Include="Content\Images\sort_asc_disabled.png" />
     <Content Include="Content\Images\sort_both.png" />
@@ -820,8 +820,8 @@
     <Content Include="Content\DataTables\css\dataTables.jqueryui.scss" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
-    <None Include="Properties\PublishProfiles\ASIMGCFS.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
+    <None Include="Properties\PublishProfiles\MGC.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.typeahead.js" />
     <Content Include="Scripts\bootstrapValidator.min.js" />
@@ -843,7 +843,25 @@
     <Content Include="Scripts\Custom\Finance\ArUnMatching.js" />
     <Content Include="Scripts\Custom\Invoice\InvoicePreparation.js" />
     <Content Include="Scripts\Custom\Job\JobEntry.js" />
+    <Content Include="Scripts\Custom\MgcReports\ARStatement.js" />
+    <Content Include="Scripts\Custom\MgcReports\ARStatementOutStanding.js" />
+    <Content Include="Scripts\Custom\MgcReports\ARSummary.js" />
     <Content Include="Scripts\Custom\MgcReports\BalanceSheet.js" />
+    <Content Include="Scripts\Custom\MgcReports\BankPayment.js" />
+    <Content Include="Scripts\Custom\MgcReports\BankStatement.js" />
+    <Content Include="Scripts\Custom\MgcReports\CancelledJobs.js" />
+    <Content Include="Scripts\Custom\MgcReports\CashMemoReverse.js" />
+    <Content Include="Scripts\Custom\MgcReports\CashMemoWiseReport.js" />
+    <Content Include="Scripts\Custom\MgcReports\DeliveredMrvDetails.js" />
+    <Content Include="Scripts\Custom\MgcReports\DeliveryDetails.js" />
+    <Content Include="Scripts\Custom\MgcReports\EmpSales.js" />
+    <Content Include="Scripts\Custom\MgcReports\EmpWiseJobDetails.js" />
+    <Content Include="Scripts\Custom\MgcReports\GlStatement.js" />
+    <Content Include="Scripts\Custom\MgcReports\InvoiceWiseReport.js" />
+    <Content Include="Scripts\Custom\MgcReports\JobWiseStatement.js" />
+    <Content Include="Scripts\Custom\MgcReports\MrvStatement.js" />
+    <Content Include="Scripts\Custom\MgcReports\PendingMrvDetails.js" />
+    <Content Include="Scripts\Custom\MgcReports\ProfitLossStatement.js" />
     <Content Include="Scripts\Custom\MRV\MRVCreation.js" />
     <Content Include="Scripts\Custom\MRV\MRVSearchDetails.js" />
     <Content Include="Scripts\Custom\Purchase\PurchaseEntry.js" />
@@ -931,7 +949,9 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-1.11.0.min.js" />
-    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.bootstrapJqGrid.min.js" />
     <Content Include="Scripts\jquery.jqGrid.min.js" />

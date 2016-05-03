@@ -17,8 +17,9 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
-                var startDate = Convert.ToDateTime("01/01/2007");
-                var endDate = Convert.ToDateTime("12/31/2007");
+                var glCode = Convert.ToString(Request.QueryString["glCode"]);
+                var startDate = Convert.ToDateTime(Request.QueryString["startDate"]);
+                var endDate = Convert.ToDateTime(Request.QueryString["endDate"]);
                 DataTable dtGlStatement = uMethods.ConvertTo(repo.RptGlStatement(startDate, endDate));
 
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\GLStatement.rdlc";

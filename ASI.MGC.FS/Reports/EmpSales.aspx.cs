@@ -17,9 +17,9 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
-                var startDate = Convert.ToDateTime("01/01/2007");
-                var endDate = Convert.ToDateTime("12/31/2007");
-                var empCode = "GN";
+                var startDate = Convert.ToDateTime(Request.QueryString["startDate"]);
+                var endDate = Convert.ToDateTime(Request.QueryString["endDate"]);
+                var empCode = Convert.ToString(Request.QueryString["empCode"]);
                 DataTable dtEmpSales = uMethods.ConvertTo(repo.RptEmpSales(empCode, startDate, endDate));
 
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\EmpSales.rdlc";

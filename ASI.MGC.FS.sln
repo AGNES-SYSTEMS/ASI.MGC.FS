@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASI.MGC.FS.DataAccess", "AS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASI.MGC.FS.Domain", "ASI.MGC.FS.Domain\ASI.MGC.FS.Domain.csproj", "{D4E45DA1-1E84-4A52-BA8C-3EDD17B5219C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASI.MGC.FS.CrystalReports", "ASI.MGC.FS.CrystalReports\ASI.MGC.FS.CrystalReports.csproj", "{7A8E3562-6BD0-4059-9407-2FCE92F9D360}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{D4E45DA1-1E84-4A52-BA8C-3EDD17B5219C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4E45DA1-1E84-4A52-BA8C-3EDD17B5219C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4E45DA1-1E84-4A52-BA8C-3EDD17B5219C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A8E3562-6BD0-4059-9407-2FCE92F9D360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A8E3562-6BD0-4059-9407-2FCE92F9D360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A8E3562-6BD0-4059-9407-2FCE92F9D360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A8E3562-6BD0-4059-9407-2FCE92F9D360}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

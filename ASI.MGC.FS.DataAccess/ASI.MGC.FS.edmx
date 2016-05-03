@@ -1071,6 +1071,9 @@
           <Parameter Name="STARTDATE" Type="datetime" Mode="In" />
           <Parameter Name="ENDDATE" Type="datetime" Mode="In" />
         </Function>
+        <Function Name="rpt_Purchase_Invoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PurchaseNo" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="rpt_PurchaseRegister" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="STARTDATE" Type="datetime" Mode="In" />
           <Parameter Name="ENDDATE" Type="datetime" Mode="In" />
@@ -1108,6 +1111,14 @@
           <Parameter Name="version" Type="int" Mode="In" />
           <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
         </Function>
+        <Function Name="sp_ARAPListTB" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="STARTDATE" Type="datetime" Mode="In" />
+          <Parameter Name="ENDDATE" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_BMBTListTB" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="STARTDATE" Type="datetime" Mode="In" />
+          <Parameter Name="ENDDATE" Type="datetime" Mode="In" />
+        </Function>
         <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -1117,6 +1128,24 @@
         <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_GetBankStatementData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BankCode" Type="int" Mode="In" />
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_GetGLStatementData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GLCode" Type="int" Mode="In" />
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_GetTrialBalanceData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Startdate" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_GLMGLTListTB" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="STARTDATE" Type="datetime" Mode="In" />
+          <Parameter Name="ENDDATE" Type="datetime" Mode="In" />
         </Function>
         <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -1540,6 +1569,35 @@
             <End Role="UNITMESSUREMENT" EntitySet="UNITMESSUREMENTs" />
             <End Role="STOCKLEDGER" EntitySet="STOCKLEDGERs" />
           </AssociationSet>
+          <FunctionImport Name="rpt_Purchase_Invoice" ReturnType="Collection(ASI_MGC_FSModel.rpt_Purchase_Invoice_Result)">
+            <Parameter Name="PurchaseNo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ARAPListTB" ReturnType="Collection(ASI_MGC_FSModel.sp_ARAPListTB_Result)">
+            <Parameter Name="STARTDATE" Mode="In" Type="DateTime" />
+            <Parameter Name="ENDDATE" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_BMBTListTB" ReturnType="Collection(ASI_MGC_FSModel.sp_BMBTListTB_Result)">
+            <Parameter Name="STARTDATE" Mode="In" Type="DateTime" />
+            <Parameter Name="ENDDATE" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetBankStatementData">
+            <Parameter Name="BankCode" Mode="In" Type="Int32" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetGLStatementData">
+            <Parameter Name="GLCode" Mode="In" Type="Int32" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetTrialBalanceData">
+            <Parameter Name="Startdate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GLMGLTListTB" ReturnType="Collection(ASI_MGC_FSModel.sp_GLMGLTListTB_Result)">
+            <Parameter Name="STARTDATE" Mode="In" Type="DateTime" />
+            <Parameter Name="ENDDATE" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="rpt_BankPayment_Result">
           <Property Type="String" Name="COMPANYNAME_CM" Nullable="true" MaxLength="50" />
@@ -3100,6 +3158,71 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="rpt_Purchase_Invoice_Result">
+          <Property Type="Int32" Name="SlNo_ART" Nullable="false" />
+          <Property Type="String" Name="DOCNUMBER_ART" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="DODATE_ART" Nullable="true" />
+          <Property Type="DateTime" Name="GLDATE_ART" Nullable="true" />
+          <Property Type="String" Name="ARAPCODE_ART" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="DEBITAMOUNT_ART" Nullable="true" />
+          <Property Type="Int32" Name="CREDITAMOUNT_ART" Nullable="true" />
+          <Property Type="String" Name="OTHERREF_ART" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="NARRATION_ART" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="USER_ART" Nullable="true" MaxLength="3" />
+          <Property Type="Decimal" Name="MATCHVALUE_AR" Nullable="true" Precision="19" />
+          <Property Type="String" Name="STATUS_ART" Nullable="true" MaxLength="2" />
+          <Property Type="Int32" Name="SLNO_SL" Nullable="false" />
+          <Property Type="DateTime" Name="DOC_DATE_SL" Nullable="true" />
+          <Property Type="DateTime" Name="LEDGER_DATE_SL" Nullable="true" />
+          <Property Type="String" Name="VOUCHERNO_SL" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="OTHERREF_SL" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="PRODID_SL" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="BATCHNO_SL" Nullable="true" MaxLength="15" />
+          <Property Type="Int32" Name="RECEPT_QTY_SL" Nullable="true" />
+          <Property Type="Decimal" Name="RECEPT_RATE_SL" Nullable="true" Precision="19" />
+          <Property Type="Int32" Name="ISSUE_QTY_SL" Nullable="true" />
+          <Property Type="Decimal" Name="ISSUE_RATE_SL" Nullable="true" Precision="19" />
+          <Property Type="String" Name="UNIT_SL" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="STATUS_SL" Nullable="true" MaxLength="1" />
+          <Property Type="Int32" Name="SLNO_GLT" Nullable="false" />
+          <Property Type="String" Name="DOCNUMBER_GLT" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="DOCDATE_GLT" Nullable="true" />
+          <Property Type="DateTime" Name="GLDATE_GLT" Nullable="true" />
+          <Property Type="String" Name="GLACCODE_GLT" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="OTHERREF_GLT" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="DEBITAMOUNT_GLT" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="CREDITAMOUNT_GLT" Nullable="true" Precision="19" />
+          <Property Type="String" Name="NARRATION_GLT" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="GLSTATUS_GLT" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="VARUSER" Nullable="true" MaxLength="15" />
+        </ComplexType>
+        <ComplexType Name="sp_ARAPListTB_Result">
+          <Property Type="Int32" Name="CODE_TB" Nullable="false" />
+          <Property Type="String" Name="ACCODE_TB" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="DESCRIPTION_TB" Nullable="true" MaxLength="40" />
+          <Property Type="Int32" Name="OPENING_TB" Nullable="false" />
+          <Property Type="Int32" Name="DEBIT_TB" Nullable="false" />
+          <Property Type="Int32" Name="CREDIT_TB" Nullable="false" />
+          <Property Type="Int32" Name="NET_TB" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_BMBTListTB_Result">
+          <Property Type="Int32" Name="CODE_TB" Nullable="false" />
+          <Property Type="String" Name="ACCODE_TB" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="DESCRIPTION_TB" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="OPENING_TB" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="DEBIT_TB" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="CREDIT_TB" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="NET_TB" Nullable="false" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="sp_GLMGLTListTB_Result">
+          <Property Type="Int32" Name="CODE_TB" Nullable="false" />
+          <Property Type="String" Name="ACCODE_TB" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="DESCRIPTION_TB" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="OPENING_TB" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="DEBIT_TB" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="CREDIT_TB" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="NET_TB" Nullable="false" Precision="19" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4788,6 +4911,90 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="rpt_Purchase_Invoice" FunctionName="ASI_MGC_FSModel.Store.rpt_Purchase_Invoice">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.rpt_Purchase_Invoice_Result">
+                <ScalarProperty Name="SlNo_ART" ColumnName="SlNo_ART" />
+                <ScalarProperty Name="DOCNUMBER_ART" ColumnName="DOCNUMBER_ART" />
+                <ScalarProperty Name="DODATE_ART" ColumnName="DODATE_ART" />
+                <ScalarProperty Name="GLDATE_ART" ColumnName="GLDATE_ART" />
+                <ScalarProperty Name="ARAPCODE_ART" ColumnName="ARAPCODE_ART" />
+                <ScalarProperty Name="DEBITAMOUNT_ART" ColumnName="DEBITAMOUNT_ART" />
+                <ScalarProperty Name="CREDITAMOUNT_ART" ColumnName="CREDITAMOUNT_ART" />
+                <ScalarProperty Name="OTHERREF_ART" ColumnName="OTHERREF_ART" />
+                <ScalarProperty Name="NARRATION_ART" ColumnName="NARRATION_ART" />
+                <ScalarProperty Name="USER_ART" ColumnName="USER_ART" />
+                <ScalarProperty Name="MATCHVALUE_AR" ColumnName="MATCHVALUE_AR" />
+                <ScalarProperty Name="STATUS_ART" ColumnName="STATUS_ART" />
+                <ScalarProperty Name="SLNO_SL" ColumnName="SLNO_SL" />
+                <ScalarProperty Name="DOC_DATE_SL" ColumnName="DOC_DATE_SL" />
+                <ScalarProperty Name="LEDGER_DATE_SL" ColumnName="LEDGER_DATE_SL" />
+                <ScalarProperty Name="VOUCHERNO_SL" ColumnName="VOUCHERNO_SL" />
+                <ScalarProperty Name="OTHERREF_SL" ColumnName="OTHERREF_SL" />
+                <ScalarProperty Name="PRODID_SL" ColumnName="PRODID_SL" />
+                <ScalarProperty Name="BATCHNO_SL" ColumnName="BATCHNO_SL" />
+                <ScalarProperty Name="RECEPT_QTY_SL" ColumnName="RECEPT_QTY_SL" />
+                <ScalarProperty Name="RECEPT_RATE_SL" ColumnName="RECEPT_RATE_SL" />
+                <ScalarProperty Name="ISSUE_QTY_SL" ColumnName="ISSUE_QTY_SL" />
+                <ScalarProperty Name="ISSUE_RATE_SL" ColumnName="ISSUE_RATE_SL" />
+                <ScalarProperty Name="UNIT_SL" ColumnName="UNIT_SL" />
+                <ScalarProperty Name="STATUS_SL" ColumnName="STATUS_SL" />
+                <ScalarProperty Name="SLNO_GLT" ColumnName="SLNO_GLT" />
+                <ScalarProperty Name="DOCNUMBER_GLT" ColumnName="DOCNUMBER_GLT" />
+                <ScalarProperty Name="DOCDATE_GLT" ColumnName="DOCDATE_GLT" />
+                <ScalarProperty Name="GLDATE_GLT" ColumnName="GLDATE_GLT" />
+                <ScalarProperty Name="GLACCODE_GLT" ColumnName="GLACCODE_GLT" />
+                <ScalarProperty Name="OTHERREF_GLT" ColumnName="OTHERREF_GLT" />
+                <ScalarProperty Name="DEBITAMOUNT_GLT" ColumnName="DEBITAMOUNT_GLT" />
+                <ScalarProperty Name="CREDITAMOUNT_GLT" ColumnName="CREDITAMOUNT_GLT" />
+                <ScalarProperty Name="NARRATION_GLT" ColumnName="NARRATION_GLT" />
+                <ScalarProperty Name="GLSTATUS_GLT" ColumnName="GLSTATUS_GLT" />
+                <ScalarProperty Name="VARUSER" ColumnName="VARUSER" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ARAPListTB" FunctionName="ASI_MGC_FSModel.Store.sp_ARAPListTB">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_ARAPListTB_Result">
+                <ScalarProperty Name="CODE_TB" ColumnName="CODE_TB" />
+                <ScalarProperty Name="ACCODE_TB" ColumnName="ACCODE_TB" />
+                <ScalarProperty Name="DESCRIPTION_TB" ColumnName="DESCRIPTION_TB" />
+                <ScalarProperty Name="OPENING_TB" ColumnName="OPENING_TB" />
+                <ScalarProperty Name="DEBIT_TB" ColumnName="DEBIT_TB" />
+                <ScalarProperty Name="CREDIT_TB" ColumnName="CREDIT_TB" />
+                <ScalarProperty Name="NET_TB" ColumnName="NET_TB" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_BMBTListTB" FunctionName="ASI_MGC_FSModel.Store.sp_BMBTListTB">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_BMBTListTB_Result">
+                <ScalarProperty Name="CODE_TB" ColumnName="CODE_TB" />
+                <ScalarProperty Name="ACCODE_TB" ColumnName="ACCODE_TB" />
+                <ScalarProperty Name="DESCRIPTION_TB" ColumnName="DESCRIPTION_TB" />
+                <ScalarProperty Name="OPENING_TB" ColumnName="OPENING_TB" />
+                <ScalarProperty Name="DEBIT_TB" ColumnName="DEBIT_TB" />
+                <ScalarProperty Name="CREDIT_TB" ColumnName="CREDIT_TB" />
+                <ScalarProperty Name="NET_TB" ColumnName="NET_TB" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetBankStatementData" FunctionName="ASI_MGC_FSModel.Store.sp_GetBankStatementData" />
+          <FunctionImportMapping FunctionImportName="sp_GetGLStatementData" FunctionName="ASI_MGC_FSModel.Store.sp_GetGLStatementData" />
+          <FunctionImportMapping FunctionImportName="sp_GetTrialBalanceData" FunctionName="ASI_MGC_FSModel.Store.sp_GetTrialBalanceData" />
+          <FunctionImportMapping FunctionImportName="sp_GLMGLTListTB" FunctionName="ASI_MGC_FSModel.Store.sp_GLMGLTListTB">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GLMGLTListTB_Result">
+                <ScalarProperty Name="CODE_TB" ColumnName="CODE_TB" />
+                <ScalarProperty Name="ACCODE_TB" ColumnName="ACCODE_TB" />
+                <ScalarProperty Name="DESCRIPTION_TB" ColumnName="DESCRIPTION_TB" />
+                <ScalarProperty Name="OPENING_TB" ColumnName="OPENING_TB" />
+                <ScalarProperty Name="DEBIT_TB" ColumnName="DEBIT_TB" />
+                <ScalarProperty Name="CREDIT_TB" ColumnName="CREDIT_TB" />
+                <ScalarProperty Name="NET_TB" ColumnName="NET_TB" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
