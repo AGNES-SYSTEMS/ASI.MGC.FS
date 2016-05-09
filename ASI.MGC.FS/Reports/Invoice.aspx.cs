@@ -17,7 +17,7 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
-                var invType = "INV";
+                const string invType = "INV";
                 var invNo = Request.QueryString["invNo"];
                 DataTable dtInvoice = uMethods.ConvertTo(repo.RptInvoice(invNo, invType));
 

@@ -17,7 +17,7 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
-                var dlNo = "DLN/1859/2007";
+                var dlNo = Request.QueryString["dlNo"];
                 DataTable dtDeliveryNoteDetails = uMethods.ConvertTo(repo.RptDeliveryNoteDetails(dlNo));
 
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\DeliveryNoteDetails.rdlc";

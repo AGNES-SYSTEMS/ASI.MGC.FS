@@ -645,6 +645,7 @@
     <Content Include="Content\jquery-ui.structure.min.css" />
     <Content Include="Content\jquery.easy-pie-chart.css" />
     <Content Include="Content\jquery.jqGrid\ui.jqgrid.css" />
+    <Content Include="Content\reportViewerStyle.css" />
     <Content Include="Content\LoginPageStyle.css" />
     <Content Include="Content\owl.carousel.css" />
     <Content Include="Content\owl.theme.css" />
@@ -862,6 +863,12 @@
     <Content Include="Scripts\Custom\MgcReports\MrvStatement.js" />
     <Content Include="Scripts\Custom\MgcReports\PendingMrvDetails.js" />
     <Content Include="Scripts\Custom\MgcReports\ProfitLossStatement.js" />
+    <Content Include="Scripts\Custom\MgcReports\PurchaseRegister.js" />
+    <Content Include="Scripts\Custom\MgcReports\ReversedInvoice.js" />
+    <Content Include="Scripts\Custom\MgcReports\StockLedger.js" />
+    <Content Include="Scripts\Custom\MgcReports\StockReceipt.js" />
+    <Content Include="Scripts\Custom\MgcReports\StockReport.js" />
+    <Content Include="Scripts\Custom\MgcReports\TrialBalance.js" />
     <Content Include="Scripts\Custom\MRV\MRVCreation.js" />
     <Content Include="Scripts\Custom\MRV\MRVSearchDetails.js" />
     <Content Include="Scripts\Custom\Purchase\PurchaseEntry.js" />

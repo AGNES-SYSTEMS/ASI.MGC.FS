@@ -17,8 +17,8 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
-                var startDate = Convert.ToDateTime("01/01/2007");
-                var endDate = Convert.ToDateTime("12/31/2007");
+                var startDate = Convert.ToDateTime(Request.QueryString["startDate"]);
+                var endDate = Convert.ToDateTime(Request.QueryString["endDate"]);
                 DataTable dtPurchaseRegister = uMethods.ConvertTo(repo.RptPurchaseRegister(startDate, endDate));
 
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\PurchaseRegister.rdlc";
@@ -31,7 +31,7 @@ namespace ASI.MGC.FS.Reports
                 ReportViewer1.LocalReport.Refresh();
                 Response.Clear();
                 byte[] bytes = ReportViewer1.LocalReport.Render("PDF");
-                var fileNamewithType = "inline;filename=PurchaseRegister.pdf";
+                const string fileNamewithType = "inline;filename=PurchaseRegister.pdf";
                 Response.AddHeader("Content-Disposition", fileNamewithType);
                 Response.ContentType = "application/pdf";
                 Response.BinaryWrite(bytes);

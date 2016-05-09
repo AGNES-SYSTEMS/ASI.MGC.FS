@@ -17,7 +17,7 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
-                var voucherNo = "RCT/1462/2007";
+                var voucherNo = Request.QueryString["voucherNo"];
                 DataTable dtStockJournal = uMethods.ConvertTo(repo.RptStockJournal(voucherNo));
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\StockJournal.rdlc";
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("VOUCHERNO", voucherNo));

@@ -17,8 +17,8 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
-                var invType = "INV";
-                var invNo = "INV/1001/2015";
+                const string invType = "INV";
+                var invNo = Request.QueryString["invNo"];
                 DataTable dtSalesInvoice = uMethods.ConvertTo(repo.RptSalesInvoice(invNo, invType));
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\SalesInvoice.rdlc";
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("INVNO", invType));

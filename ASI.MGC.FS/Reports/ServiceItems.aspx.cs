@@ -24,7 +24,7 @@ namespace ASI.MGC.FS.Reports
             ReportViewer1.LocalReport.Refresh();
             Response.Clear();
             byte[] bytes = ReportViewer1.LocalReport.Render("PDF");
-            var fileNamewithType = "inline;filename=ServiceItems.pdf";
+            const string fileNamewithType = "inline;filename=ServiceItems.pdf";
             Response.AddHeader("Content-Disposition", fileNamewithType);
             Response.ContentType = "application/pdf";
             Response.BinaryWrite(bytes);
