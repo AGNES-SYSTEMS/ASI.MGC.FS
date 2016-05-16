@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Accounts Payable";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.currPage = "Accounts Payable";
+}
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>Accounts Payable</legend>
+            <div class="row">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-11">
+                            <div id="grid" class="panel-body">
+                                <section>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <div class="col-md-12 input-group">
+                                                @Html.TextBox("accountsPayable", null, new { ID = "txtAccountsPayable", Class = "form-control" })
+                                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table id="tblAccountsPayable"></table>
+                                    <div id="Pager"></div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/Custom/Finance/AccountsPayableList.js")"></script>
+}

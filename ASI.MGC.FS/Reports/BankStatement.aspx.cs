@@ -17,10 +17,11 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
+                var bankCode = Convert.ToInt32(Request.QueryString["bankCode"]);
                 var startDate = Convert.ToDateTime(Request.QueryString["startDate"]);
                 var endDate = Convert.ToDateTime(Request.QueryString["endDate"]);
+                repo.SpGetBankStatementData(bankCode, startDate, endDate);
                 DataTable dtBankStatement = uMethods.ConvertTo(repo.RptBankStatement(startDate, endDate));
-
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\BankStatement.rdlc";
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("STARTDATE", startDate.ToShortDateString()));
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("ENDDATE", endDate.ToShortDateString()));
@@ -29,13 +30,13 @@ namespace ASI.MGC.FS.Reports
                 ReportViewer1.LocalReport.DataSources.Add(rds);
                 ReportViewer1.DataBind();
                 ReportViewer1.LocalReport.Refresh();
-                Response.Clear();
-                byte[] bytes = ReportViewer1.LocalReport.Render("PDF");
-                var fileNamewithType = "inline;filename=BankStatement.pdf";
-                Response.AddHeader("Content-Disposition", fileNamewithType);
-                Response.ContentType = "application/pdf";
-                Response.BinaryWrite(bytes);
-                Response.End();
+                //Response.Clear();
+                //byte[] bytes = ReportViewer1.LocalReport.Render("PDF");
+                //const string fileNamewithType = "inline;filename=BankStatement.pdf";
+                //Response.AddHeader("Content-Disposition", fileNamewithType);
+                //Response.ContentType = "application/pdf";
+                //Response.BinaryWrite(bytes);
+                //Response.End();
             }
         }
     }

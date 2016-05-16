@@ -114,6 +114,8 @@ namespace ASI.MGC.FS.Controllers
                 _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBankTransaction);
                 _unitOfWork.Save();
                 brNo = objBankTransaction.DOCNUMBER_BT;
+                _unitOfWork.Truncate("VOUCHERMASTER_RPT");
+                _unitOfWork.Truncate("VOUCHERCHILD_RPT");
                 var objVoucherMaster = _unitOfWork.Repository<VOUCHERMASTER_RPT>().Create();
                 objVoucherMaster.GLDATE_VRPT = objBankTransaction.GLDATE_BT;
                 objVoucherMaster.ALLCODE_VRPT = "Bank";
@@ -247,6 +249,8 @@ namespace ASI.MGC.FS.Controllers
                 objBankTransaction.MASTERSTATUS_BT = "M";
                 _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBankTransaction);
                 _unitOfWork.Save();
+                _unitOfWork.Truncate("VOUCHERMASTER_RPT");
+                _unitOfWork.Truncate("VOUCHERCHILD_RPT");
                 bpNo = objBankTransaction.DOCNUMBER_BT;
                 var objVoucherMaster = _unitOfWork.Repository<VOUCHERMASTER_RPT>().Create();
                 objVoucherMaster.GLDATE_VRPT = objBankTransaction.GLDATE_BT;

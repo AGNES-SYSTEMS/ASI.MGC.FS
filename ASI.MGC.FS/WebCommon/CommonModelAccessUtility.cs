@@ -174,7 +174,6 @@ namespace ASI.MGC.FS.WebCommon
 
             return bankStatusDictionary;
         }
-
         public static int GetReturnPurchaseCount(IUnitOfWork iUnitOfWork)
         {
             var currYear = DateTime.Now.Year.ToString();
@@ -182,6 +181,19 @@ namespace ASI.MGC.FS.WebCommon
                             where lstArApLedger.DOCNUMBER_ART.Contains("RPC") && lstArApLedger.DOCNUMBER_ART.EndsWith(currYear)
                             select lstArApLedger.DOCNUMBER_ART).Distinct().Count();
             return revCount;
+        }
+
+        public static Dictionary<int, string> GetVoucherTypes()
+        {
+            var voucherDictionary = new Dictionary<int, string>
+            {
+                {1, "Cash Payment"},
+                {2, "Cash Receipt" },
+                {3, "Bank Payment"},
+                {4, "Bank Receipt" }
+            };
+
+            return voucherDictionary;
         }
     }
 }

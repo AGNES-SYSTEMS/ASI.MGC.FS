@@ -1143,6 +1143,10 @@
           <Parameter Name="Startdate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
         </Function>
+        <Function Name="sp_GetVoucherDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vType" Type="varchar" Mode="In" />
+          <Parameter Name="vCode" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_GLMGLTListTB" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="STARTDATE" Type="datetime" Mode="In" />
           <Parameter Name="ENDDATE" Type="datetime" Mode="In" />
@@ -1154,6 +1158,9 @@
         <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_JvDataList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="jvNo" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -1570,7 +1577,7 @@
             <End Role="STOCKLEDGER" EntitySet="STOCKLEDGERs" />
           </AssociationSet>
           <FunctionImport Name="rpt_Purchase_Invoice" ReturnType="Collection(ASI_MGC_FSModel.rpt_Purchase_Invoice_Result)">
-            <Parameter Name="PurchaseNo" Mode="In" Type="String" />
+          <Parameter Name="PurchaseNo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_ARAPListTB" ReturnType="Collection(ASI_MGC_FSModel.sp_ARAPListTB_Result)">
             <Parameter Name="STARTDATE" Mode="In" Type="DateTime" />
@@ -1597,6 +1604,13 @@
           <FunctionImport Name="sp_GLMGLTListTB" ReturnType="Collection(ASI_MGC_FSModel.sp_GLMGLTListTB_Result)">
             <Parameter Name="STARTDATE" Mode="In" Type="DateTime" />
             <Parameter Name="ENDDATE" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_JvDataList">
+          <Parameter Name="jvNo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetVoucherDetails">
+            <Parameter Name="vType" Mode="In" Type="String" />
+            <Parameter Name="vCode" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="rpt_BankPayment_Result">
@@ -4995,6 +5009,8 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_JvDataList" FunctionName="ASI_MGC_FSModel.Store.sp_JvDataList" />
+          <FunctionImportMapping FunctionImportName="sp_GetVoucherDetails" FunctionName="ASI_MGC_FSModel.Store.sp_GetVoucherDetails" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

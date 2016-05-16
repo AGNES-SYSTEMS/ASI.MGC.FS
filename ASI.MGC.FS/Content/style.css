@@ -13,6 +13,10 @@
     padding-left: 25px !important;
 }
 
+.third-level-childs li{
+    padding-left: 35px !important;
+}
+
 .nav-side-menu {
   overflow: auto;
   font-family: verdana;
@@ -2983,17 +2987,24 @@ h3.timeline-title {
 }
 
 .iframeStyling iframe {
-    width:99%;
+    width:100%;
     height: 786px;
+    align-items: center !important;
+}
+
+.frameCenter {
+    /*text-align: center !important;*/
+    text-align: -webkit-center !important;
 }
 
 .frameWrap {
     position:relative;
     height: 786px;
-    width: 95%;
+    width: 80%;
     border: 1px solid #777777;
     background:#f0f0f0;
     box-shadow:0px 0px 10px #777777;
+    align-items: center !important;
 }
 
 .iframe {
@@ -3002,6 +3013,7 @@ h3.timeline-title {
     margin:2px 2px 2px 2px;
     padding:2px 2px 2px 2px;
     border:0;
+    align-items: center !important;
 }
 
 .loader {

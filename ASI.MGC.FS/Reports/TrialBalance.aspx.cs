@@ -19,7 +19,8 @@ namespace ASI.MGC.FS.Reports
                 UtilityMethods uMethods = new UtilityMethods();
                 var startDate = Convert.ToDateTime(Request.QueryString["startDate"]);
                 var endDate = Convert.ToDateTime(Request.QueryString["endDate"]);
-                DataTable dtTrialBalance = uMethods.ConvertTo(repo.RptStockLedger(startDate, endDate));
+                repo.SpGetTrialBalanceData(startDate, endDate);
+                DataTable dtTrialBalance = uMethods.ConvertTo(repo.RptTrialBalance(startDate, endDate));
 
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\TrialBalance.rdlc";
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("STARTDATE", startDate.ToShortDateString()));
@@ -29,13 +30,13 @@ namespace ASI.MGC.FS.Reports
                 ReportViewer1.LocalReport.DataSources.Add(rds);
                 ReportViewer1.DataBind();
                 ReportViewer1.LocalReport.Refresh();
-                Response.Clear();
-                byte[] bytes = ReportViewer1.LocalReport.Render("PDF");
-                var fileNamewithType = "inline;filename=TrialBalance.pdf";
-                Response.AddHeader("Content-Disposition", fileNamewithType);
-                Response.ContentType = "application/pdf";
-                Response.BinaryWrite(bytes);
-                Response.End();
+                //Response.Clear();
+                //byte[] bytes = ReportViewer1.LocalReport.Render("PDF");
+                //var fileNamewithType = "inline;filename=TrialBalance.pdf";
+                //Response.AddHeader("Content-Disposition", fileNamewithType);
+                //Response.ContentType = "application/pdf";
+                //Response.BinaryWrite(bytes);
+                //Response.End();
             }
         }
     }

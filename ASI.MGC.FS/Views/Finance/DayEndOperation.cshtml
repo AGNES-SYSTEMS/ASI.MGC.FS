@@ -22,7 +22,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Day From</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DayFrom", null, new { ID = "txtDayFrom",@Value=DateTime.Now.ToShortDateString(), Class = "form-control" })
+                                    @Html.TextBox("DayFrom", null, new { ID = "txtDayFrom", @Value = DateTime.Now.ToShortDateString(), Class = "form-control" })
                                     @Html.ValidationMessage("DayFrom")
                                 </div>
                             </div>
@@ -70,14 +70,14 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Job Total</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("JobTotal", null, new {ID = "txtJobTotal", Class = "form-control"})
+                                    @Html.TextBox("JobTotal", null, new { ID = "txtJobTotal", Class = "form-control" })
                                     @Html.ValidationMessage("JobTotal")
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Sales Total</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("SalesTotal", null, new {ID = "txtSalesTotal", Class = "form-control"})
+                                    @Html.TextBox("SalesTotal", null, new { ID = "txtSalesTotal", Class = "form-control" })
                                     @Html.ValidationMessage("SalesTotal")
                                 </div>
                             </div>
@@ -95,6 +95,18 @@
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBox("DiscountTotal", null, new { ID = "txtDiscountTotal", Class = "form-control" })
                                     @Html.ValidationMessage("DiscountTotal")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label></label>
+                                <div class="col-md-8 ">
+                                    <input type="button" class="btn btn-success col-md-3 pull-right" value="Get">
+                                    &nbsp;&nbsp;
+                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
                                 </div>
                             </div>
                         </div>

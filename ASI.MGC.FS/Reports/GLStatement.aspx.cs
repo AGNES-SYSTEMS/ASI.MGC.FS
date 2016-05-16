@@ -17,9 +17,11 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
-                var glCode = Convert.ToString(Request.QueryString["glCode"]);
+                var glCode = Convert.ToInt32(Request.QueryString["glCode"]);
                 var startDate = Convert.ToDateTime(Request.QueryString["startDate"]);
                 var endDate = Convert.ToDateTime(Request.QueryString["endDate"]);
+
+                repo.SpGetGlStatementData(glCode, startDate, endDate);
                 DataTable dtGlStatement = uMethods.ConvertTo(repo.RptGlStatement(startDate, endDate));
 
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\GLStatement.rdlc";
@@ -30,13 +32,13 @@ namespace ASI.MGC.FS.Reports
                 ReportViewer1.LocalReport.DataSources.Add(rds);
                 ReportViewer1.DataBind();
                 ReportViewer1.LocalReport.Refresh();
-                Response.Clear();
-                byte[] bytes = ReportViewer1.LocalReport.Render("PDF");
-                var fileNamewithType = "inline;filename=GLStatement.pdf";
-                Response.AddHeader("Content-Disposition", fileNamewithType);
-                Response.ContentType = "application/pdf";
-                Response.BinaryWrite(bytes);
-                Response.End();
+                //Response.Clear();
+                //byte[] bytes = ReportViewer1.LocalReport.Render("PDF");
+                //var fileNamewithType = "inline;filename=GLStatement.pdf";
+                //Response.AddHeader("Content-Disposition", fileNamewithType);
+                //Response.ContentType = "application/pdf";
+                //Response.BinaryWrite(bytes);
+                //Response.End();
             }
         }
     }

@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using ASI.MGC.FS.Model;
+
 namespace ASI.MGC.FS.DataAccess
 {
     using System;
@@ -14,7 +16,6 @@ namespace ASI.MGC.FS.DataAccess
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    using ASI.MGC.FS.Model;
     
     public partial class ASI_MGC_FSEntities : DbContext
     {
@@ -855,6 +856,28 @@ namespace ASI.MGC.FS.DataAccess
                 new ObjectParameter("ENDDATE", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GLMGLTListTB_Result>("sp_GLMGLTListTB", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual int sp_JvDataList(string jvNo)
+        {
+            var jvNoParameter = jvNo != null ?
+                new ObjectParameter("jvNo", jvNo) :
+                new ObjectParameter("jvNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_JvDataList", jvNoParameter);
+        }
+    
+        public virtual int sp_GetVoucherDetails(string vType, string vCode)
+        {
+            var vTypeParameter = vType != null ?
+                new ObjectParameter("vType", vType) :
+                new ObjectParameter("vType", typeof(string));
+    
+            var vCodeParameter = vCode != null ?
+                new ObjectParameter("vCode", vCode) :
+                new ObjectParameter("vCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetVoucherDetails", vTypeParameter, vCodeParameter);
         }
     }
 }

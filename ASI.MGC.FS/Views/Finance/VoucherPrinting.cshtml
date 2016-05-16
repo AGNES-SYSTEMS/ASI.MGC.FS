@@ -1,0 +1,85 @@
+﻿@{
+    ViewBag.Title = "Voucher Printing";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.currPage = "Voucher Printing";
+}
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>Voucher Printing</legend>
+            <div class="row">
+                <div class="container">
+                    @using (Ajax.BeginForm(null, null, null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formVoucherPrinting", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    {
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Voucher Type</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.DropDownList("VoucherType", new SelectList(@ViewBag.VoucherTypes, "Key", "Value", "1"), new { ID = "ddlVoucherType", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Doc Type</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.DropDownList("DocType", new SelectList(@ViewBag.DocType, "Key", "Value", "1"), new { ID = "ddlDocType", @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Doc Number</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("DocNumber", null, new { ID = "txtDocNumber", Class = "form-control" })
+                                    @Html.ValidationMessage("DocNumber")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label></label>
+                                <div class="col-md-8">
+                                    <input type="button" id="btnSubmit" class="btn btn-success col-md-3 pull-right" value="View">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row frameCenter">
+                            @*<div class="col-md-12 iframeStyling" style="overflow-x: hidden; overflow-y: no-display">
+                                </div>*@
+                            <div id="frameWrap" class="frameWrap" style="display: none">
+                                <img id="loader" class="loader" src="/content/Images/loader.gif" alt="loading gif" />
+                                <iframe id="iframe" class="iframe iframeStyling"></iframe>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<!-- end:main -->
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/Custom/Finance/VoucherPrinting.js")"></script>
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
+
+    <script type="text/javascript">
+
+        function OnSuccess(response) {
+            //alert(response);
+        }
+
+        function OnFailure() {
+            alert("Whoops! That didn't go so well did it?");
+        }
+
+    </script>
+}

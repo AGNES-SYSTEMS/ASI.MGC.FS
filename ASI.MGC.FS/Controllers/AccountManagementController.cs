@@ -37,11 +37,11 @@ namespace ASI.MGC.FS.Controllers
                 if (IsValid(model.Email, model.Password))
                 {
                     FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
-                    return RedirectToAction("Index","Home");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    ModelState.AddModelError("","Invalid Email/ Password.");
+                    ModelState.AddModelError("", "Invalid Email/ Password.");
                 }
             }
             return View(model);
@@ -86,11 +86,11 @@ namespace ASI.MGC.FS.Controllers
             bool isValid = false;
 
             var user = (from mesUsers in _unitOfWork.Repository<MESUser>().Query().Get()
-                           where mesUsers.Email.Equals(email)
-                           select mesUsers).FirstOrDefault();
+                        where mesUsers.Email.Equals(email)
+                        select mesUsers).FirstOrDefault();
             if (user != null)
             {
-                if (user.Password == crypto.Compute(password,user.PasswordSalt))
+                if (user.Password == crypto.Compute(password, user.PasswordSalt))
                 {
                     isValid = true;
                 }
@@ -102,6 +102,39 @@ namespace ASI.MGC.FS.Controllers
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("LogIn", "AccountManagement");
+        }
+
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePassword model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (IsValid(model.Email, model.CurrentPassword))
+                {
+                    var user = (from mesUsers in _unitOfWork.Repository<MESUser>().Query().Get()
+                                where mesUsers.Email.Equals(model.Email)
+                                select mesUsers).FirstOrDefault();
+                    if (user != null)
+                    {
+                        var crypto = new PBKDF2();
+                        var encrypPassword = crypto.Compute(model.Password);
+                        user.Password = encrypPassword;
+                        user.PasswordSalt = crypto.Salt;
+                        _unitOfWork.Repository<MESUser>().Update(user);
+                        _unitOfWork.Save();
+                    }
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "One or More values are incorrect.");
+            }
+            return View();
         }
     }
 }

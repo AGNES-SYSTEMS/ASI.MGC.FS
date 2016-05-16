@@ -11,7 +11,7 @@
         <div>
             <asp:ScriptManager ID="ScriptManager1" runat="server">
             </asp:ScriptManager>
-            <rsweb:ReportViewer ID="ReportViewer1" hasprintbutton="true" runat="server" Style="margin-right: 0; margin-top: 20px" Width="1332" Height="600px">
+            <rsweb:ReportViewer ID="ReportViewer1" ShowPrintButton="True" ShowExportControls="True" runat="server" Style="margin-right: 0; margin-top: 20px" Width="100%" Height="100%" AsyncRendering="False" SizeToReportContent="True">
             </rsweb:ReportViewer>
         </div>
     </form>

@@ -100,6 +100,7 @@ namespace ASI.MGC.FS.Controllers
 
         public ActionResult ArUnmatching()
         {
+            ViewBag.DocType = CommonModelAccessUtility.GetDocTypes(_unitOfWork);
             return View();
         }
 
@@ -124,6 +125,8 @@ namespace ASI.MGC.FS.Controllers
                 objBankTransaction.MASTERSTATUS_BT = "M";
                 _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBankTransaction);
                 _unitOfWork.Save();
+                _unitOfWork.Truncate("VOUCHERMASTER_RPT");
+                _unitOfWork.Truncate("VOUCHERCHILD_RPT");
                 pdcNo = objBankTransaction.DOCNUMBER_BT;
                 var objVoucherMaster = _unitOfWork.Repository<VOUCHERMASTER_RPT>().Create();
                 objVoucherMaster.GLDATE_VRPT = objBankTransaction.GLDATE_BT;
@@ -320,6 +323,20 @@ namespace ASI.MGC.FS.Controllers
             throw new System.NotImplementedException();
         }
 
+        public ActionResult AccountsPayableList()
+        {
+            return View();
+        }
+
+        public ActionResult AccountsReceivableList()
+        {
+            return View();
+        }
+
+        public ActionResult GeneralLedgerList()
+        {
+            return View();
+        }
         public ActionResult SaveJvCreation()
         {
             throw new System.NotImplementedException();
@@ -495,6 +512,19 @@ namespace ASI.MGC.FS.Controllers
             reverseEntry.GLSTATUS_GLT = "R";
             _unitOfWork.Repository<GLTRANSACTION1>().Insert(reverseEntry);
             _unitOfWork.Save();
+        }
+
+        public ActionResult JvPrinting()
+        {
+            @ViewBag.DocType = CommonModelAccessUtility.GetDocTypes(_unitOfWork);
+            return View();
+        }
+
+        public ActionResult VoucherPrinting()
+        {
+            @ViewBag.VoucherTypes = CommonModelAccessUtility.GetVoucherTypes();
+            @ViewBag.DocType = CommonModelAccessUtility.GetDocTypes(_unitOfWork);
+            return View();
         }
     }
 }

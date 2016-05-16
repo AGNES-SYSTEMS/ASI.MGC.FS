@@ -560,5 +560,79 @@ namespace ASI.MGC.FS.Domain.Repositories
             }
             return lst;
         }
+
+        public IList<rpt_TrialBalance_Result> RptTrialBalance(DateTime startDate, DateTime endDate)
+        {
+            List<rpt_TrialBalance_Result> lst = null;
+            try
+            {
+                lst = _context.rpt_TrialBalance(startDate, endDate).ToList();
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+            return lst;
+        }
+
+        public void SpGetBankStatementData(int bankCode, DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                _context.sp_GetBankStatementData(bankCode,startDate, endDate);
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+        }
+
+        public void SpGetGlStatementData(int glCode, DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                _context.sp_GetGLStatementData(glCode, startDate, endDate);
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+        }
+
+        public void SpGetTrialBalanceData(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                _context.sp_GetTrialBalanceData(startDate, endDate);
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+        }
+
+        public void Sp_JvDataList(string jvNo)
+        {
+            try
+            {
+                _context.sp_JvDataList(jvNo);
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            } 
+        }
+
+        public void Sp_GetVoucherDetails(string vType, string vCode)
+        {
+            try
+            {
+                _context.sp_GetVoucherDetails(vType,vCode);
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+        }
     }
 }

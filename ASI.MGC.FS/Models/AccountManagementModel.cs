@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ASI.MGC.FS.Models
 {
@@ -50,6 +46,28 @@ namespace ASI.MGC.FS.Models
         [Required]
         [DataType(DataType.Password)]
         [StringLength(25,MinimumLength=8)]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+    }
+
+    public class ChangePassword
+    {
+        [Required]
+        [StringLength(250)]
+        [EmailAddress]
+        public string Email { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
+        [StringLength(25, MinimumLength = 8)]
+        public string CurrentPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [StringLength(25, MinimumLength = 8)]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]

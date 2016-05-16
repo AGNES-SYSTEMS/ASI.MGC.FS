@@ -17,6 +17,8 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
+                var jvNo = Request.QueryString["jvNo"];
+                repo.Sp_JvDataList(jvNo);
                 DataTable dtJournalVoucher = uMethods.ConvertTo(repo.RptJournalVoucher());
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\JournalVoucher.rdlc";
                 var rds = new ReportDataSource("DS_JournalVoucher", dtJournalVoucher);
@@ -24,13 +26,13 @@ namespace ASI.MGC.FS.Reports
                 ReportViewer1.LocalReport.DataSources.Add(rds);
                 ReportViewer1.DataBind();
                 ReportViewer1.LocalReport.Refresh();
-                Response.Clear();
-                byte[] bytes = ReportViewer1.LocalReport.Render("PDF");
-                const string fileNamewithType = "inline;filename=JournalVoucher.pdf";
-                Response.AddHeader("Content-Disposition", fileNamewithType);
-                Response.ContentType = "application/pdf";
-                Response.BinaryWrite(bytes);
-                Response.End();
+                //Response.Clear();
+                //byte[] bytes = ReportViewer1.LocalReport.Render("PDF");
+                //const string fileNamewithType = "inline;filename=JournalVoucher.pdf";
+                //Response.AddHeader("Content-Disposition", fileNamewithType);
+                //Response.ContentType = "application/pdf";
+                //Response.BinaryWrite(bytes);
+                //Response.End();
             }
         }
     }

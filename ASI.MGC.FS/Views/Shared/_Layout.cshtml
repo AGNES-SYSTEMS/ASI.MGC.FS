@@ -421,7 +421,8 @@
                         <ul class="sub-menu collapse second-level-childs" id="Statement">
                             <li><a href="@Href("~/MgcReports/ArStatement")">AR Detailed Statement</a></li>
                             <li><a href="@Href("~/MgcReports/ArStatementOutstanding")">AR OutStanding Statement</a></li>
-                            <li><a href="#">AP Detailed Statement</a></li>
+                            <li><a href="@Href("~/MgcReports/ApStatement")">AP Detailed Statement</a></li>
+                            <li><a href="@Href("~/MgcReports/ApStatementOutstanding")">AP OutStanding Statement</a></li>
                             <li><a href="@Href("~/MgcReports/BankStatement")">Bank Statement</a></li>
                             <li><a href="@Href("~/MgcReports/StockReport")">Stock Report</a></li>
                             <li><a href="@Href("~/MgcReports/StockLedgerReport")">Stock Ledger</a></li>
@@ -435,26 +436,26 @@
                             <a href="#">List <span class="arrow"></span></a>
                         </li>
                         <ul class="sub-menu collapse second-level-childs" id="List">
-                            <li><a href="#">General Ledgers</a></li>
-                            <li><a href="#">Accounts Receivable</a></li>
-                            <li><a href="#">Accounts payable</a></li>
+                            <li><a href="@Href("~/Finance/GeneralLedgerList")">General Ledgers</a></li>
+                            <li><a href="@Href("~/Finance/AccountsReceivableList")">Accounts Receivable</a></li>
+                            <li><a href="@Href("~/Finance/AccountsPayableList")">Accounts payable</a></li>
                         </ul>
-                        <li class="active"><a href="#">Reversal</a></li>
+                        <li><a href="@Href("~/Finance/DocumentReversal")">Reversal</a></li>
                         <li data-toggle="collapse" data-target="#DuplicatePrinting" class="collapsed">
                             <a href="#">Duplicate Printing <span class="arrow"></span></a>
                         </li>
                         <ul class="sub-menu collapse second-level-childs" id="DuplicatePrinting">
-                            <li><a href="#">Jv Printing</a></li>
-                            <li><a href="#">Voucher Print</a></li>
+                            <li><a href="@Href("~/Finance/JvPrinting")">Jv Printing</a></li>
+                            <li><a href="@Href("~/Finance/VoucherPrinting")">Voucher Print</a></li>
                         </ul>
-                        <li class="active"><a href="#">Day End Process</a></li>
+                        <li><a href="@Href("~/Finance/DayEndOperation")">Day End Process</a></li>
 
                         <li data-toggle="collapse" data-target="#UserAdmin" class="collapsed">
                             <a href="#">User Admin<span class="arrow"></span></a>
                         </li>
                         <ul class="sub-menu collapse second-level-childs" id="UserAdmin">
                             <li><a href="@Href("~/AccountManagement/Registration")">User Creation</a></li>
-                            <li><a href="#">Change Password</a></li>
+                            <li><a href="@Href("~/AccountManagement/ChangePassword")">Change Password</a></li>
                         </ul>
                         @*secondlevel*@
 
@@ -555,16 +556,36 @@
                             <a href="#">MRV Details <span class="arrow"></span></a>
                         </li>
                         <ul class="sub-menu collapse second-level-childs" id="ReportsMrv">
-                            <li><a href="#">Pending Mrv Details</a></li>
-                            <li><a href="#">Delivered Mrv Details</a></li>
-                            <li><a href="#">Custom Reports</a></li>
+                            <li><a href="@Href("~/MgcReports/PendingMrvDetails")">Pending Mrv Details</a></li>
+                            <li><a href="@Href("~/MgcReports/DeliveredMrvDetails")">Delivered Mrv Details</a></li>
+                            <li data-toggle="collapse" data-target="#customReports" class="collapsed">
+                                <a href="#">Custom Reports<span class="arrow"></span></a>
+                            </li>
+                            <ul class="sub-menu collapse third-level-childs" id="customReports">
+                                <li><a href="@Href("~/MgcReports/JobWiseStatement")">Job Wise Report</a></li>
+                                <li><a href="@Href("~/MgcReports/PurchaseRegister")">Purchase Report</a></li>
+                                <li><a href="@Href("~/MgcReports/DeliveryDetails")">Delivery Note Details</a></li>
+                                <li><a href="@Href("~/MgcReports/InvoiceWiseReport")">Invoice Wise Delivery Report</a></li>
+                                <li><a href="@Href("~/MgcReports/CashMemoWiseReport")">CashMemo Wise Report</a></li>
+                                <li><a href="@Href("~/MgcReports/CancelledJobs")">Cancelled Jobs Details</a></li>
+                                <li><a href="@Href("~/MgcReports/ReversedInvoice")">Reversed Invoice Statement</a></li>
+                                <li><a href="@Href("~/MgcReports/CashMemoReverse")">Reversed RV Statement</a></li>
+                            </ul>
                         </ul>
                         <li data-toggle="collapse" data-target="#ReportsSales" class="collapsed">
                             <a href="#">Sales Report <span class="arrow"></span></a>
                         </li>
                         <ul class="sub-menu collapse second-level-childs" id="ReportsSales">
-                            <li><a href="#">Empwise Report</a></li>
-                            <li><a href="#">General Report</a></li>
+                            <li><a href="@Href("~/MgcReports/EmpWiseJobDetails")">Empwise Report</a></li>
+                            <li><a href="@Href("~/MgcReports/EmpSales")">General Report</a></li>
+                        </ul>
+                        <li data-toggle="collapse" data-target="#ReportsStock" class="collapsed">
+                            <a href="#">Stock Report <span class="arrow"></span></a>
+                        </li>
+                        <ul class="sub-menu collapse second-level-childs" id="ReportsStock">
+                            <li><a href="@Href("~/MgcReports/ServiceItems")">Service Items</a></li>
+                            <li><a href="@Href("~/MgcReports/StockReport")">Inventory Items</a></li>
+                            <li><a href="@Href("~/MgcReports/StockLedgerReport")">Stock Ledger</a></li>
                         </ul>
                         @*secondlevel*@
                         <li><a href="#">Customer Statement</a></li>
@@ -575,11 +596,11 @@
                             <a href="#">Finance<span class="arrow"></span></a>
                         </li>
                         <ul class="sub-menu collapse second-level-childs" id="ReportFinance">
-                            <li><a href="#">Bank Statement</a></li>
-                            <li><a href="#">GL Statement</a></li>
-                            <li><a href="#">Trial Balance</a></li>
-                            <li><a href="#">P and L Statement</a></li>
-                            <li><a href="#">Balance Sheet</a></li>
+                            <li><a href="@Href("~/MgcReports/BankStatement")">Bank Statement</a></li>
+                            <li><a href="@Href("~/MgcReports/GlStatement")">GL Statement</a></li>
+                            <li><a href="@Href("~/MgcReports/TrialBalance")">Trial Balance</a></li>
+                            <li><a href="@Href("~/MgcReports/ProfitLossStatement")">P and L Statement</a></li>
+                            <li><a href="@Href("~/MgcReports/BalanceSheet")">Balance Sheet</a></li>
                         </ul>
                         @*secondlevel*@
                     </ul>

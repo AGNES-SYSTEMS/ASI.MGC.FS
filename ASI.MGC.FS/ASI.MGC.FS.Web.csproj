@@ -40,12 +40,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.ReportViewer.WinForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SimpleCrypto">
       <HintPath>..\packages\SimpleCrypto.0.3.30.26\lib\SimpleCrypto.dll</HintPath>
     </Reference>
@@ -63,8 +69,12 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Abstractions" />
-    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.Abstractions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -248,6 +258,13 @@
       <DependentUpon>BankPayment.aspx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Reports\BankPaymentVP.aspx.cs">
+      <DependentUpon>BankPaymentVP.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\BankPaymentVP.aspx.designer.cs">
+      <DependentUpon>BankPaymentVP.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\BankReceipt.aspx.cs">
       <DependentUpon>BankReceipt.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -256,6 +273,13 @@
     <Compile Include="Reports\BankReceipt.aspx.designer.cs">
       <DependentUpon>BankReceipt.aspx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\BankReceiptVP.aspx.cs">
+      <DependentUpon>BankReceiptVP.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\BankReceiptVP.aspx.designer.cs">
+      <DependentUpon>BankReceiptVP.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\BankStatement.aspx.cs">
       <DependentUpon>BankStatement.aspx</DependentUpon>
@@ -311,6 +335,13 @@
       <DependentUpon>CashPayment.aspx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Reports\CashPaymentVP.aspx.cs">
+      <DependentUpon>CashPaymentVP.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\CashPaymentVP.aspx.designer.cs">
+      <DependentUpon>CashPaymentVP.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\CashReceipt.aspx.cs">
       <DependentUpon>CashReceipt.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -319,6 +350,13 @@
     <Compile Include="Reports\CashReceipt.aspx.designer.cs">
       <DependentUpon>CashReceipt.aspx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\CashReceiptVP.aspx.cs">
+      <DependentUpon>CashReceiptVP.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\CashReceiptVP.aspx.designer.cs">
+      <DependentUpon>CashReceiptVP.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reports\DeliveredMrvDetails.aspx.cs">
       <DependentUpon>DeliveredMrvDetails.aspx</DependentUpon>
@@ -567,10 +605,18 @@
     <Compile Include="WebCommon\CommonModelAccessUtility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-reset.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\bootstrapValidator.min.css" />
+    <Content Include="Content\bootstrap-reset.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\bootstrap.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\bootstrap.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\bootstrapValidator.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\DataTables\css\dataTables.autoFill.css" />
     <Content Include="Content\DataTables\css\dataTables.autoFill.min.css" />
     <Content Include="Content\DataTables\css\dataTables.bootstrap.css" />
@@ -626,9 +672,15 @@
     <Content Include="Content\DataTables\images\xls_hover.png" />
     <Content Include="Content\DataTables\swf\copy_csv_xls.swf" />
     <Content Include="Content\DataTables\swf\copy_csv_xls_pdf.swf" />
-    <Content Include="Content\font-awesome.min.css" />
-    <Content Include="Content\formValidation.min.css" />
-    <Content Include="Content\GoogleFontFace.css" />
+    <Content Include="Content\font-awesome.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\formValidation.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\GoogleFontFace.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Images\75.png" />
     <Content Include="Content\Images\bg-header.jpg" />
     <Content Include="Content\Images\bg.jpg" />
@@ -639,17 +691,35 @@
     <Content Include="Content\Images\sort_both.png" />
     <Content Include="Content\Images\sort_desc.png" />
     <Content Include="Content\Images\sort_desc_disabled.png" />
-    <Content Include="Content\jquery-ui.css" />
-    <Content Include="Content\jquery-ui.min.css" />
-    <Content Include="Content\jquery-ui.structure.css" />
-    <Content Include="Content\jquery-ui.structure.min.css" />
-    <Content Include="Content\jquery.easy-pie-chart.css" />
+    <Content Include="Content\jquery-ui.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\jquery-ui.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\jquery-ui.structure.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\jquery-ui.structure.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\jquery.easy-pie-chart.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\jquery.jqGrid\ui.jqgrid.css" />
     <Content Include="Content\reportViewerStyle.css" />
-    <Content Include="Content\LoginPageStyle.css" />
-    <Content Include="Content\owl.carousel.css" />
-    <Content Include="Content\owl.theme.css" />
-    <Content Include="Content\owl.transitions.css" />
+    <Content Include="Content\LoginPageStyle.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\owl.carousel.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\owl.theme.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\owl.transitions.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\style.css" />
     <Content Include="Content\table-responsive.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -679,14 +749,20 @@
     <Content Include="Content\themes\base\jquery.ui.slider.css" />
     <Content Include="Content\themes\base\jquery.ui.tabs.css" />
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
-    <Content Include="Content\bootstrap.typeahead.css" />
+    <Content Include="Content\bootstrap.typeahead.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="Content\ui.jqgrid-bootstrap-ui.css" />
     <Content Include="Content\ui.jqgrid-bootstrap.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\fontawesome-webfont862f.svg" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\fontawesome-webfont862f.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="Reports\ARStatement.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -703,9 +779,11 @@
     <Content Include="Reports\BankPayment.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\BankPaymentVP.aspx" />
     <Content Include="Reports\BankReceipt.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\BankReceiptVP.aspx" />
     <Content Include="Reports\BankStatement.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -724,9 +802,11 @@
     <Content Include="Reports\CashPayment.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\CashPaymentVP.aspx" />
     <Content Include="Reports\CashReceipt.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\CashReceiptVP.aspx" />
     <Content Include="Reports\DeliveredMrvDetails.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -812,17 +892,28 @@
     <Content Include="Scripts\bootstrap.framework.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="fonts\fontawesome-webfont862f.eot" />
-    <Content Include="fonts\fontawesome-webfont862f.ttf" />
-    <Content Include="fonts\fontawesome-webfont862f.woff" />
-    <Content Include="fonts\fontawesome-webfontd41d.eot" />
-    <Content Include="fonts\glyphicons-halflings-regulard41d.eot" />
+    <Content Include="fonts\fontawesome-webfont862f.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fonts\fontawesome-webfont862f.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fonts\fontawesome-webfont862f.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fonts\fontawesome-webfontd41d.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fonts\glyphicons-halflings-regulard41d.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\DataTables\css\dataTables.responsive.scss" />
     <Content Include="Content\DataTables\css\dataTables.jqueryui.scss" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="Properties\PublishProfiles\MGC.pubxml" />
+    <None Include="Properties\PublishProfiles\ServerFiles.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.typeahead.js" />
     <Content Include="Scripts\bootstrapValidator.min.js" />
@@ -834,14 +925,19 @@
     <Content Include="Scripts\Custom\Cash\CashPayment.js" />
     <Content Include="Scripts\Custom\Cash\CashReceipt.js" />
     <Content Include="Scripts\Custom\Finance\AccountsPayable.js" />
+    <Content Include="Scripts\Custom\Finance\AccountsPayableList.js" />
     <Content Include="Scripts\Custom\Finance\AccountsReceivable.js" />
+    <Content Include="Scripts\Custom\Finance\AccountsReceivableList.js" />
     <Content Include="Scripts\Custom\Finance\ArApMatching.js" />
     <Content Include="Scripts\Custom\Finance\DayEndOperation.js" />
     <Content Include="Scripts\Custom\Finance\DocumentReversal.js" />
+    <Content Include="Scripts\Custom\Finance\GeneralLedgerList.js" />
     <Content Include="Scripts\Custom\Finance\GlCreation.js" />
     <Content Include="Scripts\Custom\Finance\JvCreation.js" />
+    <Content Include="Scripts\Custom\Finance\JvPrinting.js" />
     <Content Include="Scripts\Custom\Finance\PdcReceipt.js" />
     <Content Include="Scripts\Custom\Finance\ArUnMatching.js" />
+    <Content Include="Scripts\Custom\Finance\VoucherPrinting.js" />
     <Content Include="Scripts\Custom\Invoice\InvoicePreparation.js" />
     <Content Include="Scripts\Custom\Job\JobEntry.js" />
     <Content Include="Scripts\Custom\MgcReports\ARStatement.js" />
@@ -1092,14 +1188,26 @@
     <Content Include="Views\MgcReports\StockReport.cshtml" />
     <Content Include="Views\MgcReports\StockLedgerReport.cshtml" />
     <Content Include="Views\MgcReports\StockReceipt.cshtml" />
+    <Content Include="Views\Finance\AccountsPayableList.cshtml" />
+    <Content Include="Views\Finance\AccountsReceivableList.cshtml" />
+    <Content Include="Views\Finance\GeneralLedgerList.cshtml" />
+    <Content Include="Views\Finance\JvPrinting.cshtml" />
+    <Content Include="Views\Finance\VoucherPrinting.cshtml" />
+    <Content Include="Views\AccountManagement\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
