@@ -29,13 +29,17 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label id="lblMRVNo" class="control-label col-md-4 small ">MRV No.</label>
-                                <div class="col-md-7 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.NARRATION_ART, null, new { ID = "txtMRVNo", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessageFor(m => m.NARRATION_ART)
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.NARRATION_ART, null, new { ID = "txtMRVNo", Class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(m => m.NARRATION_ART)
+                                        <span class="input-group-btn">
+                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#mrvSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
-                                <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#mrvSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblDate" class="control-label col-md-4 small ">Date</label>

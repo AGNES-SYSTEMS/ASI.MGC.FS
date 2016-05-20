@@ -27,9 +27,11 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">GL Code</label>
-                                <div class="col-md-8 input-group icon-style">
-                                    @Html.TextBoxFor(o => o.GLCODE_LM, null, new { ID = "txtGLCode", Class = "form-control" })
-                                    <span class="input-group-btn"><button type="button" id="btnGlSearch" class="btn btn-default" data-toggle="modal" data-target="#glSearchModel"><i class="fa fa-search"></i></button></span>
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(o => o.GLCODE_LM, null, new { ID = "txtGLCode", Class = "form-control" })
+                                        <span class="input-group-btn"><button type="button" id="btnGlSearch" class="btn btn-default" data-toggle="modal" data-target="#glSearchModel"><i class="fa fa-search"></i></button></span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
@@ -239,10 +241,9 @@
     <script src="~/Scripts/Custom/Finance/GlCreation.js"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
-        var isReportOpened = false;
         function OnSuccess(success) {
             if (success) {
-                toastr.success("Genral Ledger is added Successfully.");
+                toastr.success("General Ledger has been added Successfully.");
             }
         }
 

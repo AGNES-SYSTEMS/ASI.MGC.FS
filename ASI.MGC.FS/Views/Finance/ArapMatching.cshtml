@@ -29,13 +29,17 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Party A/C No:</label>
-                                <div class="col-md-7 paddingLeftRight0">
-                                    @Html.TextBox("PartyAccNo", null, new { ID = "txtPartyAccNo", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessage("PartyAccNo")
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBox("PartyAccNo", null, new { ID = "txtPartyAccNo", Class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessage("PartyAccNo")
+                                        <span class="input-group-btn">
+                                            <button type="button" id="btnDocTypeSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#docTypeSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
-                                <button type="button" id="btnDocTypeSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#docTypeSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblDocNo" class="control-label col-md-4 small ">Total Doc Value:</label>
@@ -126,12 +130,16 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">AL Code:</label>
-                                <div class="col-md-7 paddingLeftRight0">
-                                    <input type="text" name="AlCode" id="txtAlCode" data-fv-notempty="true" class="form-control" readonly required />
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        <input type="text" name="AlCode" id="txtAlCode" data-fv-notempty="true" class="form-control" readonly required />
+                                        <span class="input-group-btn">
+                                            <button type="button" id="btnAlCodeSearch" class="btn btn-default" data-toggle="modal" data-target="#alCodeSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
-                                <button type="button" id="btnAlCodeSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#alCodeSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">AL Description:</label>
@@ -143,12 +151,16 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Account Code:</label>
-                                <div class="col-md-7 paddingLeftRight0">
-                                    <input type="text" name="AccountCode" data-fv-notempty="true" id="txtAccountCode" class="form-control" readonly required />
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        <input type="text" name="AccountCode" data-fv-notempty="true" id="txtAccountCode" class="form-control" readonly required />
+                                        <span class="input-group-btn">
+                                            <button type="button" id="btnAccountSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" disabled data-target="#accountSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
-                                <button type="button" id="btnAccountSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" disabled data-target="#accountSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Account Description:</label>

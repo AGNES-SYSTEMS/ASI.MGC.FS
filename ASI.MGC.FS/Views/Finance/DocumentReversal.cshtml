@@ -28,8 +28,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Invoice Number</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("InvNumber", null, new { ID = "txtInvNumber", Class = "form-control" })
-                                    @Html.ValidationMessage("InvNumber")
+                                    @Html.TextBox("InvNumber", null, new { ID = "txtInvNumber", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -37,15 +36,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Doc Date</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DocDate", null, new { ID = "txtDocDate", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessage("DocDate")
+                                    @Html.TextBox("DocDate", null, new { ID = "txtDocDate", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">OtherRef</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("OtherRef", null, new { ID = "txtOtherRef", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessage("OtherRef")
+                                    @Html.TextBox("OtherRef", null, new { ID = "txtOtherRef", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -53,15 +50,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Acc. Code</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("AccCode", null, new { ID = "txtAccCode", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessage("AccCode")
+                                    @Html.TextBox("AccCode", null, new { ID = "txtAccCode", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Amount</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("Amount", null, new { ID = "txtAmount", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessage("Amount")
+                                    @Html.TextBox("Amount", null, new { ID = "txtAmount", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -69,8 +64,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Status</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("Status", null, new { ID = "txtStatus", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessage("Status")
+                                    @Html.TextBox("Status", null, new { ID = "txtStatus", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -97,14 +91,14 @@
     <script src="@Url.Content("~/Scripts/common.js")"></script>
 
     <script type="text/javascript">
-
-        function OnSuccess(response) {
-            alert(response);
+        function OnSuccess(success) {
+            if (success) {
+                toastr.success("Document has been reversed Successfully.");
+            }
         }
 
         function OnFailure() {
-            alert("Whoops! That didn't go so well did it?");
+            toastr.error("Sorry! Something went wrong, please try again.");
         }
-
     </script>
 }

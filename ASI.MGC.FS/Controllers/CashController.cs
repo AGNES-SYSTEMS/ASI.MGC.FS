@@ -17,10 +17,10 @@ namespace ASI.MGC.FS.Controllers
             _unitOfWork = new UnitOfWork();
         }
         // GET: Cash
-        public ActionResult Index()
-        {
-            return View();
-        }
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
 
         public ActionResult CashPayments()
         {

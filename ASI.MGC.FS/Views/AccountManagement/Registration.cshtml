@@ -17,7 +17,7 @@
             <legend>Add New User</legend>
             <div class="row">
                 <div class="container">
-                    @using (Html.BeginForm("Registration", "AccountManagement", null, FormMethod.Post, new { id = "formRegistration", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @using (Ajax.BeginForm("Registration", "AccountManagement", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formRegistration", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "One or More fields are incorrect.", new { @class = "text-danger" })
@@ -25,13 +25,13 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblFirstName" class="control-label col-md-4 small ">First Name:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.FirstName, null, new { ID = "txtFirstName", Class = "form-control" })
+                                    @Html.TextBoxFor(d => d.FirstName, null, new { ID = "txtFirstName", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblLastName" class="control-label col-md-4 small ">Last Name:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.LastName, null, new { ID = "txtLastName", Class = "form-control" })
+                                    @Html.TextBoxFor(d => d.LastName, null, new { ID = "txtLastName", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -39,13 +39,13 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblUserName" class="control-label col-md-4 small ">User Name:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.UserName, null, new { ID = "txtUserName", Class = "form-control" })
+                                    @Html.TextBoxFor(d => d.UserName, null, new { ID = "txtUserName", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblEmail" class="control-label col-md-4 small ">Email:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.Email, null, new { ID = "txtEmail", Class = "form-control" })
+                                    @Html.TextBoxFor(d => d.Email, null, new { ID = "txtEmail", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -54,13 +54,13 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblPassword" class="control-label col-md-4 small ">Password:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.PasswordFor(d => d.Password, new { ID = "txtPassword", Class = "form-control" })
+                                    @Html.PasswordFor(d => d.Password, new { ID = "txtPassword", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblConfirmPassword" class="control-label col-md-4 small ">Confirm Password:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.PasswordFor(d => d.ConfirmPassword, new { ID = "txtConfirmPassword", Class = "form-control" })
+                                    @Html.PasswordFor(d => d.ConfirmPassword, new { ID = "txtConfirmPassword", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -73,7 +73,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small "></label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                                    <button type="submit" class="btn btn-primary btn-lg" disabled="disabled">Register</button>
                                     <button type="button" class="btn btn-warning btn-lg">Cancel</button>
                                 </div>
                             </div>
@@ -88,14 +88,34 @@
     <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
     <script src="@Url.Content("~/Scripts/formValidation.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.framework.js")"></script>
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script>
+        function OnSuccess(success) {
+            if (success) {
+                toastr.success("New User has been created Successfully.");
+            }
+        }
+
+        function OnFailure() {
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
+
         $(document).ready(function () {
-            $('#formRegistration').formValidation({
+            $('#formRegistration').on('init.field.fv', function (e, data) {
+                var $icon = data.element.data('fv.icon'),
+                    options = data.fv.getOptions(),
+                    validators = data.fv.getOptions(data.field).validators;
+
+                if (validators.notEmpty && options.icon && options.icon.required) {
+                    $icon.addClass(options.icon.required).show();
+                }
+            }).formValidation({
                 framework: 'bootstrap',
                 icon: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
+                    required: 'fa fa-asterisk',
+                    valid: 'fa fa-check',
+                    invalid: 'fa fa-times',
+                    validating: 'fa fa-refresh'
                 },
                 fields: {
                     'FirstName': {
@@ -137,8 +157,47 @@
                                 message: 'The input is not a valid email address'
                             }
                         }
+                    },
+                    Password: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Password is required'
+                            },
+                            identical: {
+                                field: 'ConfirmPassword',
+                                message: 'The password and its confirm are not the same'
+                            }
+                        }
+                    },
+                    ConfirmPassword: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Confirm Password is required'
+                            },
+                            identical: {
+                                field: 'Password',
+                                message: 'The password and its confirm are not the same'
+                            }
+                        }
                     }
                 }
+            }).on('status.field.fv', function (e, data) {
+                // Remove the required icon when the field updates its status
+                var $icon = data.element.data('fv.icon'),
+                    options = data.fv.getOptions(),                      // Entire options
+                    validators = data.fv.getOptions(data.field).validators; // The field validators
+
+                if (validators.notEmpty && options.icon && options.icon.required) {
+                    $icon.removeClass(options.icon.required).addClass('fa');
+                }
+            }).on('success.field.fv', function (e, data) {
+                if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
+                    data.fv.disableSubmitButtons(true);
+                }
+            }).on('success.form.fv', function (e) {
+                debugger;
+                // Prevent form submission
+                e.preventDefault();
             });
         });
     </script>

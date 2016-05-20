@@ -20,13 +20,17 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Doc No:</label>
-                                <div class="col-md-7 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.DOCNUMBER_BT, null, new { ID = "txtDocNo", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.DOCNUMBER_BT)
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(d => d.DOCNUMBER_BT, null, new { ID = "txtDocNo", Class = "form-control" })
+                                        @Html.ValidationMessageFor(d => d.DOCNUMBER_BT)
+                                        <span class="input-group-btn">
+                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#mrvJobSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
-                                <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#mrvJobSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Doc Date:</label>
@@ -46,7 +50,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Bank Code:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d=>d.BANKCODE_BT, null, new { ID = "txtBankCode", Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBoxFor(d => d.BANKCODE_BT, null, new { ID = "txtBankCode", Class = "form-control", @readonly = "readonly" })
                                 </div>
                             </div>
                         </div>

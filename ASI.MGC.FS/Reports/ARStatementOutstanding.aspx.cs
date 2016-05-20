@@ -17,10 +17,11 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
+                var acCode = Request.QueryString["acCode"];
                 var startDate = Convert.ToDateTime(Request.QueryString["startDate"]);
                 var endDate = Convert.ToDateTime(Request.QueryString["endDate"]);
+                repo.Sp_GetARStatementOutStandingData(acCode, startDate, endDate);
                 DataTable dtArStatementOutstanding= uMethods.ConvertTo(repo.RptArStatementOutstanding(startDate, endDate));
-
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\ARStatementOutstanding.rdlc";
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("STARTDATE", startDate.ToShortDateString()));
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("ENDDATE", endDate.ToShortDateString()));

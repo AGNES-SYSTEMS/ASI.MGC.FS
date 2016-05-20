@@ -26,14 +26,16 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">AP Code</label>
-                                <div class="col-md-8 input-group icon-style">
-                                    @Html.TextBox("APCode", null, new { ID = "txtAPCode", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessage("APCode")
-                                    <span class="input-group-btn">
-                                        <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#CustomerSearchModel">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </span>
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBox("APCode", null, new { ID = "txtAPCode", Class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessage("APCode")
+                                        <span class="input-group-btn">
+                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#CustomerSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
@@ -241,13 +243,15 @@
                         <div class="row">
                             <div class="col-md-5 form-group">
                                 <label class="control-label col-md-4 small ">PrCode:</label>
-                                <div class="col-md-6 input-group icon-style-modal">
-                                    <input type="text" id="txtPrCode" name="PrCode" class="form-control" required readonly />
-                                    <span class="input-group-btn">
-                                        <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#PrdSearchModel">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </span>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" id="txtPrCode" name="PrCode" class="form-control" required readonly />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#PrdSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-7 form-group">

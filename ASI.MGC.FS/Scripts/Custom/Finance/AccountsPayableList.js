@@ -1,4 +1,22 @@
 ﻿$(document).ready(function () {
+
+    var searchGrid = function (searchValue) {
+        debugger;
+        var postData = $("#tblAccountsPayable").jqGrid("getGridParam", "postData");
+        postData["searchValue"] = searchValue;
+
+        $("#tblAccountsPayable").setGridParam({ postData: postData });
+        $("#tblAccountsPayable").trigger("reloadGrid", [{ page: 1 }]);
+    };
+
+    $("#txtAccountsPayable").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtAccountsPayable").val().length >= 3 || $("#txtAccountsPayable").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtAccountsPayable").val());
+        }
+    });
+
     var $custType = "AP";
     jQuery("#tblAccountsPayable").jqGrid({
         url: '/Customer/GetAllCustomers?custType=' + $custType,

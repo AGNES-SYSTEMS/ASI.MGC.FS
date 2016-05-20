@@ -70,8 +70,8 @@ $(document).ready(function () {
             autoheight: true,
             colNames: ['Account Code', 'Account Description', ''],
             colModel: [
-                {key:true, name: 'AccountCode', index: 'AccountCode', width: 400 },
-                {key:false, name: 'AccountDetail', index: 'AccountDetail', width: 400 },
+                { key: true, name: 'AccountCode', index: 'AccountCode', width: 400 },
+                { key: false, name: 'AccountDetail', index: 'AccountDetail', width: 400 },
             {
                 name: "action",
                 align: "center",
@@ -125,10 +125,10 @@ $(document).ready(function () {
             datatype: "json",
             autoheight: true,
             styleUI: "Bootstrap",
-            colNames: ['AL Code', 'AL Code Description',''],
+            colNames: ['AL Code', 'AL Code Description', ''],
             colModel: [
-                {key:true, name: 'ALCODE_ALD', index: 'ALCODE_ALD', width: 400 },
-                {key:false, name: 'ALDESCRIPTION', index: 'ALDESCRIPTION', width: 400 },
+                { key: true, name: 'ALCODE_ALD', index: 'ALCODE_ALD', width: 400 },
+                { key: false, name: 'ALDESCRIPTION', index: 'ALDESCRIPTION', width: 400 },
             {
                 name: "action",
                 align: "center",
@@ -186,7 +186,7 @@ $(document).ready(function () {
             datatype: "json",
             autoheight: true,
             styleUI: "Bootstrap",
-            colNames: ['Bank Code', 'Bank Name',''],
+            colNames: ['Bank Code', 'Bank Name', ''],
             colModel: [
             { key: true, name: 'BANKCODE_BM', index: 'BANKCODE_BM', width: 400 },
             { key: false, name: 'BANKNAME_BM', index: 'BANKNAME_BM', width: 400 },
@@ -244,7 +244,7 @@ $(document).ready(function () {
             datatype: "json",
             autoheight: true,
             styleUI: "Bootstrap",
-            colNames: ['Document Type', 'Document Name',''],
+            colNames: ['Document Type', 'Document Name', ''],
             colModel: [
             { key: true, name: 'DOCABBREVIATION_DM', index: 'DOCABBREVIATION_DM', width: 400 },
             { key: false, name: 'DESCRIPTION_DM', index: 'DESCRIPTION_DM', width: 400 },
@@ -297,21 +297,23 @@ $(document).ready(function () {
     });
     $("#docTypeSearchModel").on('hide.bs.modal', function () {
         var docType = $("#txtDocType").val();
-        var data = JSON.stringify({ docType: docType });
-        $.ajax({
-            url: '/DocumentMaster/GetDocNo',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: data,
-            type: "POST",
-            success: function (docNumber) {
-                $("#txtDocNo").val(docNumber);
-            },
-            complete: function () {
-            },
-            error: function () {
-            }
-        });
+        if (docType !== "") {
+            var data = JSON.stringify({ docType: docType });
+            $.ajax({
+                url: '/DocumentMaster/GetDocNo',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: data,
+                type: "POST",
+                success: function (docNumber) {
+                    $("#txtDocNo").val(docNumber);
+                },
+                complete: function () {
+                },
+                error: function () {
+                }
+            });
+        }
     });
     $("#btnDocSelect").on("click", function (e) {
         var id = jQuery("#tblDocSearch").jqGrid('getGridParam', 'selrow');
@@ -381,7 +383,7 @@ $(document).ready(function () {
     });
     $("#txtAlCode").on("change", function () {
         $("#btnAccountSearch").prop('disabled', false);
-        $("#allocationDetailsModelform").formValidation('revalidateField', 'AlCode');
+        //$("#allocationDetailsModelform").formValidation('revalidateField', 'AlCode');
         if (counter > 0) {
             counter += 1;
             $('#tblAccountSearch').setGridParam({ url: '/AllocationMaster/GetAccountDetailsList?accountType=' + $("#txtAlCode").val() });
@@ -397,8 +399,11 @@ $(document).ready(function () {
     $("#txtAlDesc").on("change", function () {
         $("#allocationDetailsModelform").formValidation('revalidateField', 'AlDesc');
     });
-    $("#txtAccountCode").on("change", function () {
-        $("#allocationDetailsModelform").formValidation('revalidateField', 'AccountCode');
+    $("#txtBankName").on("change", function () {
+        $("#formBankPayment").formValidation('revalidateField', 'BankName');
+    });
+    $("#txtAllocationTotal").on("change", function () {
+        $("#formBankPayment").formValidation('revalidateField', 'AllocationTotal');
     });
     $("#txtAccountDesc").on("change", function () {
         $("#allocationDetailsModelform").formValidation('revalidateField', 'AccountDesc');
@@ -419,6 +424,8 @@ $(document).ready(function () {
             totalGridPrdAmount += parseFloat(arrAllocDetails[i]["Amount"]);
         }
         $("#txtAllocationTotal").val(totalGridPrdAmount);
+        $("#formBankPayment").formValidation('revalidateField', 'AllocationTotal');
+        $(this).find('form')[0].reset();
     });
     $("#btnCancel").click(function () {
         clearModalForm();
@@ -440,37 +447,56 @@ $(document).ready(function () {
             }
         }
         else {
-            $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'AlCode');
-            $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'AlDesc');
-            $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'AccountCode');
-            $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'AccountDesc');
-            $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'Amount');
-            $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'Narration');
+            $("#allocationDetailsModelform").formValidation('revalidateField', 'AlCode');
+            $("#allocationDetailsModelform").formValidation('revalidateField', 'AlDesc');
+            $("#allocationDetailsModelform").formValidation('revalidateField', 'AccountCode');
+            $("#allocationDetailsModelform").formValidation('revalidateField', 'AccountDesc');
+            $("#allocationDetailsModelform").formValidation('revalidateField', 'Amount');
+            $("#allocationDetailsModelform").formValidation('revalidateField', 'Narration');
         }
     });
-    $('#formBankPayment').bootstrapValidator({
+
+    var searchGrid = function (searchValue) {
+        debugger;
+        var postData = $("#tblAccountSearch").jqGrid("getGridParam", "postData");
+        postData["searchValue"] = searchValue;
+
+        $("#tblAccountSearch").setGridParam({ postData: postData });
+        $("#tblAccountSearch").trigger("reloadGrid", [{ page: 1 }]);
+    };
+    $("#txtAccountSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtAccountSearch").val().length >= 3 || $("#txtAccountSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtAccountSearch").val());
+        }
+    });
+
+    $('#formBankPayment').on('init.field.fv', function (e, data) {
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),
+            validators = data.fv.getOptions(data.field).validators;
+
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.addClass(options.icon.required).show();
+        }
+    }).formValidation({
         container: '#messages',
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
+        icon: {
+            required: 'fa fa-asterisk',
+            valid: 'fa fa-check',
+            invalid: 'fa fa-times',
+            validating: 'fa fa-refresh'
         },
         fields: {
-            DocType: {
-                validators: {
-                    notEmpty: {
-                        message: 'Document Type is required'
-                    }
-                }
-            },
-            DocNo: {
+            DOCNUMBER_BT: {
                 validators: {
                     notEmpty: {
                         message: 'Document No is required'
                     }
                 }
             },
-            DocDate: {
+            DOCDATE_BT: {
                 validators: {
                     notEmpty: {
                         message: 'Document Date is required'
@@ -481,7 +507,7 @@ $(document).ready(function () {
                     }
                 }
             },
-            GLDate: {
+            GLDATE_BT: {
                 validators: {
                     notEmpty: {
                         message: 'GL Date is required'
@@ -499,17 +525,17 @@ $(document).ready(function () {
                     }
                 }
             },
-            PaidTo: {
+            NOTE_BT: {
                 validators: {
                     notEmpty: {
                         message: 'Paid To is required'
                     }
                 }
             },
-            BankCode: {
+            OTHERREF_BT: {
                 validators: {
                     notEmpty: {
-                        message: 'Bank Code is required'
+                        message: 'Other Ref is required'
                     }
                 }
             },
@@ -520,24 +546,24 @@ $(document).ready(function () {
                     }
                 }
             },
-            BRAmount: {
+            CREDITAMOUT_BT: {
                 validators: {
                     notEmpty: {
                         message: 'BR Amount is required'
-                    },
-                    integer: {
-                        message: 'Integer Only'
-                    }
+                    }//,
+                    //integer: {
+                    //    message: 'Integer Only'
+                    //}
                 }
             },
-            ChequeNo: {
+            CHQNO_BT: {
                 validators: {
                     notEmpty: {
                         message: 'Cheque No is required'
                     }
                 }
             },
-            ChequeDate: {
+            CHQDATE_BT: {
                 validators: {
                     notEmpty: {
                         message: 'Cheque Date is required'
@@ -548,7 +574,7 @@ $(document).ready(function () {
                     }
                 }
             },
-            ClearanceDate: {
+            CLEARANCEDATE_BT: {
                 validators: {
                     notEmpty: {
                         message: 'Clearance Date is required'
@@ -558,7 +584,41 @@ $(document).ready(function () {
                         message: 'Enter Valid Date'
                     }
                 }
+            },
+            BENACCOUNT_BT: {
+                validators: {
+                    notEmpty: {
+                        message: 'Ben Account is required'
+                    }
+                }
+            },
+            BENACNO_BT: {
+                validators: {
+                    notEmpty: {
+                        message: 'Ben AC NO is required'
+                    }
+                }
+            },
+            AllocationTotal: {
+                validators: {
+                    notEmpty: {
+                        message: 'Allocation Total is required'
+                    }
+                }
             }
+        }
+    }).on('status.field.fv', function (e, data) {
+        // Remove the required icon when the field updates its status
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),                      // Entire options
+            validators = data.fv.getOptions(data.field).validators; // The field validators
+
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.removeClass(options.icon.required).addClass('fa');
+        }
+    }).on('success.field.fv', function (e, data) {
+        if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
+            data.fv.disableSubmitButtons(true);
         }
     }).on('success.form.fv', function (e) {
         debugger;

@@ -28,7 +28,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Doc Number</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DocNumber", null, new { ID = "txtDocNumber", Class = "form-control" })
+                                    @Html.TextBox("DocNumber", null, new { ID = "txtDocNumber", Class = "form-control", @required = "required" })
                                     @Html.ValidationMessage("DocNumber")
                                 </div>
                             </div>
@@ -39,11 +39,11 @@
                             <div class="col-md-6 form-group">
                                 <label></label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    <input type="button" id="btnSubmit" class="btn btn-success col-md-3 pull-right" value="View">
+                                    <input type="submit" id="btnSubmit" class="btn btn-success col-md-3 pull-right" disabled="disabled" value="View">
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row frameCenter">
                             @*<div class="col-md-12 iframeStyling" style="overflow-x: hidden; overflow-y: no-display">
                                 </div>*@
                             <div id="frameWrap" class="frameWrap" style="display: none">
@@ -65,7 +65,7 @@
 
     <script type="text/javascript">
 
-        function OnSuccess(response) {
+        function OnSuccess() {
             //alert(response);
         }
 

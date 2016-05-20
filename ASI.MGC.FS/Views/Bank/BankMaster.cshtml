@@ -27,9 +27,11 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Bank Code</label>
-                                <div class="col-md-8 input-group icon-style">
-                                    @Html.TextBoxFor(o => o.BANKCODE_BM, null, new { ID = "txtBankCode", Class = "form-control" })
-                                    <span class="input-group-btn"><button type="button" id="btnBankSearch" class="btn btn-default" data-toggle="modal" data-target="#BankSearchModel"><i class="fa fa-search"></i></button></span>
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(o => o.BANKCODE_BM, null, new { ID = "txtBankCode", Class = "form-control" })
+                                        <span class="input-group-btn"><button type="button" id="btnBankSearch" class="btn btn-default" data-toggle="modal" data-target="#BankSearchModel"><i class="fa fa-search"></i></button></span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
@@ -181,17 +183,17 @@
 </div>
 @section Scripts {
     <script src="@Url.Content("~/Scripts/Custom/Bank/BankMaster.js")"></script>
-   <script src="@Url.Content("~/Scripts/common.js")"></script>
-<script type="text/javascript">
-    var isReportOpened = false;
-    function OnSuccess(success) {
-        if (success) {
-            toastr.success("Bank Details added Successfully.");
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
+    <script type="text/javascript">
+        var isReportOpened = false;
+        function OnSuccess(success) {
+            if (success) {
+                toastr.success("Bank Details has been added Successfully.");
+            }
         }
-    }
 
-    function OnFailure() {
-        toastr.error("Sorry! Something went wrong, please try again.");
-    }
-</script>
+        function OnFailure() {
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
+    </script>
 }

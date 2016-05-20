@@ -30,13 +30,17 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label id="lblMRVNo" class="control-label col-md-4 small ">Customer Code</label>
-                                <div class="col-md-7 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.CUSTNAME_QM, null, new { ID = "txtCustCode", Class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.CUSTNAME_QM)
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.CUSTNAME_QM, null, new { ID = "txtCustCode", Class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.CUSTNAME_QM)
+                                        <span class="input-group-btn">
+                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#CustomerSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
-                                <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#CustomerSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblDate" class="control-label col-md-4 small ">Quotation No</label>
@@ -149,11 +153,15 @@
                             <div class="col-md-5 form-group">
                                 <label id="lblPrCode" class="control-label col-md-4 small ">PrCode:</label>
                                 <div class="col-md-6 paddingLeftRight0">
-                                    <input type="text" id="txtPrCode" data-provide="typeahead" name="PrCode" class="form-control" autocomplete="off" required readonly />
+                                    <div class="input-group">
+                                        <input type="text" id="txtPrCode" data-provide="typeahead" name="PrCode" class="form-control" autocomplete="off" required readonly />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#QuotPrdSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
-                                <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#QuotPrdSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div class="col-md-7 form-group">
                                 <label id="lblPrDesc" class="control-label col-md-4 small ">PrDesc:</label>
@@ -166,17 +174,20 @@
                             <div class="col-md-5 form-group">
                                 <label id="lblJobID" class="control-label col-md-4 small ">Jobid:</label>
                                 <div class="col-md-6 paddingLeftRight0">
-                                    <input type="text" id="txtJobID" data-provide="typeahead" name="Jobid" class="form-control" autocomplete="off" required readonly />
+                                    <div class="input-group">
+                                        <input type="text" id="txtJobID" data-provide="typeahead" name="Jobid" class="form-control" autocomplete="off" required readonly />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#QuotJobSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
-                                <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#QuotJobSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div class="col-md-7 form-group">
                                 <label id="lblJobDesc" class="control-label col-md-4 small ">JobDesc:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     <input type="text" id="txtJobDesc" data-provide="typeahead" name="JobDesc" class="form-control" autocomplete="off" required readonly />
-
                                 </div>
                             </div>
                         </div>
@@ -344,26 +355,25 @@
     <script src="@Url.Content("~/Scripts/bootstrap.framework.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Quotation/QuotationEntry.js")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>
-<script type="text/javascript">
-    var isAlreadyOpen = false;
-    function OnSuccess(quotNumber) {
-        if (quotNumber !== "" && !isAlreadyOpen) {
-            toastr.success("Quotation Entry is added Successfully.");
-            isAlreadyOpen = true;
-            openInvReport(quotNumber);
+    <script type="text/javascript">
+        var isAlreadyOpen = false;
+        function OnSuccess(quotNumber) {
+            if (quotNumber !== "" && !isAlreadyOpen) {
+                toastr.success("Quotation Entry is added Successfully.");
+                isAlreadyOpen = true;
+                openInvReport(quotNumber);
+            }
         }
-    }
 
-    function OnFailure() {
-        toastr.error("Sorry! Something went wrong, please try again.");
-    }
+        function OnFailure() {
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
 
-    function openInvReport(quotNo) {
-        var quotReportUrl = "/MgcReports/Quotation?quotNo=" + quotNo;
-        window.open(quotReportUrl);
-        toastr.info("Quotation Report is open in new window.");
-    }
+        function openInvReport(quotNo) {
+            var quotReportUrl = "/MgcReports/Quotation?quotNo=" + quotNo;
+            window.open(quotReportUrl);
+            toastr.info("Quotation Report is open in new window.");
+        }
 
-</script>
-
+    </script>
 }

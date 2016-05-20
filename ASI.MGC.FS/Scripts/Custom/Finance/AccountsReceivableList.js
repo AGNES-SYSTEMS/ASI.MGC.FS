@@ -1,6 +1,24 @@
 ﻿$(document).ready(function () {
+
+    var searchGrid = function (searchValue) {
+        debugger;
+        var postData = $("#tblAccountsReceivable").jqGrid("getGridParam", "postData");
+        postData["searchValue"] = searchValue;
+
+        $("#tblAccountsReceivable").setGridParam({ postData: postData });
+        $("#tblAccountsReceivable").trigger("reloadGrid", [{ page: 1 }]);
+    };
+
+    $("#txtAccountsReceivable").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtAccountsReceivable").val().length >= 3 || $("#txtAccountsReceivable").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtAccountsReceivable").val());
+        }
+    });
+
     var $custType = "AR";
-    jQuery("#tblAccountsReceiveable").jqGrid({
+    jQuery("#tblAccountsReceivable").jqGrid({
         url: '/Customer/GetAllCustomers?custType=' + $custType,
         datatype: "json",
         height: 450,
@@ -40,6 +58,6 @@
     }).navGrid("#Pager", { edit: false, add: false, del: false });
     $(window).resize(function () {
         var outerwidth = $('#grid').width();
-        $('#tblAccountsReceiveable').setGridWidth(outerwidth);
+        $('#tblAccountsReceivable').setGridWidth(outerwidth);
     });
 });

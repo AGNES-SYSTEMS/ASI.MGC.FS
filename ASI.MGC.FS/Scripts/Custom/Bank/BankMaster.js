@@ -108,7 +108,7 @@ $(document).ready(function () {
             viewrecords: true,
             sortorder: "asc",
             pager: jQuery('#Pager'),
-            caption: "Genral Ledger Codes List",
+            caption: "Bank Details List",
             emptyrecords: "No Data to Display",
             jsonReader: {
                 root: "rows",

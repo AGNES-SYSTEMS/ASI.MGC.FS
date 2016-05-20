@@ -54,30 +54,34 @@ namespace ASI.MGC.FS.Controllers
         }
 
         [HttpPost]
-        public ActionResult Registration(UserRegistartionViewModal model)
+        public JsonResult Registration(UserRegistartionViewModal model)
         {
-            if (ModelState.IsValid)
+            bool success = false;
+            try
             {
-                var crypto = new PBKDF2();
-                var encrypPassword = crypto.Compute(model.Password);
-                var mesUser = _unitOfWork.Repository<MESUser>().Create();
-                mesUser.UserID = Guid.NewGuid();
-                mesUser.Email = model.Email;
-                mesUser.Password = encrypPassword;
-                mesUser.PasswordSalt = crypto.Salt;
-                mesUser.UserName = model.UserName;
-                mesUser.CreatedDate = DateTime.Now;
-                mesUser.isActive = true;
+                if (ModelState.IsValid)
+                {
+                    var crypto = new PBKDF2();
+                    var encrypPassword = crypto.Compute(model.Password);
+                    var mesUser = _unitOfWork.Repository<MESUser>().Create();
+                    mesUser.UserID = Guid.NewGuid();
+                    mesUser.Email = model.Email;
+                    mesUser.Password = encrypPassword;
+                    mesUser.PasswordSalt = crypto.Salt;
+                    mesUser.UserName = model.UserName;
+                    mesUser.CreatedDate = DateTime.Now;
+                    mesUser.isActive = true;
 
-                _unitOfWork.Repository<MESUser>().Insert(mesUser);
-                _unitOfWork.Save();
-                return RedirectToAction("Registration", "AccountManagement");
+                    _unitOfWork.Repository<MESUser>().Insert(mesUser);
+                    _unitOfWork.Save();
+                    success = true;
+                }
             }
-            else
+            catch (Exception)
             {
-                ModelState.AddModelError("", "One or More values are incorrect.");
+                success = false;
             }
-            return View();
+            return Json(success, JsonRequestBehavior.AllowGet);
         }
 
         private bool IsValid(string email, string password)
@@ -110,31 +114,36 @@ namespace ASI.MGC.FS.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChangePassword(ChangePassword model)
+        public JsonResult ChangePassword(ChangePassword model)
         {
-            if (ModelState.IsValid)
+            bool success = false;
+            try
             {
-                if (IsValid(model.Email, model.CurrentPassword))
+                if (ModelState.IsValid)
                 {
-                    var user = (from mesUsers in _unitOfWork.Repository<MESUser>().Query().Get()
-                                where mesUsers.Email.Equals(model.Email)
-                                select mesUsers).FirstOrDefault();
-                    if (user != null)
+                    if (IsValid(model.Email, model.CurrentPassword))
                     {
-                        var crypto = new PBKDF2();
-                        var encrypPassword = crypto.Compute(model.Password);
-                        user.Password = encrypPassword;
-                        user.PasswordSalt = crypto.Salt;
-                        _unitOfWork.Repository<MESUser>().Update(user);
-                        _unitOfWork.Save();
+                        var user = (from mesUsers in _unitOfWork.Repository<MESUser>().Query().Get()
+                                    where mesUsers.Email.Equals(model.Email)
+                                    select mesUsers).FirstOrDefault();
+                        if (user != null)
+                        {
+                            var crypto = new PBKDF2();
+                            var encrypPassword = crypto.Compute(model.Password);
+                            user.Password = encrypPassword;
+                            user.PasswordSalt = crypto.Salt;
+                            _unitOfWork.Repository<MESUser>().Update(user);
+                            _unitOfWork.Save();
+                            success = true;
+                        }
                     }
                 }
             }
-            else
+            catch (Exception)
             {
-                ModelState.AddModelError("", "One or More values are incorrect.");
+                success = false;
             }
-            return View();
+            return Json(success, JsonRequestBehavior.AllowGet);
         }
     }
 }

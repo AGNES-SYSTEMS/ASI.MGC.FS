@@ -10,7 +10,7 @@
 
     $("#txtglCodeSearch").off().on("keyup", function () {
 
-        var shouldSearch = $("#txtglCodeSearch").val().length >= 2 || $("#txtglCodeSearch").val().length === 0;
+        var shouldSearch = $("#txtglCodeSearch").val().length >= 3 || $("#txtglCodeSearch").val().length === 0;
         if (shouldSearch) {
             searchGrid($("#txtglCodeSearch").val());
         }

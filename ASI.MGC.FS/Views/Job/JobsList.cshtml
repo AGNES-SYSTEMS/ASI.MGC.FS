@@ -62,7 +62,6 @@
                 mtype: 'GET',
                 gridview: true,
                 shrinkToFit: true,
-                autowidth: true,
                 viewrecords: true,
                 pager: jQuery('#Pager'),
                 caption: "Job Details List",
@@ -74,7 +73,7 @@
                     records: "records",
                     repeatitems: false
                 },
-                loadComplete: function(data) {
+                loadComplete: function (data) {
                     alert('load complete');
                     reloadGridByJobID();
                 },

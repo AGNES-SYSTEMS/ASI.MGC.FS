@@ -19,7 +19,7 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
-        public JsonResult GetAllCustomers(string sidx, string sord, int page, int rows, string custType)
+        public JsonResult GetAllCustomers(string sidx, string sord, int page, int rows, string custType, string searchValue = null)
         {
             var custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
                             where customers.TYPE_ARM.Equals(custType)
@@ -35,6 +35,25 @@ namespace ASI.MGC.FS.Controllers
                                 a.CONDACTPERSON_ARM
 
                             });
+
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                            where customers.TYPE_ARM.Equals(custType) && customers.DESCRIPTION_ARM.Contains(searchValue)
+                            select customers).Select(a => new
+                                {
+                                    a.ARCODE_ARM,
+                                    a.DESCRIPTION_ARM,
+                                    a.ADDRESS1_ARM,
+                                    a.POBOX_ARM,
+                                    a.TELEPHONE_ARM,
+                                    a.FAX_ARM,
+                                    a.EMAIL_ARM,
+                                    a.CONDACTPERSON_ARM
+
+                                });
+            }
+
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
             int totalRecords = custList.Count();

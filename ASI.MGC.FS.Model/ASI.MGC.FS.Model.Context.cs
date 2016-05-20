@@ -877,5 +877,39 @@ namespace ASI.MGC.FS.Model
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetVoucherDetails", vTypeParameter, vCodeParameter);
         }
+    
+        public virtual int sp_GetARStatementData(string acCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        {
+            var acCodeParameter = acCode != null ?
+                new ObjectParameter("AcCode", acCode) :
+                new ObjectParameter("AcCode", typeof(string));
+    
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetARStatementData", acCodeParameter, startDateParameter, endDateParameter);
+        }
+    
+        public virtual int sp_GetARStatementOutStandingData(string acCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        {
+            var acCodeParameter = acCode != null ?
+                new ObjectParameter("AcCode", acCode) :
+                new ObjectParameter("AcCode", typeof(string));
+    
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetARStatementOutStandingData", acCodeParameter, startDateParameter, endDateParameter);
+        }
     }
 }

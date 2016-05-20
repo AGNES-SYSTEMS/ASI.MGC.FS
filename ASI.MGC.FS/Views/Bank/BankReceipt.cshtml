@@ -24,169 +24,177 @@
                 <div class="container">
                     @using (Ajax.BeginForm("SaveBankReceipt", "Bank", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formBankReceipt", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
-                        <input id="hdnAllocDetails" name="allocDetails" type="hidden" />
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblDocType" class="control-label col-md-4 small ">Doc Type:</label>
-                                <div class="col-md-7 paddingLeftRight0">
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
+                    <input id="hdnAllocDetails" name="allocDetails" type="hidden" />
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblDocType" class="control-label col-md-4 small ">Doc Type:</label>
+                            <div class="col-md-8">
+                                <div class="input-group">
                                     @Html.TextBox("DocType", null, new { ID = "txtDocType", Class = "form-control", @readonly = "readonly" })
                                     @Html.ValidationMessage("DocType")
-                                </div>
-                                <button type="button" id="btnDocTypeSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#docTypeSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblDocNo" class="control-label col-md-4 small ">Doc No:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.DOCNUMBER_BT, null, new { ID = "txtDocNo", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessageFor(m => m.DOCNUMBER_BT)
+                                    <span class="input-group-btn">
+                                        <button type="button" id="btnDocTypeSearch" class="btn btn-default" data-toggle="modal" data-target="#docTypeSearchModel">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblDocDetails" class="control-label col-md-4 small ">Doc Details:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DocDetails", null, new { ID = "txtDocDetails", Class = "form-control", @readonly = "readonly" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblDocDate" class="control-label col-md-4 small ">Doc Date:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.DOCDATE_BT, null, new { ID = "txtDocDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control datepicker" })
-                                    @Html.ValidationMessageFor(m => m.DOCDATE_BT)
-                                </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblDocNo" class="control-label col-md-4 small ">Doc No:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(m => m.DOCNUMBER_BT, null, new { ID = "txtDocNo", Class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(m => m.DOCNUMBER_BT)
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblBankCode" class="control-label col-md-4 small ">Bank Code:</label>
-                                <div class="col-md-7 paddingLeftRight0">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblDocDetails" class="control-label col-md-4 small ">Doc Details:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("DocDetails", null, new { ID = "txtDocDetails", Class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblDocDate" class="control-label col-md-4 small ">Doc Date:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(m => m.DOCDATE_BT, null, new { ID = "txtDocDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control datepicker" })
+                                @Html.ValidationMessageFor(m => m.DOCDATE_BT)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblBankCode" class="control-label col-md-4 small ">Bank Code:</label>
+                            <div class="col-md-8">
+                                <div class="input-group">
                                     @Html.TextBoxFor(m => m.BANKCODE_BT, null, new { ID = "txtBankCode", Class = "form-control", @readonly = "readonly" })
                                     @Html.ValidationMessageFor(m => m.BANKCODE_BT)
-                                </div>
-                                <button type="button" id="btnBankSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#BankSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblGLDate" class="control-label col-md-4 small ">GL Date:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.GLDATE_BT, null, new { ID = "txtGLDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.GLDATE_BT)
+                                    <span class="input-group-btn">
+                                        <button type="button" id="btnBankSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#BankSearchModel">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblBankName" class="control-label col-md-4 small ">Bank Name</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("BankName", null, new { ID = "txtBankName", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessage("BankName")
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblotherRef" class="control-label col-md-4 small ">Other Ref</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.OTHERREF_BT, null, new { ID = "txtOtherRef", Class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.OTHERREF_BT)
-                                </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblGLDate" class="control-label col-md-4 small ">GL Date:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(m => m.GLDATE_BT, null, new { ID = "txtGLDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.GLDATE_BT)
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblAmount" class="control-label col-md-4 small ">Amount</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.DEBITAMOUT_BT, null, new { ID = "txtBRAmount", Class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.DEBITAMOUT_BT)
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblReceiveFrom" class="control-label col-md-4 small ">Received From</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.NOTE_BT, null, new { ID = "txtReceivedFrom", Class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.NOTE_BT)
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblBankName" class="control-label col-md-4 small ">Bank Name</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("BankName", null, new { ID = "txtBankName", Class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessage("BankName")
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblNarration" class="control-label col-md-4 small ">Narration</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.NARRATION_BT, null, new { ID = "txtBRNarration", Class = "form-control" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblChequeNo" class="control-label col-md-4 small ">Cheque No</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.CHQNO_BT, null, new { ID = "txtChequeNo", Class = "form-control" })
-                                </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblotherRef" class="control-label col-md-4 small ">Other Ref</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(m => m.OTHERREF_BT, null, new { ID = "txtOtherRef", Class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.OTHERREF_BT)
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblChequeDate" class="control-label col-md-4 small ">Cheque Date</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.CHQDATE_BT, null, new { ID = "txtChequeDate", Class = "form-control" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblClearanceDate" class="control-label col-md-4 small ">Clearance Date</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.CLEARANCEDATE_BT, null, new { ID = "txtClearanceDate", Class = "form-control" })
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblAmount" class="control-label col-md-4 small ">Amount</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(m => m.DEBITAMOUT_BT, null, new { ID = "txtBRAmount", Class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.DEBITAMOUT_BT)
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblDrawerBr" class="control-label col-md-4 small ">Drawer Br.</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.BENACCOUNT_BT, null, new { ID = "txtDrawerBr", Class = "form-control" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblDrwACNo" class="control-label col-md-4 small ">Drw AC No</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.BENACNO_BT, null, new { ID = "txtDrwACNo", Class = "form-control" })
-                                </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblReceiveFrom" class="control-label col-md-4 small ">Received From</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(m => m.NOTE_BT, null, new { ID = "txtReceivedFrom", Class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.NOTE_BT)
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblAllocationTotal" class="control-label col-md-4 small ">Allocation Total</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("AllocationTotal", null, new { ID = "txtAllocationTotal", Class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblNarration" class="control-label col-md-4 small ">Narration</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(m => m.NARRATION_BT, null, new { ID = "txtBRNarration", Class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblChequeNo" class="control-label col-md-4 small ">Cheque No</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(m => m.CHQNO_BT, null, new { ID = "txtChequeNo", Class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblChequeDate" class="control-label col-md-4 small ">Cheque Date</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(m => m.CHQDATE_BT, null, new { ID = "txtChequeDate", Class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblClearanceDate" class="control-label col-md-4 small ">Clearance Date</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(m => m.CLEARANCEDATE_BT, null, new { ID = "txtClearanceDate", Class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblDrawerBr" class="control-label col-md-4 small ">Drawer Br.</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(m => m.BENACCOUNT_BT, null, new { ID = "txtDrawerBr", Class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblDrwACNo" class="control-label col-md-4 small ">Drw AC No</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(m => m.BENACNO_BT, null, new { ID = "txtDrwACNo", Class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblAllocationTotal" class="control-label col-md-4 small ">Allocation Total</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("AllocationTotal", null, new { ID = "txtAllocationTotal", Class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <fieldset>
+                                <legend>Allocation Details</legend>
+                                <div id="grid" class="panel-body">
+                                    <section id="unseen">
+                                        <button class="btn btn-primary" data-toggle="modal" data-target="#allocationDetailsModel">
+                                            Add Allocation Details
+                                        </button>
+                                        <table id="tblAllocDetails"></table>
+                                    </section>
                                 </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label></label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-10">
-                                <fieldset>
-                                    <legend>Allocation Details</legend>
-                                    <div id="grid" class="panel-body">
-                                        <section id="unseen">
-                                            <button class="btn btn-primary" data-toggle="modal" data-target="#allocationDetailsModel">
-                                                Add Allocation Details
-                                            </button>
-                                            <table id="tblAllocDetails"></table>
-                                        </section>
-                                    </div>
-                                </fieldset>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label></label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
-                                </div>
-                            </div>
-                        </div>
+                    </div>
                     }
                 </div>
             </div>
@@ -215,12 +223,16 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">AL Code:</label>
-                                <div class="col-md-7 paddingLeftRight0">
-                                    <input type="text" name="AlCode" id="txtAlCode" data-fv-notempty="true" class="form-control" readonly required />
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        <input type="text" name="AlCode" id="txtAlCode" data-fv-notempty="true" class="form-control" readonly required />
+                                        <span class="input-group-btn">
+                                            <button type="button" id="btnAlCodeSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#alCodeSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
-                                <button type="button" id="btnAlCodeSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#alCodeSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">AL Description:</label>
@@ -232,12 +244,16 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Account Code:</label>
-                                <div class="col-md-7 paddingLeftRight0">
-                                    <input type="text" name="AccountCode" data-fv-notempty="true" id="txtAccountCode" class="form-control" readonly required />
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        <input type="text" name="AccountCode" data-fv-notempty="true" id="txtAccountCode" class="form-control" readonly required />
+                                        <span class="input-group-btn">
+                                            <button type="button" id="btnAccountSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" disabled data-target="#accountSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
-                                <button type="button" id="btnAccountSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" disabled data-target="#accountSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Account Description:</label>

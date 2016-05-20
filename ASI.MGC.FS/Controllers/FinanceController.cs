@@ -257,54 +257,56 @@ namespace ASI.MGC.FS.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveDocumentReversal(FormCollection frm)
+        public JsonResult SaveDocumentReversal(FormCollection frm)
         {
-            bool success;
+            bool success = false;
             var invCode = frm["InvNumber"];
             try
             {
-                // Checking Bank Transactions entries and adding their reverse
-                var btEnteries = (from bankTransactions in _unitOfWork.Repository<BANKTRANSACTION>().Query().Get()
-                                  where (bankTransactions.DOCNUMBER_BT == invCode)
-                                  select bankTransactions);
-                foreach (var entry in btEnteries.ToList())
+                if (!string.IsNullOrEmpty(invCode))
                 {
-                    entry.STATUS_BT = "R";
-                    _unitOfWork.Repository<BANKTRANSACTION>().Update(entry);
-                    _unitOfWork.Save();
+                    // Checking Bank Transactions entries and adding their reverse
+                    var btEnteries = (from bankTransactions in _unitOfWork.Repository<BANKTRANSACTION>().Query().Get()
+                                      where (bankTransactions.DOCNUMBER_BT == invCode)
+                                      select bankTransactions);
+                    foreach (var entry in btEnteries.ToList())
+                    {
+                        entry.STATUS_BT = "R";
+                        _unitOfWork.Repository<BANKTRANSACTION>().Update(entry);
+                        _unitOfWork.Save();
 
-                    // adding reverse entry
-                    ReverseBankTransactions(entry);
+                        // adding reverse entry
+                        success = ReverseBankTransactions(entry);
+                    }
+
+                    // Checking AR_AP Ledger entries and adding their reverse
+                    var arApEnteries = (from arApLedger in _unitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
+                                        where (arApLedger.DOCNUMBER_ART == invCode)
+                                        select arApLedger);
+                    foreach (var entry in arApEnteries.ToList())
+                    {
+                        entry.STATUS_ART = "R";
+                        _unitOfWork.Repository<AR_AP_LEDGER>().Update(entry);
+                        _unitOfWork.Save();
+
+                        // adding reverse entry
+                        success = ReverseAr_Ap_Enteries(entry);
+                    }
+
+                    // Checking GL Transactions entries and adding their reverse
+                    var glEnteries = (from glTransactions in _unitOfWork.Repository<GLTRANSACTION1>().Query().Get()
+                                      where (glTransactions.DOCNUMBER_GLT == invCode)
+                                      select glTransactions);
+                    foreach (var entry in glEnteries.ToList())
+                    {
+                        entry.GLSTATUS_GLT = "R";
+                        _unitOfWork.Repository<GLTRANSACTION1>().Update(entry);
+                        _unitOfWork.Save();
+
+                        // adding reverse entry
+                        success = ReverseGlTransactions(entry);
+                    }
                 }
-
-                // Checking AR_AP Ledger entries and adding their reverse
-                var arApEnteries = (from arApLedger in _unitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
-                                    where (arApLedger.DOCNUMBER_ART == invCode)
-                                    select arApLedger);
-                foreach (var entry in arApEnteries.ToList())
-                {
-                    entry.STATUS_ART = "R";
-                    _unitOfWork.Repository<AR_AP_LEDGER>().Update(entry);
-                    _unitOfWork.Save();
-
-                    // adding reverse entry
-                    ReverseAr_Ap_Enteries(entry);
-                }
-
-                // Checking GL Transactions entries and adding their reverse
-                var glEnteries = (from glTransactions in _unitOfWork.Repository<GLTRANSACTION1>().Query().Get()
-                                  where (glTransactions.DOCNUMBER_GLT == invCode)
-                                  select glTransactions);
-                foreach (var entry in glEnteries.ToList())
-                {
-                    entry.GLSTATUS_GLT = "R";
-                    _unitOfWork.Repository<GLTRANSACTION1>().Update(entry);
-                    _unitOfWork.Save();
-
-                    // adding reverse entry
-                    ReverseGlTransactions(entry);
-                }
-                success = true;
             }
             catch (Exception)
             {
@@ -457,61 +459,92 @@ namespace ASI.MGC.FS.Controllers
             return Json(false, JsonRequestBehavior.AllowGet);
         }
 
-        private void ReverseBankTransactions(BANKTRANSACTION entry)
+        private bool ReverseBankTransactions(BANKTRANSACTION entry)
         {
-            var reverseEntry = _unitOfWork.Repository<BANKTRANSACTION>().Create();
-            reverseEntry.DOCNUMBER_BT = "Rev" + entry.DOCNUMBER_BT;
-            reverseEntry.BANKCODE_BT = entry.BANKCODE_BT;
-            reverseEntry.DOCDATE_BT = entry.DOCDATE_BT;
-            reverseEntry.GLDATE_BT = entry.GLDATE_BT;
-            reverseEntry.OTHERREF_BT = entry.OTHERREF_BT;
-            reverseEntry.CHQNO_BT = entry.CHQNO_BT;
-            reverseEntry.CHQDATE_BT = entry.CHQDATE_BT;
-            reverseEntry.CLEARANCEDATE_BT = entry.CLEARANCEDATE_BT;
-            reverseEntry.BENACNO_BT = entry.BENACNO_BT;
-            reverseEntry.BENACCOUNT_BT = entry.BENACCOUNT_BT;
-            reverseEntry.NARRATION_BT = entry.NARRATION_BT;
-            reverseEntry.NOTE_BT = entry.NOTE_BT;
-            reverseEntry.MASTERSTATUS_BT = entry.MASTERSTATUS_BT;
-            reverseEntry.CREDITAMOUT_BT = entry.DEBITAMOUT_BT;
-            reverseEntry.DEBITAMOUT_BT = entry.CREDITAMOUT_BT;
-            reverseEntry.STATUS_BT = "R";
+            bool success;
+            try
+            {
+                var reverseEntry = _unitOfWork.Repository<BANKTRANSACTION>().Create();
+                reverseEntry.DOCNUMBER_BT = "Rev" + entry.DOCNUMBER_BT;
+                reverseEntry.BANKCODE_BT = entry.BANKCODE_BT;
+                reverseEntry.DOCDATE_BT = entry.DOCDATE_BT;
+                reverseEntry.GLDATE_BT = entry.GLDATE_BT;
+                reverseEntry.OTHERREF_BT = entry.OTHERREF_BT;
+                reverseEntry.CHQNO_BT = entry.CHQNO_BT;
+                reverseEntry.CHQDATE_BT = entry.CHQDATE_BT;
+                reverseEntry.CLEARANCEDATE_BT = entry.CLEARANCEDATE_BT;
+                reverseEntry.BENACNO_BT = entry.BENACNO_BT;
+                reverseEntry.BENACCOUNT_BT = entry.BENACCOUNT_BT;
+                reverseEntry.NARRATION_BT = entry.NARRATION_BT;
+                reverseEntry.NOTE_BT = entry.NOTE_BT;
+                reverseEntry.MASTERSTATUS_BT = entry.MASTERSTATUS_BT;
+                reverseEntry.CREDITAMOUT_BT = entry.DEBITAMOUT_BT;
+                reverseEntry.DEBITAMOUT_BT = entry.CREDITAMOUT_BT;
+                reverseEntry.STATUS_BT = "R";
 
-            _unitOfWork.Repository<BANKTRANSACTION>().Insert(reverseEntry);
-            _unitOfWork.Save();
+                _unitOfWork.Repository<BANKTRANSACTION>().Insert(reverseEntry);
+                _unitOfWork.Save();
+                success = true;
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+
+            return success;
         }
 
-        private void ReverseAr_Ap_Enteries(AR_AP_LEDGER entry)
+        private bool ReverseAr_Ap_Enteries(AR_AP_LEDGER entry)
         {
-            var reverseEntry = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
-            reverseEntry.DOCNUMBER_ART = "Rev" + entry.DOCNUMBER_ART;
-            reverseEntry.DODATE_ART = entry.DODATE_ART;
-            reverseEntry.GLDATE_ART = entry.GLDATE_ART;
-            reverseEntry.ARAPCODE_ART = entry.ARAPCODE_ART;
-            reverseEntry.OTHERREF_ART = entry.OTHERREF_ART;
-            reverseEntry.NARRATION_ART = entry.NARRATION_ART;
-            reverseEntry.MATCHVALUE_AR = entry.MATCHVALUE_AR;
-            reverseEntry.CREDITAMOUNT_ART = entry.DEBITAMOUNT_ART;
-            reverseEntry.DEBITAMOUNT_ART = entry.CREDITAMOUNT_ART;
-            reverseEntry.STATUS_ART = "R";
-            _unitOfWork.Repository<AR_AP_LEDGER>().Insert(reverseEntry);
-            _unitOfWork.Save();
+            bool success;
+            try
+            {
+                var reverseEntry = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
+                reverseEntry.DOCNUMBER_ART = "Rev" + entry.DOCNUMBER_ART;
+                reverseEntry.DODATE_ART = entry.DODATE_ART;
+                reverseEntry.GLDATE_ART = entry.GLDATE_ART;
+                reverseEntry.ARAPCODE_ART = entry.ARAPCODE_ART;
+                reverseEntry.OTHERREF_ART = entry.OTHERREF_ART;
+                reverseEntry.NARRATION_ART = entry.NARRATION_ART;
+                reverseEntry.MATCHVALUE_AR = entry.MATCHVALUE_AR;
+                reverseEntry.CREDITAMOUNT_ART = entry.DEBITAMOUNT_ART;
+                reverseEntry.DEBITAMOUNT_ART = entry.CREDITAMOUNT_ART;
+                reverseEntry.STATUS_ART = "R";
+                _unitOfWork.Repository<AR_AP_LEDGER>().Insert(reverseEntry);
+                _unitOfWork.Save();
+                success = true;
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+            return success;
         }
 
-        private void ReverseGlTransactions(GLTRANSACTION1 entry)
+        private bool ReverseGlTransactions(GLTRANSACTION1 entry)
         {
-            var reverseEntry = _unitOfWork.Repository<GLTRANSACTION1>().Create();
-            reverseEntry.DOCNUMBER_GLT = "Rev" + entry.DOCNUMBER_GLT;
-            reverseEntry.DOCDATE_GLT = entry.DOCDATE_GLT;
-            reverseEntry.GLDATE_GLT = entry.GLDATE_GLT;
-            reverseEntry.GLACCODE_GLT = entry.GLACCODE_GLT;
-            reverseEntry.OTHERREF_GLT = entry.OTHERREF_GLT;
-            reverseEntry.NARRATION_GLT = entry.NARRATION_GLT;
-            reverseEntry.CREDITAMOUNT_GLT = entry.DEBITAMOUNT_GLT;
-            reverseEntry.DEBITAMOUNT_GLT = entry.CREDITAMOUNT_GLT;
-            reverseEntry.GLSTATUS_GLT = "R";
-            _unitOfWork.Repository<GLTRANSACTION1>().Insert(reverseEntry);
-            _unitOfWork.Save();
+            bool success;
+            try
+            {
+                var reverseEntry = _unitOfWork.Repository<GLTRANSACTION1>().Create();
+                reverseEntry.DOCNUMBER_GLT = "Rev" + entry.DOCNUMBER_GLT;
+                reverseEntry.DOCDATE_GLT = entry.DOCDATE_GLT;
+                reverseEntry.GLDATE_GLT = entry.GLDATE_GLT;
+                reverseEntry.GLACCODE_GLT = entry.GLACCODE_GLT;
+                reverseEntry.OTHERREF_GLT = entry.OTHERREF_GLT;
+                reverseEntry.NARRATION_GLT = entry.NARRATION_GLT;
+                reverseEntry.CREDITAMOUNT_GLT = entry.DEBITAMOUNT_GLT;
+                reverseEntry.DEBITAMOUNT_GLT = entry.CREDITAMOUNT_GLT;
+                reverseEntry.GLSTATUS_GLT = "R";
+                _unitOfWork.Repository<GLTRANSACTION1>().Insert(reverseEntry);
+                _unitOfWork.Save();
+                success = true;
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+            return success;
         }
 
         public ActionResult JvPrinting()

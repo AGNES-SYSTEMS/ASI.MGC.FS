@@ -129,7 +129,7 @@ namespace ASI.MGC.FS.Controllers
         {
             try
             {
-                objCustomerMaster.STATUS_ARM = "AR";
+                objCustomerMaster.TYPE_ARM = "AR";
                 _unitOfWork.Repository<AR_AP_MASTER>().Insert(objCustomerMaster);
                 _unitOfWork.Save();
 
@@ -201,7 +201,7 @@ namespace ASI.MGC.FS.Controllers
         {
             try
             {
-                objSupplierMaster.STATUS_ARM = "AP";
+                objSupplierMaster.TYPE_ARM = "AP";
                 _unitOfWork.Repository<AR_AP_MASTER>().Insert(objSupplierMaster);
                 _unitOfWork.Save();
 

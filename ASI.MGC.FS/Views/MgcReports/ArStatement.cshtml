@@ -20,6 +20,23 @@
                     {
                         <div class="row">
                             <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4">AR Code:</label>
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBox("ArCode", null, new { ID = "txtArCode", Class = "form-control", @readonly = "readonly" })
+                                        <span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-search"></i></button></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4">Description:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("ArDesc", null, new { ID = "txtArDesc", Class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4">Start Date:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBox("startDate", null, new { ID = "txtStartDate", Class = "form-control" })

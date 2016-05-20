@@ -54,4 +54,25 @@
         var outerwidth = $('#grid').width();
         $('#tblSupplierDetails').setGridWidth(outerwidth);
     });
+
+    var searchGrid = function (searchValue) {
+        debugger;
+        var postData = $("#tblSupplierDetails").jqGrid("getGridParam", "postData");
+        postData["searchValue"] = searchValue;
+
+        $("#tblSupplierDetails").setGridParam({ postData: postData });
+        $("#tblSupplierDetails").trigger("reloadGrid", [{ page: 1 }]);
+    };
+
+    $("#txtSupplierSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtSupplierSearch").val().length >= 3 || $("#txtSupplierSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtSupplierSearch").val());
+        }
+    });
+
+    $("#SupplierMasterModel").on('hide.bs.modal', function () {
+        $(this).find('form')[0].reset();
+    });
 });

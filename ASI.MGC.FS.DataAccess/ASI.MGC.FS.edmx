@@ -1129,6 +1129,16 @@
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_GetARStatementData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AcCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_GetARStatementOutStandingData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AcCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+        </Function>
         <Function Name="sp_GetBankStatementData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BankCode" Type="int" Mode="In" />
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
@@ -1611,6 +1621,16 @@
           <FunctionImport Name="sp_GetVoucherDetails">
             <Parameter Name="vType" Mode="In" Type="String" />
             <Parameter Name="vCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetARStatementData">
+            <Parameter Name="AcCode" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetARStatementOutStandingData">
+            <Parameter Name="AcCode" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="rpt_BankPayment_Result">
@@ -5011,6 +5031,8 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_JvDataList" FunctionName="ASI_MGC_FSModel.Store.sp_JvDataList" />
           <FunctionImportMapping FunctionImportName="sp_GetVoucherDetails" FunctionName="ASI_MGC_FSModel.Store.sp_GetVoucherDetails" />
+          <FunctionImportMapping FunctionImportName="sp_GetARStatementData" FunctionName="ASI_MGC_FSModel.Store.sp_GetARStatementData" />
+          <FunctionImportMapping FunctionImportName="sp_GetARStatementOutStandingData" FunctionName="ASI_MGC_FSModel.Store.sp_GetARStatementOutStandingData" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

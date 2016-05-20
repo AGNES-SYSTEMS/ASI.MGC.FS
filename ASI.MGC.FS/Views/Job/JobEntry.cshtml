@@ -25,13 +25,17 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label id="lblJobID" class="control-label col-md-4 small ">Job id:</label>
-                                <div class="col-md-7 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.JOBNO_SD, null, new { ID = "txtJobid", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessageFor(d => d.JOBNO_SD)
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(d => d.JOBNO_SD, null, new { ID = "txtJobid", Class = "form-control", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(d => d.JOBNO_SD)
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#mrvJobSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
-                                <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#mrvJobSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblMRVNo" class="control-label col-md-4 small ">MRV No:</label>
@@ -72,12 +76,16 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label id="lblEmpCode" class="control-label col-md-4 small ">Emp Code:</label>
-                                <div class="col-md-7 paddingLeftRight0">
-                                    @Html.TextBox("EmpCode", null, new { ID = "txtEmpCode", Class = "form-control", @readonly = "readonly" })
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBox("EmpCode", null, new { ID = "txtEmpCode", Class = "form-control", @readonly = "readonly" })
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#EmployeeSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
-                                <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#EmployeeSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblEmpName" class="control-label col-md-4 small ">Emp Name:</label>
@@ -104,21 +112,29 @@
                         <div class="row">
                             <div id="divPrCode" class="col-md-6 form-group">
                                 <label id="lblPrCode" class="control-label col-md-4 small ">Pr Code:</label>
-                                <div class="col-md-7 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.PRCODE_SD, null, new { ID = "txtPrCode", Class = "form-control", @readonly = "readonly" })
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(d => d.PRCODE_SD, null, new { ID = "txtPrCode", Class = "form-control", @readonly = "readonly" })
+                                        <span class="input-group-btn">
+                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#PrdSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
-                                <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#PrdSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div id="divSowCode" style="display:none;" class="col-md-6 form-group">
                                 <label id="lblSowCode" class="control-label col-md-4 small ">Sow Code:</label>
-                                <div class="col-md-7 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.JOBID_SD, null, new { ID = "txtSowid", Class = "form-control", @readonly = "readonly" })
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(d => d.JOBID_SD, null, new { ID = "txtSowid", Class = "form-control", @readonly = "readonly" })
+                                        <span class="input-group-btn">
+                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#JobSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
-                                <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#JobSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div id="divPrDetail" class="col-md-6 form-group">
                                 <label id="lblPrDetail" class="control-label col-md-4 small ">Pr Detail:</label>
@@ -205,12 +221,16 @@
                         <div class="row" id="divCreditCustDetails" style="display:none;">
                             <div class="col-md-6 form-group">
                                 <label id="lblCustCode" class="control-label col-md-4 small ">Cust Code:</label>
-                                <div class="col-md-7 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.CREDITACCODE_SD, null, new { ID = "txtCreditCustCode", Class = "form-control", @readonly = "readonly" })
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(d => d.CREDITACCODE_SD, null, new { ID = "txtCreditCustCode", Class = "form-control", @readonly = "readonly" })
+                                        <span class="input-group-btn">
+                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#CustomerSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
-                                <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#CustomerSearchModel">
-                                    <i class="fa fa-search"></i>
-                                </button>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblCustName" class="control-label col-md-4 small ">Cust Name:</label>

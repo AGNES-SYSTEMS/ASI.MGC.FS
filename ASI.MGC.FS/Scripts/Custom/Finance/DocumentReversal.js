@@ -37,7 +37,11 @@ $(document).ready(function () {
                         } else {
                             $("#btnSubmit").prop("disabled", false);
                         }
-
+                        $("#formDocumentReversal").formValidation('revalidateField', 'AccCode');
+                        $("#formDocumentReversal").formValidation('revalidateField', 'DocDate');
+                        $("#formDocumentReversal").formValidation('revalidateField', 'OtherRef');
+                        $("#formDocumentReversal").formValidation('revalidateField', 'Status');
+                        $("#formDocumentReversal").formValidation('revalidateField', 'Amount');
                     } else {
                         toastr.error("Invalid Document Number.");
 
@@ -61,12 +65,21 @@ $(document).ready(function () {
             }
         }
     });
-    $('#formDocumentReversal').formValidation({
+    $('#formDocumentReversal').on('init.field.fv', function (e, data) {
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),
+            validators = data.fv.getOptions(data.field).validators;
+
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.addClass(options.icon.required).show();
+        }
+    }).formValidation({
         container: '#messages',
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
+        icon: {
+            required: 'fa fa-asterisk',
+            valid: 'fa fa-check',
+            invalid: 'fa fa-times',
+            validating: 'fa fa-refresh'
         },
         fields: {
             InvNumber: {
@@ -75,7 +88,54 @@ $(document).ready(function () {
                         message: 'INV Code is required'
                     }
                 }
+            },
+            DocDate: {
+                validators: {
+                    notEmpty: {
+                        message: 'Document Date is required'
+                    }
+                }
+            },
+            OtherRef: {
+                validators: {
+                    notEmpty: {
+                        message: 'Other Ref is required'
+                    }
+                }
+            },
+            AccCode: {
+                validators: {
+                    notEmpty: {
+                        message: 'Account Code is required'
+                    }
+                }
+            }, Amount: {
+                validators: {
+                    notEmpty: {
+                        message: 'Amount is required'
+                    }
+                }
+            },
+            Status: {
+                validators: {
+                    notEmpty: {
+                        message: 'Status is required'
+                    }
+                }
             }
+        }
+    }).on('status.field.fv', function (e, data) {
+        // Remove the required icon when the field updates its status
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),
+            validators = data.fv.getOptions(data.field).validators;
+
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.removeClass(options.icon.required).addClass('fa');
+        }
+    }).on('success.field.fv', function (e, data) {
+        if (data.fv.getInvalidFields().length > 0) {
+            data.fv.disableSubmitButtons(true);
         }
     }).on('success.form.fv', function (e) {
         debugger;

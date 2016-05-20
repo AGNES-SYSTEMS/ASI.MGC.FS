@@ -171,9 +171,16 @@
                         <div class="row">
                             <div class="col-md-5 col-sm-5 form-group">
                                 <label id="lblPrCode" class="control-label col-md-4 small">PrCode:</label>
-                                <div class="col-md-6 col-sm-6 input-group">
-                                    <input type="text" id="txtPrCode" data-provide="typeahead" name="PrCode" class="form-control" autocomplete="off" required readonly />
-                                    <span class="input-group-addon" data-toggle="modal" data-target="#mrvPrdSearchModel"><i class="fa fa-search"></i></span>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="input-group">
+                                        <input type="text" id="txtPrCode" data-provide="typeahead" name="PrCode" class="form-control" autocomplete="off" required readonly />
+                                        @*<span class="input-group-addon" data-toggle="modal" data-target="#mrvPrdSearchModel"><i class="fa fa-search"></i></span>*@
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#mrvPrdSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-7 col-sm-7 form-group">
@@ -186,16 +193,22 @@
                         <div class="row">
                             <div class="col-md-5 col-sm-5 form-group">
                                 <label id="lblJobID" class="control-label col-md-4 small ">Jobid:</label>
-                                <div class="col-md-6 input-group">
-                                    <input type="text" id="txtJobID" data-provide="typeahead" name="Jobid" class="form-control" autocomplete="off" required readonly />
-                                    <span class="input-group-addon" data-toggle="modal" data-target="#mrvJobSearchModel"><i class="fa fa-search"></i></span>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" id="txtJobID" data-provide="typeahead" name="Jobid" class="form-control" autocomplete="off" required readonly />
+                                        @*<span class="input-group-addon" data-toggle="modal" data-target="#mrvJobSearchModel"><i class="fa fa-search"></i></span>*@
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#mrvJobSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-7 col-sm-7 form-group">
                                 <label id="lblJobDesc" class="control-label col-md-4 small ">JobDesc:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     <input type="text" id="txtJobDesc" data-provide="typeahead" name="JobDesc" class="form-control" autocomplete="off" required readonly />
-
                                 </div>
                             </div>
                         </div>
@@ -263,11 +276,11 @@
                                 <div id="prdGrid" class="panel-body">
                                     <div class="col-md-12 form-group">
                                         <div class="col-md-12 input-group paddingLeftRight0">
-                                            @Html.TextBox("prdCustomer", null, new {ID = "txtPrdSearch", Class = "form-control"})
+                                            @Html.TextBox("prdCustomer", null, new { ID = "txtPrdSearch", Class = "form-control" })
                                             <span class="input-group-addon"><i class="fa fa-search"></i></span>
                                         </div>
                                     </div>
-                                    <br/><br/>
+                                    <br /><br />
                                     <table id="tblProductSearch" style="width: 100%"></table>
                                     <div id="prdPager"></div>
                                 </div>
@@ -308,11 +321,11 @@
                                 <div id="jobGrid" class="panel-body">
                                     <div class="col-md-12 form-group">
                                         <div class="col-md-12 input-group paddingLeftRight0">
-                                            @Html.TextBox("searchJob", null, new {ID = "txtJobSearch", Class = "form-control"})
+                                            @Html.TextBox("searchJob", null, new { ID = "txtJobSearch", Class = "form-control" })
                                             <span class="input-group-addon"><i class="fa fa-search"></i></span>
                                         </div>
                                     </div>
-                                    <br/><br/>
+                                    <br /><br />
                                     <table id="tblJobSearch" style="width: 100%"></table>
                                     <div id="jobPager"></div>
                                 </div>

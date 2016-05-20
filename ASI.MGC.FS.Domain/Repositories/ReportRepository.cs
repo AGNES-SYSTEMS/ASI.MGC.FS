@@ -634,5 +634,29 @@ namespace ASI.MGC.FS.Domain.Repositories
                 //exception handling pending
             }
         }
+
+        public void Sp_GetARStatementData(string acCode, DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                _context.sp_GetARStatementData(acCode, startDate, endDate);
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+        }
+        public void Sp_GetARStatementOutStandingData(string acCode, DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                _context.sp_GetARStatementOutStandingData(acCode, startDate, endDate);
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+        }
+
     }
 }

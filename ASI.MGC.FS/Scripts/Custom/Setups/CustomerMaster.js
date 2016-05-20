@@ -54,4 +54,25 @@
         var outerwidth = $('#grid').width();
         $('#tblCustomerDetails').setGridWidth(outerwidth);
     });
+
+    var searchGrid = function (searchValue) {
+        debugger;
+        var postData = $("#tblCustomerDetails").jqGrid("getGridParam", "postData");
+        postData["searchValue"] = searchValue;
+
+        $("#tblCustomerDetails").setGridParam({ postData: postData });
+        $("#tblCustomerDetails").trigger("reloadGrid", [{ page: 1 }]);
+    };
+
+    $("#txtCustSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtCustSearch").val().length >= 3 || $("#txtCustSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtCustSearch").val());
+        }
+    });
+
+    $("#CustomerMasterModel").on('hide.bs.modal', function () {
+        $(this).find('form')[0].reset();
+    });
 });
