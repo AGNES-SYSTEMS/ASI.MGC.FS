@@ -104,12 +104,13 @@ namespace ASI.MGC.FS.Controllers
 
         public ActionResult CustomerMaster()
         {
-            return View();
+            var objCustomerMaster = new AR_AP_MASTER();
+            return View(objCustomerMaster);
         }
 
         public ActionResult SupplierMaster()
         {
-            var objSupplierMaster = _unitOfWork.Repository<AR_AP_MASTER>().Create();
+            var objSupplierMaster = new AR_AP_MASTER();
             return View(objSupplierMaster);
         }
 
@@ -125,8 +126,10 @@ namespace ASI.MGC.FS.Controllers
             return View(objUnitCreation);
         }
 
-        public ActionResult SaveCustomerMaster(FormCollection form, AR_AP_MASTER objCustomerMaster)
+        [HttpPost]
+        public JsonResult SaveCustomerMaster(FormCollection form, AR_AP_MASTER objCustomerMaster)
         {
+            bool success;
             try
             {
                 objCustomerMaster.TYPE_ARM = "AR";
@@ -145,12 +148,14 @@ namespace ASI.MGC.FS.Controllers
                 objCustomerLedger.STATUS_ART = "OP";
                 _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objCustomerLedger);
                 _unitOfWork.Save();
+                success = true;
             }
             catch (Exception)
             {
-                // ignored
+                success = false;
             }
-            return RedirectToAction("CustomerMaster");
+            return Json(success, JsonRequestBehavior.AllowGet);
+            //return RedirectToAction("CustomerMaster");
         }
 
         public ActionResult SaveJobCreation(JOBIDREFERENCE objJobCreation)
@@ -197,11 +202,14 @@ namespace ASI.MGC.FS.Controllers
             return RedirectToAction("EmployeeMaster");
         }
 
-        public ActionResult SaveSupplierMaster(FormCollection form, AR_AP_MASTER objSupplierMaster)
+        [HttpPost]
+        public JsonResult SaveSupplierMaster(FormCollection form, AR_AP_MASTER objSupplierMaster)
         {
+            bool success;
             try
             {
                 objSupplierMaster.TYPE_ARM = "AP";
+                _unitOfWork.Repository<AR_AP_MASTER>().Create();
                 _unitOfWork.Repository<AR_AP_MASTER>().Insert(objSupplierMaster);
                 _unitOfWork.Save();
 
@@ -217,12 +225,13 @@ namespace ASI.MGC.FS.Controllers
                 objCustomerLedger.STATUS_ART = "OP";
                 _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objCustomerLedger);
                 _unitOfWork.Save();
+                success = true;
             }
             catch (Exception)
             {
-                // ignored
+                success = false;
             }
-            return RedirectToAction("SupplierMaster");
+            return Json(success, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SaveProductMaster(PRODUCTMASTER objProductMaster)

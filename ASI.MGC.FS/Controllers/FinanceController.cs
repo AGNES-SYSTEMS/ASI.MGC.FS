@@ -20,15 +20,17 @@ namespace ASI.MGC.FS.Controllers
         // GET: Finance
         public ActionResult GlCreation()
         {
-            var objGlMaster = _unitOfWork.Repository<GLMASTER>().Create();
+            var objGlMaster = new GLMASTER();
             ViewBag.accountsType = CommonModelAccessUtility.GetAccountsType();
             ViewBag.glType = CommonModelAccessUtility.GetGlType();
             ViewBag.balanceType = CommonModelAccessUtility.GetBalanceType();
             return View(objGlMaster);
         }
 
+        [HttpPost]
         public JsonResult SaveGlCreation(FormCollection frm, GLMASTER objGlMaster)
         {
+            bool success = false;
             try
             {
                 _unitOfWork.Repository<GLMASTER>().Insert(objGlMaster);
@@ -54,13 +56,13 @@ namespace ASI.MGC.FS.Controllers
                 objGlTransaction.GLSTATUS_GLT = "OP";
                 _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGlTransaction);
                 _unitOfWork.Save();
-
+                success = true;
             }
             catch (Exception)
             {
-                // ignored
+                success = false;
             }
-            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            return Json(success, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult AccountsReceivable()
@@ -85,7 +87,8 @@ namespace ASI.MGC.FS.Controllers
 
         public ActionResult PdcReceipt()
         {
-            return View();
+            var objBankTransaction = new BANKTRANSACTION();
+            return View(objBankTransaction);
         }
 
         public ActionResult JvCreation()
@@ -116,9 +119,10 @@ namespace ASI.MGC.FS.Controllers
         }
 
         [HttpPost]
-        public ActionResult SavePdcReceipt(FormCollection form, BANKTRANSACTION objBankTransaction)
+        public JsonResult SavePdcReceipt(FormCollection form, BANKTRANSACTION objBankTransaction)
         {
             string pdcNo = "";
+            bool success;
             try
             {
                 objBankTransaction.STATUS_BT = "P";
@@ -243,12 +247,13 @@ namespace ASI.MGC.FS.Controllers
                             break;
                     }
                 }
+                success = true;
             }
             catch (Exception)
             {
-                // ignored
+                success = false;
             }
-            return Json(pdcNo, JsonRequestBehavior.AllowGet);
+            return Json(new { success, pdcNo }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SaveDayEndOperation()

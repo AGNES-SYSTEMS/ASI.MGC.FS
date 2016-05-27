@@ -294,12 +294,12 @@ namespace ASI.MGC.FS.Domain.Repositories
             return lst;
         }
 
-        public IList<rpt_GLStatement_Result> RptGlStatement(DateTime startDate, DateTime endDate)
+        public IList<rpt_GLStatement_Result> RptGlStatement(int glCode, DateTime startDate, DateTime endDate)
         {
             List<rpt_GLStatement_Result> lst = null;
             try
             {
-                lst = _context.rpt_GLStatement(startDate, endDate).ToList();
+                lst = _context.rpt_GLStatement(glCode, startDate, endDate).ToList();
             }
             catch (Exception)
             {
@@ -349,7 +349,17 @@ namespace ASI.MGC.FS.Domain.Repositories
             }
             return lst;
         }
-
+        public void SpGetStockLedgerData(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                _context.sp_GetStockLedgerData(startDate, endDate);
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+        }
 
         public IList<rpt_StockLedger_Result> RptStockLedger(DateTime startDate, DateTime endDate)
         {
@@ -575,11 +585,11 @@ namespace ASI.MGC.FS.Domain.Repositories
             return lst;
         }
 
-        public void SpGetBankStatementData(int bankCode, DateTime startDate, DateTime endDate)
+        public void SpGetBankStatementData(string bankCode, DateTime startDate, DateTime endDate)
         {
             try
             {
-                _context.sp_GetBankStatementData(bankCode,startDate, endDate);
+                _context.sp_GetBankStatementData(bankCode, startDate, endDate);
             }
             catch (Exception)
             {
@@ -620,14 +630,14 @@ namespace ASI.MGC.FS.Domain.Repositories
             catch (Exception)
             {
                 //exception handling pending
-            } 
+            }
         }
 
         public void Sp_GetVoucherDetails(string vType, string vCode)
         {
             try
             {
-                _context.sp_GetVoucherDetails(vType,vCode);
+                _context.sp_GetVoucherDetails(vType, vCode);
             }
             catch (Exception)
             {

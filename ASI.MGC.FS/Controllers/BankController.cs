@@ -377,19 +377,37 @@ namespace ASI.MGC.FS.Controllers
 
         public ActionResult BankMaster()
         {
+            var objBankMaster = new BANKMASTER();
             @ViewBag.CurrCode = "AED";
             @ViewBag.CurrName = "UAE DHIRHAM";
             @ViewBag.bankModeTypes = WebCommon.CommonModelAccessUtility.GetBankModes();
             @ViewBag.bankStatus = WebCommon.CommonModelAccessUtility.GetBankStatus();
-            return View();
+            return View(objBankMaster);
         }
 
         [HttpPost]
         public JsonResult SaveBankMaster(FormCollection frm, BANKMASTER objBankmaster)
         {
+            bool success;
             try
             {
-                _unitOfWork.Repository<BANKMASTER>().Insert(objBankmaster);
+                var existingObj = _unitOfWork.Repository<BANKMASTER>().FindByID(objBankmaster.BANKCODE_BM);
+                if (existingObj != null)
+                {
+                    existingObj.BANKCODE_BM = objBankmaster.BANKCODE_BM;
+                    existingObj.BANKNAME_BM = objBankmaster.BANKNAME_BM;
+                    existingObj.CURRENCY_BM = objBankmaster.CURRENCY_BM;
+                    existingObj.MODE_BM = objBankmaster.MODE_BM;
+                    existingObj.ODLIMIT_BM = objBankmaster.ODLIMIT_BM;
+                    existingObj.ACCOUNTNUMBER_BM = objBankmaster.ACCOUNTNUMBER_BM;
+                    existingObj.RECEIPTLOCATION_BM = objBankmaster.RECEIPTLOCATION_BM;
+                    existingObj.BANKSTTUS_BM = objBankmaster.BANKSTTUS_BM;
+                    _unitOfWork.Repository<BANKMASTER>().Update(existingObj);
+                }
+                else
+                {
+                    _unitOfWork.Repository<BANKMASTER>().Insert(objBankmaster);
+                }
                 _unitOfWork.Save();
 
                 var objBankTransaction = _unitOfWork.Repository<BANKTRANSACTION>().Create();
@@ -407,12 +425,13 @@ namespace ASI.MGC.FS.Controllers
 
                 _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBankTransaction);
                 _unitOfWork.Save();
+                success = true;
             }
             catch (Exception)
             {
-                // ignored
+                success = false;
             }
-            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            return Json(success, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetBankCodeDetails(string bankCode = "")

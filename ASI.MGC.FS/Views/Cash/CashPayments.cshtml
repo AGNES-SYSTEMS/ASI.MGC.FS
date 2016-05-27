@@ -4,9 +4,8 @@
     ViewBag.currPage = "Cash Payments";
 }
 @model ASI.MGC.FS.Model.BANKTRANSACTION
-<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
 <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+@*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
 <link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
 <link href="~/Content/formValidation.min.css" rel="stylesheet" />
 <!-- start:main -->
@@ -411,17 +410,19 @@
 @section Scripts {
     <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>*@
     <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Cash/CashPayment.js")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
         var isReportOpened = false;
-        function OnSuccess(cpNo) {
-            if (cpNo !== "" && !isReportOpened) {
+        function OnSuccess(data) {
+            if (data.success && data.cpNo !== "" && !isReportOpened) {
                 toastr.success("Cash Payment is added Successfully.");
                 isReportOpened = true;
-                openCashPayment(cpNo);
+                openCashPayment(data.cpNo);
+            } else {
+                toastr.error("Sorry! Something went wrong, please try again.");
             }
         }
 

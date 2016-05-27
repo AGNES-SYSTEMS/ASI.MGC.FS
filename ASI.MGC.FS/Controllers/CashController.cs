@@ -24,7 +24,8 @@ namespace ASI.MGC.FS.Controllers
 
         public ActionResult CashPayments()
         {
-            return View();
+            var objBankTransaction = new BANKTRANSACTION();
+            return View(objBankTransaction);
         }
 
         public ActionResult CashMemo()
@@ -39,13 +40,15 @@ namespace ASI.MGC.FS.Controllers
 
         public ActionResult CashReceipt()
         {
-            return View();
+            var objBankTransaction = new BANKTRANSACTION();
+            return View(objBankTransaction);
         }
 
         [HttpPost]
         public JsonResult SaveCashMemo(FormCollection frm, BANKTRANSACTION objBankTransaction)
         {
-            string cashMemoNumber = ""; 
+            bool success;
+            string cashMemoNumber = "";
             try
             {
                 var mrvNumber = Convert.ToString(frm["MRVNo"]);
@@ -103,7 +106,7 @@ namespace ASI.MGC.FS.Controllers
                     }
                     objInvoiceDetail.QTY_INVD = sale.QTY_SD;
                     objInvoiceDetail.RATE_INVD = sale.RATE_SD;
-                    objInvoiceDetail.AMOUNT_INVNO = (objInvoiceDetail.QTY_INVD*objInvoiceDetail.RATE_INVD);
+                    objInvoiceDetail.AMOUNT_INVNO = (objInvoiceDetail.QTY_INVD * objInvoiceDetail.RATE_INVD);
                     objInvoiceDetail.JOBNO_INVD = sale.JOBNO_SD;
                     objInvoiceDetail.UNIT_INVD = sale.UNIT_SD;
                     objInvoiceDetail.INVNO_INVD = cashMemoNumber;
@@ -122,18 +125,20 @@ namespace ASI.MGC.FS.Controllers
                     _unitOfWork.Repository<JOBMASTER>().Update(objJobMaster);
                     _unitOfWork.Save();
                 }
+                success = true;
             }
             catch (Exception)
             {
-                // ignored
+                success = false;
             }
-            return Json(cashMemoNumber, JsonRequestBehavior.AllowGet);
+            return Json(new { cashMemoNumber, success }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public ActionResult SaveCashReceipt(FormCollection form, BANKTRANSACTION objBankTransaction)
         {
             string crNo = "";
+            bool success;
             try
             {
                 crNo = objBankTransaction.DOCNUMBER_BT;
@@ -259,18 +264,20 @@ namespace ASI.MGC.FS.Controllers
                             break;
                     }
                 }
+                success = true;
             }
             catch (Exception)
             {
-                // ignored
+                success = false;
             }
-            return Json(crNo, JsonRequestBehavior.AllowGet);
+            return Json(new { success, crNo }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult SaveCashPayment(FormCollection form, BANKTRANSACTION objBankTransaction)
         {
             string cpNo = "";
+            bool success;
             try
             {
                 objBankTransaction.STATUS_BT = "P";
@@ -395,12 +402,13 @@ namespace ASI.MGC.FS.Controllers
                             break;
                     }
                 }
+                success = true;
             }
             catch (Exception)
             {
-                // ignored
+                success = false;
             }
-            return Json(cpNo, JsonRequestBehavior.AllowGet);
+            return Json(new {success,cpNo}, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult CashMemoReversal()

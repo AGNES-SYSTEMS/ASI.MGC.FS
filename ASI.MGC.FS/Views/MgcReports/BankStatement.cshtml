@@ -16,19 +16,40 @@
             <legend>Bank Statement</legend>
             <div class="row">
                 <div class="container">
-                    @using (Ajax.BeginForm(null, null, null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formArStatement", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @using (Ajax.BeginForm(null, null, null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formBankStatement", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblBankCode" class="control-label col-md-4 small ">Bank Code:</label>
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBox("BankCode", null, new { ID = "txtBankCode", Class = "form-control", @readonly = "readonly" })
+                                        <span class="input-group-btn">
+                                            <button type="button" id="btnBankSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#BankSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblBankName" class="control-label col-md-4 small ">Bank Name</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("BankName", null, new { ID = "txtBankName", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4">Start Date:</label>
                                 <div class="col-md-8">
-                                    @Html.TextBox("startDate", null, new { ID = "txtStartDate", Class = "form-control" })
+                                    @Html.TextBox("startDate", null, new { ID = "txtStartDate", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4">End Date:</label>
                                 <div class="col-md-8">
-                                    @Html.TextBox("endDate", null, new { ID = "txtEndDate", Class = "form-control" })
+                                    @Html.TextBox("endDate", null, new { ID = "txtEndDate", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -54,6 +75,46 @@
                 </div>
             </div>
         </fieldset>
+    </div>
+</div>
+<div class="container">
+    <div class="modal fade" id="BankSearchModel" tabindex="-1" role="dialog" aria-labelledby="BankSearchModelLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form class="form-horizontal" id="BankSearchModelform" method="post" data-fv-framework="bootstrap"
+                      data-fv-message="This value is not valid"
+                      data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
+                      data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                      data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title">
+                            Bank Details Search
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <section>
+                                <div class="col-md-12">
+                                    <div id="bankGrid" class="panel-body">
+                                        <table id="tblBankSearch" style="width: 100%"></table>
+                                        <div id="bankPager"></div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <a href="#" id="btnBankSelect" class="btn btn-success">Select</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 @section scripts

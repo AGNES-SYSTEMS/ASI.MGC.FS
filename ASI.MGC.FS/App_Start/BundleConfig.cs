@@ -9,7 +9,7 @@ namespace ASI.MGC.FS
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"//,
-                        //"~/Scripts/jquery.unobtrusive-ajax.min.js"
+                //"~/Scripts/jquery.unobtrusive-ajax.min.js"
                         ));
 
             //bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -28,8 +28,8 @@ namespace ASI.MGC.FS
             bundles.Add(new ScriptBundle("~/bundles/libraries").Include(
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/toastr.min.js",
-                       "~/Scripts/i18n/grid.locale-en.js",
-                "~/Scripts/jquery.jqGrid.min.js",
+                        "~/Scripts/i18n/grid.locale-en.js",
+                        "~/Scripts/jquery.jqGrid.min.js",
                         "~/Scripts/bootstrapValidator.min.js",
                         "~/Scripts/jquery.validate.min.js",
                         "~/Scripts/formValidation.min.js",
@@ -63,6 +63,9 @@ namespace ASI.MGC.FS
                       "~/Content/owl.transitions.css",
                       "~/Content/toastr.min.css",
                       "~/Content/ui.jqgrid-bootstrap.css",
+                      "~/Content/jquery-ui.min.css",
+                      "~/Content/jquery-ui.structure.min.css",
+                      "~/Content/themes/base/jquery-ui.theme.css",
                       "~/Content/themes/base/jquery.ui.all.css",
                       "~/Content/jquery.jqGrid/ui.jqgrid.css",
                       "~/Content/bootstrap.min.css",

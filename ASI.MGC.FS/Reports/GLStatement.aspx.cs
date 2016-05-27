@@ -22,7 +22,7 @@ namespace ASI.MGC.FS.Reports
                 var endDate = Convert.ToDateTime(Request.QueryString["endDate"]);
 
                 repo.SpGetGlStatementData(glCode, startDate, endDate);
-                DataTable dtGlStatement = uMethods.ConvertTo(repo.RptGlStatement(startDate, endDate));
+                DataTable dtGlStatement = uMethods.ConvertTo(repo.RptGlStatement(glCode,startDate, endDate));
 
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\GLStatement.rdlc";
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("STARTDATE", startDate.ToShortDateString()));

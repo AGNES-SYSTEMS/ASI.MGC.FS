@@ -741,7 +741,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=(Sum(Fields!RECEIPTQTY_STR.Value, "DS_StockLedger") - Sum(Fields!ISSUEQTY_STR.Value, "DS_StockLedger")) &amp; First(Fields!UNIT_STR.Value, "DS_StockLedger")</Value>
+                              <Value>=(Sum(Fields!RECEIPTQTY_STR.Value) - Sum(Fields!ISSUEQTY_STR.Value))</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -801,7 +801,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=FORMAT((ReportItems!ClosingStock.Value * ReportItems!ClosingRate.Value),"N2")</Value>
+                              <Value>=FORMAT(((Sum(Fields!RECEIPTQTY_STR.Value) - Sum(Fields!ISSUEQTY_STR.Value)) * ReportItems!ClosingRate.Value),"N2")</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -913,6 +913,10 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <RepeatColumnHeaders>true</RepeatColumnHeaders>
+        <RepeatRowHeaders>true</RepeatRowHeaders>
+        <FixedColumnHeaders>true</FixedColumnHeaders>
+        <FixedRowHeaders>true</FixedRowHeaders>
         <DataSetName>DS_StockLedger</DataSetName>
         <Top>0.08333in</Top>
         <Height>1in</Height>
@@ -1264,6 +1268,7 @@
   <DataSources>
     <DataSource Name="DataSource">
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>568b710f-d203-4028-8327-ed0e841a48d1</rd:DataSourceID>
     </DataSource>
   </DataSources>

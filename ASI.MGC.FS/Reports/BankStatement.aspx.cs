@@ -17,7 +17,7 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
-                var bankCode = Convert.ToInt32(Request.QueryString["bankCode"]);
+                var bankCode = Convert.ToString(Request.QueryString["bankCode"]);
                 var startDate = Convert.ToDateTime(Request.QueryString["startDate"]);
                 var endDate = Convert.ToDateTime(Request.QueryString["endDate"]);
                 repo.SpGetBankStatementData(bankCode, startDate, endDate);

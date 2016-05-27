@@ -19,6 +19,7 @@ namespace ASI.MGC.FS.Reports
                 UtilityMethods uMethods = new UtilityMethods();
                 var startDate = Convert.ToDateTime(Request.QueryString["startDate"]);
                 var endDate = Convert.ToDateTime(Request.QueryString["endDate"]);
+                repo.SpGetStockLedgerData(startDate,endDate);
                 DataTable dtStockLedger = uMethods.ConvertTo(repo.RptStockLedger(startDate, endDate));
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\StockLedger.rdlc";
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("STARTDATE", startDate.ToShortDateString()));

@@ -4,8 +4,6 @@
     ViewBag.Title = "BankMaster";
 }
 @model ASI.MGC.FS.Model.BANKMASTER
-<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
 <!-- start:main -->
 <div class="container">
@@ -29,7 +27,7 @@
                                 <label class="control-label col-md-4 small ">Bank Code</label>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        @Html.TextBoxFor(o => o.BANKCODE_BM, null, new { ID = "txtBankCode", Class = "form-control" })
+                                        @Html.TextBoxFor(o => o.BANKCODE_BM, null, new { ID = "txtBankCode", Class = "form-control", @required = "required" })
                                         <span class="input-group-btn"><button type="button" id="btnBankSearch" class="btn btn-default" data-toggle="modal" data-target="#BankSearchModel"><i class="fa fa-search"></i></button></span>
                                     </div>
                                 </div>
@@ -37,7 +35,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Bank Name</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.BANKNAME_BM, null, new { ID = "txtBankName", Class = "form-control" })
+                                    @Html.TextBoxFor(o => o.BANKNAME_BM, null, new { ID = "txtBankName", Class = "form-control", @required = "required" })
                                     @Html.ValidationMessage("BankName")
                                 </div>
                             </div>
@@ -46,7 +44,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Receipt Loc</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.RECEIPTLOCATION_BM, null, new { ID = "txtReceiptLoc", Class = "form-control", @Value = "01", })
+                                    @Html.TextBoxFor(o => o.RECEIPTLOCATION_BM, null, new { ID = "txtReceiptLoc", Class = "form-control", @Value = "01", @required = "required" })
                                     @Html.ValidationMessage("ReceiptLoc")
                                 </div>
                             </div>
@@ -61,7 +59,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Account No</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.ACCOUNTNUMBER_BM, null, new { ID = "txtAccNo", Class = "form-control" })
+                                    @Html.TextBoxFor(o => o.ACCOUNTNUMBER_BM, null, new { ID = "txtAccNo", Class = "form-control", @required = "required" })
                                     @Html.ValidationMessage("AccNo")
                                 </div>
                             </div>
@@ -92,14 +90,14 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Bank Date</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("BankDate", null, new { ID = "txtBankDate", Class = "form-control" })
+                                    @Html.TextBox("BankDate", null, new { ID = "txtBankDate", @Value = DateTime.Now.ToShortDateString(), Class = "form-control", @required = "required" })
                                     @Html.ValidationMessage("BankDate")
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Opening Balance</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("OpenBalance", null, new { ID = "txtOpenBalance", Class = "form-control" })
+                                    @Html.TextBox("OpenBalance", null, new { ID = "txtOpenBalance", Class = "form-control", @required = "required" })
                                     @Html.ValidationMessage("OpenBalance")
                                 </div>
                             </div>
@@ -108,7 +106,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">OD Limit</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.ODLIMIT_BM, null, new { ID = "txtODLimit", Class = "form-control" })
+                                    @Html.TextBoxFor(o => o.ODLIMIT_BM, null, new { ID = "txtODLimit", Class = "form-control", @required = "required" })
                                     @Html.ValidationMessage("ODLimit")
                                 </div>
                             </div>
@@ -189,6 +187,9 @@
         function OnSuccess(success) {
             if (success) {
                 toastr.success("Bank Details has been added Successfully.");
+                $('#formBankMaster')[0].reset();
+            } else {
+                toastr.error("Sorry! Something went wrong, please try again.");
             }
         }
 

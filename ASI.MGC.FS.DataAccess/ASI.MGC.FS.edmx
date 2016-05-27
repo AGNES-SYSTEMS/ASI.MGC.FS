@@ -1029,6 +1029,7 @@
           <Parameter Name="ENDDATE" Type="datetime" Mode="In" />
         </Function>
         <Function Name="rpt_GLStatement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GLCode" Type="int" Mode="In" />
           <Parameter Name="STARTDATE" Type="datetime" Mode="In" />
           <Parameter Name="ENDDATE" Type="datetime" Mode="In" />
         </Function>
@@ -1140,12 +1141,16 @@
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
         </Function>
         <Function Name="sp_GetBankStatementData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="BankCode" Type="int" Mode="In" />
+          <Parameter Name="BankCode" Type="nvarchar" Mode="In" />
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
         </Function>
         <Function Name="sp_GetGLStatementData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GLCode" Type="int" Mode="In" />
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_GetStockLedgerData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
         </Function>
@@ -1392,6 +1397,7 @@
             <Parameter Name="ENDDATE" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="rpt_GLStatement" ReturnType="Collection(ASI_MGC_FSModel.rpt_GLStatement_Result)">
+            <Parameter Name="GLCode" Mode="In" Type="Int32" />
             <Parameter Name="STARTDATE" Mode="In" Type="DateTime" />
             <Parameter Name="ENDDATE" Mode="In" Type="DateTime" />
           </FunctionImport>
@@ -1598,7 +1604,7 @@
             <Parameter Name="ENDDATE" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="sp_GetBankStatementData">
-            <Parameter Name="BankCode" Mode="In" Type="Int32" />
+            <Parameter Name="BankCode" Mode="In" Type="String" />
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
           </FunctionImport>
@@ -1629,6 +1635,10 @@
           </FunctionImport>
           <FunctionImport Name="sp_GetARStatementOutStandingData">
             <Parameter Name="AcCode" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetStockLedgerData">
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
           </FunctionImport>
@@ -5033,6 +5043,7 @@
           <FunctionImportMapping FunctionImportName="sp_GetVoucherDetails" FunctionName="ASI_MGC_FSModel.Store.sp_GetVoucherDetails" />
           <FunctionImportMapping FunctionImportName="sp_GetARStatementData" FunctionName="ASI_MGC_FSModel.Store.sp_GetARStatementData" />
           <FunctionImportMapping FunctionImportName="sp_GetARStatementOutStandingData" FunctionName="ASI_MGC_FSModel.Store.sp_GetARStatementOutStandingData" />
+          <FunctionImportMapping FunctionImportName="sp_GetStockLedgerData" FunctionName="ASI_MGC_FSModel.Store.sp_GetStockLedgerData" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -17,6 +17,14 @@ namespace ASI.MGC.FS.Controllers
         {
             return View();
         }
+        public ActionResult ApStatement()
+        {
+            return View();
+        }
+        public ActionResult ApStatementOutstanding()
+        {
+            return View();
+        }
         public ActionResult ArStatementOutstanding()
         {
             return View();

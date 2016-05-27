@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "AP Statement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.currPage = "APStatement";
+}
+
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>AP Statement</legend>
+            <div class="row">
+                <div class="container">
+                    @using (Ajax.BeginForm(null, null, null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formApStatement", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    {
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4">AP Code:</label>
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBox("AccountCode", null, new { ID = "txtAccountCode", Class = "form-control", @readonly = "readonly" })
+                                        <span class="input-group-btn">
+                                            <button type="button" id="btnAccountSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#accountSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4">Description:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("AccountDesc", null, new { ID = "txtAccountDesc", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4">Start Date:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("startDate", null, new { ID = "txtStartDate", Class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4">End Date:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("endDate", null, new { ID = "txtEndDate", Class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label></label>
+                                <div class="col-md-8">
+                                    <input type="submit" id="btnReportSubmit" class="btn btn-success col-md-3 pull-right" value="Submit"> &nbsp;
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row frameCenter">
+                            @*<div class="col-md-12 iframeStyling" style="overflow-x: hidden; overflow-y: no-display">
+                                </div>*@
+                            <div id="frameWrap" class="frameWrap" style="display: none">
+                                <img id="loader" class="loader" src="/content/Images/loader.gif" alt="loading gif"/>
+                                <iframe id="iframe" class="iframe iframeStyling"></iframe>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<div class="container">
+    <div class="modal fade" id="accountSearchModel" tabindex="-1" role="dialog" aria-labelledby="accountSearchModelLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form class="form-horizontal" id="accountSearchModelform" method="post" data-fv-framework="bootstrap"
+                      data-fv-message="This value is not valid"
+                      data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
+                      data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                      data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title">
+                            Account Details
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="accGrid" class="panel-body">
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-12 input-group paddingLeftRight0">
+                                            @Html.TextBox("accountSearch", null, new { ID = "txtAccountSearch", Class = "form-control" })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <br /><br />
+                                    <table id="tblAccountSearch" style="width: 100%"></table>
+                                    <div id="accPager"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <a href="#" id="btnAccountSelect" class="btn btn-success">Select</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/Custom/MgcReports/APStatement.js")"></script>
+}

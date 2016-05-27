@@ -16,19 +16,19 @@
             <legend>Profit Loss Statement</legend>
             <div class="row">
                 <div class="container">
-                    @using (Ajax.BeginForm(null, null, null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formArStatement", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @using (Ajax.BeginForm(null, null, null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formPLStatement", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4">Start Date:</label>
                                 <div class="col-md-8">
-                                    @Html.TextBox("startDate", null, new { ID = "txtStartDate", Class = "form-control" })
+                                    @Html.TextBox("startDate", null, new { ID = "txtStartDate", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4">End Date:</label>
                                 <div class="col-md-8">
-                                    @Html.TextBox("endDate", null, new { ID = "txtEndDate", Class = "form-control" })
+                                    @Html.TextBox("endDate", null, new { ID = "txtEndDate", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                         </div>

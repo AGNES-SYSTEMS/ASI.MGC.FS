@@ -447,9 +447,9 @@ $(document).ready(function () {
             }
         }
         else {
-            $("#allocationDetailsModelform").formValidation('revalidateField', 'AlCode');
+            //$("#allocationDetailsModelform").formValidation('revalidateField', 'AlCode');
             $("#allocationDetailsModelform").formValidation('revalidateField', 'AlDesc');
-            $("#allocationDetailsModelform").formValidation('revalidateField', 'AccountCode');
+            //$("#allocationDetailsModelform").formValidation('revalidateField', 'AccountCode');
             $("#allocationDetailsModelform").formValidation('revalidateField', 'AccountDesc');
             $("#allocationDetailsModelform").formValidation('revalidateField', 'Amount');
             $("#allocationDetailsModelform").formValidation('revalidateField', 'Narration');

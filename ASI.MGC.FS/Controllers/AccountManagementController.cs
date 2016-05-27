@@ -54,9 +54,9 @@ namespace ASI.MGC.FS.Controllers
         }
 
         [HttpPost]
-        public JsonResult Registration(UserRegistartionViewModal model)
+        public ActionResult Registration(UserRegistartionViewModal model)
         {
-            bool success = false;
+            //bool success = false;
             try
             {
                 if (ModelState.IsValid)
@@ -74,14 +74,20 @@ namespace ASI.MGC.FS.Controllers
 
                     _unitOfWork.Repository<MESUser>().Insert(mesUser);
                     _unitOfWork.Save();
-                    success = true;
+                    //success = true;
+                    return RedirectToAction("Registration", "AccountManagement");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "One or More fields are not correct.");
                 }
             }
             catch (Exception)
             {
-                success = false;
+                //success = false;
             }
-            return Json(success, JsonRequestBehavior.AllowGet);
+            //return Json(success, JsonRequestBehavior.AllowGet);
+            return RedirectToAction("Registration", "AccountManagement");
         }
 
         private bool IsValid(string email, string password)

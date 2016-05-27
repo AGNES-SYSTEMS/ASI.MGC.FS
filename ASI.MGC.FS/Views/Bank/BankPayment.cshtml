@@ -4,9 +4,7 @@
     ViewBag.currPage = "Bank Payment";
 }
 @model ASI.MGC.FS.Model.BANKTRANSACTION
-<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
 <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
 <link href="~/Content/formValidation.min.css" rel="stylesheet" />
 <!-- start:main -->
@@ -226,7 +224,7 @@
                                 <label class="control-label col-md-4 small ">AL Code:</label>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        <input type="text" name="AlCode" id="txtAlCode" data-fv-notempty="true" class="form-control" readonly required />
+                                        <input type="text" name="AlCode" id="txtAlCode" data-fv-notempty="true" class="form-control" readonly />
                                         <span class="input-group-btn">
                                             <button type="button" id="btnAlCodeSearch" class="btn btn-default" data-toggle="modal" data-target="#alCodeSearchModel">
                                                 <i class="fa fa-search"></i>
@@ -247,7 +245,7 @@
                                 <label class="control-label col-md-4 small ">Account Code:</label>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        <input type="text" name="AccountCode" data-fv-notempty="true" id="txtAccountCode" class="form-control" readonly required />
+                                        <input type="text" name="AccountCode" data-fv-notempty="true" id="txtAccountCode" class="form-control" readonly />
                                         <span class="input-group-btn">
                                             <button type="button" id="btnAccountSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" disabled data-target="#accountSearchModel">
                                                 <i class="fa fa-search"></i>
@@ -458,7 +456,6 @@
 @section Scripts {
     <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Bank/BankPayment.js")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>

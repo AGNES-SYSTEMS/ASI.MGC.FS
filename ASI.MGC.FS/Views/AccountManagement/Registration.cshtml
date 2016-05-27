@@ -17,7 +17,8 @@
             <legend>Add New User</legend>
             <div class="row">
                 <div class="container">
-                    @using (Ajax.BeginForm("Registration", "AccountManagement", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formRegistration", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @*@using (Ajax.BeginForm("SaveRegistration", "AccountManagement", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formRegistration", @class = "form-horizontal", enctype = "multipart/form-data" }))*@
+                    @using (Html.BeginForm("Registration", "AccountManagement", null, FormMethod.Post, new { id = "formRegistration", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "One or More fields are incorrect.", new { @class = "text-danger" })
@@ -90,15 +91,15 @@
     <script src="@Url.Content("~/Scripts/bootstrap.framework.js")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script>
-        function OnSuccess(success) {
-            if (success) {
-                toastr.success("New User has been created Successfully.");
-            }
-        }
+        //function OnSuccess(success) {
+        //    if (success) {
+        //        toastr.success("New User has been created Successfully.");
+        //    }
+        //}
 
-        function OnFailure() {
-            toastr.error("Sorry! Something went wrong, please try again.");
-        }
+        //function OnFailure() {
+        //    toastr.error("Sorry! Something went wrong, please try again.");
+        //}
 
         $(document).ready(function () {
             $('#formRegistration').on('init.field.fv', function (e, data) {
@@ -197,7 +198,7 @@
             }).on('success.form.fv', function (e) {
                 debugger;
                 // Prevent form submission
-                e.preventDefault();
+                //e.preventDefault();
             });
         });
     </script>

@@ -4,7 +4,7 @@
     ViewBag.Title = "GLCreation";
 }
 @model ASI.MGC.FS.Model.GLMASTER
-<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+@*<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />*@
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
 <!-- start:main -->
@@ -20,8 +20,9 @@
             <legend>GL Creation</legend>
             <div class="row">
                 <div class="container">
-                    @using (Ajax.BeginForm("SaveGLCreation", "Finance", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formGLCreation", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @using (Ajax.BeginForm("SaveGLCreation", "Finance", null, new AjaxOptions { HttpMethod = "Post", OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formGLCreation", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
+                        Html.EnableClientValidation();
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
                         <div class="row">
@@ -29,7 +30,7 @@
                                 <label class="control-label col-md-4 small ">GL Code</label>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        @Html.TextBoxFor(o => o.GLCODE_LM, null, new { ID = "txtGLCode", Class = "form-control" })
+                                        @Html.TextBoxFor(o => o.GLCODE_LM, null, new { ID = "txtGLCode", Class = "form-control", @required = "required" })
                                         <span class="input-group-btn"><button type="button" id="btnGlSearch" class="btn btn-default" data-toggle="modal" data-target="#glSearchModel"><i class="fa fa-search"></i></button></span>
                                     </div>
                                 </div>
@@ -37,7 +38,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">GL Description</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.GLDESCRIPTION_LM, null, new { ID = "txtGLDesc", Class = "form-control" })
+                                    @Html.TextBoxFor(o => o.GLDESCRIPTION_LM, null, new { ID = "txtGLDesc", Class = "form-control", @required = "required" })
                                     @Html.ValidationMessage("GLDesc")
                                 </div>
                             </div>
@@ -61,14 +62,14 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Sub GL Code</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.SUBCODE_LM, null, new { ID = "txtSubGLCode", Class = "form-control" })
+                                    @Html.TextBoxFor(o => o.SUBCODE_LM, null, new { ID = "txtSubGLCode", Class = "form-control", @required = "required" })
                                     @Html.ValidationMessage("SubGLCode")
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Sub GL Desc</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("SubGLDesc", null, new { ID = "txtSubGLDesc", Class = "form-control" })
+                                    @Html.TextBox("SubGLDesc", null, new { ID = "txtSubGLDesc", Class = "form-control", @required = "required" })
                                     @Html.ValidationMessage("SubGLDesc")
                                 </div>
                             </div>
@@ -83,7 +84,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">GL Date</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("GLDate", null, new { ID = "txtGLDate", Class = "form-control" })
+                                    @Html.TextBox("GLDate", null, new { ID = "txtGLDate", Class = "form-control", @required = "required" })
                                     @Html.ValidationMessage("GLDate")
                                 </div>
                             </div>
@@ -92,7 +93,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Opening Balance</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("OpenBalance", null, new { ID = "txtOpenBalance", Class = "form-control" })
+                                    @Html.TextBox("OpenBalance", null, new { ID = "txtOpenBalance", Class = "form-control", @required = "required" })
                                     @Html.ValidationMessage("OpenBalance")
                                 </div>
                             </div>

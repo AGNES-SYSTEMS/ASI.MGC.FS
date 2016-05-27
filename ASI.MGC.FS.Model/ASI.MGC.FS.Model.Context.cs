@@ -441,8 +441,12 @@ namespace ASI.MGC.FS.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_EmpWiseJobDetails_Result>("rpt_EmpWiseJobDetails", sTARTDATEParameter, eNDDATEParameter);
         }
     
-        public virtual ObjectResult<rpt_GLStatement_Result> rpt_GLStatement(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        public virtual ObjectResult<rpt_GLStatement_Result> rpt_GLStatement(Nullable<int> gLCode, Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
         {
+            var gLCodeParameter = gLCode.HasValue ?
+                new ObjectParameter("GLCode", gLCode) :
+                new ObjectParameter("GLCode", typeof(int));
+    
             var sTARTDATEParameter = sTARTDATE.HasValue ?
                 new ObjectParameter("STARTDATE", sTARTDATE) :
                 new ObjectParameter("STARTDATE", typeof(System.DateTime));
@@ -451,7 +455,7 @@ namespace ASI.MGC.FS.Model
                 new ObjectParameter("ENDDATE", eNDDATE) :
                 new ObjectParameter("ENDDATE", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_GLStatement_Result>("rpt_GLStatement", sTARTDATEParameter, eNDDATEParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_GLStatement_Result>("rpt_GLStatement", gLCodeParameter, sTARTDATEParameter, eNDDATEParameter);
         }
     
         public virtual ObjectResult<rpt_Invoice3_Result> rpt_Invoice3(string iNV_NO, string iNVTYPE)
@@ -796,11 +800,11 @@ namespace ASI.MGC.FS.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_BMBTListTB_Result>("sp_BMBTListTB", sTARTDATEParameter, eNDDATEParameter);
         }
     
-        public virtual int sp_GetBankStatementData(Nullable<int> bankCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        public virtual int sp_GetBankStatementData(string bankCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
         {
-            var bankCodeParameter = bankCode.HasValue ?
+            var bankCodeParameter = bankCode != null ?
                 new ObjectParameter("BankCode", bankCode) :
-                new ObjectParameter("BankCode", typeof(int));
+                new ObjectParameter("BankCode", typeof(string));
     
             var startDateParameter = startDate.HasValue ?
                 new ObjectParameter("StartDate", startDate) :
@@ -910,6 +914,19 @@ namespace ASI.MGC.FS.Model
                 new ObjectParameter("EndDate", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetARStatementOutStandingData", acCodeParameter, startDateParameter, endDateParameter);
+        }
+    
+        public virtual int sp_GetStockLedgerData(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        {
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetStockLedgerData", startDateParameter, endDateParameter);
         }
     }
 }
