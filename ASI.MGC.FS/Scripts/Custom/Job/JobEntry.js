@@ -1,7 +1,7 @@
 ﻿var jobMRVSelect = function (jobId) {
     if (jobId) {
         var ret = jQuery("#tblJobSearch").jqGrid('getRowData', jobId);
-        $("#txtJobID").val(ret.JOBNO_JM);
+        $("#txtJobid").val(ret.JOBNO_JM);
         $("#txtMRVNo").val(ret.MRVNO_JM);
         $('#mrvJobSearchModel').modal('toggle');
     }
@@ -54,6 +54,8 @@ $(document).ready(function () {
             $("#divSowDetail").hide();
             $("#txtSowID").val("");
             $("#txtSowDetail").val("");
+            $("#txtPrDetail").attr("required", "true");
+            $("#txtSowDetail").removeAttr("required");
             $("#divPrCode").show();
             $("#divPrDetail").show();
         }
@@ -64,6 +66,8 @@ $(document).ready(function () {
             $("#txtPrDetail").val("");
             $("#divSowCode").show();
             $("#divSowDetail").show();
+            $("#txtSowDetail").attr("required", "true");
+            $("#txtPrDetail").removeAttr("required");
         }
     });
     $('#ddlPayMode').on("change", function () {
@@ -75,6 +79,8 @@ $(document).ready(function () {
             $("#txtCreditAmount").val("0");
             $("#txtCreditCustCode").val("");
             $("#txtCreditCustName").val("");
+            $("#txtCashAmount").attr("required", "true");
+            $("#txtCreditCustName").removeAttr("required");
             $("#divCreditAmount").hide();
             $("#divCreditCustDetails").hide();
             $('#txtCashAmount').val($finalAmount);
@@ -83,6 +89,8 @@ $(document).ready(function () {
         else if ($('#ddlPayMode').val() === "Credit") {
             $finalAmount = $("#txtShipCharge").val() * 1 + totalAmount - $("#txtDiscount").val() * 1;
             $("#txtCashAmount").val("0");
+            $("#txtCreditCustName").attr("required", "true");
+            $("#txtCashAmount").removeAttr("required");
             $("#divCashAmount").hide();
             $('#txtCreditAmount').val($finalAmount);
             $("#divCreditAmount").show();
@@ -241,7 +249,7 @@ $(document).ready(function () {
         var id = jQuery("#tblJobSearch").jqGrid('getGridParam', 'selrow');
         if (id) {
             var ret = jQuery("#tblJobSearch").jqGrid('getRowData', id);
-            $("#txtJobID").val(ret.JOBNO_JM);
+            $("#txtJobid").val(ret.JOBNO_JM);
             $("#txtMRVNo").val(ret.MRVNO_JM);
             $('#mrvJobSearchModel').modal('toggle');
         }
@@ -249,7 +257,7 @@ $(document).ready(function () {
     });
 
     $("#mrvJobSearchModel").on('hide.bs.modal', function () {
-        var jobCode = $("#txtJobID").val();
+        var jobCode = $("#txtJobid").val();
         var mrvNo = $("#txtMRVNo").val();
         if (jobCode !== "" && mrvNo !== "") {
             var data = JSON.stringify({ jobId: jobCode, mrvNo: mrvNo });
@@ -277,18 +285,18 @@ $(document).ready(function () {
         source: '/Product/getUnitlist',
         minLength: 0,
         change: function () {
-            $('#formJobEntry').bootstrapValidator('revalidateField', 'Unit');
+            $('#formJobEntry').formValidation('revalidateField', 'Unit');
         }
     }).bind('focus', function () {
         $(this).autocomplete("search");
     });
 
     $('#txtEmpCode').on('change', function () {
-        $('#formJobEntry').bootstrapValidator('revalidateField', 'EmpCode');
+        $('#formJobEntry').formValidation('revalidateField', 'EmpCode');
     });
 
     $('#txtEmpName').on('change', function () {
-        $('#formJobEntry').bootstrapValidator('revalidateField', 'EmpName');
+        $('#formJobEntry').formValidation('revalidateField', 'EmpName');
     });
     
     $("#PrdSearchModel").on('show.bs.modal', function () {
@@ -565,12 +573,21 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
-    $('#formJobEntry').formValidation({
+    $('#formJobEntry').on('init.field.fv', function (e, data) {
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),
+            validators = data.fv.getOptions(data.field).validators;
+
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.addClass(options.icon.required).show();
+        }
+    }).formValidation({
         container: '#messages',
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
+        icon: {
+            required: 'fa fa-asterisk',
+            valid: 'fa fa-check',
+            invalid: 'fa fa-times',
+            validating: 'fa fa-refresh'
         },
         fields: {
             MRVNO_SD: {
@@ -652,6 +669,19 @@ $(document).ready(function () {
                     }
                 }
             }
+        }
+    }).on('status.field.fv', function (e, data) {
+        // Remove the required icon when the field updates its status
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),                      // Entire options
+            validators = data.fv.getOptions(data.field).validators; // The field validators
+
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.removeClass(options.icon.required).addClass('fa');
+        }
+    }).on('success.field.fv', function (e, data) {
+        if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
+            data.fv.disableSubmitButtons(true);
         }
     }).on('success.form.fv', function (e) {
         debugger;

@@ -34,7 +34,7 @@ namespace ASI.MGC.FS.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveQuotation(FormCollection form, QUOTATION_MASTER objQuotationMaster)
+        public JsonResult SaveQuotation(FormCollection form, QUOTATION_MASTER objQuotationMaster)
         {
             string quotNo = "";
             try

@@ -78,6 +78,39 @@ $(document).ready(function () {
         $("#txtRate").val("");
         $("#txtAmount").val("0");
     }
+    var searchGrid = function (searchValue) {
+        debugger;
+        var postData = $("#tblProductSearch").jqGrid("getGridParam", "postData");
+        postData["prdName"] = searchValue;
+
+        $("#tblProductSearch").setGridParam({ postData: postData });
+        $("#tblProductSearch").trigger("reloadGrid", [{ page: 1 }]);
+    };
+
+    $("#txtPrdSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtPrdSearch").val().length >= 3 || $("#txtPrdSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtPrdSearch").val());
+        }
+    });
+
+    var searchGridJob = function (searchValue) {
+        debugger;
+        var postData = $("#tblJobSearch").jqGrid("getGridParam", "postData");
+        postData["jobSearch"] = searchValue;
+
+        $("#tblJobSearch").setGridParam({ postData: postData });
+        $("#tblJobSearch").trigger("reloadGrid", [{ page: 1 }]);
+    };
+
+    $("#txtJobSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtJobSearch").val().length >= 3 || $("#txtJobSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGridJob($("#txtJobSearch").val());
+        }
+    });
 
     $("#btnCancel").click(function () {
         clearModalForm();
@@ -119,7 +152,11 @@ $(document).ready(function () {
         for (var i = 0; i < arrMetarials.length; i++) {
             totalGridPrdAmount += parseFloat(arrMetarials[i]["AMOUNT_MRR"]);
         }
-        $("#txtNetPrdAmount").val(totalGridPrdAmount);
+        if (totalGridPrdAmount !== 0) {
+            $("#txtNetPrdAmount").val(totalGridPrdAmount);
+            $('#mrvProductModelform').formValidation('revalidateField', 'netPrdAmount');
+        }
+
     });
     $("#txtCustCode").autocomplete({
         source: '/Customer/GetCustomersCode',
@@ -346,13 +383,21 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
-    $('#formMRVCreation').formValidation({
+    $('#formMRVCreation').on('init.field.fv', function (e, data) {
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),
+            validators = data.fv.getOptions(data.field).validators;
+
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.addClass(options.icon.required).show();
+        }
+    }).formValidation({
         container: '#messages',
-        feedbackIcons: {
+        icon: {
             required: 'fa fa-asterisk',
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
+            valid: 'fa fa-check',
+            invalid: 'fa fa-times',
+            validating: 'fa fa-refresh'
         },
         fields: {
             CUSTOMERCODE_MRV: {
@@ -413,6 +458,19 @@ $(document).ready(function () {
                 validators: {
                 }
             }
+        }
+    }).on('status.field.fv', function (e, data) {
+        // Remove the required icon when the field updates its status
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),                      // Entire options
+            validators = data.fv.getOptions(data.field).validators; // The field validators
+
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.removeClass(options.icon.required).addClass('fa');
+        }
+    }).on('success.field.fv', function (e, data) {
+        if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
+            data.fv.disableSubmitButtons(true);
         }
     }).on('success.form.fv', function (e) {
         debugger;

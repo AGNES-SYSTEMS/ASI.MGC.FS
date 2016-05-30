@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web.Mvc;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Model;
-using ASI.MGC.FS.Model.HelperClasses;
 using ASI.MGC.FS.WebCommon;
 
 namespace ASI.MGC.FS.Controllers
@@ -39,7 +38,7 @@ namespace ASI.MGC.FS.Controllers
             if (!string.IsNullOrEmpty(jobSearch))
             {
                 jobList = (from jobs in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
-                           where jobs.JOBID_JR.Contains(jobSearch) || jobs.JOBDESCRIPTION_JR.Contains(jobSearch) || jobs.RATE_RJ.Equals(Convert.ToDecimal(jobSearch))
+                           where jobs.JOBDESCRIPTION_JR.Contains(jobSearch)
                            select jobs).Select(a => new { a.JOBID_JR, a.JOBDESCRIPTION_JR, a.RATE_RJ });
             }
             int pageIndex = Convert.ToInt32(page) - 1;

@@ -4,11 +4,10 @@
     ViewBag.currPage = "Quotation Entry";
 }
 @model ASI.MGC.FS.Model.QUOTATION_MASTER
-<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
-<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-<link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
-<link href="~/Content/formValidation.min.css" rel="stylesheet" />
+@*<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />*@
+@*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+    <link href="~/Content/formValidation.min.css" rel="stylesheet" />*@
 <!-- start:main -->
 <div class="container">
     <div id="main">
@@ -24,106 +23,103 @@
                 <div class="container">
                     @using (Ajax.BeginForm("SaveQuotation", "Quotation", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formQuotationEntry", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
-                        <input type="hidden" id="hdnQuotProds" name="quotProds" />
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblMRVNo" class="control-label col-md-4 small ">Customer Code</label>
-                                <div class="col-md-8">
-                                    <div class="input-group">
-                                        @Html.TextBoxFor(m => m.CUSTNAME_QM, null, new { ID = "txtCustCode", Class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.CUSTNAME_QM)
-                                        <span class="input-group-btn">
-                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#CustomerSearchModel">
-                                                <i class="fa fa-search"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblDate" class="control-label col-md-4 small ">Quotation No</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.QUOTNO_QM, null, new { ID = "txtQuotationNo", @Value = ViewBag.QotNumber, Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessageFor(m => m.QUOTNO_QM)
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
+                    <input type="hidden" id="hdnQuotProds" name="quotProds" />
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblMRVNo" class="control-label col-md-4 small ">Customer Code</label>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.CUSTNAME_QM, null, new { ID = "txtCustCode", Class = "form-control", @required = "required" })
+                                    <span class="input-group-btn">
+                                        <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#CustomerSearchModel">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblCustCode" class="control-label col-md-4 small ">Customer Name</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("CustName", null, new { ID = "txtCustName", Class = "form-control" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblGLDate" class="control-label col-md-4 small ">Quotation Date</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.DATE_QM, null, new { ID = "txtQuotDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.DATE_QM)
-                                </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblDate" class="control-label col-md-4 small ">Quotation No</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(m => m.QUOTNO_QM, null, new { ID = "txtQuotationNo", @Value = ViewBag.QotNumber, Class = "form-control", @readonly = "readonly", @required = "required" })
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblCustCode" class="control-label col-md-4 small ">Primary Address</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.ADDRESS1_QM, null, new { ID = "txtAddress1", Class = "form-control" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblGLDate" class="control-label col-md-4 small ">Secondary Address</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.ADDRESS2_QM, null, new { ID = "txtAddress2", Class = "form-control" })
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblCustCode" class="control-label col-md-4 small ">Customer Name</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("CustName", null, new { ID = "txtCustName", Class = "form-control", @required = "required" })
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblCustCode" class="control-label col-md-4 small ">Remarks</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextAreaFor(d => d.NOTE_QM, new { ID = "txtRemarks", Class = "form-control" })
+                        <div class="col-md-6 form-group">
+                            <label id="lblGLDate" class="control-label col-md-4 small ">Quotation Date</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(m => m.DATE_QM, null, new { ID = "txtQuotDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @required = "required" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblCustCode" class="control-label col-md-4 small ">Primary Address</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(m => m.ADDRESS1_QM, null, new { ID = "txtAddress1", Class = "form-control", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblGLDate" class="control-label col-md-4 small ">Secondary Address</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(m => m.ADDRESS2_QM, null, new { ID = "txtAddress2", Class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblCustCode" class="control-label col-md-4 small ">Remarks</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextAreaFor(d => d.NOTE_QM, new { ID = "txtRemarks", Class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <fieldset>
+                                <legend>Quotation Details</legend>
+                                <div id="grid" class="panel-body">
+                                    <section>
+                                        <button class="btn btn-primary" data-toggle="modal" data-target="#QuotProductModel">
+                                            Add Product
+                                        </button>
+                                        <table id="tblQuotDetails"></table>
+                                    </section>
                                 </div>
-                            </div>
-                            <div class="col-md-6 form-group">
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Grand Total</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("NetPrdAmount", null, new { ID = "txtNetPrdAmount", Class = "form-control", @readonly = "readonly", @required = "required" })
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-10">
-                                <fieldset>
-                                    <legend>Quotation Details</legend>
-                                    <div id="grid" class="panel-body">
-                                        <section>
-                                            <button class="btn btn-primary" data-toggle="modal" data-target="#QuotProductModel">
-                                                Add Product
-                                            </button>
-                                            <table id="tblQuotDetails"></table>
-                                        </section>
-                                    </div>
-                                </fieldset>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label></label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Grand Total</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("NetPrdAmount", null, new { ID = "txtNetPrdAmount", Class = "form-control" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label></label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
-                                </div>
-                            </div>
-                        </div>
+                    </div>
                     }
                 </div>
             </div>
@@ -154,7 +150,7 @@
                                 <label id="lblPrCode" class="control-label col-md-4 small ">PrCode:</label>
                                 <div class="col-md-6 paddingLeftRight0">
                                     <div class="input-group">
-                                        <input type="text" id="txtPrCode" data-provide="typeahead" name="PrCode" class="form-control" autocomplete="off" required readonly />
+                                        <input type="text" id="txtPrCode" data-provide="typeahead" name="PrCode" class="form-control" autocomplete="off" readonly />
                                         <span class="input-group-btn">
                                             <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#QuotPrdSearchModel">
                                                 <i class="fa fa-search"></i>
@@ -175,7 +171,7 @@
                                 <label id="lblJobID" class="control-label col-md-4 small ">Jobid:</label>
                                 <div class="col-md-6 paddingLeftRight0">
                                     <div class="input-group">
-                                        <input type="text" id="txtJobID" data-provide="typeahead" name="Jobid" class="form-control" autocomplete="off" required readonly />
+                                        <input type="text" id="txtJobID" data-provide="typeahead" name="Jobid" class="form-control" autocomplete="off" readonly />
                                         <span class="input-group-btn">
                                             <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#QuotJobSearchModel">
                                                 <i class="fa fa-search"></i>
@@ -251,8 +247,15 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-11 col-md-11">
                                 <div id="custGrid" class="panel-body">
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-12 input-group paddingLeftRight0">
+                                            @Html.TextBox("searchCust", null, new { ID = "txtCustSearch", Class = "form-control" })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <br /><br />
                                     <table id="tblCustomerSearch" style="width: 100%"></table>
                                     <div id="custPager"></div>
                                 </div>
@@ -289,8 +292,15 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-11 col-md-11">
                                 <div id="prdGrid" class="panel-body">
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-12 input-group paddingLeftRight0">
+                                            @Html.TextBox("prdCustomer", null, new { ID = "txtPrdSearch", Class = "form-control" })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <br /><br />
                                     <table id="tblProductSearch" style="width: 100%"></table>
                                     <div id="prdPager"></div>
                                 </div>
@@ -327,8 +337,15 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-11 col-md-11">
                                 <div id="jobGrid" class="panel-body">
+                                    <div class="col-md-12 form-group">
+                                        <div class="col-md-12 input-group paddingLeftRight0">
+                                            @Html.TextBox("searchJob", null, new { ID = "txtJobSearch", Class = "form-control" })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <br /><br />
                                     <table id="tblJobSearch" style="width: 100%"></table>
                                     <div id="jobPager"></div>
                                 </div>
@@ -348,11 +365,11 @@
 <!-- end:main -->
 @section scripts
 {
-    <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
-    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/bootstrap.framework.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
+        <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/bootstrap.framework.js")"></script>*@
     <script src="@Url.Content("~/Scripts/Custom/Quotation/QuotationEntry.js")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">

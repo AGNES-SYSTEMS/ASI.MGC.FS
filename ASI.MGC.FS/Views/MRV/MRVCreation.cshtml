@@ -24,14 +24,13 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblCustCode" class="control-label col-md-4 small ">Cust Code:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.CUSTOMERCODE_MRV, null, new { ID = "txtCustCode", Class = "form-control" })
+                                    @Html.TextBoxFor(d => d.CUSTOMERCODE_MRV, null, new { ID = "txtCustCode", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblMRVNo" class="control-label col-md-4 small ">MRV No:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.MRVNO_MRV, null, new { ID = "txtMRVNo", @Value = @ViewBag.MRVCode, Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessageFor(d => d.MRVNO_MRV)
+                                    @Html.TextBoxFor(d => d.MRVNO_MRV, null, new { ID = "txtMRVNo", @Value = @ViewBag.MRVCode, Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -39,13 +38,13 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblCustName" class="control-label col-md-4 small ">Cust Name:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.CUSTOMERNAME_MRV, null, new { ID = "txtCustName", Class = "form-control" })
+                                    @Html.TextBoxFor(d => d.CUSTOMERNAME_MRV, null, new { ID = "txtCustName", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblMRVDate" class="control-label col-md-4 small ">Date:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.MRVDATE_MRV, null, new { ID = "txtMRVDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control datepicker" })
+                                    @Html.TextBoxFor(d => d.MRVDATE_MRV, null, new { ID = "txtMRVDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control datepicker", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -54,15 +53,13 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblMRVAddress" class="control-label col-md-4 small ">Address:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.ADDRESS1_MRV, null, new { ID = "txtMRVAddress", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.ADDRESS1_MRV)
+                                    @Html.TextBoxFor(d => d.ADDRESS1_MRV, null, new { ID = "txtMRVAddress", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblMRVAddress2" class="control-label col-md-4 small ">Address2:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBoxFor(d => d.ADDRESS2_MRV, null, new { ID = "txtMRVAddress2", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.ADDRESS1_MRV)
                                 </div>
                             </div>
                         </div>
@@ -70,15 +67,13 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblMRVTel" class="control-label col-md-4 small ">Telephone No:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.PHONE_MRV, null, new { ID = "txtMRVTel", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.PHONE_MRV)
+                                    @Html.TextBoxFor(d => d.PHONE_MRV, null, new { ID = "txtMRVTel", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblDocDate" class="control-label col-md-4 small ">DocDate:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.DOC_DATE_MRV, null, new { ID = "txtDocDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessageFor(d => d.DOC_DATE_MRV)
+                                    @Html.TextBoxFor(d => d.DOC_DATE_MRV, null, new { ID = "txtDocDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -86,15 +81,13 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblDeleDate" class="control-label col-md-4 small ">DeleDate:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.DELE_DATE_MRV, null, new { ID = "txtDeleDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.DELE_DATE_MRV)
+                                    @Html.TextBoxFor(d => d.DELE_DATE_MRV, null, new { ID = "txtDeleDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblExeCode" class="control-label col-md-4 small ">Exe. Code:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBoxFor(d => d.EXECODE_MRV, null, new { ID = "txtExeCode", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.EXECODE_MRV)
                                 </div>
                             </div>
                         </div>
@@ -129,7 +122,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblNetPrdAmount" class="control-label col-md-4 small">Net Amount:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    <input type="text" id="txtNetPrdAmount" class="form-control" value="0" readonly />
+                                    <input type="text" id="txtNetPrdAmount" name="netPrdAmount" class="form-control" readonly required />
                                 </div>
                             </div>
                         </div>
@@ -173,8 +166,7 @@
                                 <label id="lblPrCode" class="control-label col-md-4 small">PrCode:</label>
                                 <div class="col-md-6 col-sm-6">
                                     <div class="input-group">
-                                        <input type="text" id="txtPrCode" data-provide="typeahead" name="PrCode" class="form-control" autocomplete="off" required readonly />
-                                        @*<span class="input-group-addon" data-toggle="modal" data-target="#mrvPrdSearchModel"><i class="fa fa-search"></i></span>*@
+                                        <input type="text" id="txtPrCode" data-provide="typeahead" name="PrCode" class="form-control" autocomplete="off" readonly />
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#mrvPrdSearchModel">
                                                 <i class="fa fa-search"></i>
@@ -195,8 +187,7 @@
                                 <label id="lblJobID" class="control-label col-md-4 small ">Jobid:</label>
                                 <div class="col-md-6">
                                     <div class="input-group">
-                                        <input type="text" id="txtJobID" data-provide="typeahead" name="Jobid" class="form-control" autocomplete="off" required readonly />
-                                        @*<span class="input-group-addon" data-toggle="modal" data-target="#mrvJobSearchModel"><i class="fa fa-search"></i></span>*@
+                                        <input type="text" id="txtJobID" data-provide="typeahead" name="Jobid" class="form-control" autocomplete="off" readonly />
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#mrvJobSearchModel">
                                                 <i class="fa fa-search"></i>

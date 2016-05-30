@@ -222,7 +222,7 @@ namespace ASI.MGC.FS.Controllers
         {
             var jobReportObj = _unitOfWork.Repository<JOBCARD_REPRT>().Create();
             jobReportObj.JOBNO_JRP = jobDetails.JOBNO_JM;
-            jobReportObj.JOBDATE_JRP = Convert.ToDateTime(jobDetails.DOCNUMBER_JM);
+            jobReportObj.JOBDATE_JRP = Convert.ToDateTime(jobDetails.DOCDATE_JM);
             jobReportObj.MRVNO_JRP = jobDetails.MRVNO_JM;
             jobReportObj.PRODID_JRP = jobDetails.PRODID_JIM;
             _unitOfWork.Repository<JOBCARD_REPRT>().Insert(jobReportObj);

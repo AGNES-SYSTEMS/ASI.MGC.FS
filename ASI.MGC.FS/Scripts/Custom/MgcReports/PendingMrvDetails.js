@@ -22,20 +22,33 @@
             toastr.error("Start Date/ End Date cannot be empty.");
         }
     });
-
     $('#iframe').on('load', function () {
         $('#loader').hide();
     });
+    $("#txtStartDate").change(function () {
+        $("#formPendingMrvDetails").formValidation('revalidateField', 'startDate');
+    });
+    $("#txtEndDate").change(function () {
+        $("#formPendingMrvDetails").formValidation('revalidateField', 'endDate');
+    });
+    $('#formPendingMrvDetails').on('init.field.fv', function (e, data) {
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),
+            validators = data.fv.getOptions(data.field).validators;
 
-    $('#formBalanceSheet').formValidation({
-        framework: 'bootstrap',
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.addClass(options.icon.required).show();
+        }
+    }).formValidation({
+        container: '#messages',
         icon: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
+            required: 'fa fa-asterisk',
+            valid: 'fa fa-check',
+            invalid: 'fa fa-times',
+            validating: 'fa fa-refresh'
         },
         fields: {
-            StartDate: {
+            startDate: {
                 validators: {
                     notEmpty: {
                         message: 'The date is required'
@@ -46,7 +59,7 @@
                     }
                 }
             },
-            EndDate: {
+            endDate: {
                 validators: {
                     notEmpty: {
                         message: 'The date is required'
@@ -57,6 +70,19 @@
                     }
                 }
             }
+        }
+    }).on('status.field.fv', function (e, data) {
+        // Remove the required icon when the field updates its status
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),                      // Entire options
+            validators = data.fv.getOptions(data.field).validators; // The field validators
+
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.removeClass(options.icon.required).addClass('fa');
+        }
+    }).on('success.field.fv', function (e, data) {
+        if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
+            data.fv.disableSubmitButtons(true);
         }
     }).on('success.form.fv', function (e) {
         debugger;
