@@ -52,59 +52,57 @@
             <div class="modal-content">
                 @using (Ajax.BeginForm("SaveNewFinancialYear", "Setups", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formFinancialYear", @class = "form-horizontal", enctype = "multipart/form-data" }))
                 {
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"
-                                aria-hidden="true">
-                            ×
-                        </button>
-                        <h4 class="modal-title">
-                            Add New Financial Year
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Financial Year From</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("CurrentFYFrom", null, new { ID = "txtCurrentFYFrom", Class = "form-control", @Value = ViewBag.CurrentFYFrom, @readonly = "readonly" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Financial Year To</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("CurrentFYTo", null, new { ID = "txtCurrentFYTo", Class = "form-control", @Value = ViewBag.CurrentFYTo, @readonly = "readonly" })
-                                </div>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">
+                        ×
+                    </button>
+                    <h4 class="modal-title">
+                        Add New Financial Year
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Financial Year From</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("CurrentFYFrom", null, new { ID = "txtCurrentFYFrom", Class = "form-control", @Value = ViewBag.CurrentFYFrom, @readonly = "readonly" })
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">New Financial Year From</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.PERRIEDFROM_FM, null, new { ID = "txtNewFYFrom", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.PERRIEDFROM_FM)
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">New Financial Year To</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.PERRIEDRTO_FM, null, new { ID = "txtNewFYTo", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.PERRIEDRTO_FM)
-                                </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Financial Year To</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("CurrentFYTo", null, new { ID = "txtCurrentFYTo", Class = "form-control", @Value = ViewBag.CurrentFYTo, @readonly = "readonly" })
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">
-                            Save
-                        </button>
-                        <button type="button" id="btnCancel" class="btn btn-warning">
-                            Cancel
-                        </button>
-                        <button type="button" class="btn btn-default"
-                                data-dismiss="modal">
-                            Close
-                        </button>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">New Financial Year From</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.PERRIEDFROM_FM, null, new { ID = "txtNewFYFrom", Class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">New Financial Year To</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.PERRIEDRTO_FM, null, new { ID = "txtNewFYTo", Class = "form-control" })
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">
+                        Save
+                    </button>
+                    <button type="button" id="btnCancel" class="btn btn-warning">
+                        Cancel
+                    </button>
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
                 }
             </div>
         </div>
@@ -114,16 +112,22 @@
 @section scripts
 {
     <script src="@Url.Content("~/Scripts/Custom/Setups/FinancialYearPeriod.js")"></script>
-<script type="text/javascript">
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
+    <script type="text/javascript">
 
-    function OnSuccess(response) {
-        alert(response);
-    }
+        function OnSuccess(success) {
+            if (success) {
+                toastr.success("Financial Year Period has been added Successfully.");
+                $('#formFinancialYear')[0].reset();
+            } else {
+                toastr.error("Sorry! Something went wrong, please try again.");
+            }
+        }
 
-    function OnFailure(response) {
-        alert("Whoops! That didn't go so well did it?");
-    }
+        function OnFailure() {
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
 
-</script>
+    </script>
 }
 

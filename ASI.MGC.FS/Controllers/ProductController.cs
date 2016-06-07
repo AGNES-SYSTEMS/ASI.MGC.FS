@@ -25,7 +25,7 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
-        public JsonResult GetProdsList(string sidx, string sord, int page, int rows, string status)
+        public JsonResult GetProdsList(string sidx, string sord, int page, int rows, string status, string searchValue)
         {
             var lstProducts = (from prodList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
                                select prodList).Select(a => new
@@ -44,6 +44,23 @@ namespace ASI.MGC.FS.Controllers
             {
                 lstProducts = (from prodList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
                                where prodList.STATUS_PM.Equals(status)
+                               select prodList).Select(a => new
+                               {
+                                   a.PROD_CODE_PM,
+                                   a.DESCRIPTION_PM,
+                                   a.CUR_QTY_PM,
+                                   a.RATE_PM,
+                                   a.SELLINGPRICE_RM,
+                                   a.PURCHSEUNIT_PM,
+                                   a.SALESUNIT_PM,
+                                   a.UNIT_PR,
+                                   a.STATUS_PM
+                               });
+            }
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                lstProducts = (from prodList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
+                               where prodList.STATUS_PM.Equals(status) && prodList.DESCRIPTION_PM.Contains(searchValue)
                                select prodList).Select(a => new
                                {
                                    a.PROD_CODE_PM,
@@ -82,10 +99,16 @@ namespace ASI.MGC.FS.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetAllUnitsList(string sidx, string sord, int page, int rows)
+        public JsonResult GetAllUnitsList(string sidx, string sord, int page, int rows, string searchValue)
         {
             var lstUnits = (from units in _unitOfWork.Repository<UNITMESSUREMENT>().Query().Get()
                             select units).Select(a => new { a.UNIT_UM, a.DESCRIPTION_UM, a.TYPE_UM, a.UNITQTY_UM, a.BASICPRIMARYUNIT_UM, a.BASICPRIMARYQTY_UM });
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                lstUnits = (from units in _unitOfWork.Repository<UNITMESSUREMENT>().Query().Get()
+                            where units.DESCRIPTION_UM.Contains(searchValue)
+                            select units).Select(a => new { a.UNIT_UM, a.DESCRIPTION_UM, a.TYPE_UM, a.UNITQTY_UM, a.BASICPRIMARYUNIT_UM, a.BASICPRIMARYQTY_UM });
+            }
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
             int totalRecords = lstUnits.Count();

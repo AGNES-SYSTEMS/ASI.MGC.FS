@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = ViewBag.voucherNo;
+    ViewBag.Title = ViewBag.brNo;
     Layout = null;
 }
 <link href="~/Content/reportViewerStyle.css" rel="stylesheet" />
@@ -26,7 +26,7 @@
 <script>
     $(document).ready(function () {
         $('#frameWrap').show();
-        var url = "/Reports/BankReceipt.aspx?brNo=" + "@Convert.ToString(@Request.QueryString["brNo"])";
+        var url = "/Reports/BankReceipt.aspx?brNo=@ViewBag.brNo";
         $('#iframe').prop('src', url);
 
         $('#iframe').on('load', function () {

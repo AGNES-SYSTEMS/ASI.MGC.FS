@@ -88,7 +88,8 @@ namespace ASI.MGC.FS.Controllers
 
         public ActionResult JobCreation()
         {
-            return View();
+            var objJobCreation = new JOBIDREFERENCE();
+            return View(objJobCreation);
         }
 
         public ActionResult ProductMaster()
@@ -116,7 +117,7 @@ namespace ASI.MGC.FS.Controllers
 
         public ActionResult ItemsMaster()
         {
-            var objItemMaster = _unitOfWork.Repository<PRODUCTMASTER>().Create();
+            var objItemMaster = new PRODUCTMASTER();
             return View(objItemMaster);
         }
 
@@ -157,51 +158,56 @@ namespace ASI.MGC.FS.Controllers
             return Json(success, JsonRequestBehavior.AllowGet);
             //return RedirectToAction("CustomerMaster");
         }
-
-        public ActionResult SaveJobCreation(JOBIDREFERENCE objJobCreation)
+        [HttpPost]
+        public JsonResult SaveJobCreation(JOBIDREFERENCE objJobCreation)
         {
+            bool success;
             try
             {
                 _unitOfWork.Repository<JOBIDREFERENCE>().Insert(objJobCreation);
                 _unitOfWork.Save();
+                success = true;
             }
             catch (Exception)
             {
-                // ignored
+                success = false;
             }
 
-            return RedirectToAction("JobCreation");
+            return Json(success, JsonRequestBehavior.AllowGet);
         }
-
-        public ActionResult SaveItemMaster(PRODUCTMASTER objItemMaster)
+        [HttpPost]
+        public JsonResult SaveItemMaster(PRODUCTMASTER objItemMaster)
         {
+            bool success;
             try
             {
                 objItemMaster.STATUS_PM = "SP";
                 _unitOfWork.Repository<PRODUCTMASTER>().Insert(objItemMaster);
                 _unitOfWork.Save();
+                success = true;
             }
             catch (Exception)
             {
-                // ignored
+                success = false;
             }
-            return RedirectToAction("ItemsMaster");
+            return Json(success, JsonRequestBehavior.AllowGet);
         }
-
-        public ActionResult SaveEmployeeMaster(EMPLOYEEMASTER objEmployeeMaster)
+        [HttpPost]
+        public JsonResult SaveEmployeeMaster(EMPLOYEEMASTER objEmployeeMaster)
         {
+            bool success;
             try
             {
                 _unitOfWork.Repository<EMPLOYEEMASTER>().Insert(objEmployeeMaster);
                 _unitOfWork.Save();
+                success = true;
             }
             catch (Exception)
             {
-                // ignored
+                success = false;
             }
-            return RedirectToAction("EmployeeMaster");
+            return Json(success, JsonRequestBehavior.AllowGet);
         }
-
         [HttpPost]
         public JsonResult SaveSupplierMaster(FormCollection form, AR_AP_MASTER objSupplierMaster)
         {
@@ -233,34 +239,38 @@ namespace ASI.MGC.FS.Controllers
             }
             return Json(success, JsonRequestBehavior.AllowGet);
         }
-
-        public ActionResult SaveProductMaster(PRODUCTMASTER objProductMaster)
+        [HttpPost]
+        public JsonResult SaveProductMaster(PRODUCTMASTER objProductMaster)
         {
+            bool success;
             try
             {
                 objProductMaster.STATUS_PM = "IP";
                 _unitOfWork.Repository<PRODUCTMASTER>().Insert(objProductMaster);
                 _unitOfWork.Save();
+                success = true;
             }
             catch (Exception)
             {
-                // ignored
+                success = false;
             }
-            return RedirectToAction("ProductMaster");
+            return Json(success, JsonRequestBehavior.AllowGet);
         }
-
-        public ActionResult SaveUnitMeasurement(UNITMESSUREMENT objUnitMessurement)
+        [HttpPost]
+        public JsonResult SaveUnitMeasurement(UNITMESSUREMENT objUnitMessurement)
         {
+            bool success;
             try
             {
                 _unitOfWork.Repository<UNITMESSUREMENT>().Insert(objUnitMessurement);
                 _unitOfWork.Save();
+                success = true;
             }
             catch (Exception)
             {
-                // ignored
+                success = false;
             }
-            return RedirectToAction("UnitCreation");
+            return Json(success,JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -1245,7 +1245,7 @@
     <Content Include="Views\AccountManagement\LogIn.cshtml" />
     <Content Include="Views\AccountManagement\Registration.cshtml" />
     <Content Include="Views\AccountManagement\LogOut.cshtml" />
-    <Content Include="Views\Purchase\PurchaseEntry.cshtml" />
+    <Content Include="Views\Purchase\PurchaseEntryOld.cshtml" />
     <Content Include="Views\Bank\BankReceipt.cshtml" />
     <Content Include="Views\Bank\BankPayment.cshtml" />
     <Content Include="Views\Invoice\InvoicePreparation.cshtml" />
@@ -1331,6 +1331,7 @@
     <Content Include="Views\AccountManagement\ChangePassword.cshtml" />
     <Content Include="Views\MgcReports\ApStatement.cshtml" />
     <Content Include="Views\MgcReports\ApStatementOutstanding.cshtml" />
+    <Content Include="Views\Purchase\PurchaseEntry.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

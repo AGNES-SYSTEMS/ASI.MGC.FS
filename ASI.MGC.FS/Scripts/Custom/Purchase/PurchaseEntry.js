@@ -6,7 +6,6 @@
         $('#CustomerSearchModel').modal('toggle');
     }
 };
-
 var productSelect = function (prdId) {
     if (prdId) {
         var ret = jQuery("#tblProductSearch").jqGrid('getRowData', prdId);
@@ -16,7 +15,6 @@ var productSelect = function (prdId) {
         $('#PrdSearchModel').modal('toggle');
     }
 };
-
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liPurchaseEntry").addClass("active");
@@ -188,7 +186,6 @@ $(document).ready(function () {
         var $amount = $("#txtRate").val() * $("#txtQuantity").val();
         $("#txtAmount").val($amount);
     });
-
     $("#txtQuantity").on("blur", function () {
         var $amount = $("#txtRate").val() * $("#txtQuantity").val();
         $("#txtAmount").val($amount);
@@ -201,7 +198,6 @@ $(document).ready(function () {
         $("#txtRate").val("");
         $("#txtAmount").val("0");
     }
-
     $("#btnCancel").click(function () {
         clearModalForm();
     });
@@ -241,37 +237,40 @@ $(document).ready(function () {
         $("#txtNetAmount").val(netAmount);
         $("#txtTotalAmount").val(totalGridPrdAmount);
     });
-
     $("#txtAPCode").on("change", function () {
         $('#formPurchaseEntry').bootstrapValidator('revalidateField', 'APCode');
     });
-
     $("#txtAPDetail").on("change", function () {
         $('#formPurchaseEntry').bootstrapValidator('revalidateField', 'APDetail');
     });
-
     $("#txtCash").on("change", function () {
         $('#formPurchaseEntry').bootstrapValidator('revalidateField', 'Cash');
     });
-
     $("#txtShipChrg").on("change", function () {
         var netAmount = $("#txtNetAmount").val() + $("#txtShipChrg").val();
         $("#txtNetAmount").val(netAmount);
         $('#formPurchaseEntry').bootstrapValidator('revalidateField', 'ShipChrg');
     });
-
     $("#txtDiscount").on("change", function () {
         var netAmount = $("#txtNetAmount").val() - $("#txtDiscount").val();
         $("#txtNetAmount").val(netAmount);
         $('#formPurchaseEntry').bootstrapValidator('revalidateField', 'Discount');
     });
+    $('#formPurchaseEntry').on('init.field.fv', function (e, data) {
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),
+            validators = data.fv.getOptions(data.field).validators;
 
-    $('#formPurchaseEntry').formValidation({
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.addClass(options.icon.required).show();
+        }
+    }).formValidation({
         container: '#messages',
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
+        icon: {
+            required: 'fa fa-asterisk',
+            valid: 'fa fa-check',
+            invalid: 'fa fa-times',
+            validating: 'fa fa-refresh'
         },
         fields: {
             APCode: {
@@ -348,9 +347,24 @@ $(document).ready(function () {
                 }
             }
         }
-    }).on('success.form.fv', function (e) {
-        debugger;
-        // Prevent form submission
-        e.preventDefault();
-    });
+    })
+    // .on('status.field.fv', function (e, data) {
+    //    // Remove the required icon when the field updates its status
+    //    var $icon = data.element.data('fv.icon'),
+    //        options = data.fv.getOptions(),                      // Entire options
+    //        validators = data.fv.getOptions(data.field).validators; // The field validators
+
+    //    if (validators.notEmpty && options.icon && options.icon.required) {
+    //        $icon.removeClass(options.icon.required).addClass('fa');
+    //    }
+    //}).on('success.field.fv', function (e, data) {
+    //    if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
+    //        data.fv.disableSubmitButtons(true);
+    //    }
+    //})
+        .on('success.form.fv', function (e) {
+            debugger;
+            // Prevent form submission
+            e.preventDefault();
+        });
 });

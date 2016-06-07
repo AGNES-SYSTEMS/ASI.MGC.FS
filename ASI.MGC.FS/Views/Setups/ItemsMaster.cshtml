@@ -50,7 +50,7 @@
     <div class="modal fade" id="ItemMasterModel" tabindex="-1" role="dialog" aria-labelledby="ItemMasterModelLabel" aria-hidden="true" data-backdrop="false">
         <div class="modal-dialog modal-lg" style="width: 85%">
             <div class="modal-content">
-                @using (Ajax.BeginForm("SaveItemMaster", "Setups", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formProductMaster", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                @using (Ajax.BeginForm("SaveItemMaster", "Setups", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formItemMaster", @class = "form-horizontal", enctype = "multipart/form-data" }))
                 {
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"
@@ -66,15 +66,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Product Code</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.PROD_CODE_PM, null, new { ID = "txtPrdId", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.PROD_CODE_PM)
+                                    @Html.TextBoxFor(d => d.PROD_CODE_PM, null, new { ID = "txtPrdId", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Product Name</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.DESCRIPTION_PM, null, new { ID = "txtPrdName", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.DESCRIPTION_PM)
+                                    @Html.TextBoxFor(d => d.DESCRIPTION_PM, null, new { ID = "txtPrdName", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -100,15 +98,21 @@
 @section scripts
 {
     <script src="@Url.Content("~/Scripts/Custom/Setups/ItemsMaster.js")"></script>
-<script type="text/javascript">
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
+    <script type="text/javascript">
 
-    function OnSuccess(response) {
-        alert(response);
-    }
+        function OnSuccess(success) {
+            if (success) {
+                toastr.success("Item has been added Successfully.");
+                $('#formItemMaster')[0].reset();
+            } else {
+                toastr.error("Sorry! Something went wrong, please try again.");
+            }
+        }
 
-    function OnFailure(response) {
-        alert("Whoops! That didn't go so well did it?");
-    }
+        function OnFailure() {
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
 
-</script>
+    </script>
 }

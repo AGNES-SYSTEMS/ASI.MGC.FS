@@ -31,7 +31,6 @@
                                 <div class="col-md-8">
                                     <div class="input-group">
                                         @Html.TextBox("DocType", null, new { ID = "txtDocType", Class = "form-control", @readonly = "readonly" })
-                                        @Html.ValidationMessage("DocType")
                                         <span class="input-group-btn">
                                             <button type="button" id="btnDocTypeSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#docTypeSearchModel">
                                                 <i class="fa fa-search"></i>
@@ -44,7 +43,6 @@
                                 <label id="lblDocNo" class="control-label col-md-4 small ">Doc No:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBoxFor(m => m.DOCNUMBER_BT, null, new { ID = "txtDocNo", Class = "form-control", @readonly = "readonly", @required = "required" })
-                                    @Html.ValidationMessageFor(m => m.DOCNUMBER_BT)
                                 </div>
                             </div>
                         </div>
@@ -59,7 +57,6 @@
                                 <label id="lblDocDate" class="control-label col-md-4 small ">Doc Date:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBoxFor(m => m.DOCDATE_BT, null, new { ID = "txtDocDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control datepicker", @required = "required" })
-                                    @Html.ValidationMessageFor(m => m.DOCDATE_BT)
                                 </div>
                             </div>
                         </div>
@@ -70,7 +67,6 @@
                                 <div class="col-md-8">
                                     <div class="input-group">
                                         @Html.TextBoxFor(m => m.BANKCODE_BT, null, new { ID = "txtBankCode", Class = "form-control", @readonly = "readonly" })
-                                        @Html.ValidationMessageFor(m => m.BANKCODE_BT)
                                         <span class="input-group-btn">
                                             <button type="button" id="btnBankSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#BankSearchModel">
                                                 <i class="fa fa-search"></i>
@@ -83,7 +79,6 @@
                                 <label id="lblGLDate" class="control-label col-md-4 small ">GL Date:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBoxFor(m => m.GLDATE_BT, null, new { ID = "txtGLDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @required = "required" })
-                                    @Html.ValidationMessageFor(m => m.GLDATE_BT)
                                 </div>
                             </div>
                         </div>
@@ -92,14 +87,12 @@
                                 <label id="lblBankName" class="control-label col-md-4 small ">Bank Name</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBox("BankName", null, new { ID = "txtBankName", Class = "form-control", @readonly = "readonly", @required = "required" })
-                                    @Html.ValidationMessage("BankName")
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblotherRef" class="control-label col-md-4 small ">Other Ref</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBoxFor(m => m.OTHERREF_BT, null, new { ID = "txtOtherRef", Class = "form-control", @required = "required" })
-                                    @Html.ValidationMessageFor(m => m.OTHERREF_BT)
                                 </div>
                             </div>
                         </div>
@@ -108,14 +101,12 @@
                                 <label id="lblAmount" class="control-label col-md-4 small ">Amount</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBoxFor(m => m.CREDITAMOUT_BT, null, new { ID = "txtBRAmount", Class = "form-control", @required = "required" })
-                                    @Html.ValidationMessageFor(m => m.CREDITAMOUT_BT)
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblReceiveFrom" class="control-label col-md-4 small ">Paid To</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBoxFor(m => m.NOTE_BT, null, new { ID = "txtPaidTo", Class = "form-control", @required = "required" })
-                                    @Html.ValidationMessageFor(m => m.NOTE_BT)
                                 </div>
                             </div>
                         </div>
@@ -466,6 +457,8 @@
                 toastr.success("Bank Payment is added Successfully.");
                 isReportOpened = true;
                 openBankPayment(bpNo);
+                $("#formBankPayment")[0].reset();
+                $('#tblAllocDetails').jqGrid("clearGridData");
             }
         }
 

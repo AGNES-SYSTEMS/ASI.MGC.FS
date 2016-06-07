@@ -1,4 +1,6 @@
-﻿var jobSelect = function (jobId) {
+﻿var arrMetarials = [];
+var selectedRowId = "";
+var jobSelect = function (jobId) {
     if (jobId) {
         var ret = jQuery("#tblJobSearch").jqGrid('getRowData', jobId);
         $("#txtJobID").val(ret.JOBID_JR).change();
@@ -7,7 +9,6 @@
         $('#mrvJobSearchModel').modal('toggle');
     }
 };
-
 var productSelect = function (prdId) {
     if (prdId) {
         var ret = jQuery("#tblProductSearch").jqGrid('getRowData', prdId);
@@ -16,22 +17,41 @@ var productSelect = function (prdId) {
         $('#mrvPrdSearchModel').modal('toggle');
     }
 };
-
+var calculateNetAmount = function () {
+    var totalGridPrdAmount = 0.0;
+    for (var i = 0; i < arrMetarials.length; i++) {
+        totalGridPrdAmount += parseFloat(arrMetarials[i]["AMOUNT_MRR"]);
+    }
+    if (totalGridPrdAmount !== 0) {
+        $("#txtNetPrdAmount").val(totalGridPrdAmount);
+    } else {
+        $("#txtNetPrdAmount").val("");
+    }
+    $('#formMRVCreation').formValidation('revalidateField', 'netPrdAmount');
+}
+var delProduct = function (rowId) {
+    if (rowId) {
+        $('#tblMetarials').jqGrid('delRowData', rowId);
+        $('#tblMetarials').trigger('reloadGrid');
+        calculateNetAmount();
+    }
+};
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liMrv").addClass("active");
 
-    var arrMetarials = [];
+    arrMetarials = [];
     $('#txtDeleDate').datepicker();
     $('#txtMRVDate').datepicker();
     jQuery("#tblMetarials").jqGrid({
         datatype: "local",
+        data: arrMetarials,
         height: 150,
         shrinkToFit: true,
         autoheight: true,
         autowidth: true,
         styleUI: "Bootstrap",
-        colNames: ['PrCode', 'Product Description', 'Job id', 'Job Description', 'Quantity', 'Rate', 'Amount'],
+        colNames: ['PrCode', 'Product Description', 'Job id', 'Job Description', 'Quantity', 'Rate', 'Amount', '', ''],
         colModel: [
             { name: 'PRODID_MRR', index: 'PRODID_MRR', width: 80, align: "center", sortable: false },
             { name: 'prdesc', index: 'prdesc', width: 300, align: "left", sortable: false },
@@ -39,12 +59,66 @@ $(document).ready(function () {
             { name: 'jobdesc', index: 'jobdesc', width: 300, align: "left", sortable: false },
             { name: 'QTY_MRR', index: 'QTY_MRR', width: 90, align: "right", sortable: false },
             { name: 'RATE_MRR', index: 'RATE_MRR', width: 100, align: "right", sortable: false },
-            { name: 'AMOUNT_MRR', index: 'AMOUNT_MRR', width: 100, align: "right", sortable: false }
+            { name: 'AMOUNT_MRR', index: 'AMOUNT_MRR', width: 100, align: "right", sortable: false },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options) {
+
+                    var markup = "<a %Href% data-toggle='modal' %Id% data-target='#mrvProductModel'> <i class='fa fa-pencil-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:editProduct(&apos;" + options.rowId + "&apos;);",
+                        "%Id%": "id='" + options.rowId + "'"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options) {
+
+                    var markup = "<a %Href%><i class='fa fa-trash-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:delProduct(&apos;" + options.rowId + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
         ],
         multiselect: false,
         caption: "Materials Details"
     });
-
+    $("#mrvProductModel").on('show.bs.modal', function (e) {
+        if (e.relatedTarget.id) {
+            selectedRowId = e.relatedTarget.id;
+            var rowId = e.relatedTarget.id;
+            var ret = $('#tblMetarials').jqGrid('getRowData', rowId);
+            $("#txtPrCode").val(ret.PRODID_MRR);
+            $("#txtPrDesc").val(ret.prdesc);
+            $("#txtJobID").val(ret.JOBID_MRR);
+            $("#txtJobDesc").val(ret.jobdesc);
+            $("#txtQuantity").val(ret.QTY_MRR);
+            $("#txtRate").val(ret.RATE_MRR);
+            $("#txtAmount").val(ret.AMOUNT_MRR);
+        }
+    });
     $("#txtPrCode").change(function () {
         $('#mrvProductModelform').bootstrapValidator('revalidateField', 'PrCode');
     });
@@ -77,6 +151,7 @@ $(document).ready(function () {
         $("#txtQuantity").val("");
         $("#txtRate").val("");
         $("#txtAmount").val("0");
+        selectedRowId = "";
     }
     var searchGrid = function (searchValue) {
         debugger;
@@ -118,19 +193,29 @@ $(document).ready(function () {
     $("#btnSave").click(function (e) {
         if ($("#mrvProductModelform").valid()) {
             e.preventDefault();
-            var arrIndex = arrMetarials.length;
-            arrMetarials[arrIndex] = {
-                PRODID_MRR: $("#txtPrCode").val(), prdesc: $("#txtPrDesc").val(), JOBID_MRR: $("#txtJobID").val(),
-                jobdesc: $("#txtJobDesc").val(), QTY_MRR: $("#txtQuantity").val(), RATE_MRR: $("#txtRate").val(),
-                AMOUNT_MRR: $("#txtAmount").val()
-            };
-            var su = jQuery("#tblMetarials").jqGrid('addRowData', arrIndex, arrMetarials[arrIndex]);
-            if (su) {
-                var mrvPrds = $('#tblMetarials').jqGrid('getGridParam', 'data');
-                var jsonMrvPrds = JSON.stringify(mrvPrds);
-                $('#mrvProds').val(jsonMrvPrds);
-                clearModalForm();
+            if (selectedRowId) {
+                arrMetarials[parseInt(selectedRowId)-1] = {
+                    PRODID_MRR: $("#txtPrCode").val(),
+                    prdesc: $("#txtPrDesc").val(),
+                    JOBID_MRR: $("#txtJobID").val(),
+                    jobdesc: $("#txtJobDesc").val(),
+                    QTY_MRR: $("#txtQuantity").val(),
+                    RATE_MRR: $("#txtRate").val(),
+                    AMOUNT_MRR: $("#txtAmount").val()
+                };
+            } else {
+                var arrIndex = arrMetarials.length;
+                arrMetarials[arrIndex] = {
+                    PRODID_MRR: $("#txtPrCode").val(),
+                    prdesc: $("#txtPrDesc").val(),
+                    JOBID_MRR: $("#txtJobID").val(),
+                    jobdesc: $("#txtJobDesc").val(),
+                    QTY_MRR: $("#txtQuantity").val(),
+                    RATE_MRR: $("#txtRate").val(),
+                    AMOUNT_MRR: $("#txtAmount").val()
+                };
             }
+            clearModalForm();
         }
         else {
             $("#mrvProductModelform").bootstrapValidator('revalidateField', 'PrCode');
@@ -146,17 +231,13 @@ $(document).ready(function () {
         var outerwidth = $('#grid').width();
         $('#tblMetarials').setGridWidth(outerwidth);
     });
+
     $("#mrvProductModel").on('hide.bs.modal', function () {
         clearModalForm();
-        var totalGridPrdAmount = 0.0;
-        for (var i = 0; i < arrMetarials.length; i++) {
-            totalGridPrdAmount += parseFloat(arrMetarials[i]["AMOUNT_MRR"]);
-        }
-        if (totalGridPrdAmount !== 0) {
-            $("#txtNetPrdAmount").val(totalGridPrdAmount);
-            $('#mrvProductModelform').formValidation('revalidateField', 'netPrdAmount');
-        }
-
+        $('#tblMetarials').trigger('reloadGrid');
+        var jsonMrvPrds = JSON.stringify(arrMetarials);
+        $('#mrvProds').val(jsonMrvPrds);
+        calculateNetAmount();
     });
     $("#txtCustCode").autocomplete({
         source: '/Customer/GetCustomersCode',

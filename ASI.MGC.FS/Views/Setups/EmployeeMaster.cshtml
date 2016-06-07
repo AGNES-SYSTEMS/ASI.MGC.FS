@@ -66,15 +66,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Employee Code</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.EMPCODE_EM, null, new { ID = "txtEmpCode", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.EMPCODE_EM)
+                                    @Html.TextBoxFor(d => d.EMPCODE_EM, null, new { ID = "txtEmpCode", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">First Name</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.EMPFNAME_EM, null, new { ID = "txtFirstName", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.EMPFNAME_EM)
+                                    @Html.TextBoxFor(d => d.EMPFNAME_EM, null, new { ID = "txtFirstName", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -82,15 +80,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Last Name</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.EMPSNAME_EM, null, new { ID = "txtLastName", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.EMPSNAME_EM)
+                                    @Html.TextBoxFor(d => d.EMPSNAME_EM, null, new { ID = "txtLastName", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Passport No</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.PASSPORTNO_EM, null, new { ID = "txtPassportNo", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.PASSPORTNO_EM)
+                                    @Html.TextBoxFor(d => d.PASSPORTNO_EM, null, new { ID = "txtPassportNo", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -98,15 +94,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Designation</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.DESIGNATION_EM, null, new { ID = "txtDesignation", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.DESIGNATION_EM)
+                                    @Html.TextBoxFor(d => d.DESIGNATION_EM, null, new { ID = "txtDesignation", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Phone</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.PHONE_EM, null, new { ID = "txtPhone", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.PHONE_EM)
+                                    @Html.TextBoxFor(d => d.PHONE_EM, null, new { ID = "txtPhone", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -114,15 +108,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Passport Issue Date</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.PASSPORTISSUEDATE_EM, null, new { ID = "txtPassIssue", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.PASSPORTISSUEDATE_EM)
+                                    @Html.TextBoxFor(d => d.PASSPORTISSUEDATE_EM, null, new { ID = "txtPassIssue", Class = "form-control", @Value = DateTime.Today.Date.ToShortDateString(), @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Passport Expiry Date</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.PASSPORTEXPDATE_EM, null, new { ID = "txtPassExp", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.PASSPORTEXPDATE_EM)
+                                    @Html.TextBoxFor(d => d.PASSPORTEXPDATE_EM, null, new { ID = "txtPassExp", Class = "form-control", @Value = DateTime.Today.Date.ToShortDateString(), @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -130,15 +122,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Visa Issue Date</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.VISAISSUEDATE_EM, null, new { ID = "txtVisaIssue", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.VISAISSUEDATE_EM)
+                                    @Html.TextBoxFor(d => d.VISAISSUEDATE_EM, null, new { ID = "txtVisaIssue", Class = "form-control", @Value = DateTime.Today.Date.ToShortDateString(), @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Visa Expiry Date</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.VISAEXPIEARYDATE_EM, null, new { ID = "txtVisaExp", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.VISAEXPIEARYDATE_EM)
+                                    @Html.TextBoxFor(d => d.VISAEXPIEARYDATE_EM, null, new { ID = "txtVisaExp", Class = "form-control", @Value = DateTime.Today.Date.ToShortDateString(), @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -164,15 +154,21 @@
 @section scripts
 {
     <script src="@Url.Content("~/Scripts/Custom/Setups/EmployeeMaster.js")"></script>
-<script type="text/javascript">
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
+    <script type="text/javascript">
 
-    function OnSuccess(response) {
-        alert(response);
-    }
+        function OnSuccess(success) {
+            if (success) {
+                toastr.success("Employee has been added Successfully.");
+                $('#formEmployeeMaster')[0].reset();
+            } else {
+                toastr.error("Sorry! Something went wrong, please try again.");
+            }
+        }
 
-    function OnFailure(response) {
-        alert("Whoops! That didn't go so well did it?");
-    }
+        function OnFailure() {
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
 
-</script>
+    </script>
 }

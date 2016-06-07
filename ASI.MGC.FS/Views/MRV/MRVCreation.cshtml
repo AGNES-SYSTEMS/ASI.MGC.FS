@@ -87,7 +87,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblExeCode" class="control-label col-md-4 small ">Exe. Code:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.EXECODE_MRV, null, new { ID = "txtExeCode", Class = "form-control" })
+                                    @Html.TextBoxFor(d => d.EXECODE_MRV, null, new { ID = "txtExeCode", Class = "form-control", @Value="GN" })
                                 </div>
                             </div>
                         </div>
@@ -207,7 +207,7 @@
                             <div class="col-md-5 col-sm-5 form-group">
                                 <label id="lblQuantity" class="control-label col-md-4 small ">Quantity:</label>
                                 <div class="col-md-6 paddingLeftRight0">
-                                    <input type="number" id="txtQuantity" data-fv-notempty="true" pattern="\d{1,5}" name="Quantity" class="form-control" required />
+                                    <input type="number" id="txtQuantity" data-fv-notempty="true" pattern="\d{1,5}" min="1" name="Quantity" class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-md-7 col-sm-7 form-group">
@@ -344,6 +344,8 @@
                 toastr.success("Material Receipt Voucher is added Successfully.");
                 openMrvReport(mrvNoJobList[0]);
                 openJobReports(mrvNoJobList);
+                $("#formMRVCreation")[0].reset();
+                $('#tblMetarials').jqGrid("clearGridData");
             }
         }
 

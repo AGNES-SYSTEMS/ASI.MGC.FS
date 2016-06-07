@@ -47,4 +47,83 @@
         var outerwidth = $('#grid').width();
         $('#tblJobDetails').setGridWidth(outerwidth);
     });
+    var searchGrid = function (searchValue) {
+        debugger;
+        var postData = $("#tblJobDetails").jqGrid("getGridParam", "postData");
+        postData["jobSearch"] = searchValue;
+
+        $("#tblJobDetails").setGridParam({ postData: postData });
+        $("#tblJobDetails").trigger("reloadGrid", [{ page: 1 }]);
+    };
+
+    $("#txtJobPrd").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtJobPrd").val().length >= 3 || $("#txtJobPrd").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtJobPrd").val());
+        }
+    });
+
+    $("#JobDetailsModel").on('hide.bs.modal', function () {
+        $(this).find('form')[0].reset();
+    });
+
+    $('#formJobCreation').on('init.field.fv', function (e, data) {
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),
+            validators = data.fv.getOptions(data.field).validators;
+
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.addClass(options.icon.required).show();
+        }
+    }).formValidation({
+        container: '#messages',
+        framework: 'bootstrap',
+        icon: {
+            required: 'fa fa-asterisk',
+            valid: 'fa fa-check',
+            invalid: 'fa fa-times',
+            validating: 'fa fa-refresh'
+        },
+        fields: {
+            JOBID_JR: {
+                validators: {
+                    notEmpty: {
+                        message: 'Job Code is required'
+                    }
+                }
+            },
+            JOBDESCRIPTION_JR: {
+                validators: {
+                    notEmpty: {
+                        message: 'Description is required'
+                    }
+                }
+            },
+            RATE_RJ: {
+                validators: {
+                    notEmpty: {
+                        message: 'Rate is required'
+                    }
+                }
+            }
+        }
+    }).on('status.field.fv', function (e, data) {
+        // Remove the required icon when the field updates its status
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),                      // Entire options
+            validators = data.fv.getOptions(data.field).validators; // The field validators
+
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.removeClass(options.icon.required).addClass('fa');
+        }
+    }).on('success.field.fv', function (e, data) {
+        if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
+            data.fv.disableSubmitButtons(true);
+        }
+    }).on('success.form.fv', function (e) {
+        debugger;
+        // Prevent form submission
+        e.preventDefault();
+    });
 });

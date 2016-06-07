@@ -1,6 +1,13 @@
 ﻿$(document).ready(function () {
     $("#txtNewFYFrom").datepicker();
     $("#txtNewFYTo").datepicker();
+    $("#txtNewFYTo").change(function () {
+        $('#formFinancialYear').formValidation('revalidateField', 'PERRIEDRTO_FM');
+    });
+
+    $("#txtNewFYFrom").change(function () {
+        $('#formFinancialYear').formValidation('revalidateField', 'PERRIEDFROM_FM');
+    });
     jQuery("#tblFinancialYearDetails").jqGrid({
         url: '/Setups/GetAllFinancialYears',
         datatype: "json",
@@ -49,5 +56,77 @@
     $(window).resize(function () {
         var outerwidth = $('#grid').width();
         $('#tblFinancialYearDetails').setGridWidth(outerwidth);
+    });
+    var searchGrid = function (searchValue) {
+        debugger;
+        var postData = $("#tblSupplierDetails").jqGrid("getGridParam", "postData");
+        postData["searchValue"] = searchValue;
+
+        $("#tblSupplierDetails").setGridParam({ postData: postData });
+        $("#tblSupplierDetails").trigger("reloadGrid", [{ page: 1 }]);
+    };
+
+    $("#txtSupplierSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtSupplierSearch").val().length >= 3 || $("#txtSupplierSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtSupplierSearch").val());
+        }
+    });
+
+    $("#FinancialYearModel").on('hide.bs.modal', function () {
+        $(this).find('form')[0].reset();
+    });
+
+    $('#formFinancialYear').on('init.field.fv', function (e, data) {
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),
+            validators = data.fv.getOptions(data.field).validators;
+
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.addClass(options.icon.required).show();
+        }
+    }).formValidation({
+        container: '#messages',
+        framework: 'bootstrap',
+        icon: {
+            required: 'fa fa-asterisk',
+            valid: 'fa fa-check',
+            invalid: 'fa fa-times',
+            validating: 'fa fa-refresh'
+        },
+        fields: {
+            PERRIEDFROM_FM: {
+                validators: {
+                    notEmpty: {
+                        message: 'New FY From is required'
+                    }
+                }
+            },
+            PERRIEDRTO_FM: {
+                validators: {
+                    notEmpty: {
+                        message: 'New FY To is required'
+                    }
+                }
+            }
+        }
+    }).on('status.field.fv', function (e, data) {
+        // Remove the required icon when the field updates its status
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),                      // Entire options
+            validators = data.fv.getOptions(data.field).validators; // The field validators
+
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.removeClass(options.icon.required).addClass('fa');
+        }
+    }).on('success.field.fv', function (e, data) {
+        if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
+            data.fv.disableSubmitButtons(true);
+        }
+    }).on('success.form.fv', function (e) {
+        debugger;
+        // Prevent form submission
+        e.preventDefault();
     });
 });

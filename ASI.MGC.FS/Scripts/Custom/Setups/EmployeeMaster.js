@@ -58,4 +58,145 @@
         var outerwidth = $('#grid').width();
         $('#tblEmpDetails').setGridWidth(outerwidth);
     });
+    var searchGrid = function (searchValue) {
+        debugger;
+        var postData = $("#tblEmpDetails").jqGrid("getGridParam", "postData");
+        postData["searchValue"] = searchValue;
+
+        $("#tblEmpDetails").setGridParam({ postData: postData });
+        $("#tblEmpDetails").trigger("reloadGrid", [{ page: 1 }]);
+    };
+
+    $("#txtEmpSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtEmpSearch").val().length >= 3 || $("#txtEmpSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtEmpSearch").val());
+        }
+    });
+
+    $("#EmployeeMasterModel").on('hide.bs.modal', function () {
+        $(this).find('form')[0].reset();
+    });
+
+    $('#formEmployeeMaster').on('init.field.fv', function (e, data) {
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),
+            validators = data.fv.getOptions(data.field).validators;
+
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.addClass(options.icon.required).show();
+        }
+    }).formValidation({
+        container: '#messages',
+        framework: 'bootstrap',
+        icon: {
+            required: 'fa fa-asterisk',
+            valid: 'fa fa-check',
+            invalid: 'fa fa-times',
+            validating: 'fa fa-refresh'
+        },
+        fields: {
+            EMPCODE_EM: {
+                validators: {
+                    notEmpty: {
+                        message: 'Emp Code is required'
+                    }
+                }
+            },
+            EMPFNAME_EM: {
+                validators: {
+                    notEmpty: {
+                        message: 'Emp Name is required'
+                    }
+                }
+            },
+            PASSPORTISSUEDATE_EM: {
+                validators: {
+                    notEmpty: {
+                        message: 'Passport Issue Date is required'
+                    },
+                    date: {
+                        format: 'MM/DD/YYYY',
+                        message: 'Enter Valid Date'
+                    }
+                }
+            }, PASSPORTEXPDATE_EM: {
+                validators: {
+                    notEmpty: {
+                        message: 'Passport Expiry Date is required'
+                    },
+                    date: {
+                        format: 'MM/DD/YYYY',
+                        message: 'Enter Valid Date'
+                    }
+                }
+            }, VISAISSUEDATE_EM: {
+                validators: {
+                    notEmpty: {
+                        message: 'Visa Issue Date is required'
+                    },
+                    date: {
+                        format: 'MM/DD/YYYY',
+                        message: 'Enter Valid Date'
+                    }
+                }
+            }, VISAEXPIEARYDATE_EM: {
+                validators: {
+                    notEmpty: {
+                        message: 'Visa Expiry Date is required'
+                    },
+                    date: {
+                        format: 'MM/DD/YYYY',
+                        message: 'Enter Valid Date'
+                    }
+                }
+            },
+            EMPSNAME_EM: {
+                validators: {
+                    notEmpty: {
+                        message: 'Emp Surname is required'
+                    }
+                }
+            },
+            PASSPORTNO_EM: {
+                validators: {
+                    notEmpty: {
+                        message: 'Passport No is required'
+                    }
+                }
+            },
+            PHONE_EM: {
+                validators: {
+                    notEmpty: {
+                        message: 'Telephone is required'
+                    }
+                }
+            },
+            DESIGNATION_EM: {
+                validators: {
+                    notEmpty: {
+                        message: 'Emp Designation is required'
+                    }
+                }
+            }
+        }
+    }).on('status.field.fv', function (e, data) {
+        // Remove the required icon when the field updates its status
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),                      // Entire options
+            validators = data.fv.getOptions(data.field).validators; // The field validators
+
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.removeClass(options.icon.required).addClass('fa');
+        }
+    }).on('success.field.fv', function (e, data) {
+        if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
+            data.fv.disableSubmitButtons(true);
+        }
+    }).on('success.form.fv', function (e) {
+        debugger;
+        // Prevent form submission
+        e.preventDefault();
+    });
 });

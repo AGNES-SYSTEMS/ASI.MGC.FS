@@ -58,7 +58,7 @@ namespace ASI.MGC.FS.Controllers
             return Json(objEmployee, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetEmployeeDetailsList(string sidx, string sord, int page, int rows, string empCode, string empName)
+        public JsonResult GetEmployeeDetailsList(string sidx, string sord, int page, int rows, string searchValue)
         {
             var empList = (from employees in _unitOfWork.Repository<EMPLOYEEMASTER>().Query().Get()
                            select employees).Select(a => new
@@ -74,10 +74,10 @@ namespace ASI.MGC.FS.Controllers
                                a.VISAISSUEDATE_EM,
                                a.VISAEXPIEARYDATE_EM
                            });
-            if (!string.IsNullOrEmpty(empCode))
+            if (!string.IsNullOrEmpty(searchValue))
             {
                 empList = (from employees in _unitOfWork.Repository<EMPLOYEEMASTER>().Query().Get()
-                           where employees.EMPCODE_EM.Contains(empCode)
+                           where employees.EMPFNAME_EM.Contains(searchValue)
                            select employees).Select(a => new
                            {
                                a.EMPCODE_EM,
@@ -92,24 +92,7 @@ namespace ASI.MGC.FS.Controllers
                                a.VISAEXPIEARYDATE_EM
                            });
             }
-            if (!string.IsNullOrEmpty(empName))
-            {
-                empList = (from employees in _unitOfWork.Repository<EMPLOYEEMASTER>().Query().Get()
-                           where employees.EMPFNAME_EM.Contains(empName)
-                           select employees).Select(a => new
-                           {
-                               a.EMPCODE_EM,
-                               a.EMPFNAME_EM,
-                               a.EMPSNAME_EM,
-                               a.PASSPORTNO_EM,
-                               a.DESIGNATION_EM,
-                               a.PHONE_EM,
-                               a.PASSPORTISSUEDATE_EM,
-                               a.PASSPORTEXPDATE_EM,
-                               a.VISAISSUEDATE_EM,
-                               a.VISAEXPIEARYDATE_EM
-                           });
-            }
+            
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
             int totalRecords = empList.Count();

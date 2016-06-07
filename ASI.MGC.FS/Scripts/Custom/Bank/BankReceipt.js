@@ -1,4 +1,6 @@
-﻿var alCodeSelect = function (alCodeId) {
+﻿var arrAllocDetails = [];
+var selectedRowId = "";
+var alCodeSelect = function (alCodeId) {
     if (alCodeId) {
         var ret = jQuery("#tblAlCodeSearch").jqGrid('getRowData', alCodeId);
         $("#txtAlCode").val(ret.ALCODE_ALD).change();
@@ -6,7 +8,6 @@
         $('#alCodeSearchModel').modal('toggle');
     }
 };
-
 var docSelect = function (docId) {
     if (docId) {
         var ret = jQuery("#tblDocSearch").jqGrid('getRowData', docId);
@@ -15,7 +16,6 @@ var docSelect = function (docId) {
         $('#docTypeSearchModel').modal('toggle');
     }
 };
-
 var bankSelect = function (bankId) {
     if (bankId) {
         var ret = jQuery("#tblBankSearch").jqGrid('getRowData', bankId);
@@ -24,7 +24,6 @@ var bankSelect = function (bankId) {
         $('#BankSearchModel').modal('toggle');
     }
 };
-
 var accountSelect = function (accountId) {
     if (accountId) {
         var ret = jQuery("#tblAccountSearch").jqGrid('getRowData', accountId);
@@ -33,29 +32,89 @@ var accountSelect = function (accountId) {
         $('#accountSearchModel').modal('toggle');
     }
 };
-
+var delProduct = function (rowId) {
+    if (rowId) {
+        $('#tblAllocDetails').jqGrid('delRowData', rowId);
+        $('#tblAllocDetails').trigger('reloadGrid');
+        calculateNetAmount();
+    }
+};
+var calculateNetAmount = function () {
+    var totalGridPrdAmount = 0.0;
+    for (var i = 0; i < arrAllocDetails.length; i++) {
+        totalGridPrdAmount += parseFloat(arrAllocDetails[i]["Amount"]);
+    }
+    if (totalGridPrdAmount !== 0) {
+        $("#txtAllocationTotal").val(totalGridPrdAmount);
+    } else {
+        $("#txtAllocationTotal").val("");
+    }
+    $("#formBankReceipt").formValidation('revalidateField', 'AllocationTotal');
+}
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liBankReceipt").addClass("active");
-    var arrAllocDetails = [];
+    arrAllocDetails = [];
     $('#txtDocDate').datepicker();
     $('#txtGLDate').datepicker();
     $('#txtChequeDate').datepicker();
     $('#txtClearanceDate').datepicker();
     jQuery("#tblAllocDetails").jqGrid({
         datatype: "local",
+        data: arrAllocDetails,
         height: 150,
         shrinkToFit: true,
         autoheight: true,
         autowidth: true,
         styleUI: "Bootstrap",
-        colNames: ['AL Code', 'Account Code', 'Account Description', 'Amount', 'Narration'],
+        colNames: ['AL Code', 'Account Code', 'Account Description', 'Amount', 'Narration', '', ''],
         colModel: [
             { name: 'AlCode', index: 'AlCode', width: 150, align: "center", sortable: false },
             { name: 'AccountCode', index: 'AccountCode', width: 150, align: "left", sortable: false },
-            { name: 'Description', index: 'Description', width: 320, align: "center", sortable: false },
+            { name: 'Description', index: 'Description', width: 300, align: "center", sortable: false },
             { name: 'Amount', index: 'Amount', width: 150, align: "right", sortable: false },
-            { name: 'Narration', index: 'Narration', width: 300, align: "left", sortable: false }
+            { name: 'Narration', index: 'Narration', width: 270, align: "left", sortable: false },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 25,
+                search: false,
+                formatter: function (cellValue, options) {
+
+                    var markup = "<a %Href% data-toggle='modal' %Id% data-target='#allocationDetailsModel'> <i class='fa fa-pencil-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:editProduct(&apos;" + options.rowId + "&apos;);",
+                        "%Id%": "id='" + options.rowId + "'"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 25,
+                search: false,
+                formatter: function (cellValue, options) {
+
+                    var markup = "<a %Href%><i class='fa fa-trash-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:delProduct(&apos;" + options.rowId + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
         ],
         multiselect: false,
         caption: "Allocation Details"
@@ -73,8 +132,8 @@ $(document).ready(function () {
             styleUI: "Bootstrap",
             colNames: ['Account Code', 'Account Description', ''],
             colModel: [
-                {key:true, name: 'AccountCode', index: 'AccountCode', width: 400 },
-                {key:false, name: 'AccountDetail', index: 'AccountDetail', width: 400 },
+                { key: true, name: 'AccountCode', index: 'AccountCode', width: 400 },
+                { key: false, name: 'AccountDetail', index: 'AccountDetail', width: 400 },
             {
                 name: "action",
                 align: "center",
@@ -212,6 +271,7 @@ $(document).ready(function () {
                 $("#txtDocNo").val(docNumber);
             },
             complete: function () {
+                $("#formBankReceipt").formValidation('revalidateField', 'DOCNUMBER_BT');
             },
             error: function () {
             }
@@ -230,6 +290,9 @@ $(document).ready(function () {
     $("#txtDocType").on("change", function () {
         $("#formBankReceipt").formValidation('revalidateField', 'DocType');
     });
+    $("#txtDocNo").on("change", function () {
+        $("#formBankReceipt").formValidation('revalidateField', 'DOCNUMBER_BT');
+    });
     $("#txtDocDetails").on("change", function () {
         $("#formBankReceipt").formValidation('revalidateField', 'DocDetails');
     });
@@ -241,8 +304,8 @@ $(document).ready(function () {
             styleUI: "Bootstrap",
             colNames: ['AL Code', 'AL Code Description', ''],
             colModel: [
-                {key:true, name: 'ALCODE_ALD', index: 'ALCODE_ALD', width: 400 },
-                {key:false, name: 'ALDESCRIPTION', index: 'ALDESCRIPTION', width: 400 },
+                { key: true, name: 'ALCODE_ALD', index: 'ALCODE_ALD', width: 400 },
+                { key: false, name: 'ALDESCRIPTION', index: 'ALDESCRIPTION', width: 400 },
             {
                 name: "action",
                 align: "center",
@@ -315,7 +378,7 @@ $(document).ready(function () {
     });
     $("#txtAlCode").on("change", function () {
         $("#btnAccountSearch").prop('disabled', false);
-        $("#allocationDetailsModelform").formValidation('revalidateField', 'AlCode');
+        //$("#allocationDetailsModelform").formValidation('revalidateField', 'AlCode');
         if (counter > 0) {
             counter += 1;
             $('#tblAccountSearch').setGridParam({ url: '/AllocationMaster/GetAccountDetailsList?accountType=' + $("#txtAlCode").val() });
@@ -330,9 +393,6 @@ $(document).ready(function () {
     });
     $("#txtAlDesc").on("change", function () {
         $("#allocationDetailsModelform").formValidation('revalidateField', 'AlDesc');
-    });
-    $("#txtAccountCode").on("change", function () {
-        $("#allocationDetailsModelform").formValidation('revalidateField', 'AccountCode');
     });
     $("#txtAccountDesc").on("change", function () {
         $("#allocationDetailsModelform").formValidation('revalidateField', 'AccountDesc');
@@ -406,10 +466,10 @@ $(document).ready(function () {
         e.preventDefault();
     });
     $("#txtBankCode").on("change", function () {
-        $("#allocationDetailsModelform").formValidation('revalidateField', 'BankCode');
+        $("#formBankReceipt").formValidation('revalidateField', 'BANKCODE_BT');
     });
     $("#txtBankName").on("change", function () {
-        $("#allocationDetailsModelform").formValidation('revalidateField', 'BankName');
+        $("#formBankReceipt").formValidation('revalidateField', 'BankName');
     });
     $('#txtChequeDate').on("blur", function () {
         if ($('#txtChequeDate').val() === "") {
@@ -433,14 +493,28 @@ $(document).ready(function () {
         $("#txtAmount").val("");
         $("#txtNarration").val("");
         $("#btnAccountSearch").prop('disabled', true);
+        selectedRowId = "";
     }
+    $("#allocationDetailsModel").on('show.bs.modal', function (e) {
+        if (e.relatedTarget.id) {
+            selectedRowId = e.relatedTarget.id;
+            var rowId = e.relatedTarget.id;
+            var ret = $('#tblAllocDetails').jqGrid('getRowData', rowId);
+            $("#txtAlCode").val(ret.AlCode);
+            $("#txtAlDesc").val(ret.AccountCode);
+            $("#txtAccountCode").val(ret.Description);
+            $("#txtAccountDesc").val(ret.Description);
+            $("#txtAmount").val(ret.Amount);
+            $("#txtNarration").val(ret.Narration);
+        }
+    });
     $("#allocationDetailsModel").on('hide.bs.modal', function () {
         clearModalForm();
-        var totalGridPrdAmount = 0.0;
-        for (var i = 0; i < arrAllocDetails.length; i++) {
-            totalGridPrdAmount += parseFloat(arrAllocDetails[i]["Amount"]);
-        }
-        $("#txtAllocationTotal").val(totalGridPrdAmount);
+        $('#tblAllocDetails').trigger('reloadGrid');
+        var jsonAllocs = JSON.stringify(arrAllocDetails);
+        calculateNetAmount();
+        $('#hdnAllocDetails').val(jsonAllocs);
+        $(this).find('form')[0].reset();
     });
     $("#btnCancel").click(function () {
         clearModalForm();
@@ -448,43 +522,52 @@ $(document).ready(function () {
     $("#btnSave").click(function (e) {
         if ($("#allocationDetailsModelform").valid()) {
             e.preventDefault();
-            var arrIndex = arrAllocDetails.length;
-            arrAllocDetails[arrIndex] = {
-                AlCode: $("#txtAlCode").val(), AccountCode: $("#txtAccountCode").val(), Description: $("#txtAccountDesc").val(),
-                Amount: $("#txtAmount").val(), Narration: $("#txtNarration").val()
-            };
-            var su = jQuery("#tblAllocDetails").jqGrid('addRowData', arrIndex, arrAllocDetails[arrIndex]);
-            if (su) {
-                var allocDetails = $('#tblAllocDetails').jqGrid('getGridParam', 'data');
-                var jsonAllocs = JSON.stringify(allocDetails);
-                $('#hdnAllocDetails').val(jsonAllocs);
-                clearModalForm();
+            if (selectedRowId) {
+                arrAllocDetails[parseInt(selectedRowId) - 1] = {
+                    AlCode: $("#txtAlCode").val(),
+                    AccountCode: $("#txtAccountCode").val(),
+                    Description: $("#txtAccountDesc").val(),
+                    Amount: $("#txtAmount").val(),
+                    Narration: $("#txtNarration").val()
+                };
+            } else {
+                var arrIndex = arrAllocDetails.length;
+                arrAllocDetails[arrIndex] = {
+                    AlCode: $("#txtAlCode").val(),
+                    AccountCode: $("#txtAccountCode").val(),
+                    Description: $("#txtAccountDesc").val(),
+                    Amount: $("#txtAmount").val(),
+                    Narration: $("#txtNarration").val()
+                };
             }
+            clearModalForm();
         }
         else {
-            $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'AlCode');
+            //$("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'AlCode');
             $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'AlDesc');
-            $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'AccountCode');
+            //$("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'AccountCode');
             $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'AccountDesc');
             $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'Amount');
             $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'Narration');
         }
     });
-    $('#formBankReceipt').formValidation({
+    $('#formBankReceipt').on('init.field.fv', function (e, data) {
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),
+            validators = data.fv.getOptions(data.field).validators;
+
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.addClass(options.icon.required).show();
+        }
+    }).formValidation({
         container: '#messages',
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
+        icon: {
+            required: 'fa fa-asterisk',
+            valid: 'fa fa-check',
+            invalid: 'fa fa-times',
+            validating: 'fa fa-refresh'
         },
         fields: {
-            DocType: {
-                validators: {
-                    notEmpty: {
-                        message: 'Document Type is required'
-                    }
-                }
-            },
             DocNo: {
                 validators: {
                     notEmpty: {
@@ -547,8 +630,9 @@ $(document).ready(function () {
                     notEmpty: {
                         message: 'BR Amount is required'
                     },
-                    integer: {
-                        message: 'Integer Only'
+                    identical: {
+                        field: 'AllocationTotal',
+                        message: 'Allocation Total must equel to Amount'
                     }
                 }
             },
@@ -557,8 +641,9 @@ $(document).ready(function () {
                     notEmpty: {
                         message: 'Allocation Amount is required'
                     },
-                    integer: {
-                        message: 'Integer Only'
+                    identical: {
+                        field: 'DEBITAMOUT_BT',
+                        message: 'Allocation Total must equel to Amount'
                     }
                 }
             },
@@ -590,7 +675,34 @@ $(document).ready(function () {
                         message: 'Enter Valid Date'
                     }
                 }
+            },
+            BENACCOUNT_BT: {
+                validators: {
+                    notEmpty: {
+                        message: 'Ben Account is required'
+                    }
+                }
+            },
+            BENACNO_BT: {
+                validators: {
+                    notEmpty: {
+                        message: 'Ben AC NO is required'
+                    }
+                }
             }
+        }
+    }).on('status.field.fv', function (e, data) {
+        // Remove the required icon when the field updates its status
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),                      // Entire options
+            validators = data.fv.getOptions(data.field).validators; // The field validators
+
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.removeClass(options.icon.required).addClass('fa');
+        }
+    }).on('success.field.fv', function (e, data) {
+        if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
+            data.fv.disableSubmitButtons(true);
         }
     }).on('success.form.fv', function (e) {
         debugger;

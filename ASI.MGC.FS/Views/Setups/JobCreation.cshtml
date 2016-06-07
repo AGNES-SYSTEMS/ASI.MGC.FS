@@ -66,15 +66,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Job Code</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.JOBid_JR, null, new { ID = "txtJobId", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.JOBid_JR)
+                                    @Html.TextBoxFor(d => d.JOBID_JR, null, new { ID = "txtJobId", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Job Name</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.JOBDESCRIPTION_JR, null, new { ID = "txtJobName", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.JOBDESCRIPTION_JR)
+                                    @Html.TextBoxFor(d => d.JOBDESCRIPTION_JR, null, new { ID = "txtJobName", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -82,7 +80,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Job Rate</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.RATE_RJ, null, new { ID = "txtJob Rate", Class = "form-control" })
+                                    @Html.TextBoxFor(d => d.RATE_RJ, null, new { ID = "txtJob Rate", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -108,15 +106,21 @@
 @section scripts
 {
     <script src="@Url.Content("~/Scripts/Custom/Setups/JobCreation.js")"></script>
-<script type="text/javascript">
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
+    <script type="text/javascript">
 
-    function OnSuccess(response) {
-        alert(response);
-    }
+        function OnSuccess(success) {
+            if (success) {
+                toastr.success("Job has been Created Successfully.");
+                $('#formJobCreation')[0].reset();
+            } else {
+                toastr.error("Sorry! Something went wrong, please try again.");
+            }
+        }
 
-    function OnFailure(response) {
-        alert("Whoops! That didn't go so well did it?");
-    }
+        function OnFailure() {
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
 
-</script>
+    </script>
 }

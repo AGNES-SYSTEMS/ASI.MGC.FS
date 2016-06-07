@@ -66,15 +66,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Unit Code</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.UNIT_UM, null, new {ID = "txtUnitId", Class = "form-control"})
-                                    @Html.ValidationMessageFor(d => d.UNIT_UM)
+                                    @Html.TextBoxFor(d => d.UNIT_UM, null, new { ID = "txtUnitId", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Unit Detail</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.DESCRIPTION_UM, null, new {ID = "txtUnitName", Class = "form-control"})
-                                    @Html.ValidationMessageFor(d => d.DESCRIPTION_UM)
+                                    @Html.TextBoxFor(d => d.DESCRIPTION_UM, null, new { ID = "txtUnitName", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -82,15 +80,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Unit Type</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.TYPE_UM, null, new {ID = "txtUnitType", Class = "form-control"})
-                                    @Html.ValidationMessageFor(d => d.TYPE_UM)
+                                    @Html.TextBoxFor(d => d.TYPE_UM, null, new { ID = "txtUnitType", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Unit Quantity</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.UNITQTY_UM, null, new {ID = "txtUnitQty", Class = "form-control"})
-                                    @Html.ValidationMessageFor(d => d.UNITQTY_UM)
+                                    @Html.TextBoxFor(d => d.UNITQTY_UM, null, new { ID = "txtUnitQty", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -98,15 +94,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Basic Primary Quantity</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.BASICPRIMARYQTY_UM, null, new { ID = "txtBasicQty", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.BASICPRIMARYQTY_UM)
+                                    @Html.TextBoxFor(d => d.BASICPRIMARYQTY_UM, null, new { ID = "txtBasicQty", Class = "form-control", @Value = "1", @readonly = "readonly" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Basic Primary Unit</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.BASICPRIMARYUNIT_UM, null, new { ID = "txtBasicUnit", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.BASICPRIMARYUNIT_UM)
+                                    @Html.TextBoxFor(d => d.BASICPRIMARYUNIT_UM, null, new { ID = "txtBasicUnit", Class = "form-control", @readonly = "readonly" })
                                 </div>
                             </div>
                         </div>
@@ -132,15 +126,21 @@
 @section scripts
 {
     <script src="@Url.Content("~/Scripts/Custom/Setups/UnitMeasurement.js")"></script>
-<script type="text/javascript">
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
+    <script type="text/javascript">
 
-    function OnSuccess(response) {
-        alert(response);
-    }
+        function OnSuccess(success) {
+            if (success) {
+                toastr.success("Unit has been Created Successfully.");
+                $('#formUnitMeasure')[0].reset();
+            } else {
+                toastr.error("Sorry! Something went wrong, please try again.");
+            }
+        }
 
-    function OnFailure(response) {
-        alert("Whoops! That didn't go so well did it?");
-    }
+        function OnFailure() {
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
 
-</script>
+    </script>
 }
