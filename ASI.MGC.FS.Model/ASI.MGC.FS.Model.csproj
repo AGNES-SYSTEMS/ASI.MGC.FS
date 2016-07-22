@@ -379,6 +379,24 @@
     <Compile Include="sp_BMBTListTB_Result.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_GetARMrvDetails_Result.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetCashMemoMrvList_Result.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetCashMrvDetails_Result.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetInvoicePreparationMrvList_Result.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetInvoicePrepMrvList1_Result.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetSalesByJobNo_Result.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="sp_GLMGLTListTB_Result.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>

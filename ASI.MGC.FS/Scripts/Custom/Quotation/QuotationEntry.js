@@ -1,4 +1,6 @@
-﻿var jobSelect = function (jobId) {
+﻿var quotProducts = [];
+var selectedRowId = "";
+var jobSelect = function (jobId) {
     if (jobId) {
         var ret = jQuery("#tblJobSearch").jqGrid('getRowData', jobId);
         $("#txtJobID").val(ret.JOBID_JR).change();
@@ -7,7 +9,6 @@
         $('#QuotJobSearchModel').modal('toggle');
     }
 };
-
 var productSelect = function (prdId) {
     if (prdId) {
         var ret = jQuery("#tblProductSearch").jqGrid('getRowData', prdId);
@@ -16,30 +17,51 @@ var productSelect = function (prdId) {
         $('#QuotPrdSearchModel').modal('toggle');
     }
 };
-
-var customerSelect = function(customerId)
-{
+var customerSelect = function (customerId) {
     if (customerId) {
         var ret = jQuery("#tblCustomerSearch").jqGrid('getRowData', customerId);
         $("#txtCustCode").val(ret.ARCODE_ARM).change();
         $("#txtCustName").val(ret.DESCRIPTION_ARM).change();
         $('#CustomerSearchModel').modal('toggle');
     }
-}
-
+};
+var delProduct = function (rowId) {
+    if (rowId) {
+        $('#tblQuotDetails').jqGrid('delRowData', rowId);
+        $('#tblQuotDetails').trigger('reloadGrid');
+        stringifyData();
+        calculateNetAmount();
+    }
+};
+var calculateNetAmount = function () {
+    var totalGridPrdAmount = 0.0;
+    for (var i = 0; i < quotProducts.length; i++) {
+        totalGridPrdAmount += parseFloat(quotProducts[i]["Amount"]);
+    }
+    if (totalGridPrdAmount !== 0) {
+        $("#txtNetPrdAmount").val(totalGridPrdAmount);
+        $("#formQuotationEntry").formValidation('revalidateField', 'NetPrdAmount');
+    }
+};
+var stringifyData = function () {
+    var quotPrds = $('#tblQuotDetails').jqGrid('getGridParam', 'data');
+    var jsonQuotPrds = JSON.stringify(quotPrds);
+    $('#hdnQuotProds').val(jsonQuotPrds);
+};
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liQuotation").addClass("active");
-    var quotProducts = [];
+    quotProducts = [];
     $('#txtQuotDate').datepicker();
     jQuery("#tblQuotDetails").jqGrid({
         datatype: "local",
+        data: quotProducts,
         height: 150,
         shrinkToFit: true,
         autoheight: true,
         autowidth: true,
         styleUI: "Bootstrap",
-        colNames: ['PrCode', 'Product Description', 'Job id', 'Job Description', 'Quantity', 'Rate', 'Amount'],
+        colNames: ['PrCode', 'Product Description', 'Job id', 'Job Description', 'Quantity', 'Rate', 'Amount', '', ''],
         colModel: [
             { name: 'PrCode', index: 'PrCode', width: 80, align: "center", sortable: false },
             { name: 'PrDesc', index: 'PrDesc', width: 300, align: "left", sortable: false },
@@ -47,7 +69,48 @@ $(document).ready(function () {
             { name: 'JobDesc', index: 'JobDesc', width: 300, align: "left", sortable: false },
             { name: 'Qty', index: 'Qty', width: 90, align: "right", sortable: false },
             { name: 'Rate', index: 'Rate', width: 100, align: "right", sortable: false },
-            { name: 'Amount', index: 'Amount', width: 100, align: "right", sortable: false }
+            { name: 'Amount', index: 'Amount', width: 100, align: "right", sortable: false },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options) {
+
+                    var markup = "<a %Href% data-toggle='modal' %Id% data-target='#QuotProductModel'> <i class='fa fa-pencil-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:editProduct(&apos;" + options.rowId + "&apos;);",
+                        "%Id%": "id='" + options.rowId + "'"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options) {
+
+                    var markup = "<a %Href%><i class='fa fa-trash-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:delProduct(&apos;" + options.rowId + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
         ],
         multiselect: false,
         caption: "Product Details"
@@ -82,6 +145,7 @@ $(document).ready(function () {
         $("#txtQuantity").val("");
         $("#txtRate").val("");
         $("#txtAmount").val("0");
+        selectedRowId = "";
     }
     $("#btnCancel").click(function () {
         clearModalForm();
@@ -89,40 +153,60 @@ $(document).ready(function () {
     $("#btnSave").click(function (e) {
         if ($("#QuotProductModelform").valid()) {
             e.preventDefault();
-            var arrIndex = quotProducts.length;
-            quotProducts[arrIndex] = {
-                PrCode: $("#txtPrCode").val(), PrDesc: $("#txtPrDesc").val(), JobId: $("#txtJobID").val(),
-                JobDesc: $("#txtJobDesc").val(), Qty: $("#txtQuantity").val(), Rate: $("#txtRate").val(),
-                Amount: $("#txtAmount").val()
-            };
-            var su = jQuery("#tblQuotDetails").jqGrid('addRowData', arrIndex, quotProducts[arrIndex]);
-            if (su) {
-                var mrvPrds = $('#tblQuotDetails').jqGrid('getGridParam', 'data');
-                var jsonQuotPrds = JSON.stringify(mrvPrds);
-                $('#hdnQuotProds').val(jsonQuotPrds);
-                clearModalForm();
+            if (selectedRowId) {
+                quotProducts[selectedRowId - 1] = {
+                    PrCode: $("#txtPrCode").val(),
+                    PrDesc: $("#txtPrDesc").val(),
+                    JobId: $("#txtJobID").val(),
+                    JobDesc: $("#txtJobDesc").val(),
+                    Qty: $("#txtQuantity").val(),
+                    Rate: $("#txtRate").val(),
+                    Amount: $("#txtAmount").val()
+                }
             }
+            else {
+                var arrIndex = quotProducts.length;
+                quotProducts[arrIndex] = {
+                    PrCode: $("#txtPrCode").val(),
+                    PrDesc: $("#txtPrDesc").val(),
+                    JobId: $("#txtJobID").val(),
+                    JobDesc: $("#txtJobDesc").val(),
+                    Qty: $("#txtQuantity").val(),
+                    Rate: $("#txtRate").val(),
+                    Amount: $("#txtAmount").val()
+                }
+            };
+            clearModalForm();
         }
         else {
-            $("#QuotProductModelform").formValidation('revalidateField', 'PrCode');
+            //$("#QuotProductModelform").formValidation('revalidateField', 'PrCode');
             $("#QuotProductModelform").formValidation('revalidateField', 'PrDesc');
-            $("#QuotProductModelform").formValidation('revalidateField', 'JobID');
+            //$("#QuotProductModelform").formValidation('revalidateField', 'JobID');
             $("#QuotProductModelform").formValidation('revalidateField', 'JobDesc');
             $("#QuotProductModelform").formValidation('revalidateField', 'Quantity');
             $("#QuotProductModelform").formValidation('revalidateField', 'Rate');
             $("#QuotProductModelform").formValidation('revalidateField', 'Amount');
         }
     });
+    $("#QuotProductModel").on('show.bs.modal', function (e) {
+        if (e.relatedTarget.id) {
+            selectedRowId = e.relatedTarget.id;
+            var rowId = e.relatedTarget.id;
+            var ret = $('#tblQuotDetails').jqGrid('getRowData', rowId);
+            $("#txtPrCode").val(ret.PrCode);
+            $("#txtPrDesc").val(ret.PrDesc);
+            $("#txtJobID").val(ret.JobId),
+            $("#txtJobDesc").val(ret.JobDesc),
+            $("#txtQuantity").val(ret.Qty);
+            $("#txtRate").val(ret.Rate);
+            $("#txtAmount").val(ret.Amount);
+        }
+    });
     $("#QuotProductModel").on('hide.bs.modal', function () {
         clearModalForm();
-        var totalGridPrdAmount = 0.0;
-        for (var i = 0; i < quotProducts.length; i++) {
-            totalGridPrdAmount += parseFloat(quotProducts[i]["Amount"]);
-        }
-        if (totalGridPrdAmount !== 0) {
-            $("#txtNetPrdAmount").val(totalGridPrdAmount);
-            $("#formQuotationEntry").formValidation('revalidateField', 'NetPrdAmount');
-        }
+        $('#tblQuotDetails').trigger('reloadGrid');
+        stringifyData();
+        calculateNetAmount();
     });
     $("#txtQuantity").change(function () {
         var totalAmount = $("#txtQuantity").val() * $("#txtRate").val();
@@ -161,8 +245,8 @@ $(document).ready(function () {
             styleUI: "Bootstrap",
             colNames: ['Customer Code', 'Customer Name', ''],
             colModel: [
-                {key:true, name: 'ARCODE_ARM', index: 'ARCODE_ARM', width: 400 },
-                {key:false, name: 'DESCRIPTION_ARM', index: 'DESCRIPTION_ARM', width: 400 },
+                { key: true, name: 'ARCODE_ARM', index: 'ARCODE_ARM', width: 400 },
+                { key: false, name: 'DESCRIPTION_ARM', index: 'DESCRIPTION_ARM', width: 400 },
             {
                 name: "action",
                 align: "center",
@@ -355,49 +439,69 @@ $(document).ready(function () {
         }
         e.preventDefault();
     });
-    var searchGrid = function (searchValue) {
-        debugger;
-        var postData = $("#tblProductSearch").jqGrid("getGridParam", "postData");
-        postData["prdName"] = searchValue;
-
-        $("#tblProductSearch").setGridParam({ postData: postData });
-        $("#tblProductSearch").trigger("reloadGrid", [{ page: 1 }]);
+    var searchGrid = function (searchById, searchByName, gridType) {
+        if (gridType === "1") {
+            var postData = $("#tblProductSearch").jqGrid("getGridParam", "postData");
+            postData["prdCode"] = searchById;
+            postData["prdName"] = searchByName;
+            $("#tblProductSearch").setGridParam({ postData: postData });
+            $("#tblProductSearch").trigger("reloadGrid", [{ page: 1 }]);
+        }
+        else if (gridType === "2") {
+            postData = $("#tblJobSearch").jqGrid("getGridParam", "postData");
+            postData["jobId"] = searchById;
+            postData["jobName"] = searchByName;
+            $("#tblJobSearch").setGridParam({ postData: postData });
+            $("#tblJobSearch").trigger("reloadGrid", [{ page: 1 }]);
+        }
+        else if (gridType === "3") {
+            postData = $("#tblCustomerSearch").jqGrid("getGridParam", "postData");
+            postData["custId"] = searchById;
+            postData["custName"] = searchByName;
+            $("#tblCustomerSearch").setGridParam({ postData: postData });
+            $("#tblCustomerSearch").trigger("reloadGrid", [{ page: 1 }]);
+        }
     };
-    $("#txtPrdSearch").off().on("keyup", function () {
+    $("#txtPrdIdSearch").off().on("keyup", function () {
 
-        var shouldSearch = $("#txtPrdSearch").val().length >= 3 || $("#txtPrdSearch").val().length === 0;
+        var shouldSearch = $("#txtPrdIdSearch").val().length >= 1 || $("#txtPrdIdSearch").val().length === 0;
         if (shouldSearch) {
-            searchGrid($("#txtPrdSearch").val());
+            searchGrid($("#txtPrdIdSearch").val(), $("#txtPrdNameSearch").val(), "1");
         }
     });
-    var searchGridCust = function (searchValue) {
-        debugger;
-        var postData = $("#tblCustomerSearch").jqGrid("getGridParam", "postData");
-        postData["searchValue"] = searchValue;
+    $("#txtPrdNameSearch").off().on("keyup", function () {
 
-        $("#tblCustomerSearch").setGridParam({ postData: postData });
-        $("#tblCustomerSearch").trigger("reloadGrid", [{ page: 1 }]);
-    };
-    $("#txtCustSearch").off().on("keyup", function () {
-
-        var shouldSearch = $("#txtCustSearch").val().length >= 3 || $("#txtCustSearch").val().length === 0;
+        var shouldSearch = $("#txtPrdNameSearch").val().length >= 3 || $("#txtPrdNameSearch").val().length === 0;
         if (shouldSearch) {
-            searchGridCust($("#txtCustSearch").val());
+            searchGrid($("#txtPrdIdSearch").val(), $("#txtPrdNameSearch").val(), "1");
         }
     });
-    var searchGridJob = function (searchValue) {
-        debugger;
-        var postData = $("#tblJobSearch").jqGrid("getGridParam", "postData");
-        postData["jobSearch"] = searchValue;
+    $("#txtJobIdSearch").off().on("keyup", function () {
 
-        $("#tblJobSearch").setGridParam({ postData: postData });
-        $("#tblJobSearch").trigger("reloadGrid", [{ page: 1 }]);
-    };
-    $("#txtJobSearch").off().on("keyup", function () {
-
-        var shouldSearch = $("#txtJobSearch").val().length >= 3 || $("#txtJobSearch").val().length === 0;
+        var shouldSearch = $("#txtJobIdSearch").val().length >= 1 || $("#txtJobIdSearch").val().length === 0;
         if (shouldSearch) {
-            searchGridJob($("#txtJobSearch").val());
+            searchGrid($("#txtJobIdSearch").val(), $("#txtJobNameSearch").val(), "2");
+        }
+    });
+    $("#txtJobNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtJobNameSearch").val().length >= 3 || $("#txtJobNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtJobIdSearch").val(), $("#txtJobNameSearch").val(), "2");
+        }
+    });
+    $("#txtCustIdSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtCustIdSearch").val().length >= 1 || $("#txtCustIdSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtCustIdSearch").val(), $("#txtCustNameSearch").val(), "3");
+        }
+    });
+    $("#txtCustNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtCustNameSearch").val().length >= 3 || $("#txtCustNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtCustIdSearch").val(), $("#txtCustNameSearch").val(), "3");
         }
     });
     $('#formQuotationEntry').on('init.field.fv', function (e, data) {

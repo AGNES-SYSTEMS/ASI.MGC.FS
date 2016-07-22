@@ -214,7 +214,7 @@
                                 <label class="control-label col-md-4 small ">AL Code:</label>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        <input type="text" name="AlCode" id="txtAlCode" data-fv-notempty="true" class="form-control" readonly/>
+                                        <input type="text" name="AlCode" id="txtAlCode" data-fv-notempty="true" class="form-control" readonly />
                                         <span class="input-group-btn">
                                             <button type="button" id="btnAlCodeSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#alCodeSearchModel">
                                                 <i class="fa fa-search"></i>
@@ -235,7 +235,7 @@
                                 <label class="control-label col-md-4 small ">Account Code:</label>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        <input type="text" name="AccountCode" data-fv-notempty="true" id="txtAccountCode" class="form-control" readonly/>
+                                        <input type="text" name="AccountCode" data-fv-notempty="true" id="txtAccountCode" class="form-control" readonly />
                                         <span class="input-group-btn">
                                             <button type="button" id="btnAccountSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" disabled data-target="#accountSearchModel">
                                                 <i class="fa fa-search"></i>
@@ -341,20 +341,25 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <section>
-                                <div class="row">
-                                    <div class="col-md-12 form-group input-group paddingLeftRight">
-                                        @Html.TextBox("searchAccount", null, new { ID = "txtAccountSearch", Class = "form-control" })
-                                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                            <div class="col-lg-12">
+                                <div id="accGrid" class="panel-body">
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("accIdSearch", null, new { ID = "txtAccIdSearch", Class = "form-control", @placeholder = "Search Account Code here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div id="accGrid" class="panel-body">
-                                        <table id="tblAccountSearch" style="width: 100%"></table>
-                                        <div id="accPager"></div>
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("accNameSearch", null, new { ID = "txtAccNameSearch", Class = "form-control", @placeholder = "Search Account Details here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
                                     </div>
+                                    <br /><br />
+                                    <table id="tblAccountSearch" style="width: 100%"></table>
+                                    <div id="accPager"></div>
                                 </div>
-                            </section>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">

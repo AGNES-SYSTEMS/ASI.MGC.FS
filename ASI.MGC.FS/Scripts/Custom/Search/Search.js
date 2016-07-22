@@ -26,7 +26,7 @@
         }
         var custCode = $('#txtCustCode').val();
         var custName = $('#txtCustName').val();
-        var telephone = $('#txtCustName').val();
+        var telephone = $('#txtTelephone').val();
         var data = JSON.stringify({ custCode: custCode, custName: custName, telephone: telephone, searchType:$searchType });
         $.ajax({
             url: '/Search/GetSearchDetails',
@@ -35,9 +35,9 @@
             data: data,
             type: "POST",
             success: function (customerDetails) {
-                $('#tblSearchDetails').jqGrid('clearGridData');;
-                for (var i = 0; i < customerDetails.Result.length; i++) {
-                    jQuery("#tblSearchDetails").jqGrid('addRowData', i, customerDetails.Result[i]);
+                $('#tblSearchDetails').jqGrid('clearGridData');
+                for (var i = 0; i < customerDetails.length; i++) {
+                    jQuery("#tblSearchDetails").jqGrid('addRowData', i, customerDetails[i]);
                 }
             },
             complete: function () {

@@ -1,4 +1,6 @@
-﻿var customerSelect = function (custId) {
+﻿var arrPrdDetails = [];
+var selectedRowId = "";
+var customerSelect = function (custId) {
     if (custId) {
         var ret = jQuery("#tblCustomerSearch").jqGrid('getRowData', custId);
         $("#txtAPCode").val(ret.ARCODE_ARM).change();
@@ -15,38 +17,133 @@ var productSelect = function (prdId) {
         $('#PrdSearchModel').modal('toggle');
     }
 };
+var delProduct = function (rowId) {
+    if (rowId) {
+        $('#tblPrdDetails').jqGrid('delRowData', rowId);
+        $('#tblPrdDetails').trigger('reloadGrid');
+        stringifyData();
+        calculateNetAmount();
+    }
+};
+var calculateNetAmount = function () {
+    var totalGridPrdAmount = 0.0;
+    for (var i = 0; i < arrPrdDetails.length; i++) {
+        totalGridPrdAmount += parseFloat(arrPrdDetails[i]["Amount"]);
+    }
+    var netAmount = parseFloat(totalGridPrdAmount) + parseFloat($("#txtShipChrg").val()) - parseFloat($("#txtDiscount").val());
+    if (netAmount > 0) {
+        $("#txtNetAmount").val(netAmount);
+    } else {
+        $("#txtNetAmount").val("");
+    }
+    if (totalGridPrdAmount > 0) {
+        $("#txtTotalAmount").val(totalGridPrdAmount);
+    } else {
+        $("#txtTotalAmount").val("");
+    }
+    $("#formPurchaseEntry").formValidation('revalidateField', 'NetAmount');
+    $("#formPurchaseEntry").formValidation('revalidateField', 'TotalAmount');
+}
+var stringifyData = function () {
+    var prdDetails = $('#tblPrdDetails').jqGrid('getGridParam', 'data');
+    var jsonPrdDetails = JSON.stringify(prdDetails);
+    $('#prdDetails').val(jsonPrdDetails);
+};
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liPurchaseEntry").addClass("active");
-    var arrPrdDetails = [];
     $('#txtDocDate').datepicker();
     $('#txtPurDate').datepicker();
     jQuery("#tblPrdDetails").jqGrid({
         datatype: "local",
+        data: arrPrdDetails,
         height: 100,
         autoheight: true,
         styleUI: "Bootstrap",
         gridview: true,
         shrinkToFit: true,
         viewrecords: true,
-        colNames: ['Product Code', 'Product Description', 'Qty', 'Unit', 'Rate', 'Amount'],
+        colNames: ['Product Code', 'Product Description', 'Qty', 'Unit', 'Rate', 'Amount', '', ''],
         colModel: [
             { name: 'PRODID_SL', index: 'PRODID_SL', width: 100, align: "center", sortable: false },
             { name: 'PrdDesc', index: 'PrdDesc', width: 350, align: "left", sortable: false },
             { name: 'RECEPT_QTY_SL', index: 'RECEPT_QTY_SL', width: 100, align: "center", sortable: false },
             { name: 'UNIT_SL', index: 'UNIT_SL', width: 100, align: "center", sortable: false },
             { name: 'RECEPT_RATE_SL', index: 'RECEPT_RATE_SL', width: 100, align: "center", sortable: false },
-            { name: 'Amount', index: 'Amount', width: 150, align: "center", sortable: false }
+            { name: 'Amount', index: 'Amount', width: 150, align: "center", sortable: false },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options) {
+
+                    var markup = "<a %Href% data-toggle='modal' %Id% data-target='#purchaseProductModel'> <i class='fa fa-pencil-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:editProduct(&apos;" + options.rowId + "&apos;);",
+                        "%Id%": "id='" + options.rowId + "'"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options) {
+
+                    var markup = "<a %Href%><i class='fa fa-trash-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:delProduct(&apos;" + options.rowId + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
         ],
         multiselect: false,
         caption: "Product Details"
     });
+    var searchGridCust = function (searchById, searchByName) {
+        var custpostData = $("#tblCustomerSearch").jqGrid("getGridParam", "postData");
+        custpostData["custId"] = searchById;
+        custpostData["custName"] = searchByName;
+        $("#tblCustomerSearch").setGridParam({ postData: custpostData });
+        $("#tblCustomerSearch").trigger("reloadGrid", [{ page: 1 }]);
+    };
+    $("#txtCustIdSearch").off().on("keyup", function () {
 
+        var shouldSearch = $("#txtCustIdSearch").val().length >= 1 || $("#txtCustIdSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGridCust($("#txtCustIdSearch").val(), $("#txtCustNameSearch").val(), "3");
+        }
+    });
+    $("#txtCustNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtCustNameSearch").val().length >= 3 || $("#txtCustNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGridCust($("#txtCustIdSearch").val(), $("#txtCustNameSearch").val(), "3");
+        }
+    });
     $(window).resize(function () {
         var outerwidthMrv = $('#gridProduct').width();
         $('#tblPrdDetails').setGridWidth(outerwidthMrv);
     });
-
+    $("#btnNew").on("click", function () {
+        location.reload();
+    });
     $("#CustomerSearchModel").on('show.bs.modal', function () {
         $("#tblCustomerSearch").jqGrid({
             url: '/Customer/GetAPCustomerDetailsList',
@@ -197,6 +294,7 @@ $(document).ready(function () {
         $("#txtQuantity").val("1");
         $("#txtRate").val("");
         $("#txtAmount").val("0");
+        selectedRowId = "";
     }
     $("#btnCancel").click(function () {
         clearModalForm();
@@ -204,19 +302,28 @@ $(document).ready(function () {
     $("#btnSave").click(function (e) {
         if ($("#purchaseProductModelform").valid()) {
             e.preventDefault();
-            var arrIndex = arrPrdDetails.length;
-            arrPrdDetails[arrIndex] = {
-                PRODID_SL: $("#txtPrCode").val(), PrdDesc: $("#txtPrDesc").val(),
-                RECEPT_QTY_SL: $("#txtQuantity").val(), RECEPT_RATE_SL: $("#txtRate").val(), UNIT_SL: $("#txtUnit").val(),
-                Amount: $("#txtAmount").val()
-            };
-            var su = jQuery("#tblPrdDetails").jqGrid('addRowData', arrIndex, arrPrdDetails[arrIndex]);
-            if (su) {
-                var prdDetails = $('#tblPrdDetails').jqGrid('getGridParam', 'data');
-                var jsonPrdDetails = JSON.stringify(prdDetails);
-                $('#prdDetails').val(jsonPrdDetails);
-                clearModalForm();
+            if (selectedRowId) {
+                arrPrdDetails[selectedRowId - 1] = {
+                    PRODID_SL: $("#txtPrCode").val(),
+                    PrdDesc: $("#txtPrDesc").val(),
+                    RECEPT_QTY_SL: $("#txtQuantity").val(),
+                    RECEPT_RATE_SL: $("#txtRate").val(),
+                    UNIT_SL: $("#txtUnit").val(),
+                    Amount: $("#txtAmount").val()
+                }
             }
+            else {
+                var arrIndex = arrPrdDetails.length;
+                arrPrdDetails[arrIndex] = {
+                    PRODID_SL: $("#txtPrCode").val(),
+                    PrdDesc: $("#txtPrDesc").val(),
+                    RECEPT_QTY_SL: $("#txtQuantity").val(),
+                    RECEPT_RATE_SL: $("#txtRate").val(),
+                    UNIT_SL: $("#txtUnit").val(),
+                    Amount: $("#txtAmount").val()
+                }
+            };
+            clearModalForm();
         }
         else {
             $("#purchaseProductModelform").bootstrapValidator('revalidateField', 'PrCode');
@@ -227,15 +334,24 @@ $(document).ready(function () {
             $("#purchaseProductModelform").bootstrapValidator('revalidateField', 'Amount');
         }
     });
+    $("#purchaseProductModel").on('show.bs.modal', function (e) {
+        if (e.relatedTarget.id) {
+            selectedRowId = e.relatedTarget.id;
+            var rowId = e.relatedTarget.id;
+            var ret = $('#tblPrdDetails').jqGrid('getRowData', rowId);
+            $("#txtPrCode").val(ret.PRODID_SL);
+            $("#txtPrDesc").val(ret.PrdDesc);
+            $("#txtQuantity").val(ret.RECEPT_QTY_SL);
+            $("#txtRate").val(ret.RECEPT_RATE_SL);
+            $("#txtUnit").val(ret.UNIT_SL);
+            $("#txtAmount").val(ret.Amount);
+        }
+    });
     $("#purchaseProductModel").on('hide.bs.modal', function () {
         clearModalForm();
-        var totalGridPrdAmount = 0.0;
-        for (var i = 0; i < arrPrdDetails.length; i++) {
-            totalGridPrdAmount += parseFloat(arrPrdDetails[i]["Amount"]);
-        }
-        var netAmount = parseFloat(totalGridPrdAmount) + parseFloat($("#txtShipChrg").val()) - parseFloat($("#txtDiscount").val());
-        $("#txtNetAmount").val(netAmount);
-        $("#txtTotalAmount").val(totalGridPrdAmount);
+        $('#tblPrdDetails').trigger('reloadGrid');
+        stringifyData();
+        calculateNetAmount();
     });
     $("#txtAPCode").on("change", function () {
         $('#formPurchaseEntry').bootstrapValidator('revalidateField', 'APCode');
@@ -247,13 +363,11 @@ $(document).ready(function () {
         $('#formPurchaseEntry').bootstrapValidator('revalidateField', 'Cash');
     });
     $("#txtShipChrg").on("change", function () {
-        var netAmount = $("#txtNetAmount").val() + $("#txtShipChrg").val();
-        $("#txtNetAmount").val(netAmount);
+        calculateNetAmount();
         $('#formPurchaseEntry').bootstrapValidator('revalidateField', 'ShipChrg');
     });
     $("#txtDiscount").on("change", function () {
-        var netAmount = $("#txtNetAmount").val() - $("#txtDiscount").val();
-        $("#txtNetAmount").val(netAmount);
+        calculateNetAmount();
         $('#formPurchaseEntry').bootstrapValidator('revalidateField', 'Discount');
     });
     $('#formPurchaseEntry').on('init.field.fv', function (e, data) {
@@ -273,10 +387,10 @@ $(document).ready(function () {
             validating: 'fa fa-refresh'
         },
         fields: {
-            APCode: {
+            NetAmount: {
                 validators: {
                     notEmpty: {
-                        message: 'AP Code is required'
+                        message: 'Net Amount is required'
                     }
                 }
             },
@@ -316,13 +430,10 @@ $(document).ready(function () {
                     }
                 }
             },
-            Cash: {
+            TotalAmount: {
                 validators: {
                     notEmpty: {
-                        message: 'Cash Detail is required'
-                    },
-                    integer: {
-                        message: 'Integer Only'
+                        message: 'Total Amount is required'
                     }
                 }
             },
@@ -348,23 +459,22 @@ $(document).ready(function () {
             }
         }
     })
-    // .on('status.field.fv', function (e, data) {
-    //    // Remove the required icon when the field updates its status
-    //    var $icon = data.element.data('fv.icon'),
-    //        options = data.fv.getOptions(),                      // Entire options
-    //        validators = data.fv.getOptions(data.field).validators; // The field validators
+     .on('status.field.fv', function (e, data) {
+         // Remove the required icon when the field updates its status
+         var $icon = data.element.data('fv.icon'),
+             options = data.fv.getOptions(),                      // Entire options
+             validators = data.fv.getOptions(data.field).validators; // The field validators
 
-    //    if (validators.notEmpty && options.icon && options.icon.required) {
-    //        $icon.removeClass(options.icon.required).addClass('fa');
-    //    }
-    //}).on('success.field.fv', function (e, data) {
-    //    if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
-    //        data.fv.disableSubmitButtons(true);
-    //    }
-    //})
-        .on('success.form.fv', function (e) {
-            debugger;
-            // Prevent form submission
-            e.preventDefault();
-        });
+         if (validators.notEmpty && options.icon && options.icon.required) {
+             $icon.removeClass(options.icon.required).addClass('fa');
+         }
+     }).on('success.field.fv', function (e, data) {
+         if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
+             data.fv.disableSubmitButtons(true);
+         }
+     }).on('success.form.fv', function (e) {
+         debugger;
+         // Prevent form submission
+         e.preventDefault();
+     });
 });

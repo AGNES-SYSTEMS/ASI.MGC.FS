@@ -4,7 +4,7 @@
     ViewBag.Title = "JobEntry";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+@*<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />*@
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
 <div class="container">
@@ -21,225 +21,229 @@
                 <div class="container">
                     @using (Ajax.BeginForm("SaveJobEntry", "Job", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formJobEntry", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblJobID" class="control-label col-md-4 small ">Job id:</label>
-                                <div class="col-md-8">
-                                    <div class="input-group">
-                                        @Html.TextBoxFor(d => d.JOBNO_SD, null, new { ID = "txtJobid", Class = "form-control", @readonly = "readonly" })
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#mrvJobSearchModel">
-                                                <i class="fa fa-search"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblMRVNo" class="control-label col-md-4 small ">MRV No:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.MRVNO_SD, null, new { ID = "txtMRVNo", Class = "form-control", @readonly = "readonly", @required = "required" })
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblJobID" class="control-label col-md-4 small ">Job id:</label>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(d => d.JOBNO_SD, null, new { ID = "txtJobid", Class = "form-control", @readonly = "readonly" })
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#mrvJobSearchModel">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblCustCode" class="control-label col-md-4 small ">Cust Code:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("CustCode", null, new { ID = "txtCustCode", Class = "form-control", @readonly = "readonly", @required = "required" })
-                                </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblMRVNo" class="control-label col-md-4 small ">MRV No:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.MRVNO_SD, null, new { ID = "txtMRVNo", Class = "form-control", @readonly = "readonly", @required = "required" })
                             </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblCustName" class="control-label col-md-4 small ">Cust Name:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("CustName", null, new { ID = "txtCustName", Class = "form-control", @readonly = "readonly", @required = "required" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblCustCode" class="control-label col-md-4 small ">Cust Code:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("CustCode", null, new { ID = "txtCustCode", Class = "form-control", @readonly = "readonly", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblCustName" class="control-label col-md-4 small ">Cust Name:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("CustName", null, new { ID = "txtCustName", Class = "form-control", @readonly = "readonly", @required = "required" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblMRVProdCode" class="control-label col-md-4 small ">MRV Prod. Code:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("MRVProdCode", null, new { ID = "txtMRVProdCode", Class = "form-control", @readonly = "readonly", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblMRVProdDetail" class="control-label col-md-4 small ">MRV Prod. Detail:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("MRVProdDetail", null, new { ID = "txtMRVProdDetail", Class = "form-control", @readonly = "readonly", @required = "required" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblEmpCode" class="control-label col-md-4 small ">Emp Code:</label>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    @Html.TextBox("EmpCode", null, new { ID = "txtEmpCode", Class = "form-control", @readonly = "readonly" })
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#EmployeeSearchModel">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblMRVProdCode" class="control-label col-md-4 small ">MRV Prod. Code:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("MRVProdCode", null, new { ID = "txtMRVProdCode", Class = "form-control", @readonly = "readonly", @required = "required" })
-                                </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblEmpName" class="control-label col-md-4 small ">Emp Name:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("EmpName", null, new { ID = "txtEmpName", Class = "form-control", @readonly = "readonly", @required = "required" })
                             </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblMRVProdDetail" class="control-label col-md-4 small ">MRV Prod. Detail:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("MRVProdDetail", null, new { ID = "txtMRVProdDetail", Class = "form-control", @readonly = "readonly", @required = "required" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblSaleDate" class="control-label col-md-4 small ">Sale Date:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.SALEDATE_SD, null, new { ID = "txtSaleDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblType" class="control-label col-md-4 small ">Type:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.DropDownList("SaleType", (IList<SelectListItem>)ViewBag.SaleTypeList, new { id = "ddlSaleType", Class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="divPrCode" class="col-md-6 form-group">
+                            <label id="lblPrCode" class="control-label col-md-4 small ">Pr Code:</label>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(d => d.PRCODE_SD, null, new { ID = "txtPrCode", Class = "form-control", @readonly = "readonly" })
+                                    <span class="input-group-btn">
+                                        <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#PrdSearchModel">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblEmpCode" class="control-label col-md-4 small ">Emp Code:</label>
-                                <div class="col-md-8">
-                                    <div class="input-group">
-                                        @Html.TextBox("EmpCode", null, new { ID = "txtEmpCode", Class = "form-control", @readonly = "readonly" })
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#EmployeeSearchModel">
-                                                <i class="fa fa-search"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblEmpName" class="control-label col-md-4 small ">Emp Name:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("EmpName", null, new { ID = "txtEmpName", Class = "form-control", @readonly = "readonly", @required = "required" })
+                        <div id="divSowCode" style="display:none;" class="col-md-6 form-group">
+                            <label id="lblSowCode" class="control-label col-md-4 small ">Sow Code:</label>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(d => d.JOBID_SD, null, new { ID = "txtSowid", Class = "form-control", @readonly = "readonly" })
+                                    <span class="input-group-btn">
+                                        <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#JobSearchModel">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblSaleDate" class="control-label col-md-4 small ">Sale Date:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.SALEDATE_SD, null, new { ID = "txtSaleDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @required = "required" })
-                                </div>
+                        <div id="divPrDetail" class="col-md-6 form-group">
+                            <label id="lblPrDetail" class="control-label col-md-4 small ">Pr Detail:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("PrDetail", null, new { ID = "txtPrDetail", Class = "form-control", @readonly = "readonly", @required = "required" })
                             </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblType" class="control-label col-md-4 small ">Type:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.DropDownList("SaleType", (IList<SelectListItem>)ViewBag.SaleTypeList, new { id = "ddlSaleType", Class = "form-control" })
+                        </div>
+                        <div id="divSowDetail" style="display:none;" class="col-md-6 form-group">
+                            <label id="lblSowDetail" class="control-label col-md-4 small ">Sow Detail:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("SowDetail", null, new { ID = "txtSowDetail", Class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblQty" class="control-label col-md-4 small ">Quantity:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.QTY_SD, null, new { ID = "txtQty", Class = "form-control", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblUnit" class="control-label col-md-4 small ">Unit:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.UNIT_SD, null, new { ID = "txtUnit", Class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblPrRate" class="control-label col-md-4 small ">Rate:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.RATE_SD, null, new { ID = "txtPrRate", Class = "form-control", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblPrAmount" class="control-label col-md-4 small ">Amount:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("Amount", null, new { ID = "txtPrAmount", Class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblDiscount" class="control-label col-md-4 small ">Discount:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.DISCOUNT_SD, null, new { ID = "txtDiscount", Class = "form-control", @value = "0", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblShipCharge" class="control-label col-md-4 small ">Shipping Charges:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.SHIPPINGCHARGES_SD, null, new { ID = "txtShipCharge", Class = "form-control", @required = "required" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblPayMode" class="control-label col-md-4 small ">Pay Mode:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.DropDownList("PayMode", (IList<SelectListItem>)ViewBag.PayModeList, new { id = "ddlPayMode", Class = "form-control" })
+                            </div>
+                        </div>
+                        <div id="divCashAmount" class="col-md-6 form-group">
+                            <label id="lblCashAmount" class="control-label col-md-4 small ">Cash Amount:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.CASHTOTAL_SD, new { ID = "txtCashAmount", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                @Html.ValidationMessageFor(d => d.CASHTOTAL_SD)
+                            </div>
+                        </div>
+                        <div id="divCreditAmount" style="display:none;" class="col-md-6 form-group">
+                            <label id="lblCreditAmount" class="control-label col-md-4 small ">Credit Amount:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.CREDITTOTAL_SD, new { ID = "txtCreditAmount", Class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(d => d.CREDITTOTAL_SD)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="divCreditCustDetails" style="display:none;">
+                        <div class="col-md-6 form-group">
+                            <label id="lblCustCode" class="control-label col-md-4 small ">Cust Code:</label>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(d => d.CREDITACCODE_SD, null, new { ID = "txtCreditCustCode", Class = "form-control", @readonly = "readonly" })
+                                    <span class="input-group-btn">
+                                        <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#CustomerSearchModel">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div id="divPrCode" class="col-md-6 form-group">
-                                <label id="lblPrCode" class="control-label col-md-4 small ">Pr Code:</label>
-                                <div class="col-md-8">
-                                    <div class="input-group">
-                                        @Html.TextBoxFor(d => d.PRCODE_SD, null, new { ID = "txtPrCode", Class = "form-control", @readonly = "readonly" })
-                                        <span class="input-group-btn">
-                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#PrdSearchModel">
-                                                <i class="fa fa-search"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="divSowCode" style="display:none;" class="col-md-6 form-group">
-                                <label id="lblSowCode" class="control-label col-md-4 small ">Sow Code:</label>
-                                <div class="col-md-8">
-                                    <div class="input-group">
-                                        @Html.TextBoxFor(d => d.JOBID_SD, null, new { ID = "txtSowid", Class = "form-control", @readonly = "readonly" })
-                                        <span class="input-group-btn">
-                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#JobSearchModel">
-                                                <i class="fa fa-search"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="divPrDetail" class="col-md-6 form-group">
-                                <label id="lblPrDetail" class="control-label col-md-4 small ">Pr Detail:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("PrDetail", null, new { ID = "txtPrDetail", Class = "form-control", @readonly = "readonly", @required = "required" })
-                                </div>
-                            </div>
-                            <div id="divSowDetail" style="display:none;" class="col-md-6 form-group">
-                                <label id="lblSowDetail" class="control-label col-md-4 small ">Sow Detail:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("SowDetail", null, new { ID = "txtSowDetail", Class = "form-control", @readonly = "readonly" })
-                                </div>
+                        <div class="col-md-6 form-group">
+                            <label id="lblCustName" class="control-label col-md-4 small ">Cust Name:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("CustName", null, new { ID = "txtCreditCustName", Class = "form-control", @readonly = "readonly" })
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblQty" class="control-label col-md-4 small ">Quantity:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.QTY_SD, null, new { ID = "txtQty", Class = "form-control", @required = "required" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblUnit" class="control-label col-md-4 small ">Unit:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.UNIT_SD, null, new { ID = "txtUnit", Class = "form-control" })
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small "></label>
+                            <div class="col-md-8">
+                                <button type="submit" class="btn btn-success">Save</button>
+                                <button type="button" id="btnNew" class="btn btn-success">New</button>
+                                <button type="button" id="btnView" class="btn btn-success" data-toggle="modal" data-target="#SalesByJobNoModel">View</button>
+                                <button type="button" id="btnPrint" class="btn btn-success">Print</button>
+                                <button type="button" id="btnDelete" class="btn btn-success">Delete</button>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblPrRate" class="control-label col-md-4 small ">Rate:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.RATE_SD, null, new { ID = "txtPrRate", Class = "form-control", @required = "required" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblPrAmount" class="control-label col-md-4 small ">Amount:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("Amount", null, new { ID = "txtPrAmount", Class = "form-control", @readonly = "readonly" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblDiscount" class="control-label col-md-4 small ">Discount:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.DISCOUNT_SD, null, new { ID = "txtDiscount", Class = "form-control", @value = "0", @required = "required" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblShipCharge" class="control-label col-md-4 small ">Shipping Charges:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.SHIPPINGCHARGES_SD, null, new { ID = "txtShipCharge", Class = "form-control", @required = "required" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblPayMode" class="control-label col-md-4 small ">Pay Mode:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.DropDownList("PayMode", (IList<SelectListItem>)ViewBag.PayModeList, new { id = "ddlPayMode", Class = "form-control" })
-                                </div>
-                            </div>
-                            <div id="divCashAmount" class="col-md-6 form-group">
-                                <label id="lblCashAmount" class="control-label col-md-4 small ">Cash Amount:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.CASHTOTAL_SD, new { ID = "txtCashAmount", Class = "form-control", @readonly = "readonly", @required = "required" })
-                                    @Html.ValidationMessageFor(d => d.CASHTOTAL_SD)
-                                </div>
-                            </div>
-                            <div id="divCreditAmount" style="display:none;" class="col-md-6 form-group">
-                                <label id="lblCreditAmount" class="control-label col-md-4 small ">Credit Amount:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.CREDITTOTAL_SD, new { ID = "txtCreditAmount", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessageFor(d => d.CREDITTOTAL_SD)
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" id="divCreditCustDetails" style="display:none;">
-                            <div class="col-md-6 form-group">
-                                <label id="lblCustCode" class="control-label col-md-4 small ">Cust Code:</label>
-                                <div class="col-md-8">
-                                    <div class="input-group">
-                                        @Html.TextBoxFor(d => d.CREDITACCODE_SD, null, new { ID = "txtCreditCustCode", Class = "form-control", @readonly = "readonly" })
-                                        <span class="input-group-btn">
-                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#CustomerSearchModel">
-                                                <i class="fa fa-search"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblCustName" class="control-label col-md-4 small ">Cust Name:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("CustName", null, new { ID = "txtCreditCustName", Class = "form-control", @readonly = "readonly" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label></label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
-                                </div>
-                            </div>
-                        </div>
+                    </div>
                     }
                 </div>
             </div>
@@ -268,7 +272,20 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div id="grid" class="panel-body">
-                                    <table id="tblJobSearch" style="width:100%"></table>
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("jobSearch", null, new { ID = "txtJobSearch", Class = "form-control", @placeholder = "Search Job No here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("mrvSearch", null, new { ID = "txtMrvSearch", Class = "form-control", @placeholder = "Search MRV No here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <br /><br />
+                                    <table id="tblJobSearch" style="width: 100%"></table>
                                     <div id="Pager"></div>
                                 </div>
                             </div>
@@ -306,6 +323,20 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div id="prdGrid" class="panel-body">
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("prdIdSearch", null, new { ID = "txtPrdIdSearch", Class = "form-control", @placeholder = "Search Product ID here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("prdNameSearch", null, new { ID = "txtPrdNameSearch", Class = "form-control", @placeholder = "Search Product Name here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+
+                                    <br /><br />
                                     <table id="tblProductSearch" style="width: 100%"></table>
                                     <div id="prdPager"></div>
                                 </div>
@@ -344,7 +375,20 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div id="jobGrid" class="panel-body">
-                                    <table id="tblJobModalSearch" style="width:100%"></table>
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("sowIdSearch", null, new { ID = "txtSowIdSearch", Class = "form-control", @placeholder = "Search Job ID here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("sowNameSearch", null, new { ID = "txtSowNameSearch", Class = "form-control", @placeholder = "Search Job Name here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <br /><br />
+                                    <table id="tblJobModalSearch" style="width: 100%"></table>
                                     <div id="jobPager"></div>
                                 </div>
                             </div>
@@ -420,7 +464,20 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div id="custGrid" class="panel-body">
-                                    <table id="tblCustomerSearch" style="width:100%"></table>
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("custIdSearch", null, new { ID = "txtCustIdSearch", Class = "form-control", @placeholder = "Search Customer ID here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("custNameSearch", null, new { ID = "txtCustNameSearch", Class = "form-control", @placeholder = "Search Customer Name here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <br /><br />
+                                    <table id="tblCustomerSearch" style="width: 100%"></table>
                                     <div id="custPager"></div>
                                 </div>
                             </div>
@@ -436,9 +493,47 @@
         </div>
     </div>
 </div>
+<div class="container">
+    <div class="modal fade" id="SalesByJobNoModel" tabindex="-1" role="dialog" aria-labelledby="SalesByJobNoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form class="form-horizontal" id="SalesByJobNoform" method="post" data-fv-framework="bootstrap"
+                      data-fv-message="This value is not valid"
+                      data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
+                      data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                      data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title">
+                            Job Details
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="salesGrid" class="panel-body">
+                                    <table id="tblSales" style="width:100%"></table>
+                                    <div id="salesPager"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <a href="#" id="btnRemoveSale" class="btn btn-success">Remove</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts {
-    <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
-    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>*@
+    @*<script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>*@
     <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Job/JobEntry.js")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>

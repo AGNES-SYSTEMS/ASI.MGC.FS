@@ -667,6 +667,94 @@ namespace ASI.MGC.FS.Domain.Repositories
                 //exception handling pending
             }
         }
-
+        public IList<sp_GetCashMrvDetails_Result> sp_GetCashMrvDetails(string custCode = null, string custName = null, string telephone = null)
+        {
+            List<sp_GetCashMrvDetails_Result> lst = null;
+            try
+            {
+                lst = _context.sp_GetCashMrvDetails(custCode, custName, telephone).ToList();
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+            return lst;
+        }
+        public bool Sp_DeleteSalesByJobId(string jobId)
+        {
+            try
+            {
+                _context.sp_DeleteSalesbyJobId(jobId);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public IList<sp_GetARMrvDetails_Result> sp_GetARMrvDetails(string custCode = null, string custName = null, string telephone = null)
+        {
+            List<sp_GetARMrvDetails_Result> lst = null;
+            try
+            {
+                lst = _context.sp_GetARMrvDetails(custCode, custName, telephone).ToList();
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+            return lst;
+        }
+        public bool sp_GetSalesDetailsByJobNo(string jobId)
+        {
+            try
+            {
+                _context.sp_GetSalesDetailsByJobNo(jobId);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public IList<sp_GetSalesByJobNo_Result> Sp_GetSalesByJobNo(string jobId)
+        {
+            List<sp_GetSalesByJobNo_Result> lst = null;
+            try
+            {
+                lst = _context.sp_GetSalesByJobNo(jobId).ToList();
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+            return lst;
+        }
+        public IList<sp_GetCashMemoMrvList_Result> sp_GetCashMemoMrvList(int pageIndex, int pageSize, string mrvCode = null, string custCode = null, string custName = null)
+        {
+            List<sp_GetCashMemoMrvList_Result> lst = null;
+            try
+            {
+                lst = _context.sp_GetCashMemoMrvList(pageIndex, pageSize, mrvCode, custCode, custName).ToList();
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+            return lst;
+        }
+        public IList<sp_GetInvoicePreparationMrvList_Result> sp_GetInvoicePreparationMrvList(int pageIndex, int pageSize, string mrvCode = null, string custCode = null, string custName = null)
+        {
+            List<sp_GetInvoicePreparationMrvList_Result> lst = null;
+            try
+            {
+                lst = _context.sp_GetInvoicePreparationMrvList(pageIndex, pageSize, mrvCode, custCode, custName).ToList();
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+            return lst;
+        }
     }
 }

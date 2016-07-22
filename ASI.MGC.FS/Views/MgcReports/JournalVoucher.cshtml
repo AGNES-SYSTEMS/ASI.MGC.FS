@@ -37,7 +37,7 @@
     <script>
         $(document).ready(function () {
             $('#frameWrap').show();
-            var url = "/Reports/JournalVoucher.aspx?jvNo=";
+            var url = "/Reports/JournalVoucher.aspx?jvNo="+ "@Convert.ToString(@Request.QueryString["jvNo"])";
             $('#iframe').prop('src', url);
 
             $('#iframe').on('load', function () {

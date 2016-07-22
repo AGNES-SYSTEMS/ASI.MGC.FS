@@ -6,6 +6,7 @@ using System.Web.Script.Serialization;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Model;
 using ASI.MGC.FS.Models;
+using ASI.MGC.FS.WebCommon;
 
 namespace ASI.MGC.FS.Controllers
 {
@@ -380,8 +381,8 @@ namespace ASI.MGC.FS.Controllers
             var objBankMaster = new BANKMASTER();
             @ViewBag.CurrCode = "AED";
             @ViewBag.CurrName = "UAE DHIRHAM";
-            @ViewBag.bankModeTypes = WebCommon.CommonModelAccessUtility.GetBankModes();
-            @ViewBag.bankStatus = WebCommon.CommonModelAccessUtility.GetBankStatus();
+            @ViewBag.bankModeTypes = CommonModelAccessUtility.GetBankModes();
+            @ViewBag.bankStatus = CommonModelAccessUtility.GetBankStatus();
             return View(objBankMaster);
         }
 

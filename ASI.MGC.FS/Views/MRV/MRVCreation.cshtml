@@ -23,13 +23,20 @@
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label id="lblCustCode" class="control-label col-md-4 small ">Cust Code:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.CUSTOMERCODE_MRV, null, new { ID = "txtCustCode", Class = "form-control", @required = "required" })
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(d => d.CUSTOMERCODE_MRV, null, new { ID = "txtCustCode", @Value = "CASH", @readonly = "readonly", Class = "form-control", @required = "required" })
+                                        <span class="input-group-btn">
+                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#CustomerSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblMRVNo" class="control-label col-md-4 small ">MRV No:</label>
-                                <div class="col-md-8 paddingLeftRight0">
+                                <div class="col-md-8">
                                     @Html.TextBoxFor(d => d.MRVNO_MRV, null, new { ID = "txtMRVNo", @Value = @ViewBag.MRVCode, Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
@@ -87,7 +94,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblExeCode" class="control-label col-md-4 small ">Exe. Code:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.EXECODE_MRV, null, new { ID = "txtExeCode", Class = "form-control", @Value="GN" })
+                                    @Html.TextBoxFor(d => d.EXECODE_MRV, null, new { ID = "txtExeCode", Class = "form-control", @Value = "GN" })
                                 </div>
                             </div>
                         </div>
@@ -326,6 +333,56 @@
                     <div class="modal-footer">
 
                         <a href="#" id="btnJobSelect" class="btn btn-success">Select</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="modal fade" id="CustomerSearchModel" tabindex="-1" role="dialog" aria-labelledby="CustomerSearchModelLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form class="form-horizontal" id="CustomerSearchModelform" method="post" data-fv-framework="bootstrap"
+                      data-fv-message="This value is not valid"
+                      data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
+                      data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                      data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title">
+                            Customer Details Search
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="custGrid" class="panel-body">
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("custIdSearch", null, new { ID = "txtCustIdSearch", Class = "form-control", @placeholder = "Search Customer ID here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("custNameSearch", null, new { ID = "txtCustNameSearch", Class = "form-control", @placeholder = "Search Customer Name here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <br /><br />
+                                    <table id="tblCustomerSearch" style="width: 100%"></table>
+                                    <div id="custPager"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" id="btnCustSelect" class="btn btn-success">Select</a>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </form>

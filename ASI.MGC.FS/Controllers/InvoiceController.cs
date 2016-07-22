@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using ASI.MGC.FS.Domain;
+using ASI.MGC.FS.Domain.Repositories;
 using ASI.MGC.FS.Model;
 using ASI.MGC.FS.WebCommon;
 
@@ -135,10 +136,15 @@ namespace ASI.MGC.FS.Controllers
         {
             throw new NotImplementedException();
         }
-
         public ActionResult PendingInvoices()
         {
             return View();
+        }
+        public JsonResult GetInvoicePrepMrvList(string sidx, string sord, int page, int rows, string mrvCode = null, string custCode = null, string custName = null)
+        {
+            var repo = _unitOfWork.ExtRepositoryFor<ReportRepository>();
+            var mrvList = repo.sp_GetInvoicePreparationMrvList(page, rows, mrvCode, custCode, custName);
+            return Json(mrvList, JsonRequestBehavior.AllowGet);
         }
     }
 }

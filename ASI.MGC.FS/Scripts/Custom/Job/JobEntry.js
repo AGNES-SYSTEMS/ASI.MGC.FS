@@ -6,16 +6,16 @@
         $('#mrvJobSearchModel').modal('toggle');
     }
 };
-
-var employeeSelect = function (empId) {
+var $custCode = "";
+var $custName = "";
+var employeeSelect = function(empId) {
     if (empId) {
         var ret = jQuery("#tblEmployeeSearch").jqGrid('getRowData', empId);
         $("#txtEmpCode").val(ret.EMPCODE_EM).change();
         $("#txtEmpName").val(ret.EMPFNAME_EM).change();
         $('#EmployeeSearchModel').modal('toggle');
     }
-}
-
+};
 var productSelect = function (prdId) {
     if (prdId) {
         var ret = jQuery("#tblProductSearch").jqGrid('getRowData', prdId);
@@ -24,17 +24,15 @@ var productSelect = function (prdId) {
         $('#PrdSearchModel').modal('toggle');
     }
 };
-
 var jobSelect = function(jobId) {
     if (jobId) {
         var ret = jQuery("#tblJobModalSearch").jqGrid('getRowData', jobId);
-        $("#txtSowID").val(ret.JOBID_JR).change();
+        $("#txtSowid").val(ret.JOBID_JR).change();
         $("#txtSowDetail").val(ret.JOBDESCRIPTION_JR).change();
         $("#txtPrRate").val(ret.RATE_RJ).change();
         $('#JobSearchModel').modal('toggle');
     }
-}
-
+};
 var customerSelect = function(custId) {
     if (custId) {
         var ret = jQuery("#tblCustomerSearch").jqGrid('getRowData', custId);
@@ -42,8 +40,32 @@ var customerSelect = function(custId) {
         $("#txtCreditCustName").val(ret.DESCRIPTION_ARM).change();
         $('#CustomerSearchModel').modal('toggle');
     }
-}
-
+};
+var DeleteSalesById = function (salesId) {
+    if (salesId) {
+        var data = JSON.stringify({ salesId: salesId });
+        $.ajax({
+            url: '/Job/DeleteSalebyId',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: data,
+            type: "POST",
+            success: function (status) {
+                if (status) {
+                    $('#tblSales').trigger('reloadGrid');
+                    toastr.success("Operation Completed Succesfully");
+                } else {
+                    toastr.error("Sorry! Something went wrong, please try again.");
+                }
+            },
+            complete: function () {
+            },
+            error: function () {
+                toastr.error("Sorry! Something went wrong, please try again.");
+            }
+        });
+    }
+};
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liSalesEntry").addClass("active");
@@ -52,7 +74,7 @@ $(document).ready(function () {
         if ($('#ddlSaleType').val() === "Product") {
             $("#divSowCode").hide();
             $("#divSowDetail").hide();
-            $("#txtSowID").val("");
+            $("#txtSowid").val("");
             $("#txtSowDetail").val("");
             $("#txtPrDetail").attr("required", "true");
             $("#txtSowDetail").removeAttr("required");
@@ -95,6 +117,8 @@ $(document).ready(function () {
             $('#txtCreditAmount').val($finalAmount);
             $("#divCreditAmount").show();
             $("#divCreditCustDetails").show();
+            $("#txtCreditCustCode").val($custCode);
+            $("#txtCreditCustName").val($custName);
         }
     });
     $("#txtQty").on("blur", function () {
@@ -187,6 +211,92 @@ $(document).ready(function () {
     });
     var $mrvJobStatus = "N";
     /***** Start - Adding JQGRID Code For Searching Job Number and MRV Number****/
+    var searchJobGrid = function (mrvNo, jobNo) {
+        var postData = $("#tblJobSearch").jqGrid("getGridParam", "postData");
+        postData["mrvNo"] = mrvNo;
+        postData["jobNo"] = jobNo;
+        $("#tblJobSearch").setGridParam({ postData: postData });
+        $("#tblJobSearch").trigger("reloadGrid", [{ page: 1 }]);
+    };
+    $("#txtJobSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtJobSearch").val().length >= 3 || $("#txtJobSearch").val().length === 0;
+        if (shouldSearch) {
+            searchJobGrid($("#txtMrvSearch").val(), $("#txtJobSearch").val());
+        }
+    });
+    $("#txtMrvSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtMrvSearch").val().length >= 3 || $("#txtMrvSearch").val().length === 0;
+        if (shouldSearch) {
+            searchJobGrid($("#txtMrvSearch").val(), $("#txtJobSearch").val());
+        }
+    });
+    var searchGrid = function (searchById, searchByName, gridType) {
+        if (gridType === "1") {
+            var postData = $("#tblProductSearch").jqGrid("getGridParam", "postData");
+            postData["prdCode"] = searchById;
+            postData["prdName"] = searchByName;
+            $("#tblProductSearch").setGridParam({ postData: postData });
+            $("#tblProductSearch").trigger("reloadGrid", [{ page: 1 }]);
+        }
+        else if (gridType === "2") {
+            postData = $("#tblJobModalSearch").jqGrid("getGridParam", "postData");
+            postData["jobId"] = searchById;
+            postData["jobName"] = searchByName;
+            $("#tblJobModalSearch").setGridParam({ postData: postData });
+            $("#tblJobModalSearch").trigger("reloadGrid", [{ page: 1 }]);
+        }
+        else if (gridType === "3") {
+            postData = $("#tblCustomerSearch").jqGrid("getGridParam", "postData");
+            postData["custId"] = searchById;
+            postData["custName"] = searchByName;
+            $("#tblCustomerSearch").setGridParam({ postData: postData });
+            $("#tblCustomerSearch").trigger("reloadGrid", [{ page: 1 }]);
+        }
+    };
+    $("#txtPrdIdSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtPrdIdSearch").val().length >= 1 || $("#txtPrdIdSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtPrdIdSearch").val(), $("#txtPrdNameSearch").val(), "1");
+        }
+    });
+    $("#txtPrdNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtPrdNameSearch").val().length >= 3 || $("#txtPrdNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtPrdIdSearch").val(), $("#txtPrdNameSearch").val(), "1");
+        }
+    });
+    $("#txtSowIdSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtSowIdSearch").val().length >= 1 || $("#txtSowIdSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtSowIdSearch").val(), $("#txtSowNameSearch").val(), "2");
+        }
+    });
+    $("#txtSowNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtSowNameSearch").val().length >= 3 || $("#txtSowNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtSowIdSearch").val(), $("#txtSowNameSearch").val(), "2");
+        }
+    });
+    $("#txtCustIdSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtCustIdSearch").val().length >= 1 || $("#txtCustIdSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtCustIdSearch").val(), $("#txtCustNameSearch").val(), "3");
+        }
+    });
+    $("#txtCustNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtCustNameSearch").val().length >= 3 || $("#txtCustNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtCustIdSearch").val(), $("#txtCustNameSearch").val(), "3");
+        }
+    });
     $("#mrvJobSearchModel").on('show.bs.modal', function () {
         $("#tblJobSearch").jqGrid({
             url: '/Job/GetJobMrvList?jobStatus=' + $mrvJobStatus,
@@ -196,7 +306,7 @@ $(document).ready(function () {
             autoheight: true,
             autowidth: true,
             styleUI: "Bootstrap",
-            colNames: ['Job No', 'MRV No',''],
+            colNames: ['Job No', 'MRV No', ''],
             colModel: [
             { key: true, name: 'JOBNO_JM', index: 'JOBNO_JM', width: 400 },
             { key: false, name: 'MRVNO_JM', index: 'MRVNO_JM', width: 400 },
@@ -269,7 +379,9 @@ $(document).ready(function () {
                 type: "POST",
                 success: function (jobMrvDetails) {
                     $("#txtCustCode").val(jobMrvDetails.custCode);
+                    $custCode = jobMrvDetails.custCode;
                     $("#txtCustName").val(jobMrvDetails.custName);
+                    $custName = jobMrvDetails.custName;
                     $("#txtMRVProdCode").val(jobMrvDetails.prdCode);
                     $("#txtMRVProdDetail").val(jobMrvDetails.prdDetail);
                 },
@@ -280,7 +392,7 @@ $(document).ready(function () {
             });
         }
     });
-    
+
     $("#txtUnit").autocomplete({
         source: '/Product/getUnitlist',
         minLength: 0,
@@ -298,7 +410,7 @@ $(document).ready(function () {
     $('#txtEmpName').on('change', function () {
         $('#formJobEntry').formValidation('revalidateField', 'EmpName');
     });
-    
+
     $("#PrdSearchModel").on('show.bs.modal', function () {
         $("#tblProductSearch").jqGrid({
             url: '/Product/GetProductDetailsList',
@@ -306,7 +418,7 @@ $(document).ready(function () {
             height: 150,
             autoheight: true,
             styleUI: "Bootstrap",
-            colNames: ['Product Code', 'Product Details',''],
+            colNames: ['Product Code', 'Product Details', ''],
             colModel: [
             { key: true, name: 'PROD_CODE_PM', index: 'PROD_CODE_PM', width: 400 },
             { key: false, name: 'DESCRIPTION_PM', index: 'DESCRIPTION_PM', width: 400 },
@@ -363,7 +475,7 @@ $(document).ready(function () {
             height: 150,
             autoheight: true,
             styleUI: "Bootstrap",
-            colNames: ['Product Code', 'Product Details', 'Rate',''],
+            colNames: ['Product Code', 'Product Details', 'Rate', ''],
             colModel: [
             { key: true, name: 'JOBID_JR', index: 'JOBID_JR', width: 250 },
             { key: false, name: 'JOBDESCRIPTION_JR', index: 'JOBDESCRIPTION_JR', width: 400 },
@@ -429,7 +541,7 @@ $(document).ready(function () {
         var id = jQuery("#tblJobModalSearch").jqGrid('getGridParam', 'selrow');
         if (id) {
             var ret = jQuery("#tblJobModalSearch").jqGrid('getRowData', id);
-            $("#txtSowID").val(ret.JOBID_JR).change();
+            $("#txtSowid").val(ret.JOBID_JR).change();
             $("#txtSowDetail").val(ret.JOBDESCRIPTION_JR).change();
             $("#txtPrRate").val(ret.RATE_RJ).change();
             $('#JobSearchModel').modal('toggle');
@@ -444,7 +556,7 @@ $(document).ready(function () {
             height: 150,
             autoheight: true,
             styleUI: "Bootstrap",
-            colNames: ['Customer Code', 'Customer Name',''],
+            colNames: ['Customer Code', 'Customer Name', ''],
             colModel: [
             { key: true, name: 'ARCODE_ARM', index: 'ARCODE_ARM', width: 400 },
             { key: false, name: 'DESCRIPTION_ARM', index: 'DESCRIPTION_ARM', width: 400 },
@@ -501,7 +613,7 @@ $(document).ready(function () {
             height: 150,
             autoheight: true,
             styleUI: "Bootstrap",
-            colNames: ['Employee Code', 'Employee Name',''],
+            colNames: ['Employee Code', 'Employee Name', ''],
             colModel: [
             { key: true, name: 'EMPCODE_EM', index: 'EMPCODE_EM', width: 400 },
             { key: false, name: 'EMPFNAME_EM', index: 'EMPFNAME_EM', width: 400 },
@@ -572,7 +684,110 @@ $(document).ready(function () {
         }
         e.preventDefault();
     });
-
+    $("#btnNew").on("click", function () {
+        location.reload();
+    });
+    $("#btnPrint").on("click", function () {
+        var jobCode = $('#txtJobid').val();
+        if (jobCode !== "") {
+            var jobCardUrl = "/MgcReports/JobCardDetails?jobNo=" + jobCode;
+            window.open(jobCardUrl);
+            toastr.info("Job Card is open in new window.");
+        }
+    });
+    $("#btnDelete").on("click", function () {
+        var jobCode = $('#txtJobid').val();
+        if (jobCode !== "" && jobCode !== null) {
+            var data = JSON.stringify({ jobId: jobCode });
+            $.ajax({
+                url: '/Job/DeleteJobsbyJobId',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: data,
+                type: "POST",
+                success: function (status) {
+                    if (status) {
+                        $('#tblSales').trigger('reloadGrid');
+                        toastr.success("Operation Completed Succesfully");
+                    } else {
+                        toastr.error("Sorry! Something went wrong, please try again.");
+                    }
+                },
+                complete: function () {
+                },
+                error: function () {
+                    toastr.error("Sorry! Something went wrong, please try again.");
+                }
+            });
+        }
+    });
+    $("#btnRemoveSale").on("click", function () {
+        var id = jQuery("#tblSales").jqGrid('getGridParam', 'selrow');
+        if (id) {
+            DeleteSalesById(id);
+        }
+        e.preventDefault();
+    });
+    $("#SalesByJobNoModel").on('show.bs.modal', function () {
+        $.jgrid.gridUnload('#tblSales');
+        var jobCode = $('#txtJobid').val();
+        $("#tblSales").jqGrid({
+            url: '/Job/GetSalesbyJobId?jobCode=' + jobCode,
+            datatype: "json",
+            height: 150,
+            styleUI: "Bootstrap",
+            colNames: ['', 'Job No', 'Pr Code', 'S W Code', 'Desciption', 'Qty', 'Rate', 'Amount', 'Disc.', 'Ship. Chrge', ''],
+            colModel: [
+            { key: true, name: 'SLNO_SD', index: 'SLNO_SD', hidden: true },
+            { key: false, name: 'JOBNO_SD', index: 'JOBNO_SD', width: 100 },
+            { key: false, name: 'PRCODE_SD', index: 'PRCODE_SD', width: 50 },
+            { key: false, name: 'JOBID_SD', index: 'JOBID_SD', width: 100 },
+            { key: false, name: 'DESCRIPTION_SD', index: 'DESCRIPTION_SD', width: 400 },
+            { key: false, name: 'QTY_SD', index: 'QTY_SD', width: 50 },
+            { key: false, name: 'RATE_SD', index: 'RATE_SD', width: 50 },
+            { key: false, name: 'AMOUNT_SD', index: 'AMOUNT_SD', width: 50 },
+            { key: false, name: 'DISCOUNT_SD', index: 'DISCOUNT_SD', width: 50 },
+            { key: false, name: 'SHIPPINGCHARGES_SD', index: 'SHIPPINGCHARGES_SD', width: 50 },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options, rowObject) {
+                    var markup = "<a %Href%> <i class='fa fa-trash-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:DeleteSalesById(&apos;" + rowObject.SLNO_SD + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
+            ],
+            mtype: 'GET',
+            gridview: true,
+            viewrecords: true,
+            sortorder: "desc",
+            pager: jQuery('#salesPager'),
+            caption: "Job Details",
+            emptyrecords: "No Data to Display",
+            //jsonReader: {
+            //    root: "rows",
+            //    page: "page",
+            //    total: "total",
+            //    records: "records",
+            //    repeatitems: false
+            //},
+            //loadonce: true,
+            width: 780,
+            rowNum: 20,
+            multiselect: false
+        });
+    });
     $('#formJobEntry').on('init.field.fv', function (e, data) {
         var $icon = data.element.data('fv.icon'),
             options = data.fv.getOptions(),
@@ -594,13 +809,6 @@ $(document).ready(function () {
                 validators: {
                     notEmpty: {
                         message: 'MRV Number is required'
-                    }
-                }
-            },
-            EmpCode: {
-                validators: {
-                    notEmpty: {
-                        message: 'Employee Code is required'
                     }
                 }
             },

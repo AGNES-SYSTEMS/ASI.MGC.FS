@@ -96,7 +96,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblCash" class="control-label col-md-4 small ">Cash</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("Cash", null, new { ID = "txtCash", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                    @Html.TextBox("Cash", null, new { ID = "txtCash", Class = "form-control", @readonly = "readonly" })
                                 </div>
                             </div>
                         </div>
@@ -156,9 +156,10 @@
                             <div class="col-md-6 form-group">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label></label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    <input type="submit" class="btn btn-success col-md-3 pull-right" disabled="disabled" value="Save">
+                                <label class="control-label col-md-4 small "></label>
+                                <div class="col-md-8">
+                                    <button type="button" id="btnNew" class="btn btn-success">New</button>
+                                    <input type="submit" class="btn btn-success" disabled="disabled" value="Save">
                                 </div>
                             </div>
                         </div>
@@ -190,14 +191,26 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div id="custGrid" class="panel-body">
-                                    <table id="tblCustomerSearch" style="width:100%"></table>
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("custIdSearch", null, new { ID = "txtCustIdSearch", Class = "form-control", @placeholder = "Search Customer ID here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("custNameSearch", null, new { ID = "txtCustNameSearch", Class = "form-control", @placeholder = "Search Customer Name here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <br /><br />
+                                    <table id="tblCustomerSearch" style="width: 100%"></table>
                                     <div id="custPager"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-
                         <a href="#" id="btnCustSelect" class="btn btn-success">Select</a>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
@@ -354,7 +367,7 @@
         }
 
         function openPurchaseReceipt(voucherNo) {
-            var purchaseReceiptUrl = "/MgcReports/JournalVoucher?voucherNo=" + voucherNo;
+            var purchaseReceiptUrl = "/MgcReports/JournalVoucher?jvNo=" + voucherNo;
             window.open(purchaseReceiptUrl);
             toastr.info("Purchase Receipt is open in new window.");
         }

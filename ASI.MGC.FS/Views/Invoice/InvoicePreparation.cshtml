@@ -4,7 +4,6 @@
     ViewBag.currPage = "Invoice Preparation";
 }
 @model ASI.MGC.FS.Model.AR_AP_LEDGER
-<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
 <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
@@ -60,7 +59,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblDocNo" class="control-label col-md-4 small ">Doc No.</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.DOCNUMBER_ART, null, new { ID = "txtDocNo", @Value = ViewBag.invoiceCode, Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBoxFor(m => m.DOCNUMBER_ART, null, new { ID = "txtDocNo", @Value = ViewBag.invoiceCode, Class = "form-control", @readonly = "readonly", @required = "required" })
                                     @Html.ValidationMessageFor(m => m.DOCNUMBER_ART)
                                 </div>
                             </div>
@@ -69,14 +68,14 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblCustCode" class="control-label col-md-4 small ">Cust Code</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.ARAPCODE_ART, null, new { ID = "txtCustCode", Class = "form-control" })
+                                    @Html.TextBoxFor(m => m.ARAPCODE_ART, null, new { ID = "txtCustCode", Class = "form-control", @readonly = "readonly", @required = "required" })
                                     @Html.ValidationMessageFor(m => m.ARAPCODE_ART)
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblDLNNo" class="control-label col-md-4 small ">DLN No.</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DLNNo", null, new { ID = "txtDLNNo", Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBox("DLNNo", null, new { ID = "txtDLNNo", Class = "form-control", @readonly = "readonly", @required = "required" })
                                     @Html.ValidationMessage("DLNNo")
                                 </div>
                             </div>
@@ -85,7 +84,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblCustDetail" class="control-label col-md-4 small ">Cust Details</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("CustDetail", null, new { ID = "txtCustDetail", Class = "form-control" })
+                                    @Html.TextBox("CustDetail", null, new { ID = "txtCustDetail", Class = "form-control", @readonly = "readonly", @required = "required" })
                                     @Html.ValidationMessage("CustDetail")
                                 </div>
                             </div>
@@ -117,7 +116,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblCustDetail" class="control-label col-md-4 small ">Net</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.DEBITAMOUNT_ART, null, new { ID = "txtNetAmount", Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBoxFor(m => m.DEBITAMOUNT_ART, null, new { ID = "txtNetAmount", Class = "form-control", @readonly = "readonly", @required = "required" })
                                     @Html.ValidationMessageFor(m => m.DEBITAMOUNT_ART)
                                 </div>
                             </div>
@@ -137,21 +136,21 @@
                                 <div class="col-md-4 form-group">
                                     <label id="lblTotalCreditAmount" class="control-label col-md-4 small ">Credit Amount</label>
                                     <div class="col-md-8 paddingLeftRight0">
-                                        @Html.TextBox("TotalCreditAmount", null, new { ID = "txtTotalCreditAmount", Class = "form-control", @readonly = "readonly" })
+                                        @Html.TextBox("TotalCreditAmount", null, new { ID = "txtTotalCreditAmount", Class = "form-control", @readonly = "readonly", @required = "required" })
                                         @Html.ValidationMessage("TotalCreditAmount")
                                     </div>
                                 </div>
                                 <div class="col-md-4 form-group">
                                     <label id="lblTotalDiscount" class="control-label col-md-4 small ">Discount</label>
                                     <div class="col-md-8 paddingLeftRight0">
-                                        @Html.TextBoxFor(m => m.DEBITAMOUNT_ART, null, new { ID = "txtTotalDiscount", Class = "form-control", @readonly = "readonly" })
+                                        @Html.TextBoxFor(m => m.DEBITAMOUNT_ART, null, new { ID = "txtTotalDiscount", Class = "form-control", @readonly = "readonly", @required = "required" })
                                         @Html.ValidationMessageFor(m => m.DEBITAMOUNT_ART)
                                     </div>
                                 </div>
                                 <div class="col-md-4 form-group">
                                     <label id="lblTotalShipCharges" class="control-label col-md-4 small ">Ship. Charges</label>
                                     <div class="col-md-8 paddingLeftRight0">
-                                        @Html.TextBox("TotalShipCharges", null, new { ID = "txtTotalShipCharges", Class = "form-control", @readonly = "readonly" })
+                                        @Html.TextBox("TotalShipCharges", null, new { ID = "txtTotalShipCharges", Class = "form-control", @readonly = "readonly", @required = "required" })
                                         @Html.ValidationMessage("TotalShipCharges")
                                     </div>
                                 </div>
@@ -195,7 +194,26 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div id="MrvGrid" class="panel-body">
-                                    <table id="tblMRVSearch" style="width:100%"></table>
+                                    <div class="col-md-4 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("mrvSearch", null, new { ID = "txtMrvSearch", Class = "form-control", @placeholder = "Search MRV No here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("custCodeSearch", null, new { ID = "txtCustCodeSearch", Class = "form-control", @placeholder = "Search Customer Code here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("custNameSearch", null, new { ID = "txtCustNameSearch", Class = "form-control", @placeholder = "Search Customer Name here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <br /><br />
+                                    <table id="tblMRVSearch" style="width: 100%"></table>
                                     <div id="Pager"></div>
                                 </div>
                             </div>
@@ -214,7 +232,7 @@
 @section Scripts {
     <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>*@
     <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Invoice/InvoicePreparation.js")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>

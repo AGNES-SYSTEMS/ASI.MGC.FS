@@ -1126,9 +1126,17 @@
           <Parameter Name="version" Type="int" Mode="In" />
           <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
         </Function>
+        <Function Name="sp_DeleteSalesbyJobId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="JobId" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_GetARMrvDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CUSTCODE" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="CUSTNAME" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="TELEPHONE" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="sp_GetARStatementData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="AcCode" Type="nvarchar" Mode="In" />
@@ -1145,10 +1153,35 @@
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
         </Function>
+        <Function Name="sp_GetCashMemoMrvList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pageNum" Type="int" Mode="In" />
+          <Parameter Name="pageSize" Type="int" Mode="In" />
+          <Parameter Name="MRVNO" Type="nvarchar" Mode="In" />
+          <Parameter Name="CUSTCODE" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="CUSTNAME" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_GetCashMrvDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CUSTCODE" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="CUSTNAME" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="TELEPHONE" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <Function Name="sp_GetGLStatementData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GLCode" Type="int" Mode="In" />
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_GetInvoicePreparationMrvList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pageNum" Type="int" Mode="In" />
+          <Parameter Name="pageSize" Type="int" Mode="In" />
+          <Parameter Name="MRVNO" Type="nvarchar" Mode="In" />
+          <Parameter Name="CUSTCODE" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="CUSTNAME" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_GetSalesByJobNo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="JobNo" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_GetSalesDetailsByJobNo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="JOBNO" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_GetStockLedgerData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
@@ -1641,6 +1674,52 @@
           <FunctionImport Name="sp_GetStockLedgerData">
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DeleteSalesbyJobId">
+          <Parameter Name="JobId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetSalesByJobNo" ReturnType="Collection(ASI_MGC_FSModel.sp_GetSalesByJobNo_Result)">
+          <Parameter Name="JobNo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetInvoicePrepMrvList" >
+            <Parameter Name="pageNum" Mode="In" Type="Int32" />
+            <Parameter Name="pageSize" Mode="In" Type="Int32" />
+            <Parameter Name="MRVNO" Mode="In" Type="String" />
+            <Parameter Name="CUSTCODE" Mode="In" Type="String" />
+            <Parameter Name="CUSTNAME" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetCashMemoMrvList" ReturnType="Collection(ASI_MGC_FSModel.sp_GetCashMemoMrvList_Result)">
+            <Parameter Name="pageNum" Mode="In" Type="Int32" />
+            <Parameter Name="pageSize" Mode="In" Type="Int32" />
+            <Parameter Name="MRVNO" Mode="In" Type="String" />
+            <Parameter Name="CUSTCODE" Mode="In" Type="String" />
+            <Parameter Name="CUSTNAME" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetInvoicePreparationMrvList" ReturnType="Collection(ASI_MGC_FSModel.sp_GetInvoicePreparationMrvList_Result)">
+            <Parameter Name="pageNum" Mode="In" Type="Int32" />
+            <Parameter Name="pageSize" Mode="In" Type="Int32" />
+            <Parameter Name="MRVNO" Mode="In" Type="String" />
+            <Parameter Name="CUSTCODE" Mode="In" Type="String" />
+            <Parameter Name="CUSTNAME" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetSalesListByJobNo">
+          <Parameter Name="JOBNO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetSalesDetailsByJobNo">
+          <Parameter Name="JOBNO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetJobSales">
+            <Parameter Name="JOBNO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetARMrvDetails" ReturnType="Collection(ASI_MGC_FSModel.sp_GetARMrvDetails_Result)">
+            <Parameter Name="CUSTCODE" Mode="In" Type="String" />
+            <Parameter Name="CUSTNAME" Mode="In" Type="String" />
+            <Parameter Name="TELEPHONE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetCashMrvDetails" ReturnType="Collection(ASI_MGC_FSModel.sp_GetCashMrvDetails_Result)">
+            <Parameter Name="CUSTCODE" Mode="In" Type="String" />
+            <Parameter Name="CUSTNAME" Mode="In" Type="String" />
+            <Parameter Name="TELEPHONE" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="rpt_BankPayment_Result">
@@ -3266,6 +3345,48 @@
           <Property Type="Decimal" Name="DEBIT_TB" Nullable="false" Precision="19" />
           <Property Type="Decimal" Name="CREDIT_TB" Nullable="false" Precision="19" />
           <Property Type="Decimal" Name="NET_TB" Nullable="false" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="sp_GetSalesByJobNo_Result">
+          <Property Type="Int32" Name="SLNO_SD" Nullable="false" />
+          <Property Type="String" Name="JOBNO_SD" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="PRCODE_SD" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="JOBID_SD" Nullable="true" MaxLength="15" />
+          <Property Type="Int32" Name="QTY_SD" Nullable="false" />
+          <Property Type="Decimal" Name="RATE_SD" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="AMOUNT_SD" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="DISCOUNT_SD" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="SHIPPINGCHARGES_SD" Nullable="false" Precision="19" />
+          <Property Type="String" Name="DESCRIPTION_SD" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_GetCashMemoMrvList_Result">
+          <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="CUSTOMERCODE_MRV" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="DOC_DATE_MRV" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetInvoicePrepMrvList1_Result">
+          <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="CUSTOMERCODE_MRV" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="DOC_DATE_MRV" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetInvoicePreparationMrvList_Result">
+          <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="CUSTOMERCODE_MRV" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="DOC_DATE_MRV" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetARMrvDetails_Result">
+          <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="CUSTOMERCODE_MRV" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PHONE_MRV" Nullable="true" MaxLength="12" />
+        </ComplexType>
+        <ComplexType Name="sp_GetCashMrvDetails_Result">
+          <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="CUSTOMERCODE_MRV" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PHONE_MRV" Nullable="true" MaxLength="12" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -5044,6 +5165,64 @@
           <FunctionImportMapping FunctionImportName="sp_GetARStatementData" FunctionName="ASI_MGC_FSModel.Store.sp_GetARStatementData" />
           <FunctionImportMapping FunctionImportName="sp_GetARStatementOutStandingData" FunctionName="ASI_MGC_FSModel.Store.sp_GetARStatementOutStandingData" />
           <FunctionImportMapping FunctionImportName="sp_GetStockLedgerData" FunctionName="ASI_MGC_FSModel.Store.sp_GetStockLedgerData" />
+          <FunctionImportMapping FunctionImportName="sp_DeleteSalesbyJobId" FunctionName="ASI_MGC_FSModel.Store.sp_DeleteSalesbyJobId" />
+          <FunctionImportMapping FunctionImportName="sp_GetSalesByJobNo" FunctionName="ASI_MGC_FSModel.Store.sp_GetSalesByJobNo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GetSalesByJobNo_Result">
+                <ScalarProperty Name="SLNO_SD" ColumnName="SLNO_SD" />
+                <ScalarProperty Name="JOBNO_SD" ColumnName="JOBNO_SD" />
+                <ScalarProperty Name="PRCODE_SD" ColumnName="PRCODE_SD" />
+                <ScalarProperty Name="JOBID_SD" ColumnName="JOBID_SD" />
+                <ScalarProperty Name="QTY_SD" ColumnName="QTY_SD" />
+                <ScalarProperty Name="RATE_SD" ColumnName="RATE_SD" />
+                <ScalarProperty Name="AMOUNT_SD" ColumnName="AMOUNT_SD" />
+                <ScalarProperty Name="DISCOUNT_SD" ColumnName="DISCOUNT_SD" />
+                <ScalarProperty Name="SHIPPINGCHARGES_SD" ColumnName="SHIPPINGCHARGES_SD" />
+                <ScalarProperty Name="DESCRIPTION_SD" ColumnName="DESCRIPTION_SD" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetCashMemoMrvList" FunctionName="ASI_MGC_FSModel.Store.sp_GetCashMemoMrvList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GetCashMemoMrvList_Result">
+                <ScalarProperty Name="MRVNO_MRV" ColumnName="MRVNO_MRV" />
+                <ScalarProperty Name="CUSTOMERCODE_MRV" ColumnName="CUSTOMERCODE_MRV" />
+                <ScalarProperty Name="CUSTOMERNAME_MRV" ColumnName="CUSTOMERNAME_MRV" />
+                <ScalarProperty Name="DOC_DATE_MRV" ColumnName="DOC_DATE_MRV" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetInvoicePreparationMrvList" FunctionName="ASI_MGC_FSModel.Store.sp_GetInvoicePreparationMrvList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GetInvoicePreparationMrvList_Result">
+                <ScalarProperty Name="MRVNO_MRV" ColumnName="MRVNO_MRV" />
+                <ScalarProperty Name="CUSTOMERCODE_MRV" ColumnName="CUSTOMERCODE_MRV" />
+                <ScalarProperty Name="CUSTOMERNAME_MRV" ColumnName="CUSTOMERNAME_MRV" />
+                <ScalarProperty Name="DOC_DATE_MRV" ColumnName="DOC_DATE_MRV" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetSalesDetailsByJobNo" FunctionName="ASI_MGC_FSModel.Store.sp_GetSalesDetailsByJobNo" />
+          <FunctionImportMapping FunctionImportName="sp_GetARMrvDetails" FunctionName="ASI_MGC_FSModel.Store.sp_GetARMrvDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GetARMrvDetails_Result">
+                <ScalarProperty Name="MRVNO_MRV" ColumnName="MRVNO_MRV" />
+                <ScalarProperty Name="CUSTOMERCODE_MRV" ColumnName="CUSTOMERCODE_MRV" />
+                <ScalarProperty Name="CUSTOMERNAME_MRV" ColumnName="CUSTOMERNAME_MRV" />
+                <ScalarProperty Name="PHONE_MRV" ColumnName="PHONE_MRV" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetCashMrvDetails" FunctionName="ASI_MGC_FSModel.Store.sp_GetCashMrvDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GetCashMrvDetails_Result">
+                <ScalarProperty Name="MRVNO_MRV" ColumnName="MRVNO_MRV" />
+                <ScalarProperty Name="CUSTOMERCODE_MRV" ColumnName="CUSTOMERCODE_MRV" />
+                <ScalarProperty Name="CUSTOMERNAME_MRV" ColumnName="CUSTOMERNAME_MRV" />
+                <ScalarProperty Name="PHONE_MRV" ColumnName="PHONE_MRV" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

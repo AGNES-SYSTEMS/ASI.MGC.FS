@@ -19,7 +19,7 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
-        public JsonResult GetAllCustomers(string sidx, string sord, int page, int rows, string custType, string searchValue = null)
+        public JsonResult GetAllCustomers(string sidx, string sord, int page, int rows, string custType, string custId = null, string custName = null)
         {
             var custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
                             where customers.TYPE_ARM.Equals(custType)
@@ -36,11 +36,9 @@ namespace ASI.MGC.FS.Controllers
 
                             });
 
-            if (!string.IsNullOrEmpty(searchValue))
+            if (!string.IsNullOrEmpty(custId))
             {
-                custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                            where customers.TYPE_ARM.Equals(custType) && customers.DESCRIPTION_ARM.Contains(searchValue)
-                            select customers).Select(a => new
+                custList = custList.Where(o=>o.ARCODE_ARM.Contains(custId)).Select(a => new
                                 {
                                     a.ARCODE_ARM,
                                     a.DESCRIPTION_ARM,
@@ -53,7 +51,21 @@ namespace ASI.MGC.FS.Controllers
 
                                 });
             }
+            if (!string.IsNullOrEmpty(custName))
+            {
+                custList = custList.Where(o => o.DESCRIPTION_ARM.Contains(custName)).Select(a => new
+                {
+                    a.ARCODE_ARM,
+                    a.DESCRIPTION_ARM,
+                    a.ADDRESS1_ARM,
+                    a.POBOX_ARM,
+                    a.TELEPHONE_ARM,
+                    a.FAX_ARM,
+                    a.EMAIL_ARM,
+                    a.CONDACTPERSON_ARM
 
+                });
+            }
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
             int totalRecords = custList.Count();
@@ -82,12 +94,10 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult GetCustList(string sidx, string sord, int page, int rows, string custType)
         {
             var custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                            select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
+                            select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM, a.TYPE_ARM });
             if (!string.IsNullOrEmpty(custType))
             {
-                custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                            where customers.TYPE_ARM.Equals(custType)
-                            select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
+                custList = custList.Where(o=>o.TYPE_ARM.Equals(custType)).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM, a.TYPE_ARM });
             }
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
@@ -219,15 +229,11 @@ namespace ASI.MGC.FS.Controllers
                             select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
             if (!string.IsNullOrEmpty(custId))
             {
-                custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                            where customers.ARCODE_ARM.Contains(custId) && customers.TYPE_ARM.Equals("AR")
-                            select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
+                custList = custList.Where(a=>a.ARCODE_ARM.Contains(custId)).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
             }
             if (!string.IsNullOrEmpty(custName))
             {
-                custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                            where customers.DESCRIPTION_ARM.Contains(custName) && customers.TYPE_ARM.Equals("AR")
-                            select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
+                custList = custList.Where(a=>a.DESCRIPTION_ARM.Contains(custName)).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
             }
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
@@ -260,15 +266,11 @@ namespace ASI.MGC.FS.Controllers
                             select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
             if (!string.IsNullOrEmpty(custId))
             {
-                custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                            where customers.ARCODE_ARM.Contains(custId) && customers.TYPE_ARM.Equals("AP")
-                            select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
+                custList = custList.Where(o=>o.ARCODE_ARM.Contains(custId)).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
             }
             if (!string.IsNullOrEmpty(custName))
             {
-                custList = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                            where customers.DESCRIPTION_ARM.Contains(custName) && customers.TYPE_ARM.Equals("AP")
-                            select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
+                custList = custList.Where(o => o.DESCRIPTION_ARM.Contains(custName)).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
             }
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;

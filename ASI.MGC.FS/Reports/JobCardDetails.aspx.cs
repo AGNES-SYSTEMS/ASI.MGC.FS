@@ -18,8 +18,8 @@ namespace ASI.MGC.FS.Reports
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
                 var jobNo = Request.QueryString["jobNo"];
+                repo.sp_GetSalesDetailsByJobNo(jobNo);
                 DataTable dtJobCardDetails = uMethods.ConvertTo(repo.RptJobCardDetails(jobNo));
-
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\JobCardDetails.rdlc";
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("JOBNO", jobNo));
                 var rds = new ReportDataSource("DS_JobCardDetails", dtJobCardDetails);

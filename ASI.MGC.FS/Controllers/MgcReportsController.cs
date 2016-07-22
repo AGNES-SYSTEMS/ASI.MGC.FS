@@ -115,8 +115,9 @@ namespace ASI.MGC.FS.Controllers
         {
             return View();
         }
-        public ActionResult JobCardDetails()
+        public ActionResult JobCardDetails(string jobNo = "")
         {
+            ViewBag.jobNo = jobNo;
             return View();
         }
         public ActionResult JobCardFormat(string jobNo = "")
@@ -128,58 +129,9 @@ namespace ASI.MGC.FS.Controllers
         {
             return View();
         }
-        public ActionResult JournalVoucher(string voucherNo = "")
+        public ActionResult JournalVoucher(string jvNo = "")
         {
-            try
-            {
-                if (!string.IsNullOrEmpty(voucherNo))
-                {
-                    _unitOfWork.Truncate("JVREPORT");
-                    var glDetails = (from genralLedger in _unitOfWork.Repository<GLTRANSACTION1>().Query().Get()
-                                     where genralLedger.DOCNUMBER_GLT.Equals(voucherNo)
-                                     select genralLedger);
-
-                    foreach (var detail in glDetails.ToList())
-                    {
-                        var objJvReport = _unitOfWork.Repository<JVREPORT>().Create();
-                        objJvReport.DOCDATE_VPR = detail.DOCDATE_GLT;
-                        objJvReport.GLDATE_VPR = detail.GLDATE_GLT;
-                        objJvReport.DOCNO_VPT = detail.DOCNUMBER_GLT;
-                        objJvReport.ALCODE_VPT = "GL";
-                        objJvReport.ACCODE_VPR = detail.GLACCODE_GLT;
-                        objJvReport.ACDESCRIPTION_VPR = GetGlMasterCode(detail.GLACCODE_GLT);
-                        objJvReport.DEBITAMOUNT_VPR = detail.DEBITAMOUNT_GLT;
-                        objJvReport.CREDITAMOUNT_VPR = detail.CREDITAMOUNT_GLT;
-                        objJvReport.NARRATION_VPT = detail.NARRATION_GLT;
-                        _unitOfWork.Repository<JVREPORT>().Insert(objJvReport);
-                        _unitOfWork.Save();
-                    }
-
-                    var arApLedgerDetails = (from ledgerList in _unitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
-                                             where ledgerList.DOCNUMBER_ART.Equals(voucherNo)
-                                             select ledgerList);
-                    foreach (var detail in arApLedgerDetails.ToList())
-                    {
-                        var accountDetails = GetArApMasterDeatils(detail.ARAPCODE_ART);
-                        var objJvReport = _unitOfWork.Repository<JVREPORT>().Create();
-                        objJvReport.DOCDATE_VPR = detail.DODATE_ART;
-                        objJvReport.GLDATE_VPR = detail.GLDATE_ART;
-                        objJvReport.DOCNO_VPT = detail.DOCNUMBER_ART;
-                        objJvReport.ACCODE_VPR = detail.ARAPCODE_ART;
-                        objJvReport.ALCODE_VPT = accountDetails.TYPE_ARM;
-                        objJvReport.ACDESCRIPTION_VPR = accountDetails.DESCRIPTION_ARM;
-                        objJvReport.DEBITAMOUNT_VPR = detail.DEBITAMOUNT_ART;
-                        objJvReport.CREDITAMOUNT_VPR = detail.CREDITAMOUNT_ART;
-                        objJvReport.NARRATION_VPT = detail.NARRATION_ART;
-                        _unitOfWork.Repository<JVREPORT>().Insert(objJvReport);
-                        _unitOfWork.Save();
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
+            ViewBag.jvNo = jvNo;
             return View();
         }
         public ActionResult MetarialReceiptVoucher(string mrvNo = "")

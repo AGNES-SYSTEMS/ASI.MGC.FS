@@ -50,7 +50,7 @@ namespace ASI.MGC.FS.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetAccountDetailsList(string sidx, string sord, int page, int rows, string accountType, string searchValue = "")
+        public JsonResult GetAccountDetailsList(string sidx, string sord, int page, int rows, string accountType, string searchById, string searchByName)
         {
             switch (accountType)
             {
@@ -59,13 +59,14 @@ namespace ASI.MGC.FS.Controllers
                                                   where allocationMaster.TYPE_ARM.Equals("AP")
                                                   select allocationMaster).Select(a => new { AccountCode = a.ARCODE_ARM, AccountDetail = a.DESCRIPTION_ARM });
 
-                    if (!string.IsNullOrEmpty(searchValue))
+                    if (!string.IsNullOrEmpty(searchById))
                     {
-                        allocationMasterApList = (from allocationMaster in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                                                  where allocationMaster.TYPE_ARM.Equals("AP") && allocationMaster.DESCRIPTION_ARM.Contains(searchValue)
-                                                  select allocationMaster).Select(a => new { AccountCode = a.ARCODE_ARM, AccountDetail = a.DESCRIPTION_ARM });
+                        allocationMasterApList = allocationMasterApList.Where(a => a.AccountCode.Contains(searchById));
                     }
-
+                    if (!string.IsNullOrEmpty(searchByName))
+                    {
+                        allocationMasterApList = allocationMasterApList.Where(a => a.AccountDetail.Contains(searchByName));
+                    }
                     int pageApIndex = Convert.ToInt32(page) - 1;
                     int pageApSize = rows;
                     int totalApRecords = allocationMasterApList.Count();
@@ -93,11 +94,13 @@ namespace ASI.MGC.FS.Controllers
                                                   where allocationMaster.TYPE_ARM.Equals("AR")
                                                   select allocationMaster).Select(a => new { AccountCode = a.ARCODE_ARM, AccountDetail = a.DESCRIPTION_ARM });
 
-                    if (!string.IsNullOrEmpty(searchValue))
+                    if (!string.IsNullOrEmpty(searchById))
                     {
-                        allocationMasterArList = (from allocationMaster in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                                                  where allocationMaster.TYPE_ARM.Equals("AR") && allocationMaster.DESCRIPTION_ARM.Contains(searchValue)
-                                                  select allocationMaster).Select(a => new { AccountCode = a.ARCODE_ARM, AccountDetail = a.DESCRIPTION_ARM });
+                        allocationMasterArList = allocationMasterArList.Where(a => a.AccountCode.Contains(searchById));
+                    }
+                    if (!string.IsNullOrEmpty(searchByName))
+                    {
+                        allocationMasterArList = allocationMasterArList.Where(a => a.AccountDetail.Contains(searchByName));
                     }
                     int pageArIndex = Convert.ToInt32(page) - 1;
                     int pageArSize = rows;
@@ -125,11 +128,13 @@ namespace ASI.MGC.FS.Controllers
                 case "GL":
                     var allocationMasterGlList = (from allocationMaster in _unitOfWork.Repository<GLMASTER>().Query().Get()
                                                   select allocationMaster).Select(a => new { AccountCode = a.GLCODE_LM, AccountDetail = a.GLDESCRIPTION_LM });
-                    if (!string.IsNullOrEmpty(searchValue))
+                    if (!string.IsNullOrEmpty(searchById))
                     {
-                        allocationMasterGlList = (from allocationMaster in _unitOfWork.Repository<GLMASTER>().Query().Get()
-                                                  where allocationMaster.GLDESCRIPTION_LM.Contains(searchValue)
-                                                  select allocationMaster).Select(a => new { AccountCode = a.GLCODE_LM, AccountDetail = a.GLDESCRIPTION_LM });
+                        allocationMasterGlList = allocationMasterGlList.Where(a => a.AccountCode.Contains(searchById));
+                    }
+                    if (!string.IsNullOrEmpty(searchByName))
+                    {
+                        allocationMasterGlList = allocationMasterGlList.Where(a => a.AccountDetail.Contains(searchByName));
                     }
                     int pageGlIndex = Convert.ToInt32(page) - 1;
                     int pageGlSize = rows;
@@ -157,11 +162,13 @@ namespace ASI.MGC.FS.Controllers
                 case "BA":
                     var allocationMasterList = (from allocationMaster in _unitOfWork.Repository<BANKMASTER>().Query().Get()
                                                 select allocationMaster).Select(a => new { AccountCode = a.BANKCODE_BM, AccountDetail = a.BANKNAME_BM });
-                    if (!string.IsNullOrEmpty(searchValue))
+                    if (!string.IsNullOrEmpty(searchById))
                     {
-                        allocationMasterList = (from allocationMaster in _unitOfWork.Repository<BANKMASTER>().Query().Get()
-                                                where allocationMaster.BANKNAME_BM.Contains(searchValue)
-                                                select allocationMaster).Select(a => new { AccountCode = a.BANKCODE_BM, AccountDetail = a.BANKNAME_BM });
+                        allocationMasterList = allocationMasterList.Where(a => a.AccountCode.Contains(searchById));
+                    }
+                    if (!string.IsNullOrEmpty(searchByName))
+                    {
+                        allocationMasterList = allocationMasterList.Where(a => a.AccountDetail.Contains(searchByName));
                     }
                     int pageIndex = Convert.ToInt32(page) - 1;
                     int pageSize = rows;

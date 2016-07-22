@@ -249,21 +249,17 @@ namespace ASI.MGC.FS.Controllers
             return Json(lstUnits, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetProductDetailsList(string sidx, string sord, int page, int rows, string prdCode, string prdName)
+        public JsonResult GetProductDetailsList(string sidx, string sord, int page, int rows, string prdCode = null, string prdName = null)
         {
             var prdList = (from products in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
                            select products).Select(a => new { a.PROD_CODE_PM, a.DESCRIPTION_PM });
             if (!string.IsNullOrEmpty(prdCode))
             {
-                prdList = (from products in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
-                           where products.PROD_CODE_PM.Contains(prdCode)
-                           select products).Select(a => new { a.PROD_CODE_PM, a.DESCRIPTION_PM });
+                prdList = prdList.Where(o => o.PROD_CODE_PM.Contains(prdCode)).Select(a => new { a.PROD_CODE_PM, a.DESCRIPTION_PM });
             }
-            else if (!string.IsNullOrEmpty(prdName))
+            if (!string.IsNullOrEmpty(prdName))
             {
-                prdList = (from products in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
-                           where products.DESCRIPTION_PM.Contains(prdName)
-                           select products).Select(a => new { a.PROD_CODE_PM, a.DESCRIPTION_PM });
+                prdList = prdList.Where(o => o.DESCRIPTION_PM.Contains(prdName)).Select(a => new { a.PROD_CODE_PM, a.DESCRIPTION_PM });
             }
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
@@ -297,15 +293,11 @@ namespace ASI.MGC.FS.Controllers
                            select products).Select(a => new { a.PROD_CODE_PM, a.DESCRIPTION_PM, a.PURCHSEUNIT_PM, a.SALESUNIT_PM });
             if (!string.IsNullOrEmpty(prdCode))
             {
-                prdList = (from products in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
-                           where products.PROD_CODE_PM.Contains(prdCode) && products.STATUS_PM.Equals("IP")
-                           select products).Select(a => new { a.PROD_CODE_PM, a.DESCRIPTION_PM, a.PURCHSEUNIT_PM, a.SALESUNIT_PM });
+                prdList = prdList.Where(o => o.PROD_CODE_PM.Contains(prdCode)).Select(a => new { a.PROD_CODE_PM, a.DESCRIPTION_PM, a.PURCHSEUNIT_PM, a.SALESUNIT_PM });
             }
-            else if (!string.IsNullOrEmpty(prdName))
+            if (!string.IsNullOrEmpty(prdName))
             {
-                prdList = (from products in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
-                           where products.DESCRIPTION_PM.Contains(prdName) && products.STATUS_PM.Equals("IP")
-                           select products).Select(a => new { a.PROD_CODE_PM, a.DESCRIPTION_PM, a.PURCHSEUNIT_PM, a.SALESUNIT_PM });
+                prdList = prdList.Where(o => o.DESCRIPTION_PM.Contains(prdName)).Select(a => new { a.PROD_CODE_PM, a.DESCRIPTION_PM, a.PURCHSEUNIT_PM, a.SALESUNIT_PM });
             }
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;

@@ -9,7 +9,6 @@
         $('#mrvSearchModel').modal('toggle');
     }
 };
-
 function getJobDetailByMrv() {
     var mrvCode = $("#txtMRVNo").val();
     var data = JSON.stringify({ MRVID: mrvCode });
@@ -31,8 +30,7 @@ function getJobDetailByMrv() {
         error: function () {
         }
     });
-}
-
+};
 function getSaleDetailByMrv() {
     var mrvCode = $("#txtMRVNo").val();
     var data = JSON.stringify({ MRVID: mrvCode, statusId: "N" });
@@ -72,8 +70,7 @@ function getSaleDetailByMrv() {
         error: function () {
         }
     });
-}
-
+};
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liInvoicePrep").addClass("active");
@@ -128,7 +125,7 @@ $(document).ready(function () {
     /***** Start - Adding JQGRID Code For Searching Job Number and MRV Number****/
     $("#mrvSearchModel").on('show.bs.modal', function () {
         $("#tblMRVSearch").jqGrid({
-            url: '/MRV/getMRVList',
+            url: '/Invoice/GetInvoicePrepMrvList',
             datatype: "json",
             height: 150,
             autoheight: true,
@@ -186,7 +183,35 @@ $(document).ready(function () {
     });
     var arrMrvJobDetails = [];
     var arrMrvSaleDetails = [];
+    var searchGrid = function (mrvNo, custCode, custName) {
+        var postData = $("#tblMRVSearch").jqGrid("getGridParam", "postData");
+        postData["mrvCode"] = mrvNo;
+        postData["custCode"] = custCode;
+        postData["custName"] = custName;
+        $("#tblMRVSearch").setGridParam({ postData: postData });
+        $("#tblMRVSearch").trigger("reloadGrid", [{ page: 1 }]);
+    };
+    $("#txtCustCodeSearch").off().on("keyup", function () {
 
+        var shouldSearch = $("#txtCustCodeSearch").val().length >= 1 || $("#txtCustCodeSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtMrvSearch").val(), $("#txtCustCodeSearch").val(), $("#txtCustNameSearch").val());
+        }
+    });
+    $("#txtCustNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtCustNameSearch").val().length >= 3 || $("#txtCustNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtMrvSearch").val(), $("#txtCustCodeSearch").val(), $("#txtCustNameSearch").val());
+        }
+    });
+    $("#txtMrvSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtMrvSearch").val().length >= 3 || $("#txtMrvSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtMrvSearch").val(), $("#txtCustCodeSearch").val(), $("#txtCustNameSearch").val());
+        }
+    });
     $("#btnMRVSelect").click(function (e) {
         var id = jQuery("#tblMRVSearch").jqGrid('getGridParam', 'selrow');
         if (id) {

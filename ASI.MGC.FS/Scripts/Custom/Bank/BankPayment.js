@@ -36,6 +36,7 @@ var delProduct = function (rowId) {
     if (rowId) {
         $('#tblAllocDetails').jqGrid('delRowData', rowId);
         $('#tblAllocDetails').trigger('reloadGrid');
+        stringfyData();
         calculateNetAmount();
     }
 };
@@ -51,6 +52,12 @@ var calculateNetAmount = function () {
     }
     $("#formBankPayment").formValidation('revalidateField', 'AllocationTotal');
 }
+var stringfyData = function() {
+    $('#tblAllocDetails').trigger('reloadGrid');
+    var jsonAllocs = JSON.stringify(arrAllocDetails);
+    calculateNetAmount();
+    $('#hdnAllocDetails').val(jsonAllocs);
+};
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liBankPayment").addClass("active");
@@ -496,10 +503,8 @@ $(document).ready(function () {
     });
     $("#allocationDetailsModel").on('hide.bs.modal', function () {
         clearModalForm();
-        $('#tblAllocDetails').trigger('reloadGrid');
-        var jsonAllocs = JSON.stringify(arrAllocDetails);
+        stringfyData();
         calculateNetAmount();
-        $('#hdnAllocDetails').val(jsonAllocs);
         $(this).find('form')[0].reset();
     });
     $("#btnCancel").click(function () {
@@ -535,19 +540,26 @@ $(document).ready(function () {
             $("#allocationDetailsModelform").formValidation('revalidateField', 'Narration');
         }
     });
-    var searchGrid = function (searchValue) {
+    var searchGrid = function (searchById, searchByName) {
         debugger;
         var postData = $("#tblAccountSearch").jqGrid("getGridParam", "postData");
-        postData["searchValue"] = searchValue;
-
+        postData["searchById"] = searchById;
+        postData["searchByName"] = searchByName;
         $("#tblAccountSearch").setGridParam({ postData: postData });
         $("#tblAccountSearch").trigger("reloadGrid", [{ page: 1 }]);
     };
-    $("#txtAccountSearch").off().on("keyup", function () {
+    $("#txtAccIdSearch").off().on("keyup", function () {
 
-        var shouldSearch = $("#txtAccountSearch").val().length >= 3 || $("#txtAccountSearch").val().length === 0;
+        var shouldSearch = $("#txtAccIdSearch").val().length >= 1 || $("#txtAccIdSearch").val().length === 0;
         if (shouldSearch) {
-            searchGrid($("#txtAccountSearch").val());
+            searchGrid($("#txtAccIdSearch").val(), $("#txtAccNameSearch").val(), "1");
+        }
+    });
+    $("#txtAccNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtAccNameSearch").val().length >= 3 || $("#txtAccNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtAccIdSearch").val(), $("#txtAccNameSearch").val(), "1");
         }
     });
 

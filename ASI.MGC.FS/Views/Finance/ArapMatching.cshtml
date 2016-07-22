@@ -2,8 +2,7 @@
     ViewBag.Title = "ArApMatching";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.currPage = "AR AP Matching";
-}
-<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+}@model ASI.MGC.FS.Model.ARMATCHING
 <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
@@ -61,6 +60,22 @@
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBox("DocNo", null, new { ID = "txtDocNo", Class = "form-control" })
                                     @Html.ValidationMessage("DocNo")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Total Doc Value:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("TotalDocValue", null, new { ID = "txtTotalDocValue", Class = "form-control" })
+                                    @*@Html.ValidationMessage("TotalMatchValue")*@
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Allocated Total:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("AllocatedTotal", null, new { ID = "txtAllocatedTotal", Class = "form-control" })
+                                    @*@Html.ValidationMessage("Amount")*@
                                 </div>
                             </div>
                         </div>
@@ -371,11 +386,7 @@
 @section Scripts {
     <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
     <script src="@Url.Content("~/Scripts/formValidation.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/bootstrap.framework.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Finance/ArApMatching.js")"></script>
     <script type="text/javascript">
 

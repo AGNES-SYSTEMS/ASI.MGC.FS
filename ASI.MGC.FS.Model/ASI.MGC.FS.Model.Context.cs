@@ -928,5 +928,159 @@ namespace ASI.MGC.FS.Model
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetStockLedgerData", startDateParameter, endDateParameter);
         }
+    
+        public virtual int sp_DeleteSalesbyJobId(string jobId)
+        {
+            var jobIdParameter = jobId != null ?
+                new ObjectParameter("JobId", jobId) :
+                new ObjectParameter("JobId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_DeleteSalesbyJobId", jobIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetSalesByJobNo_Result> sp_GetSalesByJobNo(string jobNo)
+        {
+            var jobNoParameter = jobNo != null ?
+                new ObjectParameter("JobNo", jobNo) :
+                new ObjectParameter("JobNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetSalesByJobNo_Result>("sp_GetSalesByJobNo", jobNoParameter);
+        }
+    
+        public virtual int sp_GetInvoicePrepMrvList(Nullable<int> pageNum, Nullable<int> pageSize, string mRVNO, string cUSTCODE, string cUSTNAME)
+        {
+            var pageNumParameter = pageNum.HasValue ?
+                new ObjectParameter("pageNum", pageNum) :
+                new ObjectParameter("pageNum", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("pageSize", pageSize) :
+                new ObjectParameter("pageSize", typeof(int));
+    
+            var mRVNOParameter = mRVNO != null ?
+                new ObjectParameter("MRVNO", mRVNO) :
+                new ObjectParameter("MRVNO", typeof(string));
+    
+            var cUSTCODEParameter = cUSTCODE != null ?
+                new ObjectParameter("CUSTCODE", cUSTCODE) :
+                new ObjectParameter("CUSTCODE", typeof(string));
+    
+            var cUSTNAMEParameter = cUSTNAME != null ?
+                new ObjectParameter("CUSTNAME", cUSTNAME) :
+                new ObjectParameter("CUSTNAME", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetInvoicePrepMrvList", pageNumParameter, pageSizeParameter, mRVNOParameter, cUSTCODEParameter, cUSTNAMEParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetCashMemoMrvList_Result> sp_GetCashMemoMrvList(Nullable<int> pageNum, Nullable<int> pageSize, string mRVNO, string cUSTCODE, string cUSTNAME)
+        {
+            var pageNumParameter = pageNum.HasValue ?
+                new ObjectParameter("pageNum", pageNum) :
+                new ObjectParameter("pageNum", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("pageSize", pageSize) :
+                new ObjectParameter("pageSize", typeof(int));
+    
+            var mRVNOParameter = mRVNO != null ?
+                new ObjectParameter("MRVNO", mRVNO) :
+                new ObjectParameter("MRVNO", typeof(string));
+    
+            var cUSTCODEParameter = cUSTCODE != null ?
+                new ObjectParameter("CUSTCODE", cUSTCODE) :
+                new ObjectParameter("CUSTCODE", typeof(string));
+    
+            var cUSTNAMEParameter = cUSTNAME != null ?
+                new ObjectParameter("CUSTNAME", cUSTNAME) :
+                new ObjectParameter("CUSTNAME", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetCashMemoMrvList_Result>("sp_GetCashMemoMrvList", pageNumParameter, pageSizeParameter, mRVNOParameter, cUSTCODEParameter, cUSTNAMEParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetInvoicePreparationMrvList_Result> sp_GetInvoicePreparationMrvList(Nullable<int> pageNum, Nullable<int> pageSize, string mRVNO, string cUSTCODE, string cUSTNAME)
+        {
+            var pageNumParameter = pageNum.HasValue ?
+                new ObjectParameter("pageNum", pageNum) :
+                new ObjectParameter("pageNum", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("pageSize", pageSize) :
+                new ObjectParameter("pageSize", typeof(int));
+    
+            var mRVNOParameter = mRVNO != null ?
+                new ObjectParameter("MRVNO", mRVNO) :
+                new ObjectParameter("MRVNO", typeof(string));
+    
+            var cUSTCODEParameter = cUSTCODE != null ?
+                new ObjectParameter("CUSTCODE", cUSTCODE) :
+                new ObjectParameter("CUSTCODE", typeof(string));
+    
+            var cUSTNAMEParameter = cUSTNAME != null ?
+                new ObjectParameter("CUSTNAME", cUSTNAME) :
+                new ObjectParameter("CUSTNAME", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetInvoicePreparationMrvList_Result>("sp_GetInvoicePreparationMrvList", pageNumParameter, pageSizeParameter, mRVNOParameter, cUSTCODEParameter, cUSTNAMEParameter);
+        }
+    
+        public virtual int sp_GetSalesListByJobNo(string jOBNO)
+        {
+            var jOBNOParameter = jOBNO != null ?
+                new ObjectParameter("JOBNO", jOBNO) :
+                new ObjectParameter("JOBNO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetSalesListByJobNo", jOBNOParameter);
+        }
+    
+        public virtual int sp_GetSalesDetailsByJobNo(string jOBNO)
+        {
+            var jOBNOParameter = jOBNO != null ?
+                new ObjectParameter("JOBNO", jOBNO) :
+                new ObjectParameter("JOBNO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetSalesDetailsByJobNo", jOBNOParameter);
+        }
+    
+        public virtual int sp_GetJobSales(string jOBNO)
+        {
+            var jOBNOParameter = jOBNO != null ?
+                new ObjectParameter("JOBNO", jOBNO) :
+                new ObjectParameter("JOBNO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetJobSales", jOBNOParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetARMrvDetails_Result> sp_GetARMrvDetails(string cUSTCODE, string cUSTNAME, string tELEPHONE)
+        {
+            var cUSTCODEParameter = cUSTCODE != null ?
+                new ObjectParameter("CUSTCODE", cUSTCODE) :
+                new ObjectParameter("CUSTCODE", typeof(string));
+    
+            var cUSTNAMEParameter = cUSTNAME != null ?
+                new ObjectParameter("CUSTNAME", cUSTNAME) :
+                new ObjectParameter("CUSTNAME", typeof(string));
+    
+            var tELEPHONEParameter = tELEPHONE != null ?
+                new ObjectParameter("TELEPHONE", tELEPHONE) :
+                new ObjectParameter("TELEPHONE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetARMrvDetails_Result>("sp_GetARMrvDetails", cUSTCODEParameter, cUSTNAMEParameter, tELEPHONEParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetCashMrvDetails_Result> sp_GetCashMrvDetails(string cUSTCODE, string cUSTNAME, string tELEPHONE)
+        {
+            var cUSTCODEParameter = cUSTCODE != null ?
+                new ObjectParameter("CUSTCODE", cUSTCODE) :
+                new ObjectParameter("CUSTCODE", typeof(string));
+    
+            var cUSTNAMEParameter = cUSTNAME != null ?
+                new ObjectParameter("CUSTNAME", cUSTNAME) :
+                new ObjectParameter("CUSTNAME", typeof(string));
+    
+            var tELEPHONEParameter = tELEPHONE != null ?
+                new ObjectParameter("TELEPHONE", tELEPHONE) :
+                new ObjectParameter("TELEPHONE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetCashMrvDetails_Result>("sp_GetCashMrvDetails", cUSTCODEParameter, cUSTNAMEParameter, tELEPHONEParameter);
+        }
     }
 }

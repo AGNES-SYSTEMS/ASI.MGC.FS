@@ -1,8 +1,6 @@
-﻿using System.Data.Entity;
-using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using ASI.MGC.FS.Domain;
-using ASI.MGC.FS.Model;
+using ASI.MGC.FS.Domain.Repositories;
 using ASI.MGC.FS.WebCommon;
 
 namespace ASI.MGC.FS.Controllers
@@ -29,65 +27,18 @@ namespace ASI.MGC.FS.Controllers
 
         public JsonResult GetSearchDetails(string custCode, string custName, string telephone, int searchType)
         {
-            IQueryable customerDetails = null;
-            switch (searchType)
+            var repo = _unitOfWork.ExtRepositoryFor<ReportRepository>();
+            if (searchType == 0)
             {
-                case 0:
-                    if (!string.IsNullOrEmpty(custCode))
-                    {
-                        customerDetails = (from customers in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
-                                           where customers.CUSTOMERCODE_MRV != ("CASH") && customers.CUSTOMERCODE_MRV.Contains(custCode)
-                                           select customers).Select(a => new { a.MRVNO_MRV, a.CUSTOMERCODE_MRV, a.CUSTOMERNAME_MRV, a.PHONE_MRV });
-                    }
-                    else if (!string.IsNullOrEmpty(custName))
-                    {
-                        customerDetails = (from customers in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
-                                           where customers.CUSTOMERCODE_MRV != ("CASH") && customers.CUSTOMERNAME_MRV.Contains(custName)
-                                           select customers).Select(a => new { a.MRVNO_MRV, a.CUSTOMERCODE_MRV, a.CUSTOMERNAME_MRV, a.PHONE_MRV });
-                    }
-                    else if (!string.IsNullOrEmpty(telephone))
-                    {
-                        customerDetails = (from customers in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
-                                           where customers.CUSTOMERCODE_MRV != ("CASH") && customers.PHONE_MRV.Contains(telephone)
-                                           select customers).Select(a => new { a.MRVNO_MRV, a.CUSTOMERCODE_MRV, a.CUSTOMERNAME_MRV, a.PHONE_MRV });
-                    }
-                    else
-                    {
-                        customerDetails = (from customers in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
-                                           where customers.CUSTOMERCODE_MRV != ("CASH")
-                                           select customers).Select(a => new { a.MRVNO_MRV, a.CUSTOMERCODE_MRV, a.CUSTOMERNAME_MRV, a.PHONE_MRV });
-                    }
-                    break;
-            case 1:
-                    if (!string.IsNullOrEmpty(custCode))
-                    {
-                        customerDetails = (from customers in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
-                                           where customers.CUSTOMERCODE_MRV.Equals("CASH") && customers.CUSTOMERCODE_MRV.Contains(custCode)
-                                           select customers).Select(a => new { a.MRVNO_MRV, a.CUSTOMERCODE_MRV, a.CUSTOMERNAME_MRV, a.PHONE_MRV });
-                    }
-                    else if (!string.IsNullOrEmpty(custName))
-                    {
-                        customerDetails = (from customers in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
-                                           where customers.CUSTOMERCODE_MRV.Equals("CASH") && customers.CUSTOMERNAME_MRV.Contains(custName)
-                                           select customers).Select(a => new { a.MRVNO_MRV, a.CUSTOMERCODE_MRV, a.CUSTOMERNAME_MRV, a.PHONE_MRV });
-                    }
-                    else if (!string.IsNullOrEmpty(telephone))
-                    {
-                        customerDetails = (from customers in
-                            _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
-                                           where customers.CUSTOMERCODE_MRV.Equals("CASH") && customers.PHONE_MRV.Contains(telephone)
-                            select customers).Select(
-                                a => new {a.MRVNO_MRV, a.CUSTOMERCODE_MRV, a.CUSTOMERNAME_MRV, a.PHONE_MRV});
-                    }
-                    else
-                    {
-                        customerDetails = (from customers in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
-                                           where customers.CUSTOMERCODE_MRV.Equals("CASH")
-                                           select customers).Select(a => new { a.MRVNO_MRV, a.CUSTOMERCODE_MRV, a.CUSTOMERNAME_MRV, a.PHONE_MRV });
-                    }
-                    break;
+                var arMrvSearchDetails = repo.sp_GetARMrvDetails(custCode, custName, telephone);
+                return Json(arMrvSearchDetails, JsonRequestBehavior.AllowGet);
             }
-            return Json(customerDetails.ToListAsync(), JsonRequestBehavior.AllowGet);
+            if (searchType == 1)
+            {
+                var cashMrvSearchDetails = repo.sp_GetCashMrvDetails(custCode, custName, telephone);
+                return Json(cashMrvSearchDetails, JsonRequestBehavior.AllowGet);
+            }
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -77,12 +77,12 @@ namespace ASI.MGC.FS.Controllers
 
         public ActionResult SaveAccountsPayable()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public ActionResult SaveAccountsReceivable()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public ActionResult PdcReceipt()
@@ -258,7 +258,7 @@ namespace ASI.MGC.FS.Controllers
 
         public ActionResult SaveDayEndOperation()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         [HttpPost]
@@ -327,7 +327,7 @@ namespace ASI.MGC.FS.Controllers
 
         public ActionResult SaveArUnMatching()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public ActionResult AccountsPayableList()
@@ -346,7 +346,7 @@ namespace ASI.MGC.FS.Controllers
         }
         public ActionResult SaveJvCreation()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public JsonResult GetGlCodes(string sidx, string sord, int page, int rows, string searchValue = "")

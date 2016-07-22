@@ -4,7 +4,6 @@
     ViewBag.Title = "CashMemo";
 }
 @model ASI.MGC.FS.Model.BANKTRANSACTION
-<link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
 <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
@@ -61,7 +60,6 @@
                                 <label id="lblDocNo" class="control-label col-md-4 small ">Doc No.</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBoxFor(m => m.DOCNUMBER_BT, null, new { ID = "txtDocNo", @Value = ViewBag.cashMemoCode, Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessageFor(m => m.DOCNUMBER_BT)
                                 </div>
                             </div>
                         </div>
@@ -69,15 +67,13 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblCustCode" class="control-label col-md-4 small ">Cust Code</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("CustCode", null, new { ID = "txtCustCode", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessage("CustCode")
+                                    @Html.TextBox("CustCode", null, new { ID = "txtCustCode", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblDLNNo" class="control-label col-md-4 small ">DLN No.</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DLNNo", null, new { ID = "txtDLNNo", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessage("DLNNo")
+                                    @Html.TextBox("DLNNo", null, new { ID = "txtDLNNo", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -85,8 +81,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblCustDetail" class="control-label col-md-4 small ">Cust Details</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("CustDetail", null, new { ID = "txtCustDetail", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessage("CustDetail")
+                                    @Html.TextBox("CustDetail", null, new { ID = "txtCustDetail", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -110,8 +105,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblCustDetail" class="control-label col-md-4 small ">Net</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.DEBITAMOUT_BT, null, new { ID = "txtNetAmount", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessageFor(m => m.DEBITAMOUT_BT)
+                                    @Html.TextBoxFor(m => m.DEBITAMOUT_BT, null, new { ID = "txtNetAmount", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -130,22 +124,19 @@
                                 <div class="col-md-4 form-group">
                                     <label id="lblTotalCashAmount" class="control-label col-md-4 small ">Cash Amount</label>
                                     <div class="col-md-8 paddingLeftRight0">
-                                        @Html.TextBox("TotalCashAmount", null, new { ID = "txtTotalCashAmount", Class = "form-control", @readonly = "readonly" })
-                                        @Html.ValidationMessage("TotalCashAmount")
+                                        @Html.TextBox("TotalCashAmount", null, new { ID = "txtTotalCashAmount", Class = "form-control", @readonly = "readonly", @required = "required" })
                                     </div>
                                 </div>
                                 <div class="col-md-4 form-group">
                                     <label id="lblTotalDiscount" class="control-label col-md-4 small ">Discount</label>
                                     <div class="col-md-8 paddingLeftRight0">
-                                        @Html.TextBox("TotalDiscount", null, new { ID = "txtTotalDiscount", Class = "form-control", @readonly = "readonly" })
-                                        @Html.ValidationMessage("TotalDiscount")
+                                        @Html.TextBox("TotalDiscount", null, new { ID = "txtTotalDiscount", Class = "form-control", @readonly = "readonly", @required = "required" })
                                     </div>
                                 </div>
                                 <div class="col-md-4 form-group">
                                     <label id="lblTotalShipCharges" class="control-label col-md-4 small ">Ship. Charges</label>
                                     <div class="col-md-8 paddingLeftRight0">
-                                        @Html.TextBox("TotalShipCharges", null, new { ID = "txtTotalShipCharges", Class = "form-control", @readonly = "readonly" })
-                                        @Html.ValidationMessage("TotalShipCharges")
+                                        @Html.TextBox("TotalShipCharges", null, new { ID = "txtTotalShipCharges", Class = "form-control", @readonly = "readonly", @required = "required" })
                                     </div>
                                 </div>
                             </div>
@@ -170,8 +161,7 @@
                                 <div class="col-md-6 form-group">
                                     <label id="lblBankDetails" class="control-label col-md-4 small ">BankDetails</label>
                                     <div class="col-md-8 paddingLeftRight0">
-                                        @Html.TextBox("BankDetails", null, new { ID = "txtBankDetails", Class = "form-control", @readonly = "readonly" })
-                                        @Html.ValidationMessage("BankDetails")
+                                        @Html.TextBox("BankDetails", null, new { ID = "txtBankDetails", Class = "form-control", @readonly = "readonly", @required = "required" })
                                     </div>
                                 </div>
                             </div>
@@ -179,15 +169,13 @@
                                 <div class="col-md-6 form-group">
                                     <label id="lblBankAmount" class="control-label col-md-4 small ">Amount</label>
                                     <div class="col-md-8 paddingLeftRight0">
-                                        @Html.TextBox("BankAmount", null, new { ID = "txtBankAmount", Class = "form-control", @readonly = "readonly" })
-                                        @Html.ValidationMessage("BankAmount")
+                                        @Html.TextBox("BankAmount", null, new { ID = "txtBankAmount", Class = "form-control", @readonly = "readonly", @required = "required" })
                                     </div>
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label id="lblCustDetail" class="control-label col-md-4 small ">Notes</label>
                                     <div class="col-md-8 paddingLeftRight0">
                                         @Html.TextBoxFor(m => m.NOTE_BT, null, new { ID = "txtBankNote", Class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.NOTE_BT)
                                     </div>
                                 </div>
                             </div>
@@ -227,10 +215,37 @@
                         </h4>
                     </div>
                     <div class="modal-body">
+                        @*<div class="row">
+                            <div class="col-lg-12">
+                                <div id="MrvGrid" class="panel-body">
+                                    <table id="tblMRVSearch" style="width: 100%"></table>
+                                    <div id="Pager"></div>
+                                </div>
+                            </div>
+                        </div>*@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div id="MrvGrid" class="panel-body">
-                                    <table id="tblMRVSearch" style="width:100%"></table>
+                                    <div class="col-md-4 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("mrvSearch", null, new { ID = "txtMrvSearch", Class = "form-control", @placeholder = "Search MRV No here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("custCodeSearch", null, new { ID = "txtCustCodeSearch", Class = "form-control", @placeholder = "Search Customer Code here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("custNameSearch", null, new { ID = "txtCustNameSearch", Class = "form-control", @placeholder = "Search Customer Name here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <br /><br />
+                                    <table id="tblMRVSearch" style="width: 100%"></table>
                                     <div id="Pager"></div>
                                 </div>
                             </div>
@@ -287,7 +302,7 @@
 @section Scripts {
     <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>*@
     <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Cash/CashMemo.js")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>

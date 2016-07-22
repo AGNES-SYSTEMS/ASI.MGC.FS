@@ -36,10 +36,11 @@ var delProduct = function (rowId) {
     if (rowId) {
         $('#tblAllocDetails').jqGrid('delRowData', rowId);
         $('#tblAllocDetails').trigger('reloadGrid');
+        stringfyData();
         calculateNetAmount();
     }
 };
-var calculateNetAmount = function () {
+var calculateNetAmount = function() {
     var totalGridPrdAmount = 0.0;
     for (var i = 0; i < arrAllocDetails.length; i++) {
         totalGridPrdAmount += parseFloat(arrAllocDetails[i]["Amount"]);
@@ -50,7 +51,13 @@ var calculateNetAmount = function () {
         $("#txtAllocationTotal").val("");
     }
     $("#formBankReceipt").formValidation('revalidateField', 'AllocationTotal');
-}
+};
+var stringfyData = function() {
+    $('#tblAllocDetails').trigger('reloadGrid');
+    var jsonAllocs = JSON.stringify(arrAllocDetails);
+    calculateNetAmount();
+    $('#hdnAllocDetails').val(jsonAllocs);
+};
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liBankReceipt").addClass("active");
@@ -510,10 +517,8 @@ $(document).ready(function () {
     });
     $("#allocationDetailsModel").on('hide.bs.modal', function () {
         clearModalForm();
-        $('#tblAllocDetails').trigger('reloadGrid');
-        var jsonAllocs = JSON.stringify(arrAllocDetails);
+        stringfyData();
         calculateNetAmount();
-        $('#hdnAllocDetails').val(jsonAllocs);
         $(this).find('form')[0].reset();
     });
     $("#btnCancel").click(function () {
@@ -549,6 +554,28 @@ $(document).ready(function () {
             $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'AccountDesc');
             $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'Amount');
             $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'Narration');
+        }
+    });
+    var searchGrid = function (searchById, searchByName) {
+        debugger;
+        var postData = $("#tblAccountSearch").jqGrid("getGridParam", "postData");
+        postData["searchById"] = searchById;
+        postData["searchByName"] = searchByName;
+        $("#tblAccountSearch").setGridParam({ postData: postData });
+        $("#tblAccountSearch").trigger("reloadGrid", [{ page: 1 }]);
+    };
+    $("#txtAccIdSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtAccIdSearch").val().length >= 1 || $("#txtAccIdSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtAccIdSearch").val(), $("#txtAccNameSearch").val(), "1");
+        }
+    });
+    $("#txtAccNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtAccNameSearch").val().length >= 3 || $("#txtAccNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtAccIdSearch").val(), $("#txtAccNameSearch").val(), "1");
         }
     });
     $('#formBankReceipt').on('init.field.fv', function (e, data) {

@@ -310,9 +310,15 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div id="accGrid" class="panel-body">
-                                    <div class="col-md-12 form-group">
-                                        <div class="col-md-12 input-group paddingLeftRight0">
-                                            @Html.TextBox("accountSearch", null, new { ID = "txtAccountSearch", Class = "form-control" })
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("accIdSearch", null, new { ID = "txtAccIdSearch", Class = "form-control", @placeholder = "Search Account Code here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("accNameSearch", null, new { ID = "txtAccNameSearch", Class = "form-control", @placeholder = "Search Account Details here..." })
                                             <span class="input-group-addon"><i class="fa fa-search"></i></span>
                                         </div>
                                     </div>

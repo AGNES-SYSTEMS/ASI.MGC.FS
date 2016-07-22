@@ -36,10 +36,17 @@ var delProduct = function (rowId) {
         calculateNetAmount();
     }
 };
+var customerSelect = function (custId) {
+    if (custId) {
+        var ret = jQuery("#tblCustomerSearch").jqGrid('getRowData', custId);
+        $("#txtCustCode").val(ret.ARCODE_ARM).change();
+        $("#txtCustName").val(ret.DESCRIPTION_ARM).change();
+        $('#CustomerSearchModel').modal('toggle');
+    }
+}
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liMrv").addClass("active");
-
     arrMetarials = [];
     $('#txtDeleDate').datepicker();
     $('#txtMRVDate').datepicker();
@@ -194,7 +201,7 @@ $(document).ready(function () {
         if ($("#mrvProductModelform").valid()) {
             e.preventDefault();
             if (selectedRowId) {
-                arrMetarials[parseInt(selectedRowId)-1] = {
+                arrMetarials[parseInt(selectedRowId) - 1] = {
                     PRODID_MRR: $("#txtPrCode").val(),
                     prdesc: $("#txtPrDesc").val(),
                     JOBID_MRR: $("#txtJobID").val(),
@@ -239,18 +246,18 @@ $(document).ready(function () {
         $('#mrvProds').val(jsonMrvPrds);
         calculateNetAmount();
     });
-    $("#txtCustCode").autocomplete({
-        source: '/Customer/GetCustomersCode',
-        minLength: 0
-    }).bind('focus', function () {
-        $(this).autocomplete("search");
-    });
-    $("#txtCustName").autocomplete({
-        source: '/Customer/GetCustomersName',
-        minLength: 0
-    }).bind('focus', function () {
-        $(this).autocomplete("search");
-    });
+    //$("#txtCustCode").autocomplete({
+    //    source: '/Customer/GetCustomersCode',
+    //    minLength: 0
+    //}).bind('focus', function () {
+    //    $(this).autocomplete("search");
+    //});
+    //$("#txtCustName").autocomplete({
+    //    source: '/Customer/GetCustomersName',
+    //    minLength: 0
+    //}).bind('focus', function () {
+    //    $(this).autocomplete("search");
+    //});
 
     $("#txtExeCode").autocomplete({
         source: '/EmployeeMaster/getEmployeeIDs',
@@ -261,37 +268,42 @@ $(document).ready(function () {
     }).bind('focus', function () {
         $(this).autocomplete("search");
     });
-    function getCustRecord() {
-        var custCode = $('#txtCustCode').val();
-        var custName = $('#txtCustName').val();
-        var data = JSON.stringify({ custCode: custCode, custName: custName });
-        $.ajax({
-            url: '/Customer/getCustomerRecord',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: data,
-            type: "POST",
-            success: function (custDetails) {
-                $('#txtCustCode').val(custDetails.ARCODE_ARM).change();
-                $('#txtCustName').val(custDetails.DESCRIPTION_ARM).change();
-                $('#txtMRVAddress').val(custDetails.ADDRESS1_ARM).change();
-                $('#txtMRVTel').val(custDetails.TELEPHONE_ARM).change();
-                $('#txtMRVAddress2').val(custDetails.ADDRESS2_ARM);
-            },
-            complete: function () {
-            },
-            error: function () {
-            }
-        });
-    }
+    ////function getCustRecord() {
+    //    var custCode = $('#txtCustCode').val();
+    //    var custName = $('#txtCustName').val();
+    //    var data = JSON.stringify({ custCode: custCode, custName: custName });
+    //    $.ajax({
+    //        url: '/Customer/getCustomerRecord',
+    //        contentType: "application/json; charset=utf-8",
+    //        dataType: "json",
+    //        data: data,
+    //        type: "POST",
+    //        success: function (custDetails) {
+    //            $('#txtCustCode').val(custDetails.ARCODE_ARM).change();
+    //            $('#txtCustName').val(custDetails.DESCRIPTION_ARM).change();
+    //            $('#txtMRVAddress').val(custDetails.ADDRESS1_ARM).change();
+    //            $('#txtMRVTel').val(custDetails.TELEPHONE_ARM).change();
+    //            $('#txtMRVAddress2').val(custDetails.ADDRESS2_ARM);
+    //        },
+    //        complete: function () {
+    //        },
+    //        error: function () {
+    //        }
+    //    });
+    //}
     $("#txtCustCode").blur(function () {
         $('#txtCustName').val("");
-        getCustRecord();
+        //getCustRecord();
     });
 
     $("#txtCustName").blur(function () {
-        $('#txtCustCode').val("");
-        getCustRecord();
+        if ($('#txtCustName').val() === "") {
+            $('#txtCustCode').val("CASH");
+            $('#txtMRVAddress').val("").change();
+            $('#txtMRVTel').val("").change();
+            $('#txtMRVAddress2').val("");
+        }
+
     });
 
     $("#txtQuantity").change(function () {
@@ -372,7 +384,116 @@ $(document).ready(function () {
         var outerwidth = $('#prdGrid').width();
         $('#tblProductSearch').setGridWidth(outerwidth);
     });
+    $("#CustomerSearchModel").on('show.bs.modal', function () {
+        $("#tblCustomerSearch").jqGrid({
+            url: '/Customer/GetCustomerDetailsList',
+            datatype: "json",
+            height: 150,
+            autoheight: true,
+            styleUI: "Bootstrap",
+            colNames: ['Customer Code', 'Customer Name', ''],
+            colModel: [
+            { key: true, name: 'ARCODE_ARM', index: 'ARCODE_ARM', width: 400 },
+            { key: false, name: 'DESCRIPTION_ARM', index: 'DESCRIPTION_ARM', width: 400 },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options, rowObject) {
 
+                    var markup = "<a %Href%> <i class='fa fa-check-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:customerSelect(&apos;" + rowObject.ARCODE_ARM + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
+            ],
+            rowNum: 40,
+            rowList: [40, 100, 500, 1000],
+            mtype: 'GET',
+            gridview: true,
+            shrinkToFit: true,
+            viewrecords: true,
+            sortorder: "asc",
+            pager: jQuery('#custPager'),
+            caption: "Customers List",
+            emptyrecords: "No Data to Display",
+            jsonReader: {
+                root: "rows",
+                page: "page",
+                total: "total",
+                records: "records",
+                repeatitems: false
+            },
+            multiselect: false
+        });
+    });
+    $(window).resize(function () {
+        var outerwidth = $('#custGrid').width();
+        $('#tblCustomerSearch').setGridWidth(outerwidth);
+    });
+    $("#CustomerSearchModel").on('hide.bs.modal', function () {
+        var custCode = $('#txtCustCode').val();
+        var custName = $('#txtCustName').val();
+        var data = JSON.stringify({ custCode: custCode, custName: custName });
+        $.ajax({
+            url: '/Customer/getCustomerRecord',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: data,
+            type: "POST",
+            success: function (custDetails) {
+                $('#txtCustCode').val(custDetails.ARCODE_ARM).change();
+                $('#txtCustName').val(custDetails.DESCRIPTION_ARM).change();
+                $('#txtMRVAddress').val(custDetails.ADDRESS1_ARM).change();
+                $('#txtMRVTel').val(custDetails.TELEPHONE_ARM).change();
+                $('#txtMRVAddress2').val(custDetails.ADDRESS2_ARM);
+            },
+            complete: function () {
+            },
+            error: function () {
+            }
+        });
+    });
+    var searchGridCust = function (searchById, searchByName) {
+        var custpostData = $("#tblCustomerSearch").jqGrid("getGridParam", "postData");
+        custpostData["custId"] = searchById;
+        custpostData["custName"] = searchByName;
+        $("#tblCustomerSearch").setGridParam({ postData: custpostData });
+        $("#tblCustomerSearch").trigger("reloadGrid", [{ page: 1 }]);
+    };
+    $("#txtCustIdSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtCustIdSearch").val().length >= 1 || $("#txtCustIdSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGridCust($("#txtCustIdSearch").val(), $("#txtCustNameSearch").val(), "3");
+        }
+    });
+    $("#txtCustNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtCustNameSearch").val().length >= 3 || $("#txtCustNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGridCust($("#txtCustIdSearch").val(), $("#txtCustNameSearch").val(), "3");
+        }
+    });
+    $("#btnCustSelect").on("click", function (e) {
+        var id = jQuery("#tblCustomerSearch").jqGrid('getGridParam', 'selrow');
+        if (id) {
+            var ret = jQuery("#tblCustomerSearch").jqGrid('getRowData', id);
+            $("#txtCustCode").val(ret.ARCODE_ARM).change();
+            $("#txtCustName").val(ret.DESCRIPTION_ARM).change();
+            $('#CustomerSearchModel').modal('toggle');
+        }
+        e.preventDefault();
+    });
     $("#btnSearchPrd").on("click", function (e) {
         e.preventDefault();
         var $postDataValues = $("tblProductSearch").jqGrid('getGridParam', 'postData');

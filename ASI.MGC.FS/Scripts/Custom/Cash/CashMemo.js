@@ -9,7 +9,6 @@
         $('#mrvSearchModel').modal('toggle');
     }
 };
-
 var bankSelect = function (bankId) {
     if (bankId) {
         var ret = jQuery("#tblBankSearch").jqGrid('getRowData', bankId);
@@ -18,8 +17,6 @@ var bankSelect = function (bankId) {
         $('#BankSearchModel').modal('toggle');
     }
 };
-
-
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liCashMemo").addClass("active");
@@ -78,7 +75,7 @@ $(window).resize(function () {
 /***** Start - Adding JQGRID Code For Searching Job Number and MRV Number****/
 $("#mrvSearchModel").on('show.bs.modal', function () {
     $("#tblMRVSearch").jqGrid({
-        url: '/MRV/getMRVList',
+        url: '/Cash/GetCashMemoMrvList',
         datatype: "json",
         styleUI: "Bootstrap",
         colNames: ['MRV No', 'Customer', 'Customer Details',''],
@@ -157,7 +154,6 @@ function getJobDetailByMRV() {
         }
     });
 }
-
 function getSaleDetailByMRV() {
     var mrvCode = $("#txtMRVNo").val();
     var data = JSON.stringify({ MRVID: mrvCode, statusId: "N" });
@@ -256,7 +252,35 @@ $(window).resize(function () {
     var outerwidth = $('#bankGrid').width();
     $('#tblBankSearch').setGridWidth(outerwidth);
 });
+var searchGrid = function (mrvNo, custCode, custName) {
+    var postData = $("#tblMRVSearch").jqGrid("getGridParam", "postData");
+    postData["mrvCode"] = mrvNo;
+    postData["custCode"] = custCode;
+    postData["custName"] = custName;
+    $("#tblMRVSearch").setGridParam({ postData: postData });
+    $("#tblMRVSearch").trigger("reloadGrid", [{ page: 1 }]);
+};
+$("#txtCustCodeSearch").off().on("keyup", function () {
 
+    var shouldSearch = $("#txtCustCodeSearch").val().length >= 1 || $("#txtCustCodeSearch").val().length === 0;
+    if (shouldSearch) {
+        searchGrid($("#txtMrvSearch").val(), $("#txtCustCodeSearch").val(), $("#txtCustNameSearch").val());
+    }
+});
+$("#txtCustNameSearch").off().on("keyup", function () {
+
+    var shouldSearch = $("#txtCustNameSearch").val().length >= 3 || $("#txtCustNameSearch").val().length === 0;
+    if (shouldSearch) {
+        searchGrid($("#txtMrvSearch").val(),$("#txtCustCodeSearch").val(), $("#txtCustNameSearch").val());
+    }
+});
+$("#txtMrvSearch").off().on("keyup", function () {
+
+    var shouldSearch = $("#txtMrvSearch").val().length >= 3 || $("#txtMrvSearch").val().length === 0;
+    if (shouldSearch) {
+        searchGrid($("#txtMrvSearch").val(), $("#txtCustCodeSearch").val(), $("#txtCustNameSearch").val());
+    }
+});
 $("#btnBankSelect").on("click", function (e) {
     var id = jQuery("#tblBankSearch").jqGrid('getGridParam', 'selrow');
     if (id) {
