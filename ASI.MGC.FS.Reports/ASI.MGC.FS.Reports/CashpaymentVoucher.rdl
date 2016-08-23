@@ -1207,7 +1207,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>="AED " &amp; FORMAT(Sum(Fields!CREDITAMOUNT_VRPT.Value, "DS_CashPaymentVoucher"),"N2")</Value>
+                  <Value>="AED " &amp; FORMAT(Fields!CREDITAMOUNT_VRPT.Value,"N2")</Value>
                   <Style />
                 </TextRun>
               </TextRuns>

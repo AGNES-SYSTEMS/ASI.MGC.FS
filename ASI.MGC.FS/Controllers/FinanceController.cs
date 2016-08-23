@@ -30,7 +30,8 @@ namespace ASI.MGC.FS.Controllers
         [HttpPost]
         public JsonResult SaveGlCreation(FormCollection frm, GLMASTER objGlMaster)
         {
-            bool success = false;
+            bool success;
+            string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             try
             {
                 _unitOfWork.Repository<GLMASTER>().Insert(objGlMaster);
@@ -42,6 +43,7 @@ namespace ASI.MGC.FS.Controllers
                 objGlTransaction.DOCNUMBER_GLT = objGlMaster.GLCODE_LM;
                 objGlTransaction.GLACCODE_GLT = objGlMaster.GLCODE_LM;
                 objGlTransaction.OTHERREF_GLT = objGlMaster.GLCODE_LM;
+                objGlTransaction.VARUSER = currentUser;
                 if (Convert.ToInt32(frm["BalanceType"]) == 1)
                 {
                     objGlTransaction.CREDITAMOUNT_GLT = Convert.ToDecimal(frm["OpenBalance"]);
@@ -122,9 +124,11 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult SavePdcReceipt(FormCollection form, BANKTRANSACTION objBankTransaction)
         {
             string pdcNo = "";
+            string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             bool success;
             try
             {
+                objBankTransaction.USER_BT = currentUser;
                 objBankTransaction.STATUS_BT = "P";
                 objBankTransaction.MASTERSTATUS_BT = "M";
                 _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBankTransaction);
@@ -144,6 +148,7 @@ namespace ASI.MGC.FS.Controllers
                 objVoucherMaster.CHQNO_VRPT = objBankTransaction.CHQNO_BT;
                 objVoucherMaster.CHQDATE_VRPT = objBankTransaction.CHQDATE_BT;
                 objVoucherMaster.DOCNO_VRPT = objBankTransaction.DOCNUMBER_BT;
+                objVoucherMaster.USER_VRPT = currentUser;
                 objVoucherMaster.VOUCHER_TYPE = "BR";
                 _unitOfWork.Repository<VOUCHERMASTER_RPT>().Insert(objVoucherMaster);
                 _unitOfWork.Save();
@@ -165,6 +170,7 @@ namespace ASI.MGC.FS.Controllers
                             objApLedger.OTHERREF_ART = objBankTransaction.OTHERREF_BT;
                             objApLedger.NARRATION_ART = allocDetail.Narration;
                             objApLedger.MATCHVALUE_AR = 0;
+                            objApLedger.USER_ART = currentUser;
                             objApLedger.STATUS_ART = "P";
                             _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objApLedger);
                             _unitOfWork.Save();
@@ -190,6 +196,7 @@ namespace ASI.MGC.FS.Controllers
                             objArLedger.OTHERREF_ART = objBankTransaction.OTHERREF_BT;
                             objArLedger.NARRATION_ART = allocDetail.Narration;
                             objArLedger.MATCHVALUE_AR = 0;
+                            objArLedger.USER_ART = currentUser;
                             objArLedger.STATUS_ART = "P";
                             _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArLedger);
                             _unitOfWork.Save();
@@ -217,6 +224,7 @@ namespace ASI.MGC.FS.Controllers
                             objBankTransaction.CLEARANCEDATE_BT = objBankTransaction.CLEARANCEDATE_BT;
                             objBTransaction.NARRATION_BT = allocDetail.Narration;
                             objBTransaction.NOTE_BT = objBankTransaction.NOTE_BT;
+                            objBankTransaction.USER_BT = currentUser;
                             objBTransaction.STATUS_BT = "P";
                             _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBTransaction);
                             _unitOfWork.Save();
@@ -230,6 +238,7 @@ namespace ASI.MGC.FS.Controllers
                             objGlTransaction.OTHERREF_GLT = objBankTransaction.OTHERREF_BT;
                             objGlTransaction.CREDITAMOUNT_GLT = Convert.ToDecimal(allocDetail.Amount);
                             objGlTransaction.NARRATION_GLT = allocDetail.Narration;
+                            objGlTransaction.VARUSER = currentUser;
                             objGlTransaction.GLSTATUS_GLT = "P";
                             _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGlTransaction);
                             _unitOfWork.Save();
@@ -265,6 +274,7 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult SaveDocumentReversal(FormCollection frm)
         {
             bool success = false;
+            string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             var invCode = frm["InvNumber"];
             try
             {
@@ -277,6 +287,7 @@ namespace ASI.MGC.FS.Controllers
                     foreach (var entry in btEnteries.ToList())
                     {
                         entry.STATUS_BT = "R";
+                        entry.STATUS_BT = currentUser;
                         _unitOfWork.Repository<BANKTRANSACTION>().Update(entry);
                         _unitOfWork.Save();
 
@@ -290,6 +301,7 @@ namespace ASI.MGC.FS.Controllers
                                         select arApLedger);
                     foreach (var entry in arApEnteries.ToList())
                     {
+                        entry.USER_ART = currentUser;
                         entry.STATUS_ART = "R";
                         _unitOfWork.Repository<AR_AP_LEDGER>().Update(entry);
                         _unitOfWork.Save();
@@ -304,6 +316,7 @@ namespace ASI.MGC.FS.Controllers
                                       select glTransactions);
                     foreach (var entry in glEnteries.ToList())
                     {
+                        entry.VARUSER = currentUser;
                         entry.GLSTATUS_GLT = "R";
                         _unitOfWork.Repository<GLTRANSACTION1>().Update(entry);
                         _unitOfWork.Save();
@@ -467,6 +480,7 @@ namespace ASI.MGC.FS.Controllers
         private bool ReverseBankTransactions(BANKTRANSACTION entry)
         {
             bool success;
+            string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             try
             {
                 var reverseEntry = _unitOfWork.Repository<BANKTRANSACTION>().Create();
@@ -485,6 +499,7 @@ namespace ASI.MGC.FS.Controllers
                 reverseEntry.MASTERSTATUS_BT = entry.MASTERSTATUS_BT;
                 reverseEntry.CREDITAMOUT_BT = entry.DEBITAMOUT_BT;
                 reverseEntry.DEBITAMOUT_BT = entry.CREDITAMOUT_BT;
+                reverseEntry.USER_BT = currentUser;
                 reverseEntry.STATUS_BT = "R";
 
                 _unitOfWork.Repository<BANKTRANSACTION>().Insert(reverseEntry);
@@ -502,6 +517,7 @@ namespace ASI.MGC.FS.Controllers
         private bool ReverseAr_Ap_Enteries(AR_AP_LEDGER entry)
         {
             bool success;
+            string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             try
             {
                 var reverseEntry = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
@@ -514,6 +530,7 @@ namespace ASI.MGC.FS.Controllers
                 reverseEntry.MATCHVALUE_AR = entry.MATCHVALUE_AR;
                 reverseEntry.CREDITAMOUNT_ART = entry.DEBITAMOUNT_ART;
                 reverseEntry.DEBITAMOUNT_ART = entry.CREDITAMOUNT_ART;
+                reverseEntry.USER_ART = currentUser;
                 reverseEntry.STATUS_ART = "R";
                 _unitOfWork.Repository<AR_AP_LEDGER>().Insert(reverseEntry);
                 _unitOfWork.Save();
@@ -529,6 +546,7 @@ namespace ASI.MGC.FS.Controllers
         private bool ReverseGlTransactions(GLTRANSACTION1 entry)
         {
             bool success;
+            string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             try
             {
                 var reverseEntry = _unitOfWork.Repository<GLTRANSACTION1>().Create();
@@ -540,6 +558,7 @@ namespace ASI.MGC.FS.Controllers
                 reverseEntry.NARRATION_GLT = entry.NARRATION_GLT;
                 reverseEntry.CREDITAMOUNT_GLT = entry.DEBITAMOUNT_GLT;
                 reverseEntry.DEBITAMOUNT_GLT = entry.CREDITAMOUNT_GLT;
+                reverseEntry.VARUSER = currentUser;
                 reverseEntry.GLSTATUS_GLT = "R";
                 _unitOfWork.Repository<GLTRANSACTION1>().Insert(reverseEntry);
                 _unitOfWork.Save();

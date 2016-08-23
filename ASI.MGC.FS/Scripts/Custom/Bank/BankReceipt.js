@@ -1,5 +1,14 @@
 ﻿var arrAllocDetails = [];
 var selectedRowId = "";
+var receiverSelect = function (receiverId) {
+    debugger;
+    if (receiverId) {
+        var ret = jQuery("#tblReceiverSearch").jqGrid('getRowData', receiverId);
+        $("#txtReceivedFrom").val(ret.DESCRIPTION_ARM).change();
+        $("#formBankReceipt").formValidation('revalidateField', 'NOTE_BT');
+        $('#ReceiverSearchModel').modal('toggle');
+    }
+};
 var alCodeSelect = function (alCodeId) {
     if (alCodeId) {
         var ret = jQuery("#tblAlCodeSearch").jqGrid('getRowData', alCodeId);
@@ -40,19 +49,15 @@ var delProduct = function (rowId) {
         calculateNetAmount();
     }
 };
-var calculateNetAmount = function() {
+var calculateNetAmount = function () {
     var totalGridPrdAmount = 0.0;
     for (var i = 0; i < arrAllocDetails.length; i++) {
         totalGridPrdAmount += parseFloat(arrAllocDetails[i]["Amount"]);
     }
-    if (totalGridPrdAmount !== 0) {
-        $("#txtAllocationTotal").val(totalGridPrdAmount);
-    } else {
-        $("#txtAllocationTotal").val("");
-    }
+    $("#txtAllocationTotal").val(totalGridPrdAmount);
     $("#formBankReceipt").formValidation('revalidateField', 'AllocationTotal');
 };
-var stringfyData = function() {
+var stringfyData = function () {
     $('#tblAllocDetails').trigger('reloadGrid');
     var jsonAllocs = JSON.stringify(arrAllocDetails);
     calculateNetAmount();
@@ -125,6 +130,9 @@ $(document).ready(function () {
         ],
         multiselect: false,
         caption: "Allocation Details"
+    });
+    $("#btnNew").on("click", function () {
+        location.reload();
     });
     $(window).resize(function () {
         var outerwidth = $('#grid').width();
@@ -521,6 +529,62 @@ $(document).ready(function () {
         calculateNetAmount();
         $(this).find('form')[0].reset();
     });
+    $("#ReceiverSearchModel").on('show.bs.modal', function () {
+        $("#tblReceiverSearch").jqGrid({
+            url: '/Customer/GetCustomerDetailsList',
+            datatype: "json",
+            height: 150,
+            autoheight: true,
+            styleUI: "Bootstrap",
+            colNames: ['Customer Code', 'Customer Name', ''],
+            colModel: [
+            { key: true, name: 'ARCODE_ARM', index: 'ARCODE_ARM', width: 400 },
+            { key: false, name: 'DESCRIPTION_ARM', index: 'DESCRIPTION_ARM', width: 400 },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options, rowObject) {
+
+                    var markup = "<a %Href%> <i class='fa fa-check-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:receiverSelect(&apos;" + rowObject.ARCODE_ARM + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
+            ],
+            rowNum: 40,
+            rowList: [40, 100, 500, 1000],
+            mtype: 'GET',
+            gridview: true,
+            shrinkToFit: true,
+            viewrecords: true,
+            sortorder: "asc",
+            pager: jQuery('#receiverPager'),
+            caption: "Receiver's List",
+            emptyrecords: "No Data to Display",
+            jsonReader: {
+                root: "rows",
+                page: "page",
+                total: "total",
+                records: "records",
+                repeatitems: false
+            },
+            multiselect: false
+        });
+    });
+    $(window).resize(function () {
+        var outerwidth = $('#receivedGrid').width();
+        $('#tblReceiverSearch').setGridWidth(outerwidth);
+    });
     $("#btnCancel").click(function () {
         clearModalForm();
     });
@@ -556,13 +620,21 @@ $(document).ready(function () {
             $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'Narration');
         }
     });
-    var searchGrid = function (searchById, searchByName) {
-        debugger;
-        var postData = $("#tblAccountSearch").jqGrid("getGridParam", "postData");
-        postData["searchById"] = searchById;
-        postData["searchByName"] = searchByName;
-        $("#tblAccountSearch").setGridParam({ postData: postData });
-        $("#tblAccountSearch").trigger("reloadGrid", [{ page: 1 }]);
+    var searchGrid = function (searchById, searchByName, gridType) {
+        if (gridType === "1") {
+            var postData = $("#tblAccountSearch").jqGrid("getGridParam", "postData");
+            postData["searchById"] = searchById;
+            postData["searchByName"] = searchByName;
+            $("#tblAccountSearch").setGridParam({ postData: postData });
+            $("#tblAccountSearch").trigger("reloadGrid", [{ page: 1 }]);
+        } else if (gridType === "2") {
+            postData = $("#tblReceiverSearch").jqGrid("getGridParam", "postData");
+            postData["custId"] = searchById;
+            postData["custName"] = searchByName;
+            $("#tblReceiverSearch").setGridParam({ postData: postData });
+            $("#tblReceiverSearch").trigger("reloadGrid", [{ page: 1 }]);
+        }
+
     };
     $("#txtAccIdSearch").off().on("keyup", function () {
 
@@ -577,6 +649,31 @@ $(document).ready(function () {
         if (shouldSearch) {
             searchGrid($("#txtAccIdSearch").val(), $("#txtAccNameSearch").val(), "1");
         }
+    });
+    $("#txtArIdSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtArIdSearch").val().length >= 1 || $("#txtArIdSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtArIdSearch").val(), $("#txtArNameSearch").val(), "2");
+        }
+    });
+    $("#txtArNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtArNameSearch").val().length >= 3 || $("#txtArNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtArIdSearch").val(), $("#txtArNameSearch").val(), "2");
+        }
+    });
+    $("#btnReceiverSelect").on("click", function (e) {
+        debugger;
+        var id = jQuery("#tblReceiverSearch").jqGrid('getGridParam', 'selrow');
+        if (id) {
+            var ret = jQuery("#tblReceiverSearch").jqGrid('getRowData', id);
+            $("#txtReceivedFrom").val(ret.DESCRIPTION_ARM).change();
+            $("#formBankReceipt").formValidation('revalidateField', 'NOTE_BT');
+            $('#ReceiverSearchModel').modal('toggle');
+        }
+        e.preventDefault();
     });
     $('#formBankReceipt').on('init.field.fv', function (e, data) {
         var $icon = data.element.data('fv.icon'),

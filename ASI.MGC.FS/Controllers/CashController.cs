@@ -35,6 +35,7 @@ namespace ASI.MGC.FS.Controllers
             string currYear = DateTime.Now.Year.ToString();
             string cashMemoCode = Convert.ToString("RCT/" + Convert.ToString(cmCount) + "/" + currYear);
             ViewBag.cashMemoCode = cashMemoCode;
+            ViewBag.dlnNumber = CommonModelAccessUtility.GetDlnNumber(_unitOfWork);
             var objBankTransaction = new BANKTRANSACTION();
             return View(objBankTransaction);
         }
@@ -49,6 +50,7 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult SaveCashMemo(FormCollection frm, BANKTRANSACTION objBankTransaction)
         {
             bool success;
+            string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             string cashMemoNumber = "";
             try
             {
@@ -59,6 +61,7 @@ namespace ASI.MGC.FS.Controllers
                 var lstSaleDetails = serializer.Deserialize<List<SALEDETAIL>>(jsonProductDetails);
                 objBankTransaction.CHQDATE_BT = Convert.ToDateTime(DateTime.Now.ToShortDateString());
                 objBankTransaction.CLEARANCEDATE_BT = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+                objBankTransaction.USER_BT = currentUser;
                 objBankTransaction.STATUS_BT = "P";
                 _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBankTransaction);
                 _unitOfWork.Save();
@@ -116,6 +119,7 @@ namespace ASI.MGC.FS.Controllers
 
                     var objSaleDetails = _unitOfWork.Repository<SALEDETAIL>().FindByID(sale.SLNO_SD);
                     objSaleDetails.CASHRVNO_SD = Convert.ToString(cashMemoNumber);
+                    objSaleDetails.USERID_SD = currentUser;
                     objSaleDetails.STATUS_SD = "P";
                     _unitOfWork.Repository<SALEDETAIL>().Update(objSaleDetails);
                     _unitOfWork.Save();
@@ -139,10 +143,12 @@ namespace ASI.MGC.FS.Controllers
         public ActionResult SaveCashReceipt(FormCollection form, BANKTRANSACTION objBankTransaction)
         {
             string crNo = "";
+            string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             bool success;
             try
             {
                 crNo = objBankTransaction.DOCNUMBER_BT;
+                objBankTransaction.USER_BT = currentUser;
                 objBankTransaction.STATUS_BT = "P";
                 objBankTransaction.MASTERSTATUS_BT = "M";
                 _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBankTransaction);
@@ -161,7 +167,8 @@ namespace ASI.MGC.FS.Controllers
                 objVoucherMaster.CHQNO_VRPT = objBankTransaction.CHQNO_BT;
                 objVoucherMaster.CHQDATE_VRPT = objBankTransaction.CHQDATE_BT;
                 objVoucherMaster.DOCNO_VRPT = objBankTransaction.DOCNUMBER_BT;
-                objVoucherMaster.VOUCHER_TYPE = "BR";
+                objVoucherMaster.USER_VRPT = currentUser;
+                objVoucherMaster.VOUCHER_TYPE = "CR";
                 _unitOfWork.Repository<VOUCHERMASTER_RPT>().Insert(objVoucherMaster);
                 _unitOfWork.Save();
 
@@ -182,6 +189,7 @@ namespace ASI.MGC.FS.Controllers
                             objApLedger.OTHERREF_ART = objBankTransaction.OTHERREF_BT;
                             objApLedger.NARRATION_ART = allocDetail.Narration;
                             objApLedger.MATCHVALUE_AR = 0;
+                            objApLedger.USER_ART = currentUser;
                             objApLedger.STATUS_ART = "P";
                             _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objApLedger);
                             _unitOfWork.Save();
@@ -207,6 +215,7 @@ namespace ASI.MGC.FS.Controllers
                             objArLedger.OTHERREF_ART = objBankTransaction.OTHERREF_BT;
                             objArLedger.NARRATION_ART = allocDetail.Narration;
                             objArLedger.MATCHVALUE_AR = 0;
+                            objArLedger.USER_ART = currentUser;
                             objArLedger.STATUS_ART = "P";
                             _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArLedger);
                             _unitOfWork.Save();
@@ -235,6 +244,7 @@ namespace ASI.MGC.FS.Controllers
                             objBTransaction.NARRATION_BT = allocDetail.Narration;
                             objBTransaction.NOTE_BT = objBankTransaction.NOTE_BT;
                             objBTransaction.STATUS_BT = "P";
+                            objBTransaction.USER_BT = currentUser;
                             _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBTransaction);
                             _unitOfWork.Save();
                             break;
@@ -247,6 +257,7 @@ namespace ASI.MGC.FS.Controllers
                             objGlTransaction.OTHERREF_GLT = objBankTransaction.OTHERREF_BT;
                             objGlTransaction.CREDITAMOUNT_GLT = Convert.ToDecimal(allocDetail.Amount);
                             objGlTransaction.NARRATION_GLT = allocDetail.Narration;
+                            objGlTransaction.VARUSER = currentUser;
                             objGlTransaction.GLSTATUS_GLT = "P";
                             _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGlTransaction);
                             _unitOfWork.Save();
@@ -278,9 +289,11 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult SaveCashPayment(FormCollection form, BANKTRANSACTION objBankTransaction)
         {
             string cpNo = "";
+            string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             bool success;
             try
             {
+                objBankTransaction.USER_BT = currentUser;
                 objBankTransaction.STATUS_BT = "P";
                 objBankTransaction.MASTERSTATUS_BT = "M";
                 _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBankTransaction);
@@ -300,6 +313,7 @@ namespace ASI.MGC.FS.Controllers
                 objVoucherMaster.CHQNO_VRPT = objBankTransaction.CHQNO_BT;
                 objVoucherMaster.CHQDATE_VRPT = objBankTransaction.CHQDATE_BT;
                 objVoucherMaster.DOCNO_VRPT = objBankTransaction.DOCNUMBER_BT;
+                objVoucherMaster.USER_VRPT = currentUser;
                 objVoucherMaster.VOUCHER_TYPE = "CP";
                 _unitOfWork.Repository<VOUCHERMASTER_RPT>().Insert(objVoucherMaster);
                 _unitOfWork.Save();
@@ -321,6 +335,7 @@ namespace ASI.MGC.FS.Controllers
                             objApLedger.OTHERREF_ART = objBankTransaction.OTHERREF_BT;
                             objApLedger.NARRATION_ART = allocDetail.Narration;
                             objApLedger.MATCHVALUE_AR = 0;
+                            objApLedger.USER_ART = currentUser;
                             objApLedger.STATUS_ART = "P";
                             _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objApLedger);
                             _unitOfWork.Save();
@@ -346,6 +361,7 @@ namespace ASI.MGC.FS.Controllers
                             objArLedger.OTHERREF_ART = objBankTransaction.OTHERREF_BT;
                             objArLedger.NARRATION_ART = allocDetail.Narration;
                             objArLedger.MATCHVALUE_AR = 0;
+                            objArLedger.USER_ART = currentUser;
                             objArLedger.STATUS_ART = "P";
                             _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArLedger);
                             _unitOfWork.Save();
@@ -373,6 +389,7 @@ namespace ASI.MGC.FS.Controllers
                             objBankTransaction.CLEARANCEDATE_BT = objBankTransaction.CLEARANCEDATE_BT;
                             objBTransaction.NARRATION_BT = allocDetail.Narration;
                             objBTransaction.NOTE_BT = objBankTransaction.NOTE_BT;
+                            objBTransaction.USER_BT = currentUser;
                             objBTransaction.STATUS_BT = "P";
                             _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBTransaction);
                             _unitOfWork.Save();
@@ -386,6 +403,7 @@ namespace ASI.MGC.FS.Controllers
                             objGlTransaction.OTHERREF_GLT = objBankTransaction.OTHERREF_BT;
                             objGlTransaction.DEBITAMOUNT_GLT = Convert.ToDecimal(allocDetail.Amount);
                             objGlTransaction.NARRATION_GLT = allocDetail.Narration;
+                            objGlTransaction.VARUSER = currentUser;
                             objGlTransaction.GLSTATUS_GLT = "P";
                             _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGlTransaction);
                             _unitOfWork.Save();
@@ -409,7 +427,7 @@ namespace ASI.MGC.FS.Controllers
             {
                 success = false;
             }
-            return Json(new {success,cpNo}, JsonRequestBehavior.AllowGet);
+            return Json(new { success, cpNo }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult CashMemoReversal()
@@ -423,10 +441,10 @@ namespace ASI.MGC.FS.Controllers
             throw new NotImplementedException();
         }
 
-        public JsonResult GetCashMemoMrvList(string sidx, string sord, int page, int rows, string mrvCode, string custCode, string custName)
+        public JsonResult GetCashMemoMrvList(string sidx, string sord, int page, int rows, string mrvCode, string jobNo, string custName)
         {
             var repo = _unitOfWork.ExtRepositoryFor<ReportRepository>();
-            var mrvList = repo.sp_GetCashMemoMrvList(page,rows,mrvCode,custCode,custName);
+            var mrvList = repo.sp_GetCashMemoMrvList(page, rows, mrvCode, custName, jobNo);
             return Json(mrvList, JsonRequestBehavior.AllowGet);
         }
     }

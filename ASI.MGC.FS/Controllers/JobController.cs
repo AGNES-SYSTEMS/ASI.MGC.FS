@@ -220,6 +220,7 @@ namespace ASI.MGC.FS.Controllers
         [HttpPost]
         public JsonResult SaveJobEntry(FormCollection form, SALEDETAIL objSaleDetail)
         {
+            string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             try
             {
                 var salesEntry = _unitOfWork.Repository<SALEDETAIL>().Create();
@@ -237,6 +238,7 @@ namespace ASI.MGC.FS.Controllers
                 salesEntry.CASHTOTAL_SD = objSaleDetail.CASHTOTAL_SD;
                 salesEntry.CREDITTOTAL_SD = objSaleDetail.CREDITTOTAL_SD;
                 salesEntry.CREDITACCODE_SD = objSaleDetail.CREDITACCODE_SD;
+                salesEntry.USERID_SD = currentUser;
                 salesEntry.STATUS_SD = "N";
                 _unitOfWork.Repository<SALEDETAIL>().Insert(salesEntry);
                 _unitOfWork.Save();

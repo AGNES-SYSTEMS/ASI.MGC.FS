@@ -107,7 +107,14 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblReceiveFrom" class="control-label col-md-4 small ">Received From</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.NOTE_BT, null, new { ID = "txtPaidTo", Class = "form-control", @required = "required" })
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.NOTE_BT, null, new { ID = "txtPaidTo", Class = "form-control", @required = "required" })
+                                        <span class="input-group-btn">
+                                            <button type="button" id="btnReceivedFrmSearch" class="btn btn-default" data-toggle="modal" data-target="#ReceiverSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -145,9 +152,10 @@
                             <div class="col-md-6 form-group">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label></label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save" disabled="disabled">
+                                <label class="control-label col-md-4 small "></label>
+                                <div class="col-md-8">
+                                    <input type="submit" class="btn btn-success" value="Save" disabled="disabled">
+                                    <button type="button" id="btnNew" class="btn btn-success">New</button>
                                 </div>
                             </div>
                         </div>
@@ -399,7 +407,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div id="docGrid" class="panel-body">
-                                    <table id="tblDocSearch" style="width:100%"></table>
+                                    <table id="tblDocSearch" style="width: 100%"></table>
                                     <div id="docPager"></div>
                                 </div>
                             </div>
@@ -407,6 +415,57 @@
                     </div>
                     <div class="modal-footer">
                         <a href="#" id="btnDocSelect" class="btn btn-success">Select</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="modal fade" id="ReceiverSearchModel" tabindex="-1" role="dialog" aria-labelledby="ReceiverSearchModelLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form class="form-horizontal" id="ReceiverSearchModelform" method="post" data-fv-framework="bootstrap"
+                      data-fv-message="This value is not valid"
+                      data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
+                      data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                      data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title">
+                            Received From Search
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="receivedGrid" class="panel-body">
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("arIdSearch", null, new { ID = "txtArIdSearch", Class = "form-control", @placeholder = "Search Receiver ID here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("arNameSearch", null, new { ID = "txtArNameSearch", Class = "form-control", @placeholder = "Search Receiver Name here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <br /><br />
+                                    <table id="tblReceiverSearch" style="width: 100%"></table>
+                                    <div id="receiverPager"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <a href="#" id="btnReceiverSelect" class="btn btn-success">Select</a>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </form>

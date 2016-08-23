@@ -58,7 +58,7 @@ namespace ASI.MGC.FS.Controllers
             return Json(objEmployee, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetEmployeeDetailsList(string sidx, string sord, int page, int rows, string searchValue)
+        public JsonResult GetEmployeeDetailsList(string sidx, string sord, int page, int rows, string searchValue, string searchById = null, string searchByName = null)
         {
             var empList = (from employees in _unitOfWork.Repository<EMPLOYEEMASTER>().Query().Get()
                            select employees).Select(a => new
@@ -91,6 +91,14 @@ namespace ASI.MGC.FS.Controllers
                                a.VISAISSUEDATE_EM,
                                a.VISAEXPIEARYDATE_EM
                            });
+            }
+            if (!string.IsNullOrEmpty(searchById))
+            {
+                empList = empList.Where(o => o.EMPCODE_EM.Contains(searchById));
+            }
+            if (!string.IsNullOrEmpty(searchByName))
+            {
+                empList = empList.Where(o => o.EMPFNAME_EM.Contains(searchByName) || o.EMPSNAME_EM.Contains(searchByName));
             }
             
             int pageIndex = Convert.ToInt32(page) - 1;

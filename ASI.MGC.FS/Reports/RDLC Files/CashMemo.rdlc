@@ -922,7 +922,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=FORMAT(Sum(Fields!DISCOUNT_IPM.Value, "DS_CashMemo"),"N2")</Value>
+                <Value>=FORMAT(First(Fields!DISCOUNT_IPM.Value, "DS_CashMemo"),"N2")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -988,7 +988,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=FORMAT(Sum(Fields!SHIPPING_IPM.Value, "DS_CashMemo"),"N2")</Value>
+                <Value>=FORMAT(First(Fields!SHIPPING_IPM.Value, "DS_CashMemo"),"N2")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -1054,7 +1054,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=FORMAT(Sum(Fields!AMOUNT_INVNO.Value, "DS_CashMemo") + Sum(Fields!SHIPPING_IPM.Value, "DS_CashMemo") + Sum(Fields!DISCOUNT_IPM.Value, "DS_CashMemo"),"N2")</Value>
+                <Value>=FORMAT(Sum(Fields!AMOUNT_INVNO.Value, "DS_CashMemo") + First(Fields!SHIPPING_IPM.Value, "DS_CashMemo") - First(Fields!DISCOUNT_IPM.Value, "DS_CashMemo"),"N2")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -1676,6 +1676,7 @@
     <DataSource Name="DataSource">
       <Transaction>true</Transaction>
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>7b64278e-d29b-4512-aa2f-2a3266750a57</rd:DataSourceID>
     </DataSource>
   </DataSources>

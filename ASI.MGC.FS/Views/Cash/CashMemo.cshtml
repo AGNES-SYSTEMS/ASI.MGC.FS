@@ -73,7 +73,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblDLNNo" class="control-label col-md-4 small ">DLN No.</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DLNNo", null, new { ID = "txtDLNNo", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                    @Html.TextBox("DLNNo", null, new { ID = "txtDLNNo", Class = "form-control", @Value = ViewBag.dlnNumber, @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -184,9 +184,10 @@
                             <div class="col-md-6 form-group">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label></label>
+                                <label class="control-label col-md-4 small "></label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
+                                    <input type="submit" class="btn btn-success" value="Save">
+                                    <button type="button" id="btnNew" class="btn btn-success">New</button>
                                 </div>
                             </div>
                         </div>
@@ -234,7 +235,7 @@
                                     </div>
                                     <div class="col-md-4 form-group ">
                                         <div class="col-md-11 input-group">
-                                            @Html.TextBox("custCodeSearch", null, new { ID = "txtCustCodeSearch", Class = "form-control", @placeholder = "Search Customer Code here..." })
+                                            @Html.TextBox("jobNoSearch", null, new { ID = "txtJobNoSearch", Class = "form-control", @placeholder = "Search Job Number here..." })
                                             <span class="input-group-addon"><i class="fa fa-search"></i></span>
                                         </div>
                                     </div>
@@ -312,7 +313,7 @@
             debugger;
             if (cashMemoNo !== "" && !isReportGenerated) {
                 toastr.success("Cash Memo is saved Successfully.");
-                openCashMemoReport(cashMemoNo);
+                openCashMemoReport(cashMemoNo.cashMemoNumber);
             }
         }
 

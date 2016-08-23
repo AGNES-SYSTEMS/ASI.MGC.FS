@@ -137,9 +137,10 @@
                             <div class="col-md-6 form-group">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label></label>
+                                <label class="control-label col-md-4 small "></label>
                                 <div class="col-md-8">
-                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save"> &nbsp;
+                                    <input type="submit" class="btn btn-success" value="Save">
+                                    <button type="button" id="btnNew" class="btn btn-success">New</button>
                                 </div>
                             </div>
                         </div>
@@ -270,14 +271,21 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-lg-11 col-md-11">
+                            <div class="col-lg-12">
                                 <div id="prdGrid" class="panel-body">
-                                    <div class="col-md-12 form-group">
-                                        <div class="col-md-12 input-group paddingLeftRight0">
-                                            @Html.TextBox("prdCustomer", null, new { ID = "txtPrdSearch", Class = "form-control" })
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("prdIdSearch", null, new { ID = "txtPrdIdSearch", Class = "form-control", @placeholder = "Search Product ID here..." })
                                             <span class="input-group-addon"><i class="fa fa-search"></i></span>
                                         </div>
                                     </div>
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("prdNameSearch", null, new { ID = "txtPrdNameSearch", Class = "form-control", @placeholder = "Search Product Name here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+
                                     <br /><br />
                                     <table id="tblProductSearch" style="width: 100%"></table>
                                     <div id="prdPager"></div>
@@ -315,11 +323,17 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-lg-11 col-md-11">
+                            <div class="col-lg-12">
                                 <div id="jobGrid" class="panel-body">
-                                    <div class="col-md-12 form-group">
-                                        <div class="col-md-12 input-group paddingLeftRight0">
-                                            @Html.TextBox("searchJob", null, new { ID = "txtJobSearch", Class = "form-control" })
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("jobIdSearch", null, new { ID = "txtJobIdSearch", Class = "form-control", @placeholder = "Search Job ID here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("jobNameSearch", null, new { ID = "txtJobNameSearch", Class = "form-control", @placeholder = "Search Job Name here..." })
                                             <span class="input-group-addon"><i class="fa fa-search"></i></span>
                                         </div>
                                     </div>

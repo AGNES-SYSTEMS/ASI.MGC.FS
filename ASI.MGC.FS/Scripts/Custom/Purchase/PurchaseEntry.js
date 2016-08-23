@@ -31,16 +31,8 @@ var calculateNetAmount = function () {
         totalGridPrdAmount += parseFloat(arrPrdDetails[i]["Amount"]);
     }
     var netAmount = parseFloat(totalGridPrdAmount) + parseFloat($("#txtShipChrg").val()) - parseFloat($("#txtDiscount").val());
-    if (netAmount > 0) {
-        $("#txtNetAmount").val(netAmount);
-    } else {
-        $("#txtNetAmount").val("");
-    }
-    if (totalGridPrdAmount > 0) {
-        $("#txtTotalAmount").val(totalGridPrdAmount);
-    } else {
-        $("#txtTotalAmount").val("");
-    }
+    $("#txtNetAmount").val(netAmount);
+    $("#txtTotalAmount").val(totalGridPrdAmount);
     $("#formPurchaseEntry").formValidation('revalidateField', 'NetAmount');
     $("#formPurchaseEntry").formValidation('revalidateField', 'TotalAmount');
 }
@@ -115,6 +107,9 @@ $(document).ready(function () {
         ],
         multiselect: false,
         caption: "Product Details"
+    });
+    $("#btnNew").on("click", function () {
+        location.reload();
     });
     var searchGridCust = function (searchById, searchByName) {
         var custpostData = $("#tblCustomerSearch").jqGrid("getGridParam", "postData");

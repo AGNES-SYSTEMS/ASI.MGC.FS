@@ -644,7 +644,19 @@ namespace ASI.MGC.FS.Domain.Repositories
                 //exception handling pending
             }
         }
-
+        public string sp_GetLastDeliveryNumber()
+        {
+            string lastDlnNumber = null;
+            try
+            {
+                lastDlnNumber = !string.IsNullOrEmpty(_context.sp_GetLastDeliveryNumber().FirstOrDefault()) ? _context.sp_GetLastDeliveryNumber().FirstOrDefault() : "";
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+            return lastDlnNumber;
+        }
         public void Sp_GetARStatementData(string acCode, DateTime startDate, DateTime endDate)
         {
             try
@@ -667,12 +679,12 @@ namespace ASI.MGC.FS.Domain.Repositories
                 //exception handling pending
             }
         }
-        public IList<sp_GetCashMrvDetails_Result> sp_GetCashMrvDetails(string custCode = null, string custName = null, string telephone = null)
+        public IList<sp_GetCashMrvDetails_Result> sp_GetCashMrvDetails(string custCode = null, string custName = null, string telephone = null, string mrvNo = null, string jobNo = null)
         {
             List<sp_GetCashMrvDetails_Result> lst = null;
             try
             {
-                lst = _context.sp_GetCashMrvDetails(custCode, custName, telephone).ToList();
+                lst = _context.sp_GetCashMrvDetails(custCode, custName, telephone,mrvNo,jobNo).ToList();
             }
             catch (Exception)
             {
@@ -692,12 +704,12 @@ namespace ASI.MGC.FS.Domain.Repositories
                 return false;
             }
         }
-        public IList<sp_GetARMrvDetails_Result> sp_GetARMrvDetails(string custCode = null, string custName = null, string telephone = null)
+        public IList<sp_GetARMrvDetails_Result> sp_GetARMrvDetails(string custCode = null, string custName = null, string telephone = null, string mrvNo = null, string jobNo = null)
         {
             List<sp_GetARMrvDetails_Result> lst = null;
             try
             {
-                lst = _context.sp_GetARMrvDetails(custCode, custName, telephone).ToList();
+                lst = _context.sp_GetARMrvDetails(custCode, custName, telephone,mrvNo, jobNo).ToList();
             }
             catch (Exception)
             {
@@ -730,12 +742,12 @@ namespace ASI.MGC.FS.Domain.Repositories
             }
             return lst;
         }
-        public IList<sp_GetCashMemoMrvList_Result> sp_GetCashMemoMrvList(int pageIndex, int pageSize, string mrvCode = null, string custCode = null, string custName = null)
+        public IList<sp_GetCashMemoMrvList_Result> sp_GetCashMemoMrvList(int pageIndex, int pageSize, string mrvCode = null, string custName = null, string jobNo = null)
         {
             List<sp_GetCashMemoMrvList_Result> lst = null;
             try
             {
-                lst = _context.sp_GetCashMemoMrvList(pageIndex, pageSize, mrvCode, custCode, custName).ToList();
+                lst = _context.sp_GetCashMemoMrvList(pageIndex, pageSize, mrvCode, custName, jobNo).ToList();
             }
             catch (Exception)
             {
@@ -743,12 +755,12 @@ namespace ASI.MGC.FS.Domain.Repositories
             }
             return lst;
         }
-        public IList<sp_GetInvoicePreparationMrvList_Result> sp_GetInvoicePreparationMrvList(int pageIndex, int pageSize, string mrvCode = null, string custCode = null, string custName = null)
+        public IList<sp_GetInvoicePreparationMrvList_Result> sp_GetInvoicePreparationMrvList(int pageIndex, int pageSize, string mrvCode = null, string custName = null, string jobNo = null)
         {
             List<sp_GetInvoicePreparationMrvList_Result> lst = null;
             try
             {
-                lst = _context.sp_GetInvoicePreparationMrvList(pageIndex, pageSize, mrvCode, custCode, custName).ToList();
+                lst = _context.sp_GetInvoicePreparationMrvList(pageIndex, pageSize, mrvCode, custName, jobNo).ToList();
             }
             catch (Exception)
             {

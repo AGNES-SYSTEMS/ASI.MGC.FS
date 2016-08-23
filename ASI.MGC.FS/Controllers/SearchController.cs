@@ -25,17 +25,17 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
-        public JsonResult GetSearchDetails(string custCode, string custName, string telephone, int searchType)
+        public JsonResult GetSearchDetails(string custCode, string custName, string telephone, int searchType, string mrvNo = null, string jobNo = null)
         {
             var repo = _unitOfWork.ExtRepositoryFor<ReportRepository>();
             if (searchType == 0)
             {
-                var arMrvSearchDetails = repo.sp_GetARMrvDetails(custCode, custName, telephone);
+                var arMrvSearchDetails = repo.sp_GetARMrvDetails(custCode, custName, telephone, mrvNo, jobNo);
                 return Json(arMrvSearchDetails, JsonRequestBehavior.AllowGet);
             }
             if (searchType == 1)
             {
-                var cashMrvSearchDetails = repo.sp_GetCashMrvDetails(custCode, custName, telephone);
+                var cashMrvSearchDetails = repo.sp_GetCashMrvDetails(custCode, custName, telephone, mrvNo, jobNo);
                 return Json(cashMrvSearchDetails, JsonRequestBehavior.AllowGet);
             }
             return Json(null, JsonRequestBehavior.AllowGet);

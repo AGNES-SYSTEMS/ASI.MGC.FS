@@ -24,25 +24,33 @@
                         @Html.ValidationSummary(true, "One or More fields are incorrect.", new { @class = "text-danger" })
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <label id="lblFirstName" class="control-label col-md-4 small ">First Name:</label>
+                                <label id="lblUserName" class="control-label col-md-4 small ">User Name:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.FirstName, null, new { ID = "txtFirstName", Class = "form-control", @required = "required" })
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(d => d.UserName, null, new { ID = "txtUserName", Class = "form-control", @required = "required", @readonly = "readonly" })
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#EmployeeSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label id="lblLastName" class="control-label col-md-4 small ">Last Name:</label>
+                                <label id="lblFirstName" class="control-label col-md-4 small ">First Name:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.LastName, null, new { ID = "txtLastName", Class = "form-control", @required = "required" })
+                                    @Html.TextBoxFor(d => d.FirstName, null, new { ID = "txtFirstName", Class = "form-control", @required = "required", @readonly = "readonly" })
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <label id="lblUserName" class="control-label col-md-4 small ">User Name:</label>
+                                <label id="lblLastName" class="control-label col-md-4 small ">Last Name:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.UserName, null, new { ID = "txtUserName", Class = "form-control", @required = "required" })
+                                    @Html.TextBoxFor(d => d.LastName, null, new { ID = "txtLastName", Class = "form-control", @required = "required", @readonly = "readonly" })
                                 </div>
                             </div>
+
                             <div class="col-md-6 form-group">
                                 <label id="lblEmail" class="control-label col-md-4 small ">Email:</label>
                                 <div class="col-md-8 paddingLeftRight0">
@@ -50,7 +58,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label id="lblPassword" class="control-label col-md-4 small ">Password:</label>
@@ -85,121 +92,174 @@
         </fieldset>
     </div>
 </div>
+<div class="container">
+    <div class="modal fade" id="EmployeeSearchModel" tabindex="-1" role="dialog" aria-labelledby="EmployeeSearchModelLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form class="form-horizontal" id="EmployeeSearchModelform" method="post" data-fv-framework="bootstrap"
+                      data-fv-message="This value is not valid"
+                      data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
+                      data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                      data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title">
+                            Employee Details Search
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="empGrid" class="panel-body">
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("empIdSearch", null, new { ID = "txtEmpIdSearch", Class = "form-control", @placeholder = "Search Employee Code here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("empNameSearch", null, new { ID = "txtEmpNameSearch", Class = "form-control", @placeholder = "Search Employee Name here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+
+                                    <br /><br />
+                                    <table id="tblEmployeeSearch" style="width: 100%"></table>
+                                    <div id="empPager"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <a href="#" id="btnEmpSelect" class="btn btn-success">Select</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts {
     <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
     <script src="@Url.Content("~/Scripts/formValidation.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.framework.js")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/AccountManagement/Registration.js")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script>
-        //function OnSuccess(success) {
-        //    if (success) {
-        //        toastr.success("New User has been created Successfully.");
-        //    }
-        //}
+        function OnSuccess(success) {
+            if (success) {
+                toastr.success("New User has been created Successfully.");
+            }
+        }
 
-        //function OnFailure() {
-        //    toastr.error("Sorry! Something went wrong, please try again.");
-        //}
+        function OnFailure() {
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
 
-        $(document).ready(function () {
-            $('#formRegistration').on('init.field.fv', function (e, data) {
-                var $icon = data.element.data('fv.icon'),
-                    options = data.fv.getOptions(),
-                    validators = data.fv.getOptions(data.field).validators;
+        //$(document).ready(function () {
+        //    $('#formRegistration').on('init.field.fv', function (e, data) {
+        //        var $icon = data.element.data('fv.icon'),
+        //            options = data.fv.getOptions(),
+        //            validators = data.fv.getOptions(data.field).validators;
 
-                if (validators.notEmpty && options.icon && options.icon.required) {
-                    $icon.addClass(options.icon.required).show();
-                }
-            }).formValidation({
-                framework: 'bootstrap',
-                icon: {
-                    required: 'fa fa-asterisk',
-                    valid: 'fa fa-check',
-                    invalid: 'fa fa-times',
-                    validating: 'fa fa-refresh'
-                },
-                fields: {
-                    'FirstName': {
-                        validators: {
-                            notEmpty: {
-                                message: 'The first name is required'
-                            }
-                        }
-                    },
-                    'LastName': {
-                        validators: {
-                            notEmpty: {
-                                message: 'The last name is required'
-                            }
-                        }
-                    },
-                    'UserName': {
-                        validators: {
-                            notEmpty: {
-                                message: 'The username is required'
-                            },
-                            stringLength: {
-                                min: 8,
-                                max: 30,
-                                message: 'The username must be more than 6 and less than 30 characters long'
-                            },
-                            regexp: {
-                                regexp: /^[a-zA-Z0-9_\.]+$/,
-                                message: 'The username can only consist of alphabetical, number, dot and underscore'
-                            }
-                        }
-                    },
-                    'Email': {
-                        validators: {
-                            notEmpty: {
-                                message: 'The email address is required'
-                            },
-                            emailAddress: {
-                                message: 'The input is not a valid email address'
-                            }
-                        }
-                    },
-                    Password: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Password is required'
-                            },
-                            identical: {
-                                field: 'ConfirmPassword',
-                                message: 'The password and its confirm are not the same'
-                            }
-                        }
-                    },
-                    ConfirmPassword: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Confirm Password is required'
-                            },
-                            identical: {
-                                field: 'Password',
-                                message: 'The password and its confirm are not the same'
-                            }
-                        }
-                    }
-                }
-            }).on('status.field.fv', function (e, data) {
-                // Remove the required icon when the field updates its status
-                var $icon = data.element.data('fv.icon'),
-                    options = data.fv.getOptions(),                      // Entire options
-                    validators = data.fv.getOptions(data.field).validators; // The field validators
+        //        if (validators.notEmpty && options.icon && options.icon.required) {
+        //            $icon.addClass(options.icon.required).show();
+        //        }
+        //    }).formValidation({
+        //        framework: 'bootstrap',
+        //        icon: {
+        //            required: 'fa fa-asterisk',
+        //            valid: 'fa fa-check',
+        //            invalid: 'fa fa-times',
+        //            validating: 'fa fa-refresh'
+        //        },
+        //        fields: {
+        //            'FirstName': {
+        //                validators: {
+        //                    notEmpty: {
+        //                        message: 'The first name is required'
+        //                    }
+        //                }
+        //            },
+        //            'LastName': {
+        //                validators: {
+        //                    notEmpty: {
+        //                        message: 'The last name is required'
+        //                    }
+        //                }
+        //            },
+        //            'UserName': {
+        //                validators: {
+        //                    notEmpty: {
+        //                        message: 'The username is required'
+        //                    },
+        //                    stringLength: {
+        //                        min: 8,
+        //                        max: 30,
+        //                        message: 'The username must be more than 6 and less than 30 characters long'
+        //                    },
+        //                    regexp: {
+        //                        regexp: /^[a-zA-Z0-9_\.]+$/,
+        //                        message: 'The username can only consist of alphabetical, number, dot and underscore'
+        //                    }
+        //                }
+        //            },
+        //            'Email': {
+        //                validators: {
+        //                    notEmpty: {
+        //                        message: 'The email address is required'
+        //                    },
+        //                    emailAddress: {
+        //                        message: 'The input is not a valid email address'
+        //                    }
+        //                }
+        //            },
+        //            Password: {
+        //                validators: {
+        //                    notEmpty: {
+        //                        message: 'Password is required'
+        //                    },
+        //                    identical: {
+        //                        field: 'ConfirmPassword',
+        //                        message: 'The password and its confirm are not the same'
+        //                    }
+        //                }
+        //            },
+        //            ConfirmPassword: {
+        //                validators: {
+        //                    notEmpty: {
+        //                        message: 'Confirm Password is required'
+        //                    },
+        //                    identical: {
+        //                        field: 'Password',
+        //                        message: 'The password and its confirm are not the same'
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }).on('status.field.fv', function (e, data) {
+        //        // Remove the required icon when the field updates its status
+        //        var $icon = data.element.data('fv.icon'),
+        //            options = data.fv.getOptions(),                      // Entire options
+        //            validators = data.fv.getOptions(data.field).validators; // The field validators
 
-                if (validators.notEmpty && options.icon && options.icon.required) {
-                    $icon.removeClass(options.icon.required).addClass('fa');
-                }
-            }).on('success.field.fv', function (e, data) {
-                if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
-                    data.fv.disableSubmitButtons(true);
-                }
-            }).on('success.form.fv', function (e) {
-                debugger;
-                // Prevent form submission
-                //e.preventDefault();
-            });
-        });
+        //        if (validators.notEmpty && options.icon && options.icon.required) {
+        //            $icon.removeClass(options.icon.required).addClass('fa');
+        //        }
+        //    }).on('success.field.fv', function (e, data) {
+        //        if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
+        //            data.fv.disableSubmitButtons(true);
+        //        }
+        //    }).on('success.form.fv', function () {
+        //        debugger;
+        //        // Prevent form submission
+        //        //e.preventDefault();
+        //    });
+        //});
     </script>
 }

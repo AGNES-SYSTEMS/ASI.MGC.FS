@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using ASI.MGC.FS.Domain;
+using ASI.MGC.FS.Domain.Repositories;
 using ASI.MGC.FS.Model;
 
 namespace ASI.MGC.FS.WebCommon
@@ -63,6 +65,21 @@ namespace ASI.MGC.FS.WebCommon
             return quotCount;
         }
 
+        public static string GetDlnNumber(IUnitOfWork iUnitOfWork)
+        {
+            string dlnNumber = "";
+            var currYear = DateTime.Now.Year.ToString();
+            var repo = iUnitOfWork.ExtRepositoryFor<ReportRepository>();
+            var lastDlnNumber = repo.sp_GetLastDeliveryNumber();
+            if (!string.IsNullOrEmpty(lastDlnNumber))
+            {
+                int dlnCount = Convert.ToInt32(lastDlnNumber.Split('/')[1]) + 1;
+                dlnNumber = "DLN/" + dlnCount +"/"+ currYear;
+
+            }
+            return dlnNumber;
+        }
+
         public static IList<SelectListItem> GetPaymentMethodList()
         {
             IList<SelectListItem> lstPaymentMethods = new List<SelectListItem>();
@@ -74,8 +91,8 @@ namespace ASI.MGC.FS.WebCommon
         public static IList<SelectListItem> GetSaleTypeList()
         {
             IList<SelectListItem> lstSaleType = new List<SelectListItem>();
-            lstSaleType.Add(new SelectListItem { Text = "Product", Value = "Product", Selected = true });
-            lstSaleType.Add(new SelectListItem { Text = "SOW", Value = "SOW" });
+            lstSaleType.Add(new SelectListItem { Text = "SOW", Value = "SOW", Selected = true });
+            lstSaleType.Add(new SelectListItem { Text = "Product", Value = "Product"});
             return lstSaleType;
         }
 
@@ -183,6 +200,21 @@ namespace ASI.MGC.FS.WebCommon
             return revCount;
         }
 
+        public static string GetCurrentUser(IUnitOfWork iUnitOfWork)
+        {
+            string currUserCode = null;
+            var currentUser = (from users in iUnitOfWork.Repository<MESUser>().Query().Get()
+                            where users.Email.Equals(HttpContext.Current.User.Identity.Name)
+                            select users).Select( a=> new
+                            {
+                                a.UserName
+                            }).FirstOrDefault();
+            if (currentUser != null)
+            {
+                currUserCode = currentUser.UserName;
+            }
+            return currUserCode;
+        }
         public static Dictionary<int, string> GetVoucherTypes()
         {
             var voucherDictionary = new Dictionary<int, string>

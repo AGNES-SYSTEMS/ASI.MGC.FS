@@ -1207,7 +1207,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>="AED " &amp; FORMAT(Sum(Fields!CREDITAMOUNT_VRPT.Value, "DS_CashPaymentVoucher"),"N2")</Value>
+                  <Value>="AED " &amp; FORMAT(Fields!CREDITAMOUNT_VRPT.Value,"N2")</Value>
                   <Style />
                 </TextRun>
               </TextRuns>
@@ -1498,6 +1498,7 @@
   <DataSources>
     <DataSource Name="DataSource">
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>975adf4e-cd2a-4cfc-9ec0-9e618695509e</rd:DataSourceID>
     </DataSource>
   </DataSources>

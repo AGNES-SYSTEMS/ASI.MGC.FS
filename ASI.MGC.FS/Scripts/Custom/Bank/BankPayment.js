@@ -1,5 +1,14 @@
 ﻿var arrAllocDetails = [];
 var selectedRowId = "";
+var payerSelect = function (payerId) {
+    debugger;
+    if (payerId) {
+        var ret = jQuery("#tblPayerSearch").jqGrid('getRowData', payerId);
+        $("#txtPaidTo").val(ret.DESCRIPTION_ARM).change();
+        $("#formBankPayment").formValidation('revalidateField', 'NOTE_BT');
+        $('#PayerSearchModel').modal('toggle');
+    }
+};
 var alCodeSelect = function (alCodeId) {
     if (alCodeId) {
         var ret = jQuery("#tblAlCodeSearch").jqGrid('getRowData', alCodeId);
@@ -45,14 +54,10 @@ var calculateNetAmount = function () {
     for (var i = 0; i < arrAllocDetails.length; i++) {
         totalGridPrdAmount += parseFloat(arrAllocDetails[i]["Amount"]);
     }
-    if (totalGridPrdAmount !== 0) {
-        $("#txtAllocationTotal").val(totalGridPrdAmount);
-    } else {
-        $("#txtAllocationTotal").val("");
-    }
+    $("#txtAllocationTotal").val(totalGridPrdAmount);
     $("#formBankPayment").formValidation('revalidateField', 'AllocationTotal');
-}
-var stringfyData = function() {
+};
+var stringfyData = function () {
     $('#tblAllocDetails').trigger('reloadGrid');
     var jsonAllocs = JSON.stringify(arrAllocDetails);
     calculateNetAmount();
@@ -122,6 +127,9 @@ $(document).ready(function () {
         ],
         multiselect: false,
         caption: "Allocation Details"
+    });
+    $("#btnNew").on("click", function () {
+        location.reload();
     });
     $(window).resize(function () {
         var outerwidth = $('#grid').width();
@@ -540,13 +548,76 @@ $(document).ready(function () {
             $("#allocationDetailsModelform").formValidation('revalidateField', 'Narration');
         }
     });
-    var searchGrid = function (searchById, searchByName) {
-        debugger;
-        var postData = $("#tblAccountSearch").jqGrid("getGridParam", "postData");
-        postData["searchById"] = searchById;
-        postData["searchByName"] = searchByName;
-        $("#tblAccountSearch").setGridParam({ postData: postData });
-        $("#tblAccountSearch").trigger("reloadGrid", [{ page: 1 }]);
+    $("#PayerSearchModel").on('show.bs.modal', function () {
+        $("#tblPayerSearch").jqGrid({
+            url: '/Customer/GetApCustomerDetailsList',
+            datatype: "json",
+            height: 150,
+            autoheight: true,
+            styleUI: "Bootstrap",
+            colNames: ['Customer Code', 'Customer Name', ''],
+            colModel: [
+            { key: true, name: 'ARCODE_ARM', index: 'ARCODE_ARM', width: 400 },
+            { key: false, name: 'DESCRIPTION_ARM', index: 'DESCRIPTION_ARM', width: 400 },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options, rowObject) {
+
+                    var markup = "<a %Href%> <i class='fa fa-check-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:payerSelect(&apos;" + rowObject.ARCODE_ARM + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
+            ],
+            rowNum: 40,
+            rowList: [40, 100, 500, 1000],
+            mtype: 'GET',
+            gridview: true,
+            shrinkToFit: true,
+            viewrecords: true,
+            sortorder: "asc",
+            pager: jQuery('#payerPager'),
+            caption: "Payer's List",
+            emptyrecords: "No Data to Display",
+            jsonReader: {
+                root: "rows",
+                page: "page",
+                total: "total",
+                records: "records",
+                repeatitems: false
+            },
+            multiselect: false
+        });
+    });
+    $(window).resize(function () {
+        var outerwidth = $('#payerGrid').width();
+        $('#tblPayerSearch').setGridWidth(outerwidth);
+    });
+    var searchGrid = function (searchById, searchByName, gridType) {
+        if (gridType === "1") {
+            var postData = $("#tblAccountSearch").jqGrid("getGridParam", "postData");
+            postData["searchById"] = searchById;
+            postData["searchByName"] = searchByName;
+            $("#tblAccountSearch").setGridParam({ postData: postData });
+            $("#tblAccountSearch").trigger("reloadGrid", [{ page: 1 }]);
+        } else if (gridType === "2") {
+            postData = $("#tblPayerSearch").jqGrid("getGridParam", "postData");
+            postData["custId"] = searchById;
+            postData["custName"] = searchByName;
+            $("#tblPayerSearch").setGridParam({ postData: postData });
+            $("#tblPayerSearch").trigger("reloadGrid", [{ page: 1 }]);
+        }
     };
     $("#txtAccIdSearch").off().on("keyup", function () {
 
@@ -562,7 +633,31 @@ $(document).ready(function () {
             searchGrid($("#txtAccIdSearch").val(), $("#txtAccNameSearch").val(), "1");
         }
     });
+    $("#txtApIdSearch").off().on("keyup", function () {
 
+        var shouldSearch = $("#txtApIdSearch").val().length >= 1 || $("#txtApIdSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtApIdSearch").val(), $("#txtApNameSearch").val(), "2");
+        }
+    });
+    $("#txtApNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtApNameSearch").val().length >= 3 || $("#txtApNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtApIdSearch").val(), $("#txtApNameSearch").val(), "2");
+        }
+    });
+    $("#btnPayerSelect").on("click", function (e) {
+        debugger;
+        var id = jQuery("#tblPayerSearch").jqGrid('getGridParam', 'selrow');
+        if (id) {
+            var ret = jQuery("#tblPayerSearch").jqGrid('getRowData', id);
+            $("#txtPaidTo").val(ret.DESCRIPTION_ARM).change();
+            $("#formBankPayment").formValidation('revalidateField', 'NOTE_BT');
+            $('#PayerSearchModel').modal('toggle');
+        }
+        e.preventDefault();
+    });
     $('#formBankPayment').on('init.field.fv', function (e, data) {
         var $icon = data.element.data('fv.icon'),
             options = data.fv.getOptions(),

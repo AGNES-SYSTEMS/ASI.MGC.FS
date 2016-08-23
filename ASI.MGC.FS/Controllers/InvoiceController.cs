@@ -29,6 +29,7 @@ namespace ASI.MGC.FS.Controllers
             string currYear = DateTime.Now.Year.ToString();
             string invoiceCode = Convert.ToString("INV/" + Convert.ToString(invCount) + "/" + currYear);
             ViewBag.invoiceCode = invoiceCode;
+            ViewBag.dlnNumber = CommonModelAccessUtility.GetDlnNumber(_unitOfWork);
             var objArApLedger = new AR_AP_LEDGER();
             return View(objArApLedger);
         }
@@ -36,6 +37,7 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult SaveInvoice(FormCollection frm, AR_AP_LEDGER objArApLedger)
         {
             string invNumber = "";
+            string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             try
             {
                 string invoiceNumber = Convert.ToString(objArApLedger.DOCNUMBER_ART);
@@ -43,6 +45,7 @@ namespace ASI.MGC.FS.Controllers
                 var serializer = new JavaScriptSerializer();
                 var lstSaleDetails = serializer.Deserialize<List<SALEDETAIL>>(jsonProductDetails);
                 objArApLedger.STATUS_ART = "P";
+                objArApLedger.USER_ART = currentUser;
                 _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArApLedger);
                 _unitOfWork.Save();
                 var objInvoiceMaster = _unitOfWork.Repository<INVMASTER>().Create();
@@ -99,6 +102,12 @@ namespace ASI.MGC.FS.Controllers
                     objInvoiceDetail.UNIT_INVD = sale.UNIT_SD;
                     _unitOfWork.Repository<INVDETAIL>().Insert(objInvoiceDetail);
                     _unitOfWork.Save();
+
+                    var objJobMaster = _unitOfWork.Repository<JOBMASTER>().FindByID(sale.JOBNO_SD);
+                    objJobMaster.DELEVERNOTENO_JM = Convert.ToString(frm["DLNNo"]);
+                    objJobMaster.JOBSTATUS_JM = "P";
+                    _unitOfWork.Repository<JOBMASTER>().Update(objJobMaster);
+                    _unitOfWork.Save();
                 }
             }
             catch (Exception)
@@ -110,11 +119,13 @@ namespace ASI.MGC.FS.Controllers
 
         private void UpdateSalesStatus(AR_AP_LEDGER objArApLedger)
         {
+            string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             var sales = (from saleList in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
                          where saleList.MRVNO_SD.Equals(objArApLedger.NARRATION_ART)
                          select saleList);
             foreach (var sale in sales.ToList())
             {
+                sale.USERID_SD = currentUser;
                 sale.STATUS_SD = "P";
                 sale.INVNO_SD = objArApLedger.DOCNUMBER_ART;
                 _unitOfWork.Repository<SALEDETAIL>().Update(sale);
@@ -140,10 +151,10 @@ namespace ASI.MGC.FS.Controllers
         {
             return View();
         }
-        public JsonResult GetInvoicePrepMrvList(string sidx, string sord, int page, int rows, string mrvCode = null, string custCode = null, string custName = null)
+        public JsonResult GetInvoicePrepMrvList(string sidx, string sord, int page, int rows, string mrvCode = null, string jobNo = null, string custName = null)
         {
             var repo = _unitOfWork.ExtRepositoryFor<ReportRepository>();
-            var mrvList = repo.sp_GetInvoicePreparationMrvList(page, rows, mrvCode, custCode, custName);
+            var mrvList = repo.sp_GetInvoicePreparationMrvList(page, rows, mrvCode, custName, jobNo);
             return Json(mrvList, JsonRequestBehavior.AllowGet);
         }
     }

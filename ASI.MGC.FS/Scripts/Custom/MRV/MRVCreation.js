@@ -22,17 +22,14 @@ var calculateNetAmount = function () {
     for (var i = 0; i < arrMetarials.length; i++) {
         totalGridPrdAmount += parseFloat(arrMetarials[i]["AMOUNT_MRR"]);
     }
-    if (totalGridPrdAmount !== 0) {
-        $("#txtNetPrdAmount").val(totalGridPrdAmount);
-    } else {
-        $("#txtNetPrdAmount").val("");
-    }
+    $("#txtNetPrdAmount").val(totalGridPrdAmount);
     $('#formMRVCreation').formValidation('revalidateField', 'netPrdAmount');
 }
 var delProduct = function (rowId) {
     if (rowId) {
         $('#tblMetarials').jqGrid('delRowData', rowId);
         $('#tblMetarials').trigger('reloadGrid');
+        stringifyData();
         calculateNetAmount();
     }
 };
@@ -44,6 +41,10 @@ var customerSelect = function (custId) {
         $('#CustomerSearchModel').modal('toggle');
     }
 }
+var stringifyData = function () {
+    var jsonMrvPrds = JSON.stringify(arrMetarials);
+    $('#mrvProds').val(jsonMrvPrds);
+};
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liMrv").addClass("active");
@@ -129,7 +130,9 @@ $(document).ready(function () {
     $("#txtPrCode").change(function () {
         $('#mrvProductModelform').bootstrapValidator('revalidateField', 'PrCode');
     });
-
+    $("#btnNew").on("click", function () {
+        location.reload();
+    });
     $("#txtPrDesc").change(function () {
         $('#mrvProductModelform').bootstrapValidator('revalidateField', 'PrDesc');
     });
@@ -160,40 +163,50 @@ $(document).ready(function () {
         $("#txtAmount").val("0");
         selectedRowId = "";
     }
-    var searchGrid = function (searchValue) {
-        debugger;
-        var postData = $("#tblProductSearch").jqGrid("getGridParam", "postData");
-        postData["prdName"] = searchValue;
-
-        $("#tblProductSearch").setGridParam({ postData: postData });
-        $("#tblProductSearch").trigger("reloadGrid", [{ page: 1 }]);
+    var searchGrid = function (searchById, searchByName, gridType) {
+        if (gridType === "1") {
+            var postData = $("#tblProductSearch").jqGrid("getGridParam", "postData");
+            postData["prdCode"] = searchById;
+            postData["prdName"] = searchByName;
+            $("#tblProductSearch").setGridParam({ postData: postData });
+            $("#tblProductSearch").trigger("reloadGrid", [{ page: 1 }]);
+        }
+        else if (gridType === "2") {
+            postData = $("#tblJobSearch").jqGrid("getGridParam", "postData");
+            postData["jobId"] = searchById;
+            postData["jobName"] = searchByName;
+            $("#tblJobSearch").setGridParam({ postData: postData });
+            $("#tblJobSearch").trigger("reloadGrid", [{ page: 1 }]);
+        }
     };
+    $("#txtPrdIdSearch").off().on("keyup", function () {
 
-    $("#txtPrdSearch").off().on("keyup", function () {
-
-        var shouldSearch = $("#txtPrdSearch").val().length >= 3 || $("#txtPrdSearch").val().length === 0;
+        var shouldSearch = $("#txtPrdIdSearch").val().length >= 1 || $("#txtPrdIdSearch").val().length === 0;
         if (shouldSearch) {
-            searchGrid($("#txtPrdSearch").val());
+            searchGrid($("#txtPrdIdSearch").val(), $("#txtPrdNameSearch").val(), "1");
         }
     });
+    $("#txtPrdNameSearch").off().on("keyup", function () {
 
-    var searchGridJob = function (searchValue) {
-        debugger;
-        var postData = $("#tblJobSearch").jqGrid("getGridParam", "postData");
-        postData["jobSearch"] = searchValue;
-
-        $("#tblJobSearch").setGridParam({ postData: postData });
-        $("#tblJobSearch").trigger("reloadGrid", [{ page: 1 }]);
-    };
-
-    $("#txtJobSearch").off().on("keyup", function () {
-
-        var shouldSearch = $("#txtJobSearch").val().length >= 3 || $("#txtJobSearch").val().length === 0;
+        var shouldSearch = $("#txtPrdNameSearch").val().length >= 3 || $("#txtPrdNameSearch").val().length === 0;
         if (shouldSearch) {
-            searchGridJob($("#txtJobSearch").val());
+            searchGrid($("#txtPrdIdSearch").val(), $("#txtPrdNameSearch").val(), "1");
         }
     });
+    $("#txtJobIdSearch").off().on("keyup", function () {
 
+        var shouldSearch = $("#txtJobIdSearch").val().length >= 1 || $("#txtJobIdSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtJobIdSearch").val(), $("#txtJobNameSearch").val(), "2");
+        }
+    });
+    $("#txtJobNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtJobNameSearch").val().length >= 3 || $("#txtJobNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtJobIdSearch").val(), $("#txtJobNameSearch").val(), "2");
+        }
+    });
     $("#btnCancel").click(function () {
         clearModalForm();
     });
@@ -242,8 +255,7 @@ $(document).ready(function () {
     $("#mrvProductModel").on('hide.bs.modal', function () {
         clearModalForm();
         $('#tblMetarials').trigger('reloadGrid');
-        var jsonMrvPrds = JSON.stringify(arrMetarials);
-        $('#mrvProds').val(jsonMrvPrds);
+        stringifyData();
         calculateNetAmount();
     });
     //$("#txtCustCode").autocomplete({

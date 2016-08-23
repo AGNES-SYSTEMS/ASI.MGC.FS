@@ -4,14 +4,15 @@
     jQuery("#tblSearchDetails").jqGrid({
         datatype: "local",
         height: 350,
-        colNames: ['MRV No', 'Customer Code', 'Customer Name', 'Telephone'],
+        colNames: ['MRV No', 'Job No', 'Customer Code', 'Customer Name', 'Telephone'],
         colModel: [
             { name: 'MRVNO_MRV', index: 'MRVNO_MRV', width: 120, align: "left", sortable: false },
+            { name: 'JOBNO_JM', index: 'JOBNO_JM', width: 120, align: "left", sortable: false },
             { name: 'CUSTOMERCODE_MRV', index: 'CUSTOMERCODE_MRV', width: 120, align: "left", sortable: false },
-            { name: 'CUSTOMERNAME_MRV', index: 'CUSTOMERNAME_MRV', width: 250, align: "left", sortable: false },
+            { name: 'CUSTOMERNAME_MRV', index: 'CUSTOMERNAME_MRV', width: 150, align: "left", sortable: false },
             { name: 'PHONE_MRV', index: 'PHONE_MRV', width: 120, align: "left", sortable: false }
         ],
-        autowidth:true,
+        autowidth: true,
         multiselect: false,
         caption: "Search Details"
     });
@@ -27,7 +28,9 @@
         var custCode = $('#txtCustCode').val();
         var custName = $('#txtCustName').val();
         var telephone = $('#txtTelephone').val();
-        var data = JSON.stringify({ custCode: custCode, custName: custName, telephone: telephone, searchType:$searchType });
+        var jobNo = $('#txtJobNo').val();
+        var mrvNo = $('#txtMrvNo').val();
+        var data = JSON.stringify({ custCode: custCode, custName: custName, telephone: telephone, searchType: $searchType, mrvNo: mrvNo, jobNo: jobNo });
         $.ajax({
             url: '/Search/GetSearchDetails',
             contentType: "application/json; charset=utf-8",

@@ -17,6 +17,17 @@ var bankSelect = function (bankId) {
         $('#BankSearchModel').modal('toggle');
     }
 };
+var evaluateFields = function() {
+    $("#formCashMemo").formValidation('revalidateField', 'MRVNo');
+    $("#formCashMemo").formValidation('revalidateField', 'CustCode');
+    $("#formCashMemo").formValidation('revalidateField', 'CustDetail');
+    $("#formCashMemo").formValidation('revalidateField', 'DEBITAMOUT_BT');
+    $("#formCashMemo").formValidation('revalidateField', 'TotalCashAmount');
+    $("#formCashMemo").formValidation('revalidateField', 'TotalDiscount');
+    $("#formCashMemo").formValidation('revalidateField', 'TotalShipCharges');
+    $("#formCashMemo").formValidation('revalidateField', 'BankDetails');
+    $("#formCashMemo").formValidation('revalidateField', 'BankAmount');
+};
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liCashMemo").addClass("active");
@@ -65,6 +76,9 @@ jQuery("#tblSaleDetails").jqGrid({
     ],
     multiselect: false,
     caption: "Sale Details"
+});
+$("#btnNew").on("click", function () {
+    location.reload();
 });
 $(window).resize(function () {
     var outerwidthMrv = $('#gridMRV').width();
@@ -190,6 +204,7 @@ function getSaleDetailByMRV() {
             $('#hdnSaleDetails').val(jsonMrvPrds);
         },
         complete: function () {
+            evaluateFields();
         },
         error: function () {
         }
@@ -248,37 +263,40 @@ $("#BankSearchModel").on('show.bs.modal', function () {
         multiselect: false
     });
 });
+$("#BankSearchModel").on('hide.bs.modal', function () {
+    evaluateFields();
+});
 $(window).resize(function () {
     var outerwidth = $('#bankGrid').width();
     $('#tblBankSearch').setGridWidth(outerwidth);
 });
-var searchGrid = function (mrvNo, custCode, custName) {
+var searchGrid = function (mrvNo, jobNo, custName) {
     var postData = $("#tblMRVSearch").jqGrid("getGridParam", "postData");
     postData["mrvCode"] = mrvNo;
-    postData["custCode"] = custCode;
+    postData["jobNo"] = jobNo;
     postData["custName"] = custName;
     $("#tblMRVSearch").setGridParam({ postData: postData });
     $("#tblMRVSearch").trigger("reloadGrid", [{ page: 1 }]);
 };
-$("#txtCustCodeSearch").off().on("keyup", function () {
+$("#txtJobNoSearch").off().on("keyup", function () {
 
-    var shouldSearch = $("#txtCustCodeSearch").val().length >= 1 || $("#txtCustCodeSearch").val().length === 0;
+    var shouldSearch = $("#txtJobNoSearch").val().length >= 1 || $("#txtJobNoSearch").val().length === 0;
     if (shouldSearch) {
-        searchGrid($("#txtMrvSearch").val(), $("#txtCustCodeSearch").val(), $("#txtCustNameSearch").val());
+        searchGrid($("#txtMrvSearch").val(), $("#txtJobNoSearch").val(), $("#txtCustNameSearch").val());
     }
 });
 $("#txtCustNameSearch").off().on("keyup", function () {
 
     var shouldSearch = $("#txtCustNameSearch").val().length >= 3 || $("#txtCustNameSearch").val().length === 0;
     if (shouldSearch) {
-        searchGrid($("#txtMrvSearch").val(),$("#txtCustCodeSearch").val(), $("#txtCustNameSearch").val());
+        searchGrid($("#txtMrvSearch").val(),$("#txtJobNoSearch").val(), $("#txtCustNameSearch").val());
     }
 });
 $("#txtMrvSearch").off().on("keyup", function () {
 
     var shouldSearch = $("#txtMrvSearch").val().length >= 3 || $("#txtMrvSearch").val().length === 0;
     if (shouldSearch) {
-        searchGrid($("#txtMrvSearch").val(), $("#txtCustCodeSearch").val(), $("#txtCustNameSearch").val());
+        searchGrid($("#txtMrvSearch").val(), $("#txtJobNoSearch").val(), $("#txtCustNameSearch").val());
     }
 });
 $("#btnBankSelect").on("click", function (e) {

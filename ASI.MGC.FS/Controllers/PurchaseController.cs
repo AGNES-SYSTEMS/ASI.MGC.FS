@@ -149,6 +149,7 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult SavePurchaseReturn(FormCollection frm)
         {
             string purchaseReturnNo = "";
+            string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             try
             {
                 purchaseReturnNo = Convert.ToString(frm["DocNo"]);
@@ -164,6 +165,7 @@ namespace ASI.MGC.FS.Controllers
                 objArApLedger.NARRATION_ART = Convert.ToString(frm["Note"]);
                 objArApLedger.CREDITAMOUNT_ART = 0;
                 objArApLedger.DEBITAMOUNT_ART = Convert.ToInt32(frm["NetAmount"]);
+                objArApLedger.USER_ART = currentUser;
                 objArApLedger.STATUS_ART = "P";
                 _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArApLedger);
                 _unitOfWork.Save();
@@ -177,6 +179,7 @@ namespace ASI.MGC.FS.Controllers
                 objPurchase.DEBITAMOUNT_GLT = 0;
                 objPurchase.OTHERREF_GLT = Convert.ToString(frm["Invoice"]);
                 objPurchase.NARRATION_GLT = Convert.ToString(frm["Note"]);
+                objPurchase.VARUSER = currentUser;
                 objPurchase.GLSTATUS_GLT = "P";
                 _unitOfWork.Repository<GLTRANSACTION1>().Insert(objPurchase);
                 _unitOfWork.Save();
@@ -215,6 +218,7 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult SavePurchaseEntry(PurchaseModel objPurchaseModal, FormCollection frm)
         {
             string purchaseNo = "";
+            string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             try
             {
                 purchaseNo = Convert.ToString(frm["DocNo"]);
@@ -230,6 +234,7 @@ namespace ASI.MGC.FS.Controllers
                 objArApLedger.NARRATION_ART = Convert.ToString(frm["Note"]);
                 objArApLedger.DEBITAMOUNT_ART = 0;
                 objArApLedger.CREDITAMOUNT_ART = Convert.ToInt32(frm["NetAmount"]);
+                objArApLedger.USER_ART = currentUser;
                 objArApLedger.STATUS_ART = "P";
                 _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArApLedger);
                 _unitOfWork.Save();
@@ -243,6 +248,7 @@ namespace ASI.MGC.FS.Controllers
                 objPurchase.CREDITAMOUNT_GLT = 0;
                 objPurchase.OTHERREF_GLT = Convert.ToString(frm["Invoice"]);
                 objPurchase.NARRATION_GLT = Convert.ToString(frm["Note"]);
+                objPurchase.VARUSER = currentUser;
                 objPurchase.GLSTATUS_GLT = "P";
                 _unitOfWork.Repository<GLTRANSACTION1>().Insert(objPurchase);
                 _unitOfWork.Save();
@@ -259,6 +265,7 @@ namespace ASI.MGC.FS.Controllers
                     objShippingChrg.OTHERREF_GLT = Convert.ToString(frm["Invoice"]);
                     objShippingChrg.NARRATION_GLT = Convert.ToString(frm["Note"]);
                     objShippingChrg.GLSTATUS_GLT = "P";
+                    objShippingChrg.VARUSER = currentUser;
                     _unitOfWork.Repository<GLTRANSACTION1>().Insert(objShippingChrg);
                     _unitOfWork.Save();
                 }
@@ -274,6 +281,7 @@ namespace ASI.MGC.FS.Controllers
                     objDiscount.DEBITAMOUNT_GLT = 0;
                     objDiscount.OTHERREF_GLT = Convert.ToString(frm["Invoice"]);
                     objDiscount.NARRATION_GLT = Convert.ToString(frm["Note"]);
+                    objDiscount.VARUSER = currentUser;
                     objDiscount.GLSTATUS_GLT = "P";
                     _unitOfWork.Repository<GLTRANSACTION1>().Insert(objDiscount);
                     _unitOfWork.Save();

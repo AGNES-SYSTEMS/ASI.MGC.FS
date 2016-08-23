@@ -72,23 +72,26 @@ namespace ASI.MGC.FS.Controllers
 
         private void InsertJobData(MRVREFERENCE prd, MATERIALRECEIPTMASTER objMrv, List<string> listMrvJobCode)
         {
-            var jobCount = (1001 + CommonModelAccessUtility.GetJobMasterCount(_unitOfWork));
-            string currYear = DateTime.Now.Year.ToString();
-            string jobCode = Convert.ToString("JOB/" + Convert.ToString(jobCount) + "/" + currYear);
-            var jobMasterObj = _unitOfWork.Repository<JOBMASTER>().Create();
-            jobMasterObj.JOBNO_JM = jobCode;
-            jobMasterObj.DOCDATE_JM = objMrv.DOC_DATE_MRV;
-            jobMasterObj.MRVNO_JM = objMrv.MRVNO_MRV;
-            jobMasterObj.EMPCODE_JM = objMrv.EXECODE_MRV;
-            jobMasterObj.JOBCODE_JM = prd.JOBID_MRR;
-            jobMasterObj.JOBSTATUS_JM = prd.JOBSTATUS_MRR;
-            jobMasterObj.PRODID_JIM = prd.PRODID_MRR;
-            jobMasterObj.PRODQTY_JM = prd.QTY_MRR;
-            _unitOfWork.Repository<JOBMASTER>().Insert(jobMasterObj);
-            _unitOfWork.Save();
+            for (int i = 0; i < prd.QTY_MRR; i++)
+            {
+                var jobCount = (1001 + CommonModelAccessUtility.GetJobMasterCount(_unitOfWork));
+                string currYear = DateTime.Now.Year.ToString();
+                string jobCode = Convert.ToString("JOB/" + Convert.ToString(jobCount) + "/" + currYear);
+                var jobMasterObj = _unitOfWork.Repository<JOBMASTER>().Create();
+                jobMasterObj.JOBNO_JM = jobCode;
+                jobMasterObj.DOCDATE_JM = objMrv.DOC_DATE_MRV;
+                jobMasterObj.MRVNO_JM = objMrv.MRVNO_MRV;
+                jobMasterObj.EMPCODE_JM = objMrv.EXECODE_MRV;
+                jobMasterObj.JOBCODE_JM = prd.JOBID_MRR;
+                jobMasterObj.JOBSTATUS_JM = prd.JOBSTATUS_MRR;
+                jobMasterObj.PRODID_JIM = prd.PRODID_MRR;
+                jobMasterObj.PRODQTY_JM = prd.QTY_MRR;
+                _unitOfWork.Repository<JOBMASTER>().Insert(jobMasterObj);
+                _unitOfWork.Save();
+                listMrvJobCode.Add(jobMasterObj.JOBNO_JM);
+                SaveJobReortObject(jobMasterObj);
+            }
             SaveMrvReportChildObject(prd);
-            SaveJobReortObject(jobMasterObj);
-            listMrvJobCode.Add(jobMasterObj.JOBNO_JM);
         }
 
         public JsonResult GetMrvList(string sidx, string sord, int page, int rows)

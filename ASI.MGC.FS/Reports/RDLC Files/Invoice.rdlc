@@ -910,7 +910,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Microsoft.VisualBasic.Strings.FORMAT(Sum(Fields!DISCOUNT_IPM.Value, "DS_Invoice"), "N2")</Value>
+                <Value>=Microsoft.VisualBasic.Strings.FORMAT(First(Fields!DISCOUNT_IPM.Value, "DS_Invoice"), "N2")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -976,7 +976,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Microsoft.VisualBasic.Strings.FORMAT(Sum(Fields!SHIPPING_IPM.Value, "DS_Invoice"), "N2")</Value>
+                <Value>=Microsoft.VisualBasic.Strings.FORMAT(First(Fields!SHIPPING_IPM.Value, "DS_Invoice"), "N2")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -1042,7 +1042,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Microsoft.VisualBasic.Strings.FORMAT(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice") + Sum(Fields!SHIPPING_IPM.Value, "DS_Invoice") - Sum(Fields!DISCOUNT_IPM.Value, "DS_Invoice") , "N2")</Value>
+                <Value>=Microsoft.VisualBasic.Strings.FORMAT(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice") + First(Fields!SHIPPING_IPM.Value, "DS_Invoice") - First(Fields!DISCOUNT_IPM.Value, "DS_Invoice") , "N2")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -1858,6 +1858,7 @@
     <DataSource Name="DataSource">
       <Transaction>true</Transaction>
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>2585510d-a4d7-414c-8d51-397b908205b0</rd:DataSourceID>
     </DataSource>
   </DataSources>

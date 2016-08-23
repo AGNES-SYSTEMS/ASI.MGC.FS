@@ -38,10 +38,8 @@ var calculateNetAmount = function () {
     for (var i = 0; i < quotProducts.length; i++) {
         totalGridPrdAmount += parseFloat(quotProducts[i]["Amount"]);
     }
-    if (totalGridPrdAmount !== 0) {
-        $("#txtNetPrdAmount").val(totalGridPrdAmount);
-        $("#formQuotationEntry").formValidation('revalidateField', 'NetPrdAmount');
-    }
+    $("#txtNetPrdAmount").val(totalGridPrdAmount);
+    $("#formQuotationEntry").formValidation('revalidateField', 'NetPrdAmount');
 };
 var stringifyData = function () {
     var quotPrds = $('#tblQuotDetails').jqGrid('getGridParam', 'data');
@@ -114,6 +112,9 @@ $(document).ready(function () {
         ],
         multiselect: false,
         caption: "Product Details"
+    });
+    $("#btnNew").on("click", function () {
+        location.reload();
     });
     $(window).resize(function () {
         var outerwidth = $('#grid').width();
