@@ -239,11 +239,12 @@
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
 
-        function OnSuccess(invNumber) {
+        function OnSuccess(reprtParams) {
             debugger;
-            if (invNumber !== "") {
+            if (reprtParams !== "") {
                 toastr.success("Invoice is generated Successfully.");
-                openInvReport(invNumber);
+                openInvReport(reprtParams[0]);
+                openDeliveryReport(reprtParams[1]);
             }
         }
 
@@ -256,7 +257,11 @@
             window.open(mrvReportUrl);
             toastr.info("Invoice Report is open in new window.");
         }
-
+        function openDeliveryReport(dlnNo) {
+            var dlnReportUrl = "/MgcReports/DeliveryNote?dlNo=" + dlnNo;
+            window.open(dlnReportUrl);
+            toastr.info("Cash Memo Report is generated in new window.");
+        }
     </script>
 }
 

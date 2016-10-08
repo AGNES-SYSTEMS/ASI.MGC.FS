@@ -36,11 +36,16 @@ namespace ASI.MGC.FS.Controllers
 
         public JsonResult SaveInvoice(FormCollection frm, AR_AP_LEDGER objArApLedger)
         {
-            string invNumber = "";
+            
+            List<string> reportParams = new List<string>();
             string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             try
             {
-                string invoiceNumber = Convert.ToString(objArApLedger.DOCNUMBER_ART);
+                var mrvNumber = Convert.ToString(objArApLedger.NARRATION_ART);
+                var invNumber = Convert.ToString(objArApLedger.DOCNUMBER_ART);
+                reportParams.Add(invNumber);
+                var dlnNumber = Convert.ToString(frm["DLNNo"]);
+                reportParams.Add(dlnNumber);
                 string jsonProductDetails = frm["saleDetail"];
                 var serializer = new JavaScriptSerializer();
                 var lstSaleDetails = serializer.Deserialize<List<SALEDETAIL>>(jsonProductDetails);
@@ -49,15 +54,15 @@ namespace ASI.MGC.FS.Controllers
                 _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArApLedger);
                 _unitOfWork.Save();
                 var objInvoiceMaster = _unitOfWork.Repository<INVMASTER>().Create();
-                objInvoiceMaster.INVNO_IPM = invoiceNumber;
+                objInvoiceMaster.INVNO_IPM = invNumber;
                 objInvoiceMaster.INVDATE_IPM = Convert.ToDateTime(DateTime.Now.ToShortDateString());
                 objInvoiceMaster.CUSTNAME_IPM = Convert.ToString(frm["CustDetail"]);
                 objInvoiceMaster.SHIPPING_IPM = Convert.ToInt32(frm["TotalShipCharges"]);
                 objInvoiceMaster.DISCOUNT_IPM = Convert.ToInt32(frm["TotalDiscount"]);
                 objInvoiceMaster.INVTYPE_IPM = "INV";
+                objInvoiceMaster.LPONO_IPM = _unitOfWork.Repository<MATERIALRECEIPTMASTER>().FindByID(mrvNumber).NOTES_MRV;
                 _unitOfWork.Repository<INVMASTER>().Insert(objInvoiceMaster);
                 _unitOfWork.Save();
-                invNumber = objInvoiceMaster.INVNO_IPM;
 
                 UpdateSalesStatus(objArApLedger);
 
@@ -80,33 +85,45 @@ namespace ASI.MGC.FS.Controllers
                     }
 
                     var objInvoiceDetail = _unitOfWork.Repository<INVDETAIL>().Create();
+                    var objDeleveryNote = _unitOfWork.Repository<DELEVERYNOTE_RPT>().Create();
+                    objDeleveryNote.DLNR_DLNRPT = Convert.ToString(frm["DLNNo"]);
+                    objDeleveryNote.QTY_DLNRPT = sale.QTY_SD;
+                    objDeleveryNote.JOBNO_DLNRPT = sale.JOBNO_SD;
+                    objDeleveryNote.DLNTYPE_DLNRPT = "CM";
                     if (!string.IsNullOrEmpty(sale.PRCODE_SD))
                     {
                         objInvoiceDetail.CODE_INVD = sale.PRCODE_SD;
+                        objDeleveryNote.ID_DLNRPT = sale.PRCODE_SD;
                         var objPrDetail =
                             _unitOfWork.Repository<PRODUCTMASTER>().FindByID(sale.PRCODE_SD).DESCRIPTION_PM;
                         objInvoiceDetail.DESCRIPTION_INVD = objPrDetail;
+                        objDeleveryNote.DESCRIPTION_DLNRPT = objPrDetail;
                     }
                     else
                     {
                         objInvoiceDetail.CODE_INVD = sale.JOBID_SD;
+                        objDeleveryNote.ID_DLNRPT = sale.JOBID_SD;
                         var objJobDetail =
                             _unitOfWork.Repository<JOBIDREFERENCE>().FindByID(sale.JOBID_SD).JOBDESCRIPTION_JR;
                         objInvoiceDetail.DESCRIPTION_INVD = objJobDetail;
+                        objDeleveryNote.DESCRIPTION_DLNRPT = objJobDetail;
                     }
                     objInvoiceDetail.QTY_INVD = sale.QTY_SD;
                     objInvoiceDetail.RATE_INVD = sale.RATE_SD;
                     objInvoiceDetail.AMOUNT_INVNO = (objInvoiceDetail.QTY_INVD*objInvoiceDetail.RATE_INVD);
-                    objInvoiceDetail.INVNO_INVD = invoiceNumber;
+                    objInvoiceDetail.INVNO_INVD = invNumber;
                     objInvoiceDetail.JOBNO_INVD = sale.JOBNO_SD;
                     objInvoiceDetail.UNIT_INVD = sale.UNIT_SD;
                     _unitOfWork.Repository<INVDETAIL>().Insert(objInvoiceDetail);
                     _unitOfWork.Save();
 
                     var objJobMaster = _unitOfWork.Repository<JOBMASTER>().FindByID(sale.JOBNO_SD);
+                    objDeleveryNote.SERVICEPROID_DLNRPT = objJobMaster.PRODID_JIM;
                     objJobMaster.DELEVERNOTENO_JM = Convert.ToString(frm["DLNNo"]);
                     objJobMaster.JOBSTATUS_JM = "P";
                     _unitOfWork.Repository<JOBMASTER>().Update(objJobMaster);
+                    _unitOfWork.Save();
+                    _unitOfWork.Repository<DELEVERYNOTE_RPT>().Insert(objDeleveryNote);
                     _unitOfWork.Save();
                 }
             }
@@ -114,7 +131,7 @@ namespace ASI.MGC.FS.Controllers
             {
                 // ignored
             }
-           return Json(invNumber, JsonRequestBehavior.AllowGet);
+            return Json(reportParams, JsonRequestBehavior.AllowGet);
         }
 
         private void UpdateSalesStatus(AR_AP_LEDGER objArApLedger)

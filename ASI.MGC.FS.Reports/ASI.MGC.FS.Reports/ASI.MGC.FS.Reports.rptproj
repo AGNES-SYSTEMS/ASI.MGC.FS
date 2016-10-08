@@ -22,6 +22,10 @@
       <FullPath>ARSummary.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>BalanceSheet.rdl</Name>
+      <FullPath>BalanceSheet.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>BankPaymentVoucher.rdl</Name>
       <FullPath>BankPaymentVoucher.rdl</FullPath>
     </ProjectItem>
@@ -106,6 +110,10 @@
       <FullPath>JobWiseStatement.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>JournalVoucher.rdl</Name>
+      <FullPath>JournalVoucher.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>MetarialReceiptVocher.rdl</Name>
       <FullPath>MetarialReceiptVocher.rdl</FullPath>
     </ProjectItem>
@@ -116,6 +124,10 @@
     <ProjectItem>
       <Name>PendingMrvDetails.rdl</Name>
       <FullPath>PendingMrvDetails.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>ProfitLossStatement.rdl</Name>
+      <FullPath>ProfitLossStatement.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>PurchaseRegister.rdl</Name>
@@ -138,36 +150,28 @@
       <FullPath>ServiceItems.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>StockJournal.rdl</Name>
+      <FullPath>StockJournal.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>StockLedger.rdl</Name>
       <FullPath>StockLedger.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>StockReport.rdl</Name>
-      <FullPath>StockReport.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>JournalVoucher.rdl</Name>
-      <FullPath>JournalVoucher.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>StockReceipt.rdl</Name>
       <FullPath>StockReceipt.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>StockJournal.rdl</Name>
-      <FullPath>StockJournal.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>BalanceSheet.rdl</Name>
-      <FullPath>BalanceSheet.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>ProfitLossStatement.rdl</Name>
-      <FullPath>ProfitLossStatement.rdl</FullPath>
+      <Name>StockReport.rdl</Name>
+      <FullPath>StockReport.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>TrialBalance.rdl</Name>
       <FullPath>TrialBalance.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>MetarialReceiptVoucher_JobDetailsSubReport.rdl</Name>
+      <FullPath>MetarialReceiptVoucher_JobDetailsSubReport.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

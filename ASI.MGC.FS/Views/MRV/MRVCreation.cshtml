@@ -74,7 +74,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblMRVTel" class="control-label col-md-4 small ">Telephone No:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.PHONE_MRV, null, new { ID = "txtMRVTel", Class = "form-control", @required = "required" })
+                                    @Html.TextBoxFor(d => d.PHONE_MRV, null, new { ID = "txtMRVTel", Class = "form-control", @minlength = "10", @maxlength = "10", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
@@ -86,20 +86,25 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-group">
+                                <label id="lblMRVTel" class="control-label col-md-4 small ">Second Phone No:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.PHONE2_MRV, null, new { ID = "txtMRVTel2", Class = "form-control", @minlength = "10", @maxlength = "10"})
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
                                 <label id="lblDeleDate" class="control-label col-md-4 small ">DeleDate:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBoxFor(d => d.DELE_DATE_MRV, null, new { ID = "txtDeleDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @required = "required" })
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-6 form-group">
                                 <label id="lblExeCode" class="control-label col-md-4 small ">Exe. Code:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBoxFor(d => d.EXECODE_MRV, null, new { ID = "txtExeCode", Class = "form-control", @Value = "GN" })
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row">
                             <div class="col-md-6 form-group">
                                 <label id="lblLpoRemarks" class="control-label col-md-4 small ">Lpo/Remarks:</label>
                                 <div class="col-md-8 paddingLeftRight0">

@@ -133,6 +133,7 @@ namespace ASI.MGC.FS.Controllers
                 objVoucherMaster.DOCNO_VRPT = objBankTransaction.DOCNUMBER_BT;
                 objVoucherMaster.USER_VRPT = currentUser;
                 objVoucherMaster.VOUCHER_TYPE = "BR";
+                objVoucherMaster.DrawerBr_VRPT = objBankTransaction.BENACCOUNT_BT;
                 _unitOfWork.Repository<VOUCHERMASTER_RPT>().Insert(objVoucherMaster);
                 _unitOfWork.Save();
 

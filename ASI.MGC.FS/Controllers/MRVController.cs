@@ -60,6 +60,7 @@ namespace ASI.MGC.FS.Controllers
 
         private void SaveMrvProducts(List<MRVREFERENCE> lstMrvProducts, MATERIALRECEIPTMASTER objMrv, List<string> listMrvJobCode)
         {
+            _unitOfWork.Repository<MRV_REPORT_CHD>().Truncate("MRV_REPORT_CHD");
             foreach (var prd in lstMrvProducts)
             {
                 prd.MRVNO_MRR = objMrv.MRVNO_MRV;
@@ -196,6 +197,7 @@ namespace ASI.MGC.FS.Controllers
 
         private void SaveMrvReportObject(MATERIALRECEIPTMASTER objMrv)
         {
+            _unitOfWork.Repository<MRVNO_REPORT>().Truncate("MRVNO_REPORT");
             var mrvReportObj = _unitOfWork.Repository<MRVNO_REPORT>().Create();
             mrvReportObj.MRVNO_RPT = objMrv.MRVNO_MRV;
             mrvReportObj.MRVDATE_RPT = objMrv.DOC_DATE_MRV;

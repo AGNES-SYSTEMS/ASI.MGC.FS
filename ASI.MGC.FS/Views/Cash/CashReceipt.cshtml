@@ -67,7 +67,7 @@
                                 <label id="lblBankCode" class="control-label col-md-4 small ">Bank Code:</label>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        @Html.TextBoxFor(m => m.BANKCODE_BT, null, new { ID = "txtBankCode", Class = "form-control", @readonly = "readonly" })
+                                        @Html.TextBoxFor(m => m.BANKCODE_BT, null, new { ID = "txtBankCode", @Value = "CSHAN", Class = "form-control", @readonly = "readonly" })
                                         <span class="input-group-btn">
                                             <button type="button" id="btnBankSearch" class="btn btn-default" data-toggle="modal" data-target="#BankSearchModel">
                                                 <i class="fa fa-search"></i>
@@ -87,7 +87,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblBankName" class="control-label col-md-4 small ">Bank Name</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("BankName", null, new { ID = "txtBankName", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                    @Html.TextBox("BankName", null, new { ID = "txtBankName", @Value = "CASH IN HAND", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">

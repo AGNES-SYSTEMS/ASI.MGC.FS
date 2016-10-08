@@ -149,13 +149,13 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblQty" class="control-label col-md-4 small ">Quantity:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.QTY_SD, null, new { ID = "txtQty", Class = "form-control", @required = "required" })
+                                    @Html.TextBoxFor(d => d.QTY_SD, null, new { ID = "txtQty", @Value = "1", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblUnit" class="control-label col-md-4 small ">Unit:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.UNIT_SD, null, new { ID = "txtUnit", Class = "form-control" })
+                                    @Html.TextBoxFor(d => d.UNIT_SD, null, new { ID = "txtUnit",@Value = "NOS", Class = "form-control" })
                                 </div>
                             </div>
                         </div>
@@ -538,7 +538,7 @@
     <script src="@Url.Content("~/Scripts/Custom/Job/JobEntry.js")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
-        var clearPartial = function() {
+        var clearPartial = function () {
             $("#txtSowid").val("");
             $("#txtSowDetail").val("");
             $("#txtPrCode").val("");

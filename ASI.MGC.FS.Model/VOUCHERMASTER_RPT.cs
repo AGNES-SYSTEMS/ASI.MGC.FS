@@ -30,5 +30,6 @@ namespace ASI.MGC.FS.Model
         public string USER_VRPT { get; set; }
         public string DOCNO_VRPT { get; set; }
         public string VOUCHER_TYPE { get; set; }
+        public string DrawerBr_VRPT { get; set; }
     }
 }

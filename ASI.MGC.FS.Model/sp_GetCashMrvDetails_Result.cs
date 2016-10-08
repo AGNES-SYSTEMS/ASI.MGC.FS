@@ -17,5 +17,6 @@ namespace ASI.MGC.FS.Model
         public string CUSTOMERCODE_MRV { get; set; }
         public string CUSTOMERNAME_MRV { get; set; }
         public string PHONE_MRV { get; set; }
+        public string JOBNO_JM { get; set; }
     }
 }

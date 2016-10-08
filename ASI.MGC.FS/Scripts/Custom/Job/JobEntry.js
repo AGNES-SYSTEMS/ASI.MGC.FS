@@ -384,6 +384,13 @@ $(document).ready(function () {
                     $custName = jobMrvDetails.custName;
                     $("#txtMRVProdCode").val(jobMrvDetails.prdCode);
                     $("#txtMRVProdDetail").val(jobMrvDetails.prdDetail);
+                    if (jobMrvDetails.custCode === "CASH") {
+                        $("#ddlPayMode").val("Cash").change();
+                        $("#ddlPayMode").prop("disabled", true);
+                    } else {
+                        $("#ddlPayMode").val("Credit").change();
+                        $("#ddlPayMode").prop("disabled", true);
+                    }
                 },
                 complete: function () {
                 },

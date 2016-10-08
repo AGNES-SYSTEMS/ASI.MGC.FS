@@ -148,7 +148,7 @@
                                     <label id="lblBankCode" class="control-label col-md-4 small ">Bank Code</label>
                                     <div class="col-md-8">
                                         <div class="input-group">
-                                            @Html.TextBoxFor(m => m.BANKCODE_BT, null, new { ID = "txtBankCode", Class = "form-control", @readonly = "readonly" })
+                                            @Html.TextBoxFor(m => m.BANKCODE_BT, null, new { ID = "txtBankCode", Class = "form-control", @Value = "CSHAN", @readonly = "readonly" })
                                             @Html.ValidationMessage("BankCode")
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#BankSearchModel">
@@ -161,7 +161,7 @@
                                 <div class="col-md-6 form-group">
                                     <label id="lblBankDetails" class="control-label col-md-4 small ">BankDetails</label>
                                     <div class="col-md-8 paddingLeftRight0">
-                                        @Html.TextBox("BankDetails", null, new { ID = "txtBankDetails", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                        @Html.TextBox("BankDetails", null, new { ID = "txtBankDetails", Class = "form-control", @Value = "CASH IN HAND", @readonly = "readonly", @required = "required" })
                                     </div>
                                 </div>
                             </div>
@@ -217,13 +217,13 @@
                     </div>
                     <div class="modal-body">
                         @*<div class="row">
-                            <div class="col-lg-12">
-                                <div id="MrvGrid" class="panel-body">
-                                    <table id="tblMRVSearch" style="width: 100%"></table>
-                                    <div id="Pager"></div>
+                                <div class="col-lg-12">
+                                    <div id="MrvGrid" class="panel-body">
+                                        <table id="tblMRVSearch" style="width: 100%"></table>
+                                        <div id="Pager"></div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>*@
+                            </div>*@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div id="MrvGrid" class="panel-body">
@@ -309,11 +309,12 @@
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
         var isReportGenerated = false;
-        function OnSuccess(cashMemoNo) {
+        function OnSuccess(reprtParams) {
             debugger;
-            if (cashMemoNo !== "" && !isReportGenerated) {
+            if (reprtParams !== "" && !isReportGenerated) {
                 toastr.success("Cash Memo is saved Successfully.");
-                openCashMemoReport(cashMemoNo.cashMemoNumber);
+                openCashMemoReport(reprtParams.reportParams[0]);
+                openDeliveryReport(reprtParams.reportParams[1]);
             }
         }
 
@@ -322,8 +323,15 @@
         }
 
         function openCashMemoReport(cmNo) {
-            var mrvReportUrl = "/MgcReports/CashMemo?cmNo=" + cmNo;
-            window.open(mrvReportUrl);
+            var cmReportUrl = "/MgcReports/CashMemo?cmNo=" + cmNo;
+            window.open(cmReportUrl);
+            isReportGenerated = true;
+            toastr.info("Cash Memo Report is generated in new window.");
+        }
+
+        function openDeliveryReport(dlnNo) {
+            var dlnReportUrl = "/MgcReports/DeliveryNote?dlNo=" + dlnNo;
+            window.open(dlnReportUrl);
             isReportGenerated = true;
             toastr.info("Cash Memo Report is generated in new window.");
         }

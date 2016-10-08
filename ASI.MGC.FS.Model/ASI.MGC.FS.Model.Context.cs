@@ -1103,5 +1103,14 @@ namespace ASI.MGC.FS.Model
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("sp_GetLastDeliveryNumber");
         }
+    
+        public virtual ObjectResult<rpt_MRV_Job_Details_Result> rpt_MRV_Job_Details(string mRVNO)
+        {
+            var mRVNOParameter = mRVNO != null ?
+                new ObjectParameter("MRVNO", mRVNO) :
+                new ObjectParameter("MRVNO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_MRV_Job_Details_Result>("rpt_MRV_Job_Details", mRVNOParameter);
+        }
     }
 }

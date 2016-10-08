@@ -11,12 +11,13 @@ namespace ASI.MGC.FS.Model
 {
     using System;
     
-    public partial class sp_GetCashMemoMrvList_Result
+    public partial class rpt_MRV_Job_Details_Result
     {
-        public string MRVNO_MRV { get; set; }
-        public string CUSTOMERCODE_MRV { get; set; }
-        public string CUSTOMERNAME_MRV { get; set; }
-        public Nullable<System.DateTime> DOC_DATE_MRV { get; set; }
-        public string JOBNO_SD { get; set; }
+        public string JOBNO_JM { get; set; }
+        public string JOBCODE_JM { get; set; }
+        public string PRODID_JIM { get; set; }
+        public string DESCRIPTION_PM { get; set; }
+        public string JOBDESCRIPTION_JR { get; set; }
+        public string JOBSTATUS_JM { get; set; }
     }
 }

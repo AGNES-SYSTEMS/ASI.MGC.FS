@@ -11,6 +11,8 @@ namespace ASI.MGC.FS.Reports
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ReportViewer1.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
+            this.ReportViewer1.LocalReport.Refresh();
             if (!Page.IsPostBack)
             {
                 IUnitOfWork iuWork = new UnitOfWork();
@@ -18,14 +20,12 @@ namespace ASI.MGC.FS.Reports
                 UtilityMethods uMethods = new UtilityMethods();
                 var mrvNo = Request.QueryString["MRVNO"];
                 var dtMaterialReceiptVoucher = uMethods.ConvertTo(repo.RptMaterialReceiptVoucher(mrvNo));
-
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\MetarialReceiptVocher.rdlc";
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("MRVNO", mrvNo));
-                var rds = new ReportDataSource("DS_MaterialReceiptVoucher", dtMaterialReceiptVoucher);
                 ReportViewer1.LocalReport.DataSources.Clear();
-                ReportViewer1.LocalReport.DataSources.Add(rds);
-                ReportViewer1.DataBind();
+                ReportViewer1.LocalReport.DataSources.Add(new ReportDataSource("DS_MaterialReceiptVoucher", dtMaterialReceiptVoucher));
                 ReportViewer1.LocalReport.Refresh();
+                ReportViewer1.DataBind();
                 //Response.Clear();
                 //byte[] bytes = ReportViewer1.LocalReport.Render("PDF");
                 //var fileNamewithType = "inline;filename=" + mrvNo + ".pdf";
@@ -34,6 +34,16 @@ namespace ASI.MGC.FS.Reports
                 //Response.BinaryWrite(bytes);
                 //Response.End();
             }
+        }
+
+        public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
+        {
+            IUnitOfWork iuWork = new UnitOfWork();
+            ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
+            UtilityMethods uMethods = new UtilityMethods();
+            var mrvNo = Request.QueryString["MRVNO"];
+            var dtMrvJobDetails = uMethods.ConvertTo(repo.Rpt_MrvJobDetails(mrvNo));
+            e.DataSources.Add(new ReportDataSource("DS_MRVJobDetails", dtMrvJobDetails));
         }
     }
 }

@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using ASI.MGC.FS.Model;
+
 namespace ASI.MGC.FS.DataAccess
 {
     using System;
@@ -14,7 +16,6 @@ namespace ASI.MGC.FS.DataAccess
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    using ASI.MGC.FS.Model;
     
     public partial class ASI_MGC_FSEntities : DbContext
     {
@@ -1103,6 +1104,15 @@ namespace ASI.MGC.FS.DataAccess
         public virtual ObjectResult<string> sp_GetLastDeliveryNumber()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("sp_GetLastDeliveryNumber");
+        }
+    
+        public virtual ObjectResult<rpt_MRV_Job_Details_Result> rpt_MRV_Job_Details(string mRVNO)
+        {
+            var mRVNOParameter = mRVNO != null ?
+                new ObjectParameter("MRVNO", mRVNO) :
+                new ObjectParameter("MRVNO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_MRV_Job_Details_Result>("rpt_MRV_Job_Details", mRVNOParameter);
         }
     }
 }

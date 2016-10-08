@@ -408,6 +408,7 @@
           <Property Name="EXECODE_MRV" Type="nvarchar" MaxLength="5" />
           <Property Name="NOTES_MRV" Type="nvarchar" MaxLength="50" />
           <Property Name="STATUS_MRV" Type="nvarchar" MaxLength="1" />
+          <Property Name="PHONE2_MRV" Type="nvarchar" MaxLength="12" />
         </EntityType>
         <EntityType Name="MESRoles">
           <Key>
@@ -814,6 +815,7 @@
           <Property Name="USER_VRPT" Type="nvarchar" MaxLength="15" />
           <Property Name="DOCNO_VRPT" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="VOUCHER_TYPE" Type="nvarchar" MaxLength="5" />
+          <Property Name="DrawerBr_VRPT" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <Association Name="BANKTRANSACTION$BANKMASTERBANKTRANSACTION">
           <End Role="BANKMASTER" Type="Self.BANKMASTER" Multiplicity="0..1" />
@@ -1057,6 +1059,9 @@
         </Function>
         <Function Name="rpt_JournalVoucher" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="rpt_MaterialReceiptVoucher" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MRVNO" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="rpt_MRV_Job_Details" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MRVNO" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="rpt_MrvStatement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1731,6 +1736,9 @@
             <Parameter Name="JOBNO" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_GetLastDeliveryNumber" ReturnType="Collection(String)" />
+          <FunctionImport Name="rpt_MRV_Job_Details" ReturnType="Collection(ASI_MGC_FSModel.rpt_MRV_Job_Details_Result)">
+          <Parameter Name="MRVNO" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="rpt_BankPayment_Result">
           <Property Type="String" Name="COMPANYNAME_CM" Nullable="true" MaxLength="50" />
@@ -2750,6 +2758,7 @@
           <Property Name="STATUS_MRV" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="JOBMASTERs" Relationship="ASI_MGC_FSModel.JOBMASTER_MATERIALRECEIPTMASTERJOBMASTER" FromRole="MATERIALRECEIPTMASTER" ToRole="JOBMASTER" />
           <NavigationProperty Name="MRVREFERENCEs" Relationship="ASI_MGC_FSModel.MRVREFERENCE_MATERIALRECEIPTMASTERMRVREFERENCE" FromRole="MATERIALRECEIPTMASTER" ToRole="MRVREFERENCE" />
+          <Property Name="PHONE2_MRV" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MESRole">
           <Key>
@@ -3170,6 +3179,7 @@
           <Property Name="USER_VRPT" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="DOCNO_VRPT" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="VOUCHER_TYPE" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="DrawerBr_VRPT" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="BANKTRANSACTION_BANKMASTERBANKTRANSACTION">
           <End Type="ASI_MGC_FSModel.BANKMASTER" Role="BANKMASTER" Multiplicity="0..1" />
@@ -3373,6 +3383,7 @@
           <Property Type="String" Name="CUSTOMERCODE_MRV" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="DOC_DATE_MRV" Nullable="true" />
+          <Property Type="String" Name="JOBNO_SD" Nullable="true" MaxLength="15" />
         </ComplexType>
         <ComplexType Name="sp_GetInvoicePrepMrvList1_Result">
           <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
@@ -3385,6 +3396,7 @@
           <Property Type="String" Name="CUSTOMERCODE_MRV" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="DOC_DATE_MRV" Nullable="true" />
+          <Property Type="String" Name="JOBNO_SD" Nullable="true" MaxLength="15" />
         </ComplexType>
         <ComplexType Name="sp_GetARMrvDetails_Result">
           <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
@@ -3399,6 +3411,14 @@
           <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="PHONE_MRV" Nullable="true" MaxLength="12" />
           <Property Type="String" Name="JOBNO_JM" Nullable="false" MaxLength="15" />
+        </ComplexType>
+        <ComplexType Name="rpt_MRV_Job_Details_Result">
+          <Property Type="String" Name="JOBNO_JM" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="JOBCODE_JM" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="PRODID_JIM" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="DESCRIPTION_PM" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="JOBDESCRIPTION_JR" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="JOBSTATUS_JM" Nullable="true" MaxLength="1" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4637,6 +4657,7 @@
           <EntitySetMapping Name="MATERIALRECEIPTMASTERs">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.MATERIALRECEIPTMASTER">
               <MappingFragment StoreEntitySet="MATERIALRECEIPTMASTER">
+                <ScalarProperty Name="PHONE2_MRV" ColumnName="PHONE2_MRV" />
                 <ScalarProperty Name="STATUS_MRV" ColumnName="STATUS_MRV" />
                 <ScalarProperty Name="NOTES_MRV" ColumnName="NOTES_MRV" />
                 <ScalarProperty Name="EXECODE_MRV" ColumnName="EXECODE_MRV" />
@@ -5069,6 +5090,7 @@
           <EntitySetMapping Name="VOUCHERMASTER_RPT">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.VOUCHERMASTER_RPT">
               <MappingFragment StoreEntitySet="VOUCHERMASTER_RPT">
+                <ScalarProperty Name="DrawerBr_VRPT" ColumnName="DrawerBr_VRPT" />
                 <ScalarProperty Name="VOUCHER_TYPE" ColumnName="VOUCHER_TYPE" />
                 <ScalarProperty Name="DOCNO_VRPT" ColumnName="DOCNO_VRPT" />
                 <ScalarProperty Name="USER_VRPT" ColumnName="USER_VRPT" />
@@ -5201,6 +5223,7 @@
                 <ScalarProperty Name="CUSTOMERCODE_MRV" ColumnName="CUSTOMERCODE_MRV" />
                 <ScalarProperty Name="CUSTOMERNAME_MRV" ColumnName="CUSTOMERNAME_MRV" />
                 <ScalarProperty Name="DOC_DATE_MRV" ColumnName="DOC_DATE_MRV" />
+                <ScalarProperty Name="JOBNO_SD" ColumnName="JOBNO_SD" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -5211,6 +5234,7 @@
                 <ScalarProperty Name="CUSTOMERCODE_MRV" ColumnName="CUSTOMERCODE_MRV" />
                 <ScalarProperty Name="CUSTOMERNAME_MRV" ColumnName="CUSTOMERNAME_MRV" />
                 <ScalarProperty Name="DOC_DATE_MRV" ColumnName="DOC_DATE_MRV" />
+                <ScalarProperty Name="JOBNO_SD" ColumnName="JOBNO_SD" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -5238,6 +5262,18 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_GetLastDeliveryNumber" FunctionName="ASI_MGC_FSModel.Store.sp_GetLastDeliveryNumber" />
+          <FunctionImportMapping FunctionImportName="rpt_MRV_Job_Details" FunctionName="ASI_MGC_FSModel.Store.rpt_MRV_Job_Details">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.rpt_MRV_Job_Details_Result">
+                <ScalarProperty Name="JOBNO_JM" ColumnName="JOBNO_JM" />
+                <ScalarProperty Name="JOBCODE_JM" ColumnName="JOBCODE_JM" />
+                <ScalarProperty Name="PRODID_JIM" ColumnName="PRODID_JIM" />
+                <ScalarProperty Name="DESCRIPTION_PM" ColumnName="DESCRIPTION_PM" />
+                <ScalarProperty Name="JOBDESCRIPTION_JR" ColumnName="JOBDESCRIPTION_JR" />
+                <ScalarProperty Name="JOBSTATUS_JM" ColumnName="JOBSTATUS_JM" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

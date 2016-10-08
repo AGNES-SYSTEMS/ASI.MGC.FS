@@ -51,11 +51,14 @@ namespace ASI.MGC.FS.Controllers
         {
             bool success;
             string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
-            string cashMemoNumber = "";
+            List<string> reportParams = new List<string>();
             try
             {
                 var mrvNumber = Convert.ToString(frm["MRVNo"]);
-                cashMemoNumber = objBankTransaction.DOCNUMBER_BT;
+                var cashMemoNumber = objBankTransaction.DOCNUMBER_BT;
+                var dlnNumber = Convert.ToString(frm["DLNNo"]);
+                reportParams.Add(cashMemoNumber);
+                reportParams.Add(dlnNumber);
                 string jsonProductDetails = frm["saleDetails"];
                 var serializer = new JavaScriptSerializer();
                 var lstSaleDetails = serializer.Deserialize<List<SALEDETAIL>>(jsonProductDetails);
@@ -94,19 +97,28 @@ namespace ASI.MGC.FS.Controllers
                     }
 
                     var objInvoiceDetail = _unitOfWork.Repository<INVDETAIL>().Create();
+                    var objDeleveryNote = _unitOfWork.Repository<DELEVERYNOTE_RPT>().Create();
+                    objDeleveryNote.DLNR_DLNRPT = Convert.ToString(frm["DLNNo"]);
+                    objDeleveryNote.QTY_DLNRPT = sale.QTY_SD;
+                    objDeleveryNote.JOBNO_DLNRPT = sale.JOBNO_SD;
+                    objDeleveryNote.DLNTYPE_DLNRPT = "CM";
                     if (!string.IsNullOrEmpty(sale.PRCODE_SD))
                     {
                         objInvoiceDetail.CODE_INVD = sale.PRCODE_SD;
+                        objDeleveryNote.ID_DLNRPT = sale.PRCODE_SD;
                         var objPrDetail =
                             _unitOfWork.Repository<PRODUCTMASTER>().FindByID(sale.PRCODE_SD).DESCRIPTION_PM;
                         objInvoiceDetail.DESCRIPTION_INVD = objPrDetail;
+                        objDeleveryNote.DESCRIPTION_DLNRPT = objPrDetail;
                     }
                     else
                     {
                         objInvoiceDetail.CODE_INVD = sale.JOBID_SD;
+                        objDeleveryNote.ID_DLNRPT = sale.JOBID_SD;
                         var objJobDetail =
                             _unitOfWork.Repository<JOBIDREFERENCE>().FindByID(sale.JOBID_SD).JOBDESCRIPTION_JR;
                         objInvoiceDetail.DESCRIPTION_INVD = objJobDetail;
+                        objDeleveryNote.DESCRIPTION_DLNRPT = objJobDetail;
                     }
                     objInvoiceDetail.QTY_INVD = sale.QTY_SD;
                     objInvoiceDetail.RATE_INVD = sale.RATE_SD;
@@ -125,9 +137,12 @@ namespace ASI.MGC.FS.Controllers
                     _unitOfWork.Save();
 
                     var objJobMaster = _unitOfWork.Repository<JOBMASTER>().FindByID(sale.JOBNO_SD);
+                    objDeleveryNote.SERVICEPROID_DLNRPT = objJobMaster.PRODID_JIM;
                     objJobMaster.DELEVERNOTENO_JM = Convert.ToString(frm["DLNNo"]);
                     objJobMaster.JOBSTATUS_JM = "P";
                     _unitOfWork.Repository<JOBMASTER>().Update(objJobMaster);
+                    _unitOfWork.Save();
+                    _unitOfWork.Repository<DELEVERYNOTE_RPT>().Insert(objDeleveryNote);
                     _unitOfWork.Save();
                 }
                 success = true;
@@ -136,7 +151,7 @@ namespace ASI.MGC.FS.Controllers
             {
                 success = false;
             }
-            return Json(new { cashMemoNumber, success }, JsonRequestBehavior.AllowGet);
+            return Json(new { reportParams, success }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

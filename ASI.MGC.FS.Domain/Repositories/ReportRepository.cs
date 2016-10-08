@@ -632,7 +632,19 @@ namespace ASI.MGC.FS.Domain.Repositories
                 //exception handling pending
             }
         }
-
+        public List<rpt_MRV_Job_Details_Result> Rpt_MrvJobDetails(string mrvNo)
+        {
+            List<rpt_MRV_Job_Details_Result> lst = null;
+            try
+            {
+                lst = _context.rpt_MRV_Job_Details(mrvNo).ToList();
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+            return lst;
+        }
         public void Sp_GetVoucherDetails(string vType, string vCode)
         {
             try

@@ -143,11 +143,13 @@ $(document).ready(function () {
             height: 150,
             autoheight: true,
             styleUI: "Bootstrap",
-            colNames: ['MRV No', 'Customer', 'Customer Details',''],
+            colNames: [
+                'MRV No', 'Job No', 'Customer', 'Customer Details',''],
             colModel: [
-            { key: true, name: 'MRVNO_MRV', index: 'MRVNO_MRV', width: 200 },
-            { key: false, name: 'CUSTOMERCODE_MRV', index: 'CUSTOMERCODE_MRV', width: 200 },
-            { key: false, name: 'CUSTOMERNAME_MRV', index: 'CUSTOMERNAME_MRV', width: 400 },
+            { key: true, name: 'MRVNO_MRV', index: 'MRVNO_MRV', width: 150 },
+            { key: false, name: 'JOBNO_SD', index: 'JOBNO_SD', width: 200 },
+            { key: false, name: 'CUSTOMERCODE_MRV', index: 'CUSTOMERCODE_MRV', width: 150 },
+            { key: false, name: 'CUSTOMERNAME_MRV', index: 'CUSTOMERNAME_MRV', width: 300 },
             {
                 name: "action",
                 align: "center",
