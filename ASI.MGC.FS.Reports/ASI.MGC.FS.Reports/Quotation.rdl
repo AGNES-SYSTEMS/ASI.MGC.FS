@@ -269,21 +269,21 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="QTY_QPRM">
+                    <Textbox Name="Textbox3">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!QTY_QPRM.Value</Value>
+                              <Value />
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>QTY_QPRM</rd:DefaultName>
+                      <rd:DefaultName>Textbox3</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -490,7 +490,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=FORMAT(Fields!RATE_QREF.Value,"N2")</Value>
+                                            <Value>=Fields!RATE_QREF.Value</Value>
                                             <Style />
                                           </TextRun>
                                         </TextRuns>
@@ -520,7 +520,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=FORMAT(Fields!AMOUNT_QREF.Value,"N2")</Value>
+                                            <Value>=Fields!AMOUNT_QREF.Value</Value>
                                             <Style />
                                           </TextRun>
                                         </TextRuns>
@@ -557,7 +557,17 @@
                       <TablixRowHierarchy>
                         <TablixMembers>
                           <TablixMember>
-                            <Group Name="Details1" />
+                            <Group Name="Details1">
+                              <Filters>
+                                <Filter>
+                                  <FilterExpression>=Fields!DESCRIPTION_PM.Value</FilterExpression>
+                                  <Operator>Equal</Operator>
+                                  <FilterValues>
+                                    <FilterValue>=Fields!DESCRIPTION_PM.Value</FilterValue>
+                                  </FilterValues>
+                                </Filter>
+                              </Filters>
+                            </Group>
                           </TablixMember>
                         </TablixMembers>
                       </TablixRowHierarchy>
@@ -610,7 +620,7 @@
         <Top>1.29in</Top>
         <Left>0.026in</Left>
         <Height>0.75in</Height>
-        <Width>7.72in</Width>
+        <Width>7.71937in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -632,7 +642,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>NOTE_QM</rd:DefaultName>
-        <Top>5.79in</Top>
+        <Top>2.54in</Top>
         <Left>0.17in</Left>
         <Height>0.25in</Height>
         <Width>5.1in</Width>
@@ -654,7 +664,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=FORMAT(Sum(Fields!AMOUNT_QREF.Value, "DS_Quotation"),"N2")</Value>
+                <Value>=Sum(Fields!AMOUNT_QREF.Value, "DS_Quotation")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -662,7 +672,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>AMOUNT_QREF1</rd:DefaultName>
-        <Top>5.48in</Top>
+        <Top>2.23in</Top>
         <Left>6.4in</Left>
         <Height>0.25in</Height>
         <Width>1.23in</Width>
@@ -692,7 +702,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>AMOUNT_QREF2</rd:DefaultName>
-        <Top>5.48in</Top>
+        <Top>2.23in</Top>
         <Left>0.17in</Left>
         <Height>0.25in</Height>
         <Width>5.45in</Width>
@@ -726,7 +736,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox37</rd:DefaultName>
-        <Top>6.16in</Top>
+        <Top>2.91in</Top>
         <Left>0.17in</Left>
         <Height>0.25in</Height>
         <Width>3.25in</Width>
@@ -756,7 +766,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox38</rd:DefaultName>
-        <Top>6.47in</Top>
+        <Top>3.22in</Top>
         <Left>0.17in</Left>
         <Height>0.25in</Height>
         <Width>5.1in</Width>
@@ -791,7 +801,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox39</rd:DefaultName>
-        <Top>6.71in</Top>
+        <Top>3.46in</Top>
         <Left>2.228in</Left>
         <Height>0.25in</Height>
         <Width>3.1in</Width>
@@ -1110,7 +1120,7 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>7in</Height>
+    <Height>4in</Height>
     <Style />
   </Body>
   <Width>7.8in</Width>
@@ -1214,15 +1224,6 @@
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
-        <Line Name="Line2">
-          <Height>0in</Height>
-          <Width>7.77083in</Width>
-          <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
-          </Style>
-        </Line>
         <Image Name="Image2">
           <Source>Embedded</Source>
           <Value>MESFooter</Value>
@@ -1231,7 +1232,6 @@
           <Left>0.05in</Left>
           <Height>0.79in</Height>
           <Width>7.7in</Width>
-          <ZIndex>1</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1252,7 +1252,6 @@
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="DataSource">
-      <Transaction>true</Transaction>
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>c4d731af-a50f-455a-b27d-d98fd83afe53</rd:DataSourceID>

@@ -572,7 +572,6 @@
     <PageHeader>
       <Height>1.10417in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
-      <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
         <Textbox Name="Textbox1">
           <CanGrow>true</CanGrow>
@@ -912,6 +911,7 @@
     <DataSource Name="DataSource">
       <Transaction>true</Transaction>
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>ffeb6820-3c61-45bc-b28c-0579ec5ad952</rd:DataSourceID>
     </DataSource>
   </DataSources>

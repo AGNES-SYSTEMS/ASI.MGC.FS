@@ -164,7 +164,7 @@ namespace ASI.MGC.FS.Controllers
                 objArApLedger.OTHERREF_ART = Convert.ToString(frm["Invoice"]);
                 objArApLedger.NARRATION_ART = Convert.ToString(frm["Note"]);
                 objArApLedger.CREDITAMOUNT_ART = 0;
-                objArApLedger.DEBITAMOUNT_ART = Convert.ToInt32(frm["NetAmount"]);
+                objArApLedger.DEBITAMOUNT_ART = Convert.ToDecimal(frm["NetAmount"]);
                 objArApLedger.USER_ART = currentUser;
                 objArApLedger.STATUS_ART = "P";
                 _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArApLedger);
@@ -233,7 +233,7 @@ namespace ASI.MGC.FS.Controllers
                 objArApLedger.OTHERREF_ART = Convert.ToString(frm["Invoice"]);
                 objArApLedger.NARRATION_ART = Convert.ToString(frm["Note"]);
                 objArApLedger.DEBITAMOUNT_ART = 0;
-                objArApLedger.CREDITAMOUNT_ART = Convert.ToInt32(frm["NetAmount"]);
+                objArApLedger.CREDITAMOUNT_ART = Convert.ToDecimal(frm["NetAmount"]);
                 objArApLedger.USER_ART = currentUser;
                 objArApLedger.STATUS_ART = "P";
                 _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArApLedger);
@@ -253,7 +253,7 @@ namespace ASI.MGC.FS.Controllers
                 _unitOfWork.Repository<GLTRANSACTION1>().Insert(objPurchase);
                 _unitOfWork.Save();
 
-                if (!string.IsNullOrEmpty(frm["ShipChrg"]) && Convert.ToInt32(frm["ShipChrg"]) != 0)
+                if (!string.IsNullOrEmpty(frm["ShipChrg"]) && Convert.ToDecimal(frm["ShipChrg"]) != 0)
                 {
                     var objShippingChrg = _unitOfWork.Repository<GLTRANSACTION1>().Create();
                     objShippingChrg.DOCNUMBER_GLT = Convert.ToString(frm["DocNo"]);
@@ -270,7 +270,7 @@ namespace ASI.MGC.FS.Controllers
                     _unitOfWork.Save();
                 }
 
-                if (!string.IsNullOrEmpty(frm["Discount"]) && Convert.ToInt32(frm["Discount"]) != 0)
+                if (!string.IsNullOrEmpty(frm["Discount"]) && Convert.ToDecimal(frm["Discount"]) != 0)
                 {
                     var objDiscount = _unitOfWork.Repository<GLTRANSACTION1>().Create();
                     objDiscount.DOCNUMBER_GLT = Convert.ToString(frm["DocNo"]);

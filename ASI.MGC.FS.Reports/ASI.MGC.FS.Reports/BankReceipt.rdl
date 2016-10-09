@@ -19,7 +19,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
-        <Top>1.08in</Top>
+        <Top>0.455in</Top>
         <Left>5.1in</Left>
         <Height>0.25in</Height>
         <Width>2.21in</Width>
@@ -52,7 +52,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>1.08in</Top>
+        <Top>0.455in</Top>
         <Left>4.2in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
@@ -84,7 +84,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
-        <Top>1.35in</Top>
+        <Top>0.725in</Top>
         <Left>5.1in</Left>
         <Height>0.25in</Height>
         <Width>2.21in</Width>
@@ -118,7 +118,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>1.35in</Top>
+        <Top>0.725in</Top>
         <Left>4.2in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
@@ -150,7 +150,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
-        <Top>1.63in</Top>
+        <Top>1.005in</Top>
         <Left>5.1in</Left>
         <Height>0.25in</Height>
         <Width>2.21in</Width>
@@ -184,7 +184,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>1.63in</Top>
+        <Top>1.005in</Top>
         <Left>4.2in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
@@ -216,7 +216,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
-        <Top>1.91in</Top>
+        <Top>1.285in</Top>
         <Left>5.1in</Left>
         <Height>0.25in</Height>
         <Width>2.21in</Width>
@@ -250,7 +250,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>1.91in</Top>
+        <Top>1.285in</Top>
         <Left>4.2in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
@@ -284,7 +284,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox23</rd:DefaultName>
-        <Top>2.74257in</Top>
+        <Top>2.11757in</Top>
         <Height>0.25in</Height>
         <Width>2in</Width>
         <ZIndex>8</ZIndex>
@@ -317,7 +317,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox23</rd:DefaultName>
-        <Top>3.03424in</Top>
+        <Top>2.40924in</Top>
         <Height>0.25in</Height>
         <Width>2in</Width>
         <ZIndex>9</ZIndex>
@@ -350,7 +350,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox23</rd:DefaultName>
-        <Top>3.3259in</Top>
+        <Top>2.7009in</Top>
         <Height>0.25in</Height>
         <Width>2in</Width>
         <ZIndex>10</ZIndex>
@@ -383,7 +383,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox23</rd:DefaultName>
-        <Top>3.61757in</Top>
+        <Top>2.99257in</Top>
         <Height>0.25in</Height>
         <Width>2in</Width>
         <ZIndex>11</ZIndex>
@@ -416,7 +416,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox23</rd:DefaultName>
-        <Top>3.90924in</Top>
+        <Top>3.28424in</Top>
         <Height>0.25in</Height>
         <Width>2in</Width>
         <ZIndex>12</ZIndex>
@@ -445,7 +445,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox28</rd:DefaultName>
-        <Top>2.74257in</Top>
+        <Top>2.11757in</Top>
         <Left>2.06944in</Left>
         <Height>0.25in</Height>
         <Width>2.4375in</Width>
@@ -477,7 +477,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox28</rd:DefaultName>
-        <Top>3.3259in</Top>
+        <Top>2.7009in</Top>
         <Left>2.06944in</Left>
         <Height>0.25in</Height>
         <Width>2.4375in</Width>
@@ -507,7 +507,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox28</rd:DefaultName>
-        <Top>3.03424in</Top>
+        <Top>2.40924in</Top>
         <Left>2.06944in</Left>
         <Height>0.25in</Height>
         <Width>2.4375in</Width>
@@ -537,7 +537,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox28</rd:DefaultName>
-        <Top>3.61757in</Top>
+        <Top>2.99257in</Top>
         <Left>2.06944in</Left>
         <Height>0.25in</Height>
         <Width>3.9375in</Width>
@@ -559,7 +559,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!ACCDESCRIPTION_VRPT.Value, "DS_BankReceipt")</Value>
+                <Value>=First(Fields!DrawerBr_VRPT.Value, "DS_BankReceipt")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -567,7 +567,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox28</rd:DefaultName>
-        <Top>3.90924in</Top>
+        <Top>3.28424in</Top>
         <Left>2.05556in</Left>
         <Height>0.25in</Height>
         <Width>2.4375in</Width>
@@ -599,7 +599,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
-        <Top>2.19in</Top>
+        <Top>1.565in</Top>
         <Left>5.1in</Left>
         <Height>0.25in</Height>
         <Width>2.21in</Width>
@@ -633,7 +633,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>2.19in</Top>
+        <Top>1.565in</Top>
         <Left>4.2in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
@@ -665,7 +665,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
-        <Top>2.46in</Top>
+        <Top>1.835in</Top>
         <Left>5.1in</Left>
         <Height>0.25in</Height>
         <Width>2.21in</Width>
@@ -699,7 +699,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>2.46in</Top>
+        <Top>1.835in</Top>
         <Left>4.2in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
@@ -733,7 +733,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox35</rd:DefaultName>
-        <Top>6.65in</Top>
+        <Top>3.65in</Top>
         <Left>5.45in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
@@ -767,7 +767,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox34</rd:DefaultName>
-        <Top>6.65in</Top>
+        <Top>3.65in</Top>
         <Left>0.13in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
@@ -818,10 +818,10 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>7in</Height>
+    <Height>4in</Height>
     <Style />
   </Body>
-  <Width>7.92052in</Width>
+  <Width>7.86026in</Width>
   <Page>
     <PageHeader>
       <Height>2.485in</Height>
@@ -899,7 +899,7 @@
           <Value>MESHeader</Value>
           <Sizing>FitProportional</Sizing>
           <Top>0.515in</Top>
-          <Left>0.06026in</Left>
+          <Left>0.03013in</Left>
           <Height>1.97in</Height>
           <Width>7.8in</Width>
           <ZIndex>2</ZIndex>
@@ -925,7 +925,8 @@
           <Source>Embedded</Source>
           <Value>MESFooter</Value>
           <Sizing>Fit</Sizing>
-          <Left>0.06026in</Left>
+          <Top>0in</Top>
+          <Left>0.03013in</Left>
           <Height>0.79in</Height>
           <Width>7.8in</Width>
           <Style>
@@ -1009,6 +1010,10 @@
         <Field Name="DEBITAMOUT_VRPT">
           <DataField>DEBITAMOUT_VRPT</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="DrawerBr_VRPT">
+          <DataField>DrawerBr_VRPT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>

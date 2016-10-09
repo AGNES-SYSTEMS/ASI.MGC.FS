@@ -17,7 +17,7 @@ namespace ASI.MGC.FS.Model
         public int SLNO { get; set; }
         public string DOCCNUMBER_ARM { get; set; }
         public string MACHTNUMBER_ARM { get; set; }
-        public Nullable<int> AMOUNT_ARM { get; set; }
+        public Nullable<decimal> AMOUNT_ARM { get; set; }
         public string USER_ARM { get; set; }
         public string ACCODE_ARM { get; set; }
         public Nullable<int> MATCHNO_ARM { get; set; }

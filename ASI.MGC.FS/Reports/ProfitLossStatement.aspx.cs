@@ -12,6 +12,7 @@ namespace ASI.MGC.FS.Reports
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ReportViewer1.KeepSessionAlive = true;
             if (!Page.IsPostBack)
             {
                 IUnitOfWork iuWork = new UnitOfWork();

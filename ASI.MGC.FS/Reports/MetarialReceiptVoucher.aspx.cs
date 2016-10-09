@@ -11,6 +11,7 @@ namespace ASI.MGC.FS.Reports
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ReportViewer1.KeepSessionAlive = true;
             ReportViewer1.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
             this.ReportViewer1.LocalReport.Refresh();
             if (!Page.IsPostBack)

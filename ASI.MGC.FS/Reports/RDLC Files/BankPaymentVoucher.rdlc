@@ -659,7 +659,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>="AED " &amp; Code.changeToWords(Sum(Fields!CREDITAMOUNT_VRPT.Value, "DS_BankPaymentVoucher"))</Value>
+                <Value>="AED " &amp; Code.changeToWords(Sum(Fields!CREDITAMOUNT_VRPT.Value, "DS_BankPaymentVoucher")) &amp; "Only"</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -722,14 +722,81 @@
           </Border>
         </Style>
       </Line>
+      <Textbox Name="Textbox35">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Received By:</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox35</rd:DefaultName>
+        <Top>3.3125in</Top>
+        <Left>5.84376in</Left>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
+        <ZIndex>23</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox34">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Prepared By:</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox34</rd:DefaultName>
+        <Top>3.3125in</Top>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
+        <ZIndex>24</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>3.19792in</Height>
+    <Height>3.625in</Height>
     <Style />
   </Body>
   <Width>7.80209in</Width>
   <Page>
     <PageHeader>
-      <Height>2in</Height>
+      <Height>1.20833in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -809,7 +876,7 @@
           </Paragraphs>
           <rd:DefaultName>COMPANYNAME_CM</rd:DefaultName>
           <Top>0.26958in</Top>
-          <Left>2.22396in</Left>
+          <Left>2.39063in</Left>
           <Height>0.25in</Height>
           <Width>3.02083in</Width>
           <ZIndex>2</ZIndex>
@@ -843,7 +910,7 @@
           </Paragraphs>
           <rd:DefaultName>ARRRESS1_CM</rd:DefaultName>
           <Top>0.54736in</Top>
-          <Left>2.36458in</Left>
+          <Left>2.53125in</Left>
           <Height>0.25in</Height>
           <Width>2.73958in</Width>
           <ZIndex>3</ZIndex>
@@ -877,8 +944,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox5</rd:DefaultName>
-          <Top>1.70833in</Top>
-          <Left>2.3125in</Left>
+          <Top>0.95833in</Top>
+          <Left>2.47917in</Left>
           <Height>0.25in</Height>
           <Width>2.84375in</Width>
           <ZIndex>4</ZIndex>
@@ -900,81 +967,13 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>0.59723in</Height>
+      <Height>0.25in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
-        <Textbox Name="Textbox34">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>Prepared By:</Value>
-                  <Style>
-                    <FontWeight>Bold</FontWeight>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox34</rd:DefaultName>
-          <Top>0.04167in</Top>
-          <Left>0.29166in</Left>
-          <Height>0.25in</Height>
-          <Width>1in</Width>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox35">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>Received By:</Value>
-                  <Style>
-                    <FontWeight>Bold</FontWeight>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox35</rd:DefaultName>
-          <Top>0.04167in</Top>
-          <Left>6.17708in</Left>
-          <Height>0.25in</Height>
-          <Width>1in</Width>
-          <ZIndex>1</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
         <Line Name="Line2">
           <Height>0in</Height>
           <Width>7.80208in</Width>
-          <ZIndex>2</ZIndex>
           <Style>
             <Border>
               <Style>Solid</Style>
@@ -1000,10 +999,9 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox61</rd:DefaultName>
-          <Top>0.34723in</Top>
           <Height>0.25in</Height>
           <Width>4.29166in</Width>
-          <ZIndex>3</ZIndex>
+          <ZIndex>1</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1031,6 +1029,7 @@
   <DataSources>
     <DataSource Name="DataSource">
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>0847b11e-c1f0-4378-ab21-3cd93a388695</rd:DataSourceID>
     </DataSource>
   </DataSources>

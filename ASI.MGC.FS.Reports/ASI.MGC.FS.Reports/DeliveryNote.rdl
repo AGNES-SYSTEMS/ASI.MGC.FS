@@ -559,7 +559,20 @@
                                     <TablixRowHierarchy>
                                       <TablixMembers>
                                         <TablixMember>
-                                          <Group Name="Details2" />
+                                          <Group Name="Details2">
+                                            <GroupExpressions>
+                                              <GroupExpression>=Fields!DESCRIPTION_DLNRPT.Value</GroupExpression>
+                                            </GroupExpressions>
+                                            <Filters>
+                                              <Filter>
+                                                <FilterExpression>=Fields!JOBNO_DLNRPT.Value</FilterExpression>
+                                                <Operator>Equal</Operator>
+                                                <FilterValues>
+                                                  <FilterValue>=Fields!JOBNO_DLNRPT.Value</FilterValue>
+                                                </FilterValues>
+                                              </Filter>
+                                            </Filters>
+                                          </Group>
                                         </TablixMember>
                                       </TablixMembers>
                                     </TablixRowHierarchy>
@@ -669,7 +682,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox61</rd:DefaultName>
-        <Top>6.2934in</Top>
+        <Top>2.2934in</Top>
         <Left>0.29013in</Left>
         <Height>0.25in</Height>
         <Width>3.58333in</Width>
@@ -703,7 +716,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox62</rd:DefaultName>
-        <Top>6.7066in</Top>
+        <Top>2.7066in</Top>
         <Left>0.27846in</Left>
         <Height>0.25in</Height>
         <Width>2.5625in</Width>
@@ -737,7 +750,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox63</rd:DefaultName>
-        <Top>6.7066in</Top>
+        <Top>2.7066in</Top>
         <Left>5.01929in</Left>
         <Height>0.25in</Height>
         <Width>2.5625in</Width>
@@ -1089,10 +1102,10 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>7in</Height>
+    <Height>3in</Height>
     <Style />
   </Body>
-  <Width>7.8in</Width>
+  <Width>7.75in</Width>
   <Page>
     <PageHeader>
       <Height>2.5in</Height>
@@ -1170,7 +1183,7 @@
           <Value>MESHeader</Value>
           <Sizing>FitProportional</Sizing>
           <Top>0.3975in</Top>
-          <Left>0.05in</Left>
+          <Left>0.025in</Left>
           <Height>1.97in</Height>
           <Width>7.7in</Width>
           <ZIndex>2</ZIndex>
@@ -1196,8 +1209,7 @@
           <Source>Embedded</Source>
           <Value>MESFooter</Value>
           <Sizing>Fit</Sizing>
-          <Top>0.255in</Top>
-          <Left>0.05in</Left>
+          <Left>0.025in</Left>
           <Height>0.79in</Height>
           <Width>7.7in</Width>
           <Style>

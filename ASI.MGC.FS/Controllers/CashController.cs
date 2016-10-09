@@ -73,8 +73,8 @@ namespace ASI.MGC.FS.Controllers
                 objInvoiceMaster.INVNO_IPM = cashMemoNumber;
                 objInvoiceMaster.INVDATE_IPM = Convert.ToDateTime(DateTime.Now.ToShortDateString());
                 objInvoiceMaster.CUSTNAME_IPM = Convert.ToString(frm["CustDetail"]);
-                objInvoiceMaster.SHIPPING_IPM = Convert.ToInt32(frm["TotalShipCharges"]);
-                objInvoiceMaster.DISCOUNT_IPM = Convert.ToInt32(frm["TotalDiscount"]);
+                objInvoiceMaster.SHIPPING_IPM = Convert.ToDecimal(frm["TotalShipCharges"]);
+                objInvoiceMaster.DISCOUNT_IPM = Convert.ToDecimal(frm["TotalDiscount"]);
                 objInvoiceMaster.INVTYPE_IPM = "CM";
                 _unitOfWork.Repository<INVMASTER>().Insert(objInvoiceMaster);
                 _unitOfWork.Save();
@@ -200,7 +200,7 @@ namespace ASI.MGC.FS.Controllers
                             objApLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
                             objApLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
                             objApLedger.ARAPCODE_ART = allocDetail.AccountCode;
-                            objApLedger.CREDITAMOUNT_ART = Convert.ToInt32(allocDetail.Amount);
+                            objApLedger.CREDITAMOUNT_ART = Convert.ToDecimal(allocDetail.Amount);
                             objApLedger.OTHERREF_ART = objBankTransaction.OTHERREF_BT;
                             objApLedger.NARRATION_ART = allocDetail.Narration;
                             objApLedger.MATCHVALUE_AR = 0;
@@ -226,7 +226,7 @@ namespace ASI.MGC.FS.Controllers
                             objArLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
                             objArLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
                             objArLedger.ARAPCODE_ART = allocDetail.AccountCode;
-                            objArLedger.CREDITAMOUNT_ART = Convert.ToInt32(allocDetail.Amount);
+                            objArLedger.CREDITAMOUNT_ART = Convert.ToDecimal(allocDetail.Amount);
                             objArLedger.OTHERREF_ART = objBankTransaction.OTHERREF_BT;
                             objArLedger.NARRATION_ART = allocDetail.Narration;
                             objArLedger.MATCHVALUE_AR = 0;
@@ -346,7 +346,7 @@ namespace ASI.MGC.FS.Controllers
                             objApLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
                             objApLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
                             objApLedger.ARAPCODE_ART = allocDetail.AccountCode;
-                            objApLedger.DEBITAMOUNT_ART = Convert.ToInt32(allocDetail.Amount);
+                            objApLedger.DEBITAMOUNT_ART = Convert.ToDecimal(allocDetail.Amount);
                             objApLedger.OTHERREF_ART = objBankTransaction.OTHERREF_BT;
                             objApLedger.NARRATION_ART = allocDetail.Narration;
                             objApLedger.MATCHVALUE_AR = 0;
@@ -372,7 +372,7 @@ namespace ASI.MGC.FS.Controllers
                             objArLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
                             objArLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
                             objArLedger.ARAPCODE_ART = allocDetail.AccountCode;
-                            objArLedger.DEBITAMOUNT_ART = Convert.ToInt32(allocDetail.Amount);
+                            objArLedger.DEBITAMOUNT_ART = Convert.ToDecimal(allocDetail.Amount);
                             objArLedger.OTHERREF_ART = objBankTransaction.OTHERREF_BT;
                             objArLedger.NARRATION_ART = allocDetail.Narration;
                             objArLedger.MATCHVALUE_AR = 0;

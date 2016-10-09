@@ -4,7 +4,6 @@
     <ReportItems>
       <Line Name="Line1">
         <Top>0.02778in</Top>
-        <Left>0in</Left>
         <Height>0in</Height>
         <Width>7.79167in</Width>
         <Style>
@@ -777,7 +776,6 @@
     <PageHeader>
       <Height>1.11458in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
-      <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
         <Textbox Name="Textbox1">
           <CanGrow>true</CanGrow>

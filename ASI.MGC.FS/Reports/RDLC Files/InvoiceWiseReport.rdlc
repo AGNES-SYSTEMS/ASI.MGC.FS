@@ -98,7 +98,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=CODE.changeToWords(Sum(Fields!DEBITAMOUNT_ART.Value, "DS_InvoiceWiseReport"))</Value>
+                    <Value>="AED " &amp; CODE.changeToWords(Sum(Fields!DEBITAMOUNT_ART.Value, "DS_InvoiceWiseReport")) &amp; "Only"</Value>
                     <Style />
                   </TextRun>
                 </TextRuns>
@@ -954,6 +954,7 @@
     <DataSource Name="DataSource">
       <Transaction>true</Transaction>
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>6d01adbd-da3f-4d70-ba48-51285b173714</rd:DataSourceID>
     </DataSource>
   </DataSources>

@@ -36,8 +36,8 @@
           <Property Name="DODATE_ART" Type="datetime2" Precision="0" />
           <Property Name="GLDATE_ART" Type="datetime2" Precision="0" />
           <Property Name="ARAPCODE_ART" Type="nvarchar" MaxLength="10" />
-          <Property Name="DEBITAMOUNT_ART" Type="int" />
-          <Property Name="CREDITAMOUNT_ART" Type="int" />
+          <Property Name="DEBITAMOUNT_ART" Type="money" />
+          <Property Name="CREDITAMOUNT_ART" Type="money" />
           <Property Name="OTHERREF_ART" Type="nvarchar" MaxLength="20" />
           <Property Name="NARRATION_ART" Type="nvarchar" MaxLength="100" />
           <Property Name="USER_ART" Type="nvarchar" MaxLength="3" />
@@ -62,7 +62,7 @@
           <Property Name="SALESEXE_ARM" Type="nvarchar" MaxLength="3" />
           <Property Name="RECEIVABLETYPE_ARM" Type="nvarchar" MaxLength="20" />
           <Property Name="STATUS_ARM" Type="nvarchar" MaxLength="20" />
-          <Property Name="LIMITAMOUNT_ARM" Type="int" />
+          <Property Name="LIMITAMOUNT_ARM" Type="money" />
           <Property Name="CREDITDAYS_ARM" Type="int" />
         </EntityType>
         <EntityType Name="ARMATCHING">
@@ -72,7 +72,7 @@
           <Property Name="SLNO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DOCCNUMBER_ARM" Type="nvarchar" MaxLength="15" />
           <Property Name="MACHTNUMBER_ARM" Type="nvarchar" MaxLength="15" />
-          <Property Name="AMOUNT_ARM" Type="int" />
+          <Property Name="AMOUNT_ARM" Type="money" />
           <Property Name="USER_ARM" Type="nvarchar" MaxLength="3" />
           <Property Name="ACCODE_ARM" Type="nvarchar" MaxLength="15" />
           <Property Name="MATCHNO_ARM" Type="int" />
@@ -299,7 +299,7 @@
           <Property Name="CUSTPIN_IPM" Type="nvarchar" MaxLength="15" />
           <Property Name="SHIPPING_IPM" Type="money" />
           <Property Name="DISCOUNT_IPM" Type="money" />
-          <Property Name="LPONO_IPM" Type="nvarchar" MaxLength="20" />
+          <Property Name="LPONO_IPM" Type="nvarchar" MaxLength="2000" />
           <Property Name="SALESFIGURE_IPM" Type="nvarchar" MaxLength="255" />
           <Property Name="INVTYPE_IPM" Type="nvarchar" MaxLength="5" />
         </EntityType>
@@ -1535,106 +1535,6 @@
           <FunctionImport Name="rpt_MaterialReceiptVoucher" ReturnType="Collection(ASI_MGC_FSModel.rpt_MaterialReceiptVoucher_Result)">
           <Parameter Name="MRVNO" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="ACSTATEMENT_RPT" EntityType="ASI_MGC_FSModel.ACSTATEMENT_RPT" />
-          <EntitySet Name="ALLOCATIONMASTERs" EntityType="ASI_MGC_FSModel.ALLOCATIONMASTER" />
-          <EntitySet Name="AR_AP_LEDGER" EntityType="ASI_MGC_FSModel.AR_AP_LEDGER" />
-          <EntitySet Name="AR_AP_MASTER" EntityType="ASI_MGC_FSModel.AR_AP_MASTER" />
-          <EntitySet Name="ARMATCHINGs" EntityType="ASI_MGC_FSModel.ARMATCHING" />
-          <EntitySet Name="BALANCESHEETs" EntityType="ASI_MGC_FSModel.BALANCESHEET" />
-          <EntitySet Name="BANKMASTERs" EntityType="ASI_MGC_FSModel.BANKMASTER" />
-          <EntitySet Name="BANKMASTER1" EntityType="ASI_MGC_FSModel.BANKMASTER1" />
-          <EntitySet Name="BANKTRANSACTIONs" EntityType="ASI_MGC_FSModel.BANKTRANSACTION" />
-          <EntitySet Name="COMPANYMASTERs" EntityType="ASI_MGC_FSModel.COMPANYMASTER" />
-          <EntitySet Name="CUSTOMEREPORTs" EntityType="ASI_MGC_FSModel.CUSTOMEREPORT" />
-          <EntitySet Name="DELEVERYNOTEs" EntityType="ASI_MGC_FSModel.DELEVERYNOTE" />
-          <EntitySet Name="DELEVERYNOTE_RPT" EntityType="ASI_MGC_FSModel.DELEVERYNOTE_RPT" />
-          <EntitySet Name="DELREPORT_MASTER" EntityType="ASI_MGC_FSModel.DELREPORT_MASTER" />
-          <EntitySet Name="DOCCUMENTMASTERs" EntityType="ASI_MGC_FSModel.DOCCUMENTMASTER" />
-          <EntitySet Name="EMPLOYEEMASTERs" EntityType="ASI_MGC_FSModel.EMPLOYEEMASTER" />
-          <EntitySet Name="ENTRYMASTERs" EntityType="ASI_MGC_FSModel.ENTRYMASTER" />
-          <EntitySet Name="FINYEARMASTERs" EntityType="ASI_MGC_FSModel.FINYEARMASTER" />
-          <EntitySet Name="GLMASTERs" EntityType="ASI_MGC_FSModel.GLMASTER" />
-          <EntitySet Name="GLTRANSACTION1" EntityType="ASI_MGC_FSModel.GLTRANSACTION1" />
-          <EntitySet Name="INVDETAILS" EntityType="ASI_MGC_FSModel.INVDETAIL" />
-          <EntitySet Name="INVMASTERs" EntityType="ASI_MGC_FSModel.INVMASTER" />
-          <EntitySet Name="JOB_REPORT" EntityType="ASI_MGC_FSModel.JOB_REPORT" />
-          <EntitySet Name="JOBCARD_REPRT" EntityType="ASI_MGC_FSModel.JOBCARD_REPRT" />
-          <EntitySet Name="JOBDETALS" EntityType="ASI_MGC_FSModel.JOBDETAL" />
-          <EntitySet Name="JOBIDREFERENCEs" EntityType="ASI_MGC_FSModel.JOBIDREFERENCE" />
-          <EntitySet Name="JOBMASTERs" EntityType="ASI_MGC_FSModel.JOBMASTER" />
-          <EntitySet Name="JVREPORTs" EntityType="ASI_MGC_FSModel.JVREPORT" />
-          <EntitySet Name="LOCATIONMASTERs" EntityType="ASI_MGC_FSModel.LOCATIONMASTER" />
-          <EntitySet Name="MATERIALRECEIPTMASTERs" EntityType="ASI_MGC_FSModel.MATERIALRECEIPTMASTER" />
-          <EntitySet Name="MESRoles" EntityType="ASI_MGC_FSModel.MESRole" />
-          <EntitySet Name="MESUserLoginDetails" EntityType="ASI_MGC_FSModel.MESUserLoginDetail" />
-          <EntitySet Name="MESUserProfiles" EntityType="ASI_MGC_FSModel.MESUserProfile" />
-          <EntitySet Name="MESUserRoles" EntityType="ASI_MGC_FSModel.MESUserRole" />
-          <EntitySet Name="MESUsers" EntityType="ASI_MGC_FSModel.MESUser" />
-          <EntitySet Name="MRV_REPORT_CHD" EntityType="ASI_MGC_FSModel.MRV_REPORT_CHD" />
-          <EntitySet Name="MRVNO_REPORT" EntityType="ASI_MGC_FSModel.MRVNO_REPORT" />
-          <EntitySet Name="MRVREFERENCEs" EntityType="ASI_MGC_FSModel.MRVREFERENCE" />
-          <EntitySet Name="PANDL_SETTINGS" EntityType="ASI_MGC_FSModel.PANDL_SETTINGS" />
-          <EntitySet Name="PRODUCTMASTERs" EntityType="ASI_MGC_FSModel.PRODUCTMASTER" />
-          <EntitySet Name="PROFITANDLOSS_RPT" EntityType="ASI_MGC_FSModel.PROFITANDLOSS_RPT" />
-          <EntitySet Name="QOTATION_REF" EntityType="ASI_MGC_FSModel.QOTATION_REF" />
-          <EntitySet Name="QUOT_PROD_MASTER" EntityType="ASI_MGC_FSModel.QUOT_PROD_MASTER" />
-          <EntitySet Name="QUOTATION_MASTER" EntityType="ASI_MGC_FSModel.QUOTATION_MASTER" />
-          <EntitySet Name="REPORT_JOBCARD" EntityType="ASI_MGC_FSModel.REPORT_JOBCARD" />
-          <EntitySet Name="SALEDETAILS" EntityType="ASI_MGC_FSModel.SALEDETAIL" />
-          <EntitySet Name="SALESALLOCATIONMASTERs" EntityType="ASI_MGC_FSModel.SALESALLOCATIONMASTER" />
-          <EntitySet Name="SALESMASTERs" EntityType="ASI_MGC_FSModel.SALESMASTER" />
-          <EntitySet Name="SLNOGENERATORs" EntityType="ASI_MGC_FSModel.SLNOGENERATOR" />
-          <EntitySet Name="STOCK_REPORT" EntityType="ASI_MGC_FSModel.STOCK_REPORT" />
-          <EntitySet Name="STOCKLEDGERs" EntityType="ASI_MGC_FSModel.STOCKLEDGER" />
-          <EntitySet Name="STOCKLEDGER_REPORT" EntityType="ASI_MGC_FSModel.STOCKLEDGER_REPORT" />
-          <EntitySet Name="sysdiagrams" EntityType="ASI_MGC_FSModel.sysdiagram" />
-          <EntitySet Name="TELEPHONE_DIRECTORY" EntityType="ASI_MGC_FSModel.TELEPHONE_DIRECTORY" />
-          <EntitySet Name="TEMPREPORTs" EntityType="ASI_MGC_FSModel.TEMPREPORT" />
-          <EntitySet Name="TRIALBALANCEs" EntityType="ASI_MGC_FSModel.TRIALBALANCE" />
-          <EntitySet Name="UNITMESSUREMENTs" EntityType="ASI_MGC_FSModel.UNITMESSUREMENT" />
-          <EntitySet Name="USERs" EntityType="ASI_MGC_FSModel.USER" />
-          <EntitySet Name="VOUCHERCHILD_RPT" EntityType="ASI_MGC_FSModel.VOUCHERCHILD_RPT" />
-          <EntitySet Name="VOUCHERMASTER_RPT" EntityType="ASI_MGC_FSModel.VOUCHERMASTER_RPT" />
-          <AssociationSet Name="BANKTRANSACTION_BANKMASTERBANKTRANSACTION" Association="ASI_MGC_FSModel.BANKTRANSACTION_BANKMASTERBANKTRANSACTION">
-            <End Role="BANKMASTER" EntitySet="BANKMASTERs" />
-            <End Role="BANKTRANSACTION" EntitySet="BANKTRANSACTIONs" />
-          </AssociationSet>
-          <AssociationSet Name="MRVREFERENCE_JOBIDREFERENCEMRVREFERENCE" Association="ASI_MGC_FSModel.MRVREFERENCE_JOBIDREFERENCEMRVREFERENCE">
-            <End Role="JOBIDREFERENCE" EntitySet="JOBIDREFERENCEs" />
-            <End Role="MRVREFERENCE" EntitySet="MRVREFERENCEs" />
-          </AssociationSet>
-          <AssociationSet Name="JOBMASTER_MATERIALRECEIPTMASTERJOBMASTER" Association="ASI_MGC_FSModel.JOBMASTER_MATERIALRECEIPTMASTERJOBMASTER">
-            <End Role="MATERIALRECEIPTMASTER" EntitySet="MATERIALRECEIPTMASTERs" />
-            <End Role="JOBMASTER" EntitySet="JOBMASTERs" />
-          </AssociationSet>
-          <AssociationSet Name="MRVREFERENCE_MATERIALRECEIPTMASTERMRVREFERENCE" Association="ASI_MGC_FSModel.MRVREFERENCE_MATERIALRECEIPTMASTERMRVREFERENCE">
-            <End Role="MATERIALRECEIPTMASTER" EntitySet="MATERIALRECEIPTMASTERs" />
-            <End Role="MRVREFERENCE" EntitySet="MRVREFERENCEs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MESUserRoles_MESRoles" Association="ASI_MGC_FSModel.FK_MESUserRoles_MESRoles">
-            <End Role="MESRole" EntitySet="MESRoles" />
-            <End Role="MESUserRole" EntitySet="MESUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MESUserLoginDetails_MESUsers" Association="ASI_MGC_FSModel.FK_MESUserLoginDetails_MESUsers">
-            <End Role="MESUser" EntitySet="MESUsers" />
-            <End Role="MESUserLoginDetail" EntitySet="MESUserLoginDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MESUserProfile_MESUsers" Association="ASI_MGC_FSModel.FK_MESUserProfile_MESUsers">
-            <End Role="MESUser" EntitySet="MESUsers" />
-            <End Role="MESUserProfile" EntitySet="MESUserProfiles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MESUserRoles_MESUsers" Association="ASI_MGC_FSModel.FK_MESUserRoles_MESUsers">
-            <End Role="MESUser" EntitySet="MESUsers" />
-            <End Role="MESUserRole" EntitySet="MESUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="MRVREFERENCE_PRODUCTMASTERMRVREFERENCE" Association="ASI_MGC_FSModel.MRVREFERENCE_PRODUCTMASTERMRVREFERENCE">
-            <End Role="PRODUCTMASTER" EntitySet="PRODUCTMASTERs" />
-            <End Role="MRVREFERENCE" EntitySet="MRVREFERENCEs" />
-          </AssociationSet>
-          <AssociationSet Name="STOCKLEDGER_UNITMESSUREMENTSTOCKLEDGER" Association="ASI_MGC_FSModel.STOCKLEDGER_UNITMESSUREMENTSTOCKLEDGER">
-            <End Role="UNITMESSUREMENT" EntitySet="UNITMESSUREMENTs" />
-            <End Role="STOCKLEDGER" EntitySet="STOCKLEDGERs" />
-          </AssociationSet>
           <FunctionImport Name="rpt_Purchase_Invoice" ReturnType="Collection(ASI_MGC_FSModel.rpt_Purchase_Invoice_Result)">
           <Parameter Name="PurchaseNo" Mode="In" Type="String" />
           </FunctionImport>
@@ -1739,7 +1639,107 @@
           <FunctionImport Name="rpt_MRV_Job_Details" ReturnType="Collection(ASI_MGC_FSModel.rpt_MRV_Job_Details_Result)">
           <Parameter Name="MRVNO" Mode="In" Type="String" />
           </FunctionImport>
-        </EntityContainer>
+          <EntitySet Name="ACSTATEMENT_RPT" EntityType="ASI_MGC_FSModel.ACSTATEMENT_RPT" />
+          <EntitySet Name="ALLOCATIONMASTERs" EntityType="ASI_MGC_FSModel.ALLOCATIONMASTER" />
+          <EntitySet Name="AR_AP_LEDGER" EntityType="ASI_MGC_FSModel.AR_AP_LEDGER" />
+          <EntitySet Name="AR_AP_MASTER" EntityType="ASI_MGC_FSModel.AR_AP_MASTER" />
+          <EntitySet Name="ARMATCHINGs" EntityType="ASI_MGC_FSModel.ARMATCHING" />
+          <EntitySet Name="BALANCESHEETs" EntityType="ASI_MGC_FSModel.BALANCESHEET" />
+          <EntitySet Name="BANKMASTERs" EntityType="ASI_MGC_FSModel.BANKMASTER" />
+          <EntitySet Name="BANKMASTER1" EntityType="ASI_MGC_FSModel.BANKMASTER1" />
+          <EntitySet Name="BANKTRANSACTIONs" EntityType="ASI_MGC_FSModel.BANKTRANSACTION" />
+          <EntitySet Name="COMPANYMASTERs" EntityType="ASI_MGC_FSModel.COMPANYMASTER" />
+          <EntitySet Name="CUSTOMEREPORTs" EntityType="ASI_MGC_FSModel.CUSTOMEREPORT" />
+          <EntitySet Name="DELEVERYNOTEs" EntityType="ASI_MGC_FSModel.DELEVERYNOTE" />
+          <EntitySet Name="DELEVERYNOTE_RPT" EntityType="ASI_MGC_FSModel.DELEVERYNOTE_RPT" />
+          <EntitySet Name="DELREPORT_MASTER" EntityType="ASI_MGC_FSModel.DELREPORT_MASTER" />
+          <EntitySet Name="DOCCUMENTMASTERs" EntityType="ASI_MGC_FSModel.DOCCUMENTMASTER" />
+          <EntitySet Name="EMPLOYEEMASTERs" EntityType="ASI_MGC_FSModel.EMPLOYEEMASTER" />
+          <EntitySet Name="ENTRYMASTERs" EntityType="ASI_MGC_FSModel.ENTRYMASTER" />
+          <EntitySet Name="FINYEARMASTERs" EntityType="ASI_MGC_FSModel.FINYEARMASTER" />
+          <EntitySet Name="GLMASTERs" EntityType="ASI_MGC_FSModel.GLMASTER" />
+          <EntitySet Name="GLTRANSACTION1" EntityType="ASI_MGC_FSModel.GLTRANSACTION1" />
+          <EntitySet Name="INVDETAILS" EntityType="ASI_MGC_FSModel.INVDETAIL" />
+          <EntitySet Name="INVMASTERs" EntityType="ASI_MGC_FSModel.INVMASTER" />
+          <EntitySet Name="JOB_REPORT" EntityType="ASI_MGC_FSModel.JOB_REPORT" />
+          <EntitySet Name="JOBCARD_REPRT" EntityType="ASI_MGC_FSModel.JOBCARD_REPRT" />
+          <EntitySet Name="JOBDETALS" EntityType="ASI_MGC_FSModel.JOBDETAL" />
+          <EntitySet Name="JOBIDREFERENCEs" EntityType="ASI_MGC_FSModel.JOBIDREFERENCE" />
+          <EntitySet Name="JOBMASTERs" EntityType="ASI_MGC_FSModel.JOBMASTER" />
+          <EntitySet Name="JVREPORTs" EntityType="ASI_MGC_FSModel.JVREPORT" />
+          <EntitySet Name="LOCATIONMASTERs" EntityType="ASI_MGC_FSModel.LOCATIONMASTER" />
+          <EntitySet Name="MATERIALRECEIPTMASTERs" EntityType="ASI_MGC_FSModel.MATERIALRECEIPTMASTER" />
+          <EntitySet Name="MESRoles" EntityType="ASI_MGC_FSModel.MESRole" />
+          <EntitySet Name="MESUserLoginDetails" EntityType="ASI_MGC_FSModel.MESUserLoginDetail" />
+          <EntitySet Name="MESUserProfiles" EntityType="ASI_MGC_FSModel.MESUserProfile" />
+          <EntitySet Name="MESUserRoles" EntityType="ASI_MGC_FSModel.MESUserRole" />
+          <EntitySet Name="MESUsers" EntityType="ASI_MGC_FSModel.MESUser" />
+          <EntitySet Name="MRV_REPORT_CHD" EntityType="ASI_MGC_FSModel.MRV_REPORT_CHD" />
+          <EntitySet Name="MRVNO_REPORT" EntityType="ASI_MGC_FSModel.MRVNO_REPORT" />
+          <EntitySet Name="MRVREFERENCEs" EntityType="ASI_MGC_FSModel.MRVREFERENCE" />
+          <EntitySet Name="PANDL_SETTINGS" EntityType="ASI_MGC_FSModel.PANDL_SETTINGS" />
+          <EntitySet Name="PRODUCTMASTERs" EntityType="ASI_MGC_FSModel.PRODUCTMASTER" />
+          <EntitySet Name="PROFITANDLOSS_RPT" EntityType="ASI_MGC_FSModel.PROFITANDLOSS_RPT" />
+          <EntitySet Name="QOTATION_REF" EntityType="ASI_MGC_FSModel.QOTATION_REF" />
+          <EntitySet Name="QUOT_PROD_MASTER" EntityType="ASI_MGC_FSModel.QUOT_PROD_MASTER" />
+          <EntitySet Name="QUOTATION_MASTER" EntityType="ASI_MGC_FSModel.QUOTATION_MASTER" />
+          <EntitySet Name="REPORT_JOBCARD" EntityType="ASI_MGC_FSModel.REPORT_JOBCARD" />
+          <EntitySet Name="SALEDETAILS" EntityType="ASI_MGC_FSModel.SALEDETAIL" />
+          <EntitySet Name="SALESALLOCATIONMASTERs" EntityType="ASI_MGC_FSModel.SALESALLOCATIONMASTER" />
+          <EntitySet Name="SALESMASTERs" EntityType="ASI_MGC_FSModel.SALESMASTER" />
+          <EntitySet Name="SLNOGENERATORs" EntityType="ASI_MGC_FSModel.SLNOGENERATOR" />
+          <EntitySet Name="STOCK_REPORT" EntityType="ASI_MGC_FSModel.STOCK_REPORT" />
+          <EntitySet Name="STOCKLEDGERs" EntityType="ASI_MGC_FSModel.STOCKLEDGER" />
+          <EntitySet Name="STOCKLEDGER_REPORT" EntityType="ASI_MGC_FSModel.STOCKLEDGER_REPORT" />
+          <EntitySet Name="sysdiagrams" EntityType="ASI_MGC_FSModel.sysdiagram" />
+          <EntitySet Name="TELEPHONE_DIRECTORY" EntityType="ASI_MGC_FSModel.TELEPHONE_DIRECTORY" />
+          <EntitySet Name="TEMPREPORTs" EntityType="ASI_MGC_FSModel.TEMPREPORT" />
+          <EntitySet Name="TRIALBALANCEs" EntityType="ASI_MGC_FSModel.TRIALBALANCE" />
+          <EntitySet Name="UNITMESSUREMENTs" EntityType="ASI_MGC_FSModel.UNITMESSUREMENT" />
+          <EntitySet Name="USERs" EntityType="ASI_MGC_FSModel.USER" />
+          <EntitySet Name="VOUCHERCHILD_RPT" EntityType="ASI_MGC_FSModel.VOUCHERCHILD_RPT" />
+          <EntitySet Name="VOUCHERMASTER_RPT" EntityType="ASI_MGC_FSModel.VOUCHERMASTER_RPT" />
+          <AssociationSet Name="BANKTRANSACTION_BANKMASTERBANKTRANSACTION" Association="ASI_MGC_FSModel.BANKTRANSACTION_BANKMASTERBANKTRANSACTION">
+            <End Role="BANKMASTER" EntitySet="BANKMASTERs" />
+            <End Role="BANKTRANSACTION" EntitySet="BANKTRANSACTIONs" />
+          </AssociationSet>
+          <AssociationSet Name="MRVREFERENCE_JOBIDREFERENCEMRVREFERENCE" Association="ASI_MGC_FSModel.MRVREFERENCE_JOBIDREFERENCEMRVREFERENCE">
+            <End Role="JOBIDREFERENCE" EntitySet="JOBIDREFERENCEs" />
+            <End Role="MRVREFERENCE" EntitySet="MRVREFERENCEs" />
+          </AssociationSet>
+          <AssociationSet Name="JOBMASTER_MATERIALRECEIPTMASTERJOBMASTER" Association="ASI_MGC_FSModel.JOBMASTER_MATERIALRECEIPTMASTERJOBMASTER">
+            <End Role="MATERIALRECEIPTMASTER" EntitySet="MATERIALRECEIPTMASTERs" />
+            <End Role="JOBMASTER" EntitySet="JOBMASTERs" />
+          </AssociationSet>
+          <AssociationSet Name="MRVREFERENCE_MATERIALRECEIPTMASTERMRVREFERENCE" Association="ASI_MGC_FSModel.MRVREFERENCE_MATERIALRECEIPTMASTERMRVREFERENCE">
+            <End Role="MATERIALRECEIPTMASTER" EntitySet="MATERIALRECEIPTMASTERs" />
+            <End Role="MRVREFERENCE" EntitySet="MRVREFERENCEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MESUserRoles_MESRoles" Association="ASI_MGC_FSModel.FK_MESUserRoles_MESRoles">
+            <End Role="MESRole" EntitySet="MESRoles" />
+            <End Role="MESUserRole" EntitySet="MESUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MESUserLoginDetails_MESUsers" Association="ASI_MGC_FSModel.FK_MESUserLoginDetails_MESUsers">
+            <End Role="MESUser" EntitySet="MESUsers" />
+            <End Role="MESUserLoginDetail" EntitySet="MESUserLoginDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MESUserProfile_MESUsers" Association="ASI_MGC_FSModel.FK_MESUserProfile_MESUsers">
+            <End Role="MESUser" EntitySet="MESUsers" />
+            <End Role="MESUserProfile" EntitySet="MESUserProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MESUserRoles_MESUsers" Association="ASI_MGC_FSModel.FK_MESUserRoles_MESUsers">
+            <End Role="MESUser" EntitySet="MESUsers" />
+            <End Role="MESUserRole" EntitySet="MESUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="MRVREFERENCE_PRODUCTMASTERMRVREFERENCE" Association="ASI_MGC_FSModel.MRVREFERENCE_PRODUCTMASTERMRVREFERENCE">
+            <End Role="PRODUCTMASTER" EntitySet="PRODUCTMASTERs" />
+            <End Role="MRVREFERENCE" EntitySet="MRVREFERENCEs" />
+          </AssociationSet>
+          <AssociationSet Name="STOCKLEDGER_UNITMESSUREMENTSTOCKLEDGER" Association="ASI_MGC_FSModel.STOCKLEDGER_UNITMESSUREMENTSTOCKLEDGER">
+            <End Role="UNITMESSUREMENT" EntitySet="UNITMESSUREMENTs" />
+            <End Role="STOCKLEDGER" EntitySet="STOCKLEDGERs" />
+          </AssociationSet>
+          </EntityContainer>
         <ComplexType Name="rpt_BankPayment_Result">
           <Property Type="String" Name="COMPANYNAME_CM" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="ARRRESS1_CM" Nullable="true" MaxLength="50" />
@@ -1765,6 +1765,7 @@
           <Property Type="String" Name="CHQNO_VRPT" Nullable="true" MaxLength="15" />
           <Property Type="DateTime" Name="CHQDATE_VRPT" Nullable="true" />
           <Property Type="Decimal" Name="DEBITAMOUT_VRPT" Nullable="true" Precision="19" />
+          <Property Type="String" Name="DrawerBr_VRPT" Nullable="true" MaxLength="250" />
         </ComplexType>
         <ComplexType Name="rpt_CashPayment_Result">
           <Property Type="String" Name="COMPANYNAME_CM" Nullable="true" MaxLength="50" />
@@ -2349,6 +2350,125 @@
           <Property Type="String" Name="JOBDESCRIPTION_JR" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="PHONE_RPT" Nullable="true" MaxLength="15" />
         </ComplexType>
+        <ComplexType Name="rpt_Purchase_Invoice_Result">
+          <Property Type="Int32" Name="SlNo_ART" Nullable="false" />
+          <Property Type="String" Name="DOCNUMBER_ART" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="DODATE_ART" Nullable="true" />
+          <Property Type="DateTime" Name="GLDATE_ART" Nullable="true" />
+          <Property Type="String" Name="ARAPCODE_ART" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="DEBITAMOUNT_ART" Nullable="true" />
+          <Property Type="Int32" Name="CREDITAMOUNT_ART" Nullable="true" />
+          <Property Type="String" Name="OTHERREF_ART" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="NARRATION_ART" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="USER_ART" Nullable="true" MaxLength="3" />
+          <Property Type="Decimal" Name="MATCHVALUE_AR" Nullable="true" Precision="19" />
+          <Property Type="String" Name="STATUS_ART" Nullable="true" MaxLength="2" />
+          <Property Type="Int32" Name="SLNO_SL" Nullable="false" />
+          <Property Type="DateTime" Name="DOC_DATE_SL" Nullable="true" />
+          <Property Type="DateTime" Name="LEDGER_DATE_SL" Nullable="true" />
+          <Property Type="String" Name="VOUCHERNO_SL" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="OTHERREF_SL" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="PRODID_SL" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="BATCHNO_SL" Nullable="true" MaxLength="15" />
+          <Property Type="Int32" Name="RECEPT_QTY_SL" Nullable="true" />
+          <Property Type="Decimal" Name="RECEPT_RATE_SL" Nullable="true" Precision="19" />
+          <Property Type="Int32" Name="ISSUE_QTY_SL" Nullable="true" />
+          <Property Type="Decimal" Name="ISSUE_RATE_SL" Nullable="true" Precision="19" />
+          <Property Type="String" Name="UNIT_SL" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="STATUS_SL" Nullable="true" MaxLength="1" />
+          <Property Type="Int32" Name="SLNO_GLT" Nullable="false" />
+          <Property Type="String" Name="DOCNUMBER_GLT" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="DOCDATE_GLT" Nullable="true" />
+          <Property Type="DateTime" Name="GLDATE_GLT" Nullable="true" />
+          <Property Type="String" Name="GLACCODE_GLT" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="OTHERREF_GLT" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="DEBITAMOUNT_GLT" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="CREDITAMOUNT_GLT" Nullable="true" Precision="19" />
+          <Property Type="String" Name="NARRATION_GLT" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="GLSTATUS_GLT" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="VARUSER" Nullable="true" MaxLength="15" />
+        </ComplexType>
+        <ComplexType Name="sp_ARAPListTB_Result">
+          <Property Type="Int32" Name="CODE_TB" Nullable="false" />
+          <Property Type="String" Name="ACCODE_TB" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="DESCRIPTION_TB" Nullable="true" MaxLength="40" />
+          <Property Type="Int32" Name="OPENING_TB" Nullable="false" />
+          <Property Type="Int32" Name="DEBIT_TB" Nullable="false" />
+          <Property Type="Int32" Name="CREDIT_TB" Nullable="false" />
+          <Property Type="Int32" Name="NET_TB" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_BMBTListTB_Result">
+          <Property Type="Int32" Name="CODE_TB" Nullable="false" />
+          <Property Type="String" Name="ACCODE_TB" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="DESCRIPTION_TB" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="OPENING_TB" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="DEBIT_TB" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="CREDIT_TB" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="NET_TB" Nullable="false" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="sp_GLMGLTListTB_Result">
+          <Property Type="Int32" Name="CODE_TB" Nullable="false" />
+          <Property Type="String" Name="ACCODE_TB" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="DESCRIPTION_TB" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="OPENING_TB" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="DEBIT_TB" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="CREDIT_TB" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="NET_TB" Nullable="false" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="sp_GetSalesByJobNo_Result">
+          <Property Type="Int32" Name="SLNO_SD" Nullable="false" />
+          <Property Type="String" Name="JOBNO_SD" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="PRCODE_SD" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="JOBID_SD" Nullable="true" MaxLength="15" />
+          <Property Type="Int32" Name="QTY_SD" Nullable="false" />
+          <Property Type="Decimal" Name="RATE_SD" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="AMOUNT_SD" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="DISCOUNT_SD" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="SHIPPINGCHARGES_SD" Nullable="false" Precision="19" />
+          <Property Type="String" Name="DESCRIPTION_SD" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_GetCashMemoMrvList_Result">
+          <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="CUSTOMERCODE_MRV" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="DOC_DATE_MRV" Nullable="true" />
+          <Property Type="String" Name="JOBNO_SD" Nullable="true" MaxLength="15" />
+        </ComplexType>
+        <ComplexType Name="sp_GetInvoicePrepMrvList1_Result">
+          <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="CUSTOMERCODE_MRV" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="DOC_DATE_MRV" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetInvoicePreparationMrvList_Result">
+          <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="CUSTOMERCODE_MRV" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="DOC_DATE_MRV" Nullable="true" />
+          <Property Type="String" Name="JOBNO_SD" Nullable="true" MaxLength="15" />
+        </ComplexType>
+        <ComplexType Name="sp_GetARMrvDetails_Result">
+          <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="CUSTOMERCODE_MRV" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PHONE_MRV" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="JOBNO_JM" Nullable="false" MaxLength="15" />
+        </ComplexType>
+        <ComplexType Name="sp_GetCashMrvDetails_Result">
+          <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="CUSTOMERCODE_MRV" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PHONE_MRV" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="JOBNO_JM" Nullable="false" MaxLength="15" />
+        </ComplexType>
+        <ComplexType Name="rpt_MRV_Job_Details_Result">
+          <Property Type="String" Name="JOBNO_JM" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="JOBCODE_JM" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="PRODID_JIM" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="DESCRIPTION_PM" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="JOBDESCRIPTION_JR" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="JOBSTATUS_JM" Nullable="true" MaxLength="1" />
+        </ComplexType>
         <EntityType Name="ACSTATEMENT_RPT">
           <Key>
             <PropertyRef Name="SLNO_SAC" />
@@ -2380,8 +2500,8 @@
           <Property Name="DODATE_ART" Type="DateTime" Precision="0" />
           <Property Name="GLDATE_ART" Type="DateTime" Precision="0" />
           <Property Name="ARAPCODE_ART" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="DEBITAMOUNT_ART" Type="Int32" />
-          <Property Name="CREDITAMOUNT_ART" Type="Int32" />
+          <Property Name="DEBITAMOUNT_ART" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CREDITAMOUNT_ART" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="OTHERREF_ART" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="NARRATION_ART" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="USER_ART" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
@@ -2406,7 +2526,7 @@
           <Property Name="SALESEXE_ARM" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="RECEIVABLETYPE_ARM" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="STATUS_ARM" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="LIMITAMOUNT_ARM" Type="Int32" />
+          <Property Name="LIMITAMOUNT_ARM" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CREDITDAYS_ARM" Type="Int32" />
         </EntityType>
         <EntityType Name="ARMATCHING">
@@ -2416,7 +2536,7 @@
           <Property Name="SLNO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DOCCNUMBER_ARM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="MACHTNUMBER_ARM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="AMOUNT_ARM" Type="Int32" />
+          <Property Name="AMOUNT_ARM" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="USER_ARM" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="ACCODE_ARM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="MATCHNO_ARM" Type="Int32" />
@@ -2645,7 +2765,7 @@
           <Property Name="CUSTPIN_IPM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="SHIPPING_IPM" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="DISCOUNT_IPM" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="LPONO_IPM" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LPONO_IPM" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="SALESFIGURE_IPM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="INVTYPE_IPM" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
         </EntityType>
@@ -2756,9 +2876,9 @@
           <Property Name="EXECODE_MRV" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="NOTES_MRV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="STATUS_MRV" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="PHONE2_MRV" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="JOBMASTERs" Relationship="ASI_MGC_FSModel.JOBMASTER_MATERIALRECEIPTMASTERJOBMASTER" FromRole="MATERIALRECEIPTMASTER" ToRole="JOBMASTER" />
           <NavigationProperty Name="MRVREFERENCEs" Relationship="ASI_MGC_FSModel.MRVREFERENCE_MATERIALRECEIPTMASTERMRVREFERENCE" FromRole="MATERIALRECEIPTMASTER" ToRole="MRVREFERENCE" />
-          <Property Name="PHONE2_MRV" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MESRole">
           <Key>
@@ -3301,126 +3421,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="rpt_Purchase_Invoice_Result">
-          <Property Type="Int32" Name="SlNo_ART" Nullable="false" />
-          <Property Type="String" Name="DOCNUMBER_ART" Nullable="true" MaxLength="20" />
-          <Property Type="DateTime" Name="DODATE_ART" Nullable="true" />
-          <Property Type="DateTime" Name="GLDATE_ART" Nullable="true" />
-          <Property Type="String" Name="ARAPCODE_ART" Nullable="true" MaxLength="10" />
-          <Property Type="Int32" Name="DEBITAMOUNT_ART" Nullable="true" />
-          <Property Type="Int32" Name="CREDITAMOUNT_ART" Nullable="true" />
-          <Property Type="String" Name="OTHERREF_ART" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="NARRATION_ART" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="USER_ART" Nullable="true" MaxLength="3" />
-          <Property Type="Decimal" Name="MATCHVALUE_AR" Nullable="true" Precision="19" />
-          <Property Type="String" Name="STATUS_ART" Nullable="true" MaxLength="2" />
-          <Property Type="Int32" Name="SLNO_SL" Nullable="false" />
-          <Property Type="DateTime" Name="DOC_DATE_SL" Nullable="true" />
-          <Property Type="DateTime" Name="LEDGER_DATE_SL" Nullable="true" />
-          <Property Type="String" Name="VOUCHERNO_SL" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="OTHERREF_SL" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="PRODID_SL" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="BATCHNO_SL" Nullable="true" MaxLength="15" />
-          <Property Type="Int32" Name="RECEPT_QTY_SL" Nullable="true" />
-          <Property Type="Decimal" Name="RECEPT_RATE_SL" Nullable="true" Precision="19" />
-          <Property Type="Int32" Name="ISSUE_QTY_SL" Nullable="true" />
-          <Property Type="Decimal" Name="ISSUE_RATE_SL" Nullable="true" Precision="19" />
-          <Property Type="String" Name="UNIT_SL" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="STATUS_SL" Nullable="true" MaxLength="1" />
-          <Property Type="Int32" Name="SLNO_GLT" Nullable="false" />
-          <Property Type="String" Name="DOCNUMBER_GLT" Nullable="true" MaxLength="20" />
-          <Property Type="DateTime" Name="DOCDATE_GLT" Nullable="true" />
-          <Property Type="DateTime" Name="GLDATE_GLT" Nullable="true" />
-          <Property Type="String" Name="GLACCODE_GLT" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="OTHERREF_GLT" Nullable="true" MaxLength="20" />
-          <Property Type="Decimal" Name="DEBITAMOUNT_GLT" Nullable="true" Precision="19" />
-          <Property Type="Decimal" Name="CREDITAMOUNT_GLT" Nullable="true" Precision="19" />
-          <Property Type="String" Name="NARRATION_GLT" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="GLSTATUS_GLT" Nullable="true" MaxLength="2" />
-          <Property Type="String" Name="VARUSER" Nullable="true" MaxLength="15" />
-        </ComplexType>
-        <ComplexType Name="sp_ARAPListTB_Result">
-          <Property Type="Int32" Name="CODE_TB" Nullable="false" />
-          <Property Type="String" Name="ACCODE_TB" Nullable="false" MaxLength="5" />
-          <Property Type="String" Name="DESCRIPTION_TB" Nullable="true" MaxLength="40" />
-          <Property Type="Int32" Name="OPENING_TB" Nullable="false" />
-          <Property Type="Int32" Name="DEBIT_TB" Nullable="false" />
-          <Property Type="Int32" Name="CREDIT_TB" Nullable="false" />
-          <Property Type="Int32" Name="NET_TB" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="sp_BMBTListTB_Result">
-          <Property Type="Int32" Name="CODE_TB" Nullable="false" />
-          <Property Type="String" Name="ACCODE_TB" Nullable="false" MaxLength="5" />
-          <Property Type="String" Name="DESCRIPTION_TB" Nullable="true" MaxLength="30" />
-          <Property Type="Decimal" Name="OPENING_TB" Nullable="false" Precision="19" />
-          <Property Type="Decimal" Name="DEBIT_TB" Nullable="false" Precision="19" />
-          <Property Type="Decimal" Name="CREDIT_TB" Nullable="false" Precision="19" />
-          <Property Type="Decimal" Name="NET_TB" Nullable="false" Precision="19" />
-        </ComplexType>
-        <ComplexType Name="sp_GLMGLTListTB_Result">
-          <Property Type="Int32" Name="CODE_TB" Nullable="false" />
-          <Property Type="String" Name="ACCODE_TB" Nullable="false" MaxLength="5" />
-          <Property Type="String" Name="DESCRIPTION_TB" Nullable="true" MaxLength="30" />
-          <Property Type="Decimal" Name="OPENING_TB" Nullable="false" Precision="19" />
-          <Property Type="Decimal" Name="DEBIT_TB" Nullable="false" Precision="19" />
-          <Property Type="Decimal" Name="CREDIT_TB" Nullable="false" Precision="19" />
-          <Property Type="Decimal" Name="NET_TB" Nullable="false" Precision="19" />
-        </ComplexType>
-        <ComplexType Name="sp_GetSalesByJobNo_Result">
-          <Property Type="Int32" Name="SLNO_SD" Nullable="false" />
-          <Property Type="String" Name="JOBNO_SD" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="PRCODE_SD" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="JOBID_SD" Nullable="true" MaxLength="15" />
-          <Property Type="Int32" Name="QTY_SD" Nullable="false" />
-          <Property Type="Decimal" Name="RATE_SD" Nullable="false" Precision="19" />
-          <Property Type="Decimal" Name="AMOUNT_SD" Nullable="true" Precision="19" />
-          <Property Type="Decimal" Name="DISCOUNT_SD" Nullable="false" Precision="19" />
-          <Property Type="Decimal" Name="SHIPPINGCHARGES_SD" Nullable="false" Precision="19" />
-          <Property Type="String" Name="DESCRIPTION_SD" Nullable="true" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="sp_GetCashMemoMrvList_Result">
-          <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
-          <Property Type="String" Name="CUSTOMERCODE_MRV" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="DOC_DATE_MRV" Nullable="true" />
-          <Property Type="String" Name="JOBNO_SD" Nullable="true" MaxLength="15" />
-        </ComplexType>
-        <ComplexType Name="sp_GetInvoicePrepMrvList1_Result">
-          <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
-          <Property Type="String" Name="CUSTOMERCODE_MRV" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="DOC_DATE_MRV" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_GetInvoicePreparationMrvList_Result">
-          <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
-          <Property Type="String" Name="CUSTOMERCODE_MRV" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="DOC_DATE_MRV" Nullable="true" />
-          <Property Type="String" Name="JOBNO_SD" Nullable="true" MaxLength="15" />
-        </ComplexType>
-        <ComplexType Name="sp_GetARMrvDetails_Result">
-          <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
-          <Property Type="String" Name="CUSTOMERCODE_MRV" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="PHONE_MRV" Nullable="true" MaxLength="12" />
-          <Property Type="String" Name="JOBNO_JM" Nullable="false" MaxLength="15" />
-        </ComplexType>
-        <ComplexType Name="sp_GetCashMrvDetails_Result">
-          <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
-          <Property Type="String" Name="CUSTOMERCODE_MRV" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="PHONE_MRV" Nullable="true" MaxLength="12" />
-          <Property Type="String" Name="JOBNO_JM" Nullable="false" MaxLength="15" />
-        </ComplexType>
-        <ComplexType Name="rpt_MRV_Job_Details_Result">
-          <Property Type="String" Name="JOBNO_JM" Nullable="false" MaxLength="15" />
-          <Property Type="String" Name="JOBCODE_JM" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="PRODID_JIM" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="DESCRIPTION_PM" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="JOBDESCRIPTION_JR" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="JOBSTATUS_JM" Nullable="true" MaxLength="1" />
-        </ComplexType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -3457,6 +3458,7 @@
                 <ScalarProperty Name="CHQNO_VRPT" ColumnName="CHQNO_VRPT" />
                 <ScalarProperty Name="CHQDATE_VRPT" ColumnName="CHQDATE_VRPT" />
                 <ScalarProperty Name="DEBITAMOUT_VRPT" ColumnName="DEBITAMOUT_VRPT" />
+                <ScalarProperty Name="DrawerBr_VRPT" ColumnName="DrawerBr_VRPT" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -4235,6 +4237,170 @@
                 <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
                 <ScalarProperty Name="JOBDESCRIPTION_JR" ColumnName="JOBDESCRIPTION_JR" />
                 <ScalarProperty Name="PHONE_RPT" ColumnName="PHONE_RPT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="rpt_Purchase_Invoice" FunctionName="ASI_MGC_FSModel.Store.rpt_Purchase_Invoice">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.rpt_Purchase_Invoice_Result">
+                <ScalarProperty Name="SlNo_ART" ColumnName="SlNo_ART" />
+                <ScalarProperty Name="DOCNUMBER_ART" ColumnName="DOCNUMBER_ART" />
+                <ScalarProperty Name="DODATE_ART" ColumnName="DODATE_ART" />
+                <ScalarProperty Name="GLDATE_ART" ColumnName="GLDATE_ART" />
+                <ScalarProperty Name="ARAPCODE_ART" ColumnName="ARAPCODE_ART" />
+                <ScalarProperty Name="DEBITAMOUNT_ART" ColumnName="DEBITAMOUNT_ART" />
+                <ScalarProperty Name="CREDITAMOUNT_ART" ColumnName="CREDITAMOUNT_ART" />
+                <ScalarProperty Name="OTHERREF_ART" ColumnName="OTHERREF_ART" />
+                <ScalarProperty Name="NARRATION_ART" ColumnName="NARRATION_ART" />
+                <ScalarProperty Name="USER_ART" ColumnName="USER_ART" />
+                <ScalarProperty Name="MATCHVALUE_AR" ColumnName="MATCHVALUE_AR" />
+                <ScalarProperty Name="STATUS_ART" ColumnName="STATUS_ART" />
+                <ScalarProperty Name="SLNO_SL" ColumnName="SLNO_SL" />
+                <ScalarProperty Name="DOC_DATE_SL" ColumnName="DOC_DATE_SL" />
+                <ScalarProperty Name="LEDGER_DATE_SL" ColumnName="LEDGER_DATE_SL" />
+                <ScalarProperty Name="VOUCHERNO_SL" ColumnName="VOUCHERNO_SL" />
+                <ScalarProperty Name="OTHERREF_SL" ColumnName="OTHERREF_SL" />
+                <ScalarProperty Name="PRODID_SL" ColumnName="PRODID_SL" />
+                <ScalarProperty Name="BATCHNO_SL" ColumnName="BATCHNO_SL" />
+                <ScalarProperty Name="RECEPT_QTY_SL" ColumnName="RECEPT_QTY_SL" />
+                <ScalarProperty Name="RECEPT_RATE_SL" ColumnName="RECEPT_RATE_SL" />
+                <ScalarProperty Name="ISSUE_QTY_SL" ColumnName="ISSUE_QTY_SL" />
+                <ScalarProperty Name="ISSUE_RATE_SL" ColumnName="ISSUE_RATE_SL" />
+                <ScalarProperty Name="UNIT_SL" ColumnName="UNIT_SL" />
+                <ScalarProperty Name="STATUS_SL" ColumnName="STATUS_SL" />
+                <ScalarProperty Name="SLNO_GLT" ColumnName="SLNO_GLT" />
+                <ScalarProperty Name="DOCNUMBER_GLT" ColumnName="DOCNUMBER_GLT" />
+                <ScalarProperty Name="DOCDATE_GLT" ColumnName="DOCDATE_GLT" />
+                <ScalarProperty Name="GLDATE_GLT" ColumnName="GLDATE_GLT" />
+                <ScalarProperty Name="GLACCODE_GLT" ColumnName="GLACCODE_GLT" />
+                <ScalarProperty Name="OTHERREF_GLT" ColumnName="OTHERREF_GLT" />
+                <ScalarProperty Name="DEBITAMOUNT_GLT" ColumnName="DEBITAMOUNT_GLT" />
+                <ScalarProperty Name="CREDITAMOUNT_GLT" ColumnName="CREDITAMOUNT_GLT" />
+                <ScalarProperty Name="NARRATION_GLT" ColumnName="NARRATION_GLT" />
+                <ScalarProperty Name="GLSTATUS_GLT" ColumnName="GLSTATUS_GLT" />
+                <ScalarProperty Name="VARUSER" ColumnName="VARUSER" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ARAPListTB" FunctionName="ASI_MGC_FSModel.Store.sp_ARAPListTB">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_ARAPListTB_Result">
+                <ScalarProperty Name="CODE_TB" ColumnName="CODE_TB" />
+                <ScalarProperty Name="ACCODE_TB" ColumnName="ACCODE_TB" />
+                <ScalarProperty Name="DESCRIPTION_TB" ColumnName="DESCRIPTION_TB" />
+                <ScalarProperty Name="OPENING_TB" ColumnName="OPENING_TB" />
+                <ScalarProperty Name="DEBIT_TB" ColumnName="DEBIT_TB" />
+                <ScalarProperty Name="CREDIT_TB" ColumnName="CREDIT_TB" />
+                <ScalarProperty Name="NET_TB" ColumnName="NET_TB" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_BMBTListTB" FunctionName="ASI_MGC_FSModel.Store.sp_BMBTListTB">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_BMBTListTB_Result">
+                <ScalarProperty Name="CODE_TB" ColumnName="CODE_TB" />
+                <ScalarProperty Name="ACCODE_TB" ColumnName="ACCODE_TB" />
+                <ScalarProperty Name="DESCRIPTION_TB" ColumnName="DESCRIPTION_TB" />
+                <ScalarProperty Name="OPENING_TB" ColumnName="OPENING_TB" />
+                <ScalarProperty Name="DEBIT_TB" ColumnName="DEBIT_TB" />
+                <ScalarProperty Name="CREDIT_TB" ColumnName="CREDIT_TB" />
+                <ScalarProperty Name="NET_TB" ColumnName="NET_TB" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetBankStatementData" FunctionName="ASI_MGC_FSModel.Store.sp_GetBankStatementData" />
+          <FunctionImportMapping FunctionImportName="sp_GetGLStatementData" FunctionName="ASI_MGC_FSModel.Store.sp_GetGLStatementData" />
+          <FunctionImportMapping FunctionImportName="sp_GetTrialBalanceData" FunctionName="ASI_MGC_FSModel.Store.sp_GetTrialBalanceData" />
+          <FunctionImportMapping FunctionImportName="sp_GLMGLTListTB" FunctionName="ASI_MGC_FSModel.Store.sp_GLMGLTListTB">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GLMGLTListTB_Result">
+                <ScalarProperty Name="CODE_TB" ColumnName="CODE_TB" />
+                <ScalarProperty Name="ACCODE_TB" ColumnName="ACCODE_TB" />
+                <ScalarProperty Name="DESCRIPTION_TB" ColumnName="DESCRIPTION_TB" />
+                <ScalarProperty Name="OPENING_TB" ColumnName="OPENING_TB" />
+                <ScalarProperty Name="DEBIT_TB" ColumnName="DEBIT_TB" />
+                <ScalarProperty Name="CREDIT_TB" ColumnName="CREDIT_TB" />
+                <ScalarProperty Name="NET_TB" ColumnName="NET_TB" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_JvDataList" FunctionName="ASI_MGC_FSModel.Store.sp_JvDataList" />
+          <FunctionImportMapping FunctionImportName="sp_GetVoucherDetails" FunctionName="ASI_MGC_FSModel.Store.sp_GetVoucherDetails" />
+          <FunctionImportMapping FunctionImportName="sp_GetARStatementData" FunctionName="ASI_MGC_FSModel.Store.sp_GetARStatementData" />
+          <FunctionImportMapping FunctionImportName="sp_GetARStatementOutStandingData" FunctionName="ASI_MGC_FSModel.Store.sp_GetARStatementOutStandingData" />
+          <FunctionImportMapping FunctionImportName="sp_GetStockLedgerData" FunctionName="ASI_MGC_FSModel.Store.sp_GetStockLedgerData" />
+          <FunctionImportMapping FunctionImportName="sp_DeleteSalesbyJobId" FunctionName="ASI_MGC_FSModel.Store.sp_DeleteSalesbyJobId" />
+          <FunctionImportMapping FunctionImportName="sp_GetSalesByJobNo" FunctionName="ASI_MGC_FSModel.Store.sp_GetSalesByJobNo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GetSalesByJobNo_Result">
+                <ScalarProperty Name="SLNO_SD" ColumnName="SLNO_SD" />
+                <ScalarProperty Name="JOBNO_SD" ColumnName="JOBNO_SD" />
+                <ScalarProperty Name="PRCODE_SD" ColumnName="PRCODE_SD" />
+                <ScalarProperty Name="JOBID_SD" ColumnName="JOBID_SD" />
+                <ScalarProperty Name="QTY_SD" ColumnName="QTY_SD" />
+                <ScalarProperty Name="RATE_SD" ColumnName="RATE_SD" />
+                <ScalarProperty Name="AMOUNT_SD" ColumnName="AMOUNT_SD" />
+                <ScalarProperty Name="DISCOUNT_SD" ColumnName="DISCOUNT_SD" />
+                <ScalarProperty Name="SHIPPINGCHARGES_SD" ColumnName="SHIPPINGCHARGES_SD" />
+                <ScalarProperty Name="DESCRIPTION_SD" ColumnName="DESCRIPTION_SD" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetCashMemoMrvList" FunctionName="ASI_MGC_FSModel.Store.sp_GetCashMemoMrvList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GetCashMemoMrvList_Result">
+                <ScalarProperty Name="MRVNO_MRV" ColumnName="MRVNO_MRV" />
+                <ScalarProperty Name="CUSTOMERCODE_MRV" ColumnName="CUSTOMERCODE_MRV" />
+                <ScalarProperty Name="CUSTOMERNAME_MRV" ColumnName="CUSTOMERNAME_MRV" />
+                <ScalarProperty Name="DOC_DATE_MRV" ColumnName="DOC_DATE_MRV" />
+                <ScalarProperty Name="JOBNO_SD" ColumnName="JOBNO_SD" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetInvoicePreparationMrvList" FunctionName="ASI_MGC_FSModel.Store.sp_GetInvoicePreparationMrvList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GetInvoicePreparationMrvList_Result">
+                <ScalarProperty Name="MRVNO_MRV" ColumnName="MRVNO_MRV" />
+                <ScalarProperty Name="CUSTOMERCODE_MRV" ColumnName="CUSTOMERCODE_MRV" />
+                <ScalarProperty Name="CUSTOMERNAME_MRV" ColumnName="CUSTOMERNAME_MRV" />
+                <ScalarProperty Name="DOC_DATE_MRV" ColumnName="DOC_DATE_MRV" />
+                <ScalarProperty Name="JOBNO_SD" ColumnName="JOBNO_SD" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetSalesDetailsByJobNo" FunctionName="ASI_MGC_FSModel.Store.sp_GetSalesDetailsByJobNo" />
+          <FunctionImportMapping FunctionImportName="sp_GetARMrvDetails" FunctionName="ASI_MGC_FSModel.Store.sp_GetARMrvDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GetARMrvDetails_Result">
+                <ScalarProperty Name="MRVNO_MRV" ColumnName="MRVNO_MRV" />
+                <ScalarProperty Name="CUSTOMERCODE_MRV" ColumnName="CUSTOMERCODE_MRV" />
+                <ScalarProperty Name="CUSTOMERNAME_MRV" ColumnName="CUSTOMERNAME_MRV" />
+                <ScalarProperty Name="PHONE_MRV" ColumnName="PHONE_MRV" />
+                <ScalarProperty Name="JOBNO_JM" ColumnName="JOBNO_JM" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetCashMrvDetails" FunctionName="ASI_MGC_FSModel.Store.sp_GetCashMrvDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GetCashMrvDetails_Result">
+                <ScalarProperty Name="MRVNO_MRV" ColumnName="MRVNO_MRV" />
+                <ScalarProperty Name="CUSTOMERCODE_MRV" ColumnName="CUSTOMERCODE_MRV" />
+                <ScalarProperty Name="CUSTOMERNAME_MRV" ColumnName="CUSTOMERNAME_MRV" />
+                <ScalarProperty Name="PHONE_MRV" ColumnName="PHONE_MRV" />
+                <ScalarProperty Name="JOBNO_JM" ColumnName="JOBNO_JM" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetLastDeliveryNumber" FunctionName="ASI_MGC_FSModel.Store.sp_GetLastDeliveryNumber" />
+          <FunctionImportMapping FunctionImportName="rpt_MRV_Job_Details" FunctionName="ASI_MGC_FSModel.Store.rpt_MRV_Job_Details">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.rpt_MRV_Job_Details_Result">
+                <ScalarProperty Name="JOBNO_JM" ColumnName="JOBNO_JM" />
+                <ScalarProperty Name="JOBCODE_JM" ColumnName="JOBCODE_JM" />
+                <ScalarProperty Name="PRODID_JIM" ColumnName="PRODID_JIM" />
+                <ScalarProperty Name="DESCRIPTION_PM" ColumnName="DESCRIPTION_PM" />
+                <ScalarProperty Name="JOBDESCRIPTION_JR" ColumnName="JOBDESCRIPTION_JR" />
+                <ScalarProperty Name="JOBSTATUS_JM" ColumnName="JOBSTATUS_JM" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -5110,170 +5276,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="rpt_Purchase_Invoice" FunctionName="ASI_MGC_FSModel.Store.rpt_Purchase_Invoice">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.rpt_Purchase_Invoice_Result">
-                <ScalarProperty Name="SlNo_ART" ColumnName="SlNo_ART" />
-                <ScalarProperty Name="DOCNUMBER_ART" ColumnName="DOCNUMBER_ART" />
-                <ScalarProperty Name="DODATE_ART" ColumnName="DODATE_ART" />
-                <ScalarProperty Name="GLDATE_ART" ColumnName="GLDATE_ART" />
-                <ScalarProperty Name="ARAPCODE_ART" ColumnName="ARAPCODE_ART" />
-                <ScalarProperty Name="DEBITAMOUNT_ART" ColumnName="DEBITAMOUNT_ART" />
-                <ScalarProperty Name="CREDITAMOUNT_ART" ColumnName="CREDITAMOUNT_ART" />
-                <ScalarProperty Name="OTHERREF_ART" ColumnName="OTHERREF_ART" />
-                <ScalarProperty Name="NARRATION_ART" ColumnName="NARRATION_ART" />
-                <ScalarProperty Name="USER_ART" ColumnName="USER_ART" />
-                <ScalarProperty Name="MATCHVALUE_AR" ColumnName="MATCHVALUE_AR" />
-                <ScalarProperty Name="STATUS_ART" ColumnName="STATUS_ART" />
-                <ScalarProperty Name="SLNO_SL" ColumnName="SLNO_SL" />
-                <ScalarProperty Name="DOC_DATE_SL" ColumnName="DOC_DATE_SL" />
-                <ScalarProperty Name="LEDGER_DATE_SL" ColumnName="LEDGER_DATE_SL" />
-                <ScalarProperty Name="VOUCHERNO_SL" ColumnName="VOUCHERNO_SL" />
-                <ScalarProperty Name="OTHERREF_SL" ColumnName="OTHERREF_SL" />
-                <ScalarProperty Name="PRODID_SL" ColumnName="PRODID_SL" />
-                <ScalarProperty Name="BATCHNO_SL" ColumnName="BATCHNO_SL" />
-                <ScalarProperty Name="RECEPT_QTY_SL" ColumnName="RECEPT_QTY_SL" />
-                <ScalarProperty Name="RECEPT_RATE_SL" ColumnName="RECEPT_RATE_SL" />
-                <ScalarProperty Name="ISSUE_QTY_SL" ColumnName="ISSUE_QTY_SL" />
-                <ScalarProperty Name="ISSUE_RATE_SL" ColumnName="ISSUE_RATE_SL" />
-                <ScalarProperty Name="UNIT_SL" ColumnName="UNIT_SL" />
-                <ScalarProperty Name="STATUS_SL" ColumnName="STATUS_SL" />
-                <ScalarProperty Name="SLNO_GLT" ColumnName="SLNO_GLT" />
-                <ScalarProperty Name="DOCNUMBER_GLT" ColumnName="DOCNUMBER_GLT" />
-                <ScalarProperty Name="DOCDATE_GLT" ColumnName="DOCDATE_GLT" />
-                <ScalarProperty Name="GLDATE_GLT" ColumnName="GLDATE_GLT" />
-                <ScalarProperty Name="GLACCODE_GLT" ColumnName="GLACCODE_GLT" />
-                <ScalarProperty Name="OTHERREF_GLT" ColumnName="OTHERREF_GLT" />
-                <ScalarProperty Name="DEBITAMOUNT_GLT" ColumnName="DEBITAMOUNT_GLT" />
-                <ScalarProperty Name="CREDITAMOUNT_GLT" ColumnName="CREDITAMOUNT_GLT" />
-                <ScalarProperty Name="NARRATION_GLT" ColumnName="NARRATION_GLT" />
-                <ScalarProperty Name="GLSTATUS_GLT" ColumnName="GLSTATUS_GLT" />
-                <ScalarProperty Name="VARUSER" ColumnName="VARUSER" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_ARAPListTB" FunctionName="ASI_MGC_FSModel.Store.sp_ARAPListTB">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_ARAPListTB_Result">
-                <ScalarProperty Name="CODE_TB" ColumnName="CODE_TB" />
-                <ScalarProperty Name="ACCODE_TB" ColumnName="ACCODE_TB" />
-                <ScalarProperty Name="DESCRIPTION_TB" ColumnName="DESCRIPTION_TB" />
-                <ScalarProperty Name="OPENING_TB" ColumnName="OPENING_TB" />
-                <ScalarProperty Name="DEBIT_TB" ColumnName="DEBIT_TB" />
-                <ScalarProperty Name="CREDIT_TB" ColumnName="CREDIT_TB" />
-                <ScalarProperty Name="NET_TB" ColumnName="NET_TB" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_BMBTListTB" FunctionName="ASI_MGC_FSModel.Store.sp_BMBTListTB">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_BMBTListTB_Result">
-                <ScalarProperty Name="CODE_TB" ColumnName="CODE_TB" />
-                <ScalarProperty Name="ACCODE_TB" ColumnName="ACCODE_TB" />
-                <ScalarProperty Name="DESCRIPTION_TB" ColumnName="DESCRIPTION_TB" />
-                <ScalarProperty Name="OPENING_TB" ColumnName="OPENING_TB" />
-                <ScalarProperty Name="DEBIT_TB" ColumnName="DEBIT_TB" />
-                <ScalarProperty Name="CREDIT_TB" ColumnName="CREDIT_TB" />
-                <ScalarProperty Name="NET_TB" ColumnName="NET_TB" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_GetBankStatementData" FunctionName="ASI_MGC_FSModel.Store.sp_GetBankStatementData" />
-          <FunctionImportMapping FunctionImportName="sp_GetGLStatementData" FunctionName="ASI_MGC_FSModel.Store.sp_GetGLStatementData" />
-          <FunctionImportMapping FunctionImportName="sp_GetTrialBalanceData" FunctionName="ASI_MGC_FSModel.Store.sp_GetTrialBalanceData" />
-          <FunctionImportMapping FunctionImportName="sp_GLMGLTListTB" FunctionName="ASI_MGC_FSModel.Store.sp_GLMGLTListTB">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GLMGLTListTB_Result">
-                <ScalarProperty Name="CODE_TB" ColumnName="CODE_TB" />
-                <ScalarProperty Name="ACCODE_TB" ColumnName="ACCODE_TB" />
-                <ScalarProperty Name="DESCRIPTION_TB" ColumnName="DESCRIPTION_TB" />
-                <ScalarProperty Name="OPENING_TB" ColumnName="OPENING_TB" />
-                <ScalarProperty Name="DEBIT_TB" ColumnName="DEBIT_TB" />
-                <ScalarProperty Name="CREDIT_TB" ColumnName="CREDIT_TB" />
-                <ScalarProperty Name="NET_TB" ColumnName="NET_TB" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_JvDataList" FunctionName="ASI_MGC_FSModel.Store.sp_JvDataList" />
-          <FunctionImportMapping FunctionImportName="sp_GetVoucherDetails" FunctionName="ASI_MGC_FSModel.Store.sp_GetVoucherDetails" />
-          <FunctionImportMapping FunctionImportName="sp_GetARStatementData" FunctionName="ASI_MGC_FSModel.Store.sp_GetARStatementData" />
-          <FunctionImportMapping FunctionImportName="sp_GetARStatementOutStandingData" FunctionName="ASI_MGC_FSModel.Store.sp_GetARStatementOutStandingData" />
-          <FunctionImportMapping FunctionImportName="sp_GetStockLedgerData" FunctionName="ASI_MGC_FSModel.Store.sp_GetStockLedgerData" />
-          <FunctionImportMapping FunctionImportName="sp_DeleteSalesbyJobId" FunctionName="ASI_MGC_FSModel.Store.sp_DeleteSalesbyJobId" />
-          <FunctionImportMapping FunctionImportName="sp_GetSalesByJobNo" FunctionName="ASI_MGC_FSModel.Store.sp_GetSalesByJobNo">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GetSalesByJobNo_Result">
-                <ScalarProperty Name="SLNO_SD" ColumnName="SLNO_SD" />
-                <ScalarProperty Name="JOBNO_SD" ColumnName="JOBNO_SD" />
-                <ScalarProperty Name="PRCODE_SD" ColumnName="PRCODE_SD" />
-                <ScalarProperty Name="JOBID_SD" ColumnName="JOBID_SD" />
-                <ScalarProperty Name="QTY_SD" ColumnName="QTY_SD" />
-                <ScalarProperty Name="RATE_SD" ColumnName="RATE_SD" />
-                <ScalarProperty Name="AMOUNT_SD" ColumnName="AMOUNT_SD" />
-                <ScalarProperty Name="DISCOUNT_SD" ColumnName="DISCOUNT_SD" />
-                <ScalarProperty Name="SHIPPINGCHARGES_SD" ColumnName="SHIPPINGCHARGES_SD" />
-                <ScalarProperty Name="DESCRIPTION_SD" ColumnName="DESCRIPTION_SD" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_GetCashMemoMrvList" FunctionName="ASI_MGC_FSModel.Store.sp_GetCashMemoMrvList">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GetCashMemoMrvList_Result">
-                <ScalarProperty Name="MRVNO_MRV" ColumnName="MRVNO_MRV" />
-                <ScalarProperty Name="CUSTOMERCODE_MRV" ColumnName="CUSTOMERCODE_MRV" />
-                <ScalarProperty Name="CUSTOMERNAME_MRV" ColumnName="CUSTOMERNAME_MRV" />
-                <ScalarProperty Name="DOC_DATE_MRV" ColumnName="DOC_DATE_MRV" />
-                <ScalarProperty Name="JOBNO_SD" ColumnName="JOBNO_SD" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_GetInvoicePreparationMrvList" FunctionName="ASI_MGC_FSModel.Store.sp_GetInvoicePreparationMrvList">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GetInvoicePreparationMrvList_Result">
-                <ScalarProperty Name="MRVNO_MRV" ColumnName="MRVNO_MRV" />
-                <ScalarProperty Name="CUSTOMERCODE_MRV" ColumnName="CUSTOMERCODE_MRV" />
-                <ScalarProperty Name="CUSTOMERNAME_MRV" ColumnName="CUSTOMERNAME_MRV" />
-                <ScalarProperty Name="DOC_DATE_MRV" ColumnName="DOC_DATE_MRV" />
-                <ScalarProperty Name="JOBNO_SD" ColumnName="JOBNO_SD" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_GetSalesDetailsByJobNo" FunctionName="ASI_MGC_FSModel.Store.sp_GetSalesDetailsByJobNo" />
-          <FunctionImportMapping FunctionImportName="sp_GetARMrvDetails" FunctionName="ASI_MGC_FSModel.Store.sp_GetARMrvDetails">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GetARMrvDetails_Result">
-                <ScalarProperty Name="MRVNO_MRV" ColumnName="MRVNO_MRV" />
-                <ScalarProperty Name="CUSTOMERCODE_MRV" ColumnName="CUSTOMERCODE_MRV" />
-                <ScalarProperty Name="CUSTOMERNAME_MRV" ColumnName="CUSTOMERNAME_MRV" />
-                <ScalarProperty Name="PHONE_MRV" ColumnName="PHONE_MRV" />
-                <ScalarProperty Name="JOBNO_JM" ColumnName="JOBNO_JM" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_GetCashMrvDetails" FunctionName="ASI_MGC_FSModel.Store.sp_GetCashMrvDetails">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GetCashMrvDetails_Result">
-                <ScalarProperty Name="MRVNO_MRV" ColumnName="MRVNO_MRV" />
-                <ScalarProperty Name="CUSTOMERCODE_MRV" ColumnName="CUSTOMERCODE_MRV" />
-                <ScalarProperty Name="CUSTOMERNAME_MRV" ColumnName="CUSTOMERNAME_MRV" />
-                <ScalarProperty Name="PHONE_MRV" ColumnName="PHONE_MRV" />
-                <ScalarProperty Name="JOBNO_JM" ColumnName="JOBNO_JM" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_GetLastDeliveryNumber" FunctionName="ASI_MGC_FSModel.Store.sp_GetLastDeliveryNumber" />
-          <FunctionImportMapping FunctionImportName="rpt_MRV_Job_Details" FunctionName="ASI_MGC_FSModel.Store.rpt_MRV_Job_Details">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.rpt_MRV_Job_Details_Result">
-                <ScalarProperty Name="JOBNO_JM" ColumnName="JOBNO_JM" />
-                <ScalarProperty Name="JOBCODE_JM" ColumnName="JOBCODE_JM" />
-                <ScalarProperty Name="PRODID_JIM" ColumnName="PRODID_JIM" />
-                <ScalarProperty Name="DESCRIPTION_PM" ColumnName="DESCRIPTION_PM" />
-                <ScalarProperty Name="JOBDESCRIPTION_JR" ColumnName="JOBDESCRIPTION_JR" />
-                <ScalarProperty Name="JOBSTATUS_JM" ColumnName="JOBSTATUS_JM" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

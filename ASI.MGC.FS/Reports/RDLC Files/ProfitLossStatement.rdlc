@@ -468,7 +468,7 @@
         <Top>0.07701in</Top>
         <Left>0.07in</Left>
         <Height>1in</Height>
-        <Width>7.65166in</Width>
+        <Width>7.65167in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -927,6 +927,7 @@
   <DataSources>
     <DataSource Name="DataSource">
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>20b9fef8-91dd-4670-b54f-d9ec406a1c7c</rd:DataSourceID>
     </DataSource>
   </DataSources>

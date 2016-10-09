@@ -859,8 +859,8 @@ $(document).ready(function () {
                     notEmpty: {
                         message: 'Rate is required'
                     },
-                    integer: {
-                        message: 'Integer Only'
+                    numeric: {
+                        message: 'Numeric Only'
                     }
                 }
             },
@@ -869,8 +869,8 @@ $(document).ready(function () {
                     notEmpty: {
                         message: 'Discount is required'
                     },
-                    integer: {
-                        message: 'Integer Only'
+                    numeric: {
+                        message: 'Numeric Only'
                     }
                 }
             },
@@ -879,8 +879,8 @@ $(document).ready(function () {
                     notEmpty: {
                         message: 'Ship Charges is required'
                     },
-                    integer: {
-                        message: 'Integer Only'
+                    numeric: {
+                        message: 'Numeric Only'
                     }
                 }
             }

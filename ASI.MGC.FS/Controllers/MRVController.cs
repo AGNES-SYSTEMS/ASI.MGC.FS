@@ -172,10 +172,10 @@ namespace ASI.MGC.FS.Controllers
                 }
                 objSales.Qty = Convert.ToInt32(sale.QTY_SD);
                 objSales.Unit = sale.UNIT_SD;
-                objSales.Rate = Convert.ToInt32(sale.RATE_SD);
+                objSales.Rate = Convert.ToDouble(sale.RATE_SD);
                 objSales.Discount = Convert.ToDouble(sale.DISCOUNT_SD);
                 objSales.ShipChrg = Convert.ToDouble(sale.SHIPPINGCHARGES_SD);
-                objSales.CashAmount = (Convert.ToInt32(sale.QTY_SD) * Convert.ToInt32(sale.RATE_SD)) - Convert.ToDouble(sale.DISCOUNT_SD) + Convert.ToDouble(sale.SHIPPINGCHARGES_SD);
+                objSales.CashAmount = (Convert.ToInt32(sale.QTY_SD) * Convert.ToDouble(sale.RATE_SD)) - Convert.ToDouble(sale.DISCOUNT_SD) + Convert.ToDouble(sale.SHIPPINGCHARGES_SD);
                 lstSales.Add(objSales);
             }
 

@@ -437,8 +437,8 @@ $(document).ready(function () {
                     notEmpty: {
                         message: 'Ship Charges Detail is required'
                     },
-                    integer: {
-                        message: 'Integer Only'
+                    numeric: {
+                        message: 'Numeric Only'
                     }
                 }
             },
@@ -447,8 +447,8 @@ $(document).ready(function () {
                     notEmpty: {
                         message: 'Discount Detail is required'
                     },
-                    integer: {
-                        message: 'Integer Only'
+                    numeric: {
+                        message: 'Numeric Only'
                     }
                 }
             }

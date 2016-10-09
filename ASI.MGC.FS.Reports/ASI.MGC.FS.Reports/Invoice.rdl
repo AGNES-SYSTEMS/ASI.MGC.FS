@@ -692,7 +692,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=FORMAT(Fields!RATE_INVD.Value,"N2")</Value>
+                                            <Value>=Fields!RATE_INVD.Value</Value>
                                             <Style />
                                           </TextRun>
                                         </TextRuns>
@@ -722,7 +722,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=FORMAT(Fields!AMOUNT_INVNO.Value,"N2")</Value>
+                                            <Value>=Fields!AMOUNT_INVNO.Value</Value>
                                             <Style />
                                           </TextRun>
                                         </TextRuns>
@@ -832,7 +832,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Microsoft.VisualBasic.Strings.FORMAT(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice"), "N2")</Value>
+                <Value>=Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -898,7 +898,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Microsoft.VisualBasic.Strings.FORMAT(First(Fields!DISCOUNT_IPM.Value, "DS_Invoice"), "N2")</Value>
+                <Value>=First(Fields!DISCOUNT_IPM.Value, "DS_Invoice")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -964,7 +964,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Microsoft.VisualBasic.Strings.FORMAT(First(Fields!SHIPPING_IPM.Value, "DS_Invoice"), "N2")</Value>
+                <Value>=First(Fields!SHIPPING_IPM.Value, "DS_Invoice")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -1030,7 +1030,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Microsoft.VisualBasic.Strings.FORMAT(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice") + First(Fields!SHIPPING_IPM.Value, "DS_Invoice") - First(Fields!DISCOUNT_IPM.Value, "DS_Invoice") , "N2")</Value>
+                <Value>=Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice") + First(Fields!SHIPPING_IPM.Value, "DS_Invoice") - First(Fields!DISCOUNT_IPM.Value, "DS_Invoice")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -1096,7 +1096,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>="AED " &amp; CODE.changeToWords(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice") + Sum(Fields!SHIPPING_IPM.Value, "DS_Invoice") - Sum(Fields!DISCOUNT_IPM.Value, "DS_Invoice")) &amp; "ONLY"</Value>
+                <Value>="AED " &amp; CODE.changeToWords(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice") + First(Fields!SHIPPING_IPM.Value, "DS_Invoice") - First(Fields!DISCOUNT_IPM.Value, "DS_Invoice")) &amp; "ONLY"</Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
                 </Style>
@@ -1142,7 +1142,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox63</rd:DefaultName>
-        <Top>6.66in</Top>
+        <Top>4.035in</Top>
         <Left>5.02in</Left>
         <Height>0.25in</Height>
         <Width>2.56in</Width>
@@ -1172,7 +1172,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox61</rd:DefaultName>
-        <Top>6.3in</Top>
+        <Top>3.675in</Top>
         <Left>0.29in</Left>
         <Height>0.25in</Height>
         <Width>3.58in</Width>
@@ -1206,7 +1206,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox62</rd:DefaultName>
-        <Top>6.66in</Top>
+        <Top>4.035in</Top>
         <Left>0.28in</Left>
         <Height>0.25in</Height>
         <Width>2.56in</Width>
@@ -1684,7 +1684,7 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>7in</Height>
+    <Height>4.5in</Height>
     <Style />
   </Body>
   <Width>7.8in</Width>

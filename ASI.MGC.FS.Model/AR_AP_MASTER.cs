@@ -28,7 +28,7 @@ namespace ASI.MGC.FS.Model
         public string SALESEXE_ARM { get; set; }
         public string RECEIVABLETYPE_ARM { get; set; }
         public string STATUS_ARM { get; set; }
-        public Nullable<int> LIMITAMOUNT_ARM { get; set; }
+        public Nullable<decimal> LIMITAMOUNT_ARM { get; set; }
         public Nullable<int> CREDITDAYS_ARM { get; set; }
     }
 }

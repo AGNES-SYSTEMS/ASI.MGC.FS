@@ -23,5 +23,6 @@ namespace ASI.MGC.FS.Model
         public string CHQNO_VRPT { get; set; }
         public Nullable<System.DateTime> CHQDATE_VRPT { get; set; }
         public Nullable<decimal> DEBITAMOUT_VRPT { get; set; }
+        public string DrawerBr_VRPT { get; set; }
     }
 }

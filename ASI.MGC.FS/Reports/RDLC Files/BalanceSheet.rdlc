@@ -972,7 +972,7 @@
     <Height>2.21875in</Height>
     <Style />
   </Body>
-  <Width>7.81266in</Width>
+  <Width>7.81265in</Width>
   <Page>
     <PageHeader>
       <Height>1.0625in</Height>
@@ -1316,6 +1316,7 @@
   <DataSources>
     <DataSource Name="DataSource">
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>8979ed69-f394-41e8-b727-273add866a18</rd:DataSourceID>
     </DataSource>
   </DataSources>

@@ -19,8 +19,8 @@ namespace ASI.MGC.FS.Model
         public Nullable<System.DateTime> DODATE_ART { get; set; }
         public Nullable<System.DateTime> GLDATE_ART { get; set; }
         public string ARAPCODE_ART { get; set; }
-        public Nullable<int> DEBITAMOUNT_ART { get; set; }
-        public Nullable<int> CREDITAMOUNT_ART { get; set; }
+        public Nullable<decimal> DEBITAMOUNT_ART { get; set; }
+        public Nullable<decimal> CREDITAMOUNT_ART { get; set; }
         public string OTHERREF_ART { get; set; }
         public string NARRATION_ART { get; set; }
         public string USER_ART { get; set; }

@@ -704,7 +704,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=FORMAT(Fields!RATE_INVD.Value,"N2")</Value>
+                                            <Value>=Fields!RATE_INVD.Value</Value>
                                             <Style />
                                           </TextRun>
                                         </TextRuns>
@@ -734,7 +734,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=FORMAT(Fields!AMOUNT_INVNO.Value,"N2")</Value>
+                                            <Value>=Fields!AMOUNT_INVNO.Value</Value>
                                             <Style />
                                           </TextRun>
                                         </TextRuns>
@@ -844,7 +844,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=FORMAT(Sum(Fields!AMOUNT_INVNO.Value, "DS_CashMemo"),"N2")</Value>
+                <Value>=Sum(Fields!AMOUNT_INVNO.Value, "DS_CashMemo")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -910,7 +910,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=FORMAT(First(Fields!DISCOUNT_IPM.Value, "DS_CashMemo"),"N2")</Value>
+                <Value>=First(Fields!DISCOUNT_IPM.Value, "DS_CashMemo")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -976,7 +976,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=FORMAT(First(Fields!SHIPPING_IPM.Value, "DS_CashMemo"),"N2")</Value>
+                <Value>=First(Fields!SHIPPING_IPM.Value, "DS_CashMemo")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -1042,7 +1042,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=FORMAT(Sum(Fields!AMOUNT_INVNO.Value, "DS_CashMemo") + First(Fields!SHIPPING_IPM.Value, "DS_CashMemo") - First(Fields!DISCOUNT_IPM.Value, "DS_CashMemo"),"N2")</Value>
+                <Value>=Sum(Fields!AMOUNT_INVNO.Value, "DS_CashMemo") + First(Fields!SHIPPING_IPM.Value, "DS_CashMemo") - First(Fields!DISCOUNT_IPM.Value, "DS_CashMemo")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -1150,7 +1150,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox61</rd:DefaultName>
-        <Top>6.34202in</Top>
+        <Top>3.71702in</Top>
         <Left>0.29013in</Left>
         <Height>0.25in</Height>
         <Width>3.58333in</Width>
@@ -1184,7 +1184,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox62</rd:DefaultName>
-        <Top>6.66146in</Top>
+        <Top>4.03646in</Top>
         <Left>0.27846in</Left>
         <Height>0.25in</Height>
         <Width>2.5625in</Width>
@@ -1218,7 +1218,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox63</rd:DefaultName>
-        <Top>6.66146in</Top>
+        <Top>4.03646in</Top>
         <Left>5.01929in</Left>
         <Height>0.25in</Height>
         <Width>2.5625in</Width>
@@ -1570,7 +1570,7 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>7in</Height>
+    <Height>4.3in</Height>
     <Style />
   </Body>
   <Width>7.8in</Width>

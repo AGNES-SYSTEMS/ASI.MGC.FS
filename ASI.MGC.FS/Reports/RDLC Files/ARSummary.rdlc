@@ -776,7 +776,6 @@
     <PageHeader>
       <Height>1.11458in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
-      <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
         <Textbox Name="Textbox1">
           <CanGrow>true</CanGrow>
@@ -1115,6 +1114,7 @@
   <DataSources>
     <DataSource Name="DataSource">
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>919dacab-d01a-4ae8-a3c7-c7ebb60a3189</rd:DataSourceID>
     </DataSource>
   </DataSources>

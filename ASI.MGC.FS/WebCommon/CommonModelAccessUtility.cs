@@ -15,7 +15,7 @@ namespace ASI.MGC.FS.WebCommon
         {
             var currYear = DateTime.Now.Year.ToString();
             var mrvCount = (from objMrv in iUnitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
-                            where objMrv.MRVNO_MRV.EndsWith(currYear)
+                            //where objMrv.MRVNO_MRV.EndsWith(currYear)
                             select objMrv.MRVNO_MRV).Distinct().Count();
             return mrvCount;
         }
@@ -24,7 +24,7 @@ namespace ASI.MGC.FS.WebCommon
         {
             var currYear = DateTime.Now.Year.ToString();
             var jobCount = (from objMrv in iUnitOfWork.Repository<JOBMASTER>().Query().Get()
-                            where objMrv.JOBNO_JM.EndsWith(currYear)
+                            //where objMrv.JOBNO_JM.EndsWith(currYear)
                             select objMrv.JOBNO_JM).Distinct().Count();
             return jobCount;
         }
@@ -33,7 +33,8 @@ namespace ASI.MGC.FS.WebCommon
         {
             var currYear = DateTime.Now.Year.ToString();
             var cashSaleCount = (from lstBankTransaction in iUnitOfWork.Repository<BANKTRANSACTION>().Query().Get()
-                                 where lstBankTransaction.DOCNUMBER_BT.Contains("RCT") && lstBankTransaction.DOCNUMBER_BT.EndsWith(currYear)
+                                 where lstBankTransaction.DOCNUMBER_BT.Contains("RCT") 
+                                 //&& lstBankTransaction.DOCNUMBER_BT.EndsWith(currYear)
                                  select lstBankTransaction.DOCNUMBER_BT).Distinct().Count();
             return cashSaleCount;
         }
@@ -42,7 +43,8 @@ namespace ASI.MGC.FS.WebCommon
         {
             var currYear = DateTime.Now.Year.ToString();
             var purCount = (from lstArApLedger in iUnitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
-                            where lstArApLedger.DOCNUMBER_ART.Contains("CRP") && lstArApLedger.DOCNUMBER_ART.EndsWith(currYear)
+                            where lstArApLedger.DOCNUMBER_ART.Contains("CRP") 
+                            //&& lstArApLedger.DOCNUMBER_ART.EndsWith(currYear)
                             select lstArApLedger.DOCNUMBER_ART).Distinct().Count();
             return purCount;
         }
@@ -51,7 +53,8 @@ namespace ASI.MGC.FS.WebCommon
         {
             var currYear = DateTime.Now.Year.ToString();
             var invoiceCount = (from lstArApLedger in iUnitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
-                                where lstArApLedger.DOCNUMBER_ART.Contains("INV") && lstArApLedger.DOCNUMBER_ART.EndsWith(currYear)
+                                where lstArApLedger.DOCNUMBER_ART.Contains("INV") 
+                                //&& lstArApLedger.DOCNUMBER_ART.EndsWith(currYear)
                                 select lstArApLedger.DOCNUMBER_ART).Distinct().Count();
             return invoiceCount;
         }
@@ -60,7 +63,8 @@ namespace ASI.MGC.FS.WebCommon
         {
             var currYear = DateTime.Now.Year.ToString();
             var quotCount = (from quotations in iUnitOfWork.Repository<QUOTATION_MASTER>().Query().Get()
-                             where quotations.QUOTNO_QM.Contains("QOT") && quotations.QUOTNO_QM.EndsWith(currYear)
+                             where quotations.QUOTNO_QM.Contains("QOT") 
+                             //&& quotations.QUOTNO_QM.EndsWith(currYear)
                              select quotations.QUOTNO_QM).Distinct().Count();
             return quotCount;
         }
