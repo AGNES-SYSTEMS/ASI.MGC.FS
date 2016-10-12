@@ -89,6 +89,8 @@ namespace ASI.MGC.FS.DataAccess
         public virtual DbSet<USER> USERs { get; set; }
         public virtual DbSet<VOUCHERCHILD_RPT> VOUCHERCHILD_RPT { get; set; }
         public virtual DbSet<VOUCHERMASTER_RPT> VOUCHERMASTER_RPT { get; set; }
+        public virtual DbSet<MESMachine> MESMachines { get; set; }
+        public virtual DbSet<MESUnAuthenticatedUsersAccess> MESUnAuthenticatedUsersAccesses { get; set; }
     
         public virtual ObjectResult<rpt_BankPayment_Result> rpt_BankPayment(string vTYPE, string vCODE)
         {

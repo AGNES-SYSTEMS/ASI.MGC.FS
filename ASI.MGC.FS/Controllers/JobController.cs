@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Domain.Repositories;
+using ASI.MGC.FS.ExtendedAPI;
 using ASI.MGC.FS.Model;
 using ASI.MGC.FS.WebCommon;
 
@@ -195,6 +196,7 @@ namespace ASI.MGC.FS.Controllers
             }
             return Json(objJob, JsonRequestBehavior.AllowGet);
         }
+        [MesAuthorize("DailyTransactions")]
         public ActionResult JobEntry()
         {
             ViewBag.PayModeList = CommonModelAccessUtility.GetPaymentMethodList();
@@ -255,7 +257,7 @@ namespace ASI.MGC.FS.Controllers
         {
             return null;
         }
-
+        [MesAuthorize("DailyTransactions")]
         public ActionResult JobCancellation()
         {
             return View();

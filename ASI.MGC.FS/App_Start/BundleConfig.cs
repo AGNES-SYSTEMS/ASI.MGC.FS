@@ -27,6 +27,7 @@ namespace ASI.MGC.FS
 
             bundles.Add(new ScriptBundle("~/bundles/libraries").Include(
                         "~/Scripts/bootstrap.js",
+                        "~/Scripts/chosen.jquery.min.js",
                         "~/Scripts/toastr.min.js",
                         "~/Scripts/i18n/grid.locale-en.js",
                         "~/Scripts/jquery.jqGrid.min.js",
@@ -54,6 +55,7 @@ namespace ASI.MGC.FS
                       "~/Content/font-awesome.min.css",
                       "~/Content/bootstrap.min.css",
                       "~/Content/bootstrap-reset.css",
+                      "~/Content/chosen.min.css",
                       "~/Content/GoogleFontFace.css",
                       "~/Content/bootstrap.typeahead.css",
                       "~/Content/style.css",

@@ -12,7 +12,7 @@
           <Property Name="SLNO_SAC" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ACCODE_SAC" Type="nvarchar" MaxLength="15" />
           <Property Name="GLDATE_SAC" Type="datetime2" Precision="0" />
-          <Property Name="DOCNUMBER_SAC" Type="nvarchar" MaxLength="15" />
+          <Property Name="DOCNUMBER_SAC" Type="nvarchar" MaxLength="20" />
           <Property Name="OTHERREF_SAC" Type="nvarchar" MaxLength="50" />
           <Property Name="NARRATION_SAC" Type="nvarchar" MaxLength="100" />
           <Property Name="DEBITAMOUNT_SAC" Type="money" />
@@ -70,8 +70,8 @@
             <PropertyRef Name="SLNO" />
           </Key>
           <Property Name="SLNO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DOCCNUMBER_ARM" Type="nvarchar" MaxLength="15" />
-          <Property Name="MACHTNUMBER_ARM" Type="nvarchar" MaxLength="15" />
+          <Property Name="DOCCNUMBER_ARM" Type="nvarchar" MaxLength="20" />
+          <Property Name="MACHTNUMBER_ARM" Type="nvarchar" MaxLength="20" />
           <Property Name="AMOUNT_ARM" Type="money" />
           <Property Name="USER_ARM" Type="nvarchar" MaxLength="3" />
           <Property Name="ACCODE_ARM" Type="nvarchar" MaxLength="15" />
@@ -357,9 +357,9 @@
           <Key>
             <PropertyRef Name="JOBNO_JM" />
           </Key>
-          <Property Name="JOBNO_JM" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="JOBNO_JM" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="DOCDATE_JM" Type="datetime2" Precision="0" />
-          <Property Name="MRVNO_JM" Type="nvarchar" MaxLength="15" />
+          <Property Name="MRVNO_JM" Type="nvarchar" MaxLength="20" />
           <Property Name="EMPCODE_JM" Type="nvarchar" MaxLength="5" />
           <Property Name="JOBCODE_JM" Type="nvarchar" MaxLength="10" />
           <Property Name="JOBSTATUS_JM" Type="nvarchar" MaxLength="1" />
@@ -396,7 +396,7 @@
           <Key>
             <PropertyRef Name="MRVNO_MRV" />
           </Key>
-          <Property Name="MRVNO_MRV" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="MRVNO_MRV" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="MRVDATE_MRV" Type="datetime2" Precision="0" />
           <Property Name="CUSTOMERCODE_MRV" Type="nvarchar" MaxLength="10" />
           <Property Name="CUSTOMERNAME_MRV" Type="nvarchar" MaxLength="50" />
@@ -410,6 +410,15 @@
           <Property Name="STATUS_MRV" Type="nvarchar" MaxLength="1" />
           <Property Name="PHONE2_MRV" Type="nvarchar" MaxLength="12" />
         </EntityType>
+        <EntityType Name="MESMachines">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MachineName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MacAddress" Type="nvarchar" MaxLength="17" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="MESRoles">
           <Key>
             <PropertyRef Name="RoleID" />
@@ -417,7 +426,23 @@
           <Property Name="RoleID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="RoleName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="isActive" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MESUnAuthenticatedUsersAccess">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserIdentityName" Type="nvarchar" MaxLength="200" />
+          <Property Name="UserHostAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserHostName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Browser" Type="nvarchar" MaxLength="50" />
+          <Property Name="MacAddress" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsMobileDevice" Type="bit" Nullable="false" />
+          <Property Name="MobileDeviceManufacturer" Type="nvarchar" MaxLength="200" />
+          <Property Name="MobileDeviceModal" Type="nvarchar" MaxLength="150" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="ExistedUser" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="MESUserLoginDetails">
           <Key>
@@ -428,6 +453,15 @@
           <Property Name="LoginDate" Type="date" Nullable="false" />
           <Property Name="LoginTime" Type="time" Precision="7" Nullable="false" />
           <Property Name="LoginDuration" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MacAddress" Type="nvarchar" MaxLength="17" Nullable="false" />
+          <Property Name="Browser" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsMobileDevice" Type="bit" Nullable="false" />
+          <Property Name="MobileDeviceManufacturer" Type="nvarchar" MaxLength="200" />
+          <Property Name="MobileDeviceModal" Type="nvarchar" MaxLength="150" />
+          <Property Name="UserIdentityName" Type="nvarchar" MaxLength="200" />
+          <Property Name="UserHostAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserHostName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="MESUserProfile">
           <Key>
@@ -450,6 +484,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="RoleID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="MESUsers">
           <Key>
@@ -462,6 +497,7 @@
           <Property Name="PasswordSalt" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="isActive" Type="bit" Nullable="false" />
+          <Property Name="isSuperUser" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="MRV_REPORT_CHD">
           <Key>
@@ -494,7 +530,7 @@
             <PropertyRef Name="SLNO_MRR" />
           </Key>
           <Property Name="SLNO_MRR" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MRVNO_MRR" Type="nvarchar" MaxLength="15" />
+          <Property Name="MRVNO_MRR" Type="nvarchar" MaxLength="20" />
           <Property Name="PRODID_MRR" Type="nvarchar" MaxLength="10" />
           <Property Name="QTY_MRR" Type="int" />
           <Property Name="RATE_MRR" Type="money" />
@@ -551,7 +587,7 @@
             <PropertyRef Name="RECNO_QPRM" />
           </Key>
           <Property Name="RECNO_QPRM" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="QUOTNO_QPRM" Type="nvarchar" MaxLength="15" />
+          <Property Name="QUOTNO_QPRM" Type="nvarchar" MaxLength="20" />
           <Property Name="PRODID_QPRM" Type="nvarchar" MaxLength="15" />
           <Property Name="SLNO_QPRM" Type="int" />
           <Property Name="QTY_QPRM" Type="int" />
@@ -560,7 +596,7 @@
           <Key>
             <PropertyRef Name="QUOTNO_QM" />
           </Key>
-          <Property Name="QUOTNO_QM" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="QUOTNO_QM" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="CUSTNAME_QM" Type="nvarchar" MaxLength="150" />
           <Property Name="ADDRESS1_QM" Type="nvarchar" MaxLength="150" />
           <Property Name="ADDRESS2_QM" Type="nvarchar" MaxLength="250" />
@@ -589,8 +625,8 @@
             <PropertyRef Name="SLNO_SD" />
           </Key>
           <Property Name="SLNO_SD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MRVNO_SD" Type="nvarchar" MaxLength="15" />
-          <Property Name="JOBNO_SD" Type="nvarchar" MaxLength="15" />
+          <Property Name="MRVNO_SD" Type="nvarchar" MaxLength="20" />
+          <Property Name="JOBNO_SD" Type="nvarchar" MaxLength="20" />
           <Property Name="PRCODE_SD" Type="nvarchar" MaxLength="15" />
           <Property Name="JOBID_SD" Type="nvarchar" MaxLength="15" />
           <Property Name="QTY_SD" Type="int" />
@@ -621,7 +657,7 @@
           <Key>
             <PropertyRef Name="MRVNO_SM" />
           </Key>
-          <Property Name="MRVNO_SM" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="MRVNO_SM" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="CUSTCODE_SM" Type="nvarchar" MaxLength="10" />
           <Property Name="DOCDATE_SM" Type="datetime2" Precision="0" />
           <Property Name="SALEDATE_SM" Type="datetime2" Precision="0" />
@@ -750,7 +786,7 @@
           </Key>
           <Property Name="SLN_TB" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CODE_TB" Type="int" />
-          <Property Name="ACCODE_TB" Type="nvarchar" MaxLength="15" />
+          <Property Name="ACCODE_TB" Type="nvarchar" MaxLength="20" />
           <Property Name="DESCRIPTION_TB" Type="nvarchar" MaxLength="50" />
           <Property Name="OPENING_TB" Type="money" />
           <Property Name="DEBIT_TB" Type="money" />
@@ -1258,7 +1294,9 @@
           <EntitySet Name="JVREPORT" EntityType="Self.JVREPORT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOCATIONMASTER" EntityType="Self.LOCATIONMASTER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MATERIALRECEIPTMASTER" EntityType="Self.MATERIALRECEIPTMASTER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MESMachines" EntityType="Self.MESMachines" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MESRoles" EntityType="Self.MESRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MESUnAuthenticatedUsersAccess" EntityType="Self.MESUnAuthenticatedUsersAccess" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MESUserLoginDetails" EntityType="Self.MESUserLoginDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MESUserProfile" EntityType="Self.MESUserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MESUserRoles" EntityType="Self.MESUserRoles" Schema="dbo" store:Type="Tables" />
@@ -1739,6 +1777,8 @@
             <End Role="UNITMESSUREMENT" EntitySet="UNITMESSUREMENTs" />
             <End Role="STOCKLEDGER" EntitySet="STOCKLEDGERs" />
           </AssociationSet>
+          <EntitySet Name="MESMachines" EntityType="ASI_MGC_FSModel.MESMachine" />
+          <EntitySet Name="MESUnAuthenticatedUsersAccesses" EntityType="ASI_MGC_FSModel.MESUnAuthenticatedUsersAccess" />
           </EntityContainer>
         <ComplexType Name="rpt_BankPayment_Result">
           <Property Type="String" Name="COMPANYNAME_CM" Nullable="true" MaxLength="50" />
@@ -2476,7 +2516,7 @@
           <Property Name="SLNO_SAC" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ACCODE_SAC" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="GLDATE_SAC" Type="DateTime" Precision="0" />
-          <Property Name="DOCNUMBER_SAC" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="DOCNUMBER_SAC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="OTHERREF_SAC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NARRATION_SAC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="DEBITAMOUNT_SAC" Type="Decimal" Precision="19" Scale="4" />
@@ -2534,8 +2574,8 @@
             <PropertyRef Name="SLNO" />
           </Key>
           <Property Name="SLNO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DOCCNUMBER_ARM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="MACHTNUMBER_ARM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="DOCCNUMBER_ARM" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MACHTNUMBER_ARM" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="AMOUNT_ARM" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="USER_ARM" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="ACCODE_ARM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
@@ -2824,9 +2864,9 @@
           <Key>
             <PropertyRef Name="JOBNO_JM" />
           </Key>
-          <Property Name="JOBNO_JM" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="JOBNO_JM" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="DOCDATE_JM" Type="DateTime" Precision="0" />
-          <Property Name="MRVNO_JM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="MRVNO_JM" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="EMPCODE_JM" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="JOBCODE_JM" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="JOBSTATUS_JM" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
@@ -2864,7 +2904,7 @@
           <Key>
             <PropertyRef Name="MRVNO_MRV" />
           </Key>
-          <Property Name="MRVNO_MRV" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="MRVNO_MRV" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="MRVDATE_MRV" Type="DateTime" Precision="0" />
           <Property Name="CUSTOMERCODE_MRV" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="CUSTOMERNAME_MRV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -2887,7 +2927,7 @@
           <Property Name="RoleID" Type="Guid" Nullable="false" />
           <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="isActive" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="MESUserRoles" Relationship="ASI_MGC_FSModel.FK_MESUserRoles_MESRoles" FromRole="MESRole" ToRole="MESUserRole" />
         </EntityType>
         <EntityType Name="MESUserLoginDetail">
@@ -2900,6 +2940,15 @@
           <Property Name="LoginTime" Type="Time" Nullable="false" Precision="7" />
           <Property Name="LoginDuration" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="MESUser" Relationship="ASI_MGC_FSModel.FK_MESUserLoginDetails_MESUsers" FromRole="MESUserLoginDetail" ToRole="MESUser" />
+          <Property Name="MacAddress" Type="String" Nullable="false" MaxLength="17" FixedLength="false" Unicode="true" />
+          <Property Name="Browser" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsMobileDevice" Type="Boolean" Nullable="false" />
+          <Property Name="MobileDeviceManufacturer" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MobileDeviceModal" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="UserIdentityName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UserHostAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserHostName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="MESUserProfile">
           <Key>
@@ -2925,6 +2974,7 @@
           <Property Name="RoleID" Type="Guid" Nullable="false" />
           <NavigationProperty Name="MESRole" Relationship="ASI_MGC_FSModel.FK_MESUserRoles_MESRoles" FromRole="MESUserRole" ToRole="MESRole" />
           <NavigationProperty Name="MESUser" Relationship="ASI_MGC_FSModel.FK_MESUserRoles_MESUsers" FromRole="MESUserRole" ToRole="MESUser" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="MESUser">
           <Key>
@@ -2940,6 +2990,7 @@
           <NavigationProperty Name="MESUserLoginDetails" Relationship="ASI_MGC_FSModel.FK_MESUserLoginDetails_MESUsers" FromRole="MESUser" ToRole="MESUserLoginDetail" />
           <NavigationProperty Name="MESUserProfiles" Relationship="ASI_MGC_FSModel.FK_MESUserProfile_MESUsers" FromRole="MESUser" ToRole="MESUserProfile" />
           <NavigationProperty Name="MESUserRoles" Relationship="ASI_MGC_FSModel.FK_MESUserRoles_MESUsers" FromRole="MESUser" ToRole="MESUserRole" />
+          <Property Name="isSuperUser" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="MRV_REPORT_CHD">
           <Key>
@@ -2972,7 +3023,7 @@
             <PropertyRef Name="SLNO_MRR" />
           </Key>
           <Property Name="SLNO_MRR" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MRVNO_MRR" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="MRVNO_MRR" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="PRODID_MRR" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="QTY_MRR" Type="Int32" />
           <Property Name="RATE_MRR" Type="Decimal" Precision="19" Scale="4" />
@@ -3033,7 +3084,7 @@
             <PropertyRef Name="RECNO_QPRM" />
           </Key>
           <Property Name="RECNO_QPRM" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="QUOTNO_QPRM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="QUOTNO_QPRM" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="PRODID_QPRM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="SLNO_QPRM" Type="Int32" />
           <Property Name="QTY_QPRM" Type="Int32" />
@@ -3042,7 +3093,7 @@
           <Key>
             <PropertyRef Name="QUOTNO_QM" />
           </Key>
-          <Property Name="QUOTNO_QM" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="QUOTNO_QM" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CUSTNAME_QM" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="ADDRESS1_QM" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="ADDRESS2_QM" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
@@ -3071,8 +3122,8 @@
             <PropertyRef Name="SLNO_SD" />
           </Key>
           <Property Name="SLNO_SD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MRVNO_SD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="JOBNO_SD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="MRVNO_SD" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="JOBNO_SD" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="PRCODE_SD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="JOBID_SD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="QTY_SD" Type="Int32" />
@@ -3103,7 +3154,7 @@
           <Key>
             <PropertyRef Name="MRVNO_SM" />
           </Key>
-          <Property Name="MRVNO_SM" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="MRVNO_SM" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CUSTCODE_SM" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="DOCDATE_SM" Type="DateTime" Precision="0" />
           <Property Name="SALEDATE_SM" Type="DateTime" Precision="0" />
@@ -3233,7 +3284,7 @@
           </Key>
           <Property Name="SLN_TB" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CODE_TB" Type="Int32" />
-          <Property Name="ACCODE_TB" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="ACCODE_TB" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="DESCRIPTION_TB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="OPENING_TB" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="DEBIT_TB" Type="Decimal" Precision="19" Scale="4" />
@@ -3421,6 +3472,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="MESMachine">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MachineName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MacAddress" Type="String" Nullable="false" MaxLength="17" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MESUnAuthenticatedUsersAccess">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserIdentityName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UserHostAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserHostName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Browser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MacAddress" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IsMobileDevice" Type="Boolean" Nullable="false" />
+          <Property Name="MobileDeviceManufacturer" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MobileDeviceModal" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ExistedUser" Type="Boolean" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4852,6 +4928,15 @@
           <EntitySetMapping Name="MESUserLoginDetails">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.MESUserLoginDetail">
               <MappingFragment StoreEntitySet="MESUserLoginDetails">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UserHostName" ColumnName="UserHostName" />
+                <ScalarProperty Name="UserHostAddress" ColumnName="UserHostAddress" />
+                <ScalarProperty Name="UserIdentityName" ColumnName="UserIdentityName" />
+                <ScalarProperty Name="MobileDeviceModal" ColumnName="MobileDeviceModal" />
+                <ScalarProperty Name="MobileDeviceManufacturer" ColumnName="MobileDeviceManufacturer" />
+                <ScalarProperty Name="IsMobileDevice" ColumnName="IsMobileDevice" />
+                <ScalarProperty Name="Browser" ColumnName="Browser" />
+                <ScalarProperty Name="MacAddress" ColumnName="MacAddress" />
                 <ScalarProperty Name="LoginDuration" ColumnName="LoginDuration" />
                 <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
                 <ScalarProperty Name="LoginDate" ColumnName="LoginDate" />
@@ -4878,6 +4963,7 @@
           <EntitySetMapping Name="MESUserRoles">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.MESUserRole">
               <MappingFragment StoreEntitySet="MESUserRoles">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -4887,6 +4973,7 @@
           <EntitySetMapping Name="MESUsers">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.MESUser">
               <MappingFragment StoreEntitySet="MESUsers">
+                <ScalarProperty Name="isSuperUser" ColumnName="isSuperUser" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
@@ -5273,6 +5360,33 @@
                 <ScalarProperty Name="ALLCODE_VRPT" ColumnName="ALLCODE_VRPT" />
                 <ScalarProperty Name="GLDATE_VRPT" ColumnName="GLDATE_VRPT" />
                 <ScalarProperty Name="SLNO_VRPT" ColumnName="SLNO_VRPT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MESMachines">
+            <EntityTypeMapping TypeName="ASI_MGC_FSModel.MESMachine">
+              <MappingFragment StoreEntitySet="MESMachines">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="MacAddress" ColumnName="MacAddress" />
+                <ScalarProperty Name="MachineName" ColumnName="MachineName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MESUnAuthenticatedUsersAccesses">
+            <EntityTypeMapping TypeName="ASI_MGC_FSModel.MESUnAuthenticatedUsersAccess">
+              <MappingFragment StoreEntitySet="MESUnAuthenticatedUsersAccess">
+                <ScalarProperty Name="ExistedUser" ColumnName="ExistedUser" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="MobileDeviceModal" ColumnName="MobileDeviceModal" />
+                <ScalarProperty Name="MobileDeviceManufacturer" ColumnName="MobileDeviceManufacturer" />
+                <ScalarProperty Name="IsMobileDevice" ColumnName="IsMobileDevice" />
+                <ScalarProperty Name="MacAddress" ColumnName="MacAddress" />
+                <ScalarProperty Name="Browser" ColumnName="Browser" />
+                <ScalarProperty Name="UserHostName" ColumnName="UserHostName" />
+                <ScalarProperty Name="UserHostAddress" ColumnName="UserHostAddress" />
+                <ScalarProperty Name="UserIdentityName" ColumnName="UserIdentityName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

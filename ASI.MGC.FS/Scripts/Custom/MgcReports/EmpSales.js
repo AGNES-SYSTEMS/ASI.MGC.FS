@@ -13,7 +13,13 @@ $(document).ready(function () {
     var endDate = "";
     var empCode = "";
     $('#txtEmpName').on('change', function () {
-        $('#formJobEntry').formValidation('revalidateField', 'EmpName');
+        $('#formEmpSales').formValidation('revalidateField', 'EmpName');
+    });
+    $('#txtStartDate').on('change', function () {
+        $('#formEmpSales').formValidation('revalidateField', 'startDate');
+    });
+    $('#txtEndDate').on('change', function () {
+        $('#formEmpSales').formValidation('revalidateField', 'endDate');
     });
     $("#EmployeeSearchModel").on('show.bs.modal', function () {
         $("#tblEmployeeSearch").jqGrid({

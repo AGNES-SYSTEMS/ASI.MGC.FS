@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using ASI.MGC.FS.Domain;
+using ASI.MGC.FS.ExtendedAPI;
 using ASI.MGC.FS.Model;
 using ASI.MGC.FS.Models;
 using ASI.MGC.FS.WebCommon;
@@ -22,13 +23,13 @@ namespace ASI.MGC.FS.Controllers
         //{
         //    return View();
         //}
-
+        [MesAuthorize("DailyTransactions")]
         public ActionResult BankReceipt()
         {
             var objBankTransaction = new BANKTRANSACTION();
             return View(objBankTransaction);
         }
-
+        [MesAuthorize("DailyTransactions")]
         public ActionResult BankPayment()
         {
             var objBankTransaction = new BANKTRANSACTION();

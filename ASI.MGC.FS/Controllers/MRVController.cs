@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using ASI.MGC.FS.Domain;
+using ASI.MGC.FS.ExtendedAPI;
 using ASI.MGC.FS.Model;
 using ASI.MGC.FS.Models;
 using ASI.MGC.FS.WebCommon;
@@ -23,6 +24,7 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
+        [MesAuthorize("DailyTransactions")]
         public ActionResult MrvCreation()
         {
             int mrvCountCode = (1001 + CommonModelAccessUtility.GetCurrMrvCount(_unitOfWork));
@@ -184,7 +186,7 @@ namespace ASI.MGC.FS.Controllers
                 lstSales
             }, JsonRequestBehavior.AllowGet);
         }
-
+        [MesAuthorize("DailyTransactions")]
         public ActionResult MrvSearch()
         {
             return View();

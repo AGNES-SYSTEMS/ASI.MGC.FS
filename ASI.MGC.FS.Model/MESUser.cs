@@ -28,6 +28,7 @@ namespace ASI.MGC.FS.Model
         public string PasswordSalt { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public bool isActive { get; set; }
+        public bool isSuperUser { get; set; }
     
         public virtual ICollection<MESUserLoginDetail> MESUserLoginDetails { get; set; }
         public virtual ICollection<MESUserProfile> MESUserProfiles { get; set; }

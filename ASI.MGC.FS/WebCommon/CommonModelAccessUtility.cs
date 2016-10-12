@@ -33,7 +33,7 @@ namespace ASI.MGC.FS.WebCommon
         {
             var currYear = DateTime.Now.Year.ToString();
             var cashSaleCount = (from lstBankTransaction in iUnitOfWork.Repository<BANKTRANSACTION>().Query().Get()
-                                 where lstBankTransaction.DOCNUMBER_BT.Contains("RCT") 
+                                 where lstBankTransaction.DOCNUMBER_BT.Contains("RCT")
                                  //&& lstBankTransaction.DOCNUMBER_BT.EndsWith(currYear)
                                  select lstBankTransaction.DOCNUMBER_BT).Distinct().Count();
             return cashSaleCount;
@@ -43,7 +43,7 @@ namespace ASI.MGC.FS.WebCommon
         {
             var currYear = DateTime.Now.Year.ToString();
             var purCount = (from lstArApLedger in iUnitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
-                            where lstArApLedger.DOCNUMBER_ART.Contains("CRP") 
+                            where lstArApLedger.DOCNUMBER_ART.Contains("CRP")
                             //&& lstArApLedger.DOCNUMBER_ART.EndsWith(currYear)
                             select lstArApLedger.DOCNUMBER_ART).Distinct().Count();
             return purCount;
@@ -53,7 +53,7 @@ namespace ASI.MGC.FS.WebCommon
         {
             var currYear = DateTime.Now.Year.ToString();
             var invoiceCount = (from lstArApLedger in iUnitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
-                                where lstArApLedger.DOCNUMBER_ART.Contains("INV") 
+                                where lstArApLedger.DOCNUMBER_ART.Contains("INV")
                                 //&& lstArApLedger.DOCNUMBER_ART.EndsWith(currYear)
                                 select lstArApLedger.DOCNUMBER_ART).Distinct().Count();
             return invoiceCount;
@@ -63,7 +63,7 @@ namespace ASI.MGC.FS.WebCommon
         {
             var currYear = DateTime.Now.Year.ToString();
             var quotCount = (from quotations in iUnitOfWork.Repository<QUOTATION_MASTER>().Query().Get()
-                             where quotations.QUOTNO_QM.Contains("QOT") 
+                             where quotations.QUOTNO_QM.Contains("QOT")
                              //&& quotations.QUOTNO_QM.EndsWith(currYear)
                              select quotations.QUOTNO_QM).Distinct().Count();
             return quotCount;
@@ -78,7 +78,7 @@ namespace ASI.MGC.FS.WebCommon
             if (!string.IsNullOrEmpty(lastDlnNumber))
             {
                 int dlnCount = Convert.ToInt32(lastDlnNumber.Split('/')[1]) + 1;
-                dlnNumber = "DLN/" + dlnCount +"/"+ currYear;
+                dlnNumber = "DLN/" + dlnCount + "/" + currYear;
 
             }
             return dlnNumber;
@@ -96,7 +96,7 @@ namespace ASI.MGC.FS.WebCommon
         {
             IList<SelectListItem> lstSaleType = new List<SelectListItem>();
             lstSaleType.Add(new SelectListItem { Text = "SOW", Value = "SOW", Selected = true });
-            lstSaleType.Add(new SelectListItem { Text = "Product", Value = "Product"});
+            lstSaleType.Add(new SelectListItem { Text = "Product", Value = "Product" });
             return lstSaleType;
         }
 
@@ -203,13 +203,24 @@ namespace ASI.MGC.FS.WebCommon
                             select lstArApLedger.DOCNUMBER_ART).Distinct().Count();
             return revCount;
         }
-
+        public static IList<SelectListItem> GetUserRoles(IUnitOfWork iUnitOfWork)
+        {
+            IList<SelectListItem> userRoles = new List<SelectListItem>();
+            var roles = (from mesRoles in iUnitOfWork.Repository<MESRole>().Query().Get()
+                         where mesRoles.isActive.Equals(true)
+                         select mesRoles);
+            foreach (var role in roles)
+            {
+                userRoles.Add(new SelectListItem { Text = role.RoleName, Value =Convert.ToString(role.RoleID)});
+            }
+            return userRoles;
+        }
         public static string GetCurrentUser(IUnitOfWork iUnitOfWork)
         {
             string currUserCode = null;
             var currentUser = (from users in iUnitOfWork.Repository<MESUser>().Query().Get()
-                            where users.Email.Equals(HttpContext.Current.User.Identity.Name)
-                            select users).Select( a=> new
+                               where users.Email.Equals(HttpContext.Current.User.Identity.Name)
+                               select users).Select(a => new
                             {
                                 a.UserName
                             }).FirstOrDefault();

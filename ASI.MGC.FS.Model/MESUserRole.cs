@@ -17,6 +17,7 @@ namespace ASI.MGC.FS.Model
         public int ID { get; set; }
         public System.Guid UserID { get; set; }
         public System.Guid RoleID { get; set; }
+        public bool IsActive { get; set; }
     
         public virtual MESRole MESRole { get; set; }
         public virtual MESUser MESUser { get; set; }

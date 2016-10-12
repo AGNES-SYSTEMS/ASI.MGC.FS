@@ -74,6 +74,20 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-group">
+                                <label id="lblPassword" class="control-label col-md-4 small ">Roles:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.DropDownListFor(model => model.SelectedRoles, new SelectList(Model.UserRoles, "value", "text"), new { ID = "ddlUserRoles", @class = "chosen-select form-control", multiple = "multiple", @required = "required", tabindex = "4" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblConfirmPassword" class="control-label col-md-4 small ">Super User:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.CheckBoxFor(d => d.IsSuperUser, new { ID = "chkSuperUser", Class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small "></label>
                                 <div class="col-md-8 paddingLeftRight0">
                                 </div>

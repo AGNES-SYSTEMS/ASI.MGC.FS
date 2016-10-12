@@ -69,9 +69,9 @@
       <DependentUpon>ASI.MGC.FS.Model.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="ASI.MGC.FS.Model.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="BALANCESHEET.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
@@ -162,7 +162,13 @@
     <Compile Include="MATERIALRECEIPTMASTER.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="MESMachine.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="MESRole.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MESUnAuthenticatedUsersAccess.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>
     <Compile Include="MESUser.cs">

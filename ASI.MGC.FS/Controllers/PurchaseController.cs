@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using ASI.MGC.FS.Domain;
+using ASI.MGC.FS.ExtendedAPI;
 using ASI.MGC.FS.Model;
 using ASI.MGC.FS.Models;
 using ASI.MGC.FS.WebCommon;
@@ -135,7 +136,7 @@ namespace ASI.MGC.FS.Controllers
                 _unitOfWork.Save();
             }
         }
-
+        [MesAuthorize("DailyTransactions")]
         public ActionResult PurchaseReturn()
         {
             int retCount = (1001 + CommonModelAccessUtility.GetReturnPurchaseCount(_unitOfWork));
@@ -204,7 +205,7 @@ namespace ASI.MGC.FS.Controllers
             }
             return Json(purchaseReturnNo, JsonRequestBehavior.AllowGet);
         }
-
+        [MesAuthorize("DailyTransactions")]
         public ActionResult PurchaseEntry()
         {
             int purCountCode = (1001 + CommonModelAccessUtility.GetCurrPurchaseCount(_unitOfWork));

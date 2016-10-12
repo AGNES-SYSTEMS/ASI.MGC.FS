@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Domain.Repositories;
+using ASI.MGC.FS.ExtendedAPI;
 using ASI.MGC.FS.Model;
 using ASI.MGC.FS.WebCommon;
 
@@ -22,7 +23,7 @@ namespace ASI.MGC.FS.Controllers
         {
             return View();
         }
-
+        [MesAuthorize("DailyTransactions")]
         public ActionResult InvoicePreparation()
         {
             var invCount = (1001 + CommonModelAccessUtility.GetInvoiceCount(_unitOfWork));
@@ -149,12 +150,12 @@ namespace ASI.MGC.FS.Controllers
                 _unitOfWork.Save();
             }
         }
-
+        [MesAuthorize("DailyTransactions")]
         public ActionResult InvoiceReversal()
         {
             return View();
         }
-
+        [MesAuthorize("DailyTransactions")]
         public ActionResult InvoicePendings()
         {
             return View();
@@ -164,6 +165,7 @@ namespace ASI.MGC.FS.Controllers
         {
             throw new NotImplementedException();
         }
+        [MesAuthorize("DailyTransactions")]
         public ActionResult PendingInvoices()
         {
             return View();

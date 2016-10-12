@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Domain.Repositories;
+using ASI.MGC.FS.ExtendedAPI;
 using ASI.MGC.FS.Model;
 using ASI.MGC.FS.Models;
 using ASI.MGC.FS.WebCommon;
@@ -22,13 +23,13 @@ namespace ASI.MGC.FS.Controllers
         //{
         //    return View();
         //}
-
+        [MesAuthorize("DailyTransactions")]
         public ActionResult CashPayments()
         {
             var objBankTransaction = new BANKTRANSACTION();
             return View(objBankTransaction);
         }
-
+        [MesAuthorize("DailyTransactions")]
         public ActionResult CashMemo()
         {
             var cmCount = (1001 + CommonModelAccessUtility.GetCashSaleCount(_unitOfWork));
@@ -39,7 +40,7 @@ namespace ASI.MGC.FS.Controllers
             var objBankTransaction = new BANKTRANSACTION();
             return View(objBankTransaction);
         }
-
+        [MesAuthorize("DailyTransactions")]
         public ActionResult CashReceipt()
         {
             var objBankTransaction = new BANKTRANSACTION();
@@ -444,7 +445,7 @@ namespace ASI.MGC.FS.Controllers
             }
             return Json(new { success, cpNo }, JsonRequestBehavior.AllowGet);
         }
-
+        [MesAuthorize("DailyTransactions")]
         public ActionResult CashMemoReversal()
         {
             return View();

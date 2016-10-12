@@ -12,18 +12,11 @@ namespace ASI.MGC.FS.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class MESRole
+    public partial class MESMachine
     {
-        public MESRole()
-        {
-            this.MESUserRoles = new HashSet<MESUserRole>();
-        }
-    
-        public System.Guid RoleID { get; set; }
-        public string RoleName { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public bool isActive { get; set; }
-    
-        public virtual ICollection<MESUserRole> MESUserRoles { get; set; }
+        public int ID { get; set; }
+        public string MachineName { get; set; }
+        public string MacAddress { get; set; }
+        public bool IsActive { get; set; }
     }
 }

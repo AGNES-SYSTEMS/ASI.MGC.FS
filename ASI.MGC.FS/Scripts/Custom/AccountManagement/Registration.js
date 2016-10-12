@@ -104,6 +104,7 @@ $(document).ready(function () {
     $('#txtLastName').on('change', function () {
         $('#formRegistration').formValidation('revalidateField', 'LastName');
     });
+    $("#ddlUserRoles").chosen();
     $('#formRegistration').on('init.field.fv', function (e, data) {
         var $icon = data.element.data('fv.icon'),
             options = data.fv.getOptions(),

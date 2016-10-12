@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace ASI.MGC.FS.Models
 {
@@ -11,7 +13,7 @@ namespace ASI.MGC.FS.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [StringLength(25,MinimumLength=8)]
+        [StringLength(25, MinimumLength = 8)]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
@@ -24,13 +26,13 @@ namespace ASI.MGC.FS.Models
         [Required]
         [StringLength(250)]
         [RegularExpression(@"^[a-zA-Z\s]+$")]
-        [Display(Name="First Name")]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         [Required]
         [StringLength(250)]
         [RegularExpression(@"^[a-zA-Z\s]+$")]
-        [Display(Name="Last Name")]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         [Required]
@@ -45,13 +47,17 @@ namespace ASI.MGC.FS.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [StringLength(25,MinimumLength=8)]
+        [StringLength(25, MinimumLength = 8)]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+        public bool IsSuperUser { get; set; }
+        [Required]
+        public string[] SelectedRoles { get; set; }
+        public IList<SelectListItem> UserRoles { get; set; }
     }
 
     public class ChangePassword
@@ -72,7 +78,7 @@ namespace ASI.MGC.FS.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
 }
