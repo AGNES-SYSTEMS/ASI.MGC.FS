@@ -1,0 +1,368 @@
+﻿@{
+    ViewBag.Title = "PurchaseEntry";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet"/>
+<link href="~/Content/formValidation.min.css" rel="stylesheet" />
+@model ASI.MGC.FS.Model.AR_AP_LEDGER
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>Purchase Entry</legend>
+            <div class="row">
+                <div class="container">
+                    @using (Ajax.BeginForm("SavePurchaseEntry", "Purchase", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formPurchaseEntry", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblAPCode" class="control-label col-md-4 small ">AP Code</label>
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBox("APCode", null, new { ID = "txtAPCode", Class = "form-control", @readonly = "readonly" })
+                                        <span class="input-group-btn">
+                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#CustomerSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDocNo" class="control-label col-md-4 small ">Doc No</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("DocNo", null, new { ID = "txtDocNo", Class = "form-control", @Value = @ViewBag.purCode, @readonly = "readonly", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblAPDetail" class="control-label col-md-4 small ">AP Code Detail</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("APDetail", null, new { ID = "txtAPDetail", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDocDate" class="control-label col-md-4 small ">Doc Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @*@Html.TextBox("DocDate", null, new { ID = "txtDocDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @required = "required" })*@
+                                    <input id="txtDocDate" name="DocDate" value="@DateTime.Today.Date.ToShortDateString()" class="form-control" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblSettleMode" class="control-label col-md-4 small ">Settle Mode</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("SettleMode", null, new { ID = "txtSettleMode", @Value = "Credit", Class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblPurDate" class="control-label col-md-4 small ">Purchase Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("PurDate", null, new { ID = "txtPurDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblBankCode" class="control-label col-md-4 small ">Bank Code</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("BankCode", null, new { ID = "txtBankCode", @Value = "CSHAN", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblInvoice" class="control-label col-md-4 small ">Invoice</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("Invoice", null, new { ID = "txtInvoice", Class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblBankDetail" class="control-label col-md-4 small ">Bank Detail</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("BankDetail", null, new { ID = "txtBankDetail", @Value = "CASH IN HAND", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblCash" class="control-label col-md-4 small ">Cash</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("Cash", null, new { ID = "txtCash", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblShipChrg" class="control-label col-md-4 small ">Shipping Charges</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("ShipChrg", null, new { ID = "txtShipChrg", @Value="0", Class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDiscount" class="control-label col-md-4 small ">Discount</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("Discount", null, new { ID = "txtDiscount", @Value = "0", Class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblNote" class="control-label col-md-4 small ">Note</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextArea("Note", null, new { ID = "txtNote", Class = "form-control" })
+                                </div>
+                            </div>
+                            <input id="prdDetails" name="prdDetails" type="hidden" />
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <fieldset>
+                                    <legend>Product Details</legend>
+                                    <div id="gridProduct" class="panel-body">
+                                        <section id="unseen">
+                                            <button class="btn btn-primary" data-toggle="modal" data-target="#purchaseProductModel">
+                                                Add Product
+                                            </button>
+                                            <table id="tblPrdDetails"></table>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustDetail" class="control-label col-md-4 small ">Net Payable</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("NetAmount", null, new { ID = "txtNetAmount", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustDetail" class="control-label col-md-4 small ">Total Amount</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("TotalAmount", null, new { ID = "txtTotalAmount", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label></label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<div class="container">
+    <div class="modal fade" id="CustomerSearchModel" tabindex="-1" role="dialog" aria-labelledby="CustomerSearchModelLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form class="form-horizontal" id="CustomerSearchModelform" method="post" data-fv-framework="bootstrap"
+                      data-fv-message="This value is not valid"
+                      data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
+                      data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                      data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title">
+                            Customer Details Search
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="custGrid" class="panel-body">
+                                    <table id="tblCustomerSearch" style="width:100%"></table>
+                                    <div id="custPager"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <a href="#" id="btnCustSelect" class="btn btn-success">Select</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="modal fade" id="purchaseProductModel" tabindex="-1" role="dialog" aria-labelledby="purchaseProductModelLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-lg" style="width: 85%">
+            <div class="modal-content">
+                <form class="form-horizontal" id="purchaseProductModelform" method="post" data-fv-framework="bootstrap"
+                      data-fv-message="This value is not valid"
+                      data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
+                      data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                      data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title">
+                            Add Product To Purchase Entry
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-5 form-group">
+                                <label id="lblPrCode" class="control-label col-md-4 small ">PrCode:</label>
+                                <div class="col-md-6 paddingLeftRight0">
+                                    <div class="input-group">
+                                        <input type="text" id="txtPrCode" name="PrCode" class="form-control" readonly />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#PrdSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7 form-group">
+                                <label id="lblPrDesc" class="control-label col-md-4 small ">PrDesc:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="text" id="txtPrDesc" name="PrDesc" class="form-control" required readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5 form-group">
+                                <label id="lblQuantity" class="control-label col-md-4 small ">Quantity:</label>
+                                <div class="col-md-7 paddingLeftRight0">
+                                    <input type="text" id="txtQuantity" name="Quantity" value="1" class="form-control" required />
+                                </div>
+                            </div>
+                            <div class="col-md-7 form-group">
+                                <label id="lblUnit" class="control-label col-md-4 small ">Unit:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="text" id="txtUnit" name="Unit" class="form-control" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5 form-group">
+                                <label id="lblRate" class="control-label col-md-4 small ">Rate:</label>
+                                <div class="col-md-7 paddingLeftRight0">
+                                    <input type="text" id="txtRate" name="Rate" class="form-control" required />
+                                </div>
+                            </div>
+                            <div class="col-md-7 form-group">
+                                <label id="lblAmount" class="control-label col-md-4 small ">Amount:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="text" id="txtAmount" name="Amount" class="form-control" value="0" readonly />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnSave" class="btn btn-success">
+                            Save
+                        </button>
+                        <button type="button" id="btnCancel" class="btn btn-warning">
+                            Cancel
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="modal fade" id="PrdSearchModel" tabindex="-1" role="dialog" aria-labelledby="PrdSearchModelLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form class="form-horizontal" id="PrdSearchModelform" method="post" data-fv-framework="bootstrap"
+                      data-fv-message="This value is not valid"
+                      data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
+                      data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                      data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title">
+                            Porduct Details Search
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="prdGrid" class="panel-body">
+                                    <table id="tblProductSearch" style="width: 100%"></table>
+                                    <div id="prdPager"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <a href="#" id="btnProductSelect" class="btn btn-success">Select</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/Custom/Purchase/PurchaseEntry.js")"></script>*@
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
+    <script type="text/javascript">
+        var isReportOpened = false;
+        function OnSuccess(purchaseNo) {
+            if (purchaseNo !== "" && !isReportOpened) {
+                toastr.success("Purchase Entry is added Successfully.");
+                isReportOpened = true;
+                openPurchaseReceipt(purchaseNo);
+                openStockReceipt(purchaseNo);
+                $("#formPurchaseEntry")[0].reset();
+                $('#tblPrdDetails').jqGrid("clearGridData");
+            }
+        }
+
+        function OnFailure() {
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
+
+        function openPurchaseReceipt(voucherNo) {
+            var purchaseReceiptUrl = "/MgcReports/JournalVoucher?voucherNo=" + voucherNo;
+            window.open(purchaseReceiptUrl);
+            toastr.info("Purchase Receipt is open in new window.");
+        }
+
+        function openStockReceipt(voucherNo) {
+            var stockReceiptUrl = "/MgcReports/StockReceipt?voucherNo=" + voucherNo;
+            window.open(stockReceiptUrl);
+            toastr.info("Stock Receipt is open in new window.");
+        }
+
+    </script>
+}

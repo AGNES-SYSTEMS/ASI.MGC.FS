@@ -192,6 +192,9 @@
     <Compile Include="MRV_REPORT_CHD.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="NOGENERATOR.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="PANDL_SETTINGS.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>
@@ -388,6 +391,9 @@
     <Compile Include="sp_BMBTListTB_Result.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_GetAllocationDetailsDocNo_Result.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="sp_GetARMrvDetails_Result.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>
@@ -401,6 +407,12 @@
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_GetInvoicePrepMrvList1_Result.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetPartyAllocationDocumentsCredit_Result.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_GetPartyAllocationDocuments_Result.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_GetSalesByJobNo_Result.cs">

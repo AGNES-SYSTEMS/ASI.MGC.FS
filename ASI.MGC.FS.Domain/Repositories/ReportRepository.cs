@@ -696,7 +696,7 @@ namespace ASI.MGC.FS.Domain.Repositories
             List<sp_GetCashMrvDetails_Result> lst = null;
             try
             {
-                lst = _context.sp_GetCashMrvDetails(custCode, custName, telephone,mrvNo,jobNo).ToList();
+                lst = _context.sp_GetCashMrvDetails(custCode, custName, telephone, mrvNo, jobNo).ToList();
             }
             catch (Exception)
             {
@@ -721,7 +721,7 @@ namespace ASI.MGC.FS.Domain.Repositories
             List<sp_GetARMrvDetails_Result> lst = null;
             try
             {
-                lst = _context.sp_GetARMrvDetails(custCode, custName, telephone,mrvNo, jobNo).ToList();
+                lst = _context.sp_GetARMrvDetails(custCode, custName, telephone, mrvNo, jobNo).ToList();
             }
             catch (Exception)
             {
@@ -773,6 +773,45 @@ namespace ASI.MGC.FS.Domain.Repositories
             try
             {
                 lst = _context.sp_GetInvoicePreparationMrvList(pageIndex, pageSize, mrvCode, custName, jobNo).ToList();
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+            return lst;
+        }
+        public IList<sp_GetAllocationDetailsDocNo_Result> sp_GetAllocationDetailsDocList(int pageIndex, int pageSize, string partyCode, string docId = null)
+        {
+            List<sp_GetAllocationDetailsDocNo_Result> lst = null;
+            try
+            {
+                lst = _context.sp_GetAllocationDetailsDocNo(pageIndex, pageSize, partyCode, docId).ToList();
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+            return lst;
+        }
+        public IList<sp_GetPartyAllocationDocumentsCredit_Result> sp_GetPartyAllocationCreditDocuments(string partyCode)
+        {
+            List<sp_GetPartyAllocationDocumentsCredit_Result> lst = null;
+            try
+            {
+                lst = _context.sp_GetPartyAllocationDocumentsCredit(partyCode).ToList();
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+            return lst;
+        }
+        public IList<sp_GetPartyAllocationDocuments_Result> sp_GetPartyAllocationDocuments(string partyCode)
+        {
+            List<sp_GetPartyAllocationDocuments_Result> lst = null;
+            try
+            {
+                lst = _context.sp_GetPartyAllocationDocuments(partyCode).ToList();
             }
             catch (Exception)
             {

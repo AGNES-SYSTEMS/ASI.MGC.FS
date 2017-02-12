@@ -222,6 +222,7 @@
     </Compile>
     <Compile Include="Models\CustomAllocationDetails.cs" />
     <Compile Include="Models\CustomSaleDetails.cs" />
+    <Compile Include="Models\DayEndOperationModel.cs" />
     <Compile Include="Models\IdentityModels.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1084,6 +1085,7 @@
     <Content Include="Scripts\Custom\Setups\FinancialYearPeriod.js" />
     <Content Include="Scripts\Custom\Setups\ItemsMaster.js" />
     <Content Include="Scripts\Custom\Setups\JobCreation.js" />
+    <Content Include="Scripts\Custom\Setups\MesMachines.js" />
     <Content Include="Scripts\Custom\Setups\ProductMaster.js" />
     <Content Include="Scripts\Custom\Setups\SupplierMaster.js" />
     <Content Include="Scripts\Custom\Setups\UnitMeasurement.js" />
@@ -1342,6 +1344,7 @@
     <Content Include="Views\MgcReports\ApStatement.cshtml" />
     <Content Include="Views\MgcReports\ApStatementOutstanding.cshtml" />
     <Content Include="Views\Purchase\PurchaseEntry.cshtml" />
+    <Content Include="Views\Setups\MesMachines.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

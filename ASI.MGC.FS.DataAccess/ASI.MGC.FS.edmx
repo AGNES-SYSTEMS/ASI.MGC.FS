@@ -538,6 +538,15 @@
           <Property Name="JOBID_MRR" Type="nvarchar" MaxLength="10" />
           <Property Name="JOBSTATUS_MRR" Type="nvarchar" MaxLength="1" />
         </EntityType>
+        <EntityType Name="NOGENERATOR">
+          <Key>
+            <PropertyRef Name="SLNO" />
+          </Key>
+          <Property Name="SLNO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DOCTYPE_NG" Type="nvarchar" MaxLength="10" />
+          <Property Name="SLNO_NG" Type="int" />
+          <Property Name="FINYEAR_NG" Type="int" />
+        </EntityType>
         <EntityType Name="PANDL_SETTINGS">
           <Key>
             <PropertyRef Name="STOCKUPDATION_PLS" />
@@ -1174,6 +1183,12 @@
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_GetAllocationDetailsDocNo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pageNum" Type="int" Mode="In" />
+          <Parameter Name="pageSize" Type="int" Mode="In" />
+          <Parameter Name="PartyId" Type="nvarchar" Mode="In" />
+          <Parameter Name="DocId" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_GetARMrvDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CUSTCODE" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="CUSTNAME" Type="nvarchar(max)" Mode="In" />
@@ -1223,6 +1238,12 @@
           <Parameter Name="JOBNO" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_GetLastDeliveryNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_GetPartyAllocationDocuments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PartyId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_GetPartyAllocationDocumentsCredit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PartyId" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_GetSalesByJobNo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="JobNo" Type="nvarchar" Mode="In" />
         </Function>
@@ -1304,6 +1325,7 @@
           <EntitySet Name="MRV_REPORT_CHD" EntityType="Self.MRV_REPORT_CHD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MRVNO_REPORT" EntityType="Self.MRVNO_REPORT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MRVREFERENCE" EntityType="Self.MRVREFERENCE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NOGENERATOR" EntityType="Self.NOGENERATOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PANDL_SETTINGS" EntityType="Self.PANDL_SETTINGS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUCTMASTER" EntityType="Self.PRODUCTMASTER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PROFITANDLOSS_RPT" EntityType="Self.PROFITANDLOSS_RPT" Schema="dbo" store:Type="Tables" />
@@ -1779,6 +1801,19 @@
           </AssociationSet>
           <EntitySet Name="MESMachines" EntityType="ASI_MGC_FSModel.MESMachine" />
           <EntitySet Name="MESUnAuthenticatedUsersAccesses" EntityType="ASI_MGC_FSModel.MESUnAuthenticatedUsersAccess" />
+          <FunctionImport Name="sp_GetAllocationDetailsDocNo" ReturnType="Collection(ASI_MGC_FSModel.sp_GetAllocationDetailsDocNo_Result)">
+            <Parameter Name="pageNum" Mode="In" Type="Int32" />
+            <Parameter Name="pageSize" Mode="In" Type="Int32" />
+            <Parameter Name="PartyId" Mode="In" Type="String" />
+            <Parameter Name="DocId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetPartyAllocationDocuments" ReturnType="Collection(ASI_MGC_FSModel.sp_GetPartyAllocationDocuments_Result)">
+          <Parameter Name="PartyId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetPartyAllocationDocumentsCredit" ReturnType="Collection(ASI_MGC_FSModel.sp_GetPartyAllocationDocumentsCredit_Result)">
+          <Parameter Name="PartyId" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="NOGENERATORs" EntityType="ASI_MGC_FSModel.NOGENERATOR" />
           </EntityContainer>
         <ComplexType Name="rpt_BankPayment_Result">
           <Property Type="String" Name="COMPANYNAME_CM" Nullable="true" MaxLength="50" />
@@ -3496,6 +3531,41 @@
           <Property Name="MobileDeviceModal" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ExistedUser" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <ComplexType Name="sp_GetAllocationDetailsDocNo_Result">
+          <Property Type="String" Name="DOCNUMBER_ART" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="CREDITAMOUNT_ART" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="DEBITAMOUNT_ART" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="MATCHVALUE_AR" Nullable="true" Precision="19" />
+          <Property Type="String" Name="OTHERREF_ART" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="STATUS_ART" Nullable="true" MaxLength="2" />
+        </ComplexType>
+        <ComplexType Name="sp_GetPartyAllocationDocuments_Result">
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="String" Name="DocNo" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="Balance_Amount" Nullable="true" Precision="19" />
+          <Property Type="String" Name="Match_Amount" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Other_Ref" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="2" />
+        </ComplexType>
+        <ComplexType Name="sp_GetPartyAllocationDocumentsCredit_Result">
+          <Property Type="DateTime" Name="Date" Nullable="true" />
+          <Property Type="String" Name="DocNo" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" />
+          <Property Type="Decimal" Name="Balance_Amount" Nullable="true" Precision="19" />
+          <Property Type="String" Name="Match_Amount" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Other_Ref" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="2" />
+        </ComplexType>
+        <EntityType Name="NOGENERATOR">
+          <Key>
+            <PropertyRef Name="SLNO" />
+          </Key>
+          <Property Name="SLNO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DOCTYPE_NG" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SLNO_NG" Type="Int32" />
+          <Property Name="FINYEAR_NG" Type="Int32" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5387,6 +5457,54 @@
                 <ScalarProperty Name="UserHostAddress" ColumnName="UserHostAddress" />
                 <ScalarProperty Name="UserIdentityName" ColumnName="UserIdentityName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetAllocationDetailsDocNo" FunctionName="ASI_MGC_FSModel.Store.sp_GetAllocationDetailsDocNo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GetAllocationDetailsDocNo_Result">
+                <ScalarProperty Name="DOCNUMBER_ART" ColumnName="DOCNUMBER_ART" />
+                <ScalarProperty Name="CREDITAMOUNT_ART" ColumnName="CREDITAMOUNT_ART" />
+                <ScalarProperty Name="DEBITAMOUNT_ART" ColumnName="DEBITAMOUNT_ART" />
+                <ScalarProperty Name="MATCHVALUE_AR" ColumnName="MATCHVALUE_AR" />
+                <ScalarProperty Name="OTHERREF_ART" ColumnName="OTHERREF_ART" />
+                <ScalarProperty Name="STATUS_ART" ColumnName="STATUS_ART" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetPartyAllocationDocuments" FunctionName="ASI_MGC_FSModel.Store.sp_GetPartyAllocationDocuments">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GetPartyAllocationDocuments_Result">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="DocNo" ColumnName="DocNo" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Balance_Amount" ColumnName="Balance_Amount" />
+                <ScalarProperty Name="Match_Amount" ColumnName="Match_Amount" />
+                <ScalarProperty Name="Other_Ref" ColumnName="Other_Ref" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetPartyAllocationDocumentsCredit" FunctionName="ASI_MGC_FSModel.Store.sp_GetPartyAllocationDocumentsCredit">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_GetPartyAllocationDocumentsCredit_Result">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="DocNo" ColumnName="DocNo" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Balance_Amount" ColumnName="Balance_Amount" />
+                <ScalarProperty Name="Match_Amount" ColumnName="Match_Amount" />
+                <ScalarProperty Name="Other_Ref" ColumnName="Other_Ref" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="NOGENERATORs">
+            <EntityTypeMapping TypeName="ASI_MGC_FSModel.NOGENERATOR">
+              <MappingFragment StoreEntitySet="NOGENERATOR">
+                <ScalarProperty Name="FINYEAR_NG" ColumnName="FINYEAR_NG" />
+                <ScalarProperty Name="SLNO_NG" ColumnName="SLNO_NG" />
+                <ScalarProperty Name="DOCTYPE_NG" ColumnName="DOCTYPE_NG" />
+                <ScalarProperty Name="SLNO" ColumnName="SLNO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

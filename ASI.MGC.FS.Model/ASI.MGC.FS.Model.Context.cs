@@ -89,6 +89,7 @@ namespace ASI.MGC.FS.Model
         public virtual DbSet<VOUCHERMASTER_RPT> VOUCHERMASTER_RPT { get; set; }
         public virtual DbSet<MESMachine> MESMachines { get; set; }
         public virtual DbSet<MESUnAuthenticatedUsersAccess> MESUnAuthenticatedUsersAccesses { get; set; }
+        public virtual DbSet<NOGENERATOR> NOGENERATORs { get; set; }
     
         public virtual ObjectResult<rpt_BankPayment_Result> rpt_BankPayment(string vTYPE, string vCODE)
         {
@@ -1113,6 +1114,45 @@ namespace ASI.MGC.FS.Model
                 new ObjectParameter("MRVNO", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_MRV_Job_Details_Result>("rpt_MRV_Job_Details", mRVNOParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetAllocationDetailsDocNo_Result> sp_GetAllocationDetailsDocNo(Nullable<int> pageNum, Nullable<int> pageSize, string partyId, string docId)
+        {
+            var pageNumParameter = pageNum.HasValue ?
+                new ObjectParameter("pageNum", pageNum) :
+                new ObjectParameter("pageNum", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("pageSize", pageSize) :
+                new ObjectParameter("pageSize", typeof(int));
+    
+            var partyIdParameter = partyId != null ?
+                new ObjectParameter("PartyId", partyId) :
+                new ObjectParameter("PartyId", typeof(string));
+    
+            var docIdParameter = docId != null ?
+                new ObjectParameter("DocId", docId) :
+                new ObjectParameter("DocId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetAllocationDetailsDocNo_Result>("sp_GetAllocationDetailsDocNo", pageNumParameter, pageSizeParameter, partyIdParameter, docIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetPartyAllocationDocuments_Result> sp_GetPartyAllocationDocuments(string partyId)
+        {
+            var partyIdParameter = partyId != null ?
+                new ObjectParameter("PartyId", partyId) :
+                new ObjectParameter("PartyId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetPartyAllocationDocuments_Result>("sp_GetPartyAllocationDocuments", partyIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_GetPartyAllocationDocumentsCredit_Result> sp_GetPartyAllocationDocumentsCredit(string partyId)
+        {
+            var partyIdParameter = partyId != null ?
+                new ObjectParameter("PartyId", partyId) :
+                new ObjectParameter("PartyId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetPartyAllocationDocumentsCredit_Result>("sp_GetPartyAllocationDocumentsCredit", partyIdParameter);
         }
     }
 }

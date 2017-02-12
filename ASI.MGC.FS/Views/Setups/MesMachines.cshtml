@@ -1,0 +1,129 @@
+﻿@{
+    ViewBag.Title = "MESMachines";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.currPage = "MES Machines";
+}
+@model ASI.MGC.FS.Model.MESMachine
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>MES Machines</legend>
+            <div class="row">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-11">
+                            <div id="grid" class="panel-body">
+                                <section>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#MachineDetailsModel">
+                                        Add New Machine
+                                    </button>
+                                </section>
+                                <br /> <br />
+                                <section>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <div class="col-md-12 input-group paddingLeftRight0">
+                                                @Html.TextBox("searchMachine", null, new { ID = "txtMachine", Class = "form-control" })
+                                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table id="tblMachineDetails"></table>
+                                    <div id="Pager"></div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<div class="container">
+    <div class="modal fade" id="MachineDetailsModel" tabindex="-1" role="dialog" aria-labelledby="MachineDetailsModelLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog modal-lg" style="width: 85%">
+            <div class="modal-content">
+                @using (Ajax.BeginForm("SaveMesMachine", "Setups", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formMachineCreation", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                {
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title">
+                            Add Machine Details
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Machine Name</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.MachineName, null, new { ID = "txtMachineName", Class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">MAC Address</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.MacAddress, null, new { ID = "txtMacAddress", Class = "form-control", @minlength = "12", @maxlength = "12", @Value = ViewBag.currentMachineMac, @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Is Active</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.CheckBoxFor(d => d.IsActive, new { ID = "chkIsActive", Class = "form-control", @Checked = "checked" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">
+                            Save
+                        </button>
+                        <button type="button" id="btnCancel" class="btn btn-warning">
+                            Cancel
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:main -->
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/Custom/Setups/MesMachines.js")"></script>
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
+    <script type="text/javascript">
+
+        function OnSuccess(response) {
+            if (response.success) {
+                toastr.success("Machine has been Added Successfully.");
+                $('#formMachineCreation')[0].reset();
+            }
+            else if (response.clientExists) {
+                toastr.warning("Machine already exists.");
+            } else {
+                toastr.error("Sorry! Something went wrong, please try again.");
+            }
+        }
+
+        function OnFailure() {
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
+
+    </script>
+}

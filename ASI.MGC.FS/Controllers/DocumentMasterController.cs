@@ -22,12 +22,12 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult GetByDocType(string sidx, string sord, int page, int rows, string docType)
         {
             var docList = (from documents in _unitOfWork.Repository<DOCCUMENTMASTER>().Query().Get()
-                            select documents).Select(a => new { a.DOCABBREVIATION_DM, a.DESCRIPTION_DM });
+                           select documents).Select(a => new { a.DOCABBREVIATION_DM, a.DESCRIPTION_DM });
             if (!string.IsNullOrEmpty(docType))
             {
                 docList = (from documents in _unitOfWork.Repository<DOCCUMENTMASTER>().Query().Get()
-                            where documents.DOCTYPE_DM.Equals(docType)
-                            select documents).Select(a => new { a.DOCABBREVIATION_DM, a.DESCRIPTION_DM });
+                           where documents.DOCTYPE_DM.Equals(docType)
+                           select documents).Select(a => new { a.DOCABBREVIATION_DM, a.DESCRIPTION_DM });
             }
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
@@ -57,11 +57,19 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult GetDocNo(string docType)
         {
             IUnitOfWork unitOfWork = new UnitOfWork();
-            var currYear = DateTime.Now.Year.ToString();
-            var docCount = 1001 + (from objMrv in unitOfWork.Repository<BANKTRANSACTION>().Query().Get()
-                                   where objMrv.DOCNUMBER_BT.Contains(docType) && objMrv.DOCNUMBER_BT.EndsWith(currYear)
-                                   select objMrv.DOCNUMBER_BT).Distinct().Count();
-            var docNo = Convert.ToString(docType +"/"+ docCount +"/"+ currYear);
+            var docNo = "";
+            var currYear = DateTime.Now.Year;
+            var docCount = (from objMrv in unitOfWork.Repository<NOGENERATOR>().Query().Get()
+                            where objMrv.DOCTYPE_NG.Contains(docType) && objMrv.FINYEAR_NG == (currYear)
+                            select objMrv.SLNO_NG).SingleOrDefault();
+            if (docCount == null)
+            {
+                docNo = Convert.ToString(docType + "/" + 1001 + "/" + currYear);
+            }
+            else
+            {
+                docNo = Convert.ToString(docType + "/" + (docCount + 1) + "/" + currYear);
+            }
             return Json(docNo, JsonRequestBehavior.AllowGet);
         }
     }

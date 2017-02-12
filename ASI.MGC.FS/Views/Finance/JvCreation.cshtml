@@ -6,8 +6,8 @@
 <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
-<link href="~/Content/formValidation.min.css" rel="stylesheet"/>
-@model ASI.MGC.FS.Models.PurchaseModel
+<link href="~/Content/formValidation.min.css" rel="stylesheet" />
+@model ASI.MGC.FS.Model.BANKTRANSACTION
 <!-- start:main -->
 <div class="container">
     <div id="main">
@@ -25,14 +25,13 @@
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
-                        <input id="hdnProductDetails" name="allocDetails" type="hidden" />
+                        <input id="hdnAllocDetails" name="allocDetails" type="hidden" />
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Doc Type:</label>
                                 <div class="col-md-8">
                                     <div class="input-group">
                                         @Html.TextBox("DocType", null, new { ID = "txtDocType", Class = "form-control", @readonly = "readonly" })
-                                        @Html.ValidationMessage("DocType")
                                         <span class="input-group-btn">
                                             <button type="button" id="btnDocTypeSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#docTypeSearchModel">
                                                 <i class="fa fa-search"></i>
@@ -44,8 +43,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblDocNo" class="control-label col-md-4 small ">Doc No:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DocNo", null, new { ID = "txtDocNo", Class = "form-control" })
-                                    @Html.ValidationMessage("DocNo")
+                                    @Html.TextBoxFor(o => o.DOCNUMBER_BT, null, new { ID = "txtDocNo", Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -53,14 +51,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Doc Details:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DocDetails", null, new { ID = "txtDocDetails", Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBox("DocDetails", null, new { ID = "txtDocDetails", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Doc Date:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DocDate", null, new { ID = "txtDocDate", @Value = DateTime.Now.ToShortDateString(), Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessage("DocDate")
+                                    @Html.TextBoxFor(o => o.DOCDATE_BT, null, new { ID = "txtDocDate", @Value = DateTime.Now.ToShortDateString(), Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -68,15 +65,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Other Ref:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("OtherRef", null, new { ID = "txtOtherRef", Class = "form-control" })
-                                    @Html.ValidationMessage("OtherRef")
+                                    @Html.TextBoxFor(o => o.OTHERREF_BT, null, new { ID = "txtOtherRef", Class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Narration:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBox("Narration", null, new { ID = "txtNarration", Class = "form-control" })
-                                    @Html.ValidationMessage("Narration")
                                 </div>
                             </div>
                         </div>
@@ -84,8 +79,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">GL Date:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("GlDate", null, new { ID = "txtGlDate", @Value = DateTime.Now.ToShortDateString(), Class = "form-control" })
-                                    @Html.ValidationMessage("GlDate")
+                                    @Html.TextBoxFor(o => o.GLDATE_BT, null, new { ID = "txtGlDate", @Value = DateTime.Now.ToShortDateString(), Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -95,10 +89,33 @@
                                     <legend>Allocation Details</legend>
                                     <div id="grid" class="panel-body">
                                         <section id="unseen">
+                                            <button class="btn btn-primary" data-toggle="modal" data-target="#allocationDetailsModel">
+                                                Add Allocation Details
+                                            </button>
                                             <table id="tblAllocDetails"></table>
                                         </section>
                                     </div>
                                 </fieldset>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label id="lblTotalDiscount" class="control-label col-md-4 small ">Total Debit</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("TotalDebitAmount", null, new { ID = "txtTotalDebitAmount", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label id="lblTotalCashAmount" class="control-label col-md-4 small ">Total Credit</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("TotalCreditAmount", null, new { ID = "txtTotalCreditAmount", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label id="lblTotalShipCharges" class="control-label col-md-4 small ">Difference</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("Difference", null, new { ID = "txtDifference", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -180,16 +197,26 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Amount:</label>
+                                <label class="control-label col-md-4 small ">Debit:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    <input type="text" name="Amount" id="txtAmount" data-fv-notempty="true" pattern="\d{1,5}" class="form-control" required />
+                                    <input type="text" name="Debit" id="txtDebit" data-fv-notempty="true" pattern="\d{0,5}" class="form-control" required />
                                 </div>
                             </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Credit:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="text" name="Credit" id="txtCredit" class="form-control" data-fv-notempty="true" pattern="\d{0,5}" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Narration:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     <input type="text" name="Narration" id="txtNarration" class="form-control" />
                                 </div>
+                            </div>
+                            <div class="col-md-6 form-group">
                             </div>
                         </div>
                     </div>
@@ -268,71 +295,30 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <section>
-                                <div class="row">
-                                    <div class="col-md-12 form-group input-group paddingLeftRight">
-                                        @Html.TextBox("searchAccount", null, new { ID = "txtAccountSearch", Class = "form-control" })
-                                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                            <div class="col-lg-12">
+                                <div id="allocGrid" class="panel-body">
+                                    <div class="col-md-4 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("searchId", null, new { ID = "txtSearchId", Class = "form-control", @placeholder = "Search by ID..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div id="accGrid" class="panel-body">
-                                        <table id="tblAccountSearch" style="width: 100%"></table>
-                                        <div id="accPager"></div>
+                                    <div class="col-md-4 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("searchAccount", null, new { ID = "txtAccountSearch", Class = "form-control", @placeholder = "Search by Name..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
                                     </div>
+                                    <br /><br />
+                                    <table id="tblAccountSearch" style="width: 100%"></table>
+                                    <div id="accPager"></div>
                                 </div>
-                            </section>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
 
                         <a href="#" id="btnAccountSelect" class="btn btn-success">Select</a>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container">
-    <div class="modal fade" id="BankSearchModel" tabindex="-1" role="dialog" aria-labelledby="BankSearchModelLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-sm">
-            <div class="modal-content">
-                <form class="form-horizontal" id="BankSearchModelform" method="post" data-fv-framework="bootstrap"
-                      data-fv-message="This value is not valid"
-                      data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
-                      data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
-                      data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"
-                                aria-hidden="true">
-                            ×
-                        </button>
-                        <h4 class="modal-title">
-                            Bank Details Search
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <section>
-                                <div class="row">
-                                    <div class="col-md-12 form-group input-group paddingLeftRight">
-                                        @Html.TextBox("searchBank", null, new { ID = "txtBankSearch", Class = "form-control" })
-                                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-sm-12">
-                                    <div id="bankGrid" class="panel-body">
-                                        <table id="tblBankSearch" style="width: 100%"></table>
-                                        <div id="bankPager"></div>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-
-                        <a href="#" id="btnBankSelect" class="btn btn-success">Select</a>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </form>
@@ -382,14 +368,26 @@
     <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Finance/JvCreation.js")"></script>
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
-
-        function OnSuccess(response) {
-            alert(response);
+        function OnSuccess(data) {
+            if (data.jvNo !== "" && data.success) {
+                toastr.success("Journal Voucher created Successfully.");
+                openJv(data.jvNo);
+                //$('#formCashReceipt')[0].reset();
+            } else {
+                toastr.error("Sorry! Something went wrong, please try again.");
+            }
         }
 
         function OnFailure() {
-            alert("Whoops! That didn't go so well did it?");
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
+
+        function openJv(jvNo) {
+            var jvUrl = "/MgcReports/JournalVoucher?jvNo=" + jvNo;
+            window.open(jvUrl);
+            toastr.info("Journal voucher report is open in new window.");
         }
 
     </script>

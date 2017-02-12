@@ -3,6 +3,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.currPage = "Day End Operation";
 }
+@model ASI.MGC.FS.Models.DayEndOperationModel
+<link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+<link href="~/Content/formValidation.min.css" rel="stylesheet" />
 <!-- start:main -->
 <div class="container">
     <div id="main">
@@ -22,15 +25,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Day From</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DayFrom", null, new { ID = "txtDayFrom", @Value = DateTime.Now.ToShortDateString(), Class = "form-control" })
-                                    @Html.ValidationMessage("DayFrom")
+                                    @Html.TextBoxFor(o => o.DayFrom, null, new { ID = "txtDayFrom", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Date</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("Date", null, new { ID = "txtDate", @Value = DateTime.Now.ToShortDateString(), Class = "form-control" })
-                                    @Html.ValidationMessage("Date")
+                                    @Html.TextBoxFor(o => o.Date, null, new { ID = "txtDate", @Value = DateTime.Now.ToShortDateString(), Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -38,15 +39,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Day To</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DayTo", null, new { ID = "txtDayTo", @Value = DateTime.Now.ToShortDateString(), Class = "form-control" })
-                                    @Html.ValidationMessage("DayTo")
+                                    @Html.TextBoxFor(o => o.DayTo, null, new { ID = "txtDayTo", @Value = DateTime.Now.ToShortDateString(), Class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Doc No</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DocNo", null, new { ID = "txtDocNo", Class = "form-control" })
-                                    @Html.ValidationMessage("DocNo")
+                                    @Html.TextBoxFor(o => o.DocumentNo, null, new { ID = "txtDocNo", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -54,15 +53,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Last Updated Date</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("LastUpdatedDate", null, new { ID = "txtLastUpdatedDate", Class = "form-control" })
-                                    @Html.ValidationMessage("LastUpdatedDate")
+                                    @Html.TextBoxFor(o => o.LastUpdateDate, null, new { ID = "txtLastUpdatedDate", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Last Doc No</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("LastDocNo", null, new { ID = "txtLastDocNo", Class = "form-control" })
-                                    @Html.ValidationMessage("LastDocNo")
+                                    @Html.TextBoxFor(o => o.LastDocumentNo, null, new { ID = "txtLastDocNo", Class = "form-control", @readonly = "readonly" })
                                 </div>
                             </div>
                         </div>
@@ -70,15 +67,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Job Total</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("JobTotal", null, new { ID = "txtJobTotal", Class = "form-control" })
-                                    @Html.ValidationMessage("JobTotal")
+                                    @Html.TextBoxFor(o => o.JobTotal, null, new { ID = "txtJobTotal", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Sales Total</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("SalesTotal", null, new { ID = "txtSalesTotal", Class = "form-control" })
-                                    @Html.ValidationMessage("SalesTotal")
+                                    @Html.TextBoxFor(o => o.SalesTotal, null, new { ID = "txtSalesTotal", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -86,15 +81,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Shipping Total</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("ShippingTotal", null, new { ID = "txtShippingTotal", Class = "form-control" })
-                                    @Html.ValidationMessage("ShippingTotal")
+                                    @Html.TextBoxFor(o => o.ShippingTotal, null, new { ID = "txtShippingTotal", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Discount Total</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DiscountTotal", null, new { ID = "txtDiscountTotal", Class = "form-control" })
-                                    @Html.ValidationMessage("DiscountTotal")
+                                    @Html.TextBoxFor(o => o.DiscountTotal, null, new { ID = "txtDiscountTotal", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -102,11 +95,11 @@
                             <div class="col-md-6 form-group">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label></label>
-                                <div class="col-md-8 ">
-                                    <input type="button" class="btn btn-success col-md-3 pull-right" value="Get">
-                                    &nbsp;&nbsp;
-                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
+                                <label class="control-label col-md-4 small "></label>
+                                <div class="col-md-8">
+                                    <button type="button" id="btnStart" class="btn btn-success">Start</button>
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                    <button type="button" id="btnNew" class="btn btn-success">New</button>
                                 </div>
                             </div>
                         </div>
@@ -119,16 +112,20 @@
 <!-- end:main -->
 @section scripts
 {
+    <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Custom/Finance/DayEndOperation.js")"></script>
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
-
-        function OnSuccess(response) {
-            alert(response);
+        function OnSuccess(status) {
+            if (status.success) {
+                toastr.success("Day end operation completed successfully");
+            }
+            else {
+                toastr.error(status.msg);
+            }
         }
-
         function OnFailure() {
-            alert("Whoops! That didn't go so well did it?");
+            toastr.error("Sorry! something went wrong.");
         }
-
     </script>
 }

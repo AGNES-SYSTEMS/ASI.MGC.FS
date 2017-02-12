@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Domain.Repositories;
 using ASI.MGC.FS.Model;
+using ASI.MGC.FS.Models;
 
 namespace ASI.MGC.FS.WebCommon
 {
@@ -211,7 +212,7 @@ namespace ASI.MGC.FS.WebCommon
                          select mesRoles);
             foreach (var role in roles)
             {
-                userRoles.Add(new SelectListItem { Text = role.RoleName, Value =Convert.ToString(role.RoleID)});
+                userRoles.Add(new SelectListItem { Text = role.RoleName, Value = Convert.ToString(role.RoleID) });
             }
             return userRoles;
         }
@@ -241,6 +242,54 @@ namespace ASI.MGC.FS.WebCommon
             };
 
             return voucherDictionary;
+        }
+        public static void updateDocNo(IUnitOfWork unitOfWork, string docType)
+        {
+            var currYear = DateTime.Now.Year;
+            var doc = (from objMrv in unitOfWork.Repository<NOGENERATOR>().Query().Get()
+                       where objMrv.DOCTYPE_NG.Contains(docType) && objMrv.FINYEAR_NG == (currYear)
+                       select objMrv).SingleOrDefault();
+            if (doc == null)
+            {
+                doc = new NOGENERATOR();
+                doc.DOCTYPE_NG = docType;
+                doc.SLNO_NG = 1001;
+                doc.FINYEAR_NG = currYear;
+                unitOfWork.Repository<NOGENERATOR>().Insert(doc);
+                unitOfWork.Save();
+            }
+            else
+            {
+                doc.SLNO_NG = doc.SLNO_NG + 1;
+                unitOfWork.Repository<NOGENERATOR>().Update(doc);
+                unitOfWork.Save();
+            }
+        }
+        public static DayEndOperationModel InitializeDayEndObj(IUnitOfWork _unitofWork)
+        {
+            var objDayEnd = new DayEndOperationModel();
+            var period = (from objPeriod in _unitofWork.Repository<FINYEARMASTER>().Query().Get()
+                          where objPeriod.CURRENTPERIOD_FM == true
+                          select objPeriod).SingleOrDefault();
+            var lastDayEndOprDate = (from objSaleDetails in _unitofWork.Repository<SALEDETAIL>().Query().Get()
+                                     where objSaleDetails.DAYENDDOC_NO != null && objSaleDetails.SALEDATE_SD.Value.Year == period.PERRIEDFROM_FM.Year
+                                     select objSaleDetails).Max(o => o.SALEDATE_SD);
+            var lastDayEndOprDocNo = (from objSaleDetails in _unitofWork.Repository<SALEDETAIL>().Query().Get()
+                                      where objSaleDetails.DAYENDDOC_NO != null && objSaleDetails.SALEDATE_SD.Value.Year == period.PERRIEDFROM_FM.Year
+                                      select objSaleDetails).Max(o => o.DAYENDDOC_NO);
+            objDayEnd.LastUpdateDate = lastDayEndOprDate != null ? Convert.ToDateTime(lastDayEndOprDate).ToShortDateString() : Convert.ToDateTime(period.PERRIEDFROM_FM).ToShortDateString();
+            objDayEnd.DayFrom = lastDayEndOprDate != null ? Convert.ToDateTime(lastDayEndOprDate).AddDays(1).ToShortDateString() : Convert.ToDateTime(period.PERRIEDFROM_FM).ToShortDateString();
+            objDayEnd.LastDocumentNo = lastDayEndOprDocNo != null ? lastDayEndOprDocNo : "";
+            if (!string.IsNullOrEmpty(lastDayEndOprDocNo))
+            {
+                var arrDocNo = lastDayEndOprDocNo.Split('/');
+                objDayEnd.DocumentNo = arrDocNo[0] + "/" + (Convert.ToInt32(arrDocNo[1]) + 1) + "/" + arrDocNo[2];
+            }
+            else
+            {
+                objDayEnd.DocumentNo = "DJV/1000/" + Convert.ToDateTime(period.PERRIEDFROM_FM).Year;
+            }
+            return objDayEnd;
         }
     }
 }

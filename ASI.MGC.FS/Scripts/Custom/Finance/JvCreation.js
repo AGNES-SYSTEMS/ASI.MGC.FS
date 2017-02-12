@@ -1,4 +1,6 @@
-﻿var alCodeSelect = function (alCodeId) {
+﻿var arrAllocDetails = [];
+var selectedRowId = "";
+var alCodeSelect = function (alCodeId) {
     if (alCodeId) {
         var ret = jQuery("#tblAlCodeSearch").jqGrid('getRowData', alCodeId);
         $("#txtAlCode").val(ret.ALCODE_ALD).change();
@@ -6,7 +8,6 @@
         $('#alCodeSearchModel').modal('toggle');
     }
 };
-
 var docSelect = function (docId) {
     if (docId) {
         var ret = jQuery("#tblDocSearch").jqGrid('getRowData', docId);
@@ -15,16 +16,6 @@ var docSelect = function (docId) {
         $('#docTypeSearchModel').modal('toggle');
     }
 };
-
-var bankSelect = function (bankId) {
-    if (bankId) {
-        var ret = jQuery("#tblBankSearch").jqGrid('getRowData', bankId);
-        $("#txtBankCode").val(ret.BANKCODE_BM).change();
-        $("#txtBankName").val(ret.BANKNAME_BM).change();
-        $('#BankSearchModel').modal('toggle');
-    }
-};
-
 var accountSelect = function (accountId) {
     if (accountId) {
         var ret = jQuery("#tblAccountSearch").jqGrid('getRowData', accountId);
@@ -33,35 +24,102 @@ var accountSelect = function (accountId) {
         $('#accountSearchModel').modal('toggle');
     }
 };
-
+var calculateNetAmount = function () {
+    var creditAmount = 0.0, debitAmount = 0.0, difference = 0.0;
+    for (var i = 0; i < arrAllocDetails.length; i++) {
+        creditAmount += parseFloat(arrAllocDetails[i]["Credit"]);
+        debitAmount += parseFloat(arrAllocDetails[i]["Debit"]);
+        difference = debitAmount - creditAmount;
+    }
+    $("#txtTotalCreditAmount").val(creditAmount);
+    $("#txtTotalDebitAmount").val(debitAmount);
+    $("#txtDifference").val(difference);
+    $("#formJvCreation").formValidation('revalidateField', 'TotalCreditAmount');
+    $("#formJvCreation").formValidation('revalidateField', 'TotalDebitAmount');
+    $("#formJvCreation").formValidation('revalidateField', 'Difference');
+}
+var stringifyData = function () {
+    var allocDetails = $('#tblAllocDetails').jqGrid('getGridParam', 'data');
+    var jsonAllocs = JSON.stringify(allocDetails);
+    $('#hdnAllocDetails').val(jsonAllocs);
+};
+var delAllocDetails = function (rowId) {
+    if (rowId) {
+        $('#tblAllocDetails').jqGrid('delRowData', rowId);
+        $('#tblAllocDetails').trigger('reloadGrid');
+        stringifyData();
+        calculateNetAmount();
+    }
+};
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     //$("#liBankReceipt").addClass("active");
-    var arrAllocDetails = [];
     $('#txtDocDate').datepicker();
-    $('#txtGLDate').datepicker();
-    $('#txtChequeDate').datepicker();
-    $('#txtClearanceDate').datepicker();
+    $('#txtGlDate').datepicker();
     jQuery("#tblAllocDetails").jqGrid({
         datatype: "local",
+        data: arrAllocDetails,
         height: 150,
         shrinkToFit: true,
         autoheight: true,
         autowidth: true,
         styleUI: "Bootstrap",
-        colNames: ['AL Code', 'Account Code', 'Account Description', 'Amount', 'Narration'],
+        colNames: ['AL Code', '', 'Account Code', 'Account Description', 'Debit', 'Credit', 'Narration', '', ''],
         colModel: [
             { name: 'AlCode', index: 'AlCode', width: 150, align: "center", sortable: false },
+            { name: 'AlDescription', index: 'AlDescription', width: 320, align: "center", sortable: false, hidden: true },
             { name: 'AccountCode', index: 'AccountCode', width: 150, align: "left", sortable: false },
             { name: 'Description', index: 'Description', width: 320, align: "center", sortable: false },
-            { name: 'Amount', index: 'Amount', width: 150, align: "right", sortable: false },
-            { name: 'Narration', index: 'Narration', width: 300, align: "left", sortable: false }
+            { name: 'Debit', index: 'Debit', width: 150, align: "right", sortable: false },
+            { name: 'Credit', index: 'Credit', width: 150, align: "right", sortable: false },
+            { name: 'Narration', index: 'Narration', width: 300, align: "left", sortable: false },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options) {
+
+                    var markup = "<a %Href% data-toggle='modal' %Id% data-target='#allocationDetailsModel'> <i class='fa fa-pencil-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:editAllocDetails(&apos;" + options.rowId + "&apos;);",
+                        "%Id%": "id='" + options.rowId + "'"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            },
+            {
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options) {
+
+                    var markup = "<a %Href%><i class='fa fa-trash-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:delAllocDetails(&apos;" + options.rowId + "&apos;);"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
+                }
+            }
         ],
         multiselect: false,
         caption: "Allocation Details"
     });
     $(window).resize(function () {
-        var outerwidth = $('#grid').width();
+        var outerwidth = $('#allocGrid').width();
         $('#tblAllocDetails').setGridWidth(outerwidth);
     });
     var counter = 0;
@@ -122,27 +180,12 @@ $(document).ready(function () {
             $('#tblAccountSearch').setGridWidth(outerwidth);
         });
     }
-    $('#btnAlCodeSearch').click(function () {
-        $('#alCodeSearchModel').modal({
-            show: true
-        });
-    });
-    $('#btnAccountSearch').click(function () {
-        $('#accountSearchModel').modal({
-            show: true
-        });
-    });
-    $('#btnBankSearch').click(function () {
-        $('#BankSearchModel').modal({
-            show: true
-        });
-    });
     $(window).resize(function () {
         var outerwidth = $('#grid').width();
         $('#tblAllocDetails').setGridWidth(outerwidth);
     });
     $("#docTypeSearchModel").on('show.bs.modal', function () {
-        var $docType = "PDC";
+        var $docType = "JV";
         $("#tblDocSearch").jqGrid({
             url: '/DocumentMaster/GetByDocType?docType=' + $docType,
             datatype: "json",
@@ -211,6 +254,7 @@ $(document).ready(function () {
                 type: "POST",
                 success: function (docNumber) {
                     $("#txtDocNo").val(docNumber);
+                    $("#formJvCreation").formValidation('revalidateField', 'DOCNUMBER_BT');
                 },
                 complete: function () {
                 },
@@ -295,19 +339,25 @@ $(document).ready(function () {
     $("#accountSearchModel").on('show.bs.modal', function () {
         populateAccountGrid();
     });
-    var searchAccountGrid = function (searchValue) {
+    var searchAccountGrid = function (searchId, searchValue) {
         debugger;
         var postData = $("#tblAccountSearch").jqGrid("getGridParam", "postData");
-        postData["searchValue"] = searchValue;
+        postData["searchById"] = searchId;
+        postData["searchByName"] = searchValue;
         postData["accountType"] = $("#txtAlCode").val();
         $("#tblAccountSearch").setGridParam({ postData: postData });
         $("#tblAccountSearch").trigger("reloadGrid", [{ page: 1 }]);
     };
+    $("#txtSearchId").off().on("keyup", function () {
+        var shouldSearch = $("#txtSearchId").val().length >= 1 || $("#txtAccountSearch").val().length === 0;
+        if (shouldSearch) {
+            searchAccountGrid($("#txtSearchId").val(), $("#txtAccountSearch").val());
+        }
+    });
     $("#txtAccountSearch").off().on("keyup", function () {
-
         var shouldSearch = $("#txtAccountSearch").val().length >= 3 || $("#txtAccountSearch").val().length === 0;
         if (shouldSearch) {
-            searchAccountGrid($("#txtAccountSearch").val());
+            searchAccountGrid($("#txtSearchId").val(), $("#txtAccountSearch").val());
         }
     });
     $("#btnAlCodeSelect").on("click", function (e) {
@@ -332,7 +382,7 @@ $(document).ready(function () {
     });
     $("#txtAlCode").on("change", function () {
         $("#btnAccountSearch").prop('disabled', false);
-        //$("#allocationDetailsModelform").formValidation('revalidateField', 'AlCode');
+        $("#allocationDetailsModelform").formValidation('revalidateField', 'AlCode');
         if (counter > 0) {
             counter += 1;
             $('#tblAccountSearch').setGridParam({ url: '/AllocationMaster/GetAccountDetailsList?accountType=' + $("#txtAlCode").val() });
@@ -342,136 +392,69 @@ $(document).ready(function () {
         }
         $("#txtAccountCode").val("");
         $("#txtAccountDesc").val("");
-        $("#txtAmount").val("");
+        $("#txtDebit").val("");
+        $("#txtCredit").val("");
         $("#txtNarration").val("");
     });
     $("#txtAlDesc").on("change", function () {
         $("#allocationDetailsModelform").formValidation('revalidateField', 'AlDesc');
     });
-    $("#txtBankName").on("change", function () {
-        $("#formJvCreation").formValidation('revalidateField', 'BankName');
+    $("#txtCredit").off().on("blur", function () {
+        var creditAmount = $("#txtCredit").val();
+        if (parseInt(creditAmount) !== 0 && creditAmount !== "") {
+            $("#txtDebit").val("0");
+            $("#txtDebit").prop('disabled', true);
+            $("#allocationDetailsModelform").formValidation('revalidateField', 'Debit');
+        }
+        else {
+            $("#txtDebit").prop('disabled', false);
+        }
+    });
+    $("#txtDebit").off().on("blur", function () {
+        var debitAmount = $("#txtDebit").val();
+        if (parseInt(debitAmount) !== 0 && debitAmount !== "") {
+            $("#txtCredit").val("0");
+            $("#txtCredit").prop('disabled', true);
+            $("#allocationDetailsModelform").formValidation('revalidateField', 'Credit');
+        }
+        else {
+            $("#txtCredit").prop('disabled', false);
+        }
     });
     $("#txtAccountDesc").on("change", function () {
         $("#allocationDetailsModelform").formValidation('revalidateField', 'AccountDesc');
-    });
-    $("#BankSearchModel").on('show.bs.modal', function () {
-        var $bankType = "1.Bank";
-        $("#tblBankSearch").jqGrid({
-            url: '/Bank/GetBankDetailsByType?bankType=' + $bankType,
-            datatype: "json",
-            autoheight: true,
-            styleUI: "Bootstrap",
-            colNames: ['Bank Code', 'Bank Name', ''],
-            colModel: [
-            { key: true, name: 'BANKCODE_BM', index: 'BANKCODE_BM', width: 400 },
-            { key: false, name: 'BANKNAME_BM', index: 'BANKNAME_BM', width: 400 },
-            {
-                name: "action",
-                align: "center",
-
-                sortable: false,
-                title: false,
-                fixed: false,
-                width: 50,
-                search: false,
-                formatter: function (cellValue, options, rowObject) {
-
-                    var markup = "<a %Href%> <i class='fa fa-check-square-o style='color:black'></i></a>";
-                    var replacements = {
-                        "%Href%": "href=javascript:bankSelect(&apos;" + rowObject.BANKCODE_BM + "&apos;);"
-                    };
-                    markup = markup.replace(/%\w+%/g, function (all) {
-                        return replacements[all];
-                    });
-                    return markup;
-                }
-            }
-            ],
-            rowNum: 40,
-            rowList: [40, 100, 500, 1000],
-            mtype: 'GET',
-            gridview: true,
-            shrinkToFit: true,
-            autowidth: true,
-            viewrecords: true,
-            sortorder: "asc",
-            pager: jQuery('#bankPager'),
-            caption: "Bank Details List",
-            emptyrecords: "No Data to Display",
-            jsonReader: {
-                root: "rows",
-                page: "page",
-                total: "total",
-                records: "records",
-                repeatitems: false
-            },
-            multiselect: false
-        });
-        $(window).resize(function () {
-            var outerwidth = $('#bankGrid').width();
-            $('#tblBankSearch').setGridWidth(outerwidth);
-        });
-    });
-    $("#btnBankSelect").on("click", function (e) {
-        var id = jQuery("#tblBankSearch").jqGrid('getGridParam', 'selrow');
-        if (id) {
-            var ret = jQuery("#tblBankSearch").jqGrid('getRowData', id);
-            $("#txtBankCode").val(ret.BANKCODE_BM).change();
-            $("#txtBankName").val(ret.BANKNAME_BM).change();
-            $('#BankSearchModel').modal('toggle');
-        }
-        e.preventDefault();
-    });
-    $('#txtChequeDate').on("blur", function () {
-        if ($('#txtChequeDate').val() === "") {
-            var currDate = new Date();
-            currDate = (currDate.getMonth() + 1) + '/' + currDate.getDate() + '/' + currDate.getFullYear();
-            $('#txtChequeDate').val(currDate);
-        }
-    });
-    $('#txtClearanceDate').on("blur", function () {
-        if ($('#txtClearanceDate').val() === "") {
-            var currDate = new Date();
-            currDate = (currDate.getMonth() + 1) + '/' + currDate.getDate() + '/' + currDate.getFullYear();
-            $('#txtClearanceDate').val(currDate);
-        }
-    });
-    $("#txtBRAmount").on("blur", function () {
-        debugger;
-        var totalAmount = parseInt($("#txtBRAmount").val());
-        var allocationTotal = parseInt($("#txtAllocationTotal").val());
-        if (totalAmount !== allocationTotal && $("#txtAllocationTotal").val() !== "") {
-            toastr.info("Allocation Amount does not match with Total Amount");
-            $("#btnSubmit").attr("disabled", true);
-        } else {
-            $("#btnSubmit").attr("disabled", false);
-        }
     });
     function clearModalForm() {
         $("#txtAlCode").val("");
         $("#txtAlDesc").val("");
         $("#txtAccountCode").val("");
         $("#txtAccountDesc").val("");
-        $("#txtAmount").val("");
+        $("#txtDebit").val("");
+        $("#txtCredit").val("");
         $("#txtNarration").val("");
-        $("#btnAccountSearch").prop('disabled', true);
+        selectedRowId = "";
+        $("#txtDebit").prop('disabled', false);
+        $("#txtCredit").prop('disabled', false);
     }
+    $("#allocationDetailsModel").on('show.bs.modal', function (e) {
+        if (e.relatedTarget.id) {
+            selectedRowId = e.relatedTarget.id;
+            var rowId = e.relatedTarget.id;
+            var ret = $('#tblAllocDetails').jqGrid('getRowData', rowId);
+            $("#txtAlCode").val(ret.AlCode);
+            $("#txtAlDesc").val(ret.AlDescription);
+            $("#txtAccountCode").val(ret.AccountCode);
+            $("#txtAccountDesc").val(ret.Description);
+            $("#txtDebit").val(ret.Debit);
+            $("#txtCredit").val(ret.Credit);
+            $("#txtNarration").val(ret.Narration);
+        }
+    });
     $("#allocationDetailsModel").on('hide.bs.modal', function () {
         clearModalForm();
-        var totalGridPrdAmount = 0.0;
-        for (var i = 0; i < arrAllocDetails.length; i++) {
-            totalGridPrdAmount += parseFloat(arrAllocDetails[i]["Amount"]);
-        }
-        $("#txtAllocationTotal").val(totalGridPrdAmount);
-        $("#formJvCreation").formValidation('revalidateField', 'AllocationTotal');
-        var totalAmount = parseInt($("#txtBRAmount").val());
-        var allocationTotal = parseInt($("#txtAllocationTotal").val());
-        if (totalAmount !== allocationTotal) {
-            toastr.info("Allocation Amount does not match with Total Amount");
-            $("#btnSubmit").attr("disabled", true);
-        } else {
-            $("#btnSubmit").attr("disabled", false);
-        }
+        $('#tblAllocDetails').trigger('reloadGrid');
+        stringifyData();
+        calculateNetAmount();
     });
     $("#btnCancel").click(function () {
         clearModalForm();
@@ -479,41 +462,29 @@ $(document).ready(function () {
     $("#btnSave").click(function (e) {
         if ($("#allocationDetailsModelform").valid()) {
             e.preventDefault();
-            var arrIndex = arrAllocDetails.length;
-            arrAllocDetails[arrIndex] = {
-                AlCode: $("#txtAlCode").val(), AccountCode: $("#txtAccountCode").val(), Description: $("#txtAccountDesc").val(),
-                Amount: $("#txtAmount").val(), Narration: $("#txtNarration").val()
-            };
-            var su = jQuery("#tblAllocDetails").jqGrid('addRowData', arrIndex, arrAllocDetails[arrIndex]);
-            if (su) {
-                var allocDetails = $('#tblAllocDetails').jqGrid('getGridParam', 'data');
-                var jsonAllocs = JSON.stringify(allocDetails);
-                $('#hdnAllocDetails').val(jsonAllocs);
-                clearModalForm();
+            if (selectedRowId) {
+                arrAllocDetails[selectedRowId-1] = {
+                    AlCode: $("#txtAlCode").val(), AlDescription: $("#txtAlDesc").val(), AccountCode: $("#txtAccountCode").val(), Description: $("#txtAccountDesc").val(),
+                    Debit: $("#txtDebit").val(), Credit: $("#txtCredit").val(), Narration: $("#txtNarration").val()
+                };
+            } else {
+                var arrIndex = arrAllocDetails.length;
+                arrAllocDetails[arrIndex] = {
+                    AlCode: $("#txtAlCode").val(), AlDescription: $("#txtAlDesc").val(), AccountCode: $("#txtAccountCode").val(), Description: $("#txtAccountDesc").val(),
+                    Debit: $("#txtDebit").val(), Credit: $("#txtCredit").val(), Narration: $("#txtNarration").val()
+                };
+                //var su = jQuery("#tblAllocDetails").jqGrid('addRowData', arrIndex, arrAllocDetails[arrIndex]);
             }
+            clearModalForm();
         }
         else {
-            $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'AlCode');
-            $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'AlDesc');
-            $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'AccountCode');
-            $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'AccountDesc');
-            $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'Amount');
-            $("#allocationDetailsModelform").bootstrapValidator('revalidateField', 'Narration');
-        }
-    });
-    var searchGrid = function (searchValue) {
-        debugger;
-        var postData = $("#tblAccountSearch").jqGrid("getGridParam", "postData");
-        postData["searchValue"] = searchValue;
-
-        $("#tblAccountSearch").setGridParam({ postData: postData });
-        $("#tblAccountSearch").trigger("reloadGrid", [{ page: 1 }]);
-    };
-    $("#txtAccountSearch").off().on("keyup", function () {
-
-        var shouldSearch = $("#txtAccountSearch").val().length >= 3 || $("#txtAccountSearch").val().length === 0;
-        if (shouldSearch) {
-            searchGrid($("#txtAccountSearch").val());
+            $("#allocationDetailsModelform").formValidation('revalidateField', 'AlCode');
+            $("#allocationDetailsModelform").formValidation('revalidateField', 'AlDesc');
+            $("#allocationDetailsModelform").formValidation('revalidateField', 'AccountCode');
+            $("#allocationDetailsModelform").formValidation('revalidateField', 'AccountDesc');
+            $("#allocationDetailsModelform").formValidation('revalidateField', 'Debit');
+            $("#allocationDetailsModelform").formValidation('revalidateField', 'Credit');
+            $("#allocationDetailsModelform").formValidation('revalidateField', 'Narration');
         }
     });
     $('#formJvCreation').on('init.field.fv', function (e, data) {
@@ -533,7 +504,7 @@ $(document).ready(function () {
             validating: 'fa fa-refresh'
         },
         fields: {
-            DocNo: {
+            DOCNUMBER_BT: {
                 validators: {
                     notEmpty: {
                         message: 'Document No is required'
@@ -569,83 +540,51 @@ $(document).ready(function () {
                     }
                 }
             },
-            NOTE_BT: {
+            TotalCreditAmount: {
                 validators: {
                     notEmpty: {
-                        message: 'Received From is required'
-                    }
-                }
-            },
-            BankName: {
-                validators: {
-                    notEmpty: {
-                        message: 'Bank Name is required'
-                    }
-                }
-            },
-            DEBITAMOUT_BT: {
-                validators: {
-                    notEmpty: {
-                        message: 'BR Amount is required'
+                        message: 'Document Details is required'
                     },
                     integer: {
-                        message: 'Integer Only'
-                    }
-                }
-            },
-            AllocationTotal: {
-                validators: {
-                    notEmpty: {
-                        message: 'Allocation Amount is required'
-                    }
-                }
-            },
-            CHQNO_BT: {
-                validators: {
-                    notEmpty: {
-                        message: 'Cheque No is required'
-                    }
-                }
-            },
-            OTHERREF_BT: {
-                validators: {
-                    notEmpty: {
-                        message: 'Other Ref is required'
-                    }
-                }
-            },
-            BENACNO_BT: {
-                validators: {
-                    notEmpty: {
-                        message: 'Drw AC No is required'
-                    }
-                }
-            }, BENACCOUNT_BT: {
-                validators: {
-                    notEmpty: {
-                        message: 'Drawer Br is required'
-                    }
-                }
-            },
-            CHQDATE_BT: {
-                validators: {
-                    notEmpty: {
-                        message: 'Cheque Date is required'
+                        message: 'The value is not an integer',
                     },
-                    date: {
-                        format: 'MM/DD/YYYY',
-                        message: 'Enter Valid Date'
+                    greaterThan: {
+                        value: 1,
+                    },
+                    identical: {
+                        field: 'TotalDebitAmount',
                     }
                 }
             },
-            CLEARANCEDATE_BT: {
+            TotalDebitAmount: {
                 validators: {
                     notEmpty: {
-                        message: 'Clearance Date is required'
+                        message: 'Document Details is required'
                     },
-                    date: {
-                        format: 'MM/DD/YYYY',
-                        message: 'Enter Valid Date'
+                    integer: {
+                        message: 'The value is not an integer',
+                    },
+                    greaterThan: {
+                        value: 1,
+                    },
+                    identical: {
+                        field: 'TotalCreditAmount',
+                    }
+                }
+            },
+            Difference: {
+                validators: {
+                    notEmpty: {
+                        message: 'Document Details is required'
+                    },
+                    integer: {
+                        message: 'The value is not an integer',
+                    },
+                    greaterThan: {
+                        value: -1,
+                    },
+                    lessThan: {
+                        value: 1,
                     }
                 }
             }

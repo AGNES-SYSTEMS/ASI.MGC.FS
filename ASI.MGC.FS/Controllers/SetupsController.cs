@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Model;
+using System.Net.NetworkInformation;
 
 namespace ASI.MGC.FS.Controllers
 {
@@ -126,7 +127,13 @@ namespace ASI.MGC.FS.Controllers
             var objUnitCreation = _unitOfWork.Repository<UNITMESSUREMENT>().Create();
             return View(objUnitCreation);
         }
-
+        public ActionResult MesMachines()
+        {
+            ViewBag.currentMachineMac = (from nic in NetworkInterface.GetAllNetworkInterfaces()
+                                         where nic.OperationalStatus == OperationalStatus.Up
+                                         select nic.GetPhysicalAddress().ToString()).FirstOrDefault();
+            return View();
+        }
         [HttpPost]
         public JsonResult SaveCustomerMaster(FormCollection form, AR_AP_MASTER objCustomerMaster)
         {
@@ -270,7 +277,71 @@ namespace ASI.MGC.FS.Controllers
             {
                 success = false;
             }
-            return Json(success,JsonRequestBehavior.AllowGet);
+            return Json(success, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult SaveMesMachine(MESMachine mesMachine)
+        {
+            bool success = false;
+            bool clientExist = false;
+            try
+            {
+                var clientMachine = (from machine in _unitOfWork.Repository<MESMachine>().Query().Get()
+                                     where machine.MacAddress.Contains(mesMachine.MacAddress)
+                                     select machine).SingleOrDefault();
+                if (clientMachine == null)
+                {
+                    _unitOfWork.Repository<MESMachine>().Insert(mesMachine);
+                    _unitOfWork.Save();
+                    success = true;
+                }
+                else
+                {
+                    clientExist = true;
+                }
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+
+            return Json(new { success = success, clientExists = clientExist }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetMesMachinesList(string sidx, string sord, int page, int rows, string machineSearch, string macSearch)
+        {
+            var machineList = (from machines in _unitOfWork.Repository<MESMachine>().Query().Get()
+                               select machines).Select(a => new { a.ID, a.MachineName, a.MacAddress, a.IsActive });
+            if (!string.IsNullOrEmpty(machineSearch))
+            {
+                machineList = machineList.Where(a => a.MachineName.Contains(machineSearch)).Select(a => new { a.ID, a.MachineName, a.MacAddress, a.IsActive });
+            }
+            if (!string.IsNullOrEmpty(macSearch))
+            {
+                machineList = machineList.Where(a => a.MacAddress.Contains(macSearch)).Select(a => new { a.ID, a.MachineName, a.MacAddress, a.IsActive });
+            }
+            int pageIndex = Convert.ToInt32(page) - 1;
+            int pageSize = rows;
+            int totalRecords = machineList.Count();
+            int totalPages = (int)Math.Ceiling(totalRecords / (float)pageSize);
+            if (sord.ToUpper() == "DESC")
+            {
+                machineList = machineList.OrderByDescending(a => a.MachineName);
+                machineList = machineList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            else
+            {
+                machineList = machineList.OrderBy(a => a.MachineName);
+                machineList = machineList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            var jsonData = new
+            {
+                total = totalPages,
+                page,
+                records = totalRecords,
+                rows = machineList
+
+            };
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
     }
 }

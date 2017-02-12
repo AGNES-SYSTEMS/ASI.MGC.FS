@@ -9,6 +9,8 @@ using ASI.MGC.FS.Model;
 using ASI.MGC.FS.Models;
 using SimpleCrypto;
 using ASI.MGC.FS.WebCommon;
+using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
 namespace ASI.MGC.FS.Controllers
 {
     public class AccountManagementController : Controller
@@ -18,6 +20,12 @@ namespace ASI.MGC.FS.Controllers
         {
             _unitOfWork = new UnitOfWork();
         }
+        #region get client mac
+        [DllImport("Iphlpapi.dll")]
+        private static extern int SendARP(Int32 dest, Int32 host, ref Int64 mac, ref Int32 length);
+        [DllImport("Ws2_32.dll")]
+        private static extern Int32 inet_addr(string ip);
+        #endregion
 
         // GET: AccountManagement
         public ActionResult Index()
@@ -44,10 +52,91 @@ namespace ASI.MGC.FS.Controllers
                 }
                 else
                 {
+                    saveDetails(model);
                     ModelState.AddModelError("", "Invalid Email/ Password.");
                 }
             }
             return View(model);
+        }
+
+        private string GetClientMachineMacAddress()
+        {
+            string macAddress = string.Empty;
+            macAddress = (from nic in NetworkInterface.GetAllNetworkInterfaces()
+                    where nic.OperationalStatus == OperationalStatus.Up
+                    select nic.GetPhysicalAddress().ToString()).FirstOrDefault();
+            try
+            {
+                string userip = Request.UserHostAddress;
+                string strClientIP = Request.UserHostAddress.ToString().Trim();
+                Int32 ldest = inet_addr(strClientIP);
+                Int32 lhost = inet_addr("");
+                Int64 macinfo = new Int64();
+                Int32 len = 6;
+                int res = SendARP(ldest, 0, ref macinfo, ref len);
+                string mac_src = macinfo.ToString("X");
+                if (mac_src == "0")
+                {
+                    //if (userip == "127.0.0.1")
+                    //    Response.Write("visited Localhost!");
+                    //else
+                    //    Response.Write("the IP from" + userip + "" + "<br>");
+                    //return;
+                }
+
+                while (mac_src.Length < 12)
+                {
+                    mac_src = mac_src.Insert(0, "0");
+                }
+
+                string mac_dest = "";
+
+                for (int i = 0; i < 11; i++)
+                {
+                    if (0 == (i % 2))
+                    {
+                        if (i == 10)
+                        {
+                            mac_dest = mac_dest.Insert(0, mac_src.Substring(i, 2));
+                        }
+                        else
+                        {
+                            mac_dest = "-" + mac_dest.Insert(0, mac_src.Substring(i, 2));
+                        }
+                    }
+                }
+                macAddress = mac_dest;
+                //Response.Write("welcome" + userip + "<br>" + ",the mac address is" + mac_dest + "."
+
+                // + "<br>");
+            }
+            catch (Exception err)
+            {
+                Response.Write(err.Message);
+            }
+
+            return macAddress;
+        }
+        private void saveDetails(UserLoginViewModel model)
+        {
+            HttpContext httpContext = System.Web.HttpContext.Current;
+            HttpRequest request = httpContext.Request;
+            var unAuthenticatedRequest = _unitOfWork.Repository<MESUnAuthenticatedUsersAccess>().Create();
+            unAuthenticatedRequest.Browser = Convert.ToString(request.Browser.Browser);
+            unAuthenticatedRequest.UserIdentityName = request.LogonUserIdentity != null
+                ? Convert.ToString(request.LogonUserIdentity.Name)
+                : null;
+            unAuthenticatedRequest.UserHostAddress = Convert.ToString(request.UserHostAddress);
+            unAuthenticatedRequest.UserHostName = Convert.ToString(request.UserHostName);
+            unAuthenticatedRequest.MacAddress = GetClientMachineMacAddress();
+            unAuthenticatedRequest.IsMobileDevice = Convert.ToBoolean(request.Browser.IsMobileDevice);
+            unAuthenticatedRequest.MobileDeviceManufacturer =
+                Convert.ToString(request.Browser.MobileDeviceManufacturer);
+            unAuthenticatedRequest.MobileDeviceModal = Convert.ToString(request.Browser.MobileDeviceModel);
+            unAuthenticatedRequest.Email = model.Email;
+            unAuthenticatedRequest.ExistedUser = false;
+            _unitOfWork.Repository<MESUnAuthenticatedUsersAccess>().Insert(unAuthenticatedRequest);
+            _unitOfWork.Save();
         }
 
         [HttpGet]
@@ -122,7 +211,7 @@ namespace ASI.MGC.FS.Controllers
 
             var user = (from mesUsers in _unitOfWork.Repository<MESUser>().Query().Get()
                         where mesUsers.Email.Equals(email)
-                        select mesUsers).FirstOrDefault();
+                        select mesUsers).SingleOrDefault();
             if (user != null)
             {
                 if (user.Password == crypto.Compute(password, user.PasswordSalt))

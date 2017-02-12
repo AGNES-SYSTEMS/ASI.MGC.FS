@@ -38,7 +38,7 @@ namespace ASI.MGC.FS.Controllers
 
             if (!string.IsNullOrEmpty(custId))
             {
-                custList = custList.Where(o=>o.ARCODE_ARM.Contains(custId)).Select(a => new
+                custList = custList.Where(o => o.ARCODE_ARM.Contains(custId)).Select(a => new
                                 {
                                     a.ARCODE_ARM,
                                     a.DESCRIPTION_ARM,
@@ -97,7 +97,7 @@ namespace ASI.MGC.FS.Controllers
                             select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM, a.TYPE_ARM });
             if (!string.IsNullOrEmpty(custType))
             {
-                custList = custList.Where(o=>o.TYPE_ARM.Equals(custType)).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM, a.TYPE_ARM });
+                custList = custList.Where(o => o.TYPE_ARM.Equals(custType)).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM, a.TYPE_ARM });
             }
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
@@ -229,11 +229,11 @@ namespace ASI.MGC.FS.Controllers
                             select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
             if (!string.IsNullOrEmpty(custId))
             {
-                custList = custList.Where(a=>a.ARCODE_ARM.Contains(custId)).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
+                custList = custList.Where(a => a.ARCODE_ARM.Contains(custId)).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
             }
             if (!string.IsNullOrEmpty(custName))
             {
-                custList = custList.Where(a=>a.DESCRIPTION_ARM.Contains(custName)).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
+                custList = custList.Where(a => a.DESCRIPTION_ARM.Contains(custName)).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
             }
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
@@ -266,7 +266,7 @@ namespace ASI.MGC.FS.Controllers
                             select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
             if (!string.IsNullOrEmpty(custId))
             {
-                custList = custList.Where(o=>o.ARCODE_ARM.Contains(custId)).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
+                custList = custList.Where(o => o.ARCODE_ARM.Contains(custId)).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM });
             }
             if (!string.IsNullOrEmpty(custName))
             {
