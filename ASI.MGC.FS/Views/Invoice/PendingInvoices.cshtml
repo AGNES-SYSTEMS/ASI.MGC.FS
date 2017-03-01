@@ -1,8 +1,44 @@
-﻿
-@{
-    ViewBag.Title = "PendingInvoices";
+﻿@{
+    ViewBag.Title = "Pending Invoices";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.currPage = "Pending Invoices";
 }
-
-<h2>PendingInvoices</h2>
-
+<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>Pending Invoices</legend>
+            <div class="row">
+                <div class="container">
+                    @using (Ajax.BeginForm("", "", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formPendingInvoices", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <div id="grid" class="panel-body">
+                                    <section id="unseen">
+                                        <table id="tblPendingInvoices"></table>
+                                        <div id="invPager"></div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/Invoice/PendingInvoices.js")"></script>
+}

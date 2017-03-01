@@ -26,18 +26,18 @@ namespace ASI.MGC.FS.Controllers
         [MesAuthorize("DailyTransactions")]
         public ActionResult InvoicePreparation()
         {
-            var invCount = (1001 + CommonModelAccessUtility.GetInvoiceCount(_unitOfWork));
-            string currYear = DateTime.Now.Year.ToString();
-            string invoiceCode = Convert.ToString("INV/" + Convert.ToString(invCount) + "/" + currYear);
+            //var invCount = (1001 + CommonModelAccessUtility.GetInvoiceCount(_unitOfWork));
+            //string currYear = DateTime.Now.Year.ToString();
+            string invoiceCode = CommonModelAccessUtility.GetInvoiceCount(_unitOfWork);
             ViewBag.invoiceCode = invoiceCode;
-            ViewBag.dlnNumber = CommonModelAccessUtility.GetDlnNumber(_unitOfWork);
+            ViewBag.dlnNumber = CommonModelAccessUtility.GetDeleNumberCount(_unitOfWork);
             var objArApLedger = new AR_AP_LEDGER();
             return View(objArApLedger);
         }
 
         public JsonResult SaveInvoice(FormCollection frm, AR_AP_LEDGER objArApLedger)
         {
-            
+
             List<string> reportParams = new List<string>();
             string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             try
@@ -111,7 +111,7 @@ namespace ASI.MGC.FS.Controllers
                     }
                     objInvoiceDetail.QTY_INVD = sale.QTY_SD;
                     objInvoiceDetail.RATE_INVD = sale.RATE_SD;
-                    objInvoiceDetail.AMOUNT_INVNO = (objInvoiceDetail.QTY_INVD*objInvoiceDetail.RATE_INVD);
+                    objInvoiceDetail.AMOUNT_INVNO = (objInvoiceDetail.QTY_INVD * objInvoiceDetail.RATE_INVD);
                     objInvoiceDetail.INVNO_INVD = invNumber;
                     objInvoiceDetail.JOBNO_INVD = sale.JOBNO_SD;
                     objInvoiceDetail.UNIT_INVD = sale.UNIT_SD;
@@ -161,9 +161,159 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
-        public ActionResult SaveInvoiceReversal()
+        [HttpPost]
+        public JsonResult SaveInvoiceReversal(SALEDETAIL objSaleDetail)
         {
-            throw new NotImplementedException();
+            bool success = false;
+            string invNo = objSaleDetail.INVNO_SD;
+            string revInvNo = "Rev" + objSaleDetail.INVNO_SD;
+            try
+            {
+                // Reversing Bank Transactions
+                var bankTransactionData = (from bankTransaction in _unitOfWork.Repository<BANKTRANSACTION>().Query().Get()
+                                           where bankTransaction.DOCNUMBER_BT.Equals(invNo)
+                                           select bankTransaction).ToList();
+                foreach (var entry in bankTransactionData)
+                {
+                    BANKTRANSACTION objBnk = _unitOfWork.Repository<BANKTRANSACTION>().Create();
+                    if (Convert.ToDecimal(entry.DEBITAMOUT_BT) > 0)
+                    {
+                        objBnk.DEBITAMOUT_BT = 0;
+                        objBnk.CREDITAMOUT_BT = entry.DEBITAMOUT_BT;
+                        objBnk.DOCDATE_BT = DateTime.Now;
+                        objBnk.GLDATE_BT = entry.GLDATE_BT;
+                        objBnk.DOCNUMBER_BT = revInvNo;
+                        objBnk.BANKCODE_BT = entry.BANKCODE_BT;
+                        objBnk.OTHERREF_BT = invNo;
+                        objBnk.STATUS_BT = "R";
+                    }
+                    if (Convert.ToDecimal(entry.CREDITAMOUT_BT) > 0)
+                    {
+                        objBnk.CREDITAMOUT_BT = 0;
+                        objBnk.DEBITAMOUT_BT = entry.CREDITAMOUT_BT;
+                        objBnk.DOCDATE_BT = DateTime.Now;
+                        objBnk.GLDATE_BT = entry.GLDATE_BT;
+                        objBnk.DOCNUMBER_BT = revInvNo;
+                        objBnk.BANKCODE_BT = entry.BANKCODE_BT;
+                        objBnk.OTHERREF_BT = invNo;
+                        objBnk.STATUS_BT = "R";
+                    }
+                    _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBnk);
+                    _unitOfWork.Save();
+
+                    entry.STATUS_BT = "R";
+                    _unitOfWork.Repository<BANKTRANSACTION>().Update(entry);
+                    _unitOfWork.Save();
+                }
+                // Reversing ArApLedger Transactions
+                var ArApLedgerData = (from ArApLedger in _unitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
+                                      where ArApLedger.DOCNUMBER_ART.Equals(invNo)
+                                      select ArApLedger).ToList();
+                foreach (var entry in ArApLedgerData)
+                {
+                    AR_AP_LEDGER objArAp = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
+                    if (Convert.ToDecimal(entry.DEBITAMOUNT_ART) > 0)
+                    {
+                        objArAp.DOCNUMBER_ART = revInvNo;
+                        objArAp.ARAPCODE_ART = entry.ARAPCODE_ART;
+                        objArAp.DODATE_ART = DateTime.Now;
+                        objArAp.GLDATE_ART = entry.GLDATE_ART;
+                        objArAp.DEBITAMOUNT_ART = 0;
+                        objArAp.CREDITAMOUNT_ART = entry.DEBITAMOUNT_ART;
+                        objArAp.OTHERREF_ART = invNo;
+                        objArAp.STATUS_ART = "R";
+                    }
+                    if (Convert.ToDecimal(entry.CREDITAMOUNT_ART) > 0)
+                    {
+                        objArAp.DOCNUMBER_ART = revInvNo;
+                        objArAp.ARAPCODE_ART = entry.ARAPCODE_ART;
+                        objArAp.DODATE_ART = DateTime.Now;
+                        objArAp.GLDATE_ART = entry.GLDATE_ART;
+                        objArAp.CREDITAMOUNT_ART = 0;
+                        objArAp.DEBITAMOUNT_ART = entry.CREDITAMOUNT_ART;
+                        objArAp.OTHERREF_ART = invNo;
+                        objArAp.STATUS_ART = "R";
+                    }
+                    _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArAp);
+                    _unitOfWork.Save();
+
+                    entry.STATUS_ART = "R";
+                    _unitOfWork.Repository<AR_AP_LEDGER>().Update(entry);
+                    _unitOfWork.Save();
+                }
+                // Reversing GL Transactions
+                var glTransactionData = (from glTransaction in _unitOfWork.Repository<GLTRANSACTION1>().Query().Get()
+                                         where glTransaction.DOCNUMBER_GLT.Equals(invNo)
+                                         select glTransaction).ToList();
+                foreach (var entry in glTransactionData)
+                {
+                    GLTRANSACTION1 objGlt = _unitOfWork.Repository<GLTRANSACTION1>().Create();
+                    if (Convert.ToDecimal(entry.DEBITAMOUNT_GLT) > 0)
+                    {
+                        objGlt.DOCNUMBER_GLT = revInvNo;
+                        objGlt.GLACCODE_GLT = entry.GLACCODE_GLT;
+                        objGlt.DOCDATE_GLT = DateTime.Now;
+                        objGlt.GLDATE_GLT = entry.GLDATE_GLT;
+                        objGlt.DEBITAMOUNT_GLT = 0;
+                        objGlt.CREDITAMOUNT_GLT = entry.DEBITAMOUNT_GLT;
+                        objGlt.OTHERREF_GLT = invNo;
+                        objGlt.GLSTATUS_GLT = "R";
+                    }
+                    if (Convert.ToDecimal(entry.CREDITAMOUNT_GLT) > 0)
+                    {
+                        objGlt.DOCNUMBER_GLT = revInvNo;
+                        objGlt.GLACCODE_GLT = entry.GLACCODE_GLT;
+                        objGlt.DOCDATE_GLT = DateTime.Now;
+                        objGlt.GLDATE_GLT = entry.GLDATE_GLT;
+                        objGlt.DEBITAMOUNT_GLT = entry.CREDITAMOUNT_GLT;
+                        objGlt.CREDITAMOUNT_GLT = 0;
+                        objGlt.OTHERREF_GLT = invNo;
+                        objGlt.GLSTATUS_GLT = "R";
+                    }
+                    _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGlt);
+                    _unitOfWork.Save();
+
+                    entry.GLSTATUS_GLT = "R";
+                    _unitOfWork.Repository<GLTRANSACTION1>().Update(entry);
+                    _unitOfWork.Save();
+                }
+                // Clearing Stock Ledger
+                var stockLedgerData = (from stockLedger in _unitOfWork.Repository<STOCKLEDGER>().Query().Get()
+                                       where stockLedger.VOUCHERNO_SL.Equals(invNo)
+                                       select stockLedger).ToList();
+                foreach (var entry in stockLedgerData)
+                {
+                    _unitOfWork.Repository<STOCKLEDGER>().Delete(entry);
+                    _unitOfWork.Save();
+                }
+                //Reversing Job & Sale Data
+                var saleDetailData = (from saleDetail in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                                      where saleDetail.INVNO_SD.Equals(invNo)
+                                      select saleDetail).ToList();
+                foreach (var entry in saleDetailData)
+                {
+                    entry.STATUS_SD = "N";
+                    entry.INVNO_SD = "";
+                    var JobData = (from jobMaster in _unitOfWork.Repository<JOBMASTER>().Query().Get()
+                                   where jobMaster.JOBNO_JM.Equals(entry.JOBNO_SD)
+                                   select jobMaster).SingleOrDefault();
+                    if (JobData != null)
+                    {
+                        JobData.DELEVERNOTENO_JM = "";
+                        JobData.JOBSTATUS_JM = "N";
+                        _unitOfWork.Repository<JOBMASTER>().Update(JobData);
+                        _unitOfWork.Save();
+                    }
+                    _unitOfWork.Repository<SALEDETAIL>().Update(entry);
+                    _unitOfWork.Save();
+                }
+                success = true;
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+            return Json(success, JsonRequestBehavior.AllowGet);
         }
         [MesAuthorize("DailyTransactions")]
         public ActionResult PendingInvoices()
@@ -175,6 +325,77 @@ namespace ASI.MGC.FS.Controllers
             var repo = _unitOfWork.ExtRepositoryFor<ReportRepository>();
             var mrvList = repo.sp_GetInvoicePreparationMrvList(page, rows, mrvCode, custName, jobNo);
             return Json(mrvList, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetPendingInvoices(string sidx, string sord, int page, int rows)
+        {
+            var pendingInvoicesList = (from saleDetails in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                                       where saleDetails.STATUS_SD.Equals("N")
+                                       select saleDetails).Select(a => new { a.SALEDATE_SD, a.MRVNO_SD, a.JOBNO_SD, a.PRCODE_SD, a.JOBID_SD });
+            int pageIndex = Convert.ToInt32(page) - 1;
+            int pageSize = rows;
+            int totalRecords = pendingInvoicesList.Count();
+            int totalPages = (int)Math.Ceiling(totalRecords / (float)pageSize);
+            if (sord.ToUpper() == "DESC")
+            {
+                pendingInvoicesList = pendingInvoicesList.OrderByDescending(a => a.SALEDATE_SD);
+                pendingInvoicesList = pendingInvoicesList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            else
+            {
+                pendingInvoicesList = pendingInvoicesList.OrderBy(a => a.SALEDATE_SD);
+                pendingInvoicesList = pendingInvoicesList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            var jsonData = new
+            {
+                total = totalPages,
+                page,
+                records = totalRecords,
+                rows = pendingInvoicesList
+
+            };
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetPostedInvoices(string sidx, string sord, int page, int rows, string invNo = null)
+        {
+            var postedInvoicesList = (from saleDetails in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                                      join arapMaster in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                                      on saleDetails.CREDITACCODE_SD equals arapMaster.ARCODE_ARM
+                                      where saleDetails.STATUS_SD.Equals("P") && saleDetails.CASHRVNO_SD != null && string.IsNullOrEmpty(saleDetails.DAYENDDOC_NO)
+                                      select new { saleDetails.INVNO_SD, arapMaster.DESCRIPTION_ARM });
+            if (!string.IsNullOrEmpty(invNo))
+            {
+                postedInvoicesList = postedInvoicesList.Where(o => o.INVNO_SD.Contains(invNo));
+            }
+            int pageIndex = Convert.ToInt32(page) - 1;
+            int pageSize = rows;
+            int totalRecords = postedInvoicesList.Count();
+            int totalPages = (int)Math.Ceiling(totalRecords / (float)pageSize);
+            if (sord.ToUpper() == "DESC")
+            {
+                postedInvoicesList = postedInvoicesList.OrderByDescending(a => a.INVNO_SD);
+                postedInvoicesList = postedInvoicesList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            else
+            {
+                postedInvoicesList = postedInvoicesList.OrderBy(a => a.INVNO_SD);
+                postedInvoicesList = postedInvoicesList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            var jsonData = new
+            {
+                total = totalPages,
+                page,
+                records = totalRecords,
+                rows = postedInvoicesList
+
+            };
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult getPostedInvDetails(string invNo)
+        {
+            var ledgerData = (from arapLedger in _unitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
+                              where arapLedger.DOCNUMBER_ART.Equals(invNo)
+                              select arapLedger).FirstOrDefault();
+            return Json(ledgerData, JsonRequestBehavior.AllowGet);
         }
     }
 }

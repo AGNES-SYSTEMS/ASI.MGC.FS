@@ -35,7 +35,7 @@ function getSaleDetailByMrv() {
     var mrvCode = $("#txtMRVNo").val();
     var data = JSON.stringify({ MRVID: mrvCode, statusId: "N" });
     $.ajax({
-        url: '/MRV/getSaleDetailByMRV',
+        url: '/MRV/GetCreditSaleDetailByMrv',
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         data: data,

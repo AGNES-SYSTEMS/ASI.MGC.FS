@@ -395,7 +395,6 @@
                             <li><a href="@Href("~/Cash/CashPayments")">Cash Payments</a></li>
                             <li><a href="@Href("~/Bank/BankPayment")">Bank Payments</a></li>
                         </ul>
-
                         <li data-toggle="collapse" data-target="#Receipt" class="collapsed">
                             <a href="#">Receipts <span class="arrow"></span></a>
                         </li>
@@ -509,17 +508,17 @@
                             <a href="#">Duplicate Printing<span class="arrow"></span></a>
                         </li>
                         <ul class="sub-menu collapse second-level-childs" id="duplicateDocument">
-                            <li><a href="#">Document Printing</a></li>
+                            <li><a href="@Href("~/MRV/DuplicateMrvPrinting")">Document Printing</a></li>
                         </ul>
                         <li data-toggle="collapse" data-target="#searchDetails" class="collapsed">
                             <a href="#">Search<span class="arrow"></span></a>
                         </li>
                         <ul class="sub-menu collapse second-level-childs" id="searchDetails">
-                            <li><a href="#">Search Mrv Details</a></li>
-                            <li><a href="#"> Mrv Details</a></li>
+                            @*<li><a href="#">Search Mrv Details</a></li>*@
+                            <li><a href="@Href("~/Search/Search")"> Mrv Details</a></li>
                         </ul>
                         @*Secondlevel*@
-                        <li><a href="#"> Bill/Invoice Pending</a> </li>
+                        <li><a href="@Href("~/Invoice/PendingInvoices")"> Bill/Invoice Pending</a> </li>
                     </ul>
 
                     @*setting section*@
@@ -539,13 +538,13 @@
                     </ul>
 
                     @*Admin section*@
-                    <li data-toggle="collapse" data-target="#admin" class="collapsed">
-                        <a href="#"><i class="fa fa-lock fa-lg"></i> Admin <span class="arrow"></span></a>
-                    </li>
-                    <ul class="sub-menu collapse" id="admin">
-                        <li><a href="#">Backup</a></li>
-                        <li><a href="#">Employee Management</a></li>
-                    </ul>
+                    @*<li data-toggle="collapse" data-target="#admin" class="collapsed">
+                            <a href="#"><i class="fa fa-lock fa-lg"></i> Admin <span class="arrow"></span></a>
+                        </li>
+                        <ul class="sub-menu collapse" id="admin">
+                            <li><a href="#">Backup</a></li>
+                            <li><a href="#">Employee Management</a></li>
+                        </ul>*@
 
                     @*REPORT section*@
                     <li data-toggle="collapse" data-target="#report" class="collapsed">

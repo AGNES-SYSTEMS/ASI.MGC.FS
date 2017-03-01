@@ -3,6 +3,10 @@
     ViewBag.Title = "InvoiceReversal";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+<link href="~/Content/formValidation.min.css" rel="stylesheet" />
 <div class="container">
     <div id="main">
         <!-- start:breadcrumb -->
@@ -15,66 +19,131 @@
             <legend>Invoice Reversal</legend>
             <div class="row">
                 <div class="container">
-                    @using (Ajax.BeginForm("SaveInvoiceReversal", "Invoice", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formJobEntry", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @using (Ajax.BeginForm("SaveInvoiceReversal", "Invoice", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formInvoiceReversal", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblJobID" class="control-label col-md-4 small ">Invoice No:</label>
-                                <div class="col-md-8">
-                                    <div class="input-group">
-                                        @Html.TextBoxFor(d => d.INVNO_SD, null, new { ID = "txtInvoiceNo", Class = "form-control" })
-                                        @Html.ValidationMessageFor(d => d.INVNO_SD)
-                                        <span class="input-group-btn">
-                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#mrvJobSearchModel">
-                                                <i class="fa fa-search"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblMRVNo" class="control-label col-md-4 small ">Doc Date:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.SALEDATE_SD, null, new { ID = "txtDocDate", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessageFor(d => d.SALEDATE_SD)
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Invoice No:</label>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(d => d.INVNO_SD, null, new { ID = "txtInvoiceNo", Class = "form-control", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(d => d.INVNO_SD)
+                                    <span class="input-group-btn">
+                                        <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#invSearchModel">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblCustCode" class="control-label col-md-4 small ">Other Ref:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("OtherRef", null, new { ID = "txtOtherRef", Class = "form-control", @readonly = "readonly" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblCustName" class="control-label col-md-4 small ">Customer:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("Customer", null, new { ID = "txtCustomer", Class = "form-control", @readonly = "readonly" })
-                                </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Doc Date:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(d => d.SALEDATE_SD, null, new { ID = "txtDocDate", Class = "form-control", @readonly = "readonly", @required = "required" })
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblMRVProdCode" class="control-label col-md-4 small ">Amount:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.CASHTOTAL_SD, null, new { ID = "txtAmount", Class = "form-control", @readonly = "readonly" })
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Other Ref:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("OtherRef", null, new { ID = "txtOtherRef", Class = "form-control", @readonly = "readonly" })
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label></label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
-                                </div>
+                        <div class="col-md-6 form-group">
+                            <label  class="control-label col-md-4 small ">Customer:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("Customer", null, new { ID = "txtCustomer", Class = "form-control", @readonly = "readonly", @required = "required" })
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label  class="control-label col-md-4 small ">Amount:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(m => m.CASHTOTAL_SD, null, new { ID = "txtAmount", Class = "form-control", @readonly = "readonly", @required="required" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small "></label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
+                                <button type="button" id="btnNew" class="btn btn-success">New</button>
+                            </div>
+                        </div>
+                    </div>
                     }
                 </div>
             </div>
         </fieldset>
     </div>
 </div>
+<div class="container">
+    <div class="modal fade" id="invSearchModel" tabindex="-1" role="dialog" aria-labelledby="invSearchModelLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form class="form-horizontal" id="invModelform" method="post" data-fv-framework="bootstrap"
+                      data-fv-message="This value is not valid"
+                      data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
+                      data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                      data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            Invoice Search
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="invGrid" class="panel-body">
+                                    <div class="col-md-4 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("invSearch", null, new { ID = "txtInvSearch", Class = "form-control", @placeholder = "Search Invoice here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <br /><br />
+                                    <table id="tblInvSearch" style="width: 100%"></table>
+                                    <div id="Pager"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <a href="#" id="btnInvSelect" class="btn btn-success">Select</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/Invoice/InvoiceReversal.js")"></script>
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
+    <script type="text/javascript">
+
+        function OnSuccess(success) {
+            debugger;
+            if (success) {
+                toastr.success("Invoice is reversed Successfully.");
+            }
+        }
+
+        function OnFailure() {
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
+    </script>
+}

@@ -208,7 +208,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!ACDESCRIPTION_VPR.Value</Value>
+                              <Value>= Fields!ACCODE_VPR.Value &amp; "		" &amp; Fields!ACDESCRIPTION_VPR.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>

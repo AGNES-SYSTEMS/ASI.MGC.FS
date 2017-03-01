@@ -33,13 +33,13 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
-        public JsonResult GetJobDetailsList(string sidx, string sord, int page, int rows,string jobId, string jobName)
+        public JsonResult GetJobDetailsList(string sidx, string sord, int page, int rows, string jobId, string jobName)
         {
             var jobList = (from jobs in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
                            select jobs).Select(a => new { a.JOBID_JR, a.JOBDESCRIPTION_JR, a.RATE_RJ });
             if (!string.IsNullOrEmpty(jobId))
             {
-                jobList = jobList.Where(a=>a.JOBID_JR.Contains(jobId)).Select(a => new { a.JOBID_JR, a.JOBDESCRIPTION_JR, a.RATE_RJ });
+                jobList = jobList.Where(a => a.JOBID_JR.Contains(jobId)).Select(a => new { a.JOBID_JR, a.JOBDESCRIPTION_JR, a.RATE_RJ });
             }
             if (!string.IsNullOrEmpty(jobName))
             {
@@ -73,16 +73,16 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult GetJobMrvList(string sidx, string sord, int page, int rows, string jobStatus, string mrvNo, string jobNo)
         {
             var jobList = (from jobMaster in _unitOfWork.Repository<JOBMASTER>().Query().Get()
-                           select jobMaster).Select(a => new { a.JOBNO_JM, a.MRVNO_JM, a.DOCDATE_JM});
+                           select jobMaster).Select(a => new { a.JOBNO_JM, a.MRVNO_JM, a.DOCDATE_JM });
             if (!string.IsNullOrEmpty(jobStatus))
             {
                 jobList = (from jobMaster in _unitOfWork.Repository<JOBMASTER>().Query().Get()
                            where jobMaster.JOBSTATUS_JM.Equals(jobStatus)
-                           select jobMaster).Select(a => new { a.JOBNO_JM, a.MRVNO_JM,a.DOCDATE_JM });
+                           select jobMaster).Select(a => new { a.JOBNO_JM, a.MRVNO_JM, a.DOCDATE_JM });
             }
             if (!string.IsNullOrEmpty(jobNo))
             {
-                jobList = jobList.Where(a=>a.JOBNO_JM.Contains(jobNo)).Select(a => new { a.JOBNO_JM, a.MRVNO_JM, a.DOCDATE_JM });
+                jobList = jobList.Where(a => a.JOBNO_JM.Contains(jobNo)).Select(a => new { a.JOBNO_JM, a.MRVNO_JM, a.DOCDATE_JM });
             }
             if (!string.IsNullOrEmpty(mrvNo))
             {
@@ -223,6 +223,7 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult SaveJobEntry(FormCollection form, SALEDETAIL objSaleDetail)
         {
             string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
+            bool success = false;
             try
             {
                 var salesEntry = _unitOfWork.Repository<SALEDETAIL>().Create();
@@ -244,13 +245,15 @@ namespace ASI.MGC.FS.Controllers
                 salesEntry.STATUS_SD = "N";
                 _unitOfWork.Repository<SALEDETAIL>().Insert(salesEntry);
                 _unitOfWork.Save();
+                JobMaster_UpdateEmpCode(form["EmpCode"], objSaleDetail.JOBNO_SD);
+                success = true;
             }
             catch (Exception)
             {
-                // ignored
+                success = false;
             }
 
-            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = success }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetAllJobDetails(string mrvCode, string jobCode)
@@ -262,12 +265,85 @@ namespace ASI.MGC.FS.Controllers
         {
             return View();
         }
-
-        public ActionResult SaveJobCancellation()
+        [HttpPost]
+        public JsonResult SaveJobCancellation(FormCollection frm, JOBMASTER objJmaster)
         {
-            throw new NotImplementedException();
+            bool isJobPosted = true;
+            bool success = false;
+            try
+            {
+                var postedJobCount = (from sData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                                      where sData.JOBNO_SD.Equals(objJmaster.JOBNO_JM) && sData.STATUS_SD.Equals("P")
+                                      select sData).Count();
+                if (postedJobCount == 0)
+                {
+                    isJobPosted = false;
+                    var jobSaleData = (from sData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                                       where sData.JOBNO_SD.Equals(objJmaster.JOBNO_JM)
+                                       select sData).ToList();
+                    foreach (var item in jobSaleData)
+                    {
+                        _unitOfWork.Repository<SALEDETAIL>().Delete(item);
+                        _unitOfWork.Save();
+                    }
+                    var jobMasterData = (from jmData in _unitOfWork.Repository<JOBMASTER>().Query().Get()
+                                         where jmData.JOBNO_JM.Equals(objJmaster.JOBNO_JM)
+                                         select jmData).ToList();
+                    foreach (var item in jobMasterData)
+                    {
+                        item.REMARIKS_JM = objJmaster.REMARIKS_JM;
+                        item.JOBSTATUS_JM = "C";
+                        _unitOfWork.Repository<JOBMASTER>().Update(item);
+                        _unitOfWork.Save();
+                    }
+                    var mrvJobsCount = (from mrv in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                                        join jmData in _unitOfWork.Repository<JOBMASTER>().Query().Get()
+                                            on mrv.MRVNO_MRV equals jmData.MRVNO_JM
+                                        where jmData.JOBSTATUS_JM != "C"
+                                        select jmData).Count();
+                    if (mrvJobsCount == 0)
+                    {
+                        var mrvItem = (from mrv in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                                       where mrv.MRVNO_MRV.Equals(objJmaster.MRVNO_JM)
+                                       select mrv).SingleOrDefault();
+                        if (mrvItem != null)
+                        {
+                            mrvItem.STATUS_MRV = "C";
+                            _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Update(mrvItem);
+                            _unitOfWork.Save();
+                        }
+                    }
+                    var JobData = (from jmData in _unitOfWork.Repository<JOBMASTER>().Query().Get()
+                                   where jmData.JOBNO_JM.Equals(objJmaster.JOBNO_JM)
+                                   select jmData).FirstOrDefault();
+                    if (JobData != null)
+                    {
+                        JobData.EMPCODE_JM = objJmaster.EMPCODE_JM;
+                        _unitOfWork.Repository<JOBMASTER>().Update(JobData);
+                        _unitOfWork.Save();
+                    }
+                    success = true;
+                }
+            }
+            catch
+            {
+                success = false;
+            }
+            return Json(new { isJobPosted = isJobPosted, success = success }, JsonRequestBehavior.AllowGet);
         }
-
+        private void JobMaster_UpdateEmpCode(string empCode, string jobNo)
+        {
+            try
+            {
+                var objSales = _unitOfWork.Repository<JOBMASTER>().FindByID(jobNo);
+                objSales.EMPCODE_JM = empCode;
+                _unitOfWork.Repository<JOBMASTER>().Update(objSales);
+                _unitOfWork.Save();
+            }
+            catch (Exception)
+            {
+            }
+        }
         public JsonResult DeleteJobsbyJobId(string jobId)
         {
             var repo = _unitOfWork.ExtRepositoryFor<ReportRepository>();
@@ -293,6 +369,95 @@ namespace ASI.MGC.FS.Controllers
             {
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
+        }
+        public JsonResult GetJobData(string sidx, string sord, int page, int rows, string jobNo)
+        {
+            var pendingJobsList = (from jmData in _unitOfWork.Repository<JOBMASTER>().Query().Get()
+                                   where jmData.JOBSTATUS_JM.Equals("N")
+                                   select new { jmData.JOBNO_JM, jmData.MRVNO_JM });
+            if (!string.IsNullOrEmpty(jobNo))
+            {
+                pendingJobsList = pendingJobsList.Where(o => o.JOBNO_JM.Contains(jobNo));
+            }
+            int pageIndex = Convert.ToInt32(page) - 1;
+            int pageSize = rows;
+            int totalRecords = pendingJobsList.Count();
+            int totalPages = (int)Math.Ceiling(totalRecords / (float)pageSize);
+            if (sord.ToUpper() == "DESC")
+            {
+                pendingJobsList = pendingJobsList.OrderByDescending(a => a.JOBNO_JM);
+                pendingJobsList = pendingJobsList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            else
+            {
+                pendingJobsList = pendingJobsList.OrderBy(a => a.JOBNO_JM);
+                pendingJobsList = pendingJobsList.Skip(pageIndex * pageSize).Take(pageSize);
+            }
+            var jsonData = new
+            {
+                total = totalPages,
+                page,
+                records = totalRecords,
+                rows = pendingJobsList
+
+            };
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult getPendingJobDetails(string jobNo)
+        {
+            try
+            {
+                string prdName = "";
+                string empName = "";
+                string custName = "";
+                string custCode = "";
+                var jobData = (from jmData in _unitOfWork.Repository<JOBMASTER>().Query().Get()
+                               where jmData.JOBNO_JM.Equals(jobNo)
+                               select new { jmData.MRVNO_JM, jmData.DOCDATE_JM, jmData.PRODID_JIM, jmData.EMPCODE_JM, jmData.REMARIKS_JM }).SingleOrDefault();
+                if (jobData != null)
+                {
+                    var prodDetail = (from pmData in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
+                                      where pmData.PROD_CODE_PM.Equals(jobData.PRODID_JIM)
+                                      select pmData).SingleOrDefault();
+                    if (prodDetail != null)
+                    {
+                        prdName = prodDetail.DESCRIPTION_PM;
+                    }
+                    var empData = (from empMData in _unitOfWork.Repository<EMPLOYEEMASTER>().Query().Get()
+                                   where empMData.EMPCODE_EM.Equals(jobData.EMPCODE_JM)
+                                   select empMData).SingleOrDefault();
+                    if (empData != null)
+                    {
+                        empName = empData.EMPFNAME_EM;
+                    }
+                    var mrvData = (from mrvMData in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                                   where mrvMData.MRVNO_MRV.Equals(jobData.MRVNO_JM)
+                                   select mrvMData).SingleOrDefault();
+                    if (mrvData != null)
+                    {
+                        custCode = mrvData.CUSTOMERCODE_MRV;
+                        custName = mrvData.CUSTOMERNAME_MRV;
+                    }
+                    var jsonData = new
+                    {
+                        mrvNo = jobData.MRVNO_JM,
+                        prodCode = jobData.PRODID_JIM,
+                        prodName = prdName,
+                        docDate = jobData.DOCDATE_JM,
+                        empCode = jobData.EMPCODE_JM,
+                        empName = empName,
+                        custCode = custCode,
+                        custName = custName,
+                        details = jobData.REMARIKS_JM
+                    };
+                    return Json(jsonData, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
     }
 }

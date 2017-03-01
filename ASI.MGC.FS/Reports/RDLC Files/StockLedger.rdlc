@@ -475,7 +475,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Fields!RECEIPTQTY_STR.Value &amp; Fields!UNIT_STR.Value</Value>
+                                            <Value>= Format(Fields!RECEIPTQTY_STR.Value,"N0") &amp; " " &amp; Fields!UNIT_STR.Value</Value>
                                             <Style />
                                           </TextRun>
                                         </TextRuns>
@@ -539,7 +539,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Fields!ISSUEQTY_STR.Value &amp; Fields!UNIT_STR.Value</Value>
+                                            <Value>=Format(Fields!ISSUEQTY_STR.Value,"N0")&amp; " " &amp; Fields!UNIT_STR.Value</Value>
                                             <Style />
                                           </TextRun>
                                         </TextRuns>
@@ -741,7 +741,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=(Sum(Fields!RECEIPTQTY_STR.Value) - Sum(Fields!ISSUEQTY_STR.Value))</Value>
+                              <Value>=Format((Sum(Fields!RECEIPTQTY_STR.Value) - Sum(Fields!ISSUEQTY_STR.Value)),"N0")</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -805,7 +805,9 @@
                               <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox59</rd:DefaultName>

@@ -30,14 +30,15 @@ namespace ASI.MGC.FS.WebCommon
             return jobCount;
         }
 
-        public static int GetCashSaleCount(IUnitOfWork iUnitOfWork)
+        public static string GetCashSaleCount(IUnitOfWork iUnitOfWork)
         {
-            var currYear = DateTime.Now.Year.ToString();
+            var currYear = DateTime.Now.Year;
             var cashSaleCount = (from lstBankTransaction in iUnitOfWork.Repository<BANKTRANSACTION>().Query().Get()
-                                 where lstBankTransaction.DOCNUMBER_BT.Contains("RCT")
-                                 //&& lstBankTransaction.DOCNUMBER_BT.EndsWith(currYear)
+                                 where lstBankTransaction.DOCNUMBER_BT.Contains("RCT") && lstBankTransaction.GLDATE_BT.Value.Year == currYear
                                  select lstBankTransaction.DOCNUMBER_BT).Distinct().Count();
-            return cashSaleCount;
+            int cmCount = cashSaleCount + 1 + 1000;
+            string cashMemoCode = Convert.ToString("RCT/" + Convert.ToString(cmCount) + "/" + currYear);
+            return cashMemoCode;
         }
 
         public static int GetCurrPurchaseCount(IUnitOfWork iUnitOfWork)
@@ -50,14 +51,15 @@ namespace ASI.MGC.FS.WebCommon
             return purCount;
         }
 
-        public static int GetInvoiceCount(IUnitOfWork iUnitOfWork)
+        public static string GetInvoiceCount(IUnitOfWork iUnitOfWork)
         {
-            var currYear = DateTime.Now.Year.ToString();
+            var currYear = DateTime.Now.Year;
             var invoiceCount = (from lstArApLedger in iUnitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
-                                where lstArApLedger.DOCNUMBER_ART.Contains("INV")
-                                //&& lstArApLedger.DOCNUMBER_ART.EndsWith(currYear)
+                                where lstArApLedger.DOCNUMBER_ART.Contains("INV") && lstArApLedger.GLDATE_ART.Value.Year == currYear
                                 select lstArApLedger.DOCNUMBER_ART).Distinct().Count();
-            return invoiceCount;
+            int invCount = invoiceCount + 1 + 1000;
+            string cashMemoCode = Convert.ToString("INV/" + Convert.ToString(invCount) + "/" + currYear);
+            return cashMemoCode;
         }
 
         public static int GetQuotationCount(IUnitOfWork iUnitOfWork)
@@ -84,7 +86,18 @@ namespace ASI.MGC.FS.WebCommon
             }
             return dlnNumber;
         }
-
+        public static string GetDeleNumberCount(IUnitOfWork iUnitOfWork)
+        {
+            var currYear = DateTime.Now.Year;
+            var cashSaleCount = (from lstBankTransaction in iUnitOfWork.Repository<BANKTRANSACTION>().Query().Get()
+                                 where lstBankTransaction.DOCNUMBER_BT.Contains("RCT") && lstBankTransaction.GLDATE_BT.Value.Year == currYear
+                                 select lstBankTransaction.DOCNUMBER_BT).Distinct().Count();
+            var invSaleCount = (from lstArTransaction in iUnitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
+                                where lstArTransaction.DOCNUMBER_ART.Contains("INV") && lstArTransaction.GLDATE_ART.Value.Year == currYear
+                                select lstArTransaction.DOCNUMBER_ART).Distinct().Count();
+            int delCount = cashSaleCount + invSaleCount + 1000;
+            return "DLN/" + delCount + "/" + currYear;
+        }
         public static IList<SelectListItem> GetPaymentMethodList()
         {
             IList<SelectListItem> lstPaymentMethods = new List<SelectListItem>();
@@ -290,6 +303,18 @@ namespace ASI.MGC.FS.WebCommon
                 objDayEnd.DocumentNo = "DJV/1000/" + Convert.ToDateTime(period.PERRIEDFROM_FM).Year;
             }
             return objDayEnd;
+        }
+        public static Dictionary<int, string> GetDocTypesForPrint(IUnitOfWork _unitofWork)
+        {
+            var docDictionary = new Dictionary<int, string>();
+            docDictionary.Add(0, "MRV");
+            docDictionary.Add(1, "DLN");
+            docDictionary.Add(2, "INV");
+            docDictionary.Add(3, "RCT");
+            docDictionary.Add(4, "JOB");
+            docDictionary.Add(5, "QOT");
+            docDictionary.Add(6, "STJ");
+            return docDictionary;
         }
     }
 }

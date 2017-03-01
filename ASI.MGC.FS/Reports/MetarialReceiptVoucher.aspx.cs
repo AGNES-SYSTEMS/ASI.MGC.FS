@@ -19,7 +19,13 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
+
                 var mrvNo = Request.QueryString["MRVNO"];
+                //bool isDuplicate = !string.IsNullOrEmpty(Request.QueryString["isDuplicate"]) ? Convert.ToBoolean(Request.QueryString["isDuplicate"]) : false;
+                //if (isDuplicate)
+                //{
+
+                //}
                 var dtMaterialReceiptVoucher = uMethods.ConvertTo(repo.RptMaterialReceiptVoucher(mrvNo));
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\MetarialReceiptVocher.rdlc";
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("MRVNO", mrvNo));

@@ -3,6 +3,10 @@
     ViewBag.Title = "JobCancellation";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+<link href="~/Content/formValidation.min.css" rel="stylesheet" />
 <div class="container">
     <div id="main">
         <!-- start:breadcrumb -->
@@ -15,17 +19,16 @@
             <legend>Job Cancellation</legend>
             <div class="row">
                 <div class="container">
-                    @using (Ajax.BeginForm("SaveJobCancellation", "Job", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formJobEntry", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @using (Ajax.BeginForm("SaveJobCancellation", "Job", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formJobCancellation", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label id="lblJobID" class="control-label col-md-4 small ">Job No:</label>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        @Html.TextBoxFor(d => d.JOBNO_JM, null, new { ID = "txtJobid", Class = "form-control" })
-                                        @Html.ValidationMessageFor(d => d.JOBNO_JM)
+                                        @Html.TextBoxFor(d => d.JOBNO_JM, null, new { ID = "txtJobNo", Class = "form-control", @readonly = "readonly" })
                                         <span class="input-group-btn">
-                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#mrvJobSearchModel">
+                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#jobSearchModel">
                                                 <i class="fa fa-search"></i>
                                             </button>
                                         </span>
@@ -35,8 +38,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblMRVNo" class="control-label col-md-4 small ">MRV No:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.MRVNO_JM, null, new { ID = "txtMRVNo", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessageFor(d => d.MRVNO_JM)
+                                    @Html.TextBoxFor(d => d.MRVNO_JM, null, new { ID = "txtMRVNo", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -44,13 +46,13 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblCustCode" class="control-label col-md-4 small ">Cust Code:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("CustCode", null, new { ID = "txtCustCode", Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBox("CustCode", null, new { ID = "txtCustCode", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblCustName" class="control-label col-md-4 small ">Cust Name:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("CustName", null, new { ID = "txtCustName", Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBox("CustName", null, new { ID = "txtCustName", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -58,27 +60,34 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblMRVProdCode" class="control-label col-md-4 small ">MRV Prod. Code:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.PRODID_JIM, null, new { ID = "txtProdCode", Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBoxFor(m => m.PRODID_JIM, null, new { ID = "txtProdCode", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblMRVProdDetail" class="control-label col-md-4 small ">MRV Prod. Detail:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("MRVProdDetail", null, new { ID = "txtMRVProdDetail", Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBox("MRVProdDetail", null, new { ID = "txtMRVProdDetail", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label id="lblEmpCode" class="control-label col-md-4 small ">Emp Code:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.EMPCODE_JM, null, new { ID = "txtEmpCode", Class = "form-control", @readonly = "readonly" })
+                                <div class="col-md-8 ">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.EMPCODE_JM, null, new { ID = "txtEmpCode", Class = "form-control", @readonly = "readonly" })
+                                        <span class="input-group-btn">
+                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#EmployeeSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblEmpName" class="control-label col-md-4 small ">Emp Name:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("EmpName", null, new { ID = "txtEmpName", Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBox("EmpName", null, new { ID = "txtEmpName", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -86,15 +95,13 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Doc Date:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.DOCDATE_JM, null, new { ID = "txtDocDate", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessageFor(d => d.DOCDATE_JM)
+                                    @Html.TextBoxFor(d => d.DOCDATE_JM, null, new { ID = "txtDocDate", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Remarks:</label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     @Html.TextBoxFor(d => d.REMARIKS_JM, null, new { ID = "txtRemarks", Class = "form-control" })
-                                    @Html.ValidationMessageFor(d => d.REMARIKS_JM)
                                 </div>
                             </div>
                         </div>
@@ -114,3 +121,111 @@
         </fieldset>
     </div>
 </div>
+<div class="container">
+    <div class="modal fade" id="jobSearchModel" tabindex="-1" role="dialog" aria-labelledby="SearchModelLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form class="form-horizontal" id="jobModelform" method="post" data-fv-framework="bootstrap"
+                      data-fv-message="This value is not valid"
+                      data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
+                      data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                      data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            Job Search
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="jobGrid" class="panel-body">
+                                    <div class="col-md-4 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("jobSearch", null, new { ID = "txtJobSearch", Class = "form-control", @placeholder = "Search Job No here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <br /><br />
+                                    <table id="tblJobSearch" style="width: 100%"></table>
+                                    <div id="Pager"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" id="btnJobSelect" class="btn btn-success">Select</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="modal fade" id="EmployeeSearchModel" tabindex="-1" role="dialog" aria-labelledby="EmployeeSearchModelLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form class="form-horizontal" id="EmployeeSearchModelform" method="post" data-fv-framework="bootstrap"
+                      data-fv-message="This value is not valid"
+                      data-fv-feedbackicons-valid="glyphicon glyphicon-ok"
+                      data-fv-feedbackicons-invalid="glyphicon glyphicon-remove"
+                      data-fv-feedbackicons-validating="glyphicon glyphicon-refresh">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title">
+                            Employee Details Search
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="empGrid" class="panel-body">
+                                    <table id="tblEmployeeSearch" style="width:100%"></table>
+                                    <div id="empPager"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" id="btnEmpSelect" class="btn btn-success">Select</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/Job/JobCancellation.js")"></script>
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
+    <script type="text/javascript">
+
+        function OnSuccess(response) {
+            debugger;
+            if (!response.isJobPosted) {
+                if (response.success) {
+                    toastr.success("Job is cancelled Successfully.");
+                }
+                else {
+                    toastr.warning("Sorry! Something went wrong, please try again.");
+                }
+            } else {
+                toastr.info("Job Already Posted..You Can't Cancel this Job!!");
+            }
+        }
+
+        function OnFailure() {
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
+    </script>
+}

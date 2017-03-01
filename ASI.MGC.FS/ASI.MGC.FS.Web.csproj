@@ -1029,6 +1029,7 @@
     <Content Include="Scripts\Custom\Bank\BankPayment.js" />
     <Content Include="Scripts\Custom\Bank\BankReceipt.js" />
     <Content Include="Scripts\Custom\Cash\CashMemo.js" />
+    <Content Include="Scripts\Custom\Cash\CashMemoReversal.js" />
     <Content Include="Scripts\Custom\Cash\CashPayment.js" />
     <Content Include="Scripts\Custom\Cash\CashReceipt.js" />
     <Content Include="Scripts\Custom\Finance\AccountsPayable.js" />
@@ -1046,6 +1047,9 @@
     <Content Include="Scripts\Custom\Finance\ArUnMatching.js" />
     <Content Include="Scripts\Custom\Finance\VoucherPrinting.js" />
     <Content Include="Scripts\Custom\Invoice\InvoicePreparation.js" />
+    <Content Include="Scripts\Custom\Invoice\InvoiceReversal.js" />
+    <Content Include="Scripts\Custom\Invoice\PendingInvoices.js" />
+    <Content Include="Scripts\Custom\Job\JobCancellation.js" />
     <Content Include="Scripts\Custom\Job\JobEntry.js" />
     <Content Include="Scripts\Custom\MgcReports\APStatement.js" />
     <Content Include="Scripts\Custom\MgcReports\APStatementOutStanding.js" />
@@ -1074,6 +1078,7 @@
     <Content Include="Scripts\Custom\MgcReports\StockReceipt.js" />
     <Content Include="Scripts\Custom\MgcReports\StockReport.js" />
     <Content Include="Scripts\Custom\MgcReports\TrialBalance.js" />
+    <Content Include="Scripts\Custom\MRV\DuplicatePrinting.js" />
     <Content Include="Scripts\Custom\MRV\MRVCreation.js" />
     <Content Include="Scripts\Custom\MRV\MRVSearchDetails.js" />
     <Content Include="Scripts\Custom\Purchase\PurchaseEntry.js" />
@@ -1345,6 +1350,7 @@
     <Content Include="Views\MgcReports\ApStatementOutstanding.cshtml" />
     <Content Include="Views\Purchase\PurchaseEntry.cshtml" />
     <Content Include="Views\Setups\MesMachines.cshtml" />
+    <Content Include="Views\MRV\DuplicateMrvPrinting.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

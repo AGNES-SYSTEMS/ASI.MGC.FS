@@ -1,0 +1,119 @@
+﻿@{
+    ViewBag.Title = "Duplicate Printing";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.currPage = "Duplicate Printing";
+}
+<link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+<link href="~/Content/formValidation.min.css" rel="stylesheet" />
+<!-- start:main -->
+<div class="container">
+    <div id="main">
+        <!-- start:breadcrumb -->
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li class="active">@ViewBag.currPage</li>
+        </ol>
+        <!-- end:breadcrumb -->
+        <fieldset>
+            <legend>Duplicate Printing</legend>
+            <div class="row">
+                <div class="container">
+                    @using (Ajax.BeginForm("SaveDuplicatePrinting", "MRV", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formDuplicatePrinting", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Doc Type:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.DropDownList("DocType", new SelectList(@ViewBag.DocType, "Key", "Value", "0"), new { ID = "ddlDocType", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDocNo" class="control-label col-md-4 small ">Document Number:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("DocNo", null, new { ID = "txtDocNo", Class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label></label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="Save">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/MRV/DuplicatePrinting.js")"></script>
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
+    <script type="text/javascript">
+
+        function OnSuccess(response) {
+            if (response.isInvalid) {
+                toastr.error("Invalid Document Number");
+            }
+            else {
+                openDuplicateReport(response.docNo, response.type, response.listMrvJobCode);
+                $("#btnUnMatch").hide();
+            }
+        }
+
+        function OnFailure() {
+            toastr.error("Something went wrong please try again");
+        }
+        function openDuplicateReport(docNumber, voucherType, jobList) {
+            var url = "";
+            if (voucherType === "0") {
+                url = "/MgcReports/MetarialReceiptVoucher?mrvNo=" + docNumber;
+                window.open(url);
+                toastr.info("Material Receipt Voucher Report is open in new window.");
+                for (var i = 0; i < jobList.length; i++) {
+                    var jobNo = jobList[i];
+                    var jobCardReportUrl = "/MgcReports/JobCardFormat?jobNo=" + jobNo;
+                    window.open(jobCardReportUrl);
+                    toastr.info("Job Card Report is open in new window.");
+                }
+            }
+            else if (voucherType === "1") {
+                url = "/MgcReports/DeliveryNote?dlNo=" + docNumber;
+                window.open(url);
+                toastr.info("Delivery Note Report is open in new window.");
+            }
+            else if (voucherType === "2") {
+                url = "/MgcReports/Invoice?invNo=" + docNumber;
+                window.open(url);
+                toastr.info("Invoice is open in new window.");
+            }
+            else if (voucherType === "3") {
+                url = "/MgcReports/CashMemo?cmNo=" + docNumber;
+                window.open(url);
+                toastr.info("Cash Receipt is open in new window.");
+            }
+            else if (voucherType === "4") {
+                url = "/MgcReports/JobCardDetails?jobNo=" + docNumber;
+                window.open(url);
+                toastr.info("Job Report is open in new window.");
+            }
+            else if (voucherType === "5") {
+                url = "/MgcReports/Quotation?quotNo=" + docNumber;
+                window.open(url);
+                toastr.info("Quotation Report is open in new window.");
+            }
+            else if (voucherType === "6") {
+                url = "/MgcReports/StockJournal?voucherNo=" + docNumber;
+                window.open(url);
+                toastr.info("Stock Journal Report is open in new window.");
+            }
+        }
+    </script>
+}

@@ -359,7 +359,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!CUR_QTY_PM.Value</Value>
+                              <Value>=Format(Fields!CUR_QTY_PM.Value, "N0")</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -505,7 +505,9 @@
                 <Style />
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox21</rd:DefaultName>
