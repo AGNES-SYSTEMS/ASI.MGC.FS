@@ -1007,7 +1007,7 @@
     <Height>3in</Height>
     <Style />
   </Body>
-  <Width>7.75in</Width>
+  <Width>7.77in</Width>
   <Page>
     <PageHeader>
       <Height>2.5in</Height>
@@ -1085,8 +1085,8 @@
           <Value>MESHeaderTransparent</Value>
           <Sizing>Fit</Sizing>
           <Top>0.45708in</Top>
-          <Height>1.97347in</Height>
-          <Width>7.725in</Width>
+          <Height>1.98in</Height>
+          <Width>7.77in</Width>
           <ZIndex>2</ZIndex>
           <Style>
             <Border>
@@ -1102,7 +1102,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>1.3in</Height>
+      <Height>1.34958in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1220,8 +1220,8 @@
           <Value>MESFooterTransparent</Value>
           <Sizing>Fit</Sizing>
           <Top>0.51958in</Top>
-          <Height>0.78042in</Height>
-          <Width>7.75in</Width>
+          <Height>0.83in</Height>
+          <Width>7.77in</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -1236,6 +1236,8 @@
         </Border>
       </Style>
     </PageFooter>
+    <PageHeight>11.69in</PageHeight>
+    <PageWidth>8.27in</PageWidth>
     <LeftMargin>0.25in</LeftMargin>
     <RightMargin>0.25in</RightMargin>
     <Style />

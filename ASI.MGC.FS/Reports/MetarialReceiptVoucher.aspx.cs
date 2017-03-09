@@ -21,11 +21,6 @@ namespace ASI.MGC.FS.Reports
                 UtilityMethods uMethods = new UtilityMethods();
 
                 var mrvNo = Request.QueryString["MRVNO"];
-                //bool isDuplicate = !string.IsNullOrEmpty(Request.QueryString["isDuplicate"]) ? Convert.ToBoolean(Request.QueryString["isDuplicate"]) : false;
-                //if (isDuplicate)
-                //{
-
-                //}
                 var dtMaterialReceiptVoucher = uMethods.ConvertTo(repo.RptMaterialReceiptVoucher(mrvNo));
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\MetarialReceiptVocher.rdlc";
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("MRVNO", mrvNo));
@@ -33,13 +28,13 @@ namespace ASI.MGC.FS.Reports
                 ReportViewer1.LocalReport.DataSources.Add(new ReportDataSource("DS_MaterialReceiptVoucher", dtMaterialReceiptVoucher));
                 ReportViewer1.LocalReport.Refresh();
                 ReportViewer1.DataBind();
-                //Response.Clear();
-                //byte[] bytes = ReportViewer1.LocalReport.Render("PDF");
-                //var fileNamewithType = "inline;filename=" + mrvNo + ".pdf";
-                //Response.AddHeader("Content-Disposition", fileNamewithType);
-                //Response.ContentType = "application/pdf";
-                //Response.BinaryWrite(bytes);
-                //Response.End();
+                Response.Clear();
+                byte[] bytes = ReportViewer1.LocalReport.Render("PDF");
+                var fileNamewithType = "inline;filename=" + mrvNo + ".pdf";
+                Response.AddHeader("Content-Disposition", fileNamewithType);
+                Response.ContentType = "application/pdf";
+                Response.BinaryWrite(bytes);
+                Response.End();
             }
         }
 

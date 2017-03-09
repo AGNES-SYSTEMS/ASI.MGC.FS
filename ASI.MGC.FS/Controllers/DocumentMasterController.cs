@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Model;
+using ASI.MGC.FS.WebCommon;
 
 namespace ASI.MGC.FS.Controllers
 {
@@ -57,19 +58,7 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult GetDocNo(string docType)
         {
             IUnitOfWork unitOfWork = new UnitOfWork();
-            var docNo = "";
-            var currYear = DateTime.Now.Year;
-            var docCount = (from objMrv in unitOfWork.Repository<NOGENERATOR>().Query().Get()
-                            where objMrv.DOCTYPE_NG.Contains(docType) && objMrv.FINYEAR_NG == (currYear)
-                            select objMrv.SLNO_NG).SingleOrDefault();
-            if (docCount == null)
-            {
-                docNo = Convert.ToString(docType + "/" + 1001 + "/" + currYear);
-            }
-            else
-            {
-                docNo = Convert.ToString(docType + "/" + (docCount + 1) + "/" + currYear);
-            }
+            string docNo = CommonModelAccessUtility.GetDocNo(unitOfWork, docType);
             return Json(docNo, JsonRequestBehavior.AllowGet);
         }
     }

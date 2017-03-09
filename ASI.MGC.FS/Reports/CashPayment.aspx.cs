@@ -20,6 +20,7 @@ namespace ASI.MGC.FS.Reports
                 UtilityMethods uMethods = new UtilityMethods();
                 const string voucherType = "CP";
                 var voucherCode = Request.QueryString["cpNo"];
+                repo.Sp_GetVoucherDetails(voucherType, voucherCode);
                 DataTable dtCashPayment = uMethods.ConvertTo(repo.RptCashPayment(voucherType, voucherCode));
 
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\CashpaymentVoucher.rdlc";
@@ -30,13 +31,13 @@ namespace ASI.MGC.FS.Reports
                 ReportViewer1.LocalReport.DataSources.Add(rds);
                 ReportViewer1.DataBind();
                 ReportViewer1.LocalReport.Refresh();
-                //Response.Clear();
-                //byte[] bytes = ReportViewer1.LocalReport.Render("PDF");
-                //var fileNamewithType = "inline;filename=" + voucherCode + ".pdf";
-                //Response.AddHeader("Content-Disposition", fileNamewithType);
-                //Response.ContentType = "application/pdf";
-                //Response.BinaryWrite(bytes);
-                //Response.End();
+                Response.Clear();
+                byte[] bytes = ReportViewer1.LocalReport.Render("PDF");
+                var fileNamewithType = "inline;filename=" + voucherCode + ".pdf";
+                Response.AddHeader("Content-Disposition", fileNamewithType);
+                Response.ContentType = "application/pdf";
+                Response.BinaryWrite(bytes);
+                Response.End();
             }
         }
     }

@@ -16,7 +16,7 @@
             <legend>Profit Loss Statement</legend>
             <div class="row">
                 <div class="container">
-                    @using (Ajax.BeginForm(null, null, null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formPLStatement", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                    @using (Ajax.BeginForm("FetchPLData", "MgcReports", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formPLStatement", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
                         <div class="row">
                             <div class="col-md-6 form-group">
@@ -38,7 +38,7 @@
                             <div class="col-md-6 form-group">
                                 <label></label>
                                 <div class="col-md-8">
-                                    <input type="button" id="btnReportSubmit" class="btn btn-success col-md-3 pull-right" value="Submit"> &nbsp;
+                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="View"> &nbsp;
                                 </div>
                             </div>
                         </div>
@@ -59,4 +59,21 @@
 @section scripts
 {
     <script src="@Url.Content("~/Scripts/Custom/MgcReports/ProfitLossStatement.js")"></script>
+    <script src="@Url.Content("~/Scripts/common.js")"></script>
+    <script type="text/javascript">
+        function OnSuccess(response) {
+            if (response.success) {
+                var startDate = $("#txtStartDate").val();
+                var endDate = $("#txtEndDate").val();
+                $('#frameWrap').show();
+                var url = "/Reports/ProfitLossStatement.aspx?startDate=" + startDate + "&endDate=" + endDate;
+                $('#iframe').prop('src', url);
+            } else {
+                toastr.error("Start Date/ End Date cannot be empty.");
+            }
+        }
+        function OnFailure() {
+            toastr.error("Sorry! Something went wrong, please try again.");
+        }
+    </script>
 }

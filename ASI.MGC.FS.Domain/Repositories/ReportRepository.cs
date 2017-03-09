@@ -589,7 +589,7 @@ namespace ASI.MGC.FS.Domain.Repositories
         {
             try
             {
-                _context.sp_GetBankStatementData(bankCode, startDate, endDate);
+                _context.sp_GetBankStatementData(bankCode, startDate, endDate,null,null,null,null,null);
             }
             catch (Exception)
             {
@@ -601,7 +601,7 @@ namespace ASI.MGC.FS.Domain.Repositories
         {
             try
             {
-                _context.sp_GetGLStatementData(glCode, startDate, endDate);
+                _context.sp_GetGLStatementData(glCode, startDate, endDate,null,null,null,null,null);
             }
             catch (Exception)
             {
@@ -673,7 +673,7 @@ namespace ASI.MGC.FS.Domain.Repositories
         {
             try
             {
-                _context.sp_GetARStatementData(acCode, startDate, endDate);
+                _context.sp_GetARStatementData(acCode, startDate, endDate,null,null,null,null,null);
             }
             catch (Exception)
             {
@@ -684,7 +684,7 @@ namespace ASI.MGC.FS.Domain.Repositories
         {
             try
             {
-                _context.sp_GetARStatementOutStandingData(acCode, startDate, endDate);
+                _context.sp_GetARStatementOutStandingData(acCode, startDate, endDate,null,null,null,null,null);
             }
             catch (Exception)
             {

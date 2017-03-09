@@ -514,6 +514,8 @@ namespace ASI.MGC.FS.Controllers
         [HttpPost]
         public JsonResult SaveJvCreation(BANKTRANSACTION objBankTransaction, FormCollection frm)
         {
+            string docType = frm["DocType"];
+            objBankTransaction.DOCNUMBER_BT = CommonModelAccessUtility.GetDocNo(_unitOfWork, docType);
             string jvNo = objBankTransaction.DOCNUMBER_BT;
             string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             bool success;
@@ -592,7 +594,7 @@ namespace ASI.MGC.FS.Controllers
                     }
                 }
                 success = true;
-                CommonModelAccessUtility.updateDocNo(_unitOfWork, "MJV");
+                CommonModelAccessUtility.updateDocNo(_unitOfWork, docType);
             }
             catch (Exception)
             {

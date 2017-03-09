@@ -830,42 +830,10 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>0.7in</Height>
+      <Height>0.325in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
-        <Textbox Name="Textbox64">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>Designed &amp; Developed by agnesoft.com,  Tel: +92-321-8831976</Value>
-                  <Style>
-                    <FontWeight>Bold</FontWeight>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox61</rd:DefaultName>
-          <Top>0.375in</Top>
-          <Height>0.25in</Height>
-          <Width>4.29166in</Width>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
         <Rectangle Name="Rectangle1">
           <ReportItems>
             <Textbox Name="Textbox27">
@@ -940,7 +908,6 @@
           <Top>0.00048in</Top>
           <Height>0.30208in</Height>
           <Width>7.84375in</Width>
-          <ZIndex>1</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>

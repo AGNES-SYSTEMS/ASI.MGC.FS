@@ -3,25 +3,25 @@
     $("#txtEndDate").datepicker();
     var startDate = "";
     var endDate = "";
-    var validateArguments = function () {
-        startDate = $("#txtStartDate").val();
-        endDate = $("#txtEndDate").val();
-        if (startDate === "" || endDate === "") {
-            return false;
-        }
-        return true;
-    }
+    //var validateArguments = function () {
+    //    startDate = $("#txtStartDate").val();
+    //    endDate = $("#txtEndDate").val();
+    //    if (startDate === "" || endDate === "") {
+    //        return false;
+    //    }
+    //    return true;
+    //}
 
-    $("#btnReportSubmit").on("click", function () {
-        var isValid = validateArguments();
-        if (isValid) {
-            $('#frameWrap').show();
-            var url = "/Reports/ProfitLossStatement.aspx?startDate=" + startDate + "&endDate=" + endDate;
-            $('#iframe').prop('src', url);
-        } else {
-            toastr.error("Start Date/ End Date cannot be empty.");
-        }
-    });
+    //$("#btnReportSubmit").on("click", function () {
+    //    var isValid = validateArguments();
+    //    if (isValid) {
+    //        $('#frameWrap').show();
+    //        var url = "/Reports/ProfitLossStatement.aspx?startDate=" + startDate + "&endDate=" + endDate;
+    //        $('#iframe').prop('src', url);
+    //    } else {
+    //        toastr.error("Start Date/ End Date cannot be empty.");
+    //    }
+    //});
 
     $('#iframe').on('load', function () {
         $('#loader').hide();

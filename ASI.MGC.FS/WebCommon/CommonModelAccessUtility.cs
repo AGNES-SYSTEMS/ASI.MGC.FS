@@ -12,13 +12,14 @@ namespace ASI.MGC.FS.WebCommon
 {
     public class CommonModelAccessUtility
     {
-        public static int GetCurrMrvCount(IUnitOfWork iUnitOfWork)
+        public static string GetCurrMrvCount(IUnitOfWork iUnitOfWork)
         {
             var currYear = DateTime.Now.Year.ToString();
             var mrvCount = (from objMrv in iUnitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
                             //where objMrv.MRVNO_MRV.EndsWith(currYear)
                             select objMrv.MRVNO_MRV).Distinct().Count();
-            return mrvCount;
+            string mrvCode = "MRV/" + (1001 + mrvCount) + "/" + currYear;
+            return mrvCode;
         }
 
         public static int GetJobMasterCount(IUnitOfWork iUnitOfWork)
@@ -255,6 +256,23 @@ namespace ASI.MGC.FS.WebCommon
             };
 
             return voucherDictionary;
+        }
+        public static string GetDocNo(IUnitOfWork unitOfWork, string docType)
+        {
+            string docNo = "";
+            var currYear = DateTime.Now.Year;
+            var docCount = (from objMrv in unitOfWork.Repository<NOGENERATOR>().Query().Get()
+                            where objMrv.DOCTYPE_NG.Contains(docType) && objMrv.FINYEAR_NG == (currYear)
+                            select objMrv.SLNO_NG).SingleOrDefault();
+            if (docCount == null)
+            {
+                docNo = Convert.ToString(docType + "/" + 1001 + "/" + currYear);
+            }
+            else
+            {
+                docNo = Convert.ToString(docType + "/" + (docCount + 1) + "/" + currYear);
+            }
+            return docNo;
         }
         public static void updateDocNo(IUnitOfWork unitOfWork, string docType)
         {

@@ -27,9 +27,7 @@ namespace ASI.MGC.FS.Controllers
         [MesAuthorize("DailyTransactions")]
         public ActionResult MrvCreation()
         {
-            int mrvCountCode = (1001 + CommonModelAccessUtility.GetCurrMrvCount(_unitOfWork));
-            string currYear = DateTime.Now.Year.ToString();
-            string mrvCode = "MRV/" + Convert.ToString(mrvCountCode) + "/" + currYear;
+            string mrvCode = CommonModelAccessUtility.GetCurrMrvCount(_unitOfWork);
             ViewBag.MRVCode = mrvCode;
             var objMrv = new MATERIALRECEIPTMASTER();
             return View(objMrv);
@@ -44,6 +42,7 @@ namespace ASI.MGC.FS.Controllers
                 var jsonProductDetails = form["mrvProds"];
                 var serializer = new JavaScriptSerializer();
                 var lstMrvProducts = serializer.Deserialize<List<MRVREFERENCE>>(jsonProductDetails);
+                objMrv.MRVNO_MRV = CommonModelAccessUtility.GetCurrMrvCount(_unitOfWork);
                 objMrv.DOC_DATE_MRV = Convert.ToDateTime(DateTime.Now.ToShortDateString());
                 objMrv.STATUS_MRV = "N";
                 _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Insert(objMrv);
@@ -143,7 +142,7 @@ namespace ASI.MGC.FS.Controllers
             IList<CustomSaleDetails> lstSales = new List<CustomSaleDetails>();
 
             var lstSaleDetails = (from saleDetails in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
-                                  where saleDetails.MRVNO_SD.Equals(mrvid) && saleDetails.STATUS_SD.Equals(statusId) && saleDetails.CASHTOTAL_SD > 0
+                                  where saleDetails.MRVNO_SD.Equals(mrvid) && saleDetails.STATUS_SD.Equals(statusId)
                                   select saleDetails).ToList();
             foreach (var sale in lstSaleDetails)
             {
@@ -191,7 +190,7 @@ namespace ASI.MGC.FS.Controllers
             IList<CustomSaleDetails> lstSales = new List<CustomSaleDetails>();
 
             var lstSaleDetails = (from saleDetails in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
-                                  where saleDetails.MRVNO_SD.Equals(mrvid) && saleDetails.STATUS_SD.Equals(statusId) && saleDetails.CREDITTOTAL_SD > 0
+                                  where saleDetails.MRVNO_SD.Equals(mrvid) && saleDetails.STATUS_SD.Equals(statusId)
                                   select saleDetails).ToList();
             foreach (var sale in lstSaleDetails)
             {

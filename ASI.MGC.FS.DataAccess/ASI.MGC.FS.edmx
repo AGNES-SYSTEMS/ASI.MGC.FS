@@ -1200,16 +1200,31 @@
           <Parameter Name="AcCode" Type="nvarchar" Mode="In" />
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
+          <Parameter Name="C" Type="decimal" Mode="In" />
+          <Parameter Name="D" Type="decimal" Mode="In" />
+          <Parameter Name="Balance" Type="decimal" Mode="In" />
+          <Parameter Name="DebitAmount" Type="decimal" Mode="In" />
+          <Parameter Name="CreditAmount" Type="decimal" Mode="In" />
         </Function>
         <Function Name="sp_GetARStatementOutStandingData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="AcCode" Type="nvarchar" Mode="In" />
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
+          <Parameter Name="C" Type="decimal" Mode="In" />
+          <Parameter Name="D" Type="decimal" Mode="In" />
+          <Parameter Name="Balance" Type="decimal" Mode="In" />
+          <Parameter Name="DebitAmount" Type="decimal" Mode="In" />
+          <Parameter Name="CreditAmount" Type="decimal" Mode="In" />
         </Function>
         <Function Name="sp_GetBankStatementData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="BankCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="BNKCode" Type="nvarchar" Mode="In" />
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
+          <Parameter Name="C" Type="decimal" Mode="In" />
+          <Parameter Name="D" Type="decimal" Mode="In" />
+          <Parameter Name="Balance" Type="decimal" Mode="In" />
+          <Parameter Name="DebitAmount" Type="decimal" Mode="In" />
+          <Parameter Name="CreditAmount" Type="decimal" Mode="In" />
         </Function>
         <Function Name="sp_GetCashMemoMrvList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pageNum" Type="int" Mode="In" />
@@ -1229,6 +1244,11 @@
           <Parameter Name="GLCode" Type="int" Mode="In" />
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
+          <Parameter Name="C" Type="decimal" Mode="In" />
+          <Parameter Name="D" Type="decimal" Mode="In" />
+          <Parameter Name="Balance" Type="decimal" Mode="In" />
+          <Parameter Name="DebitAmount" Type="decimal" Mode="In" />
+          <Parameter Name="CreditAmount" Type="decimal" Mode="In" />
         </Function>
         <Function Name="sp_GetInvoicePreparationMrvList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pageNum" Type="int" Mode="In" />
@@ -1607,14 +1627,24 @@
             <Parameter Name="ENDDATE" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="sp_GetBankStatementData">
-            <Parameter Name="BankCode" Mode="In" Type="String" />
+            <Parameter Name="BNKCode" Mode="In" Type="String" />
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+            <Parameter Name="C" Mode="In" Type="Decimal" />
+            <Parameter Name="D" Mode="In" Type="Decimal" />
+            <Parameter Name="Balance" Mode="In" Type="Decimal" />
+            <Parameter Name="DebitAmount" Mode="In" Type="Decimal" />
+            <Parameter Name="CreditAmount" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="sp_GetGLStatementData">
             <Parameter Name="GLCode" Mode="In" Type="Int32" />
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+            <Parameter Name="C" Mode="In" Type="Decimal" />
+            <Parameter Name="D" Mode="In" Type="Decimal" />
+            <Parameter Name="Balance" Mode="In" Type="Decimal" />
+            <Parameter Name="DebitAmount" Mode="In" Type="Decimal" />
+            <Parameter Name="CreditAmount" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="sp_GetTrialBalanceData">
             <Parameter Name="Startdate" Mode="In" Type="DateTime" />
@@ -1635,11 +1665,21 @@
             <Parameter Name="AcCode" Mode="In" Type="String" />
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+            <Parameter Name="C" Mode="In" Type="Decimal" />
+            <Parameter Name="D" Mode="In" Type="Decimal" />
+            <Parameter Name="Balance" Mode="In" Type="Decimal" />
+            <Parameter Name="DebitAmount" Mode="In" Type="Decimal" />
+            <Parameter Name="CreditAmount" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="sp_GetARStatementOutStandingData">
             <Parameter Name="AcCode" Mode="In" Type="String" />
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+            <Parameter Name="C" Mode="In" Type="Decimal" />
+            <Parameter Name="D" Mode="In" Type="Decimal" />
+            <Parameter Name="Balance" Mode="In" Type="Decimal" />
+            <Parameter Name="DebitAmount" Mode="In" Type="Decimal" />
+            <Parameter Name="CreditAmount" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="sp_GetStockLedgerData">
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />

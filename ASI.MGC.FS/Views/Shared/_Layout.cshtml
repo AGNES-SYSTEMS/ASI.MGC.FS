@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mahboob Electrical Services</title>
@@ -388,10 +389,10 @@
                         <li><a href="@Href("~/Setups/SupplierMaster")">APCreation</a></li>
                         <li><a href="@Href("~/Bank/BankMaster")">Bank Creation</a></li>
                         @*secondlevel*@
-                        <li data-toggle="collapse" data-target="#Paments" class="collapsed">
-                            <a href="#">Paments <span class="arrow"></span></a>
+                        <li data-toggle="collapse" data-target="#Payments" class="collapsed">
+                            <a href="#">Payments <span class="arrow"></span></a>
                         </li>
-                        <ul class="sub-menu collapse second-level-childs" id="Paments">
+                        <ul class="sub-menu collapse second-level-childs" id="Payments">
                             <li><a href="@Href("~/Cash/CashPayments")">Cash Payments</a></li>
                             <li><a href="@Href("~/Bank/BankPayment")">Bank Payments</a></li>
                         </ul>
@@ -588,9 +589,11 @@
                             <li><a href="@Href("~/MgcReports/StockLedgerReport")">Stock Ledger</a></li>
                         </ul>
                         @*secondlevel*@
-                        <li><a href="#">Customer Statement</a></li>
-                        <li><a href="#">Supplier Statement</a></li>
-                        <li><a href="#">AR/AP Summary</a></li>
+                        @*<li><a href="#">AR/AP Summary</a></li>*@
+                        <li><a href="@Href("~/MgcReports/ArStatement")">Customer Statement</a></li>
+                        <li><a href="@Href("~/MgcReports/ArStatementOutstanding")">Customer Statement OutStanding</a></li>
+                        <li><a href="@Href("~/MgcReports/ApStatement")">Supplier Statement</a></li>
+                        <li><a href="@Href("~/MgcReports/ApStatementOutstanding")">Supplier Statement OutStanding</a></li>
                         @*secondlevel*@
                         <li data-toggle="collapse" data-target="#ReportFinance" class="collapsed">
                             <a href="#">Finance<span class="arrow"></span></a>

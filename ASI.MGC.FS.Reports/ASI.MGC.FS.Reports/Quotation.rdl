@@ -622,7 +622,7 @@
         </TablixRowHierarchy>
         <DataSetName>DS_Quotation</DataSetName>
         <Top>1.29in</Top>
-        <Left>0.026in</Left>
+        <Left>0.025in</Left>
         <Height>0.75in</Height>
         <Width>7.71937in</Width>
         <Style>
@@ -631,98 +631,6 @@
           </Border>
         </Style>
       </Tablix>
-      <Textbox Name="NOTE_QM">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!NOTE_QM.Value, "DS_Quotation")</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>NOTE_QM</rd:DefaultName>
-        <Top>2.54in</Top>
-        <Left>0.17in</Left>
-        <Height>0.25in</Height>
-        <Width>5.1in</Width>
-        <ZIndex>1</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="AMOUNT_QREF1">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=Format(Sum(Fields!AMOUNT_QREF.Value, "DS_Quotation"),"N2")</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>AMOUNT_QREF1</rd:DefaultName>
-        <Top>2.23in</Top>
-        <Left>6.4in</Left>
-        <Height>0.25in</Height>
-        <Width>1.23in</Width>
-        <ZIndex>2</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="AMOUNT_QREF2">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>="AED " &amp; CODE.changeToWords(Sum(Fields!AMOUNT_QREF.Value, "DS_Quotation")) &amp; "ONLY"</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>AMOUNT_QREF2</rd:DefaultName>
-        <Top>2.23in</Top>
-        <Left>0.17in</Left>
-        <Height>0.25in</Height>
-        <Width>5.45in</Width>
-        <ZIndex>3</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Textbox Name="Textbox1">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
@@ -747,7 +655,7 @@
         <Left>3.12396in</Left>
         <Height>0.25in</Height>
         <Width>1.55208in</Width>
-        <ZIndex>4</ZIndex>
+        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -781,7 +689,7 @@
         <Left>0.01459in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
-        <ZIndex>5</ZIndex>
+        <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -815,7 +723,7 @@
         <Left>0.66959in</Left>
         <Height>0.25in</Height>
         <Width>1.84375in</Width>
-        <ZIndex>6</ZIndex>
+        <ZIndex>3</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -849,7 +757,7 @@
         <Left>0.66959in</Left>
         <Height>0.25in</Height>
         <Width>1.84375in</Width>
-        <ZIndex>7</ZIndex>
+        <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -883,7 +791,7 @@
         <Left>0.66959in</Left>
         <Height>0.25in</Height>
         <Width>1.84375in</Width>
-        <ZIndex>8</ZIndex>
+        <ZIndex>5</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -912,10 +820,10 @@
         </Paragraphs>
         <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
         <Top>0.37587in</Top>
-        <Left>5.75764in</Left>
+        <Left>5.63264in</Left>
         <Height>0.25in</Height>
         <Width>2.02777in</Width>
-        <ZIndex>9</ZIndex>
+        <ZIndex>6</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -946,10 +854,10 @@
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
         <Top>0.37587in</Top>
-        <Left>4.63264in</Left>
+        <Left>4.50764in</Left>
         <Height>0.25in</Height>
         <Width>1.125in</Width>
-        <ZIndex>10</ZIndex>
+        <ZIndex>7</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -978,10 +886,10 @@
         </Paragraphs>
         <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
         <Top>0.65364in</Top>
-        <Left>5.75764in</Left>
+        <Left>5.63264in</Left>
         <Height>0.25in</Height>
         <Width>2.02777in</Width>
-        <ZIndex>11</ZIndex>
+        <ZIndex>8</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1012,10 +920,10 @@
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
         <Top>0.65364in</Top>
-        <Left>4.63264in</Left>
+        <Left>4.50764in</Left>
         <Height>0.25in</Height>
         <Width>1.125in</Width>
-        <ZIndex>12</ZIndex>
+        <ZIndex>9</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1027,13 +935,13 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>4in</Height>
+    <Height>3.1in</Height>
     <Style />
   </Body>
-  <Width>7.8in</Width>
+  <Width>7.77in</Width>
   <Page>
     <PageHeader>
-      <Height>2.5in</Height>
+      <Height>2.35417in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1056,8 +964,6 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.1325in</Top>
-          <Left>0.0375in</Left>
           <Height>0.25in</Height>
           <Width>2in</Width>
           <Style>
@@ -1089,8 +995,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>0.1325in</Top>
-          <Left>5.5375in</Left>
+          <Top>0.0075in</Top>
+          <Left>5.9125in</Left>
           <Height>0.25in</Height>
           <Width>1.77083in</Width>
           <ZIndex>1</ZIndex>
@@ -1108,9 +1014,10 @@
           <Source>Embedded</Source>
           <Value>MESHeaderTransparent</Value>
           <Sizing>Fit</Sizing>
-          <Top>0.47792in</Top>
-          <Height>1.95264in</Height>
-          <Width>7.8in</Width>
+          <Top>0.35292in</Top>
+          <Left>0in</Left>
+          <Height>1.95in</Height>
+          <Width>7.77in</Width>
           <ZIndex>2</ZIndex>
           <Style>
             <Border>
@@ -1126,7 +1033,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>2.175in</Height>
+      <Height>2.49667in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1134,9 +1041,10 @@
           <Source>Embedded</Source>
           <Value>MESFooterTransparent</Value>
           <Sizing>Fit</Sizing>
-          <Top>0.91667in</Top>
-          <Height>1.25833in</Height>
-          <Width>7.78541in</Width>
+          <Top>1.66667in</Top>
+          <Left>0in</Left>
+          <Height>0.83in</Height>
+          <Width>7.77in</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1165,7 +1073,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox39</rd:DefaultName>
-              <Top>0.5534in</Top>
+              <Top>1.3034in</Top>
               <Left>1.98941in</Left>
               <Height>0.25in</Height>
               <Width>3.1in</Width>
@@ -1197,7 +1105,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox38</rd:DefaultName>
-              <Top>0.3134in</Top>
+              <Top>1.0634in</Top>
               <Height>0.25in</Height>
               <Width>5.1in</Width>
               <ZIndex>1</ZIndex>
@@ -1231,7 +1139,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox37</rd:DefaultName>
-              <Top>0.0034in</Top>
+              <Top>0.7534in</Top>
               <Height>0.25in</Height>
               <Width>3.25in</Width>
               <ZIndex>2</ZIndex>
@@ -1246,11 +1154,100 @@
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
+            <Textbox Name="NOTE_QM">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!NOTE_QM.Value, "DS_Quotation")</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>NOTE_QM</rd:DefaultName>
+              <Top>0.3709in</Top>
+              <Height>0.25in</Height>
+              <Width>5.1in</Width>
+              <ZIndex>3</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="AMOUNT_QREF1">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Format(Sum(Fields!AMOUNT_QREF.Value, "DS_Quotation"),"N2")</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>AMOUNT_QREF1</rd:DefaultName>
+              <Top>0.0609in</Top>
+              <Left>6.385in</Left>
+              <Height>0.25in</Height>
+              <Width>1.23in</Width>
+              <ZIndex>4</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="AMOUNT_QREF2">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="AED " &amp; CODE.changeToWords(Sum(Fields!AMOUNT_QREF.Value, "DS_Quotation")) &amp; "ONLY"</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>AMOUNT_QREF2</rd:DefaultName>
+              <Top>0.0609in</Top>
+              <Height>0.25in</Height>
+              <Width>5.45in</Width>
+              <ZIndex>5</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
           </ReportItems>
           <KeepTogether>true</KeepTogether>
           <Top>0.04042in</Top>
-          <Left>0.01459in</Left>
-          <Height>0.81in</Height>
+          <Height>1.57in</Height>
           <Width>7.77in</Width>
           <ZIndex>1</ZIndex>
           <Visibility>
@@ -1269,6 +1266,8 @@
         </Border>
       </Style>
     </PageFooter>
+    <PageHeight>11.69in</PageHeight>
+    <PageWidth>8.27in</PageWidth>
     <LeftMargin>0.25in</LeftMargin>
     <RightMargin>0.25in</RightMargin>
     <Style />

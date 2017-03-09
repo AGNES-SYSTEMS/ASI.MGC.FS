@@ -804,11 +804,11 @@ namespace ASI.MGC.FS.DataAccess
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_BMBTListTB_Result>("sp_BMBTListTB", sTARTDATEParameter, eNDDATEParameter);
         }
     
-        public virtual int sp_GetBankStatementData(string bankCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        public virtual int sp_GetBankStatementData(string bNKCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<decimal> c, Nullable<decimal> d, Nullable<decimal> balance, Nullable<decimal> debitAmount, Nullable<decimal> creditAmount)
         {
-            var bankCodeParameter = bankCode != null ?
-                new ObjectParameter("BankCode", bankCode) :
-                new ObjectParameter("BankCode", typeof(string));
+            var bNKCodeParameter = bNKCode != null ?
+                new ObjectParameter("BNKCode", bNKCode) :
+                new ObjectParameter("BNKCode", typeof(string));
     
             var startDateParameter = startDate.HasValue ?
                 new ObjectParameter("StartDate", startDate) :
@@ -818,10 +818,30 @@ namespace ASI.MGC.FS.DataAccess
                 new ObjectParameter("EndDate", endDate) :
                 new ObjectParameter("EndDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetBankStatementData", bankCodeParameter, startDateParameter, endDateParameter);
+            var cParameter = c.HasValue ?
+                new ObjectParameter("C", c) :
+                new ObjectParameter("C", typeof(decimal));
+    
+            var dParameter = d.HasValue ?
+                new ObjectParameter("D", d) :
+                new ObjectParameter("D", typeof(decimal));
+    
+            var balanceParameter = balance.HasValue ?
+                new ObjectParameter("Balance", balance) :
+                new ObjectParameter("Balance", typeof(decimal));
+    
+            var debitAmountParameter = debitAmount.HasValue ?
+                new ObjectParameter("DebitAmount", debitAmount) :
+                new ObjectParameter("DebitAmount", typeof(decimal));
+    
+            var creditAmountParameter = creditAmount.HasValue ?
+                new ObjectParameter("CreditAmount", creditAmount) :
+                new ObjectParameter("CreditAmount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetBankStatementData", bNKCodeParameter, startDateParameter, endDateParameter, cParameter, dParameter, balanceParameter, debitAmountParameter, creditAmountParameter);
         }
     
-        public virtual int sp_GetGLStatementData(Nullable<int> gLCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        public virtual int sp_GetGLStatementData(Nullable<int> gLCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<decimal> c, Nullable<decimal> d, Nullable<decimal> balance, Nullable<decimal> debitAmount, Nullable<decimal> creditAmount)
         {
             var gLCodeParameter = gLCode.HasValue ?
                 new ObjectParameter("GLCode", gLCode) :
@@ -835,7 +855,27 @@ namespace ASI.MGC.FS.DataAccess
                 new ObjectParameter("EndDate", endDate) :
                 new ObjectParameter("EndDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetGLStatementData", gLCodeParameter, startDateParameter, endDateParameter);
+            var cParameter = c.HasValue ?
+                new ObjectParameter("C", c) :
+                new ObjectParameter("C", typeof(decimal));
+    
+            var dParameter = d.HasValue ?
+                new ObjectParameter("D", d) :
+                new ObjectParameter("D", typeof(decimal));
+    
+            var balanceParameter = balance.HasValue ?
+                new ObjectParameter("Balance", balance) :
+                new ObjectParameter("Balance", typeof(decimal));
+    
+            var debitAmountParameter = debitAmount.HasValue ?
+                new ObjectParameter("DebitAmount", debitAmount) :
+                new ObjectParameter("DebitAmount", typeof(decimal));
+    
+            var creditAmountParameter = creditAmount.HasValue ?
+                new ObjectParameter("CreditAmount", creditAmount) :
+                new ObjectParameter("CreditAmount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetGLStatementData", gLCodeParameter, startDateParameter, endDateParameter, cParameter, dParameter, balanceParameter, debitAmountParameter, creditAmountParameter);
         }
     
         public virtual int sp_GetTrialBalanceData(Nullable<System.DateTime> startdate, Nullable<System.DateTime> endDate)
@@ -886,7 +926,7 @@ namespace ASI.MGC.FS.DataAccess
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetVoucherDetails", vTypeParameter, vCodeParameter);
         }
     
-        public virtual int sp_GetARStatementData(string acCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        public virtual int sp_GetARStatementData(string acCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<decimal> c, Nullable<decimal> d, Nullable<decimal> balance, Nullable<decimal> debitAmount, Nullable<decimal> creditAmount)
         {
             var acCodeParameter = acCode != null ?
                 new ObjectParameter("AcCode", acCode) :
@@ -900,10 +940,30 @@ namespace ASI.MGC.FS.DataAccess
                 new ObjectParameter("EndDate", endDate) :
                 new ObjectParameter("EndDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetARStatementData", acCodeParameter, startDateParameter, endDateParameter);
+            var cParameter = c.HasValue ?
+                new ObjectParameter("C", c) :
+                new ObjectParameter("C", typeof(decimal));
+    
+            var dParameter = d.HasValue ?
+                new ObjectParameter("D", d) :
+                new ObjectParameter("D", typeof(decimal));
+    
+            var balanceParameter = balance.HasValue ?
+                new ObjectParameter("Balance", balance) :
+                new ObjectParameter("Balance", typeof(decimal));
+    
+            var debitAmountParameter = debitAmount.HasValue ?
+                new ObjectParameter("DebitAmount", debitAmount) :
+                new ObjectParameter("DebitAmount", typeof(decimal));
+    
+            var creditAmountParameter = creditAmount.HasValue ?
+                new ObjectParameter("CreditAmount", creditAmount) :
+                new ObjectParameter("CreditAmount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetARStatementData", acCodeParameter, startDateParameter, endDateParameter, cParameter, dParameter, balanceParameter, debitAmountParameter, creditAmountParameter);
         }
     
-        public virtual int sp_GetARStatementOutStandingData(string acCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        public virtual int sp_GetARStatementOutStandingData(string acCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<decimal> c, Nullable<decimal> d, Nullable<decimal> balance, Nullable<decimal> debitAmount, Nullable<decimal> creditAmount)
         {
             var acCodeParameter = acCode != null ?
                 new ObjectParameter("AcCode", acCode) :
@@ -917,7 +977,27 @@ namespace ASI.MGC.FS.DataAccess
                 new ObjectParameter("EndDate", endDate) :
                 new ObjectParameter("EndDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetARStatementOutStandingData", acCodeParameter, startDateParameter, endDateParameter);
+            var cParameter = c.HasValue ?
+                new ObjectParameter("C", c) :
+                new ObjectParameter("C", typeof(decimal));
+    
+            var dParameter = d.HasValue ?
+                new ObjectParameter("D", d) :
+                new ObjectParameter("D", typeof(decimal));
+    
+            var balanceParameter = balance.HasValue ?
+                new ObjectParameter("Balance", balance) :
+                new ObjectParameter("Balance", typeof(decimal));
+    
+            var debitAmountParameter = debitAmount.HasValue ?
+                new ObjectParameter("DebitAmount", debitAmount) :
+                new ObjectParameter("DebitAmount", typeof(decimal));
+    
+            var creditAmountParameter = creditAmount.HasValue ?
+                new ObjectParameter("CreditAmount", creditAmount) :
+                new ObjectParameter("CreditAmount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetARStatementOutStandingData", acCodeParameter, startDateParameter, endDateParameter, cParameter, dParameter, balanceParameter, debitAmountParameter, creditAmountParameter);
         }
     
         public virtual int sp_GetStockLedgerData(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)

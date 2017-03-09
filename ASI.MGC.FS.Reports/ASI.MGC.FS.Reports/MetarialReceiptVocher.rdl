@@ -12,10 +12,10 @@
               <Width>2.58in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.89583in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.94in</Width>
+              <Width>2.42312in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.15in</Width>
@@ -389,10 +389,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DS_MaterialReceiptVoucher</DataSetName>
-        <Top>0.13069in</Top>
-        <Left>0.01042in</Left>
+        <Top>0.25569in</Top>
+        <Left>0.00312in</Left>
         <Height>0.5in</Height>
-        <Width>7.26375in</Width>
+        <Width>7.6427in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -406,10 +406,10 @@
             <Value>=Parameters!MRVNO.Value</Value>
           </Parameter>
         </Parameters>
-        <Top>0.68625in</Top>
+        <Top>0.81125in</Top>
         <Left>0.01042in</Left>
         <Height>0.55903in</Height>
-        <Width>7.26041in</Width>
+        <Width>7.63541in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -417,118 +417,14 @@
           </Border>
         </Style>
       </Subreport>
-      <Textbox Name="Textbox18">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Company is not Responsible for any damages or loss of the appliances if delivery is not taken within 15 days.
-Produce this Receipt at the time of delivery.</Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox18</rd:DefaultName>
-        <Top>1.40104in</Top>
-        <Height>0.78125in</Height>
-        <Width>3.35417in</Width>
-        <ZIndex>2</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox19">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>الشركة غير مسئول عن أي تلف او فقدان للادوات اذا لم تستلم خلال ۔  ۱۵ يوما من تاريخ التسليم
-الرجاء تقديم هذا الا يصال عند الا ستلام</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox18</rd:DefaultName>
-        <Top>1.40104in</Top>
-        <Left>3.92708in</Left>
-        <Height>0.78125in</Height>
-        <Width>3.35417in</Width>
-        <ZIndex>3</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox20">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Note: Minimum Services Charge, if not repair the item. Dhs.25 must paid.</Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox20</rd:DefaultName>
-        <Top>2.25173in</Top>
-        <Left>0.01042in</Left>
-        <Height>0.35417in</Height>
-        <Width>3.34375in</Width>
-        <ZIndex>4</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
     </ReportItems>
-    <Height>3.41194in</Height>
+    <Height>3.55in</Height>
     <Style />
   </Body>
-  <Width>7.28125in</Width>
+  <Width>7.77in</Width>
   <Page>
     <PageHeader>
-      <Height>3.52083in</Height>
+      <Height>3.55in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -554,7 +450,7 @@ Produce this Receipt at the time of delivery.</Value>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
           <Top>1.98959in</Top>
-          <Left>1.89062in</Left>
+          <Left>2.14021in</Left>
           <Height>0.36458in</Height>
           <Width>3.48958in</Width>
           <Style>
@@ -589,7 +485,7 @@ Produce this Receipt at the time of delivery.</Value>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
           <Top>2.31251in</Top>
-          <Left>1.89062in</Left>
+          <Left>2.14021in</Left>
           <Height>0.3125in</Height>
           <Width>3.48958in</Width>
           <ZIndex>1</ZIndex>
@@ -816,7 +712,7 @@ Produce this Receipt at the time of delivery.</Value>
           </Paragraphs>
           <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
           <Top>2.69445in</Top>
-          <Left>5.0625in</Left>
+          <Left>5.4375in</Left>
           <Height>0.25in</Height>
           <Width>2.20833in</Width>
           <ZIndex>8</ZIndex>
@@ -850,7 +746,7 @@ Produce this Receipt at the time of delivery.</Value>
           </Paragraphs>
           <rd:DefaultName>Textbox5</rd:DefaultName>
           <Top>2.69445in</Top>
-          <Left>4.1875in</Left>
+          <Left>4.5625in</Left>
           <Height>0.25in</Height>
           <Width>1in</Width>
           <ZIndex>9</ZIndex>
@@ -882,7 +778,7 @@ Produce this Receipt at the time of delivery.</Value>
           </Paragraphs>
           <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
           <Top>2.97222in</Top>
-          <Left>5.0625in</Left>
+          <Left>5.4375in</Left>
           <Height>0.25in</Height>
           <Width>2.20833in</Width>
           <ZIndex>10</ZIndex>
@@ -916,7 +812,7 @@ Produce this Receipt at the time of delivery.</Value>
           </Paragraphs>
           <rd:DefaultName>Textbox5</rd:DefaultName>
           <Top>2.97222in</Top>
-          <Left>4.1875in</Left>
+          <Left>4.5625in</Left>
           <Height>0.25in</Height>
           <Width>1in</Width>
           <ZIndex>11</ZIndex>
@@ -1002,7 +898,7 @@ Produce this Receipt at the time of delivery.</Value>
           <Sizing>Fit</Sizing>
           <Top>0.31944in</Top>
           <Height>1.55431in</Height>
-          <Width>7.27083in</Width>
+          <Width>7.77in</Width>
           <ZIndex>14</ZIndex>
           <Style>
             <Border>
@@ -1018,7 +914,7 @@ Produce this Receipt at the time of delivery.</Value>
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>1.25in</Height>
+      <Height>2.625in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1044,6 +940,7 @@ Produce this Receipt at the time of delivery.</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox21</rd:DefaultName>
+              <Top>1.375in</Top>
               <Left>0.00521in</Left>
               <Height>0.25in</Height>
               <Width>1.59375in</Width>
@@ -1077,7 +974,7 @@ Produce this Receipt at the time of delivery.</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox22</rd:DefaultName>
-              <Top>0.25695in</Top>
+              <Top>1.63195in</Top>
               <Left>0.00521in</Left>
               <Height>0.25in</Height>
               <Width>1.59375in</Width>
@@ -1112,7 +1009,8 @@ Produce this Receipt at the time of delivery.</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox21</rd:DefaultName>
-              <Left>2.83854in</Left>
+              <Top>1.375in</Top>
+              <Left>3.08812in</Left>
               <Height>0.25in</Height>
               <Width>1.59375in</Width>
               <ZIndex>2</ZIndex>
@@ -1146,8 +1044,8 @@ Produce this Receipt at the time of delivery.</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox22</rd:DefaultName>
-              <Top>0.25695in</Top>
-              <Left>2.83854in</Left>
+              <Top>1.63195in</Top>
+              <Left>3.08812in</Left>
               <Height>0.25in</Height>
               <Width>1.59375in</Width>
               <ZIndex>3</ZIndex>
@@ -1181,9 +1079,10 @@ Produce this Receipt at the time of delivery.</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox21</rd:DefaultName>
-              <Left>5.68229in</Left>
+              <Top>1.375in</Top>
+              <Left>6.05729in</Left>
               <Height>0.25in</Height>
-              <Width>1.59375in</Width>
+              <Width>1.71271in</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <Border>
@@ -1215,11 +1114,113 @@ Produce this Receipt at the time of delivery.</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox22</rd:DefaultName>
-              <Top>0.25695in</Top>
-              <Left>5.68229in</Left>
+              <Top>1.63195in</Top>
+              <Left>6.05729in</Left>
               <Height>0.25in</Height>
-              <Width>1.59375in</Width>
+              <Width>1.71271in</Width>
               <ZIndex>5</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox20">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Note: Minimum Services Charge, if not repair the item. Dhs.25 must paid.</Value>
+                      <Style>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox20</rd:DefaultName>
+              <Top>0.82812in</Top>
+              <Left>0.01042in</Left>
+              <Height>0.35417in</Height>
+              <Width>3.34375in</Width>
+              <ZIndex>6</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox18">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Company is not Responsible for any damages or loss of the appliances if delivery is not taken within 15 days.
+Produce this Receipt at the time of delivery.</Value>
+                      <Style>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox18</rd:DefaultName>
+              <Height>0.78125in</Height>
+              <Width>3.35417in</Width>
+              <ZIndex>7</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox19">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>الشركة غير مسئول عن أي تلف او فقدان للادوات اذا لم تستلم خلال ۔  ۱۵ يوما من تاريخ التسليم
+الرجاء تقديم هذا الا يصال عند الا ستلام</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox18</rd:DefaultName>
+              <Left>4.46875in</Left>
+              <Height>0.78125in</Height>
+              <Width>3.30125in</Width>
+              <ZIndex>8</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1232,8 +1233,9 @@ Produce this Receipt at the time of delivery.</Value>
             </Textbox>
           </ReportItems>
           <KeepTogether>true</KeepTogether>
-          <Height>0.50695in</Height>
-          <Width>7.28125in</Width>
+          <Top>0in</Top>
+          <Height>1.89in</Height>
+          <Width>7.77in</Width>
           <Visibility>
             <Hidden>=iif(Globals!PageNumber=Globals!TotalPages,false,true)</Hidden>
           </Visibility>
@@ -1247,9 +1249,9 @@ Produce this Receipt at the time of delivery.</Value>
           <Source>Embedded</Source>
           <Value>MESFooterTransparent1</Value>
           <Sizing>Fit</Sizing>
-          <Top>0.48264in</Top>
-          <Height>0.76736in</Height>
-          <Width>7.27083in</Width>
+          <Top>1.95139in</Top>
+          <Height>0.67361in</Height>
+          <Width>7.77in</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -1264,6 +1266,8 @@ Produce this Receipt at the time of delivery.</Value>
         </Border>
       </Style>
     </PageFooter>
+    <PageHeight>11.69in</PageHeight>
+    <PageWidth>8.27in</PageWidth>
     <LeftMargin>0.25in</LeftMargin>
     <RightMargin>0.25in</RightMargin>
     <Style />

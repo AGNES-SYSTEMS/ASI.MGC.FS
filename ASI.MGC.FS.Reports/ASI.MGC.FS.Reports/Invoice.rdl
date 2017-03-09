@@ -12,7 +12,7 @@
               <Width>0.85417in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.095in</Width>
+              <Width>2.17862in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.11458in</Width>
@@ -504,25 +504,25 @@
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>0.65179in</Width>
+                            <Width>0.66373in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>0.90268in</Width>
+                            <Width>0.91462in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>2.00929in</Width>
+                            <Width>2.02123in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>1.11458in</Width>
+                            <Width>1.12652in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>0.95833in</Width>
+                            <Width>0.97027in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>0.94792in</Width>
+                            <Width>0.95986in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>0.96875in</Width>
+                            <Width>0.98069in</Width>
                           </TablixColumn>
                         </TablixColumns>
                         <TablixRows>
@@ -822,311 +822,13 @@
         <Top>1.55556in</Top>
         <Left>0.05347in</Left>
         <Height>0.75in</Height>
-        <Width>7.55333in</Width>
+        <Width>7.63695in</Width>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Tablix>
-      <Textbox Name="DOCNO_VRPT3">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=Format(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice"),"N2")</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
-        <Top>2.57293in</Top>
-        <Left>6.34513in</Left>
-        <Height>0.23612in</Height>
-        <Width>0.94792in</Width>
-        <ZIndex>1</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox8">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Sub Total:</Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>2.57293in</Top>
-        <Left>5.34513in</Left>
-        <Height>0.25in</Height>
-        <Width>1in</Width>
-        <ZIndex>2</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="DOCNO_VRPT4">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=Format(First(Fields!DISCOUNT_IPM.Value, "DS_Invoice"),"N2")</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
-        <Top>2.83682in</Top>
-        <Left>6.34513in</Left>
-        <Height>0.26388in</Height>
-        <Width>0.94792in</Width>
-        <ZIndex>3</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox13">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Discount:</Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>2.8507in</Top>
-        <Left>5.34513in</Left>
-        <Height>0.25in</Height>
-        <Width>1in</Width>
-        <ZIndex>4</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="DOCNO_VRPT5">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=Format(First(Fields!SHIPPING_IPM.Value, "DS_Invoice"), "N2")</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
-        <Top>3.1007in</Top>
-        <Left>6.34513in</Left>
-        <Height>0.23612in</Height>
-        <Width>0.94792in</Width>
-        <ZIndex>5</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox14">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Shipping:</Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>3.1007in</Top>
-        <Left>5.34513in</Left>
-        <Height>0.25in</Height>
-        <Width>1in</Width>
-        <ZIndex>6</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="DOCNO_VRPT6">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=Format(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice") + First(Fields!SHIPPING_IPM.Value, "DS_Invoice") - First(Fields!DISCOUNT_IPM.Value, "DS_Invoice"),"N2")</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
-        <Top>3.36459in</Top>
-        <Left>6.34513in</Left>
-        <Height>0.26388in</Height>
-        <Width>0.94792in</Width>
-        <ZIndex>7</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox15">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Net Amount:</Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>3.37847in</Top>
-        <Left>5.34513in</Left>
-        <Height>0.25in</Height>
-        <Width>1in</Width>
-        <ZIndex>8</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="DOCNO_VRPT7">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>="AED " &amp; CODE.changeToWords(Format(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice") + First(Fields!SHIPPING_IPM.Value, "DS_Invoice") - First(Fields!DISCOUNT_IPM.Value, "DS_Invoice"),"N2")) &amp; "ONLY"</Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
-        <Top>3.32in</Top>
-        <Left>0.053in</Left>
-        <Height>0.26in</Height>
-        <Width>4.81in</Width>
-        <ZIndex>9</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Textbox Name="Textbox3">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
@@ -1148,10 +850,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Left>3.26333in</Left>
+        <Left>3.30688in</Left>
         <Height>0.25in</Height>
         <Width>1.15625in</Width>
-        <ZIndex>10</ZIndex>
+        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1186,7 +888,7 @@
         <Left>0.24375in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
-        <ZIndex>11</ZIndex>
+        <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1220,7 +922,7 @@
         <Left>0.98208in</Left>
         <Height>0.25in</Height>
         <Width>1.75in</Width>
-        <ZIndex>12</ZIndex>
+        <ZIndex>3</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1254,7 +956,7 @@
         <Left>0.98208in</Left>
         <Height>0.25in</Height>
         <Width>1.75in</Width>
-        <ZIndex>13</ZIndex>
+        <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1288,7 +990,7 @@
         <Left>0.98208in</Left>
         <Height>0.25in</Height>
         <Width>1.75in</Width>
-        <ZIndex>14</ZIndex>
+        <ZIndex>5</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1322,7 +1024,7 @@
         <Left>0.98208in</Left>
         <Height>0.25in</Height>
         <Width>1.75in</Width>
-        <ZIndex>15</ZIndex>
+        <ZIndex>6</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1353,10 +1055,10 @@
         </Paragraphs>
         <rd:DefaultName>Textbox9</rd:DefaultName>
         <Top>0.30145in</Top>
-        <Left>4.64875in</Left>
+        <Left>4.77375in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
-        <ZIndex>16</ZIndex>
+        <ZIndex>7</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1387,10 +1089,10 @@
         </Paragraphs>
         <rd:DefaultName>Textbox9</rd:DefaultName>
         <Top>0.55145in</Top>
-        <Left>4.64875in</Left>
+        <Left>4.77375in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
-        <ZIndex>17</ZIndex>
+        <ZIndex>8</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1421,10 +1123,10 @@
         </Paragraphs>
         <rd:DefaultName>Textbox11</rd:DefaultName>
         <Top>0.80145in</Top>
-        <Left>4.64875in</Left>
+        <Left>4.77375in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
-        <ZIndex>18</ZIndex>
+        <ZIndex>9</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1451,10 +1153,10 @@
         </Paragraphs>
         <rd:DefaultName>INVNO_IPM</rd:DefaultName>
         <Top>0.30145in</Top>
-        <Left>5.64875in</Left>
+        <Left>5.77375in</Left>
         <Height>0.25in</Height>
         <Width>1.9075in</Width>
-        <ZIndex>19</ZIndex>
+        <ZIndex>10</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1481,10 +1183,10 @@
         </Paragraphs>
         <rd:DefaultName>INVDATE_IPM</rd:DefaultName>
         <Top>0.56534in</Top>
-        <Left>5.64875in</Left>
+        <Left>5.77375in</Left>
         <Height>0.25in</Height>
         <Width>1.9075in</Width>
-        <ZIndex>20</ZIndex>
+        <ZIndex>11</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1511,10 +1213,10 @@
         </Paragraphs>
         <rd:DefaultName>LPONO_IPM</rd:DefaultName>
         <Top>0.80145in</Top>
-        <Left>5.64875in</Left>
+        <Left>5.77375in</Left>
         <Height>0.25in</Height>
         <Width>1.9075in</Width>
-        <ZIndex>21</ZIndex>
+        <ZIndex>12</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1545,10 +1247,10 @@
         </Paragraphs>
         <rd:DefaultName>Textbox11</rd:DefaultName>
         <Top>1.05145in</Top>
-        <Left>4.64875in</Left>
+        <Left>4.77375in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
-        <ZIndex>22</ZIndex>
+        <ZIndex>13</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1575,10 +1277,10 @@
         </Paragraphs>
         <rd:DefaultName>LPONO_IPM</rd:DefaultName>
         <Top>1.05145in</Top>
-        <Left>5.64875in</Left>
+        <Left>5.77375in</Left>
         <Height>0.25in</Height>
         <Width>1.9075in</Width>
-        <ZIndex>23</ZIndex>
+        <ZIndex>14</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1590,13 +1292,13 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>3.78125in</Height>
+    <Height>3.78in</Height>
     <Style />
   </Body>
-  <Width>7.8in</Width>
+  <Width>7.77in</Width>
   <Page>
     <PageHeader>
-      <Height>2.5in</Height>
+      <Height>2.3125in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1671,10 +1373,10 @@
           <Source>Embedded</Source>
           <Value>MESHeaderTransparent</Value>
           <Sizing>Fit</Sizing>
-          <Top>0.54042in</Top>
+          <Top>0.41542in</Top>
           <Left>0.00917in</Left>
           <Height>1.89014in</Height>
-          <Width>7.79083in</Width>
+          <Width>7.76083in</Width>
           <ZIndex>2</ZIndex>
           <Style>
             <Border>
@@ -1690,7 +1392,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>1.35in</Height>
+      <Height>2.8in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1711,7 +1413,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox61</rd:DefaultName>
-              <Top>0.07in</Top>
+              <Top>1.195in</Top>
               <Height>0.25in</Height>
               <Width>3.58in</Width>
               <Style>
@@ -1743,7 +1445,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox62</rd:DefaultName>
-              <Top>0.305in</Top>
+              <Top>1.555in</Top>
               <Height>0.25in</Height>
               <Width>2.56in</Width>
               <ZIndex>1</ZIndex>
@@ -1776,8 +1478,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox63</rd:DefaultName>
-              <Top>0.305in</Top>
-              <Left>4.715in</Left>
+              <Top>1.555in</Top>
+              <Left>5.09in</Left>
               <Height>0.25in</Height>
               <Width>2.56in</Width>
               <ZIndex>2</ZIndex>
@@ -1791,10 +1493,309 @@
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
+            <Textbox Name="DOCNO_VRPT3">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Format(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice"),"N2")</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
+              <Top>0.02786in</Top>
+              <Left>6.70023in</Left>
+              <Height>0.23612in</Height>
+              <Width>0.94792in</Width>
+              <ZIndex>3</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox8">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Sub Total:</Value>
+                      <Style>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox5</rd:DefaultName>
+              <Top>0.02786in</Top>
+              <Left>5.70023in</Left>
+              <Height>0.25in</Height>
+              <Width>1in</Width>
+              <ZIndex>4</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="DOCNO_VRPT4">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Format(First(Fields!DISCOUNT_IPM.Value, "DS_Invoice"),"N2")</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
+              <Top>0.29175in</Top>
+              <Left>6.70023in</Left>
+              <Height>0.26388in</Height>
+              <Width>0.94792in</Width>
+              <ZIndex>5</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox13">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Discount:</Value>
+                      <Style>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox5</rd:DefaultName>
+              <Top>0.30563in</Top>
+              <Left>5.70023in</Left>
+              <Height>0.25in</Height>
+              <Width>1in</Width>
+              <ZIndex>6</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="DOCNO_VRPT5">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Format(First(Fields!SHIPPING_IPM.Value, "DS_Invoice"), "N2")</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
+              <Top>0.55563in</Top>
+              <Left>6.70023in</Left>
+              <Height>0.23612in</Height>
+              <Width>0.94792in</Width>
+              <ZIndex>7</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox14">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Shipping:</Value>
+                      <Style>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox5</rd:DefaultName>
+              <Top>0.55563in</Top>
+              <Left>5.70023in</Left>
+              <Height>0.25in</Height>
+              <Width>1in</Width>
+              <ZIndex>8</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="DOCNO_VRPT6">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Format(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice") + First(Fields!SHIPPING_IPM.Value, "DS_Invoice") - First(Fields!DISCOUNT_IPM.Value, "DS_Invoice"),"N2")</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
+              <Top>0.81952in</Top>
+              <Left>6.70023in</Left>
+              <Height>0.26388in</Height>
+              <Width>0.94792in</Width>
+              <ZIndex>9</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox15">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Net Amount:</Value>
+                      <Style>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox5</rd:DefaultName>
+              <Top>0.8334in</Top>
+              <Left>5.70023in</Left>
+              <Height>0.25in</Height>
+              <Width>1in</Width>
+              <ZIndex>10</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="DOCNO_VRPT7">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="AED " &amp; CODE.changeToWords(Format(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice") + First(Fields!SHIPPING_IPM.Value, "DS_Invoice") - First(Fields!DISCOUNT_IPM.Value, "DS_Invoice"),"N2")) &amp; "ONLY"</Value>
+                      <Style>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
+              <Top>0.89993in</Top>
+              <Left>0.0331in</Left>
+              <Height>0.26in</Height>
+              <Width>4.81in</Width>
+              <ZIndex>11</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
           </ReportItems>
           <KeepTogether>true</KeepTogether>
-          <Height>0.58in</Height>
-          <Width>7.8in</Width>
+          <Top>0in</Top>
+          <Height>1.86125in</Height>
+          <Width>7.77in</Width>
           <Visibility>
             <Hidden>=iif(Globals!PageNumber=Globals!TotalPages,false,true)</Hidden>
           </Visibility>
@@ -1808,9 +1809,10 @@
           <Source>Embedded</Source>
           <Value>MESFooterTransparent</Value>
           <Sizing>Fit</Sizing>
-          <Top>0.56125in</Top>
-          <Height>0.78875in</Height>
-          <Width>7.8in</Width>
+          <Top>1.93625in</Top>
+          <Left>0.00917in</Left>
+          <Height>0.86375in</Height>
+          <Width>7.76083in</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -1825,6 +1827,8 @@
         </Border>
       </Style>
     </PageFooter>
+    <PageHeight>11.69in</PageHeight>
+    <PageWidth>8.27in</PageWidth>
     <LeftMargin>0.25in</LeftMargin>
     <RightMargin>0.25in</RightMargin>
     <Style />

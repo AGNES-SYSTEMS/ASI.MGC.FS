@@ -8,7 +8,7 @@
 };
 var $custCode = "";
 var $custName = "";
-var employeeSelect = function(empId) {
+var employeeSelect = function (empId) {
     if (empId) {
         var ret = jQuery("#tblEmployeeSearch").jqGrid('getRowData', empId);
         $("#txtEmpCode").val(ret.EMPCODE_EM).change();
@@ -24,7 +24,7 @@ var productSelect = function (prdId) {
         $('#PrdSearchModel').modal('toggle');
     }
 };
-var jobSelect = function(jobId) {
+var jobSelect = function (jobId) {
     if (jobId) {
         var ret = jQuery("#tblJobModalSearch").jqGrid('getRowData', jobId);
         $("#txtSowid").val(ret.JOBID_JR).change();
@@ -33,7 +33,7 @@ var jobSelect = function(jobId) {
         $('#JobSearchModel').modal('toggle');
     }
 };
-var customerSelect = function(custId) {
+var customerSelect = function (custId) {
     if (custId) {
         var ret = jQuery("#tblCustomerSearch").jqGrid('getRowData', custId);
         $("#txtCreditCustCode").val(ret.ARCODE_ARM).change();
@@ -254,6 +254,13 @@ $(document).ready(function () {
             $("#tblCustomerSearch").setGridParam({ postData: postData });
             $("#tblCustomerSearch").trigger("reloadGrid", [{ page: 1 }]);
         }
+        else if (gridType === "4") {
+            postData = $("#tblEmployeeSearch").jqGrid("getGridParam", "postData");
+            postData["searchById"] = searchById;
+            postData["searchByName"] = searchByName;
+            $("#tblEmployeeSearch").setGridParam({ postData: postData });
+            $("#tblEmployeeSearch").trigger("reloadGrid", [{ page: 1 }]);
+        }
     };
     $("#txtPrdIdSearch").off().on("keyup", function () {
 
@@ -295,6 +302,20 @@ $(document).ready(function () {
         var shouldSearch = $("#txtCustNameSearch").val().length >= 3 || $("#txtCustNameSearch").val().length === 0;
         if (shouldSearch) {
             searchGrid($("#txtCustIdSearch").val(), $("#txtCustNameSearch").val(), "3");
+        }
+    });
+    $("#txtEmpIdSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtEmpIdSearch").val().length >= 1 || $("#txtEmpIdSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtEmpIdSearch").val(), $("#txtEmpNameSearch").val(), "4");
+        }
+    });
+    $("#txtEmpNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtEmpNameSearch").val().length >= 3 || $("#txtEmpNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtEmpIdSearch").val(), $("#txtEmpNameSearch").val(), "4");
         }
     });
     $("#mrvJobSearchModel").on('show.bs.modal', function () {
@@ -386,10 +407,8 @@ $(document).ready(function () {
                     $("#txtMRVProdDetail").val(jobMrvDetails.prdDetail);
                     if (jobMrvDetails.custCode === "CASH") {
                         $("#ddlPayMode").val("Cash").change();
-                        $("#ddlPayMode").prop("disabled", true);
                     } else {
                         $("#ddlPayMode").val("Credit").change();
-                        $("#ddlPayMode").prop("disabled", true);
                     }
                 },
                 complete: function () {

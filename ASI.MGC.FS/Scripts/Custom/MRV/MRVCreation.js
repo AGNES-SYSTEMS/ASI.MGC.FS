@@ -158,7 +158,7 @@ $(document).ready(function () {
         $("#txtPrDesc").val("");
         $("#txtJobID").val("");
         $("#txtJobDesc").val("");
-        $("#txtQuantity").val("");
+        $("#txtQuantity").val("1");
         $("#txtRate").val("");
         $("#txtAmount").val("0");
         selectedRowId = "";

@@ -26,8 +26,6 @@ namespace ASI.MGC.FS.Controllers
         [MesAuthorize("DailyTransactions")]
         public ActionResult InvoicePreparation()
         {
-            //var invCount = (1001 + CommonModelAccessUtility.GetInvoiceCount(_unitOfWork));
-            //string currYear = DateTime.Now.Year.ToString();
             string invoiceCode = CommonModelAccessUtility.GetInvoiceCount(_unitOfWork);
             ViewBag.invoiceCode = invoiceCode;
             ViewBag.dlnNumber = CommonModelAccessUtility.GetDeleNumberCount(_unitOfWork);
@@ -43,9 +41,10 @@ namespace ASI.MGC.FS.Controllers
             try
             {
                 var mrvNumber = Convert.ToString(objArApLedger.NARRATION_ART);
-                var invNumber = Convert.ToString(objArApLedger.DOCNUMBER_ART);
+                var invNumber = CommonModelAccessUtility.GetInvoiceCount(_unitOfWork);
+                objArApLedger.DOCNUMBER_ART = invNumber;
                 reportParams.Add(invNumber);
-                var dlnNumber = Convert.ToString(frm["DLNNo"]);
+                var dlnNumber = CommonModelAccessUtility.GetDeleNumberCount(_unitOfWork);
                 reportParams.Add(dlnNumber);
                 string jsonProductDetails = frm["saleDetail"];
                 var serializer = new JavaScriptSerializer();

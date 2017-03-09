@@ -529,7 +529,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>="AED " &amp; Code.changeToWords(Format(Sum(Fields!DEBITAMOUT_VRPT.Value, "DS_BankReceipt"), "N2")) &amp;"Only"</Value>
+                <Value>="AED " &amp; Code.changeToWords(Format(First(Fields!DEBITAMOUT_VRPT.Value, "DS_BankReceipt"), "N2")) &amp;"Only"</Value>
                 <Style />
               </TextRun>
             </TextRuns>
