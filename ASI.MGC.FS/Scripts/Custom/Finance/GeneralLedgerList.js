@@ -15,7 +15,9 @@
             searchGrid($("#txtglCodeSearch").val());
         }
     });
-
+    $("#btnNew").on("click", function () {
+        location.reload();
+    });
     $("#tblGeneralLedger").jqGrid({
         url: '/Finance/GetGlCodes',
         datatype: "json",

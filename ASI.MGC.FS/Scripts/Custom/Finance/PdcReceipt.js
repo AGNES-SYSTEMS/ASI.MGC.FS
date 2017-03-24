@@ -6,7 +6,6 @@
         $('#alCodeSearchModel').modal('toggle');
     }
 };
-
 var docSelect = function (docId) {
     if (docId) {
         var ret = jQuery("#tblDocSearch").jqGrid('getRowData', docId);
@@ -15,7 +14,6 @@ var docSelect = function (docId) {
         $('#docTypeSearchModel').modal('toggle');
     }
 };
-
 var bankSelect = function (bankId) {
     if (bankId) {
         var ret = jQuery("#tblBankSearch").jqGrid('getRowData', bankId);
@@ -24,7 +22,6 @@ var bankSelect = function (bankId) {
         $('#BankSearchModel').modal('toggle');
     }
 };
-
 var accountSelect = function (accountId) {
     if (accountId) {
         var ret = jQuery("#tblAccountSearch").jqGrid('getRowData', accountId);
@@ -33,7 +30,6 @@ var accountSelect = function (accountId) {
         $('#accountSearchModel').modal('toggle');
     }
 };
-
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     //$("#liBankReceipt").addClass("active");
@@ -446,6 +442,9 @@ $(document).ready(function () {
         } else {
             $("#btnSubmit").attr("disabled", false);
         }
+    });
+    $("#btnNew").on("click", function () {
+        location.reload();
     });
     function clearModalForm() {
         $("#txtAlCode").val("");

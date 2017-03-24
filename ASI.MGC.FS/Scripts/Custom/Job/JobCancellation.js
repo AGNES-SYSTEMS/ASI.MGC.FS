@@ -195,6 +195,9 @@ $(document).ready(function () {
         var outerwidth = $('#empGrid').width();
         $('#tblEmployeeSearch').setGridWidth(outerwidth);
     });
+    $("#btnNew").on("click", function () {
+        location.reload();
+    });
     $("#btnEmpSelect").on("click", function (e) {
         var id = jQuery("#tblEmployeeSearch").jqGrid('getGridParam', 'selrow');
         if (id) {

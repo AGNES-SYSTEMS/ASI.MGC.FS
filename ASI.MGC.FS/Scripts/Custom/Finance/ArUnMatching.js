@@ -17,11 +17,13 @@
         multiselect: false,
         caption: "Allocation Details",
         loadComplete: function (data) {
-            if ($("#tblUnMatchingDetails").getGridParam("reccount") <= 0 && $("#txtInvoiceNumber").val() !== "")
-            {
+            if ($("#tblUnMatchingDetails").getGridParam("reccount") <= 0 && $("#txtInvoiceNumber").val() !== "") {
                 toastr.warning("Doc Type mismatch or Doc match not found");
             }
         }
+    });
+    $("#btnNew").on("click", function () {
+        location.reload();
     });
     $(window).resize(function () {
         var outerwidth = $('#grid').width();

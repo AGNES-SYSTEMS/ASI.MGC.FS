@@ -4,7 +4,6 @@
     var dt = new Date(parseFloat(results[1]));
     return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
 }
-
 $(document).ready(function () {
     debugger;
     function getInvDetails() {
@@ -55,6 +54,9 @@ $(document).ready(function () {
             });
         }
     }
+    $("#btnNew").on("click", function () {
+        location.reload();
+    });
     $("#txtInvNumber").on("blur", function () {
         var ddlVal = $("#ddlDocType").val();
         if (ddlVal !== "8" && ddlVal !== "9" && ddlVal !== "15" && ddlVal !== "16") {

@@ -72,7 +72,9 @@ $(document).ready(function () {
             searchGrid($("#txtglCodeSearch").val());
         }
     });
-
+    $("#btnNew").on("click", function () {
+        location.reload();
+    });
     $("#glSearchModel").on('show.bs.modal', function () {
         $("#tblGlSearch").jqGrid({
             url: '/Finance/GetGlCodes',

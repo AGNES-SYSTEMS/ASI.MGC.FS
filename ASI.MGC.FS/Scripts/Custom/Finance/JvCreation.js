@@ -424,6 +424,9 @@ $(document).ready(function () {
     $("#txtAccountDesc").on("change", function () {
         $("#allocationDetailsModelform").formValidation('revalidateField', 'AccountDesc');
     });
+    $("#btnNew").on("click", function () {
+        location.reload();
+    });
     function clearModalForm() {
         $("#txtAlCode").val("");
         $("#txtAlDesc").val("");
@@ -463,7 +466,7 @@ $(document).ready(function () {
         if ($("#allocationDetailsModelform").valid()) {
             e.preventDefault();
             if (selectedRowId) {
-                arrAllocDetails[selectedRowId-1] = {
+                arrAllocDetails[selectedRowId - 1] = {
                     AlCode: $("#txtAlCode").val(), AlDescription: $("#txtAlDesc").val(), AccountCode: $("#txtAccountCode").val(), Description: $("#txtAccountDesc").val(),
                     Debit: $("#txtDebit").val(), Credit: $("#txtCredit").val(), Narration: $("#txtNarration").val()
                 };

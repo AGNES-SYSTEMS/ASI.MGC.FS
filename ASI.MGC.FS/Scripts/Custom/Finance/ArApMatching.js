@@ -56,7 +56,7 @@ function editRow(id) {
         var grid = $("#tblAllocationDetails");
         grid.jqGrid('editRow', id, { keys: true });
         $("input[id^='" + id + "_" + fieldName + "']", "#tblAllocationDetails").bind('keyup', function () {
-            var matchValSelector = $('#' + id + "_" + fieldName); 
+            var matchValSelector = $('#' + id + "_" + fieldName);
             var matchVal = Math.floor(matchValSelector.val());
             matchValSelector.val(matchVal);
             var ret = grid.jqGrid('getRowData', id);
@@ -104,6 +104,9 @@ $(document).ready(function () {
         multiselect: false,
         onSelectRow: editRow,
         caption: "Product Details"
+    });
+    $("#btnNew").on("click", function () {
+        location.reload();
     });
     function validatePositive(value, column) {
         if (isNaN(value) && value < 0)

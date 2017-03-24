@@ -6,7 +6,6 @@
         $('#CustomerSearchModel').modal('toggle');
     }
 };
-
 var productSelect = function (prdId) {
     if (prdId) {
         var ret = jQuery("#tblProductSearch").jqGrid('getRowData', prdId);
@@ -16,7 +15,6 @@ var productSelect = function (prdId) {
         $('#PrdSearchModel').modal('toggle');
     }
 };
-
 $(document).ready(function () {
     var arrPrdDetails = [];
     $('#txtDocDate').datepicker();
@@ -46,7 +44,9 @@ $(document).ready(function () {
         var outerwidthMrv = $('#gridProduct').width();
         $('#tblPrdDetails').setGridWidth(outerwidthMrv);
     });
-
+    $("#btnNew").on("click", function () {
+        location.reload();
+    });
     $("#CustomerSearchModel").on('show.bs.modal', function () {
         $("#tblCustomerSearch").jqGrid({
             url: '/Customer/GetAPCustomerDetailsList',

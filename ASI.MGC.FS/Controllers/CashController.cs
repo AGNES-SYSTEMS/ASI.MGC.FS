@@ -54,6 +54,7 @@ namespace ASI.MGC.FS.Controllers
             List<string> reportParams = new List<string>();
             try
             {
+                _unitOfWork.Truncate("DELEVERYNOTE_RPT");
                 var mrvNumber = Convert.ToString(frm["MRVNo"]);
                 var cashMemoNumber = CommonModelAccessUtility.GetCashSaleCount(_unitOfWork);
                 var dlnNumber = CommonModelAccessUtility.GetDeleNumberCount(_unitOfWork);

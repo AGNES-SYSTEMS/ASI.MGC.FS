@@ -40,6 +40,7 @@ namespace ASI.MGC.FS.Controllers
             string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             try
             {
+                _unitOfWork.Truncate("DELEVERYNOTE_RPT");
                 var mrvNumber = Convert.ToString(objArApLedger.NARRATION_ART);
                 var invNumber = CommonModelAccessUtility.GetInvoiceCount(_unitOfWork);
                 objArApLedger.DOCNUMBER_ART = invNumber;

@@ -188,9 +188,10 @@
                             <div class="col-md-6 form-group">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label></label>
+                                <label class="control-label col-md-4 small "></label>
                                 <div class="col-md-8 paddingLeftRight0">
                                     <input type="submit" id="btnSubmit" class="btn btn-success col-md-3 pull-right" value="Save">
+                                    <button type="button" id="btnNew" class="btn btn-success">New</button>
                                 </div>
                             </div>
                         </div>
@@ -468,10 +469,12 @@
             } else {
                 toastr.error("Sorry! Something went wrong, please try again.");
             }
+            $("#btnSubmit").hide();
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
+            $("#btnSubmit").hide();
         }
 
         function openBankPayment(brNo) {

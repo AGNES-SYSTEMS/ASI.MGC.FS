@@ -38,6 +38,7 @@
                               <Style>
                                 <FontFamily>Arial Black</FontFamily>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -73,6 +74,7 @@
                               <Style>
                                 <FontFamily>Arial Black</FontFamily>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -108,6 +110,7 @@
                               <Style>
                                 <FontFamily>Arial Black</FontFamily>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -143,6 +146,7 @@
                               <Style>
                                 <FontFamily>Arial Black</FontFamily>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -178,6 +182,7 @@
                               <Style>
                                 <FontFamily>Arial Black</FontFamily>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -475,6 +480,7 @@
                     <FontFamily>Arial Black</FontFamily>
                     <FontSize>14pt</FontSize>
                     <FontWeight>Bold</FontWeight>
+                    <TextDecoration>Underline</TextDecoration>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1233,7 +1239,6 @@ Produce this Receipt at the time of delivery.</Value>
             </Textbox>
           </ReportItems>
           <KeepTogether>true</KeepTogether>
-          <Top>0in</Top>
           <Height>1.89in</Height>
           <Width>7.77in</Width>
           <Visibility>

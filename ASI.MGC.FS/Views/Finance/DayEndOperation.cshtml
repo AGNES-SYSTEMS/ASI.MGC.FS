@@ -98,7 +98,7 @@
                                 <label class="control-label col-md-4 small "></label>
                                 <div class="col-md-8">
                                     <button type="button" id="btnStart" class="btn btn-success">Start</button>
-                                    <button type="submit" class="btn btn-success">Save</button>
+                                    <button type="submit" id="btnSave" class="btn btn-success">Save</button>
                                     <button type="button" id="btnNew" class="btn btn-success">New</button>
                                 </div>
                             </div>
@@ -123,9 +123,11 @@
             else {
                 toastr.error(status.msg);
             }
+            $("#btnSave").hide();
         }
         function OnFailure() {
             toastr.error("Sorry! something went wrong.");
+            $("#btnSave").hide();
         }
     </script>
 }

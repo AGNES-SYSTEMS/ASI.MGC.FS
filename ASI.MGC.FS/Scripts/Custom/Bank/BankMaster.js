@@ -59,7 +59,9 @@ $(document).ready(function () {
         $("#tblBankSearch").setGridParam({ postData: postData });
         $("#tblBankSearch").trigger("reloadGrid", [{ page: 1 }]);
     };
-
+    $("#btnNew").on("click", function () {
+        location.reload();
+    });
     $("#txtBankSearch").off().on("keyup", function () {
 
         var shouldSearch = $("#txtBankSearch").val().length >= 3 || $("#txtBankSearch").val().length === 0;

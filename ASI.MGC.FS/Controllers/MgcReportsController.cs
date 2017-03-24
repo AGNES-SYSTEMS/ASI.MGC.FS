@@ -166,24 +166,25 @@ namespace ASI.MGC.FS.Controllers
                         decimal openingBalance = default(decimal);
                         decimal uptoYear = default(decimal);
 
-                        decimal debitAmount = default(decimal);
-                        decimal creditAmount = default(decimal);
-                        decimal netAmount = default(decimal);
+                        //decimal debitAmount = default(decimal);
+                        //decimal creditAmount = default(decimal);
+                        //decimal netAmount = default(decimal);
                         string plAccType = string.Empty;
-                        short i = 0;
-                        decimal qty = default(decimal);
-                        decimal rate = default(decimal);
-                        decimal stockAmount = default(decimal);
+                        //short i = 0;
+                        //decimal qty = default(decimal);
+                        //decimal rate = default(decimal);
+                        //decimal stockAmount = default(decimal);
 
-                        decimal curMonth = default(decimal);
-                        decimal curYear = default(decimal);
+                        //decimal curMonth = default(decimal);
+                        //decimal curYear = default(decimal);
                         DateTime yearStart = Convert.ToDateTime("01-jan-" + endDate.Year);
                         string plCode = string.Empty;
                         _unitOfWork.Truncate("PROFITANDLOSS_RPT");
                         var glMaster = (from glm in _unitOfWork.Repository<GLMASTER>().Query().Get()
-                                        where Convert.ToInt32(glm.GLCODE_LM) >= 3000 & Convert.ToInt32(glm.GLCODE_LM) <= 4999
                                         select new { glm.GLCODE_LM, glm.GLDESCRIPTION_LM }).ToList();
-                        foreach (var item in glMaster)
+                        var filteredGlMaster = glMaster.ToList().Where(glm => Convert.ToInt32(glm.GLCODE_LM) >= 3000 && Convert.ToInt32(glm.GLCODE_LM) <= 4999);
+
+                        foreach (var item in filteredGlMaster)
                         {
                             var glCode = Convert.ToInt32(item.GLCODE_LM);
                             if (glCode >= 3000 & glCode < 3500)
@@ -220,7 +221,7 @@ namespace ASI.MGC.FS.Controllers
                             openingBalance = sumUptoYear != null ? Convert.ToDecimal(sumUptoYear) : 0;
                             var rptPLStatementObj = _unitOfWork.Repository<PROFITANDLOSS_RPT>().Create();
                             rptPLStatementObj.ACCOUNTCODE_PL = plAccType;
-                            rptPLStatementObj.DESCRIPTION_PL = item.GLDESCRIPTION_LM;
+                            rptPLStatementObj.DESCRIPTION_PL = item.GLCODE_LM + " " + item.GLDESCRIPTION_LM;
                             rptPLStatementObj.CURMONTH_PL = openingBalance;
                             rptPLStatementObj.CURRENT_YEARTODATE = uptoYear;
                             rptPLStatementObj.GROUPCODE = plCode;
@@ -230,6 +231,7 @@ namespace ASI.MGC.FS.Controllers
                         openingBalance = fn_StockValution(startDate);
                         uptoYear = fn_StockValution(yearStart);
 
+                        //PROFITANDLOSS_RPT rptPLStatementOpn = null;
                         var rptPLStatementOpn = _unitOfWork.Repository<PROFITANDLOSS_RPT>().Create();
                         rptPLStatementOpn.ACCOUNTCODE_PL = plAccType;
                         rptPLStatementOpn.DESCRIPTION_PL = "Opening Stock";
