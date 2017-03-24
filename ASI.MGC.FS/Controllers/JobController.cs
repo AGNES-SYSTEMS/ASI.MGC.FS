@@ -224,28 +224,77 @@ namespace ASI.MGC.FS.Controllers
         {
             string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             bool success = false;
+            bool isEntryExist = false;
             try
             {
-                var salesEntry = _unitOfWork.Repository<SALEDETAIL>().Create();
-                salesEntry.MRVNO_SD = objSaleDetail.MRVNO_SD;
-                salesEntry.JOBNO_SD = objSaleDetail.JOBNO_SD;
-                salesEntry.PRCODE_SD = objSaleDetail.PRCODE_SD;
-                salesEntry.JOBID_SD = objSaleDetail.JOBID_SD;
-                salesEntry.QTY_SD = objSaleDetail.QTY_SD;
-                salesEntry.UNIT_SD = objSaleDetail.UNIT_SD;
-                salesEntry.RATE_SD = objSaleDetail.RATE_SD;
-                salesEntry.DISCOUNT_SD = objSaleDetail.DISCOUNT_SD;
-                salesEntry.SHIPPINGCHARGES_SD = objSaleDetail.SHIPPINGCHARGES_SD;
-                salesEntry.ADDITIONALCHARGES_SD = objSaleDetail.ADDITIONALCHARGES_SD;
-                salesEntry.SALEDATE_SD = objSaleDetail.SALEDATE_SD;
-                salesEntry.CASHTOTAL_SD = objSaleDetail.CASHTOTAL_SD;
-                salesEntry.CREDITTOTAL_SD = objSaleDetail.CREDITTOTAL_SD;
-                salesEntry.CREDITACCODE_SD = objSaleDetail.CREDITACCODE_SD;
-                salesEntry.USERID_SD = currentUser;
-                salesEntry.STATUS_SD = "N";
-                _unitOfWork.Repository<SALEDETAIL>().Insert(salesEntry);
-                _unitOfWork.Save();
-                JobMaster_UpdateEmpCode(form["EmpCode"], objSaleDetail.JOBNO_SD);
+                if (!string.IsNullOrEmpty(objSaleDetail.JOBID_SD))
+                {
+                    var currJobSale = (from saleData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                                       where saleData.JOBNO_SD.Equals(objSaleDetail.JOBNO_SD)
+                                       && saleData.JOBID_SD.Equals(objSaleDetail.JOBID_SD)
+                                       select saleData).FirstOrDefault();
+                    if (currJobSale != null)
+                    {
+                        currJobSale.QTY_SD = currJobSale.QTY_SD + objSaleDetail.QTY_SD;
+                        if (form["PayMode"] == "Credit")
+                        {
+                            currJobSale.CREDITTOTAL_SD = (currJobSale.QTY_SD * currJobSale.RATE_SD) - currJobSale.DISCOUNT_SD + currJobSale.SHIPPINGCHARGES_SD;
+                        }
+                        else
+                        {
+                            currJobSale.CASHTOTAL_SD = (currJobSale.QTY_SD * currJobSale.RATE_SD) - currJobSale.DISCOUNT_SD + currJobSale.SHIPPINGCHARGES_SD;
+                        }
+                        _unitOfWork.Repository<SALEDETAIL>().Update(currJobSale);
+                        _unitOfWork.Save();
+                        isEntryExist = true;
+                    }
+                }
+                else if (!string.IsNullOrEmpty(objSaleDetail.PRCODE_SD))
+                {
+                    var currPrdSale = (from saleData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                                       where saleData.JOBNO_SD.Equals(objSaleDetail.JOBNO_SD)
+                                       && saleData.PRCODE_SD.Equals(objSaleDetail.PRCODE_SD)
+                                       select saleData).FirstOrDefault();
+                    if (currPrdSale != null)
+                    {
+                        currPrdSale.QTY_SD = currPrdSale.QTY_SD + objSaleDetail.QTY_SD;
+                        if (form["PayMode"] == "Credit")
+                        {
+                            currPrdSale.CREDITTOTAL_SD = (currPrdSale.QTY_SD * currPrdSale.RATE_SD) + currPrdSale.SHIPPINGCHARGES_SD - currPrdSale.DISCOUNT_SD;
+                        }
+                        else
+                        {
+                            currPrdSale.CREDITTOTAL_SD = (currPrdSale.QTY_SD * currPrdSale.RATE_SD) + currPrdSale.SHIPPINGCHARGES_SD - currPrdSale.DISCOUNT_SD;
+                        }
+                        _unitOfWork.Repository<SALEDETAIL>().Update(currPrdSale);
+                        _unitOfWork.Save();
+                        isEntryExist = true;
+                    }
+                }
+
+                if (isEntryExist == false)
+                {
+                    var salesEntry = _unitOfWork.Repository<SALEDETAIL>().Create();
+                    salesEntry.MRVNO_SD = objSaleDetail.MRVNO_SD;
+                    salesEntry.JOBNO_SD = objSaleDetail.JOBNO_SD;
+                    salesEntry.PRCODE_SD = objSaleDetail.PRCODE_SD;
+                    salesEntry.JOBID_SD = objSaleDetail.JOBID_SD;
+                    salesEntry.QTY_SD = objSaleDetail.QTY_SD;
+                    salesEntry.UNIT_SD = objSaleDetail.UNIT_SD;
+                    salesEntry.RATE_SD = objSaleDetail.RATE_SD;
+                    salesEntry.DISCOUNT_SD = objSaleDetail.DISCOUNT_SD;
+                    salesEntry.SHIPPINGCHARGES_SD = objSaleDetail.SHIPPINGCHARGES_SD;
+                    salesEntry.ADDITIONALCHARGES_SD = objSaleDetail.ADDITIONALCHARGES_SD;
+                    salesEntry.SALEDATE_SD = objSaleDetail.SALEDATE_SD;
+                    salesEntry.CASHTOTAL_SD = objSaleDetail.CASHTOTAL_SD;
+                    salesEntry.CREDITTOTAL_SD = objSaleDetail.CREDITTOTAL_SD;
+                    salesEntry.CREDITACCODE_SD = objSaleDetail.CREDITACCODE_SD;
+                    salesEntry.USERID_SD = currentUser;
+                    salesEntry.STATUS_SD = "N";
+                    _unitOfWork.Repository<SALEDETAIL>().Insert(salesEntry);
+                    _unitOfWork.Save();
+                    JobMaster_UpdateEmpCode(form["EmpCode"], objSaleDetail.JOBNO_SD);
+                }
                 success = true;
             }
             catch (Exception)

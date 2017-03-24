@@ -268,7 +268,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=RowNumber(nothing)</Value>
+                              <Value>=RunningValue(Fields!CASHRVNO_SD.Value,CountDistinct, "DS_CashMemoWiseReport")</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>

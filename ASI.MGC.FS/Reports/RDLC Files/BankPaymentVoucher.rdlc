@@ -723,6 +723,7 @@
                 <Style>
                   <FontFamily>Arial Black</FontFamily>
                   <FontWeight>Bold</FontWeight>
+                  <TextDecoration>Underline</TextDecoration>
                 </Style>
               </TextRun>
             </TextRuns>

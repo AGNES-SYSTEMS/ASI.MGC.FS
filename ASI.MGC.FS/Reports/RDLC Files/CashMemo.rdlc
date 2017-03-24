@@ -6,25 +6,25 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.4943in</Width>
+              <Width>0.49537in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.84896in</Width>
+              <Width>0.85003in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.00909in</Width>
+              <Width>2.61167in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.17014in</Width>
+              <Width>1.17121in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.76149in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.83441in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.84482in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -44,6 +44,7 @@
                               <Style>
                                 <FontFamily>Arial Black</FontFamily>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -79,6 +80,7 @@
                               <Style>
                                 <FontFamily>Arial Black</FontFamily>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -114,6 +116,7 @@
                               <Style>
                                 <FontFamily>Arial Black</FontFamily>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -149,6 +152,7 @@
                               <Style>
                                 <FontFamily>Arial Black</FontFamily>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -184,6 +188,7 @@
                               <Style>
                                 <FontFamily>Arial Black</FontFamily>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -219,6 +224,7 @@
                               <Style>
                                 <FontFamily>Arial Black</FontFamily>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -254,6 +260,7 @@
                               <Style>
                                 <FontFamily>Arial Black</FontFamily>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -520,25 +527,25 @@
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>0.52561in</Width>
+                            <Width>0.53225in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>0.88027in</Width>
+                            <Width>0.88691in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>1.81805in</Width>
+                            <Width>2.53791in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>1.20464in</Width>
+                            <Width>1.17121in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>1.03131in</Width>
+                            <Width>0.76149in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>1.03131in</Width>
+                            <Width>0.83441in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>1.03131in</Width>
+                            <Width>0.84482in</Width>
                           </TablixColumn>
                         </TablixColumns>
                         <TablixRows>
@@ -708,7 +715,9 @@
                                             <Style />
                                           </TextRun>
                                         </TextRuns>
-                                        <Style />
+                                        <Style>
+                                          <TextAlign>Right</TextAlign>
+                                        </Style>
                                       </Paragraph>
                                     </Paragraphs>
                                     <rd:DefaultName>Textbox45</rd:DefaultName>
@@ -738,7 +747,9 @@
                                             <Style />
                                           </TextRun>
                                         </TextRuns>
-                                        <Style />
+                                        <Style>
+                                          <TextAlign>Right</TextAlign>
+                                        </Style>
                                       </Paragraph>
                                     </Paragraphs>
                                     <rd:DefaultName>Textbox47</rd:DefaultName>
@@ -830,7 +841,7 @@
         <Top>1.68056in</Top>
         <Left>0.08876in</Left>
         <Height>0.75in</Height>
-        <Width>7.52249in</Width>
+        <Width>7.56901in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1656,7 +1667,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
-              <Top>0.69444in</Top>
+              <Top>0.81944in</Top>
               <Left>0.04319in</Left>
               <Height>0.26388in</Height>
               <Width>4.8125in</Width>
@@ -1671,9 +1682,30 @@
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
+            <Line Name="Line1">
+              <Top>1.125in</Top>
+              <Left>0.01001in</Left>
+              <Height>0in</Height>
+              <Width>7.68999in</Width>
+              <ZIndex>12</ZIndex>
+              <Style>
+                <Border>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+            </Line>
+            <Line Name="Line2">
+              <Height>0in</Height>
+              <Width>7.7in</Width>
+              <ZIndex>13</ZIndex>
+              <Style>
+                <Border>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+            </Line>
           </ReportItems>
           <KeepTogether>true</KeepTogether>
-          <Top>0in</Top>
           <Height>1.71527in</Height>
           <Width>7.7in</Width>
           <Visibility>

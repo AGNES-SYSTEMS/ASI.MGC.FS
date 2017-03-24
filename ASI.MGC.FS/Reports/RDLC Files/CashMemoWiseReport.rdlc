@@ -51,6 +51,7 @@
                               <Style>
                                 <FontFamily>Arial Black</FontFamily>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -86,6 +87,7 @@
                               <Style>
                                 <FontFamily>Arial Black</FontFamily>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -121,6 +123,7 @@
                               <Style>
                                 <FontFamily>Arial Black</FontFamily>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -156,6 +159,7 @@
                               <Style>
                                 <FontFamily>Arial Black</FontFamily>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -191,6 +195,7 @@
                               <Style>
                                 <FontFamily>Arial Black</FontFamily>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -226,6 +231,7 @@
                               <Style>
                                 <FontFamily>Arial Black</FontFamily>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -262,7 +268,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=RowNumber(nothing)</Value>
+                              <Value>=RunningValue(Fields!CASHRVNO_SD.Value,CountDistinct, "DS_CashMemoWiseReport")</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -585,6 +591,7 @@
                     <FontFamily>Arial Black</FontFamily>
                     <FontSize>12pt</FontSize>
                     <FontWeight>Bold</FontWeight>
+                    <TextDecoration>Underline</TextDecoration>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -618,6 +625,7 @@
                   <Value>CASH MEMO WISE REPORT</Value>
                   <Style>
                     <FontFamily>Arial Black</FontFamily>
+                    <TextDecoration>Underline</TextDecoration>
                   </Style>
                 </TextRun>
               </TextRuns>

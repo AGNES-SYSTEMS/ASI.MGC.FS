@@ -939,7 +939,7 @@
         </Field>
         <Field Name="DEBITAMOUNT_ART">
           <DataField>DEBITAMOUNT_ART</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="DELEVERNOTENO_JM">
           <DataField>DELEVERNOTENO_JM</DataField>

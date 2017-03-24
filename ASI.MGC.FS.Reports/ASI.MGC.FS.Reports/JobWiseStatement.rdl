@@ -19,13 +19,13 @@
               <Width>0.52083in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.19917in</Width>
+              <Width>1.18in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.77729in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.10417in</Width>
+              <Width>1.17668in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.64583in</Width>
@@ -34,7 +34,7 @@
               <Width>1.50333in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.89583in</Width>
+              <Width>0.85in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.16146in</Width>
@@ -627,7 +627,7 @@
         <Top>0.09722in</Top>
         <Left>0.0075in</Left>
         <Height>0.5in</Height>
-        <Width>7.80791in</Width>
+        <Width>7.81542in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
