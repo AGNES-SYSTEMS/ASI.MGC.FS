@@ -602,7 +602,9 @@
                 <Style />
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox40</rd:DefaultName>
@@ -663,11 +665,13 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=FORMAT((Sum(Fields!DEBITAMOUNT_SAC.Value, "DS_BankStatement") - Sum(Fields!CREDITAMOUNT_SAC.Value, "DS_BankStatement")),"N2")</Value>
+                <Value>=FORMAT(Last(Fields!BALANCE_SAC.Value, "DS_BankStatement"),"N2")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox40</rd:DefaultName>

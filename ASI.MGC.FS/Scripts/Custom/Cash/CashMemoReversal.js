@@ -24,9 +24,11 @@ function getCMDetail() {
                     $("#txtBankCode").val(cmDetails.BANKCODE_BT);
                     $("#txtAmount").val(cmDetails.DEBITAMOUT_BT);
                 } else {
+                    clearFields();
                     toastr.warning("Cash Memo is already reversed.");
                 }
             } else {
+                clearFields();
                 toastr.warning("Receipt No is invalid.");
             }
         },
@@ -36,6 +38,13 @@ function getCMDetail() {
         }
     });
 };
+function clearFields() {
+    $("#txtDocDate").val("");
+    $("#txtOtherRef").val("");
+    $("#txtBankCode").val("");
+    $("#txtAmount").val("");
+
+}
 function formattedDate(jsonDate) {
     var dateString = jsonDate.substr(6);
     var currentTime = new Date(parseInt(dateString));

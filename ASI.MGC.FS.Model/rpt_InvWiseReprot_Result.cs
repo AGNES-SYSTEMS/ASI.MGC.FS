@@ -16,7 +16,7 @@ namespace ASI.MGC.FS.Model
         public string INVNO_SD { get; set; }
         public Nullable<System.DateTime> DODATE_ART { get; set; }
         public string DESCRIPTION_ARM { get; set; }
-        public Nullable<int> DEBITAMOUNT_ART { get; set; }
+        public Nullable<decimal> DEBITAMOUNT_ART { get; set; }
         public string DELEVERNOTENO_JM { get; set; }
         public Nullable<decimal> CREDITTOTAL_SD { get; set; }
     }

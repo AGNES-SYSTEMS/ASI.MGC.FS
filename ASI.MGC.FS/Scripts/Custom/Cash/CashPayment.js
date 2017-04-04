@@ -750,7 +750,7 @@ $(document).ready(function () {
         if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
             data.fv.disableSubmitButtons(true);
         }
-    }).on('success.form.fv', function (e) {
+    }).off('success.form.fv').on('success.form.fv', function (e) {
         debugger;
         // Prevent form submission
         e.preventDefault();

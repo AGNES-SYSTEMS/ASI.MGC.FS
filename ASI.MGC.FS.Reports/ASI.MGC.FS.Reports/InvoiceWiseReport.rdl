@@ -31,7 +31,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=FORMAT(Sum(Fields!DEBITAMOUNT_ART.Value, "DS_InvoiceWiseReport"),"N2")</Value>
+                    <Value>=FORMAT(Sum(Fields!CREDITTOTAL_SD.Value, "DS_InvoiceWiseReport"),"N2")</Value>
                     <Style />
                   </TextRun>
                 </TextRuns>
@@ -98,7 +98,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>="AED " &amp; CODE.changeToWords(Sum(Fields!DEBITAMOUNT_ART.Value, "DS_InvoiceWiseReport")) &amp; "Only"</Value>
+                    <Value>="AED " &amp; CODE.changeToWords(Sum(Fields!CREDITTOTAL_SD.Value, "DS_InvoiceWiseReport")) &amp; "Only"</Value>
                     <Style />
                   </TextRun>
                 </TextRuns>
@@ -593,7 +593,11 @@
               <KeepWithGroup>After</KeepWithGroup>
             </TablixMember>
             <TablixMember>
-              <Group Name="Details" />
+              <Group Name="Details">
+                <GroupExpressions>
+                  <GroupExpression>=Fields!INVNO_SD.Value</GroupExpression>
+                </GroupExpressions>
+              </Group>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>

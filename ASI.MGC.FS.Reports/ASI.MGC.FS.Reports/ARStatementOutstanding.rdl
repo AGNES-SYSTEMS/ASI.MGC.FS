@@ -657,7 +657,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=FORMAT((Sum(Fields!DEBITAMOUNT_SAC.Value, "DS_ARStatementOutstanding") - Sum(Fields!CREDITAMOUNT_SAC.Value, "DS_ARStatementOutstanding")),"N2")</Value>
+                <Value>=FORMAT(Last(Fields!BALANCE_SAC.Value, "DS_ARStatementOutstanding"),"N2")</Value>
                 <Style />
               </TextRun>
             </TextRuns>

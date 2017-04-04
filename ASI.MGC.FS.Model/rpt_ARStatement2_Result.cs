@@ -11,7 +11,7 @@ namespace ASI.MGC.FS.Model
 {
     using System;
     
-    public partial class rpt_ARStatementOutstanding_Result
+    public partial class rpt_ARStatement2_Result
     {
         public string DESCRIPTION_ARM { get; set; }
         public string POBOX_ARM { get; set; }

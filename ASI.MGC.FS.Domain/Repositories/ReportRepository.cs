@@ -168,12 +168,12 @@ namespace ASI.MGC.FS.Domain.Repositories
             }
             return lst;
         }
-        public List<rpt_ARStatement_Result> RptArStatement(DateTime startDate, DateTime endDate)
+        public List<rpt_ARStatement2_Result> RptArStatement(DateTime startDate, DateTime endDate)
         {
-            List<rpt_ARStatement_Result> lst = null;
+            List<rpt_ARStatement2_Result> lst = null;
             try
             {
-                lst = _context.rpt_ARStatement(startDate, endDate).ToList();
+                lst = _context.rpt_ARStatement2(startDate, endDate).ToList();
             }
             catch (Exception)
             {

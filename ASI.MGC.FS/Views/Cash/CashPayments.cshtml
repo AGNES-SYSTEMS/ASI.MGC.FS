@@ -154,7 +154,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small "></label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    <input type="submit" id="btnSave" class="btn btn-success" disabled="disabled" value="Save">
+                                    <input type="submit" id="btnSubmit" class="btn btn-success" disabled="disabled" value="Save">
                                     <button type="button" id="btnNew" class="btn btn-success">New</button>
 
                                 </div>
@@ -490,12 +490,12 @@
             } else {
                 toastr.error("Sorry! Something went wrong, please try again.");
             }
-            $("#btnSave").hide();
+            $("#btnSubmit").hide();
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
-            $("#btnSave").hide();
+            $("#btnSubmit").hide();
         }
 
         function openCashPayment(cpNo) {

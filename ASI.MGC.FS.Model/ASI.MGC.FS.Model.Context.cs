@@ -27,10 +27,10 @@ namespace ASI.MGC.FS.Model
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AR_AP_MASTER> AR_AP_MASTER { get; set; }
         public virtual DbSet<ACSTATEMENT_RPT> ACSTATEMENT_RPT { get; set; }
         public virtual DbSet<ALLOCATIONMASTER> ALLOCATIONMASTERs { get; set; }
         public virtual DbSet<AR_AP_LEDGER> AR_AP_LEDGER { get; set; }
-        public virtual DbSet<AR_AP_MASTER> AR_AP_MASTER { get; set; }
         public virtual DbSet<ARMATCHING> ARMATCHINGs { get; set; }
         public virtual DbSet<BALANCESHEET> BALANCESHEETs { get; set; }
         public virtual DbSet<BANKMASTER> BANKMASTERs { get; set; }
@@ -57,7 +57,9 @@ namespace ASI.MGC.FS.Model
         public virtual DbSet<JVREPORT> JVREPORTs { get; set; }
         public virtual DbSet<LOCATIONMASTER> LOCATIONMASTERs { get; set; }
         public virtual DbSet<MATERIALRECEIPTMASTER> MATERIALRECEIPTMASTERs { get; set; }
+        public virtual DbSet<MESMachine> MESMachines { get; set; }
         public virtual DbSet<MESRole> MESRoles { get; set; }
+        public virtual DbSet<MESUnAuthenticatedUsersAccess> MESUnAuthenticatedUsersAccesses { get; set; }
         public virtual DbSet<MESUserLoginDetail> MESUserLoginDetails { get; set; }
         public virtual DbSet<MESUserProfile> MESUserProfiles { get; set; }
         public virtual DbSet<MESUserRole> MESUserRoles { get; set; }
@@ -65,6 +67,7 @@ namespace ASI.MGC.FS.Model
         public virtual DbSet<MRV_REPORT_CHD> MRV_REPORT_CHD { get; set; }
         public virtual DbSet<MRVNO_REPORT> MRVNO_REPORT { get; set; }
         public virtual DbSet<MRVREFERENCE> MRVREFERENCEs { get; set; }
+        public virtual DbSet<NOGENERATOR> NOGENERATORs { get; set; }
         public virtual DbSet<PANDL_SETTINGS> PANDL_SETTINGS { get; set; }
         public virtual DbSet<PRODUCTMASTER> PRODUCTMASTERs { get; set; }
         public virtual DbSet<PROFITANDLOSS_RPT> PROFITANDLOSS_RPT { get; set; }
@@ -79,7 +82,6 @@ namespace ASI.MGC.FS.Model
         public virtual DbSet<STOCK_REPORT> STOCK_REPORT { get; set; }
         public virtual DbSet<STOCKLEDGER> STOCKLEDGERs { get; set; }
         public virtual DbSet<STOCKLEDGER_REPORT> STOCKLEDGER_REPORT { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TELEPHONE_DIRECTORY> TELEPHONE_DIRECTORY { get; set; }
         public virtual DbSet<TEMPREPORT> TEMPREPORTs { get; set; }
         public virtual DbSet<TRIALBALANCE> TRIALBALANCEs { get; set; }
@@ -87,9 +89,6 @@ namespace ASI.MGC.FS.Model
         public virtual DbSet<USER> USERs { get; set; }
         public virtual DbSet<VOUCHERCHILD_RPT> VOUCHERCHILD_RPT { get; set; }
         public virtual DbSet<VOUCHERMASTER_RPT> VOUCHERMASTER_RPT { get; set; }
-        public virtual DbSet<MESMachine> MESMachines { get; set; }
-        public virtual DbSet<MESUnAuthenticatedUsersAccess> MESUnAuthenticatedUsersAccesses { get; set; }
-        public virtual DbSet<NOGENERATOR> NOGENERATORs { get; set; }
     
         public virtual ObjectResult<rpt_BankPayment_Result> rpt_BankPayment(string vTYPE, string vCODE)
         {
@@ -259,19 +258,6 @@ namespace ASI.MGC.FS.Model
                 new ObjectParameter("ENDDATE", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_ARStatement_Result>("rpt_ARStatement", sTARTDATEParameter, eNDDATEParameter);
-        }
-    
-        public virtual ObjectResult<rpt_ARStatementOutstanding_Result> rpt_ARStatementOutstanding(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
-        {
-            var sTARTDATEParameter = sTARTDATE.HasValue ?
-                new ObjectParameter("STARTDATE", sTARTDATE) :
-                new ObjectParameter("STARTDATE", typeof(System.DateTime));
-    
-            var eNDDATEParameter = eNDDATE.HasValue ?
-                new ObjectParameter("ENDDATE", eNDDATE) :
-                new ObjectParameter("ENDDATE", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_ARStatementOutstanding_Result>("rpt_ARStatementOutstanding", sTARTDATEParameter, eNDDATEParameter);
         }
     
         public virtual ObjectResult<rpt_ARSummary_Result> rpt_ARSummary(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
@@ -803,11 +789,11 @@ namespace ASI.MGC.FS.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_BMBTListTB_Result>("sp_BMBTListTB", sTARTDATEParameter, eNDDATEParameter);
         }
     
-        public virtual int sp_GetBankStatementData(string bankCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        public virtual int sp_GetBankStatementData(string bNKCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<decimal> c, Nullable<decimal> d, Nullable<decimal> balance, Nullable<decimal> debitAmount, Nullable<decimal> creditAmount)
         {
-            var bankCodeParameter = bankCode != null ?
-                new ObjectParameter("BankCode", bankCode) :
-                new ObjectParameter("BankCode", typeof(string));
+            var bNKCodeParameter = bNKCode != null ?
+                new ObjectParameter("BNKCode", bNKCode) :
+                new ObjectParameter("BNKCode", typeof(string));
     
             var startDateParameter = startDate.HasValue ?
                 new ObjectParameter("StartDate", startDate) :
@@ -817,10 +803,30 @@ namespace ASI.MGC.FS.Model
                 new ObjectParameter("EndDate", endDate) :
                 new ObjectParameter("EndDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetBankStatementData", bankCodeParameter, startDateParameter, endDateParameter);
+            var cParameter = c.HasValue ?
+                new ObjectParameter("C", c) :
+                new ObjectParameter("C", typeof(decimal));
+    
+            var dParameter = d.HasValue ?
+                new ObjectParameter("D", d) :
+                new ObjectParameter("D", typeof(decimal));
+    
+            var balanceParameter = balance.HasValue ?
+                new ObjectParameter("Balance", balance) :
+                new ObjectParameter("Balance", typeof(decimal));
+    
+            var debitAmountParameter = debitAmount.HasValue ?
+                new ObjectParameter("DebitAmount", debitAmount) :
+                new ObjectParameter("DebitAmount", typeof(decimal));
+    
+            var creditAmountParameter = creditAmount.HasValue ?
+                new ObjectParameter("CreditAmount", creditAmount) :
+                new ObjectParameter("CreditAmount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetBankStatementData", bNKCodeParameter, startDateParameter, endDateParameter, cParameter, dParameter, balanceParameter, debitAmountParameter, creditAmountParameter);
         }
     
-        public virtual int sp_GetGLStatementData(Nullable<int> gLCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        public virtual int sp_GetGLStatementData(Nullable<int> gLCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<decimal> c, Nullable<decimal> d, Nullable<decimal> balance, Nullable<decimal> debitAmount, Nullable<decimal> creditAmount)
         {
             var gLCodeParameter = gLCode.HasValue ?
                 new ObjectParameter("GLCode", gLCode) :
@@ -834,7 +840,27 @@ namespace ASI.MGC.FS.Model
                 new ObjectParameter("EndDate", endDate) :
                 new ObjectParameter("EndDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetGLStatementData", gLCodeParameter, startDateParameter, endDateParameter);
+            var cParameter = c.HasValue ?
+                new ObjectParameter("C", c) :
+                new ObjectParameter("C", typeof(decimal));
+    
+            var dParameter = d.HasValue ?
+                new ObjectParameter("D", d) :
+                new ObjectParameter("D", typeof(decimal));
+    
+            var balanceParameter = balance.HasValue ?
+                new ObjectParameter("Balance", balance) :
+                new ObjectParameter("Balance", typeof(decimal));
+    
+            var debitAmountParameter = debitAmount.HasValue ?
+                new ObjectParameter("DebitAmount", debitAmount) :
+                new ObjectParameter("DebitAmount", typeof(decimal));
+    
+            var creditAmountParameter = creditAmount.HasValue ?
+                new ObjectParameter("CreditAmount", creditAmount) :
+                new ObjectParameter("CreditAmount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetGLStatementData", gLCodeParameter, startDateParameter, endDateParameter, cParameter, dParameter, balanceParameter, debitAmountParameter, creditAmountParameter);
         }
     
         public virtual int sp_GetTrialBalanceData(Nullable<System.DateTime> startdate, Nullable<System.DateTime> endDate)
@@ -885,7 +911,7 @@ namespace ASI.MGC.FS.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetVoucherDetails", vTypeParameter, vCodeParameter);
         }
     
-        public virtual int sp_GetARStatementData(string acCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        public virtual int sp_GetARStatementData(string acCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<decimal> c, Nullable<decimal> d, Nullable<decimal> balance, Nullable<decimal> debitAmount, Nullable<decimal> creditAmount)
         {
             var acCodeParameter = acCode != null ?
                 new ObjectParameter("AcCode", acCode) :
@@ -899,10 +925,30 @@ namespace ASI.MGC.FS.Model
                 new ObjectParameter("EndDate", endDate) :
                 new ObjectParameter("EndDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetARStatementData", acCodeParameter, startDateParameter, endDateParameter);
+            var cParameter = c.HasValue ?
+                new ObjectParameter("C", c) :
+                new ObjectParameter("C", typeof(decimal));
+    
+            var dParameter = d.HasValue ?
+                new ObjectParameter("D", d) :
+                new ObjectParameter("D", typeof(decimal));
+    
+            var balanceParameter = balance.HasValue ?
+                new ObjectParameter("Balance", balance) :
+                new ObjectParameter("Balance", typeof(decimal));
+    
+            var debitAmountParameter = debitAmount.HasValue ?
+                new ObjectParameter("DebitAmount", debitAmount) :
+                new ObjectParameter("DebitAmount", typeof(decimal));
+    
+            var creditAmountParameter = creditAmount.HasValue ?
+                new ObjectParameter("CreditAmount", creditAmount) :
+                new ObjectParameter("CreditAmount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetARStatementData", acCodeParameter, startDateParameter, endDateParameter, cParameter, dParameter, balanceParameter, debitAmountParameter, creditAmountParameter);
         }
     
-        public virtual int sp_GetARStatementOutStandingData(string acCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        public virtual int sp_GetARStatementOutStandingData(string acCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<decimal> c, Nullable<decimal> d, Nullable<decimal> balance, Nullable<decimal> debitAmount, Nullable<decimal> creditAmount)
         {
             var acCodeParameter = acCode != null ?
                 new ObjectParameter("AcCode", acCode) :
@@ -916,7 +962,27 @@ namespace ASI.MGC.FS.Model
                 new ObjectParameter("EndDate", endDate) :
                 new ObjectParameter("EndDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetARStatementOutStandingData", acCodeParameter, startDateParameter, endDateParameter);
+            var cParameter = c.HasValue ?
+                new ObjectParameter("C", c) :
+                new ObjectParameter("C", typeof(decimal));
+    
+            var dParameter = d.HasValue ?
+                new ObjectParameter("D", d) :
+                new ObjectParameter("D", typeof(decimal));
+    
+            var balanceParameter = balance.HasValue ?
+                new ObjectParameter("Balance", balance) :
+                new ObjectParameter("Balance", typeof(decimal));
+    
+            var debitAmountParameter = debitAmount.HasValue ?
+                new ObjectParameter("DebitAmount", debitAmount) :
+                new ObjectParameter("DebitAmount", typeof(decimal));
+    
+            var creditAmountParameter = creditAmount.HasValue ?
+                new ObjectParameter("CreditAmount", creditAmount) :
+                new ObjectParameter("CreditAmount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetARStatementOutStandingData", acCodeParameter, startDateParameter, endDateParameter, cParameter, dParameter, balanceParameter, debitAmountParameter, creditAmountParameter);
         }
     
         public virtual int sp_GetStockLedgerData(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
@@ -1153,6 +1219,32 @@ namespace ASI.MGC.FS.Model
                 new ObjectParameter("PartyId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetPartyAllocationDocumentsCredit_Result>("sp_GetPartyAllocationDocumentsCredit", partyIdParameter);
+        }
+    
+        public virtual ObjectResult<rpt_ARStatement2_Result> rpt_ARStatement2(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_ARStatement2_Result>("rpt_ARStatement2", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_ARStatementOutstanding_Result> rpt_ARStatementOutstanding(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_ARStatementOutstanding_Result>("rpt_ARStatementOutstanding", sTARTDATEParameter, eNDDATEParameter);
         }
     }
 }

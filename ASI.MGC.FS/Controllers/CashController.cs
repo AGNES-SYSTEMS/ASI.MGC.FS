@@ -519,13 +519,13 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult SaveCashMemoReversal(BANKTRANSACTION objBankTransaction)
         {
             bool success = false;
-            string invNo = objBankTransaction.DOCNUMBER_BT;
-            string revInvNo = "Rev" + objBankTransaction.DOCNUMBER_BT;
+            string cashReceiptNo = objBankTransaction.DOCNUMBER_BT;
+            string revRCTNo = "Rev" + objBankTransaction.DOCNUMBER_BT;
             try
             {
                 // Reversing Bank Transactions
                 var bankTransactionData = (from bankTransaction in _unitOfWork.Repository<BANKTRANSACTION>().Query().Get()
-                                           where bankTransaction.DOCNUMBER_BT.Equals(invNo)
+                                           where bankTransaction.DOCNUMBER_BT.Equals(cashReceiptNo)
                                            select bankTransaction).ToList();
                 foreach (var entry in bankTransactionData)
                 {
@@ -536,9 +536,9 @@ namespace ASI.MGC.FS.Controllers
                         objBnk.CREDITAMOUT_BT = entry.DEBITAMOUT_BT;
                         objBnk.DOCDATE_BT = DateTime.Now;
                         objBnk.GLDATE_BT = entry.GLDATE_BT;
-                        objBnk.DOCNUMBER_BT = revInvNo;
+                        objBnk.DOCNUMBER_BT = revRCTNo;
                         objBnk.BANKCODE_BT = entry.BANKCODE_BT;
-                        objBnk.OTHERREF_BT = invNo;
+                        objBnk.OTHERREF_BT = cashReceiptNo;
                         objBnk.STATUS_BT = "R";
                     }
                     if (Convert.ToDecimal(entry.CREDITAMOUT_BT) > 0)
@@ -547,9 +547,9 @@ namespace ASI.MGC.FS.Controllers
                         objBnk.DEBITAMOUT_BT = entry.CREDITAMOUT_BT;
                         objBnk.DOCDATE_BT = DateTime.Now;
                         objBnk.GLDATE_BT = entry.GLDATE_BT;
-                        objBnk.DOCNUMBER_BT = revInvNo;
+                        objBnk.DOCNUMBER_BT = revRCTNo;
                         objBnk.BANKCODE_BT = entry.BANKCODE_BT;
-                        objBnk.OTHERREF_BT = invNo;
+                        objBnk.OTHERREF_BT = cashReceiptNo;
                         objBnk.STATUS_BT = "R";
                     }
                     _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBnk);
@@ -561,31 +561,31 @@ namespace ASI.MGC.FS.Controllers
                 }
                 // Reversing ArApLedger Transactions
                 var ArApLedgerData = (from ArApLedger in _unitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
-                                      where ArApLedger.DOCNUMBER_ART.Equals(invNo)
+                                      where ArApLedger.DOCNUMBER_ART.Equals(cashReceiptNo)
                                       select ArApLedger).ToList();
                 foreach (var entry in ArApLedgerData)
                 {
                     AR_AP_LEDGER objArAp = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
                     if (Convert.ToDecimal(entry.DEBITAMOUNT_ART) > 0)
                     {
-                        objArAp.DOCNUMBER_ART = revInvNo;
+                        objArAp.DOCNUMBER_ART = revRCTNo;
                         objArAp.ARAPCODE_ART = entry.ARAPCODE_ART;
                         objArAp.DODATE_ART = DateTime.Now;
                         objArAp.GLDATE_ART = entry.GLDATE_ART;
                         objArAp.DEBITAMOUNT_ART = 0;
                         objArAp.CREDITAMOUNT_ART = entry.DEBITAMOUNT_ART;
-                        objArAp.OTHERREF_ART = invNo;
+                        objArAp.OTHERREF_ART = cashReceiptNo;
                         objArAp.STATUS_ART = "R";
                     }
                     if (Convert.ToDecimal(entry.CREDITAMOUNT_ART) > 0)
                     {
-                        objArAp.DOCNUMBER_ART = revInvNo;
+                        objArAp.DOCNUMBER_ART = revRCTNo;
                         objArAp.ARAPCODE_ART = entry.ARAPCODE_ART;
                         objArAp.DODATE_ART = DateTime.Now;
                         objArAp.GLDATE_ART = entry.GLDATE_ART;
                         objArAp.CREDITAMOUNT_ART = 0;
                         objArAp.DEBITAMOUNT_ART = entry.CREDITAMOUNT_ART;
-                        objArAp.OTHERREF_ART = invNo;
+                        objArAp.OTHERREF_ART = cashReceiptNo;
                         objArAp.STATUS_ART = "R";
                     }
                     _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArAp);
@@ -597,31 +597,31 @@ namespace ASI.MGC.FS.Controllers
                 }
                 // Reversing GL Transactions
                 var glTransactionData = (from glTransaction in _unitOfWork.Repository<GLTRANSACTION1>().Query().Get()
-                                         where glTransaction.DOCNUMBER_GLT.Equals(invNo)
+                                         where glTransaction.DOCNUMBER_GLT.Equals(cashReceiptNo)
                                          select glTransaction).ToList();
                 foreach (var entry in glTransactionData)
                 {
                     GLTRANSACTION1 objGlt = _unitOfWork.Repository<GLTRANSACTION1>().Create();
                     if (Convert.ToDecimal(entry.DEBITAMOUNT_GLT) > 0)
                     {
-                        objGlt.DOCNUMBER_GLT = revInvNo;
+                        objGlt.DOCNUMBER_GLT = revRCTNo;
                         objGlt.GLACCODE_GLT = entry.GLACCODE_GLT;
                         objGlt.DOCDATE_GLT = DateTime.Now;
                         objGlt.GLDATE_GLT = entry.GLDATE_GLT;
                         objGlt.DEBITAMOUNT_GLT = 0;
                         objGlt.CREDITAMOUNT_GLT = entry.DEBITAMOUNT_GLT;
-                        objGlt.OTHERREF_GLT = invNo;
+                        objGlt.OTHERREF_GLT = cashReceiptNo;
                         objGlt.GLSTATUS_GLT = "R";
                     }
                     if (Convert.ToDecimal(entry.CREDITAMOUNT_GLT) > 0)
                     {
-                        objGlt.DOCNUMBER_GLT = revInvNo;
+                        objGlt.DOCNUMBER_GLT = revRCTNo;
                         objGlt.GLACCODE_GLT = entry.GLACCODE_GLT;
                         objGlt.DOCDATE_GLT = DateTime.Now;
                         objGlt.GLDATE_GLT = entry.GLDATE_GLT;
                         objGlt.DEBITAMOUNT_GLT = entry.CREDITAMOUNT_GLT;
                         objGlt.CREDITAMOUNT_GLT = 0;
-                        objGlt.OTHERREF_GLT = invNo;
+                        objGlt.OTHERREF_GLT = cashReceiptNo;
                         objGlt.GLSTATUS_GLT = "R";
                     }
                     _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGlt);
@@ -633,7 +633,7 @@ namespace ASI.MGC.FS.Controllers
                 }
                 // Clearing Stock Ledger
                 var stockLedgerData = (from stockLedger in _unitOfWork.Repository<STOCKLEDGER>().Query().Get()
-                                       where stockLedger.VOUCHERNO_SL.Equals(invNo)
+                                       where stockLedger.VOUCHERNO_SL.Equals(cashReceiptNo)
                                        select stockLedger).ToList();
                 foreach (var entry in stockLedgerData)
                 {
@@ -642,7 +642,7 @@ namespace ASI.MGC.FS.Controllers
                 }
                 //Reversing Job & Sale Data
                 var saleDetailData = (from saleDetail in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
-                                      where saleDetail.INVNO_SD.Equals(invNo)
+                                      where saleDetail.CASHRVNO_SD.Equals(cashReceiptNo)
                                       select saleDetail).ToList();
                 foreach (var entry in saleDetailData)
                 {
@@ -673,10 +673,10 @@ namespace ASI.MGC.FS.Controllers
         {
             var postedCashMemoList = (from saleDetails in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
                                       where saleDetails.STATUS_SD.Equals("P") && !string.IsNullOrEmpty(saleDetails.CASHRVNO_SD) && string.IsNullOrEmpty(saleDetails.DAYENDDOC_NO)
-                                      select saleDetails);
+                                      select new {saleDetails.CASHRVNO_SD}).Distinct();
             if (!string.IsNullOrEmpty(cmNo))
             {
-                postedCashMemoList = postedCashMemoList.Where(o => o.CASHRVNO_SD.Contains(cmNo));
+                postedCashMemoList = postedCashMemoList.Where(o => o.CASHRVNO_SD.Contains(cmNo)).Distinct();
             }
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
@@ -701,11 +701,12 @@ namespace ASI.MGC.FS.Controllers
             };
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
         public JsonResult getPostedCMDetails(string cmNo)
         {
             var bankData = (from bankTransaction in _unitOfWork.Repository<BANKTRANSACTION>().Query().Get()
                             where bankTransaction.DOCNUMBER_BT.Equals(cmNo)
-                            select new { bankTransaction.DOCNUMBER_BT, bankTransaction.DOCDATE_BT, bankTransaction.OTHERREF_BT, bankTransaction.BANKCODE_BT, bankTransaction.DEBITAMOUT_BT, bankTransaction.STATUS_BT }).SingleOrDefault();
+                            select new { bankTransaction.DOCNUMBER_BT, bankTransaction.DOCDATE_BT, bankTransaction.OTHERREF_BT, bankTransaction.BANKCODE_BT, bankTransaction.DEBITAMOUT_BT, bankTransaction.STATUS_BT }).FirstOrDefault();
             return Json(bankData, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetCashMemoMrvList(string sidx, string sord, int page, int rows, string mrvCode, string jobNo, string custName)

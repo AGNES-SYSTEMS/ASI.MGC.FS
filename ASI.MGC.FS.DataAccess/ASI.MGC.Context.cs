@@ -28,10 +28,10 @@ namespace ASI.MGC.FS.DataAccess
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AR_AP_MASTER> AR_AP_MASTER { get; set; }
         public virtual DbSet<ACSTATEMENT_RPT> ACSTATEMENT_RPT { get; set; }
         public virtual DbSet<ALLOCATIONMASTER> ALLOCATIONMASTERs { get; set; }
         public virtual DbSet<AR_AP_LEDGER> AR_AP_LEDGER { get; set; }
-        public virtual DbSet<AR_AP_MASTER> AR_AP_MASTER { get; set; }
         public virtual DbSet<ARMATCHING> ARMATCHINGs { get; set; }
         public virtual DbSet<BALANCESHEET> BALANCESHEETs { get; set; }
         public virtual DbSet<BANKMASTER> BANKMASTERs { get; set; }
@@ -58,7 +58,9 @@ namespace ASI.MGC.FS.DataAccess
         public virtual DbSet<JVREPORT> JVREPORTs { get; set; }
         public virtual DbSet<LOCATIONMASTER> LOCATIONMASTERs { get; set; }
         public virtual DbSet<MATERIALRECEIPTMASTER> MATERIALRECEIPTMASTERs { get; set; }
+        public virtual DbSet<MESMachine> MESMachines { get; set; }
         public virtual DbSet<MESRole> MESRoles { get; set; }
+        public virtual DbSet<MESUnAuthenticatedUsersAccess> MESUnAuthenticatedUsersAccesses { get; set; }
         public virtual DbSet<MESUserLoginDetail> MESUserLoginDetails { get; set; }
         public virtual DbSet<MESUserProfile> MESUserProfiles { get; set; }
         public virtual DbSet<MESUserRole> MESUserRoles { get; set; }
@@ -66,6 +68,7 @@ namespace ASI.MGC.FS.DataAccess
         public virtual DbSet<MRV_REPORT_CHD> MRV_REPORT_CHD { get; set; }
         public virtual DbSet<MRVNO_REPORT> MRVNO_REPORT { get; set; }
         public virtual DbSet<MRVREFERENCE> MRVREFERENCEs { get; set; }
+        public virtual DbSet<NOGENERATOR> NOGENERATORs { get; set; }
         public virtual DbSet<PANDL_SETTINGS> PANDL_SETTINGS { get; set; }
         public virtual DbSet<PRODUCTMASTER> PRODUCTMASTERs { get; set; }
         public virtual DbSet<PROFITANDLOSS_RPT> PROFITANDLOSS_RPT { get; set; }
@@ -80,7 +83,6 @@ namespace ASI.MGC.FS.DataAccess
         public virtual DbSet<STOCK_REPORT> STOCK_REPORT { get; set; }
         public virtual DbSet<STOCKLEDGER> STOCKLEDGERs { get; set; }
         public virtual DbSet<STOCKLEDGER_REPORT> STOCKLEDGER_REPORT { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TELEPHONE_DIRECTORY> TELEPHONE_DIRECTORY { get; set; }
         public virtual DbSet<TEMPREPORT> TEMPREPORTs { get; set; }
         public virtual DbSet<TRIALBALANCE> TRIALBALANCEs { get; set; }
@@ -88,9 +90,6 @@ namespace ASI.MGC.FS.DataAccess
         public virtual DbSet<USER> USERs { get; set; }
         public virtual DbSet<VOUCHERCHILD_RPT> VOUCHERCHILD_RPT { get; set; }
         public virtual DbSet<VOUCHERMASTER_RPT> VOUCHERMASTER_RPT { get; set; }
-        public virtual DbSet<MESMachine> MESMachines { get; set; }
-        public virtual DbSet<MESUnAuthenticatedUsersAccess> MESUnAuthenticatedUsersAccesses { get; set; }
-        public virtual DbSet<NOGENERATOR> NOGENERATORs { get; set; }
     
         public virtual ObjectResult<rpt_BankPayment_Result> rpt_BankPayment(string vTYPE, string vCODE)
         {
@@ -260,19 +259,6 @@ namespace ASI.MGC.FS.DataAccess
                 new ObjectParameter("ENDDATE", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_ARStatement_Result>("rpt_ARStatement", sTARTDATEParameter, eNDDATEParameter);
-        }
-    
-        public virtual ObjectResult<rpt_ARStatementOutstanding_Result> rpt_ARStatementOutstanding(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
-        {
-            var sTARTDATEParameter = sTARTDATE.HasValue ?
-                new ObjectParameter("STARTDATE", sTARTDATE) :
-                new ObjectParameter("STARTDATE", typeof(System.DateTime));
-    
-            var eNDDATEParameter = eNDDATE.HasValue ?
-                new ObjectParameter("ENDDATE", eNDDATE) :
-                new ObjectParameter("ENDDATE", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_ARStatementOutstanding_Result>("rpt_ARStatementOutstanding", sTARTDATEParameter, eNDDATEParameter);
         }
     
         public virtual ObjectResult<rpt_ARSummary_Result> rpt_ARSummary(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
@@ -1234,6 +1220,32 @@ namespace ASI.MGC.FS.DataAccess
                 new ObjectParameter("PartyId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetPartyAllocationDocumentsCredit_Result>("sp_GetPartyAllocationDocumentsCredit", partyIdParameter);
+        }
+    
+        public virtual ObjectResult<rpt_ARStatement2_Result> rpt_ARStatement2(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_ARStatement2_Result>("rpt_ARStatement2", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<rpt_ARStatementOutstanding_Result> rpt_ARStatementOutstanding(Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        {
+            var sTARTDATEParameter = sTARTDATE.HasValue ?
+                new ObjectParameter("STARTDATE", sTARTDATE) :
+                new ObjectParameter("STARTDATE", typeof(System.DateTime));
+    
+            var eNDDATEParameter = eNDDATE.HasValue ?
+                new ObjectParameter("ENDDATE", eNDDATE) :
+                new ObjectParameter("ENDDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_ARStatementOutstanding_Result>("rpt_ARStatementOutstanding", sTARTDATEParameter, eNDDATEParameter);
         }
     }
 }
