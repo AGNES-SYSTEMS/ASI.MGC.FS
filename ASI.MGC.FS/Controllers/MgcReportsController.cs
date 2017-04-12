@@ -155,107 +155,111 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult FetchPLData(FormCollection frm)
         {
             bool success = false;
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                if (!string.IsNullOrEmpty(frm["startDate"]) && !string.IsNullOrEmpty(frm["endDate"]))
+                try
                 {
-                    var startDate = Convert.ToDateTime(frm["startDate"]);
-                    var endDate = Convert.ToDateTime(frm["endDate"]);
-                    if (endDate > startDate)
+                    if (!string.IsNullOrEmpty(frm["startDate"]) && !string.IsNullOrEmpty(frm["endDate"]))
                     {
-                        decimal openingBalance = default(decimal);
-                        decimal uptoYear = default(decimal);
-
-                        //decimal debitAmount = default(decimal);
-                        //decimal creditAmount = default(decimal);
-                        //decimal netAmount = default(decimal);
-                        string plAccType = string.Empty;
-                        //short i = 0;
-                        //decimal qty = default(decimal);
-                        //decimal rate = default(decimal);
-                        //decimal stockAmount = default(decimal);
-
-                        //decimal curMonth = default(decimal);
-                        //decimal curYear = default(decimal);
-                        DateTime yearStart = Convert.ToDateTime("01-jan-" + endDate.Year);
-                        string plCode = string.Empty;
-                        _unitOfWork.Truncate("PROFITANDLOSS_RPT");
-                        var glMaster = (from glm in _unitOfWork.Repository<GLMASTER>().Query().Get()
-                                        select new { glm.GLCODE_LM, glm.GLDESCRIPTION_LM }).ToList();
-                        var filteredGlMaster = glMaster.ToList().Where(glm => Convert.ToInt32(glm.GLCODE_LM) >= 3000 && Convert.ToInt32(glm.GLCODE_LM) <= 4999);
-
-                        foreach (var item in filteredGlMaster)
+                        var startDate = Convert.ToDateTime(frm["startDate"]);
+                        var endDate = Convert.ToDateTime(frm["endDate"]);
+                        if (endDate > startDate)
                         {
-                            var glCode = Convert.ToInt32(item.GLCODE_LM);
-                            if (glCode >= 3000 & glCode < 3500)
-                            {
-                                plCode = "B";
-                                plAccType = "Sales";
-                            }
-                            if (glCode >= 3500 & glCode < 4000)
-                            {
-                                plCode = "D";
-                                plAccType = "Other Income";
-                            }
-                            if (glCode >= 4000 & glCode < 4500)
-                            {
-                                plCode = "A";
-                                plAccType = "Cost of Sales";
-                            }
-                            if (glCode >= 4500 & glCode < 5000)
-                            {
-                                plCode = "C";
-                                plAccType = "Other Expense";
-                            }
-                            openingBalance = 0;
+                            decimal openingBalance = default(decimal);
+                            decimal uptoYear = default(decimal);
 
-                            var sumUptoYear = (from glt in _unitOfWork.Repository<GLTRANSACTION1>().Query().Get()
-                                               where glt.GLACCODE_GLT.Equals(item.GLCODE_LM) &&
-                                               (glt.GLDATE_GLT >= yearStart && glt.GLDATE_GLT <= endDate)
-                                               select (glt.DEBITAMOUNT_GLT - glt.CREDITAMOUNT_GLT)).Sum();
-                            uptoYear = sumUptoYear != null ? Convert.ToDecimal(sumUptoYear) : 0;
-                            var sumUptoSelectedDate = (from glt in _unitOfWork.Repository<GLTRANSACTION1>().Query().Get()
-                                                       where glt.GLACCODE_GLT.Equals(item.GLCODE_LM) &&
-                                                       (glt.GLDATE_GLT >= startDate && glt.GLDATE_GLT <= endDate)
-                                                       select (glt.DEBITAMOUNT_GLT - glt.CREDITAMOUNT_GLT)).Sum();
-                            openingBalance = sumUptoYear != null ? Convert.ToDecimal(sumUptoYear) : 0;
-                            var rptPLStatementObj = _unitOfWork.Repository<PROFITANDLOSS_RPT>().Create();
-                            rptPLStatementObj.ACCOUNTCODE_PL = plAccType;
-                            rptPLStatementObj.DESCRIPTION_PL = item.GLCODE_LM + " " + item.GLDESCRIPTION_LM;
-                            rptPLStatementObj.CURMONTH_PL = openingBalance;
-                            rptPLStatementObj.CURRENT_YEARTODATE = uptoYear;
-                            rptPLStatementObj.GROUPCODE = plCode;
-                            _unitOfWork.Repository<PROFITANDLOSS_RPT>().Insert(rptPLStatementObj);
+                            //decimal debitAmount = default(decimal);
+                            //decimal creditAmount = default(decimal);
+                            //decimal netAmount = default(decimal);
+                            string plAccType = string.Empty;
+                            //short i = 0;
+                            //decimal qty = default(decimal);
+                            //decimal rate = default(decimal);
+                            //decimal stockAmount = default(decimal);
+
+                            //decimal curMonth = default(decimal);
+                            //decimal curYear = default(decimal);
+                            DateTime yearStart = Convert.ToDateTime("01-jan-" + endDate.Year);
+                            string plCode = string.Empty;
+                            _unitOfWork.Truncate("PROFITANDLOSS_RPT");
+                            var glMaster = (from glm in _unitOfWork.Repository<GLMASTER>().Query().Get()
+                                            select new { glm.GLCODE_LM, glm.GLDESCRIPTION_LM }).ToList();
+                            var filteredGlMaster = glMaster.ToList().Where(glm => Convert.ToInt32(glm.GLCODE_LM) >= 3000 && Convert.ToInt32(glm.GLCODE_LM) <= 4999);
+
+                            foreach (var item in filteredGlMaster)
+                            {
+                                var glCode = Convert.ToInt32(item.GLCODE_LM);
+                                if (glCode >= 3000 & glCode < 3500)
+                                {
+                                    plCode = "B";
+                                    plAccType = "Sales";
+                                }
+                                if (glCode >= 3500 & glCode < 4000)
+                                {
+                                    plCode = "D";
+                                    plAccType = "Other Income";
+                                }
+                                if (glCode >= 4000 & glCode < 4500)
+                                {
+                                    plCode = "A";
+                                    plAccType = "Cost of Sales";
+                                }
+                                if (glCode >= 4500 & glCode < 5000)
+                                {
+                                    plCode = "C";
+                                    plAccType = "Other Expense";
+                                }
+                                openingBalance = 0;
+
+                                var sumUptoYear = (from glt in _unitOfWork.Repository<GLTRANSACTION1>().Query().Get()
+                                                   where glt.GLACCODE_GLT.Equals(item.GLCODE_LM) &&
+                                                   (glt.GLDATE_GLT >= yearStart && glt.GLDATE_GLT <= endDate)
+                                                   select (glt.DEBITAMOUNT_GLT - glt.CREDITAMOUNT_GLT)).Sum();
+                                uptoYear = sumUptoYear != null ? Convert.ToDecimal(sumUptoYear) : 0;
+                                var sumUptoSelectedDate = (from glt in _unitOfWork.Repository<GLTRANSACTION1>().Query().Get()
+                                                           where glt.GLACCODE_GLT.Equals(item.GLCODE_LM) &&
+                                                           (glt.GLDATE_GLT >= startDate && glt.GLDATE_GLT <= endDate)
+                                                           select (glt.DEBITAMOUNT_GLT - glt.CREDITAMOUNT_GLT)).Sum();
+                                openingBalance = sumUptoYear != null ? Convert.ToDecimal(sumUptoYear) : 0;
+                                var rptPLStatementObj = _unitOfWork.Repository<PROFITANDLOSS_RPT>().Create();
+                                rptPLStatementObj.ACCOUNTCODE_PL = plAccType;
+                                rptPLStatementObj.DESCRIPTION_PL = item.GLCODE_LM + " " + item.GLDESCRIPTION_LM;
+                                rptPLStatementObj.CURMONTH_PL = openingBalance;
+                                rptPLStatementObj.CURRENT_YEARTODATE = uptoYear;
+                                rptPLStatementObj.GROUPCODE = plCode;
+                                _unitOfWork.Repository<PROFITANDLOSS_RPT>().Insert(rptPLStatementObj);
+                                _unitOfWork.Save();
+                            }
+                            openingBalance = fn_StockValution(startDate);
+                            uptoYear = fn_StockValution(yearStart);
+
+                            //PROFITANDLOSS_RPT rptPLStatementOpn = null;
+                            var rptPLStatementOpn = _unitOfWork.Repository<PROFITANDLOSS_RPT>().Create();
+                            rptPLStatementOpn.ACCOUNTCODE_PL = plAccType;
+                            rptPLStatementOpn.DESCRIPTION_PL = "Opening Stock";
+                            rptPLStatementOpn.CURMONTH_PL = openingBalance;
+                            rptPLStatementOpn.CURRENT_YEARTODATE = uptoYear;
+                            rptPLStatementOpn.GROUPCODE = "A";
+                            _unitOfWork.Repository<PROFITANDLOSS_RPT>().Insert(rptPLStatementOpn);
+                            _unitOfWork.Save();
+
+                            var rptPLStatementCls = _unitOfWork.Repository<PROFITANDLOSS_RPT>().Create();
+                            rptPLStatementCls.ACCOUNTCODE_PL = "Sales";
+                            rptPLStatementCls.DESCRIPTION_PL = "Closing Stock";
+                            rptPLStatementCls.CURMONTH_PL = openingBalance;
+                            rptPLStatementCls.CURRENT_YEARTODATE = uptoYear;
+                            rptPLStatementCls.GROUPCODE = "B";
+                            _unitOfWork.Repository<PROFITANDLOSS_RPT>().Insert(rptPLStatementCls);
                             _unitOfWork.Save();
                         }
-                        openingBalance = fn_StockValution(startDate);
-                        uptoYear = fn_StockValution(yearStart);
-
-                        //PROFITANDLOSS_RPT rptPLStatementOpn = null;
-                        var rptPLStatementOpn = _unitOfWork.Repository<PROFITANDLOSS_RPT>().Create();
-                        rptPLStatementOpn.ACCOUNTCODE_PL = plAccType;
-                        rptPLStatementOpn.DESCRIPTION_PL = "Opening Stock";
-                        rptPLStatementOpn.CURMONTH_PL = openingBalance;
-                        rptPLStatementOpn.CURRENT_YEARTODATE = uptoYear;
-                        rptPLStatementOpn.GROUPCODE = "A";
-                        _unitOfWork.Repository<PROFITANDLOSS_RPT>().Insert(rptPLStatementOpn);
-                        _unitOfWork.Save();
-
-                        var rptPLStatementCls = _unitOfWork.Repository<PROFITANDLOSS_RPT>().Create();
-                        rptPLStatementCls.ACCOUNTCODE_PL = "Sales";
-                        rptPLStatementCls.DESCRIPTION_PL = "Closing Stock";
-                        rptPLStatementCls.CURMONTH_PL = openingBalance;
-                        rptPLStatementCls.CURRENT_YEARTODATE = uptoYear;
-                        rptPLStatementCls.GROUPCODE = "B";
-                        _unitOfWork.Repository<PROFITANDLOSS_RPT>().Insert(rptPLStatementCls);
-                        _unitOfWork.Save();
                     }
+                    success = true;
+                    transaction.Commit();
                 }
-
-            }
-            catch (Exception)
-            {
-
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                }
             }
             return Json(success, JsonRequestBehavior.AllowGet);
         }

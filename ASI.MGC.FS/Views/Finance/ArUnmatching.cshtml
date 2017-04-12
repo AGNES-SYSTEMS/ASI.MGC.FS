@@ -22,46 +22,46 @@
                 <div class="container">
                     @using (Ajax.BeginForm("SaveArUnMatching", "Finance", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formArUnMatching", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
-                        <input id="hdnProductDetails" name="allocDetails" type="hidden" />
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Doc Type:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.DropDownList("DocType", new SelectList(@ViewBag.DocType, "Key", "Value", "1"), new { ID = "ddlDocType", @class = "form-control" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label id="lblDocNo" class="control-label col-md-4 small ">Invoice Number:</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.DOCCNUMBER_ARM, null, new { ID = "txtInvoiceNumber", Class = "form-control", @required = "required"})
-                                </div>
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
+                    <input id="hdnProductDetails" name="allocDetails" type="hidden" />
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Doc Type:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.DropDownList("DocType", new SelectList(@ViewBag.DocType, "Key", "Value", "1"), new { ID = "ddlDocType", @class = "form-control" })
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-10">
-                                <fieldset>
-                                    <legend>UnMatching Details</legend>
-                                    <div id="grid" class="panel-body">
-                                        <section id="unseen">
-                                            <table id="tblUnMatchingDetails"></table>
-                                        </section>
-                                    </div>
-                                </fieldset>
+                        <div class="col-md-6 form-group">
+                            <label id="lblDocNo" class="control-label col-md-4 small ">Invoice Number:</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(o => o.DOCCNUMBER_ARM, null, new { ID = "txtInvoiceNumber", Class = "form-control", @required = "required"})
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small "></label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    <input type="submit" class="btn btn-success col-md-3 pull-right"  id="btnUnMatch" value="Save">
-                                    <button type="button" id="btnNew" class="btn btn-success">New</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <fieldset>
+                                <legend>UnMatching Details</legend>
+                                <div id="grid" class="panel-body">
+                                    <section id="unseen">
+                                        <table id="tblUnMatchingDetails"></table>
+                                    </section>
                                 </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small "></label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                <input type="submit" class="btn btn-success col-md-3 pull-right" id="btnUnMatch" value="Save">
+                                <button type="button" id="btnNew" class="btn btn-success">New</button>
                             </div>
                         </div>
+                    </div>
                     }
                 </div>
             </div>
@@ -76,14 +76,18 @@
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
 
-        function OnSuccess(response) {
-            toastr.success("Document unmatched Successfully.");
-            $("#btnUnMatch").hide();
+        function OnSuccess(success) {
+            if (success) {
+                toastr.success("Document unmatched Successfully.");
+                $("#btnUnMatch").hide();
+            } else {
+                toastr.error("Sorry! Something went wrong, please try again.");
+            }
         }
 
         function OnFailure() {
             toastr.error("Doc Type mismatch or Doc match not found");
-            $("#btnUnMatch").hide();
+            //$("#btnUnMatch").hide();
         }
 
     </script>

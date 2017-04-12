@@ -424,6 +424,10 @@
                 //$('#tblMetarials').jqGrid("clearGridData");
                 $("#btnSubmit").hide();
             }
+            else
+            {
+                toastr.error("Sorry! Something went wrong, please try again.");
+            }
         }
 
         function OnFailure() {

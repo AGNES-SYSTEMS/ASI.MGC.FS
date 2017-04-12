@@ -72,7 +72,7 @@ function getSaleDetailByMrv() {
         }
     });
 };
-var evaluateFields = function() {
+var evaluateFields = function () {
     $("#formCashMemo").formValidation('revalidateField', 'NARRATION_ART');
     $("#formCashMemo").formValidation('revalidateField', 'ARAPCODE_ART');
     $("#formCashMemo").formValidation('revalidateField', 'CustDetail');
@@ -108,7 +108,7 @@ $(document).ready(function () {
         autoheight: true,
         autowidth: true,
         styleUI: "Bootstrap",
-        colNames: ['Sale id','Job No', 'PR Code', 'S W Code', 'Description', 'Qty', 'Unit', 'Rate', 'Credit Amount', 'Discount', 'Ship. Chrg'],
+        colNames: ['Sale id', 'Job No', 'PR Code', 'S W Code', 'Description', 'Qty', 'Unit', 'Rate', 'Credit Amount', 'Discount', 'Ship. Chrg'],
         colModel: [
             { name: 'SLNO_SD', index: 'SLNO_SD', width: 50, align: "center", sortable: false },
             { name: 'JOBNO_SD', index: 'JOBNO_SD', width: 80, align: "center", sortable: false },
@@ -144,7 +144,7 @@ $(document).ready(function () {
             autoheight: true,
             styleUI: "Bootstrap",
             colNames: [
-                'MRV No', 'Job No', 'Customer', 'Customer Details',''],
+                'MRV No', 'Job No', 'Customer', 'Customer Details', ''],
             colModel: [
             { key: true, name: 'MRVNO_MRV', index: 'MRVNO_MRV', width: 150 },
             { key: false, name: 'JOBNO_SD', index: 'JOBNO_SD', width: 200 },
@@ -239,12 +239,21 @@ $(document).ready(function () {
         e.preventDefault();
     });
     /***** End - Adding JQGRID Code For Searching Job Number and MRV Number****/
-    $('#formInvoicePrep').formValidation({
+    $('#formInvoicePrep').on('init.field.fv', function (e, data) {
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),
+            validators = data.fv.getOptions(data.field).validators;
+
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.addClass(options.icon.required).show();
+        }
+    }).formValidation({
         container: '#messages',
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
+        icon: {
+            required: 'fa fa-asterisk',
+            valid: 'fa fa-check',
+            invalid: 'fa fa-times',
+            validating: 'fa fa-refresh'
         },
         fields: {
             MRVNo: {
@@ -266,7 +275,20 @@ $(document).ready(function () {
                 }
             }
         }
-    }).on('success.form.fv', function (e) {
+    }).on('status.field.fv', function (e, data) {
+        // Remove the required icon when the field updates its status
+        var $icon = data.element.data('fv.icon'),
+            options = data.fv.getOptions(),                      // Entire options
+            validators = data.fv.getOptions(data.field).validators; // The field validators
+
+        if (validators.notEmpty && options.icon && options.icon.required) {
+            $icon.removeClass(options.icon.required).addClass('fa');
+        }
+    }).on('success.field.fv', function (e, data) {
+        if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
+            data.fv.disableSubmitButtons(true);
+        }
+    }).off('success.form.fv').on('success.form.fv', function (e) {
         debugger;
         // Prevent form submission
         e.preventDefault();

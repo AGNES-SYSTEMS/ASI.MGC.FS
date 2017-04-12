@@ -216,6 +216,7 @@
             if (!response.isJobPosted) {
                 if (response.success) {
                     toastr.success("Job is cancelled Successfully.");
+                    $("#btnSave").hide();
                 }
                 else {
                     toastr.warning("Sorry! Something went wrong, please try again.");
@@ -223,12 +224,12 @@
             } else {
                 toastr.info("Job Already Posted..You Can't Cancel this Job!!");
             }
-            $("#btnSave").hide();
+            
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
-            $("#btnSave").hide();
+            //$("#btnSave").hide();
         }
     </script>
 }

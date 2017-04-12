@@ -1005,6 +1005,7 @@
       <Prompt>VOUCHERNO</Prompt>
     </ReportParameter>
   </ReportParameters>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>b0ecdc8c-807f-430a-99f0-cfb25d5bb390</rd:ReportID>
 </Report>

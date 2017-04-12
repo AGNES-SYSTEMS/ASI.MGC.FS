@@ -23,170 +23,170 @@
                     @using (Ajax.BeginForm("SaveGLCreation", "Finance", null, new AjaxOptions { HttpMethod = "Post", OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formGLCreation", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
                         Html.EnableClientValidation();
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">GL Code</label>
-                                <div class="col-md-8">
-                                    <div class="input-group">
-                                        @Html.TextBoxFor(o => o.GLCODE_LM, null, new { ID = "txtGLCode", Class = "form-control", @required = "required" })
-                                        <span class="input-group-btn"><button type="button" id="btnGlSearch" class="btn btn-default" data-toggle="modal" data-target="#glSearchModel"><i class="fa fa-search"></i></button></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">GL Description</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.GLDESCRIPTION_LM, null, new { ID = "txtGLDesc", Class = "form-control", @required = "required" })
-                                    @Html.ValidationMessage("GLDesc")
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">GL Code</label>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(o => o.GLCODE_LM, null, new { ID = "txtGLCode", Class = "form-control", @required = "required" })
+                                    <span class="input-group-btn"><button type="button" id="btnGlSearch" class="btn btn-default" data-toggle="modal" data-target="#glSearchModel"><i class="fa fa-search"></i></button></span>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label id="lblGLDate" class="control-label col-md-4 small ">Loc Code</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.LOCATIONCODE_LM, null, new { ID = "txtLocCode", @Value = "01", Class = "form-control", @readonly = "readonly" })
-                                    @Html.ValidationMessage("LocCode")
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Main Code</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.DropDownListFor(o => o.MAINCODE_LM, new SelectList(@ViewBag.accountsType, "Key", "Value", "1"), new { ID = "ddlMainCode", @class = "form-control" })
-                                </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">GL Description</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(o => o.GLDESCRIPTION_LM, null, new { ID = "txtGLDesc", Class = "form-control", @required = "required" })
+                                @Html.ValidationMessage("GLDesc")
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Sub GL Code</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.SUBCODE_LM, null, new { ID = "txtSubGLCode", Class = "form-control", @required = "required" })
-                                    @Html.ValidationMessage("SubGLCode")
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Sub GL Desc</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("SubGLDesc", null, new { ID = "txtSubGLDesc", Class = "form-control", @required = "required" })
-                                    @Html.ValidationMessage("SubGLDesc")
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label id="lblGLDate" class="control-label col-md-4 small ">Loc Code</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(o => o.LOCATIONCODE_LM, null, new { ID = "txtLocCode", @Value = "01", Class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessage("LocCode")
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">GL Type</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.DropDownListFor(o => o.GTYPE_LM, new SelectList(@ViewBag.glType, "Key", "Value", "1"), new { ID = "ddlGLType", @class = "form-control" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">GL Date</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("GLDate", null, new { ID = "txtGLDate", Class = "form-control", @required = "required" })
-                                    @Html.ValidationMessage("GLDate")
-                                </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Main Code</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.DropDownListFor(o => o.MAINCODE_LM, new SelectList(@ViewBag.accountsType, "Key", "Value", "1"), new { ID = "ddlMainCode", @class = "form-control" })
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Opening Balance</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("OpenBalance", null, new { ID = "txtOpenBalance", Class = "form-control", @required = "required" })
-                                    @Html.ValidationMessage("OpenBalance")
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Balance Type</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.DropDownList("BalanceType", new SelectList(@ViewBag.balanceType, "Key", "Value", "1"), new { ID = "ddlBalanceType", @class = "form-control" })
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Sub GL Code</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(o => o.SUBCODE_LM, null, new { ID = "txtSubGLCode", Class = "form-control", @required = "required" })
+                                @Html.ValidationMessage("SubGLCode")
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Note (If Any)</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextAreaFor(o => o.NOTES_LM, new { ID = "txtNote", Class = "form-control" })
-                                    @Html.ValidationMessage("Note")
-                                </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Sub GL Desc</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("SubGLDesc", null, new { ID = "txtSubGLDesc", Class = "form-control", @required = "required" })
+                                @Html.ValidationMessage("SubGLDesc")
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <fieldset>
-                                    <legend>Min. 1000 &nbsp; Max. 4999</legend>
-                                    <div class="row">
-                                        <div class="col-md-6 form-group">
-                                            <div class="row">
-                                                <label class="control-label col-md-4 small ">ASSET 1000 To 1999</label>
-                                            </div>
-                                            <div class="row">
-                                                <label class="control-label col-md-8 small ">Current Asset 1000 To 1499</label>
-                                            </div>
-                                            <div class="row">
-                                                <label class="control-label col-md-8 small ">Non Current Asset 1500 To 1899</label>
-                                            </div>
-                                            <div class="row">
-                                                <label class="control-label col-md-8 small ">Intangible Asset 1900 To 1999</label>
-                                            </div>
-                                            <div class="row">
-                                                <label class="control-label col-md-4 small ">LIABILITY 2000 To 2999</label>
-                                            </div>
-                                            <div class="row">
-                                                <label class="control-label col-md-8 small ">Current Liability 2000 To 2499</label>
-                                            </div>
-                                            <div class="row">
-                                                <label class="control-label col-md-8 small ">Longe Term Liability 2500 To 2899</label>
-                                            </div>
-                                            <div class="row">
-                                                <label class="control-label col-md-8 small ">Equity/ Capital 2900 To 2999</label>
-                                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">GL Type</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.DropDownListFor(o => o.GTYPE_LM, new SelectList(@ViewBag.glType, "Key", "Value", "1"), new { ID = "ddlGLType", @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">GL Date</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("GLDate", null, new { ID = "txtGLDate", Class = "form-control", @required = "required" })
+                                @Html.ValidationMessage("GLDate")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Opening Balance</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("OpenBalance", null, new { ID = "txtOpenBalance", Class = "form-control", @required = "required" })
+                                @Html.ValidationMessage("OpenBalance")
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Balance Type</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.DropDownList("BalanceType", new SelectList(@ViewBag.balanceType, "Key", "Value", "1"), new { ID = "ddlBalanceType", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Note (If Any)</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextAreaFor(o => o.NOTES_LM, new { ID = "txtNote", Class = "form-control" })
+                                @Html.ValidationMessage("Note")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <fieldset>
+                                <legend>Min. 1000 &nbsp; Max. 4999</legend>
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <div class="row">
+                                            <label class="control-label col-md-4 small ">ASSET 1000 To 1999</label>
                                         </div>
-                                        <div class="col-md-6 form-group">
-                                            <div class="row">
-                                                <label class="control-label col-md-4 small ">INCOME 3000 To 3999</label>
-                                            </div>
-                                            <div class="row">
-                                                <label class="control-label col-md-8 small ">Sales 3000 To 3499</label>
-                                            </div>
-                                            <div class="row">
-                                                <label class="control-label col-md-8 small ">Other Income 3500 To 3999</label>
-                                            </div>
-                                            <div class="row">
-                                                <label class="control-label col-md-8 small "></label>
-                                            </div>
-                                            <div class="row">
-                                                <label class="control-label col-md-4 small ">EXPENSE 4000 To 4999</label>
-                                            </div>
-                                            <div class="row">
-                                                <label class="control-label col-md-8 small ">Cost of Sales 4000 To 4499</label>
-                                            </div>
-                                            <div class="row">
-                                                <label class="control-label col-md-8 small ">Expense 4500 To 4999</label>
-                                            </div>
-                                            <div class="row">
-                                                <label class="control-label col-md-8 small "></label>
-                                            </div>
-
+                                        <div class="row">
+                                            <label class="control-label col-md-8 small ">Current Asset 1000 To 1499</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="control-label col-md-8 small ">Non Current Asset 1500 To 1899</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="control-label col-md-8 small ">Intangible Asset 1900 To 1999</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="control-label col-md-4 small ">LIABILITY 2000 To 2999</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="control-label col-md-8 small ">Current Liability 2000 To 2499</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="control-label col-md-8 small ">Longe Term Liability 2500 To 2899</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="control-label col-md-8 small ">Equity/ Capital 2900 To 2999</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <div class="row">
+                                            <label class="control-label col-md-4 small ">INCOME 3000 To 3999</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="control-label col-md-8 small ">Sales 3000 To 3499</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="control-label col-md-8 small ">Other Income 3500 To 3999</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="control-label col-md-8 small "></label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="control-label col-md-4 small ">EXPENSE 4000 To 4999</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="control-label col-md-8 small ">Cost of Sales 4000 To 4499</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="control-label col-md-8 small ">Expense 4500 To 4999</label>
+                                        </div>
+                                        <div class="row">
+                                            <label class="control-label col-md-8 small "></label>
                                         </div>
 
                                     </div>
-                                </fieldset>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small "></label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    <input type="submit" id="btnSave" class="btn btn-success col-md-3 pull-right" value="Save">
-                                    <button type="button" id="btnNew" class="btn btn-success">New</button>
+
                                 </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small "></label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                <input type="submit" id="btnSave" class="btn btn-success col-md-3 pull-right" value="Save">
+                                <button type="button" id="btnNew" class="btn btn-success">New</button>
                             </div>
                         </div>
+                    </div>
                     }
                 </div>
             </div>
@@ -246,13 +246,15 @@
         function OnSuccess(success) {
             if (success) {
                 toastr.success("General Ledger has been added Successfully.");
+                $("#btnSave").hide();
+            } else {
+                toastr.error("Sorry! Something went wrong, please try again.");
             }
-            $("#btnSave").hide();
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
-            $("#btnSave").hide();
+            //$("#btnSave").hide();
         }
 
     </script>

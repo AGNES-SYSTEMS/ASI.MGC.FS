@@ -99,6 +99,19 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div id="empGrid" class="panel-body">
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("empIdSearch", null, new { ID = "txtEmpIdSearch", Class = "form-control", @placeholder = "Search Employee Code here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group ">
+                                        <div class="col-md-11 input-group">
+                                            @Html.TextBox("empNameSearch", null, new { ID = "txtEmpNameSearch", Class = "form-control", @placeholder = "Search Employee Name here..." })
+                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <br /><br />
                                     <table id="tblEmployeeSearch" style="width:100%"></table>
                                     <div id="empPager"></div>
                                 </div>

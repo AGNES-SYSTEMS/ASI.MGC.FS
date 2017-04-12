@@ -2328,6 +2328,7 @@ Om1vZGlmeQAyMDE3LTAyLTIwVDEzOjE3OjM4LTA1OjAwkQVcrwAAABF0RVh0anBlZzpjb2xvcnNwYWNl
     </EmbeddedImage>
   </EmbeddedImages>
   <Language>en-GB</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>bf502da5-21e8-416d-8f53-5faf809f33ec</rd:ReportID>
 </Report>

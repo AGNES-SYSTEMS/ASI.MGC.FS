@@ -362,8 +362,10 @@
                 toastr.success("Return Purchase is added Successfully.");
                 isReportOpened = true;
                 openPurchaseReturn(rpcNo);
+                $("#btnSave").hide();
+            } else {
+                toastr.error("Sorry! Something went wrong, please try again.");
             }
-            $("#btnSave").hide();
         }
 
         function OnFailure() {

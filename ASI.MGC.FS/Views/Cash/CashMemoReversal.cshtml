@@ -140,12 +140,14 @@
             if (success) {
                 toastr.success("Cash Memo is reversed Successfully.");
                 $("#btnSave").hide();
+            } else {
+                toastr.error("Sorry! Something went wrong, please try again.");
             }
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
-            $("#btnSave").hide();
+            //$("#btnSave").hide();
         }
     </script>
 }

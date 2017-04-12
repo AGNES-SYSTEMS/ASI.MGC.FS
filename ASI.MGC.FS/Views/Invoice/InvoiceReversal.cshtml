@@ -51,7 +51,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label  class="control-label col-md-4 small ">Customer:</label>
+                            <label class="control-label col-md-4 small ">Customer:</label>
                             <div class="col-md-8 paddingLeftRight0">
                                 @Html.TextBox("Customer", null, new { ID = "txtCustomer", Class = "form-control", @readonly = "readonly", @required = "required" })
                             </div>
@@ -59,7 +59,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            <label  class="control-label col-md-4 small ">Amount:</label>
+                            <label class="control-label col-md-4 small ">Amount:</label>
                             <div class="col-md-8 paddingLeftRight0">
                                 @Html.TextBoxFor(m => m.CASHTOTAL_SD, null, new { ID = "txtAmount", Class = "form-control", @readonly = "readonly", @required="required" })
                             </div>
@@ -140,12 +140,14 @@
             if (success) {
                 toastr.success("Invoice is reversed Successfully.");
                 $("#btnSave").hide();
+            } else {
+                toastr.error("Sorry! Something went wrong, please try again.");
             }
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
-            $("#btnSave").hide();
+            //$("#btnSave").hide();
         }
     </script>
 }

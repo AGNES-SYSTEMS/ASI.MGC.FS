@@ -75,7 +75,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -112,7 +111,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -149,7 +147,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -186,7 +183,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -223,7 +219,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -260,7 +255,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -297,7 +291,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -925,6 +918,7 @@
       <Prompt>ENDDATE</Prompt>
     </ReportParameter>
   </ReportParameters>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>dd890b8a-a8dc-4290-97e6-9a92adf2992b</rd:ReportID>
 </Report>

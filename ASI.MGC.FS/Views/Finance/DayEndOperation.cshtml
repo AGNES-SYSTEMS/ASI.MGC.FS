@@ -21,88 +21,88 @@
                 <div class="container">
                     @using (Ajax.BeginForm("SaveDayEndOperation", "Finance", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formDayEndProcess", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Day From</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.DayFrom, null, new { ID = "txtDayFrom", Class = "form-control", @readonly = "readonly", @required = "required" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Date</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.Date, null, new { ID = "txtDate", @Value = DateTime.Now.ToShortDateString(), Class = "form-control", @readonly = "readonly", @required = "required" })
-                                </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Day From</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(o => o.DayFrom, null, new { ID = "txtDayFrom", Class = "form-control", @readonly = "readonly", @required = "required" })
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Day To</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.DayTo, null, new { ID = "txtDayTo", @Value = DateTime.Now.ToShortDateString(), Class = "form-control" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Doc No</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.DocumentNo, null, new { ID = "txtDocNo", Class = "form-control", @readonly = "readonly", @required = "required" })
-                                </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Date</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(o => o.Date, null, new { ID = "txtDate", @Value = DateTime.Now.ToShortDateString(), Class = "form-control", @readonly = "readonly", @required = "required" })
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Last Updated Date</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.LastUpdateDate, null, new { ID = "txtLastUpdatedDate", Class = "form-control", @readonly = "readonly", @required = "required" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Last Doc No</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.LastDocumentNo, null, new { ID = "txtLastDocNo", Class = "form-control", @readonly = "readonly" })
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Day To</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(o => o.DayTo, null, new { ID = "txtDayTo", @Value = DateTime.Now.ToShortDateString(), Class = "form-control" })
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Job Total</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.JobTotal, null, new { ID = "txtJobTotal", Class = "form-control", @readonly = "readonly", @required = "required" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Sales Total</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.SalesTotal, null, new { ID = "txtSalesTotal", Class = "form-control", @readonly = "readonly", @required = "required" })
-                                </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Doc No</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(o => o.DocumentNo, null, new { ID = "txtDocNo", Class = "form-control", @readonly = "readonly", @required = "required" })
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Shipping Total</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.ShippingTotal, null, new { ID = "txtShippingTotal", Class = "form-control", @readonly = "readonly", @required = "required" })
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small ">Discount Total</label>
-                                <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.DiscountTotal, null, new { ID = "txtDiscountTotal", Class = "form-control", @readonly = "readonly", @required = "required" })
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Last Updated Date</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(o => o.LastUpdateDate, null, new { ID = "txtLastUpdatedDate", Class = "form-control", @readonly = "readonly", @required = "required" })
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label class="control-label col-md-4 small "></label>
-                                <div class="col-md-8">
-                                    <button type="button" id="btnStart" class="btn btn-success">Start</button>
-                                    <button type="submit" id="btnSave" class="btn btn-success">Save</button>
-                                    <button type="button" id="btnNew" class="btn btn-success">New</button>
-                                </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Last Doc No</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(o => o.LastDocumentNo, null, new { ID = "txtLastDocNo", Class = "form-control", @readonly = "readonly" })
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Job Total</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(o => o.JobTotal, null, new { ID = "txtJobTotal", Class = "form-control", @readonly = "readonly", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Sales Total</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(o => o.SalesTotal, null, new { ID = "txtSalesTotal", Class = "form-control", @readonly = "readonly", @required = "required" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Shipping Total</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(o => o.ShippingTotal, null, new { ID = "txtShippingTotal", Class = "form-control", @readonly = "readonly", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">Discount Total</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBoxFor(o => o.DiscountTotal, null, new { ID = "txtDiscountTotal", Class = "form-control", @readonly = "readonly", @required = "required" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small "></label>
+                            <div class="col-md-8">
+                                <button type="button" id="btnStart" class="btn btn-success">Start</button>
+                                <button type="submit" id="btnSave" class="btn btn-success">Save</button>
+                                <button type="button" id="btnNew" class="btn btn-success">New</button>
+                            </div>
+                        </div>
+                    </div>
                     }
                 </div>
             </div>
@@ -119,15 +119,16 @@
         function OnSuccess(status) {
             if (status.success) {
                 toastr.success("Day end operation completed successfully");
+                $("#btnSave").hide();
             }
             else {
                 toastr.error(status.msg);
             }
-            $("#btnSave").hide();
+
         }
         function OnFailure() {
             toastr.error("Sorry! something went wrong.");
-            $("#btnSave").hide();
+            //$("#btnSave").hide();
         }
     </script>
 }

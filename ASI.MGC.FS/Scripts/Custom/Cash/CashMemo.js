@@ -17,7 +17,7 @@ var bankSelect = function (bankId) {
         $('#BankSearchModel').modal('toggle');
     }
 };
-var evaluateFields = function() {
+var evaluateFields = function () {
     $("#formCashMemo").formValidation('revalidateField', 'MRVNo');
     $("#formCashMemo").formValidation('revalidateField', 'CustCode');
     $("#formCashMemo").formValidation('revalidateField', 'CustDetail');
@@ -92,7 +92,7 @@ $("#mrvSearchModel").on('show.bs.modal', function () {
         url: '/Cash/GetCashMemoMrvList',
         datatype: "json",
         styleUI: "Bootstrap",
-        colNames: ['MRV No','Job No', 'Customer', 'Customer Details',''],
+        colNames: ['MRV No', 'Job No', 'Customer', 'Customer Details', ''],
         colModel: [
         { key: true, name: 'MRVNO_MRV', index: 'MRVNO_MRV', width: 150 },
         { key: false, name: 'JOBNO_SD', index: 'JOBNO_SD', width: 200 },
@@ -217,7 +217,7 @@ $("#BankSearchModel").on('show.bs.modal', function () {
         datatype: "json",
         autoheight: true,
         styleUI: "Bootstrap",
-        colNames: ['Bank Code', 'Bank Name',''],
+        colNames: ['Bank Code', 'Bank Name', ''],
         colModel: [
         { key: true, name: 'BANKCODE_BM', index: 'BANKCODE_BM', width: 400 },
         { key: false, name: 'BANKNAME_BM', index: 'BANKNAME_BM', width: 400 },
@@ -290,7 +290,7 @@ $("#txtCustNameSearch").off().on("keyup", function () {
 
     var shouldSearch = $("#txtCustNameSearch").val().length >= 3 || $("#txtCustNameSearch").val().length === 0;
     if (shouldSearch) {
-        searchGrid($("#txtMrvSearch").val(),$("#txtJobNoSearch").val(), $("#txtCustNameSearch").val());
+        searchGrid($("#txtMrvSearch").val(), $("#txtJobNoSearch").val(), $("#txtCustNameSearch").val());
     }
 });
 $("#txtMrvSearch").off().on("keyup", function () {
@@ -324,12 +324,21 @@ $("#btnMRVSelect").click(function (e) {
     e.preventDefault();
 });
 /***** End - Adding JQGRID Code For Searching Job Number and MRV Number****/
-$('#formCashMemo').formValidation({
+$('#formCashMemo').on('init.field.fv', function (e, data) {
+    var $icon = data.element.data('fv.icon'),
+        options = data.fv.getOptions(),
+        validators = data.fv.getOptions(data.field).validators;
+
+    if (validators.notEmpty && options.icon && options.icon.required) {
+        $icon.addClass(options.icon.required).show();
+    }
+}).formValidation({
     container: '#messages',
-    feedbackIcons: {
-        valid: 'glyphicon glyphicon-ok',
-        invalid: 'glyphicon glyphicon-remove',
-        validating: 'glyphicon glyphicon-refresh'
+    icon: {
+        required: 'fa fa-asterisk',
+        valid: 'fa fa-check',
+        invalid: 'fa fa-times',
+        validating: 'fa fa-refresh'
     },
     fields: {
         MRVNo: {
@@ -340,7 +349,20 @@ $('#formCashMemo').formValidation({
             }
         }
     }
-}).on('success.form.fv', function (e) {
+}).on('status.field.fv', function (e, data) {
+    // Remove the required icon when the field updates its status
+    var $icon = data.element.data('fv.icon'),
+        options = data.fv.getOptions(),                      // Entire options
+        validators = data.fv.getOptions(data.field).validators; // The field validators
+
+    if (validators.notEmpty && options.icon && options.icon.required) {
+        $icon.removeClass(options.icon.required).addClass('fa');
+    }
+}).on('success.field.fv', function (e, data) {
+    if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
+        data.fv.disableSubmitButtons(true);
+    }
+}).off('success.form.fv').on('success.form.fv', function (e) {
     debugger;
     // Prevent form submission
     e.preventDefault();

@@ -394,7 +394,7 @@ $(document).ready(function () {
         $("#txtAccountDesc").val("");
         $("#txtDebit").val("");
         $("#txtCredit").val("");
-        $("#txtNarration").val("");
+        $("#txtAccNarration").val("");
     });
     $("#txtAlDesc").on("change", function () {
         $("#allocationDetailsModelform").formValidation('revalidateField', 'AlDesc');
@@ -434,7 +434,7 @@ $(document).ready(function () {
         $("#txtAccountDesc").val("");
         $("#txtDebit").val("");
         $("#txtCredit").val("");
-        $("#txtNarration").val("");
+        $("#txtAccNarration").val("");
         selectedRowId = "";
         $("#txtDebit").prop('disabled', false);
         $("#txtCredit").prop('disabled', false);
@@ -450,7 +450,7 @@ $(document).ready(function () {
             $("#txtAccountDesc").val(ret.Description);
             $("#txtDebit").val(ret.Debit);
             $("#txtCredit").val(ret.Credit);
-            $("#txtNarration").val(ret.Narration);
+            $("#txtAccNarration").val(ret.Narration);
         }
     });
     $("#allocationDetailsModel").on('hide.bs.modal', function () {
@@ -468,13 +468,13 @@ $(document).ready(function () {
             if (selectedRowId) {
                 arrAllocDetails[selectedRowId - 1] = {
                     AlCode: $("#txtAlCode").val(), AlDescription: $("#txtAlDesc").val(), AccountCode: $("#txtAccountCode").val(), Description: $("#txtAccountDesc").val(),
-                    Debit: $("#txtDebit").val(), Credit: $("#txtCredit").val(), Narration: $("#txtNarration").val()
+                    Debit: $("#txtDebit").val(), Credit: $("#txtCredit").val(), Narration: $("#txtAccNarration").val()
                 };
             } else {
                 var arrIndex = arrAllocDetails.length;
                 arrAllocDetails[arrIndex] = {
                     AlCode: $("#txtAlCode").val(), AlDescription: $("#txtAlDesc").val(), AccountCode: $("#txtAccountCode").val(), Description: $("#txtAccountDesc").val(),
-                    Debit: $("#txtDebit").val(), Credit: $("#txtCredit").val(), Narration: $("#txtNarration").val()
+                    Debit: $("#txtDebit").val(), Credit: $("#txtCredit").val(), Narration: $("#txtAccNarration").val()
                 };
                 //var su = jQuery("#tblAllocDetails").jqGrid('addRowData', arrIndex, arrAllocDetails[arrIndex]);
             }

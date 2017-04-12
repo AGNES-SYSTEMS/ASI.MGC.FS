@@ -39,41 +39,45 @@ namespace ASI.MGC.FS.Controllers
         {
             string quotNo = "";
             var prdCount = 0;
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                quotNo = objQuotationMaster.QUOTNO_QM;
-                _unitOfWork.Repository<QUOTATION_MASTER>().Insert(objQuotationMaster);
-                _unitOfWork.Save();
-
-                string jsonPrdDetails = form["quotProds"];
-                var serializer = new JavaScriptSerializer();
-                var lstPrdDetails = serializer.Deserialize<List<QuotationCustom>>(jsonPrdDetails);
-                foreach (var prd in lstPrdDetails)
+                try
                 {
-                    prdCount++;
-                    var objQuotProduct = _unitOfWork.Repository<QUOT_PROD_MASTER>().Create();
-                    objQuotProduct.QUOTNO_QPRM = Convert.ToString(objQuotationMaster.QUOTNO_QM);
-                    objQuotProduct.PRODID_QPRM = Convert.ToString(prd.PrCode);
-                    objQuotProduct.QTY_QPRM = Convert.ToInt32(prd.Qty);
-                    objQuotProduct.SLNO_QPRM = Convert.ToInt32(prdCount);
-                    _unitOfWork.Repository<QUOT_PROD_MASTER>().Insert(objQuotProduct);
+                    quotNo = objQuotationMaster.QUOTNO_QM;
+                    _unitOfWork.Repository<QUOTATION_MASTER>().Insert(objQuotationMaster);
                     _unitOfWork.Save();
 
-                    var objQuotationRef = _unitOfWork.Repository<QOTATION_REF>().Create();
-                    objQuotationRef.QUOTNO_QREF = Convert.ToString(objQuotationMaster.QUOTNO_QM);
-                    objQuotationRef.CODE_QREF = Convert.ToString(prd.JobId);
-                    objQuotationRef.DESCRIPTION_QREF = Convert.ToString(prd.JobDesc);
-                    objQuotationRef.QTY_QREF = Convert.ToInt32(prd.Qty);
-                    objQuotationRef.RATE_QREF = Convert.ToDecimal(prd.Rate);
-                    objQuotationRef.AMOUNT_QREF = Convert.ToDecimal(prd.Rate*prd.Qty);
-                    objQuotationRef.ID_QREF = Convert.ToInt32(prdCount);
-                    _unitOfWork.Repository<QOTATION_REF>().Insert(objQuotationRef);
-                    _unitOfWork.Save();
+                    string jsonPrdDetails = form["quotProds"];
+                    var serializer = new JavaScriptSerializer();
+                    var lstPrdDetails = serializer.Deserialize<List<QuotationCustom>>(jsonPrdDetails);
+                    foreach (var prd in lstPrdDetails)
+                    {
+                        prdCount++;
+                        var objQuotProduct = _unitOfWork.Repository<QUOT_PROD_MASTER>().Create();
+                        objQuotProduct.QUOTNO_QPRM = Convert.ToString(objQuotationMaster.QUOTNO_QM);
+                        objQuotProduct.PRODID_QPRM = Convert.ToString(prd.PrCode);
+                        objQuotProduct.QTY_QPRM = Convert.ToInt32(prd.Qty);
+                        objQuotProduct.SLNO_QPRM = Convert.ToInt32(prdCount);
+                        _unitOfWork.Repository<QUOT_PROD_MASTER>().Insert(objQuotProduct);
+                        _unitOfWork.Save();
+
+                        var objQuotationRef = _unitOfWork.Repository<QOTATION_REF>().Create();
+                        objQuotationRef.QUOTNO_QREF = Convert.ToString(objQuotationMaster.QUOTNO_QM);
+                        objQuotationRef.CODE_QREF = Convert.ToString(prd.JobId);
+                        objQuotationRef.DESCRIPTION_QREF = Convert.ToString(prd.JobDesc);
+                        objQuotationRef.QTY_QREF = Convert.ToInt32(prd.Qty);
+                        objQuotationRef.RATE_QREF = Convert.ToDecimal(prd.Rate);
+                        objQuotationRef.AMOUNT_QREF = Convert.ToDecimal(prd.Rate * prd.Qty);
+                        objQuotationRef.ID_QREF = Convert.ToInt32(prdCount);
+                        _unitOfWork.Repository<QOTATION_REF>().Insert(objQuotationRef);
+                        _unitOfWork.Save();
+                    }
+                    transaction.Commit();
                 }
-            }
-            catch (Exception)
-            {
-                // ignored
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                }
             }
             return Json(quotNo, JsonRequestBehavior.AllowGet);
         }

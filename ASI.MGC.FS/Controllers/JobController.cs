@@ -225,83 +225,87 @@ namespace ASI.MGC.FS.Controllers
             string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             bool success = false;
             bool isEntryExist = false;
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                if (!string.IsNullOrEmpty(objSaleDetail.JOBID_SD))
+                try
                 {
-                    var currJobSale = (from saleData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
-                                       where saleData.JOBNO_SD.Equals(objSaleDetail.JOBNO_SD)
-                                       && saleData.JOBID_SD.Equals(objSaleDetail.JOBID_SD)
-                                       select saleData).FirstOrDefault();
-                    if (currJobSale != null)
+                    if (!string.IsNullOrEmpty(objSaleDetail.JOBID_SD))
                     {
-                        currJobSale.QTY_SD = currJobSale.QTY_SD + objSaleDetail.QTY_SD;
-                        if (form["PayMode"] == "Credit")
+                        var currJobSale = (from saleData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                                           where saleData.JOBNO_SD.Equals(objSaleDetail.JOBNO_SD)
+                                           && saleData.JOBID_SD.Equals(objSaleDetail.JOBID_SD)
+                                           select saleData).FirstOrDefault();
+                        if (currJobSale != null)
                         {
-                            currJobSale.CREDITTOTAL_SD = (currJobSale.QTY_SD * currJobSale.RATE_SD) - currJobSale.DISCOUNT_SD + currJobSale.SHIPPINGCHARGES_SD;
+                            currJobSale.QTY_SD = currJobSale.QTY_SD + objSaleDetail.QTY_SD;
+                            if (form["PayMode"] == "Credit")
+                            {
+                                currJobSale.CREDITTOTAL_SD = (currJobSale.QTY_SD * currJobSale.RATE_SD) - currJobSale.DISCOUNT_SD + currJobSale.SHIPPINGCHARGES_SD;
+                            }
+                            else
+                            {
+                                currJobSale.CASHTOTAL_SD = (currJobSale.QTY_SD * currJobSale.RATE_SD) - currJobSale.DISCOUNT_SD + currJobSale.SHIPPINGCHARGES_SD;
+                            }
+                            _unitOfWork.Repository<SALEDETAIL>().Update(currJobSale);
+                            _unitOfWork.Save();
+                            isEntryExist = true;
                         }
-                        else
-                        {
-                            currJobSale.CASHTOTAL_SD = (currJobSale.QTY_SD * currJobSale.RATE_SD) - currJobSale.DISCOUNT_SD + currJobSale.SHIPPINGCHARGES_SD;
-                        }
-                        _unitOfWork.Repository<SALEDETAIL>().Update(currJobSale);
-                        _unitOfWork.Save();
-                        isEntryExist = true;
                     }
-                }
-                else if (!string.IsNullOrEmpty(objSaleDetail.PRCODE_SD))
-                {
-                    var currPrdSale = (from saleData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
-                                       where saleData.JOBNO_SD.Equals(objSaleDetail.JOBNO_SD)
-                                       && saleData.PRCODE_SD.Equals(objSaleDetail.PRCODE_SD)
-                                       select saleData).FirstOrDefault();
-                    if (currPrdSale != null)
+                    else if (!string.IsNullOrEmpty(objSaleDetail.PRCODE_SD))
                     {
-                        currPrdSale.QTY_SD = currPrdSale.QTY_SD + objSaleDetail.QTY_SD;
-                        if (form["PayMode"] == "Credit")
+                        var currPrdSale = (from saleData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                                           where saleData.JOBNO_SD.Equals(objSaleDetail.JOBNO_SD)
+                                           && saleData.PRCODE_SD.Equals(objSaleDetail.PRCODE_SD)
+                                           select saleData).FirstOrDefault();
+                        if (currPrdSale != null)
                         {
-                            currPrdSale.CREDITTOTAL_SD = (currPrdSale.QTY_SD * currPrdSale.RATE_SD) + currPrdSale.SHIPPINGCHARGES_SD - currPrdSale.DISCOUNT_SD;
+                            currPrdSale.QTY_SD = currPrdSale.QTY_SD + objSaleDetail.QTY_SD;
+                            if (form["PayMode"] == "Credit")
+                            {
+                                currPrdSale.CREDITTOTAL_SD = (currPrdSale.QTY_SD * currPrdSale.RATE_SD) + currPrdSale.SHIPPINGCHARGES_SD - currPrdSale.DISCOUNT_SD;
+                            }
+                            else
+                            {
+                                currPrdSale.CREDITTOTAL_SD = (currPrdSale.QTY_SD * currPrdSale.RATE_SD) + currPrdSale.SHIPPINGCHARGES_SD - currPrdSale.DISCOUNT_SD;
+                            }
+                            _unitOfWork.Repository<SALEDETAIL>().Update(currPrdSale);
+                            _unitOfWork.Save();
+                            isEntryExist = true;
                         }
-                        else
-                        {
-                            currPrdSale.CREDITTOTAL_SD = (currPrdSale.QTY_SD * currPrdSale.RATE_SD) + currPrdSale.SHIPPINGCHARGES_SD - currPrdSale.DISCOUNT_SD;
-                        }
-                        _unitOfWork.Repository<SALEDETAIL>().Update(currPrdSale);
-                        _unitOfWork.Save();
-                        isEntryExist = true;
                     }
-                }
 
-                if (isEntryExist == false)
+                    if (isEntryExist == false)
+                    {
+                        var salesEntry = _unitOfWork.Repository<SALEDETAIL>().Create();
+                        salesEntry.MRVNO_SD = objSaleDetail.MRVNO_SD;
+                        salesEntry.JOBNO_SD = objSaleDetail.JOBNO_SD;
+                        salesEntry.PRCODE_SD = objSaleDetail.PRCODE_SD;
+                        salesEntry.JOBID_SD = objSaleDetail.JOBID_SD;
+                        salesEntry.QTY_SD = objSaleDetail.QTY_SD;
+                        salesEntry.UNIT_SD = objSaleDetail.UNIT_SD;
+                        salesEntry.RATE_SD = objSaleDetail.RATE_SD;
+                        salesEntry.DISCOUNT_SD = objSaleDetail.DISCOUNT_SD;
+                        salesEntry.SHIPPINGCHARGES_SD = objSaleDetail.SHIPPINGCHARGES_SD;
+                        salesEntry.ADDITIONALCHARGES_SD = objSaleDetail.ADDITIONALCHARGES_SD;
+                        salesEntry.SALEDATE_SD = objSaleDetail.SALEDATE_SD;
+                        salesEntry.CASHTOTAL_SD = objSaleDetail.CASHTOTAL_SD;
+                        salesEntry.CREDITTOTAL_SD = objSaleDetail.CREDITTOTAL_SD;
+                        salesEntry.CREDITACCODE_SD = objSaleDetail.CREDITACCODE_SD;
+                        salesEntry.USERID_SD = currentUser;
+                        salesEntry.STATUS_SD = "N";
+                        _unitOfWork.Repository<SALEDETAIL>().Insert(salesEntry);
+                        _unitOfWork.Save();
+                        JobMaster_UpdateEmpCode(form["EmpCode"], objSaleDetail.JOBNO_SD);
+                    }
+                    success = true;
+                    transaction.Commit();
+                }
+                catch (Exception)
                 {
-                    var salesEntry = _unitOfWork.Repository<SALEDETAIL>().Create();
-                    salesEntry.MRVNO_SD = objSaleDetail.MRVNO_SD;
-                    salesEntry.JOBNO_SD = objSaleDetail.JOBNO_SD;
-                    salesEntry.PRCODE_SD = objSaleDetail.PRCODE_SD;
-                    salesEntry.JOBID_SD = objSaleDetail.JOBID_SD;
-                    salesEntry.QTY_SD = objSaleDetail.QTY_SD;
-                    salesEntry.UNIT_SD = objSaleDetail.UNIT_SD;
-                    salesEntry.RATE_SD = objSaleDetail.RATE_SD;
-                    salesEntry.DISCOUNT_SD = objSaleDetail.DISCOUNT_SD;
-                    salesEntry.SHIPPINGCHARGES_SD = objSaleDetail.SHIPPINGCHARGES_SD;
-                    salesEntry.ADDITIONALCHARGES_SD = objSaleDetail.ADDITIONALCHARGES_SD;
-                    salesEntry.SALEDATE_SD = objSaleDetail.SALEDATE_SD;
-                    salesEntry.CASHTOTAL_SD = objSaleDetail.CASHTOTAL_SD;
-                    salesEntry.CREDITTOTAL_SD = objSaleDetail.CREDITTOTAL_SD;
-                    salesEntry.CREDITACCODE_SD = objSaleDetail.CREDITACCODE_SD;
-                    salesEntry.USERID_SD = currentUser;
-                    salesEntry.STATUS_SD = "N";
-                    _unitOfWork.Repository<SALEDETAIL>().Insert(salesEntry);
-                    _unitOfWork.Save();
-                    JobMaster_UpdateEmpCode(form["EmpCode"], objSaleDetail.JOBNO_SD);
+                    success = false;
+                    transaction.Rollback();
                 }
-                success = true;
             }
-            catch (Exception)
-            {
-                success = false;
-            }
-
             return Json(new { success = success }, JsonRequestBehavior.AllowGet);
         }
 
@@ -319,64 +323,69 @@ namespace ASI.MGC.FS.Controllers
         {
             bool isJobPosted = true;
             bool success = false;
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                var postedJobCount = (from sData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
-                                      where sData.JOBNO_SD.Equals(objJmaster.JOBNO_JM) && sData.STATUS_SD.Equals("P")
-                                      select sData).Count();
-                if (postedJobCount == 0)
+                try
                 {
-                    isJobPosted = false;
-                    var jobSaleData = (from sData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
-                                       where sData.JOBNO_SD.Equals(objJmaster.JOBNO_JM)
-                                       select sData).ToList();
-                    foreach (var item in jobSaleData)
+                    var postedJobCount = (from sData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                                          where sData.JOBNO_SD.Equals(objJmaster.JOBNO_JM) && sData.STATUS_SD.Equals("P")
+                                          select sData).Count();
+                    if (postedJobCount == 0)
                     {
-                        _unitOfWork.Repository<SALEDETAIL>().Delete(item);
-                        _unitOfWork.Save();
-                    }
-                    var jobMasterData = (from jmData in _unitOfWork.Repository<JOBMASTER>().Query().Get()
-                                         where jmData.JOBNO_JM.Equals(objJmaster.JOBNO_JM)
-                                         select jmData).ToList();
-                    foreach (var item in jobMasterData)
-                    {
-                        item.REMARIKS_JM = objJmaster.REMARIKS_JM;
-                        item.JOBSTATUS_JM = "C";
-                        _unitOfWork.Repository<JOBMASTER>().Update(item);
-                        _unitOfWork.Save();
-                    }
-                    var mrvJobsCount = (from mrv in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
-                                        join jmData in _unitOfWork.Repository<JOBMASTER>().Query().Get()
-                                            on mrv.MRVNO_MRV equals jmData.MRVNO_JM
-                                        where jmData.JOBSTATUS_JM != "C"
-                                        select jmData).Count();
-                    if (mrvJobsCount == 0)
-                    {
-                        var mrvItem = (from mrv in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
-                                       where mrv.MRVNO_MRV.Equals(objJmaster.MRVNO_JM)
-                                       select mrv).SingleOrDefault();
-                        if (mrvItem != null)
+                        isJobPosted = false;
+                        var jobSaleData = (from sData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                                           where sData.JOBNO_SD.Equals(objJmaster.JOBNO_JM)
+                                           select sData).ToList();
+                        foreach (var item in jobSaleData)
                         {
-                            mrvItem.STATUS_MRV = "C";
-                            _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Update(mrvItem);
+                            _unitOfWork.Repository<SALEDETAIL>().Delete(item);
                             _unitOfWork.Save();
                         }
+                        var jobMasterData = (from jmData in _unitOfWork.Repository<JOBMASTER>().Query().Get()
+                                             where jmData.JOBNO_JM.Equals(objJmaster.JOBNO_JM)
+                                             select jmData).ToList();
+                        foreach (var item in jobMasterData)
+                        {
+                            item.REMARIKS_JM = objJmaster.REMARIKS_JM;
+                            item.JOBSTATUS_JM = "C";
+                            _unitOfWork.Repository<JOBMASTER>().Update(item);
+                            _unitOfWork.Save();
+                        }
+                        var mrvJobsCount = (from mrv in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                                            join jmData in _unitOfWork.Repository<JOBMASTER>().Query().Get()
+                                                on mrv.MRVNO_MRV equals jmData.MRVNO_JM
+                                            where jmData.JOBSTATUS_JM != "C"
+                                            select jmData).Count();
+                        if (mrvJobsCount == 0)
+                        {
+                            var mrvItem = (from mrv in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                                           where mrv.MRVNO_MRV.Equals(objJmaster.MRVNO_JM)
+                                           select mrv).SingleOrDefault();
+                            if (mrvItem != null)
+                            {
+                                mrvItem.STATUS_MRV = "C";
+                                _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Update(mrvItem);
+                                _unitOfWork.Save();
+                            }
+                        }
+                        var JobData = (from jmData in _unitOfWork.Repository<JOBMASTER>().Query().Get()
+                                       where jmData.JOBNO_JM.Equals(objJmaster.JOBNO_JM)
+                                       select jmData).FirstOrDefault();
+                        if (JobData != null)
+                        {
+                            JobData.EMPCODE_JM = objJmaster.EMPCODE_JM;
+                            _unitOfWork.Repository<JOBMASTER>().Update(JobData);
+                            _unitOfWork.Save();
+                        }
+                        success = true;
+                        transaction.Commit();
                     }
-                    var JobData = (from jmData in _unitOfWork.Repository<JOBMASTER>().Query().Get()
-                                   where jmData.JOBNO_JM.Equals(objJmaster.JOBNO_JM)
-                                   select jmData).FirstOrDefault();
-                    if (JobData != null)
-                    {
-                        JobData.EMPCODE_JM = objJmaster.EMPCODE_JM;
-                        _unitOfWork.Repository<JOBMASTER>().Update(JobData);
-                        _unitOfWork.Save();
-                    }
-                    success = true;
                 }
-            }
-            catch
-            {
-                success = false;
+                catch
+                {
+                    success = false;
+                    transaction.Rollback();
+                }
             }
             return Json(new { isJobPosted = isJobPosted, success = success }, JsonRequestBehavior.AllowGet);
         }
@@ -407,16 +416,21 @@ namespace ASI.MGC.FS.Controllers
         }
         public JsonResult DeleteSalebyId(int salesId)
         {
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                var objSales = _unitOfWork.Repository<SALEDETAIL>().FindByID(salesId);
-                _unitOfWork.Repository<SALEDETAIL>().Delete(objSales);
-                _unitOfWork.Save();
-                return Json(true, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception)
-            {
-                return Json(false, JsonRequestBehavior.AllowGet);
+                try
+                {
+                    var objSales = _unitOfWork.Repository<SALEDETAIL>().FindByID(salesId);
+                    _unitOfWork.Repository<SALEDETAIL>().Delete(objSales);
+                    _unitOfWork.Save();
+                    transaction.Commit();
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    return Json(false, JsonRequestBehavior.AllowGet);
+                }
             }
         }
         public JsonResult GetJobData(string sidx, string sord, int page, int rows, string jobNo)

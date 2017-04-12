@@ -1297,6 +1297,7 @@
       <Prompt>ENDDATE</Prompt>
     </ReportParameter>
   </ReportParameters>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>970dc77a-87ac-43d6-8f24-33d635e90a9d</rd:ReportID>
 </Report>

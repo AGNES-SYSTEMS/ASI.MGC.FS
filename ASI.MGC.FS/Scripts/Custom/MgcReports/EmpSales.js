@@ -106,7 +106,27 @@ $(document).ready(function () {
             toastr.error("Start Date/ End Date cannot be empty.");
         }
     });
+    var searchGrid = function (empId, empName) {
+        var postData = $("#tblEmployeeSearch").jqGrid("getGridParam", "postData");
+        postData["searchById"] = empId;
+        postData["searchByName"] = empName;
+        $("#tblEmployeeSearch").setGridParam({ postData: postData });
+        $("#tblEmployeeSearch").trigger("reloadGrid", [{ page: 1 }]);
+    };
+    $("#txtEmpIdSearch").off().on("keyup", function () {
 
+        var shouldSearch = $("#txtEmpIdSearch").val().length >= 1 || $("#txtEmpIdSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtEmpIdSearch").val(), $("#txtEmpNameSearch").val());
+        }
+    });
+    $("#txtEmpNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtEmpNameSearch").val().length >= 3 || $("#txtEmpNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtEmpIdSearch").val(), $("#txtEmpNameSearch").val());
+        }
+    });
     $('#iframe').on('load', function () {
         $('#loader').hide();
     });

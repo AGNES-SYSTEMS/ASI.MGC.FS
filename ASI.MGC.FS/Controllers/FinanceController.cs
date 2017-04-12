@@ -33,37 +33,42 @@ namespace ASI.MGC.FS.Controllers
         {
             bool success;
             string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                _unitOfWork.Repository<GLMASTER>().Insert(objGlMaster);
-                _unitOfWork.Save();
+                try
+                {
+                    _unitOfWork.Repository<GLMASTER>().Insert(objGlMaster);
+                    _unitOfWork.Save();
 
-                var objGlTransaction = _unitOfWork.Repository<GLTRANSACTION1>().Create();
-                objGlTransaction.DOCDATE_GLT = DateTime.Now;
-                objGlTransaction.GLDATE_GLT = Convert.ToDateTime(frm["GLDate"]);
-                objGlTransaction.DOCNUMBER_GLT = objGlMaster.GLCODE_LM;
-                objGlTransaction.GLACCODE_GLT = objGlMaster.GLCODE_LM;
-                objGlTransaction.OTHERREF_GLT = objGlMaster.GLCODE_LM;
-                objGlTransaction.VARUSER = currentUser;
-                if (Convert.ToInt32(frm["BalanceType"]) == 1)
-                {
-                    objGlTransaction.CREDITAMOUNT_GLT = Convert.ToDecimal(frm["OpenBalance"]);
-                    objGlTransaction.DEBITAMOUNT_GLT = 0;
+                    var objGlTransaction = _unitOfWork.Repository<GLTRANSACTION1>().Create();
+                    objGlTransaction.DOCDATE_GLT = DateTime.Now;
+                    objGlTransaction.GLDATE_GLT = Convert.ToDateTime(frm["GLDate"]);
+                    objGlTransaction.DOCNUMBER_GLT = objGlMaster.GLCODE_LM;
+                    objGlTransaction.GLACCODE_GLT = objGlMaster.GLCODE_LM;
+                    objGlTransaction.OTHERREF_GLT = objGlMaster.GLCODE_LM;
+                    objGlTransaction.VARUSER = currentUser;
+                    if (Convert.ToInt32(frm["BalanceType"]) == 1)
+                    {
+                        objGlTransaction.CREDITAMOUNT_GLT = Convert.ToDecimal(frm["OpenBalance"]);
+                        objGlTransaction.DEBITAMOUNT_GLT = 0;
+                    }
+                    else
+                    {
+                        objGlTransaction.CREDITAMOUNT_GLT = 0;
+                        objGlTransaction.DEBITAMOUNT_GLT = Convert.ToDecimal(frm["OpenBalance"]);
+                    }
+                    objGlTransaction.NARRATION_GLT = "Opening Balance";
+                    objGlTransaction.GLSTATUS_GLT = "OP";
+                    _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGlTransaction);
+                    _unitOfWork.Save();
+                    success = true;
+                    transaction.Commit();
                 }
-                else
+                catch (Exception)
                 {
-                    objGlTransaction.CREDITAMOUNT_GLT = 0;
-                    objGlTransaction.DEBITAMOUNT_GLT = Convert.ToDecimal(frm["OpenBalance"]);
+                    success = false;
+                    transaction.Rollback();
                 }
-                objGlTransaction.NARRATION_GLT = "Opening Balance";
-                objGlTransaction.GLSTATUS_GLT = "OP";
-                _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGlTransaction);
-                _unitOfWork.Save();
-                success = true;
-            }
-            catch (Exception)
-            {
-                success = false;
             }
             return Json(success, JsonRequestBehavior.AllowGet);
         }
@@ -130,141 +135,146 @@ namespace ASI.MGC.FS.Controllers
             string pdcNo = "";
             string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             bool success;
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                objBankTransaction.USER_BT = currentUser;
-                objBankTransaction.STATUS_BT = "P";
-                objBankTransaction.MASTERSTATUS_BT = "M";
-                _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBankTransaction);
-                _unitOfWork.Save();
-                _unitOfWork.Truncate("VOUCHERMASTER_RPT");
-                _unitOfWork.Truncate("VOUCHERCHILD_RPT");
-                pdcNo = objBankTransaction.DOCNUMBER_BT;
-                var objVoucherMaster = _unitOfWork.Repository<VOUCHERMASTER_RPT>().Create();
-                objVoucherMaster.GLDATE_VRPT = objBankTransaction.GLDATE_BT;
-                objVoucherMaster.ALLCODE_VRPT = "Bank";
-                objVoucherMaster.BANKCODE_VRT = objBankTransaction.BANKCODE_BT;
-                objVoucherMaster.ACCDESCRIPTION_VRPT = Convert.ToString(form["BankName"]);
-                objVoucherMaster.PARTICULARS_VRPT = objBankTransaction.NARRATION_BT;
-                objVoucherMaster.NOTES_VRPT = objBankTransaction.NOTE_BT;
-                objVoucherMaster.DEBITAMOUT_VRPT = objBankTransaction.DEBITAMOUT_BT;
-                objVoucherMaster.CREDITAMOUNT_VRPT = 0;
-                objVoucherMaster.CHQNO_VRPT = objBankTransaction.CHQNO_BT;
-                objVoucherMaster.CHQDATE_VRPT = objBankTransaction.CHQDATE_BT;
-                objVoucherMaster.DOCNO_VRPT = objBankTransaction.DOCNUMBER_BT;
-                objVoucherMaster.USER_VRPT = currentUser;
-                objVoucherMaster.VOUCHER_TYPE = "BR";
-                _unitOfWork.Repository<VOUCHERMASTER_RPT>().Insert(objVoucherMaster);
-                _unitOfWork.Save();
-
-                string jsonAllocDetails = form["allocDetails"];
-                var serializer = new JavaScriptSerializer();
-                var lstAllocDetails = serializer.Deserialize<List<CustomAllocationDetails>>(jsonAllocDetails);
-                foreach (var allocDetail in lstAllocDetails)
+                try
                 {
-                    switch (allocDetail.AlCode)
+                    objBankTransaction.USER_BT = currentUser;
+                    objBankTransaction.STATUS_BT = "P";
+                    objBankTransaction.MASTERSTATUS_BT = "M";
+                    _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBankTransaction);
+                    _unitOfWork.Save();
+                    _unitOfWork.Truncate("VOUCHERMASTER_RPT");
+                    _unitOfWork.Truncate("VOUCHERCHILD_RPT");
+                    pdcNo = objBankTransaction.DOCNUMBER_BT;
+                    var objVoucherMaster = _unitOfWork.Repository<VOUCHERMASTER_RPT>().Create();
+                    objVoucherMaster.GLDATE_VRPT = objBankTransaction.GLDATE_BT;
+                    objVoucherMaster.ALLCODE_VRPT = "Bank";
+                    objVoucherMaster.BANKCODE_VRT = objBankTransaction.BANKCODE_BT;
+                    objVoucherMaster.ACCDESCRIPTION_VRPT = Convert.ToString(form["BankName"]);
+                    objVoucherMaster.PARTICULARS_VRPT = objBankTransaction.NARRATION_BT;
+                    objVoucherMaster.NOTES_VRPT = objBankTransaction.NOTE_BT;
+                    objVoucherMaster.DEBITAMOUT_VRPT = objBankTransaction.DEBITAMOUT_BT;
+                    objVoucherMaster.CREDITAMOUNT_VRPT = 0;
+                    objVoucherMaster.CHQNO_VRPT = objBankTransaction.CHQNO_BT;
+                    objVoucherMaster.CHQDATE_VRPT = objBankTransaction.CHQDATE_BT;
+                    objVoucherMaster.DOCNO_VRPT = objBankTransaction.DOCNUMBER_BT;
+                    objVoucherMaster.USER_VRPT = currentUser;
+                    objVoucherMaster.VOUCHER_TYPE = "BR";
+                    _unitOfWork.Repository<VOUCHERMASTER_RPT>().Insert(objVoucherMaster);
+                    _unitOfWork.Save();
+
+                    string jsonAllocDetails = form["allocDetails"];
+                    var serializer = new JavaScriptSerializer();
+                    var lstAllocDetails = serializer.Deserialize<List<CustomAllocationDetails>>(jsonAllocDetails);
+                    foreach (var allocDetail in lstAllocDetails)
                     {
-                        case "AP":
-                            var objApLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
-                            objApLedger.DOCNUMBER_ART = objBankTransaction.DOCNUMBER_BT;
-                            objApLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
-                            objApLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
-                            objApLedger.ARAPCODE_ART = allocDetail.AccountCode;
-                            objApLedger.CREDITAMOUNT_ART = Convert.ToDecimal(allocDetail.Amount);
-                            objApLedger.OTHERREF_ART = objBankTransaction.OTHERREF_BT;
-                            objApLedger.NARRATION_ART = allocDetail.Narration;
-                            objApLedger.MATCHVALUE_AR = 0;
-                            objApLedger.USER_ART = currentUser;
-                            objApLedger.STATUS_ART = "P";
-                            _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objApLedger);
-                            _unitOfWork.Save();
+                        switch (allocDetail.AlCode)
+                        {
+                            case "AP":
+                                var objApLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
+                                objApLedger.DOCNUMBER_ART = objBankTransaction.DOCNUMBER_BT;
+                                objApLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
+                                objApLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
+                                objApLedger.ARAPCODE_ART = allocDetail.AccountCode;
+                                objApLedger.CREDITAMOUNT_ART = Convert.ToDecimal(allocDetail.Amount);
+                                objApLedger.OTHERREF_ART = objBankTransaction.OTHERREF_BT;
+                                objApLedger.NARRATION_ART = allocDetail.Narration;
+                                objApLedger.MATCHVALUE_AR = 0;
+                                objApLedger.USER_ART = currentUser;
+                                objApLedger.STATUS_ART = "P";
+                                _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objApLedger);
+                                _unitOfWork.Save();
 
-                            var objApVoucherChild = _unitOfWork.Repository<VOUCHERCHILD_RPT>().Create();
-                            objApVoucherChild.ALLCODE_VCD = "GL";
-                            objApVoucherChild.NARRATION_VCD = objBankTransaction.NARRATION_BT;
-                            objApVoucherChild.ACCODE_VCD = allocDetail.AccountCode;
-                            objApVoucherChild.ACDESCRIPTION_VCD = allocDetail.Description;
-                            objApVoucherChild.CREDITAMOUNT_VCD = Convert.ToDecimal(allocDetail.Amount);
-                            objApVoucherChild.AMOUNTSTATUTS_VCD = "Cr";
-                            objApVoucherChild.DOCNO_VCD = objBankTransaction.DOCNUMBER_BT;
-                            _unitOfWork.Repository<VOUCHERCHILD_RPT>().Insert(objApVoucherChild);
-                            _unitOfWork.Save();
-                            break;
-                        case "AR":
-                            var objArLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
-                            objArLedger.DOCNUMBER_ART = objBankTransaction.DOCNUMBER_BT;
-                            objArLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
-                            objArLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
-                            objArLedger.ARAPCODE_ART = allocDetail.AccountCode;
-                            objArLedger.CREDITAMOUNT_ART = Convert.ToDecimal(allocDetail.Amount);
-                            objArLedger.OTHERREF_ART = objBankTransaction.OTHERREF_BT;
-                            objArLedger.NARRATION_ART = allocDetail.Narration;
-                            objArLedger.MATCHVALUE_AR = 0;
-                            objArLedger.USER_ART = currentUser;
-                            objArLedger.STATUS_ART = "P";
-                            _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArLedger);
-                            _unitOfWork.Save();
+                                var objApVoucherChild = _unitOfWork.Repository<VOUCHERCHILD_RPT>().Create();
+                                objApVoucherChild.ALLCODE_VCD = "GL";
+                                objApVoucherChild.NARRATION_VCD = objBankTransaction.NARRATION_BT;
+                                objApVoucherChild.ACCODE_VCD = allocDetail.AccountCode;
+                                objApVoucherChild.ACDESCRIPTION_VCD = allocDetail.Description;
+                                objApVoucherChild.CREDITAMOUNT_VCD = Convert.ToDecimal(allocDetail.Amount);
+                                objApVoucherChild.AMOUNTSTATUTS_VCD = "Cr";
+                                objApVoucherChild.DOCNO_VCD = objBankTransaction.DOCNUMBER_BT;
+                                _unitOfWork.Repository<VOUCHERCHILD_RPT>().Insert(objApVoucherChild);
+                                _unitOfWork.Save();
+                                break;
+                            case "AR":
+                                var objArLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
+                                objArLedger.DOCNUMBER_ART = objBankTransaction.DOCNUMBER_BT;
+                                objArLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
+                                objArLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
+                                objArLedger.ARAPCODE_ART = allocDetail.AccountCode;
+                                objArLedger.CREDITAMOUNT_ART = Convert.ToDecimal(allocDetail.Amount);
+                                objArLedger.OTHERREF_ART = objBankTransaction.OTHERREF_BT;
+                                objArLedger.NARRATION_ART = allocDetail.Narration;
+                                objArLedger.MATCHVALUE_AR = 0;
+                                objArLedger.USER_ART = currentUser;
+                                objArLedger.STATUS_ART = "P";
+                                _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArLedger);
+                                _unitOfWork.Save();
 
-                            var objArVoucherChild = _unitOfWork.Repository<VOUCHERCHILD_RPT>().Create();
-                            objArVoucherChild.ALLCODE_VCD = "GL";
-                            objArVoucherChild.NARRATION_VCD = objBankTransaction.NARRATION_BT;
-                            objArVoucherChild.ACCODE_VCD = allocDetail.AccountCode;
-                            objArVoucherChild.ACDESCRIPTION_VCD = allocDetail.Description;
-                            objArVoucherChild.CREDITAMOUNT_VCD = Convert.ToDecimal(allocDetail.Amount);
-                            objArVoucherChild.AMOUNTSTATUTS_VCD = "Cr";
-                            objArVoucherChild.DOCNO_VCD = objBankTransaction.DOCNUMBER_BT;
-                            _unitOfWork.Repository<VOUCHERCHILD_RPT>().Insert(objArVoucherChild);
-                            _unitOfWork.Save();
-                            break;
-                        case "BA":
-                            var objBTransaction = _unitOfWork.Repository<BANKTRANSACTION>().Create();
-                            objBTransaction.DOCNUMBER_BT = objBankTransaction.DOCNUMBER_BT;
-                            objBTransaction.BANKCODE_BT = allocDetail.AccountCode;
-                            objBTransaction.DOCDATE_BT = objBankTransaction.DOCDATE_BT;
-                            objBTransaction.GLDATE_BT = objBankTransaction.GLDATE_BT;
-                            objBTransaction.DEBITAMOUT_BT = Convert.ToDecimal(allocDetail.Amount);
-                            objBTransaction.OTHERREF_BT = objBankTransaction.OTHERREF_BT;
-                            objBTransaction.CHQDATE_BT = objBankTransaction.CHQDATE_BT;
-                            objBankTransaction.CLEARANCEDATE_BT = objBankTransaction.CLEARANCEDATE_BT;
-                            objBTransaction.NARRATION_BT = allocDetail.Narration;
-                            objBTransaction.NOTE_BT = objBankTransaction.NOTE_BT;
-                            objBankTransaction.USER_BT = currentUser;
-                            objBTransaction.STATUS_BT = "P";
-                            _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBTransaction);
-                            _unitOfWork.Save();
-                            break;
-                        case "GL":
-                            var objGlTransaction = _unitOfWork.Repository<GLTRANSACTION1>().Create();
-                            objGlTransaction.DOCNUMBER_GLT = objBankTransaction.DOCNUMBER_BT;
-                            objGlTransaction.DOCDATE_GLT = objBankTransaction.DOCDATE_BT;
-                            objGlTransaction.GLDATE_GLT = objBankTransaction.GLDATE_BT;
-                            objGlTransaction.GLACCODE_GLT = allocDetail.AccountCode;
-                            objGlTransaction.OTHERREF_GLT = objBankTransaction.OTHERREF_BT;
-                            objGlTransaction.CREDITAMOUNT_GLT = Convert.ToDecimal(allocDetail.Amount);
-                            objGlTransaction.NARRATION_GLT = allocDetail.Narration;
-                            objGlTransaction.VARUSER = currentUser;
-                            objGlTransaction.GLSTATUS_GLT = "P";
-                            _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGlTransaction);
-                            _unitOfWork.Save();
+                                var objArVoucherChild = _unitOfWork.Repository<VOUCHERCHILD_RPT>().Create();
+                                objArVoucherChild.ALLCODE_VCD = "GL";
+                                objArVoucherChild.NARRATION_VCD = objBankTransaction.NARRATION_BT;
+                                objArVoucherChild.ACCODE_VCD = allocDetail.AccountCode;
+                                objArVoucherChild.ACDESCRIPTION_VCD = allocDetail.Description;
+                                objArVoucherChild.CREDITAMOUNT_VCD = Convert.ToDecimal(allocDetail.Amount);
+                                objArVoucherChild.AMOUNTSTATUTS_VCD = "Cr";
+                                objArVoucherChild.DOCNO_VCD = objBankTransaction.DOCNUMBER_BT;
+                                _unitOfWork.Repository<VOUCHERCHILD_RPT>().Insert(objArVoucherChild);
+                                _unitOfWork.Save();
+                                break;
+                            case "BA":
+                                var objBTransaction = _unitOfWork.Repository<BANKTRANSACTION>().Create();
+                                objBTransaction.DOCNUMBER_BT = objBankTransaction.DOCNUMBER_BT;
+                                objBTransaction.BANKCODE_BT = allocDetail.AccountCode;
+                                objBTransaction.DOCDATE_BT = objBankTransaction.DOCDATE_BT;
+                                objBTransaction.GLDATE_BT = objBankTransaction.GLDATE_BT;
+                                objBTransaction.DEBITAMOUT_BT = Convert.ToDecimal(allocDetail.Amount);
+                                objBTransaction.OTHERREF_BT = objBankTransaction.OTHERREF_BT;
+                                objBTransaction.CHQDATE_BT = objBankTransaction.CHQDATE_BT;
+                                objBankTransaction.CLEARANCEDATE_BT = objBankTransaction.CLEARANCEDATE_BT;
+                                objBTransaction.NARRATION_BT = allocDetail.Narration;
+                                objBTransaction.NOTE_BT = objBankTransaction.NOTE_BT;
+                                objBankTransaction.USER_BT = currentUser;
+                                objBTransaction.STATUS_BT = "P";
+                                _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBTransaction);
+                                _unitOfWork.Save();
+                                break;
+                            case "GL":
+                                var objGlTransaction = _unitOfWork.Repository<GLTRANSACTION1>().Create();
+                                objGlTransaction.DOCNUMBER_GLT = objBankTransaction.DOCNUMBER_BT;
+                                objGlTransaction.DOCDATE_GLT = objBankTransaction.DOCDATE_BT;
+                                objGlTransaction.GLDATE_GLT = objBankTransaction.GLDATE_BT;
+                                objGlTransaction.GLACCODE_GLT = allocDetail.AccountCode;
+                                objGlTransaction.OTHERREF_GLT = objBankTransaction.OTHERREF_BT;
+                                objGlTransaction.CREDITAMOUNT_GLT = Convert.ToDecimal(allocDetail.Amount);
+                                objGlTransaction.NARRATION_GLT = allocDetail.Narration;
+                                objGlTransaction.VARUSER = currentUser;
+                                objGlTransaction.GLSTATUS_GLT = "P";
+                                _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGlTransaction);
+                                _unitOfWork.Save();
 
-                            var objGlVoucherChild = _unitOfWork.Repository<VOUCHERCHILD_RPT>().Create();
-                            objGlVoucherChild.ALLCODE_VCD = "GL";
-                            objGlVoucherChild.NARRATION_VCD = objBankTransaction.NARRATION_BT;
-                            objGlVoucherChild.ACCODE_VCD = allocDetail.AccountCode;
-                            objGlVoucherChild.ACDESCRIPTION_VCD = allocDetail.Description;
-                            objGlVoucherChild.CREDITAMOUNT_VCD = Convert.ToDecimal(allocDetail.Amount);
-                            objGlVoucherChild.AMOUNTSTATUTS_VCD = "Dr";
-                            objGlVoucherChild.DOCNO_VCD = objBankTransaction.DOCNUMBER_BT;
-                            _unitOfWork.Repository<VOUCHERCHILD_RPT>().Insert(objGlVoucherChild);
-                            _unitOfWork.Save();
-                            break;
+                                var objGlVoucherChild = _unitOfWork.Repository<VOUCHERCHILD_RPT>().Create();
+                                objGlVoucherChild.ALLCODE_VCD = "GL";
+                                objGlVoucherChild.NARRATION_VCD = objBankTransaction.NARRATION_BT;
+                                objGlVoucherChild.ACCODE_VCD = allocDetail.AccountCode;
+                                objGlVoucherChild.ACDESCRIPTION_VCD = allocDetail.Description;
+                                objGlVoucherChild.CREDITAMOUNT_VCD = Convert.ToDecimal(allocDetail.Amount);
+                                objGlVoucherChild.AMOUNTSTATUTS_VCD = "Dr";
+                                objGlVoucherChild.DOCNO_VCD = objBankTransaction.DOCNUMBER_BT;
+                                _unitOfWork.Repository<VOUCHERCHILD_RPT>().Insert(objGlVoucherChild);
+                                _unitOfWork.Save();
+                                break;
+                        }
                     }
+                    success = true;
+                    transaction.Commit();
                 }
-                success = true;
-            }
-            catch (Exception)
-            {
-                success = false;
+                catch (Exception)
+                {
+                    success = false;
+                    transaction.Rollback();
+                }
             }
             return Json(new { success, pdcNo }, JsonRequestBehavior.AllowGet);
         }
@@ -275,89 +285,93 @@ namespace ASI.MGC.FS.Controllers
             bool success = false;
             ENTRYMASTER objEntry = new ENTRYMASTER();
             string msg = string.Empty;
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                var objGLTransaction = new GLTRANSACTION1();
-                objGLTransaction.DOCNUMBER_GLT = objDayEndOpr.DocumentNo;
-                objGLTransaction.DOCDATE_GLT = Convert.ToDateTime(objDayEndOpr.Date);
-                objGLTransaction.GLDATE_GLT = Convert.ToDateTime(objDayEndOpr.DayTo);
-                objGLTransaction.NARRATION_GLT = objDayEndOpr.DayFrom + " TO " + objDayEndOpr.DayTo;
-                objGLTransaction.VARUSER = currentUser;
-                objGLTransaction.GLSTATUS_GLT = "P";
+                try
+                {
+                    var objGLTransaction = new GLTRANSACTION1();
+                    objGLTransaction.DOCNUMBER_GLT = objDayEndOpr.DocumentNo;
+                    objGLTransaction.DOCDATE_GLT = Convert.ToDateTime(objDayEndOpr.Date);
+                    objGLTransaction.GLDATE_GLT = Convert.ToDateTime(objDayEndOpr.DayTo);
+                    objGLTransaction.NARRATION_GLT = objDayEndOpr.DayFrom + " TO " + objDayEndOpr.DayTo;
+                    objGLTransaction.VARUSER = currentUser;
+                    objGLTransaction.GLSTATUS_GLT = "P";
 
-                objEntry = GetEntryMasterACcodeDetails("CASHSALE");
-                var var_CashAcCode = objEntry != null ? objEntry.ACCODE_EM : "";
-                objEntry = GetEntryMasterACcodeDetails("SALESDIS");
-                var var_DiscAccode = objEntry != null ? objEntry.ACCODE_EM : "";
-                if (string.IsNullOrEmpty(var_DiscAccode))
-                {
-                    msg = "Can't SalesAcCode Discount Code";
-                    goto err;
-                }
-                objEntry = GetEntryMasterACcodeDetails("SALE1");
-                var var_SalesAcode = objEntry != null ? objEntry.ACCODE_EM : "";
-                if (string.IsNullOrEmpty(var_SalesAcode))
-                {
-                    msg = "Can't SalesAcCode Discount Code";
-                    goto err;
-                }
-                objEntry = GetEntryMasterACcodeDetails("SALE2");
-                var var_JobTotalAcCode = objEntry != null ? objEntry.ACCODE_EM : "";
-                if (string.IsNullOrEmpty(var_JobTotalAcCode))
-                {
-                    msg = "Can't JobTotalAccode Discount Code";
-                }
-                objEntry = GetEntryMasterACcodeDetails("SALESHIPIN");
-                var var_ShippingAcCode = objEntry != null ? objEntry.ACCODE_EM : "";
-                if (string.IsNullOrEmpty(var_ShippingAcCode))
-                {
-                    msg = "Can't ShippingChargeACCOde Discount Code";
-                    goto err;
-                }
+                    objEntry = GetEntryMasterACcodeDetails("CASHSALE");
+                    var var_CashAcCode = objEntry != null ? objEntry.ACCODE_EM : "";
+                    objEntry = GetEntryMasterACcodeDetails("SALESDIS");
+                    var var_DiscAccode = objEntry != null ? objEntry.ACCODE_EM : "";
+                    if (string.IsNullOrEmpty(var_DiscAccode))
+                    {
+                        msg = "Can't SalesAcCode Discount Code";
+                        goto err;
+                    }
+                    objEntry = GetEntryMasterACcodeDetails("SALE1");
+                    var var_SalesAcode = objEntry != null ? objEntry.ACCODE_EM : "";
+                    if (string.IsNullOrEmpty(var_SalesAcode))
+                    {
+                        msg = "Can't SalesAcCode Discount Code";
+                        goto err;
+                    }
+                    objEntry = GetEntryMasterACcodeDetails("SALE2");
+                    var var_JobTotalAcCode = objEntry != null ? objEntry.ACCODE_EM : "";
+                    if (string.IsNullOrEmpty(var_JobTotalAcCode))
+                    {
+                        msg = "Can't JobTotalAccode Discount Code";
+                    }
+                    objEntry = GetEntryMasterACcodeDetails("SALESHIPIN");
+                    var var_ShippingAcCode = objEntry != null ? objEntry.ACCODE_EM : "";
+                    if (string.IsNullOrEmpty(var_ShippingAcCode))
+                    {
+                        msg = "Can't ShippingChargeACCOde Discount Code";
+                        goto err;
+                    }
 
-                if (Convert.ToDecimal(objDayEndOpr.JobTotal) > 0)
-                {
-                    var objGLJobTrans = objGLTransaction;
-                    objGLJobTrans.DEBITAMOUNT_GLT = 0;
-                    objGLJobTrans.CREDITAMOUNT_GLT = Convert.ToDecimal(objDayEndOpr.JobTotal);
-                    objGLJobTrans.GLACCODE_GLT = var_JobTotalAcCode;
-                    _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGLJobTrans);
-                    _unitOfWork.Save();
+                    if (Convert.ToDecimal(objDayEndOpr.JobTotal) > 0)
+                    {
+                        var objGLJobTrans = objGLTransaction;
+                        objGLJobTrans.DEBITAMOUNT_GLT = 0;
+                        objGLJobTrans.CREDITAMOUNT_GLT = Convert.ToDecimal(objDayEndOpr.JobTotal);
+                        objGLJobTrans.GLACCODE_GLT = var_JobTotalAcCode;
+                        _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGLJobTrans);
+                        _unitOfWork.Save();
+                    }
+                    if (Convert.ToDecimal(objDayEndOpr.SalesTotal) > 0)
+                    {
+                        var objGLSaleTrans = objGLTransaction;
+                        objGLSaleTrans.DEBITAMOUNT_GLT = 0;
+                        objGLSaleTrans.CREDITAMOUNT_GLT = Convert.ToDecimal(objDayEndOpr.SalesTotal);
+                        objGLSaleTrans.GLACCODE_GLT = var_SalesAcode;
+                        _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGLSaleTrans);
+                        _unitOfWork.Save();
+                    }
+                    if (Convert.ToDecimal(objDayEndOpr.DiscountTotal) > 0)
+                    {
+                        var objGLDiscTrans = objGLTransaction;
+                        objGLDiscTrans.DEBITAMOUNT_GLT = Convert.ToDecimal(objDayEndOpr.DiscountTotal);
+                        objGLDiscTrans.CREDITAMOUNT_GLT = 0;
+                        objGLDiscTrans.GLACCODE_GLT = var_DiscAccode;
+                        _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGLDiscTrans);
+                        _unitOfWork.Save();
+                    }
+                    if (Convert.ToDecimal(objDayEndOpr.ShippingTotal) > 0)
+                    {
+                        var objGLShipTrans = objGLTransaction;
+                        objGLShipTrans.DEBITAMOUNT_GLT = 0;
+                        objGLShipTrans.CREDITAMOUNT_GLT = Convert.ToDecimal(objDayEndOpr.ShippingTotal);
+                        objGLShipTrans.GLACCODE_GLT = var_ShippingAcCode;
+                        _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGLShipTrans);
+                        _unitOfWork.Save();
+                    }
+                    DayEndUpdate(Convert.ToDateTime(objDayEndOpr.DayFrom), Convert.ToDateTime(objDayEndOpr.DayTo), objDayEndOpr.DocumentNo);
+                    success = true;
+                    transaction.Commit();
                 }
-                if (Convert.ToDecimal(objDayEndOpr.SalesTotal) > 0)
+                catch (Exception e)
                 {
-                    var objGLSaleTrans = objGLTransaction;
-                    objGLSaleTrans.DEBITAMOUNT_GLT = 0;
-                    objGLSaleTrans.CREDITAMOUNT_GLT = Convert.ToDecimal(objDayEndOpr.SalesTotal);
-                    objGLSaleTrans.GLACCODE_GLT = var_SalesAcode;
-                    _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGLSaleTrans);
-                    _unitOfWork.Save();
+                    success = false;
+                    transaction.Rollback();
                 }
-                if (Convert.ToDecimal(objDayEndOpr.DiscountTotal) > 0)
-                {
-                    var objGLDiscTrans = objGLTransaction;
-                    objGLDiscTrans.DEBITAMOUNT_GLT = Convert.ToDecimal(objDayEndOpr.DiscountTotal);
-                    objGLDiscTrans.CREDITAMOUNT_GLT = 0;
-                    objGLDiscTrans.GLACCODE_GLT = var_DiscAccode;
-                    _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGLDiscTrans);
-                    _unitOfWork.Save();
-                }
-                if (Convert.ToDecimal(objDayEndOpr.ShippingTotal) > 0)
-                {
-                    var objGLShipTrans = objGLTransaction;
-                    objGLShipTrans.DEBITAMOUNT_GLT = 0;
-                    objGLShipTrans.CREDITAMOUNT_GLT = Convert.ToDecimal(objDayEndOpr.ShippingTotal);
-                    objGLShipTrans.GLACCODE_GLT = var_ShippingAcCode;
-                    _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGLShipTrans);
-                    _unitOfWork.Save();
-                }
-                DayEndUpdate(Convert.ToDateTime(objDayEndOpr.DayFrom), Convert.ToDateTime(objDayEndOpr.DayTo), objDayEndOpr.DocumentNo);
-                success = true;
-            }
-            catch (Exception e)
-            {
-                success = false;
-
             }
         err:
 
@@ -374,59 +388,64 @@ namespace ASI.MGC.FS.Controllers
             bool success = false;
             string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             var invCode = frm["InvNumber"];
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                if (!string.IsNullOrEmpty(invCode))
+                try
                 {
-                    // Checking Bank Transactions entries and adding their reverse
-                    var btEnteries = (from bankTransactions in _unitOfWork.Repository<BANKTRANSACTION>().Query().Get()
-                                      where (bankTransactions.DOCNUMBER_BT == invCode)
-                                      select bankTransactions);
-                    foreach (var entry in btEnteries.ToList())
+                    if (!string.IsNullOrEmpty(invCode))
                     {
-                        entry.STATUS_BT = "R";
-                        entry.STATUS_BT = currentUser;
-                        _unitOfWork.Repository<BANKTRANSACTION>().Update(entry);
-                        _unitOfWork.Save();
+                        // Checking Bank Transactions entries and adding their reverse
+                        var btEnteries = (from bankTransactions in _unitOfWork.Repository<BANKTRANSACTION>().Query().Get()
+                                          where (bankTransactions.DOCNUMBER_BT == invCode)
+                                          select bankTransactions);
+                        foreach (var entry in btEnteries.ToList())
+                        {
+                            entry.STATUS_BT = "R";
+                            entry.USER_BT = currentUser;
+                            _unitOfWork.Repository<BANKTRANSACTION>().Update(entry);
+                            _unitOfWork.Save();
 
-                        // adding reverse entry
-                        success = ReverseBankTransactions(entry);
+                            // adding reverse entry
+                            success = ReverseBankTransactions(entry);
+                        }
+
+                        // Checking AR_AP Ledger entries and adding their reverse
+                        var arApEnteries = (from arApLedger in _unitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
+                                            where (arApLedger.DOCNUMBER_ART == invCode)
+                                            select arApLedger);
+                        foreach (var entry in arApEnteries.ToList())
+                        {
+                            entry.USER_ART = currentUser;
+                            entry.STATUS_ART = "R";
+                            _unitOfWork.Repository<AR_AP_LEDGER>().Update(entry);
+                            _unitOfWork.Save();
+
+                            // adding reverse entry
+                            success = ReverseAr_Ap_Enteries(entry);
+                        }
+
+                        // Checking GL Transactions entries and adding their reverse
+                        var glEnteries = (from glTransactions in _unitOfWork.Repository<GLTRANSACTION1>().Query().Get()
+                                          where (glTransactions.DOCNUMBER_GLT == invCode)
+                                          select glTransactions);
+                        foreach (var entry in glEnteries.ToList())
+                        {
+                            entry.VARUSER = currentUser;
+                            entry.GLSTATUS_GLT = "R";
+                            _unitOfWork.Repository<GLTRANSACTION1>().Update(entry);
+                            _unitOfWork.Save();
+
+                            // adding reverse entry
+                            success = ReverseGlTransactions(entry);
+                        }
                     }
-
-                    // Checking AR_AP Ledger entries and adding their reverse
-                    var arApEnteries = (from arApLedger in _unitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
-                                        where (arApLedger.DOCNUMBER_ART == invCode)
-                                        select arApLedger);
-                    foreach (var entry in arApEnteries.ToList())
-                    {
-                        entry.USER_ART = currentUser;
-                        entry.STATUS_ART = "R";
-                        _unitOfWork.Repository<AR_AP_LEDGER>().Update(entry);
-                        _unitOfWork.Save();
-
-                        // adding reverse entry
-                        success = ReverseAr_Ap_Enteries(entry);
-                    }
-
-                    // Checking GL Transactions entries and adding their reverse
-                    var glEnteries = (from glTransactions in _unitOfWork.Repository<GLTRANSACTION1>().Query().Get()
-                                      where (glTransactions.DOCNUMBER_GLT == invCode)
-                                      select glTransactions);
-                    foreach (var entry in glEnteries.ToList())
-                    {
-                        entry.VARUSER = currentUser;
-                        entry.GLSTATUS_GLT = "R";
-                        _unitOfWork.Repository<GLTRANSACTION1>().Update(entry);
-                        _unitOfWork.Save();
-
-                        // adding reverse entry
-                        success = ReverseGlTransactions(entry);
-                    }
+                    transaction.Commit();
                 }
-            }
-            catch (Exception)
-            {
-                success = false;
+                catch (Exception)
+                {
+                    success = false;
+                    transaction.Rollback();
+                }
             }
             return Json(success, JsonRequestBehavior.AllowGet);
         }
@@ -434,35 +453,40 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult SaveArApMatching(ARMATCHING objAllocDetails, FormCollection frm)
         {
             bool success = false;
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
-                if (!string.IsNullOrEmpty(objAllocDetails.DOCCNUMBER_ARM))
+                try
                 {
-                    var matchNo = (from allocDetails in _unitOfWork.Repository<ARMATCHING>().Query().Get()
-                                   select allocDetails).Max(p => p.MATCHNO_ARM) + 1;
-                    string jsonAllocDetails = frm["allocDetails"];
-                    var serializer = new JavaScriptSerializer();
-                    var lstAllocDetails = serializer.Deserialize<List<ARMATCHING>>(jsonAllocDetails);
-                    objAllocDetails.USER_ARM = currentUser;
-                    objAllocDetails.MATCHNO_ARM = matchNo;
-                    _unitOfWork.Repository<ARMATCHING>().Insert(objAllocDetails);
-                    _unitOfWork.Save();
-                    Proc_ARAPTransaction_MatchValue_Update(Convert.ToString(objAllocDetails.DOCCNUMBER_ARM), Convert.ToDecimal(objAllocDetails.AMOUNT_ARM));
-                    foreach (var record in lstAllocDetails)
+                    string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
+                    if (!string.IsNullOrEmpty(objAllocDetails.DOCCNUMBER_ARM))
                     {
-                        record.USER_ARM = currentUser;
-                        record.MATCHNO_ARM = matchNo;
-                        _unitOfWork.Repository<ARMATCHING>().Insert(record);
+                        var matchNo = (from allocDetails in _unitOfWork.Repository<ARMATCHING>().Query().Get()
+                                       select allocDetails).Max(p => p.MATCHNO_ARM) + 1;
+                        string jsonAllocDetails = frm["allocDetails"];
+                        var serializer = new JavaScriptSerializer();
+                        var lstAllocDetails = serializer.Deserialize<List<ARMATCHING>>(jsonAllocDetails);
+                        objAllocDetails.USER_ARM = currentUser;
+                        objAllocDetails.MATCHNO_ARM = matchNo;
+                        _unitOfWork.Repository<ARMATCHING>().Insert(objAllocDetails);
                         _unitOfWork.Save();
-                        Proc_ARAPTransaction_MatchValue_Update(Convert.ToString(record.DOCCNUMBER_ARM), Convert.ToDecimal(record.AMOUNT_ARM));
+                        Proc_ARAPTransaction_MatchValue_Update(Convert.ToString(objAllocDetails.DOCCNUMBER_ARM), Convert.ToDecimal(objAllocDetails.AMOUNT_ARM));
+                        foreach (var record in lstAllocDetails)
+                        {
+                            record.USER_ARM = currentUser;
+                            record.MATCHNO_ARM = matchNo;
+                            _unitOfWork.Repository<ARMATCHING>().Insert(record);
+                            _unitOfWork.Save();
+                            Proc_ARAPTransaction_MatchValue_Update(Convert.ToString(record.DOCCNUMBER_ARM), Convert.ToDecimal(record.AMOUNT_ARM));
+                        }
+                        success = true;
                     }
-                    success = true;
+                    transaction.Commit();
                 }
-            }
-            catch (Exception)
-            {
-                success = false;
+                catch (Exception)
+                {
+                    success = false;
+                    transaction.Rollback();
+                }
             }
             return Json(success, JsonRequestBehavior.AllowGet);
         }
@@ -470,32 +494,37 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult SaveArUnMatching(ARMATCHING objAllocDetails)
         {
             bool success = false;
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                if (!string.IsNullOrEmpty(objAllocDetails.DOCCNUMBER_ARM))
+                try
                 {
-                    var invMatchDetails = (from arMatching in _unitOfWork.Repository<ARMATCHING>().Query().Get()
-                                           where arMatching.DOCCNUMBER_ARM.Equals(objAllocDetails.DOCCNUMBER_ARM)
-                                           select arMatching);
-                    var matchNo = invMatchDetails.Max(o => o.MATCHNO_ARM);
-                    var arMatchAllocDetails = (from arMatching in _unitOfWork.Repository<ARMATCHING>().Query().Get()
-                                               where arMatching.MATCHNO_ARM == matchNo
-                                               select arMatching).ToList();
-                    foreach (var matchVal in arMatchAllocDetails)
+                    if (!string.IsNullOrEmpty(objAllocDetails.DOCCNUMBER_ARM))
                     {
-                        Proc_ARAPTransaction_MatchValue_Update(Convert.ToString(matchVal.DOCCNUMBER_ARM), Convert.ToDecimal(matchVal.AMOUNT_ARM), false);
-                        //var objMatch = (from arMatching in _unitOfWork.Repository<ARMATCHING>().Query().Get()
-                        //                where arMatching.MATCHNO_ARM == matchVal.AMOUNT_ARM && arMatching.DOCCNUMBER_ARM.Equals(matchVal.DOCCNUMBER_ARM)
-                        //                select arMatching).SingleOrDefault();
-                        _unitOfWork.Repository<ARMATCHING>().Delete(matchVal);
-                        _unitOfWork.Save();
+                        var invMatchDetails = (from arMatching in _unitOfWork.Repository<ARMATCHING>().Query().Get()
+                                               where arMatching.DOCCNUMBER_ARM.Equals(objAllocDetails.DOCCNUMBER_ARM)
+                                               select arMatching);
+                        var matchNo = invMatchDetails.Max(o => o.MATCHNO_ARM);
+                        var arMatchAllocDetails = (from arMatching in _unitOfWork.Repository<ARMATCHING>().Query().Get()
+                                                   where arMatching.MATCHNO_ARM == matchNo
+                                                   select arMatching).ToList();
+                        foreach (var matchVal in arMatchAllocDetails)
+                        {
+                            Proc_ARAPTransaction_MatchValue_Update(Convert.ToString(matchVal.DOCCNUMBER_ARM), Convert.ToDecimal(matchVal.AMOUNT_ARM), false);
+                            //var objMatch = (from arMatching in _unitOfWork.Repository<ARMATCHING>().Query().Get()
+                            //                where arMatching.MATCHNO_ARM == matchVal.AMOUNT_ARM && arMatching.DOCCNUMBER_ARM.Equals(matchVal.DOCCNUMBER_ARM)
+                            //                select arMatching).SingleOrDefault();
+                            _unitOfWork.Repository<ARMATCHING>().Delete(matchVal);
+                            _unitOfWork.Save();
+                        }
+                        success = true;
                     }
-                    success = true;
+                    transaction.Commit();
                 }
-            }
-            catch (Exception)
-            {
-                success = false;
+                catch (Exception)
+                {
+                    success = false;
+                    transaction.Rollback();
+                }
             }
             return Json(success, JsonRequestBehavior.AllowGet);
         }
@@ -519,98 +548,109 @@ namespace ASI.MGC.FS.Controllers
             string jvNo = objBankTransaction.DOCNUMBER_BT;
             string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             bool success;
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                string jsonAllocDetails = frm["allocDetails"];
-                var serializer = new JavaScriptSerializer();
-                var lstAllocDetails = serializer.Deserialize<List<CustomJvAllocationDetails>>(jsonAllocDetails);
-                _unitOfWork.Truncate("JVREPORT");
-                foreach (var allocDetail in lstAllocDetails)
+                try
                 {
-                    switch (allocDetail.AlCode)
+                    string jsonAllocDetails = frm["allocDetails"];
+                    var serializer = new JavaScriptSerializer();
+                    var lstAllocDetails = serializer.Deserialize<List<CustomJvAllocationDetails>>(jsonAllocDetails);
+                    _unitOfWork.Truncate("JVREPORT");
+                    foreach (var allocDetail in lstAllocDetails)
                     {
-                        case "AP":
-                            var objApLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
-                            objApLedger.DOCNUMBER_ART = objBankTransaction.DOCNUMBER_BT;
-                            objApLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
-                            objApLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
-                            objApLedger.ARAPCODE_ART = allocDetail.AccountCode;
-                            objApLedger.CREDITAMOUNT_ART = Convert.ToDecimal(allocDetail.Credit);
-                            objApLedger.DEBITAMOUNT_ART = Convert.ToDecimal(allocDetail.Debit);
-                            objApLedger.OTHERREF_ART = objBankTransaction.OTHERREF_BT;
-                            objApLedger.NARRATION_ART = allocDetail.Narration;
-                            objApLedger.MATCHVALUE_AR = 0;
-                            objApLedger.USER_ART = currentUser;
-                            objApLedger.STATUS_ART = "P";
-                            _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objApLedger);
-                            _unitOfWork.Save();
-                            break;
-                        case "AR":
-                            var objArLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
-                            objArLedger.DOCNUMBER_ART = objBankTransaction.DOCNUMBER_BT;
-                            objArLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
-                            objArLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
-                            objArLedger.ARAPCODE_ART = allocDetail.AccountCode;
-                            objArLedger.CREDITAMOUNT_ART = Convert.ToDecimal(allocDetail.Credit);
-                            objArLedger.DEBITAMOUNT_ART = Convert.ToDecimal(allocDetail.Debit);
-                            objArLedger.OTHERREF_ART = objBankTransaction.OTHERREF_BT;
-                            objArLedger.NARRATION_ART = allocDetail.Narration;
-                            objArLedger.MATCHVALUE_AR = 0;
-                            objArLedger.USER_ART = currentUser;
-                            objArLedger.STATUS_ART = "P";
-                            _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArLedger);
-                            _unitOfWork.Save();
-                            break;
-                        case "BA":
-                            var objBTransaction = _unitOfWork.Repository<BANKTRANSACTION>().Create();
-                            objBTransaction.DOCNUMBER_BT = objBankTransaction.DOCNUMBER_BT;
-                            objBTransaction.BANKCODE_BT = allocDetail.AccountCode;
-                            objBTransaction.DOCDATE_BT = objBankTransaction.DOCDATE_BT;
-                            objBTransaction.GLDATE_BT = objBankTransaction.GLDATE_BT;
-                            objBTransaction.DEBITAMOUT_BT = Convert.ToDecimal(allocDetail.Debit);
-                            objBTransaction.CREDITAMOUT_BT = Convert.ToDecimal(allocDetail.Credit);
-                            objBTransaction.OTHERREF_BT = objBankTransaction.OTHERREF_BT;
-                            objBTransaction.NARRATION_BT = allocDetail.Narration;
-                            objBTransaction.STATUS_BT = "P";
-                            objBTransaction.USER_BT = currentUser;
-                            _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBTransaction);
-                            _unitOfWork.Save();
-                            break;
-                        case "GL":
-                            var objGlTransaction = _unitOfWork.Repository<GLTRANSACTION1>().Create();
-                            objGlTransaction.DOCNUMBER_GLT = objBankTransaction.DOCNUMBER_BT;
-                            objGlTransaction.DOCDATE_GLT = objBankTransaction.DOCDATE_BT;
-                            objGlTransaction.GLDATE_GLT = objBankTransaction.GLDATE_BT;
-                            objGlTransaction.GLACCODE_GLT = allocDetail.AccountCode;
-                            objGlTransaction.OTHERREF_GLT = objBankTransaction.OTHERREF_BT;
-                            objGlTransaction.CREDITAMOUNT_GLT = Convert.ToDecimal(allocDetail.Credit);
-                            objGlTransaction.DEBITAMOUNT_GLT = Convert.ToDecimal(allocDetail.Debit);
-                            objGlTransaction.NARRATION_GLT = allocDetail.Narration;
-                            objGlTransaction.VARUSER = currentUser;
-                            objGlTransaction.GLSTATUS_GLT = "P";
-                            _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGlTransaction);
-                            _unitOfWork.Save();
-                            break;
+                        switch (allocDetail.AlCode)
+                        {
+                            case "AP":
+                                var objApLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
+                                objApLedger.DOCNUMBER_ART = objBankTransaction.DOCNUMBER_BT;
+                                objApLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
+                                objApLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
+                                objApLedger.ARAPCODE_ART = allocDetail.AccountCode;
+                                objApLedger.CREDITAMOUNT_ART = Convert.ToDecimal(allocDetail.Credit);
+                                objApLedger.DEBITAMOUNT_ART = Convert.ToDecimal(allocDetail.Debit);
+                                objApLedger.OTHERREF_ART = objBankTransaction.OTHERREF_BT;
+                                objApLedger.NARRATION_ART = allocDetail.Narration;
+                                objApLedger.MATCHVALUE_AR = 0;
+                                objApLedger.USER_ART = currentUser;
+                                objApLedger.STATUS_ART = "P";
+                                _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objApLedger);
+                                _unitOfWork.Save();
+                                break;
+                            case "AR":
+                                var objArLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
+                                objArLedger.DOCNUMBER_ART = objBankTransaction.DOCNUMBER_BT;
+                                objArLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
+                                objArLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
+                                objArLedger.ARAPCODE_ART = allocDetail.AccountCode;
+                                objArLedger.CREDITAMOUNT_ART = Convert.ToDecimal(allocDetail.Credit);
+                                objArLedger.DEBITAMOUNT_ART = Convert.ToDecimal(allocDetail.Debit);
+                                objArLedger.OTHERREF_ART = objBankTransaction.OTHERREF_BT;
+                                objArLedger.NARRATION_ART = allocDetail.Narration;
+                                objArLedger.MATCHVALUE_AR = 0;
+                                objArLedger.USER_ART = currentUser;
+                                objArLedger.STATUS_ART = "P";
+                                _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArLedger);
+                                _unitOfWork.Save();
+                                break;
+                            case "BA":
+                                var objAccBTransaction = _unitOfWork.Repository<BANKTRANSACTION>().Create();
+                                objAccBTransaction.DOCNUMBER_BT = objBankTransaction.DOCNUMBER_BT;
+                                objAccBTransaction.BANKCODE_BT = allocDetail.AccountCode;
+                                objAccBTransaction.DOCDATE_BT = objBankTransaction.DOCDATE_BT;
+                                objAccBTransaction.GLDATE_BT = objBankTransaction.GLDATE_BT;
+                                objAccBTransaction.DEBITAMOUT_BT = Convert.ToDecimal(allocDetail.Debit);
+                                objAccBTransaction.CREDITAMOUT_BT = Convert.ToDecimal(allocDetail.Credit);
+                                objAccBTransaction.OTHERREF_BT = objBankTransaction.OTHERREF_BT;
+                                objAccBTransaction.NARRATION_BT = allocDetail.Narration;
+                                objAccBTransaction.STATUS_BT = "P";
+                                objAccBTransaction.USER_BT = currentUser;
+                                _unitOfWork.Repository<BANKTRANSACTION>().Insert(objAccBTransaction);
+                                _unitOfWork.Save();
+                                break;
+                            case "GL":
+                                var objGlTransaction = _unitOfWork.Repository<GLTRANSACTION1>().Create();
+                                objGlTransaction.DOCNUMBER_GLT = objBankTransaction.DOCNUMBER_BT;
+                                objGlTransaction.DOCDATE_GLT = objBankTransaction.DOCDATE_BT;
+                                objGlTransaction.GLDATE_GLT = objBankTransaction.GLDATE_BT;
+                                objGlTransaction.GLACCODE_GLT = allocDetail.AccountCode;
+                                objGlTransaction.OTHERREF_GLT = objBankTransaction.OTHERREF_BT;
+                                objGlTransaction.CREDITAMOUNT_GLT = Convert.ToDecimal(allocDetail.Credit);
+                                objGlTransaction.DEBITAMOUNT_GLT = Convert.ToDecimal(allocDetail.Debit);
+                                objGlTransaction.NARRATION_GLT = allocDetail.Narration;
+                                objGlTransaction.VARUSER = currentUser;
+                                objGlTransaction.GLSTATUS_GLT = "P";
+                                _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGlTransaction);
+                                _unitOfWork.Save();
+                                break;
+                        }
                     }
+                    CommonModelAccessUtility.updateDocNo(_unitOfWork, docType);
+                    success = true;
+                    transaction.Commit();
                 }
-                success = true;
-                CommonModelAccessUtility.updateDocNo(_unitOfWork, docType);
-            }
-            catch (Exception)
-            {
-                success = false;
+                catch (Exception)
+                {
+                    success = false;
+                    transaction.Rollback();
+                }
             }
             return Json(new { success, jvNo = jvNo }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetGlCodes(string sidx, string sord, int page, int rows, string searchValue = "")
+        public JsonResult GetGlCodes(string sidx, string sord, int page, int rows, string searchValue = "", string searchById = "", string searchByName = "")
         {
             var glCodeList = (from glDetails in _unitOfWork.Repository<GLMASTER>().Query().Get()
                               select glDetails).Select(a => new { a.GLCODE_LM, a.GLDESCRIPTION_LM });
             if (!string.IsNullOrEmpty(searchValue))
             {
-                glCodeList = (from glDetails in _unitOfWork.Repository<GLMASTER>().Query().Get()
-                              where glDetails.GLDESCRIPTION_LM.Contains(searchValue)
-                              select glDetails).Select(a => new { a.GLCODE_LM, a.GLDESCRIPTION_LM });
+                glCodeList = glCodeList.Where(gl => gl.GLDESCRIPTION_LM.Contains(searchValue));
+            }
+            if (!string.IsNullOrEmpty(searchById))
+            {
+                glCodeList = glCodeList.Where(gl => gl.GLCODE_LM.Contains(searchById));
+            }
+            if (!string.IsNullOrEmpty(searchByName))
+            {
+                glCodeList = glCodeList.Where(gl => gl.GLDESCRIPTION_LM.Contains(searchByName));
             }
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;

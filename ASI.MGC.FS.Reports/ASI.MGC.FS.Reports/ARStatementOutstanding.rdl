@@ -1032,7 +1032,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Sum(Fields!CREDITDAYS_ARM.Value, "DS_ARStatementOutstanding") &amp; "DAY(s)"</Value>
+                <Value>=First(Fields!CREDITDAYS_ARM.Value, "DS_ARStatementOutstanding") &amp; "DAY(s)"</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -1098,7 +1098,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=FORMAT(Sum(Fields!LIMITAMOUNT_ARM.Value, "DS_ARStatementOutstanding"),"N2")</Value>
+                <Value>=FORMAT(First(Fields!LIMITAMOUNT_ARM.Value, "DS_ARStatementOutstanding"),"N2")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -1498,6 +1498,7 @@
       <Prompt>ENDDATE</Prompt>
     </ReportParameter>
   </ReportParameters>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>d0ae9033-55f7-4c19-879a-a5356baea442</rd:ReportID>
 </Report>

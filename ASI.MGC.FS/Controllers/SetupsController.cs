@@ -56,23 +56,28 @@ namespace ASI.MGC.FS.Controllers
         }
         public ActionResult SaveNewFinancialYear(FINYEARMASTER financialYear)
         {
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                var currentFinancialYear = GetCurrentFinancialYear();
-                currentFinancialYear.CURRENTPERIOD_FM = false;
-                financialYear.ARAPSTATUS_FM = true;
-                financialYear.BANKSTATUS_FM = true;
-                financialYear.GLSTATUS_FM = true;
-                financialYear.CURRENTPERIOD_FM = true;
-                _unitOfWork.Repository<FINYEARMASTER>().Update(currentFinancialYear);
-                _unitOfWork.Save();
-                _unitOfWork.Repository<FINYEARMASTER>().Insert(financialYear);
-                _unitOfWork.Save();
-                TempData["success"] = "New Financial Year is added successfully!";
-            }
-            catch (Exception)
-            {
-                TempData["error"] = "Error: Sorry, Something went wrong!";
+                try
+                {
+                    var currentFinancialYear = GetCurrentFinancialYear();
+                    currentFinancialYear.CURRENTPERIOD_FM = false;
+                    financialYear.ARAPSTATUS_FM = true;
+                    financialYear.BANKSTATUS_FM = true;
+                    financialYear.GLSTATUS_FM = true;
+                    financialYear.CURRENTPERIOD_FM = true;
+                    _unitOfWork.Repository<FINYEARMASTER>().Update(currentFinancialYear);
+                    _unitOfWork.Save();
+                    _unitOfWork.Repository<FINYEARMASTER>().Insert(financialYear);
+                    _unitOfWork.Save();
+                    TempData["success"] = "New Financial Year is added successfully!";
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    TempData["error"] = "Error: Sorry, Something went wrong!";
+                    transaction.Rollback();
+                }
             }
             return RedirectToAction("FinancialYearPeriod");
         }
@@ -138,29 +143,34 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult SaveCustomerMaster(FormCollection form, AR_AP_MASTER objCustomerMaster)
         {
             bool success;
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                objCustomerMaster.TYPE_ARM = "AR";
-                _unitOfWork.Repository<AR_AP_MASTER>().Insert(objCustomerMaster);
-                _unitOfWork.Save();
+                try
+                {
+                    objCustomerMaster.TYPE_ARM = "AR";
+                    _unitOfWork.Repository<AR_AP_MASTER>().Insert(objCustomerMaster);
+                    _unitOfWork.Save();
 
-                var objCustomerLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
-                objCustomerLedger.DOCNUMBER_ART = objCustomerMaster.ARCODE_ARM;
-                objCustomerLedger.DODATE_ART = Convert.ToDateTime(DateTime.Now.ToShortDateString());
-                objCustomerLedger.GLDATE_ART = Convert.ToDateTime(form["GLDate"]);
-                objCustomerLedger.ARAPCODE_ART = objCustomerMaster.ARCODE_ARM;
-                objCustomerLedger.DEBITAMOUNT_ART = Convert.ToInt32(form["OpeningBalance"]);
-                objCustomerLedger.NARRATION_ART = "Opening Balance";
-                objCustomerLedger.OTHERREF_ART = objCustomerMaster.ARCODE_ARM;
-                objCustomerLedger.MATCHVALUE_AR = Convert.ToDecimal("0.0");
-                objCustomerLedger.STATUS_ART = "OP";
-                _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objCustomerLedger);
-                _unitOfWork.Save();
-                success = true;
-            }
-            catch (Exception)
-            {
-                success = false;
+                    var objCustomerLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
+                    objCustomerLedger.DOCNUMBER_ART = objCustomerMaster.ARCODE_ARM;
+                    objCustomerLedger.DODATE_ART = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+                    objCustomerLedger.GLDATE_ART = Convert.ToDateTime(form["GLDate"]);
+                    objCustomerLedger.ARAPCODE_ART = objCustomerMaster.ARCODE_ARM;
+                    objCustomerLedger.DEBITAMOUNT_ART = Convert.ToInt32(form["OpeningBalance"]);
+                    objCustomerLedger.NARRATION_ART = "Opening Balance";
+                    objCustomerLedger.OTHERREF_ART = objCustomerMaster.ARCODE_ARM;
+                    objCustomerLedger.MATCHVALUE_AR = Convert.ToDecimal("0.0");
+                    objCustomerLedger.STATUS_ART = "OP";
+                    _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objCustomerLedger);
+                    _unitOfWork.Save();
+                    success = true;
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    success = false;
+                    transaction.Rollback();
+                }
             }
             return Json(success, JsonRequestBehavior.AllowGet);
             //return RedirectToAction("CustomerMaster");
@@ -169,33 +179,42 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult SaveJobCreation(JOBIDREFERENCE objJobCreation)
         {
             bool success;
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                _unitOfWork.Repository<JOBIDREFERENCE>().Insert(objJobCreation);
-                _unitOfWork.Save();
-                success = true;
+                try
+                {
+                    _unitOfWork.Repository<JOBIDREFERENCE>().Insert(objJobCreation);
+                    _unitOfWork.Save();
+                    success = true;
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    success = false;
+                    transaction.Rollback();
+                }
             }
-            catch (Exception)
-            {
-                success = false;
-            }
-
             return Json(success, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public JsonResult SaveItemMaster(PRODUCTMASTER objItemMaster)
         {
             bool success;
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                objItemMaster.STATUS_PM = "SP";
-                _unitOfWork.Repository<PRODUCTMASTER>().Insert(objItemMaster);
-                _unitOfWork.Save();
-                success = true;
-            }
-            catch (Exception)
-            {
-                success = false;
+                try
+                {
+                    objItemMaster.STATUS_PM = "SP";
+                    _unitOfWork.Repository<PRODUCTMASTER>().Insert(objItemMaster);
+                    _unitOfWork.Save();
+                    success = true;
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    success = false;
+                    transaction.Rollback();
+                }
             }
             return Json(success, JsonRequestBehavior.AllowGet);
         }
@@ -203,15 +222,22 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult SaveEmployeeMaster(EMPLOYEEMASTER objEmployeeMaster)
         {
             bool success;
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                _unitOfWork.Repository<EMPLOYEEMASTER>().Insert(objEmployeeMaster);
-                _unitOfWork.Save();
-                success = true;
-            }
-            catch (Exception)
-            {
-                success = false;
+                try
+                {
+
+                    _unitOfWork.Repository<EMPLOYEEMASTER>().Insert(objEmployeeMaster);
+                    _unitOfWork.Save();
+                    success = true;
+                    transaction.Commit();
+
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    success = false;
+                }
             }
             return Json(success, JsonRequestBehavior.AllowGet);
         }
@@ -219,30 +245,35 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult SaveSupplierMaster(FormCollection form, AR_AP_MASTER objSupplierMaster)
         {
             bool success;
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                objSupplierMaster.TYPE_ARM = "AP";
-                _unitOfWork.Repository<AR_AP_MASTER>().Create();
-                _unitOfWork.Repository<AR_AP_MASTER>().Insert(objSupplierMaster);
-                _unitOfWork.Save();
+                try
+                {
+                    objSupplierMaster.TYPE_ARM = "AP";
+                    _unitOfWork.Repository<AR_AP_MASTER>().Create();
+                    _unitOfWork.Repository<AR_AP_MASTER>().Insert(objSupplierMaster);
+                    _unitOfWork.Save();
 
-                var objCustomerLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
-                objCustomerLedger.DOCNUMBER_ART = objSupplierMaster.ARCODE_ARM;
-                objCustomerLedger.DODATE_ART = Convert.ToDateTime(DateTime.Now.ToShortDateString());
-                objCustomerLedger.GLDATE_ART = Convert.ToDateTime(form["GLDate"]);
-                objCustomerLedger.ARAPCODE_ART = objSupplierMaster.ARCODE_ARM;
-                objCustomerLedger.DEBITAMOUNT_ART = Convert.ToInt32(form["OpeningBalance"]);
-                objCustomerLedger.NARRATION_ART = "Opening Balance";
-                objCustomerLedger.OTHERREF_ART = objSupplierMaster.ARCODE_ARM;
-                objCustomerLedger.MATCHVALUE_AR = Convert.ToDecimal("0.0");
-                objCustomerLedger.STATUS_ART = "OP";
-                _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objCustomerLedger);
-                _unitOfWork.Save();
-                success = true;
-            }
-            catch (Exception)
-            {
-                success = false;
+                    var objCustomerLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
+                    objCustomerLedger.DOCNUMBER_ART = objSupplierMaster.ARCODE_ARM;
+                    objCustomerLedger.DODATE_ART = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+                    objCustomerLedger.GLDATE_ART = Convert.ToDateTime(form["GLDate"]);
+                    objCustomerLedger.ARAPCODE_ART = objSupplierMaster.ARCODE_ARM;
+                    objCustomerLedger.DEBITAMOUNT_ART = Convert.ToInt32(form["OpeningBalance"]);
+                    objCustomerLedger.NARRATION_ART = "Opening Balance";
+                    objCustomerLedger.OTHERREF_ART = objSupplierMaster.ARCODE_ARM;
+                    objCustomerLedger.MATCHVALUE_AR = Convert.ToDecimal("0.0");
+                    objCustomerLedger.STATUS_ART = "OP";
+                    _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objCustomerLedger);
+                    _unitOfWork.Save();
+                    success = true;
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    success = false;
+                    transaction.Rollback();
+                }
             }
             return Json(success, JsonRequestBehavior.AllowGet);
         }
@@ -250,16 +281,21 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult SaveProductMaster(PRODUCTMASTER objProductMaster)
         {
             bool success;
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                objProductMaster.STATUS_PM = "IP";
-                _unitOfWork.Repository<PRODUCTMASTER>().Insert(objProductMaster);
-                _unitOfWork.Save();
-                success = true;
-            }
-            catch (Exception)
-            {
-                success = false;
+                try
+                {
+                    objProductMaster.STATUS_PM = "IP";
+                    _unitOfWork.Repository<PRODUCTMASTER>().Insert(objProductMaster);
+                    _unitOfWork.Save();
+                    success = true;
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    success = false;
+                    transaction.Rollback();
+                }
             }
             return Json(success, JsonRequestBehavior.AllowGet);
         }
@@ -267,15 +303,20 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult SaveUnitMeasurement(UNITMESSUREMENT objUnitMessurement)
         {
             bool success;
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                _unitOfWork.Repository<UNITMESSUREMENT>().Insert(objUnitMessurement);
-                _unitOfWork.Save();
-                success = true;
-            }
-            catch (Exception)
-            {
-                success = false;
+                try
+                {
+                    _unitOfWork.Repository<UNITMESSUREMENT>().Insert(objUnitMessurement);
+                    _unitOfWork.Save();
+                    success = true;
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    success = false;
+                    transaction.Rollback();
+                }
             }
             return Json(success, JsonRequestBehavior.AllowGet);
         }
@@ -284,27 +325,31 @@ namespace ASI.MGC.FS.Controllers
         {
             bool success = false;
             bool clientExist = false;
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                var clientMachine = (from machine in _unitOfWork.Repository<MESMachine>().Query().Get()
-                                     where machine.MacAddress.Contains(mesMachine.MacAddress)
-                                     select machine).SingleOrDefault();
-                if (clientMachine == null)
+                try
                 {
-                    _unitOfWork.Repository<MESMachine>().Insert(mesMachine);
-                    _unitOfWork.Save();
-                    success = true;
+                    var clientMachine = (from machine in _unitOfWork.Repository<MESMachine>().Query().Get()
+                                         where machine.MacAddress.Contains(mesMachine.MacAddress)
+                                         select machine).SingleOrDefault();
+                    if (clientMachine == null)
+                    {
+                        _unitOfWork.Repository<MESMachine>().Insert(mesMachine);
+                        _unitOfWork.Save();
+                        success = true;
+                    }
+                    else
+                    {
+                        clientExist = true;
+                    }
+                    transaction.Commit();
                 }
-                else
+                catch (Exception)
                 {
-                    clientExist = true;
+                    success = false;
+                    transaction.Rollback();
                 }
             }
-            catch (Exception)
-            {
-                success = false;
-            }
-
             return Json(new { success = success, clientExists = clientExist }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetMesMachinesList(string sidx, string sord, int page, int rows, string machineSearch, string macSearch)

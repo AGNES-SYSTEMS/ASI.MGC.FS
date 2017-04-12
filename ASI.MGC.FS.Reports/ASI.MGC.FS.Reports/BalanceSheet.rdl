@@ -56,7 +56,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -93,7 +92,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -130,7 +128,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -167,7 +164,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -1328,6 +1324,7 @@
       <Prompt>ENDDATE</Prompt>
     </ReportParameter>
   </ReportParameters>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>d0807440-e6fd-4c35-af76-7e0723ed4370</rd:ReportID>
 </Report>

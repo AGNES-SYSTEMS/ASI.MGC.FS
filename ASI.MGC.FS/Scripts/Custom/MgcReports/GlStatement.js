@@ -15,20 +15,25 @@ $(document).ready(function () {
     $("#txtGLDesc").on("change", function () {
         $("#formGlStatement").formValidation('revalidateField', 'GlDesc');
     });
-    var searchGrid = function (searchValue) {
-        debugger;
+    var searchGrid = function (glId, glName) {
         var postData = $("#tblGlSearch").jqGrid("getGridParam", "postData");
-        postData["searchValue"] = searchValue;
-
+        postData["searchById"] = glId;
+        postData["searchByName"] = glName;
         $("#tblGlSearch").setGridParam({ postData: postData });
         $("#tblGlSearch").trigger("reloadGrid", [{ page: 1 }]);
     };
+    $("#txtGlIdSearch").off().on("keyup", function () {
 
-    $("#txtglCodeSearch").off().on("keyup", function () {
-
-        var shouldSearch = $("#txtglCodeSearch").val().length >= 2 || $("#txtglCodeSearch").val().length === 0;
+        var shouldSearch = $("#txtGlIdSearch").val().length >= 1 || $("#txtGlIdSearch").val().length === 0;
         if (shouldSearch) {
-            searchGrid($("#txtglCodeSearch").val());
+            searchGrid($("#txtGlIdSearch").val(), $("#txtGlNameSearch").val());
+        }
+    });
+    $("#txtGlNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtGlNameSearch").val().length >= 3 || $("#txtGlNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtGlIdSearch").val(), $("#txtGlNameSearch").val());
         }
     });
     $("#glSearchModel").on('show.bs.modal', function () {

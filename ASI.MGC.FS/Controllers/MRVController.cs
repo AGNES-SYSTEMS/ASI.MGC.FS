@@ -37,23 +37,27 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult SaveMrvCreation(FormCollection form, MATERIALRECEIPTMASTER objMrv)
         {
             List<string> listMrvJobCode = new List<string>();
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                var jsonProductDetails = form["mrvProds"];
-                var serializer = new JavaScriptSerializer();
-                var lstMrvProducts = serializer.Deserialize<List<MRVREFERENCE>>(jsonProductDetails);
-                objMrv.MRVNO_MRV = CommonModelAccessUtility.GetCurrMrvCount(_unitOfWork);
-                objMrv.DOC_DATE_MRV = Convert.ToDateTime(DateTime.Now.ToShortDateString());
-                objMrv.STATUS_MRV = "N";
-                _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Insert(objMrv);
-                _unitOfWork.Save();
-                listMrvJobCode.Add(objMrv.MRVNO_MRV);
-                SaveMrvReportObject(objMrv);
-                SaveMrvProducts(lstMrvProducts, objMrv, listMrvJobCode);
-            }
-            catch (Exception)
-            {
-                // ignored
+                try
+                {
+                    var jsonProductDetails = form["mrvProds"];
+                    var serializer = new JavaScriptSerializer();
+                    var lstMrvProducts = serializer.Deserialize<List<MRVREFERENCE>>(jsonProductDetails);
+                    objMrv.MRVNO_MRV = CommonModelAccessUtility.GetCurrMrvCount(_unitOfWork);
+                    objMrv.DOC_DATE_MRV = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+                    objMrv.STATUS_MRV = "N";
+                    _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Insert(objMrv);
+                    _unitOfWork.Save();
+                    listMrvJobCode.Add(objMrv.MRVNO_MRV);
+                    SaveMrvReportObject(objMrv);
+                    SaveMrvProducts(lstMrvProducts, objMrv, listMrvJobCode);
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                }
             }
             return Json(listMrvJobCode, JsonRequestBehavior.AllowGet);
             //return View("MrvCreation");
@@ -262,92 +266,103 @@ namespace ASI.MGC.FS.Controllers
                 listMrvJobCode = listMrvJobCode,
                 isInvalid = isInvalid
             };
-            switch (type)
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                case "0":
-                    isInvalid = Proc_MRVReportGenerater(docNo);
-                    if (!isInvalid)
+                try
+                {
+                    switch (type)
                     {
-                        proc_JobCardGeneration(listMrvJobCode, docNo);
+                        case "0":
+                            isInvalid = Proc_MRVReportGenerater(docNo);
+                            if (!isInvalid)
+                            {
+                                proc_JobCardGeneration(listMrvJobCode, docNo);
+                            }
+                            jsonData = new
+                            {
+                                type = type,
+                                docNo = docNo,
+                                listMrvJobCode = listMrvJobCode,
+                                isInvalid = isInvalid
+                            };
+                            break;
+                        case "1":
+                            isInvalid = proc_DeleveryNoteNo(docNo);
+                            jsonData = new
+                            {
+                                type = type,
+                                docNo = docNo,
+                                listMrvJobCode = listMrvJobCode,
+                                isInvalid = isInvalid
+                            };
+                            break;
+                        case "2":
+                            isInvalid = proc_InvDataExist(docNo);
+                            if (!isInvalid)
+                            {
+                                var dlNo = proc_GetDeleveryNoteNo(docNo);
+                                proc_DeleveryNoteNo(dlNo);
+                                proc_GenerateInvoice(docNo);
+                            }
+                            jsonData = new
+                            {
+                                type = type,
+                                docNo = docNo,
+                                listMrvJobCode = listMrvJobCode,
+                                isInvalid = isInvalid
+                            };
+                            break;
+                        case "3":
+                            isInvalid = proc_CMDataExist(docNo);
+                            if (!isInvalid)
+                            {
+                                proc_GenerateCashMemo(docNo);
+                                var dlNo = proc_DeleveryNoteNoCashMemo(docNo);
+                                proc_DeleveryNoteNo(dlNo);
+                            }
+                            jsonData = new
+                            {
+                                type = type,
+                                docNo = docNo,
+                                listMrvJobCode = listMrvJobCode,
+                                isInvalid = isInvalid
+                            };
+                            break;
+                        case "4":
+                            //proc_JobCardReport(docNo);
+                            jsonData = new
+                            {
+                                type = type,
+                                docNo = docNo,
+                                listMrvJobCode = listMrvJobCode,
+                                isInvalid = false
+                            };
+                            break;
+                        case "5":
+                            jsonData = new
+                            {
+                                type = type,
+                                docNo = docNo,
+                                listMrvJobCode = listMrvJobCode,
+                                isInvalid = false
+                            };
+                            break;
+                        case "6":
+                            jsonData = new
+                            {
+                                type = type,
+                                docNo = docNo,
+                                listMrvJobCode = listMrvJobCode,
+                                isInvalid = false
+                            };
+                            break;
                     }
-                    jsonData = new
-                    {
-                        type = type,
-                        docNo = docNo,
-                        listMrvJobCode = listMrvJobCode,
-                        isInvalid = isInvalid
-                    };
-                    break;
-                case "1":
-                    isInvalid = proc_DeleveryNoteNo(docNo);
-                    jsonData = new
-                    {
-                        type = type,
-                        docNo = docNo,
-                        listMrvJobCode = listMrvJobCode,
-                        isInvalid = isInvalid
-                    };
-                    break;
-                case "2":
-                    isInvalid = proc_InvDataExist(docNo);
-                    if (!isInvalid)
-                    {
-                        var dlNo = proc_GetDeleveryNoteNo(docNo);
-                        proc_DeleveryNoteNo(dlNo);
-                        proc_GenerateInvoice(docNo);
-                    }
-                    jsonData = new
-                    {
-                        type = type,
-                        docNo = docNo,
-                        listMrvJobCode = listMrvJobCode,
-                        isInvalid = isInvalid
-                    };
-                    break;
-                case "3":
-                    isInvalid = proc_CMDataExist(docNo);
-                    if (!isInvalid)
-                    {
-                        proc_GenerateCashMemo(docNo);
-                        var dlNo = proc_DeleveryNoteNoCashMemo(docNo);
-                        proc_DeleveryNoteNo(dlNo);
-                    }
-                    jsonData = new
-                    {
-                        type = type,
-                        docNo = docNo,
-                        listMrvJobCode = listMrvJobCode,
-                        isInvalid = isInvalid
-                    };
-                    break;
-                case "4":
-                    //proc_JobCardReport(docNo);
-                    jsonData = new
-                    {
-                        type = type,
-                        docNo = docNo,
-                        listMrvJobCode = listMrvJobCode,
-                        isInvalid = false
-                    };
-                    break;
-                case "5":
-                    jsonData = new
-                    {
-                        type = type,
-                        docNo = docNo,
-                        listMrvJobCode = listMrvJobCode,
-                        isInvalid = false
-                    };
-                    break;
-                case "6":
-                    jsonData = new
-                    {
-                        type = type,
-                        docNo = docNo,
-                        listMrvJobCode = listMrvJobCode,
-                        isInvalid = false
-                    };
-                    break;
+                    transaction.Commit();
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                }
             }
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }

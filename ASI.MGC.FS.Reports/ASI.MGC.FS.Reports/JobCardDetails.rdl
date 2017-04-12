@@ -1153,6 +1153,7 @@
       <Prompt>JOBNO</Prompt>
     </ReportParameter>
   </ReportParameters>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>53e048d2-30fd-49e0-aafa-b3f940b06879</rd:ReportID>
 </Report>

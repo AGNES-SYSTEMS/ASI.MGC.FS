@@ -7,16 +7,18 @@ using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
+using System.Data.Common;
 
 namespace ASI.MGC.FS.Domain.Repositories
 {
-    public class Repository<TEntity>:IRepository<TEntity> where TEntity: class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         internal ASI_MGC_FSEntities dbContext;
         internal DbSet<TEntity> dbSet;
+        internal DbContextTransaction Transaction;
 
         public Repository(ASI_MGC_FSEntities _dbContext)
-        { 
+        {
             if (_dbContext == null)
             {
                 throw new ArgumentNullException("dbContext");
@@ -32,7 +34,7 @@ namespace ASI.MGC.FS.Domain.Repositories
 
         public virtual void Update(TEntity entity)
         {
-             if (dbContext.Entry(entity).State == System.Data.Entity.EntityState.Detached)
+            if (dbContext.Entry(entity).State == System.Data.Entity.EntityState.Detached)
             {
                 dbSet.Attach(entity);
             }
@@ -75,7 +77,19 @@ namespace ASI.MGC.FS.Domain.Repositories
             string command = "TRUNCATE TABLE[" + tableName + "]";
             dbContext.Database.ExecuteSqlCommand(command);
         }
+        public DbContextTransaction BeginTransaction()
+        {
 
+            if (null == Transaction)
+            {
+                if (dbContext.Database.Connection.State != ConnectionState.Open)
+                {
+                    dbContext.Database.Connection.Open();
+                }
+                this.Transaction = dbContext.Database.BeginTransaction();
+            }
+            return Transaction;
+        }
         public virtual RepositoryQuery<TEntity> Query()
         {
             var repositoryGetFluentHelper =

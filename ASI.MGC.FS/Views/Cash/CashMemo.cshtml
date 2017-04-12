@@ -316,12 +316,14 @@
                 openCashMemoReport(reprtParams.reportParams[0]);
                 openDeliveryReport(reprtParams.reportParams[1]);
                 $("#btnSave").hide();
+            } else {
+                toastr.error("Sorry! Something went wrong, please try again.");
             }
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
-            $("#btnSave").hide();
+            //$("#btnSave").hide();
         }
 
         function openCashMemoReport(cmNo) {

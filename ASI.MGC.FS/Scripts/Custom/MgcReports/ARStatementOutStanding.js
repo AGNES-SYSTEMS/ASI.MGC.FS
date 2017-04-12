@@ -82,19 +82,25 @@ $(document).ready(function () {
         }
         e.preventDefault();
     });
-    var searchGrid = function (searchValue) {
-        debugger;
+    var searchGrid = function (accountId, accountName) {
         var postData = $("#tblAccountSearch").jqGrid("getGridParam", "postData");
-        postData["searchValue"] = searchValue;
-
+        postData["searchById"] = accountId;
+        postData["searchByName"] = accountName;
         $("#tblAccountSearch").setGridParam({ postData: postData });
         $("#tblAccountSearch").trigger("reloadGrid", [{ page: 1 }]);
     };
-    $("#txtAccountSearch").off().on("keyup", function () {
+    $("#txtArIdSearch").off().on("keyup", function () {
 
-        var shouldSearch = $("#txtAccountSearch").val().length >= 3 || $("#txtAccountSearch").val().length === 0;
+        var shouldSearch = $("#txtArIdSearch").val().length >= 1 || $("#txtArIdSearch").val().length === 0;
         if (shouldSearch) {
-            searchGrid($("#txtAccountSearch").val());
+            searchGrid($("#txtArIdSearch").val(), $("#txtArNameSearch").val());
+        }
+    });
+    $("#txtArNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtArNameSearch").val().length >= 3 || $("#txtArNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtArIdSearch").val(), $("#txtArNameSearch").val());
         }
     });
     var validateArguments = function () {

@@ -81,7 +81,27 @@ $(document).ready(function () {
         }
         return true;
     }
+    var searchGrid = function (bnkId, bnkName) {
+        var postData = $("#tblBankSearch").jqGrid("getGridParam", "postData");
+        postData["searchById"] = bnkId;
+        postData["searchByName"] = bnkName;
+        $("#tblBankSearch").setGridParam({ postData: postData });
+        $("#tblBankSearch").trigger("reloadGrid", [{ page: 1 }]);
+    };
+    $("#txtIdSearch").off().on("keyup", function () {
 
+        var shouldSearch = $("#txtIdSearch").val().length >= 1 || $("#txtIdSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtIdSearch").val(), $("#txtEmpNameSearch").val());
+        }
+    });
+    $("#txtNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtNameSearch").val().length >= 3 || $("#txtNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtIdSearch").val(), $("#txtNameSearch").val());
+        }
+    });
     $("#btnReportSubmit").on("click", function () {
         var isValid = validateArguments();
         if (isValid) {

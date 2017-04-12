@@ -118,6 +118,10 @@
       <FullPath>MetarialReceiptVocher.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>MetarialReceiptVoucher_JobDetailsSubReport.rdl</Name>
+      <FullPath>MetarialReceiptVoucher_JobDetailsSubReport.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>MrvStatement.rdl</Name>
       <FullPath>MrvStatement.rdl</FullPath>
     </ProjectItem>
@@ -170,8 +174,8 @@
       <FullPath>TrialBalance.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>MetarialReceiptVoucher_JobDetailsSubReport.rdl</Name>
-      <FullPath>MetarialReceiptVoucher_JobDetailsSubReport.rdl</FullPath>
+      <Name>CashMemo3.rdl</Name>
+      <FullPath>CashMemo3.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

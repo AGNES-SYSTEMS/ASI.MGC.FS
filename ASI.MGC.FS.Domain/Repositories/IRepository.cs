@@ -1,6 +1,8 @@
-﻿namespace ASI.MGC.FS.Domain.Repositories
+﻿using System.Data.Common;
+using System.Data.Entity;
+namespace ASI.MGC.FS.Domain.Repositories
 {
-    public interface IRepository<TEntity> where TEntity:class
+    public interface IRepository<TEntity> where TEntity : class
     {
         TEntity FindByID(object id);
         void Update(TEntity entity);
@@ -10,5 +12,6 @@
         void Truncate(string tableName);
         TEntity Create();
         RepositoryQuery<TEntity> Query();
+        DbContextTransaction BeginTransaction();
     }
 }

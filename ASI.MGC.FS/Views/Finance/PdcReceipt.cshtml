@@ -466,15 +466,16 @@
                 toastr.success("PDC Receipt is added Successfully.");
                 isReportOpened = true;
                 openBankPayment(data.brNo);
+                $("#btnSubmit").hide();
             } else {
                 toastr.error("Sorry! Something went wrong, please try again.");
             }
-            $("#btnSubmit").hide();
+            
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
-            $("#btnSubmit").hide();
+            //$("#btnSubmit").hide();
         }
 
         function openBankPayment(brNo) {

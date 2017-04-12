@@ -151,57 +151,60 @@ namespace ASI.MGC.FS.Controllers
         {
             string purchaseReturnNo = "";
             string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                purchaseReturnNo = Convert.ToString(frm["DocNo"]);
-                var jsonProductDetails = frm["prdDetails"];
-                var serializer = new JavaScriptSerializer();
-                var lstProducts = serializer.Deserialize<List<STOCKLEDGER>>(jsonProductDetails);
-                var objArApLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
-                objArApLedger.DOCNUMBER_ART = Convert.ToString(frm["DocNo"]);
-                objArApLedger.ARAPCODE_ART = Convert.ToString(frm["APCode"]);
-                objArApLedger.DODATE_ART = Convert.ToDateTime(frm["DocDate"]);
-                objArApLedger.GLDATE_ART = Convert.ToDateTime(frm["PurDate"]);
-                objArApLedger.OTHERREF_ART = Convert.ToString(frm["Invoice"]);
-                objArApLedger.NARRATION_ART = Convert.ToString(frm["Note"]);
-                objArApLedger.CREDITAMOUNT_ART = 0;
-                objArApLedger.DEBITAMOUNT_ART = Convert.ToDecimal(frm["NetAmount"]);
-                objArApLedger.USER_ART = currentUser;
-                objArApLedger.STATUS_ART = "P";
-                _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArApLedger);
-                _unitOfWork.Save();
-
-                var objPurchase = _unitOfWork.Repository<GLTRANSACTION1>().Create();
-                objPurchase.DOCNUMBER_GLT = Convert.ToString(frm["DocNo"]);
-                objPurchase.DOCDATE_GLT = Convert.ToDateTime(frm["DocDate"]);
-                objPurchase.GLDATE_GLT = Convert.ToDateTime(frm["PurDate"]);
-                objPurchase.GLACCODE_GLT = "4001";
-                objPurchase.CREDITAMOUNT_GLT = Convert.ToDecimal(frm["TotalAmount"]);
-                objPurchase.DEBITAMOUNT_GLT = 0;
-                objPurchase.OTHERREF_GLT = Convert.ToString(frm["Invoice"]);
-                objPurchase.NARRATION_GLT = Convert.ToString(frm["Note"]);
-                objPurchase.VARUSER = currentUser;
-                objPurchase.GLSTATUS_GLT = "P";
-                _unitOfWork.Repository<GLTRANSACTION1>().Insert(objPurchase);
-                _unitOfWork.Save();
-
-                foreach (var prd in lstProducts)
+                try
                 {
-                    prd.VOUCHERNO_SL = Convert.ToString(frm["DocNo"]);
-                    prd.OTHERREF_SL = Convert.ToString(frm["Invoice"]);
-                    prd.DOC_DATE_SL = Convert.ToDateTime(frm["DocDate"]);
-                    prd.LEDGER_DATE_SL = Convert.ToDateTime(frm["PurDate"]);
-                    prd.STATUS_SL = "P";
-                    _unitOfWork.Repository<STOCKLEDGER>().Insert(prd);
+                    purchaseReturnNo = Convert.ToString(frm["DocNo"]);
+                    var jsonProductDetails = frm["prdDetails"];
+                    var serializer = new JavaScriptSerializer();
+                    var lstProducts = serializer.Deserialize<List<STOCKLEDGER>>(jsonProductDetails);
+                    var objArApLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
+                    objArApLedger.DOCNUMBER_ART = Convert.ToString(frm["DocNo"]);
+                    objArApLedger.ARAPCODE_ART = Convert.ToString(frm["APCode"]);
+                    objArApLedger.DODATE_ART = Convert.ToDateTime(frm["DocDate"]);
+                    objArApLedger.GLDATE_ART = Convert.ToDateTime(frm["PurDate"]);
+                    objArApLedger.OTHERREF_ART = Convert.ToString(frm["Invoice"]);
+                    objArApLedger.NARRATION_ART = Convert.ToString(frm["Note"]);
+                    objArApLedger.CREDITAMOUNT_ART = 0;
+                    objArApLedger.DEBITAMOUNT_ART = Convert.ToDecimal(frm["NetAmount"]);
+                    objArApLedger.USER_ART = currentUser;
+                    objArApLedger.STATUS_ART = "P";
+                    _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArApLedger);
                     _unitOfWork.Save();
 
-                    UpdateProductMaster(prd);
-                }
+                    var objPurchase = _unitOfWork.Repository<GLTRANSACTION1>().Create();
+                    objPurchase.DOCNUMBER_GLT = Convert.ToString(frm["DocNo"]);
+                    objPurchase.DOCDATE_GLT = Convert.ToDateTime(frm["DocDate"]);
+                    objPurchase.GLDATE_GLT = Convert.ToDateTime(frm["PurDate"]);
+                    objPurchase.GLACCODE_GLT = "4001";
+                    objPurchase.CREDITAMOUNT_GLT = Convert.ToDecimal(frm["TotalAmount"]);
+                    objPurchase.DEBITAMOUNT_GLT = 0;
+                    objPurchase.OTHERREF_GLT = Convert.ToString(frm["Invoice"]);
+                    objPurchase.NARRATION_GLT = Convert.ToString(frm["Note"]);
+                    objPurchase.VARUSER = currentUser;
+                    objPurchase.GLSTATUS_GLT = "P";
+                    _unitOfWork.Repository<GLTRANSACTION1>().Insert(objPurchase);
+                    _unitOfWork.Save();
 
-            }
-            catch (Exception)
-            {
-                // ignored
+                    foreach (var prd in lstProducts)
+                    {
+                        prd.VOUCHERNO_SL = Convert.ToString(frm["DocNo"]);
+                        prd.OTHERREF_SL = Convert.ToString(frm["Invoice"]);
+                        prd.DOC_DATE_SL = Convert.ToDateTime(frm["DocDate"]);
+                        prd.LEDGER_DATE_SL = Convert.ToDateTime(frm["PurDate"]);
+                        prd.STATUS_SL = "P";
+                        _unitOfWork.Repository<STOCKLEDGER>().Insert(prd);
+                        _unitOfWork.Save();
+
+                        UpdateProductMaster(prd);
+                    }
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                }
             }
             return Json(purchaseReturnNo, JsonRequestBehavior.AllowGet);
         }
@@ -220,91 +223,94 @@ namespace ASI.MGC.FS.Controllers
         {
             string purchaseNo = "";
             string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
-            try
+            using (var transaction = _unitOfWork.BeginTransaction())
             {
-                purchaseNo = Convert.ToString(frm["DocNo"]);
-                var jsonProductDetails = frm["prdDetails"];
-                var serializer = new JavaScriptSerializer();
-                var lstProducts = serializer.Deserialize<List<STOCKLEDGER>>(jsonProductDetails);
-                var objArApLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
-                objArApLedger.DOCNUMBER_ART = Convert.ToString(frm["DocNo"]);
-                objArApLedger.ARAPCODE_ART = Convert.ToString(frm["APCode"]);
-                objArApLedger.DODATE_ART = Convert.ToDateTime(frm["DocDate"]);
-                objArApLedger.GLDATE_ART = Convert.ToDateTime(frm["PurDate"]);
-                objArApLedger.OTHERREF_ART = Convert.ToString(frm["Invoice"]);
-                objArApLedger.NARRATION_ART = Convert.ToString(frm["Note"]);
-                objArApLedger.DEBITAMOUNT_ART = 0;
-                objArApLedger.CREDITAMOUNT_ART = Convert.ToDecimal(frm["NetAmount"]);
-                objArApLedger.USER_ART = currentUser;
-                objArApLedger.STATUS_ART = "P";
-                _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArApLedger);
-                _unitOfWork.Save();
-
-                var objPurchase = _unitOfWork.Repository<GLTRANSACTION1>().Create();
-                objPurchase.DOCNUMBER_GLT = Convert.ToString(frm["DocNo"]);
-                objPurchase.DOCDATE_GLT = Convert.ToDateTime(frm["DocDate"]);
-                objPurchase.GLDATE_GLT = Convert.ToDateTime(frm["PurDate"]);
-                objPurchase.GLACCODE_GLT = "4000";
-                objPurchase.DEBITAMOUNT_GLT = Convert.ToDecimal(frm["TotalAmount"]);
-                objPurchase.CREDITAMOUNT_GLT = 0;
-                objPurchase.OTHERREF_GLT = Convert.ToString(frm["Invoice"]);
-                objPurchase.NARRATION_GLT = Convert.ToString(frm["Note"]);
-                objPurchase.VARUSER = currentUser;
-                objPurchase.GLSTATUS_GLT = "P";
-                _unitOfWork.Repository<GLTRANSACTION1>().Insert(objPurchase);
-                _unitOfWork.Save();
-
-                if (!string.IsNullOrEmpty(frm["ShipChrg"]) && Convert.ToDecimal(frm["ShipChrg"]) != 0)
+                try
                 {
-                    var objShippingChrg = _unitOfWork.Repository<GLTRANSACTION1>().Create();
-                    objShippingChrg.DOCNUMBER_GLT = Convert.ToString(frm["DocNo"]);
-                    objShippingChrg.DOCDATE_GLT = Convert.ToDateTime(frm["DocDate"]);
-                    objShippingChrg.GLDATE_GLT = Convert.ToDateTime(frm["PurDate"]);
-                    objShippingChrg.GLACCODE_GLT = "3505";
-                    objShippingChrg.CREDITAMOUNT_GLT = 0;
-                    objShippingChrg.DEBITAMOUNT_GLT = Convert.ToDecimal(frm["ShipChrg"]);
-                    objShippingChrg.OTHERREF_GLT = Convert.ToString(frm["Invoice"]);
-                    objShippingChrg.NARRATION_GLT = Convert.ToString(frm["Note"]);
-                    objShippingChrg.GLSTATUS_GLT = "P";
-                    objShippingChrg.VARUSER = currentUser;
-                    _unitOfWork.Repository<GLTRANSACTION1>().Insert(objShippingChrg);
-                    _unitOfWork.Save();
-                }
-
-                if (!string.IsNullOrEmpty(frm["Discount"]) && Convert.ToDecimal(frm["Discount"]) != 0)
-                {
-                    var objDiscount = _unitOfWork.Repository<GLTRANSACTION1>().Create();
-                    objDiscount.DOCNUMBER_GLT = Convert.ToString(frm["DocNo"]);
-                    objDiscount.DOCDATE_GLT = Convert.ToDateTime(frm["DocDate"]);
-                    objDiscount.GLDATE_GLT = Convert.ToDateTime(frm["PurDate"]);
-                    objDiscount.GLACCODE_GLT = "3501";
-                    objDiscount.CREDITAMOUNT_GLT = Convert.ToDecimal(frm["Discount"]);
-                    objDiscount.DEBITAMOUNT_GLT = 0;
-                    objDiscount.OTHERREF_GLT = Convert.ToString(frm["Invoice"]);
-                    objDiscount.NARRATION_GLT = Convert.ToString(frm["Note"]);
-                    objDiscount.VARUSER = currentUser;
-                    objDiscount.GLSTATUS_GLT = "P";
-                    _unitOfWork.Repository<GLTRANSACTION1>().Insert(objDiscount);
-                    _unitOfWork.Save();
-                }
-
-                foreach (var prd in lstProducts)
-                {
-                    prd.VOUCHERNO_SL = Convert.ToString(frm["DocNo"]);
-                    prd.OTHERREF_SL = Convert.ToString(frm["Invoice"]);
-                    prd.DOC_DATE_SL = Convert.ToDateTime(frm["DocDate"]);
-                    prd.LEDGER_DATE_SL = Convert.ToDateTime(frm["PurDate"]);
-                    prd.STATUS_SL = "P";
-                    _unitOfWork.Repository<STOCKLEDGER>().Insert(prd);
+                    purchaseNo = Convert.ToString(frm["DocNo"]);
+                    var jsonProductDetails = frm["prdDetails"];
+                    var serializer = new JavaScriptSerializer();
+                    var lstProducts = serializer.Deserialize<List<STOCKLEDGER>>(jsonProductDetails);
+                    var objArApLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
+                    objArApLedger.DOCNUMBER_ART = Convert.ToString(frm["DocNo"]);
+                    objArApLedger.ARAPCODE_ART = Convert.ToString(frm["APCode"]);
+                    objArApLedger.DODATE_ART = Convert.ToDateTime(frm["DocDate"]);
+                    objArApLedger.GLDATE_ART = Convert.ToDateTime(frm["PurDate"]);
+                    objArApLedger.OTHERREF_ART = Convert.ToString(frm["Invoice"]);
+                    objArApLedger.NARRATION_ART = Convert.ToString(frm["Note"]);
+                    objArApLedger.DEBITAMOUNT_ART = 0;
+                    objArApLedger.CREDITAMOUNT_ART = Convert.ToDecimal(frm["NetAmount"]);
+                    objArApLedger.USER_ART = currentUser;
+                    objArApLedger.STATUS_ART = "P";
+                    _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArApLedger);
                     _unitOfWork.Save();
 
-                    UpdateProductMaster(prd);
-                }
+                    var objPurchase = _unitOfWork.Repository<GLTRANSACTION1>().Create();
+                    objPurchase.DOCNUMBER_GLT = Convert.ToString(frm["DocNo"]);
+                    objPurchase.DOCDATE_GLT = Convert.ToDateTime(frm["DocDate"]);
+                    objPurchase.GLDATE_GLT = Convert.ToDateTime(frm["PurDate"]);
+                    objPurchase.GLACCODE_GLT = "4000";
+                    objPurchase.DEBITAMOUNT_GLT = Convert.ToDecimal(frm["TotalAmount"]);
+                    objPurchase.CREDITAMOUNT_GLT = 0;
+                    objPurchase.OTHERREF_GLT = Convert.ToString(frm["Invoice"]);
+                    objPurchase.NARRATION_GLT = Convert.ToString(frm["Note"]);
+                    objPurchase.VARUSER = currentUser;
+                    objPurchase.GLSTATUS_GLT = "P";
+                    _unitOfWork.Repository<GLTRANSACTION1>().Insert(objPurchase);
+                    _unitOfWork.Save();
 
-            }
-            catch (Exception)
-            {
-                // ignored
+                    if (!string.IsNullOrEmpty(frm["ShipChrg"]) && Convert.ToDecimal(frm["ShipChrg"]) != 0)
+                    {
+                        var objShippingChrg = _unitOfWork.Repository<GLTRANSACTION1>().Create();
+                        objShippingChrg.DOCNUMBER_GLT = Convert.ToString(frm["DocNo"]);
+                        objShippingChrg.DOCDATE_GLT = Convert.ToDateTime(frm["DocDate"]);
+                        objShippingChrg.GLDATE_GLT = Convert.ToDateTime(frm["PurDate"]);
+                        objShippingChrg.GLACCODE_GLT = "3505";
+                        objShippingChrg.CREDITAMOUNT_GLT = 0;
+                        objShippingChrg.DEBITAMOUNT_GLT = Convert.ToDecimal(frm["ShipChrg"]);
+                        objShippingChrg.OTHERREF_GLT = Convert.ToString(frm["Invoice"]);
+                        objShippingChrg.NARRATION_GLT = Convert.ToString(frm["Note"]);
+                        objShippingChrg.GLSTATUS_GLT = "P";
+                        objShippingChrg.VARUSER = currentUser;
+                        _unitOfWork.Repository<GLTRANSACTION1>().Insert(objShippingChrg);
+                        _unitOfWork.Save();
+                    }
+
+                    if (!string.IsNullOrEmpty(frm["Discount"]) && Convert.ToDecimal(frm["Discount"]) != 0)
+                    {
+                        var objDiscount = _unitOfWork.Repository<GLTRANSACTION1>().Create();
+                        objDiscount.DOCNUMBER_GLT = Convert.ToString(frm["DocNo"]);
+                        objDiscount.DOCDATE_GLT = Convert.ToDateTime(frm["DocDate"]);
+                        objDiscount.GLDATE_GLT = Convert.ToDateTime(frm["PurDate"]);
+                        objDiscount.GLACCODE_GLT = "3501";
+                        objDiscount.CREDITAMOUNT_GLT = Convert.ToDecimal(frm["Discount"]);
+                        objDiscount.DEBITAMOUNT_GLT = 0;
+                        objDiscount.OTHERREF_GLT = Convert.ToString(frm["Invoice"]);
+                        objDiscount.NARRATION_GLT = Convert.ToString(frm["Note"]);
+                        objDiscount.VARUSER = currentUser;
+                        objDiscount.GLSTATUS_GLT = "P";
+                        _unitOfWork.Repository<GLTRANSACTION1>().Insert(objDiscount);
+                        _unitOfWork.Save();
+                    }
+
+                    foreach (var prd in lstProducts)
+                    {
+                        prd.VOUCHERNO_SL = Convert.ToString(frm["DocNo"]);
+                        prd.OTHERREF_SL = Convert.ToString(frm["Invoice"]);
+                        prd.DOC_DATE_SL = Convert.ToDateTime(frm["DocDate"]);
+                        prd.LEDGER_DATE_SL = Convert.ToDateTime(frm["PurDate"]);
+                        prd.STATUS_SL = "P";
+                        _unitOfWork.Repository<STOCKLEDGER>().Insert(prd);
+                        _unitOfWork.Save();
+
+                        UpdateProductMaster(prd);
+                    }
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                }
             }
             return Json(purchaseNo, JsonRequestBehavior.AllowGet);
         }
