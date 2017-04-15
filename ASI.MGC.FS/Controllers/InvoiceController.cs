@@ -66,12 +66,11 @@ namespace ASI.MGC.FS.Controllers
                     _unitOfWork.Repository<INVMASTER>().Insert(objInvoiceMaster);
                     _unitOfWork.Save();
 
-                    UpdateSalesStatus(objArApLedger);
-
                     foreach (var sale in lstSaleDetails)
                     {
                         if (!string.IsNullOrEmpty(sale.PRCODE_SD))
                         {
+                            UpdateSalesStatus(sale.JOBNO_SD, sale.PRCODE_SD, 2, invNumber, "P");
                             var objStockLedger = _unitOfWork.Repository<STOCKLEDGER>().Create();
                             objStockLedger.DOC_DATE_SL = Convert.ToDateTime(DateTime.Now.ToShortDateString());
                             objStockLedger.LEDGER_DATE_SL = Convert.ToDateTime(DateTime.Now.ToShortDateString());
@@ -103,6 +102,7 @@ namespace ASI.MGC.FS.Controllers
                         }
                         else
                         {
+                            UpdateSalesStatus(sale.JOBNO_SD, sale.JOBID_SD, 1, invNumber, "P");
                             objInvoiceDetail.CODE_INVD = sale.JOBID_SD;
                             objDeleveryNote.ID_DLNRPT = sale.JOBID_SD;
                             var objJobDetail =
@@ -138,21 +138,33 @@ namespace ASI.MGC.FS.Controllers
             return Json(reportParams, JsonRequestBehavior.AllowGet);
         }
 
-        private void UpdateSalesStatus(AR_AP_LEDGER objArApLedger)
+        private void UpdateSalesStatus(string jobNo, string Pr_Job_Code, int choice, string inv_no, string status)
         {
             string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
-            var sales = (from saleList in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
-                         where saleList.MRVNO_SD.Equals(objArApLedger.NARRATION_ART)
-                         select saleList);
-            foreach (var sale in sales.ToList())
+            if (choice == 1)
             {
+                var sale = (from saleList in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                            where saleList.JOBNO_SD.Equals(jobNo) && saleList.JOBID_SD.Equals(Pr_Job_Code)
+                            select saleList).FirstOrDefault();
                 sale.USERID_SD = currentUser;
-                sale.STATUS_SD = "P";
-                sale.INVNO_SD = objArApLedger.DOCNUMBER_ART;
+                sale.STATUS_SD = status;
+                sale.INVNO_SD = inv_no;
+                _unitOfWork.Repository<SALEDETAIL>().Update(sale);
+                _unitOfWork.Save();
+            }
+            else if (choice == 2)
+            {
+                var sale = (from saleList in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                            where saleList.JOBNO_SD.Equals(jobNo) && saleList.PRCODE_SD.Equals(Pr_Job_Code)
+                            select saleList).FirstOrDefault();
+                sale.USERID_SD = currentUser;
+                sale.STATUS_SD = status;
+                sale.INVNO_SD = inv_no;
                 _unitOfWork.Repository<SALEDETAIL>().Update(sale);
                 _unitOfWork.Save();
             }
         }
+
         [MesAuthorize("DailyTransactions")]
         public ActionResult InvoiceReversal()
         {

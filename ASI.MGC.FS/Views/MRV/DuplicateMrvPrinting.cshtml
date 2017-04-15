@@ -90,12 +90,12 @@
                 toastr.info("Delivery Note Report is open in new window.");
             }
             else if (voucherType === "2") {
-                url = "/MgcReports/Invoice?invNo=" + docNumber;
+                url = "/MgcReports/DuplicateInvoice?invNo=" + docNumber;
                 window.open(url);
                 toastr.info("Invoice is open in new window.");
             }
             else if (voucherType === "3") {
-                url = "/MgcReports/CashMemo?cmNo=" + docNumber;
+                url = "/MgcReports/DuplicateCashMemo?cmNo=" + docNumber;
                 window.open(url);
                 toastr.info("Cash Receipt is open in new window.");
             }

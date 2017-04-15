@@ -8,7 +8,7 @@ using Microsoft.Reporting.WebForms;
 
 namespace ASI.MGC.FS.Reports
 {
-    public partial class CashMemo : Page
+    public partial class DuplicateInvoice : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -18,14 +18,14 @@ namespace ASI.MGC.FS.Reports
                 IUnitOfWork iuWork = new UnitOfWork();
                 ReportRepository repo = iuWork.ExtRepositoryFor<ReportRepository>();
                 UtilityMethods uMethods = new UtilityMethods();
-                var invNo = Request.QueryString["cmNo"];
-                var invType = "CM";
-                DataTable dtCashMemo = uMethods.ConvertTo(repo.RptCashMemo(invNo,invType));
+                const string invType = "INV";
+                var invNo = Request.QueryString["invNo"];
+                DataTable dtInvoice = uMethods.ConvertTo(repo.RptInvoice(invNo, invType));
 
-                ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\CashMemo1.rdlc";
-                ReportViewer1.LocalReport.SetParameters(new ReportParameter("INVNO", invNo));
-                ReportViewer1.LocalReport.SetParameters(new ReportParameter("INVTYPE", invType));
-                var rds = new ReportDataSource("DS_CashMemo", dtCashMemo);
+                ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\Invoice.rdlc";
+                ReportViewer1.LocalReport.SetParameters(new ReportParameter("INV_NO", invType));
+                ReportViewer1.LocalReport.SetParameters(new ReportParameter("INVTYPE", invNo));
+                var rds = new ReportDataSource("DS_Invoice", dtInvoice);
                 ReportViewer1.LocalReport.DataSources.Clear();
                 ReportViewer1.LocalReport.DataSources.Add(rds);
                 ReportViewer1.DataBind();

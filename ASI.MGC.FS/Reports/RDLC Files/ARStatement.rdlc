@@ -1032,7 +1032,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Sum(Fields!CREDITDAYS_ARM.Value, "DS_ARStatement") &amp; "DAY(s)"</Value>
+                <Value>=First(Fields!CREDITDAYS_ARM.Value, "DS_ARStatement") &amp; "DAY(s)"</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -1098,7 +1098,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=FORMAT(Sum(Fields!LIMITAMOUNT_ARM.Value, "DS_ARStatement"),"N2")</Value>
+                <Value>=FORMAT(First(Fields!LIMITAMOUNT_ARM.Value, "DS_ARStatement"),"N2")</Value>
                 <Style />
               </TextRun>
             </TextRuns>

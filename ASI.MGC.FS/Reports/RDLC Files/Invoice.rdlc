@@ -731,7 +731,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Format(Fields!RATE_INVD.Value,"N2")</Value>
+                                            <Value>=Format(Fields!RATE_INVD.Value,"N2") * Fields!QTY_INVD.Value</Value>
                                             <Style />
                                           </TextRun>
                                         </TextRuns>
@@ -1508,7 +1508,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Format(Sum(Fields!RATE_INVD.Value, "DS_Invoice"),"N2")</Value>
+                      <Value>=Format(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice") + First(Fields!DISCOUNT_IPM.Value, "DS_Invoice") - First(Fields!SHIPPING_IPM.Value, "DS_Invoice"),"N2")</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1772,7 +1772,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="AED " &amp; CODE.changeToWords(Format(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice") + First(Fields!SHIPPING_IPM.Value, "DS_Invoice") - First(Fields!DISCOUNT_IPM.Value, "DS_Invoice"),"N2")) &amp; "ONLY"</Value>
+                      <Value>="AED " &amp; CODE.changeToWords(Format(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice"),"N2")) &amp; "ONLY"</Value>
                       <Style>
                         <FontWeight>Bold</FontWeight>
                       </Style>

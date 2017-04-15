@@ -87,6 +87,7 @@ namespace ASI.MGC.FS.Controllers
                     {
                         if (!string.IsNullOrEmpty(sale.PRCODE_SD))
                         {
+                            UpdateSalesStatus(sale.JOBNO_SD, sale.PRCODE_SD, 2, cashMemoNumber, "P");
                             var objStockLedger = _unitOfWork.Repository<STOCKLEDGER>().Create();
                             objStockLedger.DOC_DATE_SL = Convert.ToDateTime(DateTime.Now.ToShortDateString());
                             objStockLedger.LEDGER_DATE_SL = Convert.ToDateTime(DateTime.Now.ToShortDateString());
@@ -117,6 +118,7 @@ namespace ASI.MGC.FS.Controllers
                         }
                         else
                         {
+                            UpdateSalesStatus(sale.JOBNO_SD, sale.JOBID_SD, 1, cashMemoNumber, "P");
                             objInvoiceDetail.CODE_INVD = sale.JOBID_SD;
                             objDeleveryNote.ID_DLNRPT = sale.JOBID_SD;
                             var objJobDetail =
@@ -133,12 +135,12 @@ namespace ASI.MGC.FS.Controllers
                         _unitOfWork.Repository<INVDETAIL>().Insert(objInvoiceDetail);
                         _unitOfWork.Save();
 
-                        var objSaleDetails = _unitOfWork.Repository<SALEDETAIL>().FindByID(sale.SLNO_SD);
-                        objSaleDetails.CASHRVNO_SD = Convert.ToString(cashMemoNumber);
-                        objSaleDetails.USERID_SD = currentUser;
-                        objSaleDetails.STATUS_SD = "P";
-                        _unitOfWork.Repository<SALEDETAIL>().Update(objSaleDetails);
-                        _unitOfWork.Save();
+                        //var objSaleDetails = _unitOfWork.Repository<SALEDETAIL>().FindByID(sale.SLNO_SD);
+                        //objSaleDetails.CASHRVNO_SD = Convert.ToString(cashMemoNumber);
+                        //objSaleDetails.USERID_SD = currentUser;
+                        //objSaleDetails.STATUS_SD = "P";
+                        //_unitOfWork.Repository<SALEDETAIL>().Update(objSaleDetails);
+                        //_unitOfWork.Save();
 
                         var objJobMaster = _unitOfWork.Repository<JOBMASTER>().FindByID(sale.JOBNO_SD);
                         objDeleveryNote.SERVICEPROID_DLNRPT = objJobMaster.PRODID_JIM;
@@ -160,7 +162,32 @@ namespace ASI.MGC.FS.Controllers
             }
             return Json(new { reportParams, success }, JsonRequestBehavior.AllowGet);
         }
-
+        private void UpdateSalesStatus(string jobNo, string Pr_Job_Code, int choice, string cashMemo_no, string status)
+        {
+            string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
+            if (choice == 1)
+            {
+                var sale = (from saleList in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                            where saleList.JOBNO_SD.Equals(jobNo) && saleList.JOBID_SD.Equals(Pr_Job_Code)
+                            select saleList).FirstOrDefault();
+                sale.USERID_SD = currentUser;
+                sale.STATUS_SD = status;
+                sale.CASHRVNO_SD = cashMemo_no;
+                _unitOfWork.Repository<SALEDETAIL>().Update(sale);
+                _unitOfWork.Save();
+            }
+            else if (choice == 2)
+            {
+                var sale = (from saleList in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                            where saleList.JOBNO_SD.Equals(jobNo) && saleList.PRCODE_SD.Equals(Pr_Job_Code)
+                            select saleList).FirstOrDefault();
+                sale.USERID_SD = currentUser;
+                sale.STATUS_SD = status;
+                sale.CASHRVNO_SD = cashMemo_no;
+                _unitOfWork.Repository<SALEDETAIL>().Update(sale);
+                _unitOfWork.Save();
+            }
+        }
         [HttpPost]
         public ActionResult SaveCashReceipt(FormCollection form, BANKTRANSACTION objBankTransaction)
         {

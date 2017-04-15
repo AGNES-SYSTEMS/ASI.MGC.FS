@@ -229,6 +229,9 @@ namespace ASI.MGC.FS.Controllers
             {
                 try
                 {
+                    var currJobMRVDetail = (from mrvData in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                                            where mrvData.MRVNO_MRV.Equals(objSaleDetail.MRVNO_SD)
+                                            select mrvData).FirstOrDefault();
                     if (!string.IsNullOrEmpty(objSaleDetail.JOBID_SD))
                     {
                         var currJobSale = (from saleData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
@@ -271,6 +274,22 @@ namespace ASI.MGC.FS.Controllers
                             _unitOfWork.Repository<SALEDETAIL>().Update(currPrdSale);
                             _unitOfWork.Save();
                             isEntryExist = true;
+                        }
+                    }
+                    if (form["PayMode"] == "Credit")
+                    {
+                        if (!Convert.ToString(objSaleDetail.CREDITACCODE_SD).Equals(Convert.ToString(currJobMRVDetail.CUSTOMERCODE_MRV), StringComparison.OrdinalIgnoreCase))
+                        {
+                            var custDetail = (from custData in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                                                    where custData.ARCODE_ARM.Equals(objSaleDetail.CREDITACCODE_SD)
+                                                    select custData).FirstOrDefault();
+                            if (custDetail != null)
+                            {
+                                currJobMRVDetail.CUSTOMERCODE_MRV = custDetail.ARCODE_ARM;
+                                currJobMRVDetail.CUSTOMERNAME_MRV = custDetail.DESCRIPTION_ARM;
+                                _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Update(currJobMRVDetail);
+                                _unitOfWork.Save();
+                            }
                         }
                     }
 

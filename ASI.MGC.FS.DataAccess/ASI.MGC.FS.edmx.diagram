@@ -13,7 +13,7 @@
         <EntityTypeShape EntityType="ASI_MGC_FSModel.BALANCESHEET" Width="1.5" PointX="12.75" PointY="14.5" />
         <EntityTypeShape EntityType="ASI_MGC_FSModel.BANKMASTER" Width="1.5" PointX="0.75" PointY="13.75" />
         <EntityTypeShape EntityType="ASI_MGC_FSModel.BANKMASTER1" Width="1.5" PointX="5.75" PointY="15.5" />
-        <EntityTypeShape EntityType="ASI_MGC_FSModel.BANKTRANSACTION" Width="1.5" PointX="3" PointY="12.75" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.BANKTRANSACTION" Width="2.75" PointX="3" PointY="12.75" />
         <EntityTypeShape EntityType="ASI_MGC_FSModel.COMPANYMASTER" Width="1.5" PointX="7.75" PointY="15.5" />
         <EntityTypeShape EntityType="ASI_MGC_FSModel.CUSTOMEREPORT" Width="1.5" PointX="14.75" PointY="1.5" />
         <EntityTypeShape EntityType="ASI_MGC_FSModel.DELEVERYNOTE" Width="1.5" PointX="14.75" PointY="14.5" />

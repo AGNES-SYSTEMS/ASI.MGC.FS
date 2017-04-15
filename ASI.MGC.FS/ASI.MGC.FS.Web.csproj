@@ -425,6 +425,20 @@
       <DependentUpon>DeliveryNoteDetails.aspx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Reports\DuplicateCashMemo.aspx.cs">
+      <DependentUpon>DuplicateCashMemo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\DuplicateCashMemo.aspx.designer.cs">
+      <DependentUpon>DuplicateCashMemo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DuplicateInvoice.aspx.cs">
+      <DependentUpon>DuplicateInvoice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\DuplicateInvoice.aspx.designer.cs">
+      <DependentUpon>DuplicateInvoice.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\EmpSales.aspx.cs">
       <DependentUpon>EmpSales.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -933,6 +947,8 @@
     <Content Include="Reports\DeliveryNoteDetails.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\DuplicateCashMemo.aspx" />
+    <Content Include="Reports\DuplicateInvoice.aspx" />
     <Content Include="Reports\EmpSales.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1382,6 +1398,8 @@
     <Content Include="Views\Purchase\PurchaseEntry.cshtml" />
     <Content Include="Views\Setups\MesMachines.cshtml" />
     <Content Include="Views\MRV\DuplicateMrvPrinting.cshtml" />
+    <Content Include="Views\MgcReports\DuplicateCashMemo.cshtml" />
+    <Content Include="Views\MgcReports\DuplicateInvoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1535,6 +1553,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reports\RDLC Files\CashMemo1.rdlc" />
+    <EmbeddedResource Include="Reports\RDLC Files\Invoice1.rdlc" />
     <EmbeddedResource Include="Reports\RDLC Files\MetarialReceiptVoucher_JobDetailsSubReport.rdlc" />
   </ItemGroup>
   <PropertyGroup>

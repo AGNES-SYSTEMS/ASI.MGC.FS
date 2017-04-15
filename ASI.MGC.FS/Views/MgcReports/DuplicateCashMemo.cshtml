@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = ViewBag.voucherNo;
+    Layout = null;
+}
+<link href="~/Content/reportViewerStyle.css" rel="stylesheet" />
+<div class="container">
+    <div id="main">
+        <div class="row">
+            <div class="container">
+                @using (Ajax.BeginForm(null, null, null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formArStatement", @class = "form-horizontal", enctype = "multipart/form-data" }))
+                {
+                    <div class="row frameCenter">
+                        @*<div class="col-md-12 iframeStyling" style="overflow-x: hidden; overflow-y: no-display">
+                            </div>*@
+                        <div id="frameWrap" class="frameWrap" style="display: none">
+                            <img id="loader" class="loader" src="/content/Images/loader.gif" alt="loading gif" />
+                            <iframe id="iframe" class="iframe iframeStyling"></iframe>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script src="@Url.Content("~/Scripts/jquery-1.11.0.min.js")"></script>
+<script>
+    $(document).ready(function () {
+        $('#frameWrap').show();
+        var url = "/Reports/DuplicateCashMemo.aspx?cmNo=" + "@Convert.ToString(@Request.QueryString["cmNo"])";
+        $('#iframe').prop('src', url);
+
+        $('#iframe').on('load', function () {
+            $('#loader').hide();
+        });
+    });
+</script>

@@ -97,6 +97,9 @@ $(document).ready(function () {
         e.preventDefault();
     });
     $("#btnReportSubmit").on("click", function () {
+        $("#btnReportSubmit").prop('disabled', false);
+        $("#btnReportSubmit").removeAttr('disabled');
+        $("#btnReportSubmit").removeClass('disabled');
         var isValid = validateArguments();
         if (isValid) {
             $('#frameWrap').show();

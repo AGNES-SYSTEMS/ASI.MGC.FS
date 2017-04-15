@@ -38,9 +38,9 @@
           <Property Name="ARAPCODE_ART" Type="nvarchar" MaxLength="10" />
           <Property Name="DEBITAMOUNT_ART" Type="money" />
           <Property Name="CREDITAMOUNT_ART" Type="money" />
-          <Property Name="OTHERREF_ART" Type="nvarchar" MaxLength="20" />
-          <Property Name="NARRATION_ART" Type="nvarchar" MaxLength="100" />
-          <Property Name="USER_ART" Type="nvarchar" MaxLength="3" />
+          <Property Name="OTHERREF_ART" Type="nvarchar" MaxLength="255" />
+          <Property Name="NARRATION_ART" Type="nvarchar" MaxLength="255" />
+          <Property Name="USER_ART" Type="nvarchar" MaxLength="10" />
           <Property Name="MATCHVALUE_AR" Type="money" />
           <Property Name="STATUS_ART" Type="nvarchar" MaxLength="2" />
         </EntityType>
@@ -126,16 +126,16 @@
           <Property Name="GLDATE_BT" Type="datetime2" Precision="0" />
           <Property Name="DEBITAMOUT_BT" Type="money" />
           <Property Name="CREDITAMOUT_BT" Type="money" />
-          <Property Name="OTHERREF_BT" Type="nvarchar" MaxLength="20" />
+          <Property Name="OTHERREF_BT" Type="nvarchar" MaxLength="255" />
           <Property Name="CHQNO_BT" Type="nvarchar" MaxLength="20" />
           <Property Name="CHQDATE_BT" Type="datetime2" Precision="0" />
           <Property Name="CLEARANCEDATE_BT" Type="datetime2" Precision="0" />
           <Property Name="BENACNO_BT" Type="nvarchar" MaxLength="20" />
-          <Property Name="BENACCOUNT_BT" Type="nvarchar" MaxLength="50" />
-          <Property Name="NARRATION_BT" Type="nvarchar" MaxLength="100" />
-          <Property Name="NOTE_BT" Type="nvarchar" MaxLength="50" />
+          <Property Name="BENACCOUNT_BT" Type="nvarchar" MaxLength="255" />
+          <Property Name="NARRATION_BT" Type="nvarchar" MaxLength="255" />
+          <Property Name="NOTE_BT" Type="nvarchar" MaxLength="255" />
           <Property Name="STATUS_BT" Type="nvarchar" MaxLength="2" />
-          <Property Name="USER_BT" Type="nvarchar" MaxLength="3" />
+          <Property Name="USER_BT" Type="nvarchar" MaxLength="5" />
           <Property Name="MASTERSTATUS_BT" Type="nvarchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="COMPANYMASTER">
@@ -266,10 +266,10 @@
           <Property Name="DOCDATE_GLT" Type="datetime2" Precision="0" />
           <Property Name="GLDATE_GLT" Type="datetime2" Precision="0" />
           <Property Name="GLACCODE_GLT" Type="nvarchar" MaxLength="15" />
-          <Property Name="OTHERREF_GLT" Type="nvarchar" MaxLength="20" />
+          <Property Name="OTHERREF_GLT" Type="nvarchar" MaxLength="255" />
           <Property Name="DEBITAMOUNT_GLT" Type="money" />
           <Property Name="CREDITAMOUNT_GLT" Type="money" />
-          <Property Name="NARRATION_GLT" Type="nvarchar" MaxLength="50" />
+          <Property Name="NARRATION_GLT" Type="nvarchar" MaxLength="255" />
           <Property Name="GLSTATUS_GLT" Type="nvarchar" MaxLength="2" />
           <Property Name="VARUSER" Type="nvarchar" MaxLength="15" />
         </EntityType>
@@ -1853,13 +1853,7 @@
           <Property Type="DateTime" Name="GLDATE_VRPT" Nullable="true" />
           <Property Type="String" Name="BANKCODE_VRT" Nullable="true" MaxLength="15" />
           <Property Type="String" Name="USER_VRPT" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="ALLCODE_VCD" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="ACCODE_VCD" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="ACDESCRIPTION_VCD" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="NARRATION_VCD" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="DEBITAMOUNT_VCD" Nullable="true" Precision="19" />
-          <Property Type="Decimal" Name="CREDITAMOUNT_VCD" Nullable="true" Precision="19" />
-        </ComplexType>
+          </ComplexType>
         <ComplexType Name="rpt_CashReceipt_Result">
           <Property Type="String" Name="PARTICULARS_VRPT" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="NOTES_VRPT" Nullable="true" MaxLength="50" />
@@ -2609,9 +2603,9 @@
           <Property Name="ARAPCODE_ART" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="DEBITAMOUNT_ART" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CREDITAMOUNT_ART" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="OTHERREF_ART" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="NARRATION_ART" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="USER_ART" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="OTHERREF_ART" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NARRATION_ART" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="USER_ART" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="MATCHVALUE_AR" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="STATUS_ART" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
         </EntityType>
@@ -2677,16 +2671,16 @@
           <Property Name="GLDATE_BT" Type="DateTime" Precision="0" />
           <Property Name="DEBITAMOUT_BT" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CREDITAMOUT_BT" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="OTHERREF_BT" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="OTHERREF_BT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="CHQNO_BT" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CHQDATE_BT" Type="DateTime" Precision="0" />
           <Property Name="CLEARANCEDATE_BT" Type="DateTime" Precision="0" />
           <Property Name="BENACNO_BT" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="BENACCOUNT_BT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="NARRATION_BT" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="NOTE_BT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BENACCOUNT_BT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NARRATION_BT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NOTE_BT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="STATUS_BT" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="USER_BT" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="USER_BT" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="MASTERSTATUS_BT" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BANKMASTER" Relationship="ASI_MGC_FSModel.BANKTRANSACTION_BANKMASTERBANKTRANSACTION" FromRole="BANKTRANSACTION" ToRole="BANKMASTER" />
         </EntityType>
@@ -2818,10 +2812,10 @@
           <Property Name="DOCDATE_GLT" Type="DateTime" Precision="0" />
           <Property Name="GLDATE_GLT" Type="DateTime" Precision="0" />
           <Property Name="GLACCODE_GLT" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="OTHERREF_GLT" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="OTHERREF_GLT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DEBITAMOUNT_GLT" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CREDITAMOUNT_GLT" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="NARRATION_GLT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NARRATION_GLT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="GLSTATUS_GLT" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
           <Property Name="VARUSER" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
         </EntityType>
@@ -3627,13 +3621,7 @@
                 <ScalarProperty Name="GLDATE_VRPT" ColumnName="GLDATE_VRPT" />
                 <ScalarProperty Name="BANKCODE_VRT" ColumnName="BANKCODE_VRT" />
                 <ScalarProperty Name="USER_VRPT" ColumnName="USER_VRPT" />
-                <ScalarProperty Name="ALLCODE_VCD" ColumnName="ALLCODE_VCD" />
-                <ScalarProperty Name="ACCODE_VCD" ColumnName="ACCODE_VCD" />
-                <ScalarProperty Name="ACDESCRIPTION_VCD" ColumnName="ACDESCRIPTION_VCD" />
-                <ScalarProperty Name="NARRATION_VCD" ColumnName="NARRATION_VCD" />
-                <ScalarProperty Name="DEBITAMOUNT_VCD" ColumnName="DEBITAMOUNT_VCD" />
-                <ScalarProperty Name="CREDITAMOUNT_VCD" ColumnName="CREDITAMOUNT_VCD" />
-              </ComplexTypeMapping>
+                </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="rpt_CashReceipt" FunctionName="ASI_MGC_FSModel.Store.rpt_CashReceipt">

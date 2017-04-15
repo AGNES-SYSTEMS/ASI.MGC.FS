@@ -1393,7 +1393,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Format(Sum(Fields!AMOUNT_INVNO.Value, "DS_CashMemo") - First(Fields!SHIPPING_IPM.Value, "DS_CashMemo") + First(Fields!DISCOUNT_IPM.Value, "DS_CashMemo"),"N2")</Value>
+                      <Value>=Format(Sum(Fields!AMOUNT_INVNO.Value, "DS_CashMemo"),"N2")</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1589,7 +1589,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Format(Sum(Fields!AMOUNT_INVNO.Value, "DS_CashMemo"),"N2")</Value>
+                      <Value>=Format(Sum(Fields!AMOUNT_INVNO.Value, "DS_CashMemo") + First(Fields!SHIPPING_IPM.Value, "DS_CashMemo") - First(Fields!DISCOUNT_IPM.Value, "DS_CashMemo"),"N2")</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1655,7 +1655,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="AED " &amp; CODE.changeToWords(Sum(Fields!AMOUNT_INVNO.Value, "DS_CashMemo") + First(Fields!SHIPPING_IPM.Value, "DS_CashMemo") - First(Fields!DISCOUNT_IPM.Value, "DS_CashMemo")) &amp; "ONLY"</Value>
+                      <Value>="AED " &amp; CODE.changeToWords(Format(Sum(Fields!AMOUNT_INVNO.Value, "DS_CashMemo") + First(Fields!SHIPPING_IPM.Value, "DS_CashMemo") - First(Fields!DISCOUNT_IPM.Value, "DS_CashMemo"),"N2")) &amp; "ONLY"</Value>
                       <Style>
                         <FontWeight>Bold</FontWeight>
                       </Style>

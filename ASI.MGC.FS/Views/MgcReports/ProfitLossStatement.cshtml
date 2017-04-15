@@ -38,7 +38,7 @@
                             <div class="col-md-6 form-group">
                                 <label></label>
                                 <div class="col-md-8">
-                                    <input type="submit" class="btn btn-success col-md-3 pull-right" value="View"> &nbsp;
+                                    <input type="submit" id="btnReportSubmit" class="btn btn-success col-md-3 pull-right" value="View"> &nbsp;
                                 </div>
                             </div>
                         </div>
@@ -62,6 +62,9 @@
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
         function OnSuccess(response) {
+            $("#btnReportSubmit").prop('disabled', false);
+            $("#btnReportSubmit").removeAttr('disabled');
+            $("#btnReportSubmit").removeClass('disabled');
             if (response.success) {
                 var startDate = $("#txtStartDate").val();
                 var endDate = $("#txtEndDate").val();

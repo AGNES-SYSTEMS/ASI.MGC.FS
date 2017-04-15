@@ -60,6 +60,11 @@ namespace ASI.MGC.FS.Controllers
             ViewBag.cmNo = cmNo;
             return View();
         }
+        public ActionResult DuplicateCashMemo(string cmNo = "")
+        {
+            ViewBag.cmNo = cmNo;
+            return View();
+        }
         public ActionResult CashMemoReverse()
         {
             return View();
@@ -107,6 +112,11 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
         public ActionResult Invoice(string invNo = "")
+        {
+            ViewBag.invNo = invNo;
+            return View();
+        }
+        public ActionResult DuplicateInvoice(string invNo = "")
         {
             ViewBag.invNo = invNo;
             return View();

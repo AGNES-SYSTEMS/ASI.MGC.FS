@@ -22,11 +22,5 @@ namespace ASI.MGC.FS.Model
         public Nullable<System.DateTime> GLDATE_VRPT { get; set; }
         public string BANKCODE_VRT { get; set; }
         public string USER_VRPT { get; set; }
-        public string ALLCODE_VCD { get; set; }
-        public string ACCODE_VCD { get; set; }
-        public string ACDESCRIPTION_VCD { get; set; }
-        public string NARRATION_VCD { get; set; }
-        public Nullable<decimal> DEBITAMOUNT_VCD { get; set; }
-        public Nullable<decimal> CREDITAMOUNT_VCD { get; set; }
     }
 }

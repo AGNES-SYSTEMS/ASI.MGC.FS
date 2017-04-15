@@ -32,9 +32,9 @@ $(document).ready(function () {
 
                         if (invDetails.STATUS_BT === "R") {
                             toastr.info("Document already reversed.");
-                            $("#btnSubmit").prop("disabled", true);
+                            $("#btnSave").prop("disabled", true);
                         } else {
-                            $("#btnSubmit").prop("disabled", false);
+                            $("#btnSave").prop("disabled", false);
                         }
                         $("#formDocumentReversal").formValidation('revalidateField', 'AccCode');
                         $("#formDocumentReversal").formValidation('revalidateField', 'DocDate');
@@ -47,8 +47,11 @@ $(document).ready(function () {
                     }
                 },
                 complete: function () {
+                    if ( $("#txtStatus").val() === "R") {
+                        $("#btnSave").hide();
+                    }
                 },
-                error: function () {
+                error: function (err) {
                     toastr.error("Something went wrong. Please try again");
                 }
             });

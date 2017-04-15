@@ -8,7 +8,7 @@ using Microsoft.Reporting.WebForms;
 
 namespace ASI.MGC.FS.Reports
 {
-    public partial class CashMemo : Page
+    public partial class DuplicateCashMemo : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -20,9 +20,9 @@ namespace ASI.MGC.FS.Reports
                 UtilityMethods uMethods = new UtilityMethods();
                 var invNo = Request.QueryString["cmNo"];
                 var invType = "CM";
-                DataTable dtCashMemo = uMethods.ConvertTo(repo.RptCashMemo(invNo,invType));
+                DataTable dtCashMemo = uMethods.ConvertTo(repo.RptCashMemo(invNo, invType));
 
-                ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\CashMemo1.rdlc";
+                ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\CashMemo.rdlc";
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("INVNO", invNo));
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("INVTYPE", invType));
                 var rds = new ReportDataSource("DS_CashMemo", dtCashMemo);

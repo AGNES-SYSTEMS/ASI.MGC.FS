@@ -11,6 +11,9 @@
     }
 
     $("#btnSubmit").on("click", function () {
+        $("#btnSubmit").prop('disabled', false);
+        $("#btnSubmit").removeAttr('disabled');
+        $("#btnSubmit").removeClass('disabled');
         var isValid = validateArguments();
         if (isValid) {
             var voucherType = $("#ddlVoucherType").val();

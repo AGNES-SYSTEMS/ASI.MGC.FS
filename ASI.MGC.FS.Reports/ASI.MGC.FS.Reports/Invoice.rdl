@@ -1772,7 +1772,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="AED " &amp; CODE.changeToWords(Format(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice") + First(Fields!SHIPPING_IPM.Value, "DS_Invoice") - First(Fields!DISCOUNT_IPM.Value, "DS_Invoice"),"N2")) &amp; "ONLY"</Value>
+                      <Value>="AED " &amp; CODE.changeToWords(Format(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice"),"N2")) &amp; "ONLY"</Value>
                       <Style>
                         <FontWeight>Bold</FontWeight>
                       </Style>

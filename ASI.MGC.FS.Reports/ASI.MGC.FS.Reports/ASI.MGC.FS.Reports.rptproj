@@ -46,6 +46,10 @@
       <FullPath>CashMemo.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>CashMemo3.rdl</Name>
+      <FullPath>CashMemo3.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>CashMemoReverse.rdl</Name>
       <FullPath>CashMemoReverse.rdl</FullPath>
     </ProjectItem>
@@ -174,8 +178,12 @@
       <FullPath>TrialBalance.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>CashMemo3.rdl</Name>
-      <FullPath>CashMemo3.rdl</FullPath>
+      <Name>CashMemo1.rdl</Name>
+      <FullPath>CashMemo1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Invoice1.rdl</Name>
+      <FullPath>Invoice1.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

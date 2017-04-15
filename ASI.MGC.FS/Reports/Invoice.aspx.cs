@@ -22,7 +22,7 @@ namespace ASI.MGC.FS.Reports
                 var invNo = Request.QueryString["invNo"];
                 DataTable dtInvoice = uMethods.ConvertTo(repo.RptInvoice(invNo, invType));
 
-                ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\Invoice.rdlc";
+                ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\Invoice1.rdlc";
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("INV_NO", invType));
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("INVTYPE", invNo));
                 var rds = new ReportDataSource("DS_Invoice", dtInvoice);
