@@ -711,7 +711,7 @@ $(document).ready(function () {
         e.preventDefault();
     });
     $("#btnNew").on("click", function () {
-        location.reload();
+        location.reload(true);
     });
     $("#btnPrint").on("click", function () {
         var jobCode = $('#txtJobid').val();

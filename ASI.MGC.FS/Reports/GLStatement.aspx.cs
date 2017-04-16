@@ -26,6 +26,7 @@ namespace ASI.MGC.FS.Reports
                 DataTable dtGlStatement = uMethods.ConvertTo(repo.RptGlStatement(glCode,startDate, endDate));
 
                 ReportViewer1.LocalReport.ReportPath = "Reports\\RDLC Files\\GLStatement.rdlc";
+                ReportViewer1.LocalReport.SetParameters(new ReportParameter("GLCode", Convert.ToString(glCode)));
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("STARTDATE", startDate.ToShortDateString()));
                 ReportViewer1.LocalReport.SetParameters(new ReportParameter("ENDDATE", endDate.ToShortDateString()));
                 var rds = new ReportDataSource("DS_GLStatement", dtGlStatement);

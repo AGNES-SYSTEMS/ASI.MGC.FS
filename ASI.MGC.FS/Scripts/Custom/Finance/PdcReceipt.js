@@ -444,7 +444,7 @@ $(document).ready(function () {
         }
     });
     $("#btnNew").on("click", function () {
-        location.reload();
+        location.reload(true);
     });
     function clearModalForm() {
         $("#txtAlCode").val("");

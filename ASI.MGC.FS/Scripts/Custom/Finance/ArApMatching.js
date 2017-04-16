@@ -106,7 +106,7 @@ $(document).ready(function () {
         caption: "Product Details"
     });
     $("#btnNew").on("click", function () {
-        location.reload();
+        location.reload(true);
     });
     function validatePositive(value, column) {
         if (isNaN(value) && value < 0)

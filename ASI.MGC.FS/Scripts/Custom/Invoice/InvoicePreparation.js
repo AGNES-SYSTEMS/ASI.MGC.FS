@@ -127,7 +127,7 @@ $(document).ready(function () {
         caption: "Sale Details"
     });
     $("#btnNew").on("click", function () {
-        location.reload();
+        location.reload(true);
     });
     $(window).resize(function () {
         var outerwidthMrv = $('#gridMRV').width();

@@ -114,7 +114,7 @@ $(document).ready(function () {
         caption: "Product Details"
     });
     $("#btnNew").on("click", function () {
-        location.reload();
+        location.reload(true);
     });
     $(window).resize(function () {
         var outerwidth = $('#grid').width();

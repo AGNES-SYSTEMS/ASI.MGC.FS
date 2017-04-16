@@ -1371,7 +1371,7 @@
           </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
-        <CommandText>rpt_empsales</CommandText>
+        <CommandText>rpt_EmpSales</CommandText>
       </Query>
       <Fields>
         <Field Name="MRVNO_SD">

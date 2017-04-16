@@ -1,7 +1,7 @@
 ﻿var invSelect = function (invNo) {
     if (invNo) {
         var ret = jQuery("#tblInvSearch").jqGrid('getRowData', invNo);
-        $("#txtInvoiceNo").val(ret.INVNO_SD);
+        $("#txtInvoiceNo").val(ret.DOCNUMBER_ART);
         getInvDetail();
         $('#invSearchModel').modal('toggle');
     }
@@ -25,6 +25,7 @@ function getInvDetail() {
                     $("#txtAmount").val(invDetails.DEBITAMOUNT_ART);
                 } else {
                     toastr.warning("Invoice is already reversed.");
+                    $("#btnSave").hide();
                 }
             } else {
                 toastr.warning("Invoice number is invalid.");
@@ -46,7 +47,7 @@ function formattedDate(jsonDate) {
 };
 $(document).ready(function () {
     $("#btnNew").on("click", function () {
-        location.reload();
+        location.reload(true);
     });
     $("#invSearchModel").on('show.bs.modal', function () {
         jQuery("#tblInvSearch").jqGrid({
@@ -56,7 +57,7 @@ $(document).ready(function () {
             styleUI: "Bootstrap",
             colNames: ['Invoice No', 'Description', ''],
             colModel: [
-            { key: true, name: 'INVNO_SD', index: 'INVNO_SD', width: 400 },
+            { key: true, name: 'DOCNUMBER_ART', index: 'DOCNUMBER_ART', width: 400 },
             { key: false, name: 'DESCRIPTION_ARM', index: 'DESCRIPTION_ARM', width: 400 },
             {
                 name: "action",
@@ -70,7 +71,7 @@ $(document).ready(function () {
 
                     var markup = "<a %Href%> <i class='fa fa-check-square-o style='color:black'></i></a>";
                     var replacements = {
-                        "%Href%": "href=javascript:invSelect(&apos;" + rowObject.INVNO_SD + "&apos;);"
+                        "%Href%": "href=javascript:invSelect(&apos;" + rowObject.DOCNUMBER_ART + "&apos;);"
                     };
                     markup = markup.replace(/%\w+%/g, function (all) {
                         return replacements[all];
@@ -86,7 +87,7 @@ $(document).ready(function () {
             shrinkToFit: true,
             autowidth: true,
             viewrecords: true,
-            sortorder: "asc",
+            sortorder: "DESC",
             pager: jQuery('#Pager'),
             caption: "Invoice List",
             emptyrecords: "No Data to Display",
@@ -121,7 +122,7 @@ $(document).ready(function () {
         var id = jQuery("#tblInvSearch").jqGrid('getGridParam', 'selrow');
         if (id) {
             var ret = jQuery("#tblInvSearch").jqGrid('getRowData', id);
-            $("#txtInvoiceNo").val(ret.INVNO_SD);
+            $("#txtInvoiceNo").val(ret.DOCNUMBER_ART);
             getInvDetail();
             $('#invSearchModel').modal('toggle');
         }

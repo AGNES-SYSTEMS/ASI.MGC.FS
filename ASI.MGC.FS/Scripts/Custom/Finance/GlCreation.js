@@ -73,7 +73,7 @@ $(document).ready(function () {
         }
     });
     $("#btnNew").on("click", function () {
-        location.reload();
+        location.reload(true);
     });
     $("#glSearchModel").on('show.bs.modal', function () {
         $("#tblGlSearch").jqGrid({

@@ -131,7 +131,7 @@ $(document).ready(function () {
         $('#mrvProductModelform').bootstrapValidator('revalidateField', 'PrCode');
     });
     $("#btnNew").on("click", function () {
-        location.reload();
+        location.reload(true);
     });
     $("#txtPrDesc").change(function () {
         $('#mrvProductModelform').bootstrapValidator('revalidateField', 'PrDesc');

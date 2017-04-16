@@ -880,30 +880,6 @@
           <DataField>USER_VRPT</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ALLCODE_VCD">
-          <DataField>ALLCODE_VCD</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ACCODE_VCD">
-          <DataField>ACCODE_VCD</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ACDESCRIPTION_VCD">
-          <DataField>ACDESCRIPTION_VCD</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="NARRATION_VCD">
-          <DataField>NARRATION_VCD</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="DEBITAMOUNT_VCD">
-          <DataField>DEBITAMOUNT_VCD</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="CREDITAMOUNT_VCD">
-          <DataField>CREDITAMOUNT_VCD</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
       </Fields>
     </DataSet>
   </DataSets>

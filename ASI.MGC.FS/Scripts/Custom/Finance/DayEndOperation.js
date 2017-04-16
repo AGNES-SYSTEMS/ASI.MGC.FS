@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     $("#txtDayTo").datepicker();
     $("#btnNew").on("click", function () {
-        location.reload();
+        location.reload(true);
     });
     $("#btnStart").on("click", function () {
         var startDate = new Date($('#txtDayFrom').val());

@@ -130,7 +130,7 @@ $(document).ready(function () {
         caption: "Allocation Details"
     });
     $("#btnNew").on("click", function () {
-        location.reload();
+        location.reload(true);
     });
     $(window).resize(function () {
         var outerwidth = $('#grid').width();

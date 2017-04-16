@@ -1189,6 +1189,9 @@
           <QueryParameter Name="@STARTDATE">
             <Value>=Parameters!STARTDATE.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="@GLCode">
+            <Value>=Parameters!GLCode.Value</Value>
+          </QueryParameter>
           <QueryParameter Name="@ENDDATE">
             <Value>=Parameters!ENDDATE.Value</Value>
           </QueryParameter>
@@ -1244,6 +1247,10 @@
     <ReportParameter Name="ENDDATE">
       <DataType>DateTime</DataType>
       <Prompt>ENDDATE</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="GLCode">
+      <DataType>Integer</DataType>
+      <Prompt>GLCode</Prompt>
     </ReportParameter>
   </ReportParameters>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>

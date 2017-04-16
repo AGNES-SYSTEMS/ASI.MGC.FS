@@ -58,7 +58,7 @@ $(document).ready(function () {
         }
     }
     $("#btnNew").on("click", function () {
-        location.reload();
+        location.reload(true);
     });
     $("#txtInvNumber").on("blur", function () {
         var ddlVal = $("#ddlDocType").val();

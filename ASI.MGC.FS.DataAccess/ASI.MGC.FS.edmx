@@ -13,8 +13,8 @@
           <Property Name="ACCODE_SAC" Type="nvarchar" MaxLength="15" />
           <Property Name="GLDATE_SAC" Type="datetime2" Precision="0" />
           <Property Name="DOCNUMBER_SAC" Type="nvarchar" MaxLength="20" />
-          <Property Name="OTHERREF_SAC" Type="nvarchar" MaxLength="50" />
-          <Property Name="NARRATION_SAC" Type="nvarchar" MaxLength="100" />
+          <Property Name="OTHERREF_SAC" Type="nvarchar" MaxLength="255" />
+          <Property Name="NARRATION_SAC" Type="nvarchar" MaxLength="255" />
           <Property Name="DEBITAMOUNT_SAC" Type="money" />
           <Property Name="CREDITAMOUNT_SAC" Type="money" />
           <Property Name="BALANCE_SAC" Type="money" />
@@ -25,7 +25,7 @@
             <PropertyRef Name="ALCODE_ALD" />
           </Key>
           <Property Name="ALCODE_ALD" Type="nvarchar" MaxLength="2" Nullable="false" />
-          <Property Name="ALDESCRIPTION" Type="nvarchar" MaxLength="30" />
+          <Property Name="ALDESCRIPTION" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="AR_AP_LEDGER">
           <Key>
@@ -50,10 +50,10 @@
           </Key>
           <Property Name="ARCODE_ARM" Type="nvarchar" MaxLength="5" Nullable="false" />
           <Property Name="TYPE_ARM" Type="nvarchar" MaxLength="2" />
-          <Property Name="DESCRIPTION_ARM" Type="nvarchar" MaxLength="40" />
+          <Property Name="DESCRIPTION_ARM" Type="nvarchar" MaxLength="255" />
           <Property Name="POBOX_ARM" Type="nvarchar" MaxLength="10" />
-          <Property Name="ADDRESS1_ARM" Type="nvarchar" MaxLength="50" />
-          <Property Name="ADDRESS2_ARM" Type="nvarchar" MaxLength="50" />
+          <Property Name="ADDRESS1_ARM" Type="nvarchar" MaxLength="255" />
+          <Property Name="ADDRESS2_ARM" Type="nvarchar" MaxLength="255" />
           <Property Name="ADDRESS3_ARM" Type="nvarchar" MaxLength="50" />
           <Property Name="TELEPHONE_ARM" Type="nvarchar" MaxLength="15" />
           <Property Name="FAX_ARM" Type="nvarchar" MaxLength="15" />
@@ -84,8 +84,8 @@
           <Property Name="SLNO_BS" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MAINCODE_BS" Type="nvarchar" MaxLength="1" />
           <Property Name="ACCODE_BS" Type="nvarchar" MaxLength="15" />
-          <Property Name="SUBDESCRIPTION_BS" Type="nvarchar" MaxLength="30" />
-          <Property Name="ACDESCRIPTION_BS" Type="nvarchar" MaxLength="50" />
+          <Property Name="SUBDESCRIPTION_BS" Type="nvarchar" MaxLength="255" />
+          <Property Name="ACDESCRIPTION_BS" Type="nvarchar" MaxLength="255" />
           <Property Name="AMOUNT_BS" Type="money" />
           <Property Name="AMOUNT2_BS" Type="money" />
         </EntityType>
@@ -94,7 +94,7 @@
             <PropertyRef Name="BANKCODE_BM" />
           </Key>
           <Property Name="BANKCODE_BM" Type="nvarchar" MaxLength="5" Nullable="false" />
-          <Property Name="BANKNAME_BM" Type="nvarchar" MaxLength="30" />
+          <Property Name="BANKNAME_BM" Type="nvarchar" MaxLength="255" />
           <Property Name="CURRENCY_BM" Type="nvarchar" MaxLength="10" />
           <Property Name="ACCOUNTNUMBER_BM" Type="nvarchar" MaxLength="15" />
           <Property Name="BANKSTTUS_BM" Type="nvarchar" MaxLength="10" />
@@ -107,9 +107,9 @@
             <PropertyRef Name="BANKCODE_BM" />
           </Key>
           <Property Name="BANKCODE_BM" Type="nvarchar" MaxLength="5" Nullable="false" />
-          <Property Name="BANKNAME_BM" Type="nvarchar" MaxLength="30" />
+          <Property Name="BANKNAME_BM" Type="nvarchar" MaxLength="255" />
           <Property Name="CURRENCY_BM" Type="nvarchar" MaxLength="10" />
-          <Property Name="ACCOUNTNUMBER_BM" Type="nvarchar" MaxLength="15" />
+          <Property Name="ACCOUNTNUMBER_BM" Type="nvarchar" MaxLength="30" />
           <Property Name="BANKSTTUS_BM" Type="nvarchar" MaxLength="10" />
           <Property Name="ODLIMIT_BM" Type="money" />
           <Property Name="MODE_BM" Type="nvarchar" MaxLength="15" />
@@ -143,10 +143,10 @@
             <PropertyRef Name="COCODE_CM" />
           </Key>
           <Property Name="COCODE_CM" Type="nvarchar" MaxLength="5" Nullable="false" />
-          <Property Name="COMPANYNAME_CM" Type="nvarchar" MaxLength="50" />
+          <Property Name="COMPANYNAME_CM" Type="nvarchar" MaxLength="255" />
           <Property Name="PBNO_CM" Type="nvarchar" MaxLength="15" />
-          <Property Name="ARRRESS1_CM" Type="nvarchar" MaxLength="50" />
-          <Property Name="ADDRESS2_CM" Type="nvarchar" MaxLength="50" />
+          <Property Name="ARRRESS1_CM" Type="nvarchar" MaxLength="255" />
+          <Property Name="ADDRESS2_CM" Type="nvarchar" MaxLength="255" />
           <Property Name="ADDRESS3_CM" Type="nvarchar" MaxLength="50" />
           <Property Name="PHONENO_CM" Type="nvarchar" MaxLength="15" />
           <Property Name="FAXNUMBER_CM" Type="nvarchar" MaxLength="15" />
@@ -157,7 +157,7 @@
           <Property Name="BASECURRENCY_CM" Type="nvarchar" MaxLength="5" />
           <Property Name="CURRECNCYNAME_CM" Type="nvarchar" MaxLength="30" />
           <Property Name="PERRIODMETHOD_CM" Type="nvarchar" MaxLength="10" />
-          <Property Name="LOGOPATH_CM" Type="nvarchar" MaxLength="150" />
+          <Property Name="LOGOPATH_CM" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="CUSTOMEREPORT">
           <Key>
@@ -173,7 +173,7 @@
           </Key>
           <Property Name="SLNO_DL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PRCODE_DL" Type="nvarchar" MaxLength="15" />
-          <Property Name="PRNAME_DL" Type="nvarchar" MaxLength="50" />
+          <Property Name="PRNAME_DL" Type="nvarchar" MaxLength="255" />
           <Property Name="DELNO_DL" Type="nvarchar" MaxLength="15" />
           <Property Name="MRVNO_DL" Type="nvarchar" MaxLength="50" />
         </EntityType>
@@ -184,7 +184,7 @@
           <Property Name="SLNO_DLNRPT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DLNR_DLNRPT" Type="nvarchar" MaxLength="15" />
           <Property Name="ID_DLNRPT" Type="nvarchar" MaxLength="15" />
-          <Property Name="DESCRIPTION_DLNRPT" Type="nvarchar" MaxLength="150" />
+          <Property Name="DESCRIPTION_DLNRPT" Type="nvarchar" MaxLength="255" />
           <Property Name="QTY_DLNRPT" Type="int" />
           <Property Name="JOBNO_DLNRPT" Type="nvarchar" MaxLength="15" />
           <Property Name="SERVICEPROID_DLNRPT" Type="nvarchar" MaxLength="15" />
@@ -202,7 +202,7 @@
             <PropertyRef Name="DOCABBREVIATION_DM" />
           </Key>
           <Property Name="DOCTYPE_DM" Type="nvarchar" MaxLength="20" />
-          <Property Name="DESCRIPTION_DM" Type="nvarchar" MaxLength="30" />
+          <Property Name="DESCRIPTION_DM" Type="nvarchar" MaxLength="255" />
           <Property Name="DOCABBREVIATION_DM" Type="nvarchar" MaxLength="3" Nullable="false" />
           <Property Name="ARSTATUS_DM" Type="bit" />
           <Property Name="APSTATUS_DM" Type="bit" />
@@ -215,11 +215,11 @@
             <PropertyRef Name="EMPCODE_EM" />
           </Key>
           <Property Name="EMPCODE_EM" Type="nvarchar" MaxLength="5" Nullable="false" />
-          <Property Name="EMPFNAME_EM" Type="nvarchar" MaxLength="30" />
-          <Property Name="EMPSNAME_EM" Type="nvarchar" MaxLength="30" />
+          <Property Name="EMPFNAME_EM" Type="nvarchar" MaxLength="255" />
+          <Property Name="EMPSNAME_EM" Type="nvarchar" MaxLength="255" />
           <Property Name="PASSPORTNO_EM" Type="nvarchar" MaxLength="20" />
           <Property Name="PHONE_EM" Type="nvarchar" MaxLength="12" />
-          <Property Name="DESIGNATION_EM" Type="nvarchar" MaxLength="50" />
+          <Property Name="DESIGNATION_EM" Type="nvarchar" MaxLength="255" />
           <Property Name="PASSPORTISSUEDATE_EM" Type="datetime2" Precision="0" />
           <Property Name="PASSPORTEXPDATE_EM" Type="datetime2" Precision="0" />
           <Property Name="VISAISSUEDATE_EM" Type="datetime2" Precision="0" />
@@ -231,7 +231,7 @@
           </Key>
           <Property Name="ENTRYCODE_EM" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="ACCODE_EM" Type="nvarchar" MaxLength="5" />
-          <Property Name="DESCRIPTION_EM" Type="nvarchar" MaxLength="50" />
+          <Property Name="DESCRIPTION_EM" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="FINYEARMASTER">
           <Key>
@@ -250,12 +250,12 @@
             <PropertyRef Name="GLCODE_LM" />
           </Key>
           <Property Name="GLCODE_LM" Type="nvarchar" MaxLength="5" Nullable="false" />
-          <Property Name="GLDESCRIPTION_LM" Type="nvarchar" MaxLength="30" />
+          <Property Name="GLDESCRIPTION_LM" Type="nvarchar" MaxLength="255" />
           <Property Name="LOCATIONCODE_LM" Type="nvarchar" MaxLength="2" />
           <Property Name="MAINCODE_LM" Type="nvarchar" MaxLength="1" />
           <Property Name="SUBCODE_LM" Type="nvarchar" MaxLength="5" />
           <Property Name="GTYPE_LM" Type="nvarchar" MaxLength="1" />
-          <Property Name="NOTES_LM" Type="nvarchar" MaxLength="50" />
+          <Property Name="NOTES_LM" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="GLTRANSACTION1">
           <Key>
@@ -279,7 +279,7 @@
           </Key>
           <Property Name="SLNO_INVD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CODE_INVD" Type="nvarchar" MaxLength="15" />
-          <Property Name="DESCRIPTION_INVD" Type="nvarchar" MaxLength="50" />
+          <Property Name="DESCRIPTION_INVD" Type="nvarchar" MaxLength="255" />
           <Property Name="QTY_INVD" Type="int" />
           <Property Name="RATE_INVD" Type="money" />
           <Property Name="AMOUNT_INVNO" Type="money" />
@@ -294,8 +294,8 @@
           <Property Name="INVNO_IPM" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="INVDATE_IPM" Type="datetime2" Precision="0" />
           <Property Name="CUST_CODE_IPM" Type="nvarchar" MaxLength="15" />
-          <Property Name="CUSTNAME_IPM" Type="nvarchar" MaxLength="50" />
-          <Property Name="CUSTADDRESS_IPM" Type="nvarchar" MaxLength="50" />
+          <Property Name="CUSTNAME_IPM" Type="nvarchar" MaxLength="255" />
+          <Property Name="CUSTADDRESS_IPM" Type="nvarchar" MaxLength="255" />
           <Property Name="CUSTPIN_IPM" Type="nvarchar" MaxLength="15" />
           <Property Name="SHIPPING_IPM" Type="money" />
           <Property Name="DISCOUNT_IPM" Type="money" />
@@ -310,7 +310,7 @@
           <Property Name="SLNO_JR" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="JOBNO_JR" Type="nvarchar" MaxLength="15" />
           <Property Name="CODE_JR" Type="nvarchar" MaxLength="15" />
-          <Property Name="DESCRIPTION_JR" Type="nvarchar" MaxLength="150" />
+          <Property Name="DESCRIPTION_JR" Type="nvarchar" MaxLength="255" />
           <Property Name="QTY_JR" Type="int" />
           <Property Name="RATE_JR" Type="money" />
           <Property Name="DISCOUNT_JR" Type="money" />
@@ -325,7 +325,7 @@
           <Property Name="MRVNO_JRP" Type="nvarchar" MaxLength="15" />
           <Property Name="JOBDATE_JRP" Type="datetime2" Precision="0" />
           <Property Name="PRODID_JRP" Type="nvarchar" MaxLength="15" />
-          <Property Name="PRODUCTNAME_JRP" Type="nvarchar" MaxLength="50" />
+          <Property Name="PRODUCTNAME_JRP" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="JOBDETALS">
           <Key>
@@ -340,7 +340,7 @@
           <Property Name="QTY_JD" Type="int" />
           <Property Name="RATE_JD" Type="money" />
           <Property Name="AMOUNT_JD" Type="money" />
-          <Property Name="NOTES_JD" Type="nvarchar" MaxLength="50" />
+          <Property Name="NOTES_JD" Type="nvarchar" MaxLength="255" />
           <Property Name="STATUS_JD" Type="nvarchar" MaxLength="1" />
           <Property Name="POSTDOCNO1_JD" Type="nvarchar" MaxLength="15" />
           <Property Name="POSTDOCNO2_JD" Type="nvarchar" MaxLength="15" />
@@ -350,7 +350,7 @@
             <PropertyRef Name="JOBID_JR" />
           </Key>
           <Property Name="JOBID_JR" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="JOBDESCRIPTION_JR" Type="nvarchar" MaxLength="50" />
+          <Property Name="JOBDESCRIPTION_JR" Type="nvarchar" MaxLength="255" />
           <Property Name="RATE_RJ" Type="money" />
         </EntityType>
         <EntityType Name="JOBMASTER">
@@ -367,7 +367,7 @@
           <Property Name="DOCNUMBER_JM" Type="nvarchar" MaxLength="10" />
           <Property Name="PRODID_JIM" Type="nvarchar" MaxLength="10" />
           <Property Name="PRODQTY_JM" Type="int" />
-          <Property Name="REMARIKS_JM" Type="nvarchar" MaxLength="50" />
+          <Property Name="REMARIKS_JM" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="JVREPORT">
           <Key>
@@ -378,10 +378,10 @@
           <Property Name="GLDATE_VPR" Type="datetime2" Precision="0" />
           <Property Name="ALCODE_VPT" Type="nvarchar" MaxLength="5" />
           <Property Name="ACCODE_VPR" Type="nvarchar" MaxLength="15" />
-          <Property Name="ACDESCRIPTION_VPR" Type="nvarchar" MaxLength="50" />
+          <Property Name="ACDESCRIPTION_VPR" Type="nvarchar" MaxLength="255" />
           <Property Name="DEBITAMOUNT_VPR" Type="money" />
           <Property Name="CREDITAMOUNT_VPR" Type="money" />
-          <Property Name="NARRATION_VPT" Type="nvarchar" MaxLength="50" />
+          <Property Name="NARRATION_VPT" Type="nvarchar" MaxLength="255" />
           <Property Name="DOCNO_VPT" Type="nvarchar" MaxLength="15" />
         </EntityType>
         <EntityType Name="LOCATIONMASTER">
@@ -389,7 +389,7 @@
             <PropertyRef Name="LOCCODE_LM" />
           </Key>
           <Property Name="LOCCODE_LM" Type="nvarchar" MaxLength="3" Nullable="false" />
-          <Property Name="LOCATIONNAME" Type="nvarchar" MaxLength="30" />
+          <Property Name="LOCATIONNAME" Type="nvarchar" MaxLength="255" />
           <Property Name="COCODE_LM" Type="nvarchar" MaxLength="5" />
         </EntityType>
         <EntityType Name="MATERIALRECEIPTMASTER">
@@ -399,14 +399,14 @@
           <Property Name="MRVNO_MRV" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="MRVDATE_MRV" Type="datetime2" Precision="0" />
           <Property Name="CUSTOMERCODE_MRV" Type="nvarchar" MaxLength="10" />
-          <Property Name="CUSTOMERNAME_MRV" Type="nvarchar" MaxLength="50" />
-          <Property Name="ADDRESS1_MRV" Type="nvarchar" MaxLength="50" />
-          <Property Name="ADDRESS2_MRV" Type="nvarchar" MaxLength="50" />
+          <Property Name="CUSTOMERNAME_MRV" Type="nvarchar" MaxLength="255" />
+          <Property Name="ADDRESS1_MRV" Type="nvarchar" MaxLength="255" />
+          <Property Name="ADDRESS2_MRV" Type="nvarchar" MaxLength="255" />
           <Property Name="PHONE_MRV" Type="nvarchar" MaxLength="12" />
           <Property Name="DOC_DATE_MRV" Type="datetime2" Precision="0" />
           <Property Name="DELE_DATE_MRV" Type="datetime2" Precision="0" />
           <Property Name="EXECODE_MRV" Type="nvarchar" MaxLength="5" />
-          <Property Name="NOTES_MRV" Type="nvarchar" MaxLength="50" />
+          <Property Name="NOTES_MRV" Type="nvarchar" MaxLength="255" />
           <Property Name="STATUS_MRV" Type="nvarchar" MaxLength="1" />
           <Property Name="PHONE2_MRV" Type="nvarchar" MaxLength="12" />
         </EntityType>
@@ -506,7 +506,7 @@
           <Property Name="SLNO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MRVNO_CHD" Type="nvarchar" MaxLength="15" />
           <Property Name="PCODE_CHD" Type="nvarchar" MaxLength="15" />
-          <Property Name="PRODUCTNAME_CHD" Type="nvarchar" MaxLength="50" />
+          <Property Name="PRODUCTNAME_CHD" Type="nvarchar" MaxLength="255" />
           <Property Name="JOBID_CHD" Type="nvarchar" MaxLength="15" />
           <Property Name="JOBDIES_CHD" Type="nvarchar" MaxLength="50" />
           <Property Name="QTY_CHD" Type="int" />
@@ -521,8 +521,8 @@
           <Property Name="MRVDATE_RPT" Type="datetime2" Precision="0" />
           <Property Name="MRVDELEDATE_RPT" Type="datetime2" Precision="0" />
           <Property Name="CUSTCODE_RPT" Type="nvarchar" MaxLength="15" />
-          <Property Name="CUSTNAME_RPT" Type="nvarchar" MaxLength="50" />
-          <Property Name="CUSTADD_RPT" Type="nvarchar" MaxLength="50" />
+          <Property Name="CUSTNAME_RPT" Type="nvarchar" MaxLength="255" />
+          <Property Name="CUSTADD_RPT" Type="nvarchar" MaxLength="255" />
           <Property Name="PHONE_RPT" Type="nvarchar" MaxLength="15" />
         </EntityType>
         <EntityType Name="MRVREFERENCE">
@@ -558,7 +558,7 @@
             <PropertyRef Name="PROD_CODE_PM" />
           </Key>
           <Property Name="PROD_CODE_PM" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="DESCRIPTION_PM" Type="nvarchar" MaxLength="50" />
+          <Property Name="DESCRIPTION_PM" Type="nvarchar" MaxLength="255" />
           <Property Name="CUR_QTY_PM" Type="int" />
           <Property Name="RATE_PM" Type="money" />
           <Property Name="SELLINGPRICE_RM" Type="money" />
@@ -574,7 +574,7 @@
           <Property Name="SLNO_PL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GROUPCODE" Type="nvarchar" MaxLength="1" />
           <Property Name="ACCOUNTCODE_PL" Type="nvarchar" MaxLength="40" />
-          <Property Name="DESCRIPTION_PL" Type="nvarchar" MaxLength="50" />
+          <Property Name="DESCRIPTION_PL" Type="nvarchar" MaxLength="255" />
           <Property Name="CURMONTH_PL" Type="money" />
           <Property Name="CURRENT_YEARTODATE" Type="money" />
         </EntityType>
@@ -585,7 +585,7 @@
           <Property Name="SLNO_QREF" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="QUOTNO_QREF" Type="nvarchar" MaxLength="15" />
           <Property Name="CODE_QREF" Type="nvarchar" MaxLength="15" />
-          <Property Name="DESCRIPTION_QREF" Type="nvarchar" MaxLength="150" />
+          <Property Name="DESCRIPTION_QREF" Type="nvarchar" MaxLength="255" />
           <Property Name="QTY_QREF" Type="int" />
           <Property Name="RATE_QREF" Type="money" />
           <Property Name="ID_QREF" Type="int" />
@@ -606,10 +606,10 @@
             <PropertyRef Name="QUOTNO_QM" />
           </Key>
           <Property Name="QUOTNO_QM" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="CUSTNAME_QM" Type="nvarchar" MaxLength="150" />
-          <Property Name="ADDRESS1_QM" Type="nvarchar" MaxLength="150" />
-          <Property Name="ADDRESS2_QM" Type="nvarchar" MaxLength="250" />
-          <Property Name="NOTE_QM" Type="nvarchar" MaxLength="50" />
+          <Property Name="CUSTNAME_QM" Type="nvarchar" MaxLength="255" />
+          <Property Name="ADDRESS1_QM" Type="nvarchar" MaxLength="255" />
+          <Property Name="ADDRESS2_QM" Type="nvarchar" MaxLength="255" />
+          <Property Name="NOTE_QM" Type="nvarchar" MaxLength="255" />
           <Property Name="DATE_QM" Type="datetime2" Precision="0" />
         </EntityType>
         <EntityType Name="REPORT_JOBCARD">
@@ -621,13 +621,13 @@
           <Property Name="JOBCARDNO_JRD" Type="nvarchar" MaxLength="15" />
           <Property Name="JOBDATE_JCARD" Type="datetime2" Precision="0" />
           <Property Name="PRODID_JCARD" Type="nvarchar" MaxLength="15" />
-          <Property Name="PRODUCTNAME_JCARD" Type="nvarchar" MaxLength="50" />
+          <Property Name="PRODUCTNAME_JCARD" Type="nvarchar" MaxLength="255" />
           <Property Name="DELEDATE_JCARD" Type="datetime2" Precision="0" />
           <Property Name="PRODQTY_JCARD" Type="int" />
           <Property Name="EMPCODE_JCARD" Type="nvarchar" MaxLength="15" />
-          <Property Name="EMPNAME_JCARD" Type="nvarchar" MaxLength="50" />
+          <Property Name="EMPNAME_JCARD" Type="nvarchar" MaxLength="255" />
           <Property Name="JOBID_JCARD" Type="nvarchar" MaxLength="15" />
-          <Property Name="JOBDESCRIPTION_JCARD" Type="nvarchar" MaxLength="50" />
+          <Property Name="JOBDESCRIPTION_JCARD" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="SALEDETAILS">
           <Key>
@@ -652,7 +652,7 @@
           <Property Name="CASHRVNO_SD" Type="nvarchar" MaxLength="15" />
           <Property Name="INVNO_SD" Type="nvarchar" MaxLength="15" />
           <Property Name="CREDITACCODE_SD" Type="nvarchar" MaxLength="15" />
-          <Property Name="LPONO_SD" Type="nvarchar" MaxLength="20" />
+          <Property Name="LPONO_SD" Type="nvarchar" MaxLength="255" />
           <Property Name="DAYENDDOC_NO" Type="nvarchar" MaxLength="15" />
         </EntityType>
         <EntityType Name="SALESALLOCATIONMASTER">
@@ -660,7 +660,7 @@
             <PropertyRef Name="ALCODE_SA" />
           </Key>
           <Property Name="ALCODE_SA" Type="nvarchar" MaxLength="2" Nullable="false" />
-          <Property Name="DESCRIPTION_SA" Type="nvarchar" MaxLength="30" />
+          <Property Name="DESCRIPTION_SA" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="SALESMASTER">
           <Key>
@@ -697,7 +697,7 @@
           <Property Name="SLNO_STOCK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DATE_STOCK" Type="datetime2" Precision="0" />
           <Property Name="PRODID_STOCK" Type="nvarchar" MaxLength="15" />
-          <Property Name="PRODDESCRIPTION_STOCK" Type="nvarchar" MaxLength="50" />
+          <Property Name="PRODDESCRIPTION_STOCK" Type="nvarchar" MaxLength="255" />
           <Property Name="RECEIPTQTY_STOCK" Type="int" />
           <Property Name="RECEIPTRATE_STOCK" Type="money" />
           <Property Name="ISSUEQTY_STOCK" Type="int" />
@@ -713,7 +713,7 @@
           <Property Name="DOC_DATE_SL" Type="datetime2" Precision="0" />
           <Property Name="LEDGER_DATE_SL" Type="datetime2" Precision="0" />
           <Property Name="VOUCHERNO_SL" Type="nvarchar" MaxLength="15" />
-          <Property Name="OTHERREF_SL" Type="nvarchar" MaxLength="15" />
+          <Property Name="OTHERREF_SL" Type="nvarchar" MaxLength="255" />
           <Property Name="PRODID_SL" Type="nvarchar" MaxLength="10" />
           <Property Name="BATCHNO_SL" Type="nvarchar" MaxLength="15" />
           <Property Name="RECEPT_QTY_SL" Type="int" />
@@ -730,13 +730,13 @@
           <Property Name="SLNO_STR" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GLDDATE_STR" Type="datetime2" Precision="0" />
           <Property Name="PROCODE_STR" Type="nvarchar" MaxLength="15" />
-          <Property Name="PRODUCTDISTCRIPTION_STR" Type="nvarchar" MaxLength="50" />
+          <Property Name="PRODUCTDISTCRIPTION_STR" Type="nvarchar" MaxLength="255" />
           <Property Name="ISSUEQTY_STR" Type="money" />
           <Property Name="ISSUERATE_STR" Type="money" />
           <Property Name="RECEIPTQTY_STR" Type="money" />
           <Property Name="RECEPTRATE_STR" Type="money" />
           <Property Name="CLOSINGQTY_STR" Type="money" />
-          <Property Name="PARTICULARS_STR" Type="nvarchar" MaxLength="50" />
+          <Property Name="PARTICULARS_STR" Type="nvarchar" MaxLength="255" />
           <Property Name="UNIT_STR" Type="nvarchar" MaxLength="10" />
           <Property Name="NO_STR" Type="int" />
         </EntityType>
@@ -786,7 +786,7 @@
           <Property Name="SLN_TB" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CODE_TB" Type="int" />
           <Property Name="ACCODE_TB" Type="nvarchar" MaxLength="20" />
-          <Property Name="DESCRIPTION_TB" Type="nvarchar" MaxLength="50" />
+          <Property Name="DESCRIPTION_TB" Type="nvarchar" MaxLength="255" />
           <Property Name="OPENING_TB" Type="money" />
           <Property Name="DEBIT_TB" Type="money" />
           <Property Name="CREDIT_TB" Type="money" />
@@ -821,10 +821,10 @@
             <PropertyRef Name="SLNO_VCD" />
           </Key>
           <Property Name="SLNO_VCD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ALLCODE_VCD" Type="nvarchar" MaxLength="10" />
-          <Property Name="NARRATION_VCD" Type="nvarchar" MaxLength="50" />
+          <Property Name="ALLCODE_VCD" Type="nvarchar" MaxLength="20" />
+          <Property Name="NARRATION_VCD" Type="nvarchar" MaxLength="255" />
           <Property Name="ACCODE_VCD" Type="nvarchar" MaxLength="15" />
-          <Property Name="ACDESCRIPTION_VCD" Type="nvarchar" MaxLength="50" />
+          <Property Name="ACDESCRIPTION_VCD" Type="nvarchar" MaxLength="255" />
           <Property Name="DEBITAMOUNT_VCD" Type="money" />
           <Property Name="CREDITAMOUNT_VCD" Type="money" />
           <Property Name="AMOUNTSTATUTS_VCD" Type="nvarchar" MaxLength="2" />
@@ -836,12 +836,12 @@
           </Key>
           <Property Name="SLNO_VRPT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GLDATE_VRPT" Type="datetime2" Precision="0" />
-          <Property Name="ALLCODE_VRPT" Type="nvarchar" MaxLength="5" />
+          <Property Name="ALLCODE_VRPT" Type="nvarchar" MaxLength="20" />
           <Property Name="BANKCODE_VRT" Type="nvarchar" MaxLength="15" />
           <Property Name="BANKAMOUNT_VRT" Type="money" />
-          <Property Name="ACCDESCRIPTION_VRPT" Type="nvarchar" MaxLength="50" />
-          <Property Name="PARTICULARS_VRPT" Type="nvarchar" MaxLength="50" />
-          <Property Name="NOTES_VRPT" Type="nvarchar" MaxLength="50" />
+          <Property Name="ACCDESCRIPTION_VRPT" Type="nvarchar" MaxLength="255" />
+          <Property Name="PARTICULARS_VRPT" Type="nvarchar" MaxLength="255" />
+          <Property Name="NOTES_VRPT" Type="nvarchar" MaxLength="255" />
           <Property Name="DEBITAMOUT_VRPT" Type="money" />
           <Property Name="CREDITAMOUNT_VRPT" Type="money" />
           <Property Name="STATUS_VRPT" Type="nvarchar" MaxLength="2" />
@@ -2529,10 +2529,10 @@
           </Key>
           <Property Name="ARCODE_ARM" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="TYPE_ARM" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="DESCRIPTION_ARM" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPTION_ARM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="POBOX_ARM" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="ADDRESS1_ARM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ADDRESS2_ARM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ADDRESS1_ARM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ADDRESS2_ARM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="ADDRESS3_ARM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TELEPHONE_ARM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="FAX_ARM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
@@ -2578,8 +2578,8 @@
           <Property Name="ACCODE_SAC" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="GLDATE_SAC" Type="DateTime" Precision="0" />
           <Property Name="DOCNUMBER_SAC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="OTHERREF_SAC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="NARRATION_SAC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OTHERREF_SAC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NARRATION_SAC" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DEBITAMOUNT_SAC" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CREDITAMOUNT_SAC" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="BALANCE_SAC" Type="Decimal" Precision="19" Scale="4" />
@@ -2590,7 +2590,7 @@
             <PropertyRef Name="ALCODE_ALD" />
           </Key>
           <Property Name="ALCODE_ALD" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="ALDESCRIPTION" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ALDESCRIPTION" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="AR_AP_LEDGER">
           <Key>
@@ -2628,8 +2628,8 @@
           <Property Name="SLNO_BS" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MAINCODE_BS" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="ACCODE_BS" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="SUBDESCRIPTION_BS" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="ACDESCRIPTION_BS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SUBDESCRIPTION_BS" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ACDESCRIPTION_BS" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="AMOUNT_BS" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="AMOUNT2_BS" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
@@ -2638,7 +2638,7 @@
             <PropertyRef Name="BANKCODE_BM" />
           </Key>
           <Property Name="BANKCODE_BM" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="BANKNAME_BM" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="BANKNAME_BM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="CURRENCY_BM" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="ACCOUNTNUMBER_BM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="BANKSTTUS_BM" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
@@ -2652,9 +2652,9 @@
             <PropertyRef Name="BANKCODE_BM" />
           </Key>
           <Property Name="BANKCODE_BM" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="BANKNAME_BM" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="BANKNAME_BM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="CURRENCY_BM" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="ACCOUNTNUMBER_BM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="ACCOUNTNUMBER_BM" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="BANKSTTUS_BM" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="ODLIMIT_BM" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="MODE_BM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
@@ -2689,10 +2689,10 @@
             <PropertyRef Name="COCODE_CM" />
           </Key>
           <Property Name="COCODE_CM" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="COMPANYNAME_CM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="COMPANYNAME_CM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="PBNO_CM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="ARRRESS1_CM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ADDRESS2_CM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ARRRESS1_CM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ADDRESS2_CM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="ADDRESS3_CM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PHONENO_CM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="FAXNUMBER_CM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
@@ -2703,7 +2703,7 @@
           <Property Name="BASECURRENCY_CM" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="CURRECNCYNAME_CM" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="PERRIODMETHOD_CM" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="LOGOPATH_CM" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LOGOPATH_CM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="CUSTOMEREPORT">
           <Key>
@@ -2719,7 +2719,7 @@
           </Key>
           <Property Name="SLNO_DL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PRCODE_DL" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="PRNAME_DL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PRNAME_DL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DELNO_DL" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="MRVNO_DL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
@@ -2730,7 +2730,7 @@
           <Property Name="SLNO_DLNRPT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DLNR_DLNRPT" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="ID_DLNRPT" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="DESCRIPTION_DLNRPT" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPTION_DLNRPT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="QTY_DLNRPT" Type="Int32" />
           <Property Name="JOBNO_DLNRPT" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="SERVICEPROID_DLNRPT" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
@@ -2748,7 +2748,7 @@
             <PropertyRef Name="DOCABBREVIATION_DM" />
           </Key>
           <Property Name="DOCTYPE_DM" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="DESCRIPTION_DM" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPTION_DM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DOCABBREVIATION_DM" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="ARSTATUS_DM" Type="Boolean" />
           <Property Name="APSTATUS_DM" Type="Boolean" />
@@ -2761,11 +2761,11 @@
             <PropertyRef Name="EMPCODE_EM" />
           </Key>
           <Property Name="EMPCODE_EM" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="EMPFNAME_EM" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="EMPSNAME_EM" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="EMPFNAME_EM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EMPSNAME_EM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="PASSPORTNO_EM" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="PHONE_EM" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
-          <Property Name="DESIGNATION_EM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DESIGNATION_EM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="PASSPORTISSUEDATE_EM" Type="DateTime" Precision="0" />
           <Property Name="PASSPORTEXPDATE_EM" Type="DateTime" Precision="0" />
           <Property Name="VISAISSUEDATE_EM" Type="DateTime" Precision="0" />
@@ -2777,7 +2777,7 @@
           </Key>
           <Property Name="ENTRYCODE_EM" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="ACCODE_EM" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="DESCRIPTION_EM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPTION_EM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="FINYEARMASTER">
           <Key>
@@ -2796,12 +2796,12 @@
             <PropertyRef Name="GLCODE_LM" />
           </Key>
           <Property Name="GLCODE_LM" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="GLDESCRIPTION_LM" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="GLDESCRIPTION_LM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="LOCATIONCODE_LM" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
           <Property Name="MAINCODE_LM" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="SUBCODE_LM" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="GTYPE_LM" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="NOTES_LM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NOTES_LM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="GLTRANSACTION1">
           <Key>
@@ -2825,7 +2825,7 @@
           </Key>
           <Property Name="SLNO_INVD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CODE_INVD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="DESCRIPTION_INVD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPTION_INVD" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="QTY_INVD" Type="Int32" />
           <Property Name="RATE_INVD" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="AMOUNT_INVNO" Type="Decimal" Precision="19" Scale="4" />
@@ -2840,8 +2840,8 @@
           <Property Name="INVNO_IPM" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="INVDATE_IPM" Type="DateTime" Precision="0" />
           <Property Name="CUST_CODE_IPM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="CUSTNAME_IPM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CUSTADDRESS_IPM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CUSTNAME_IPM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CUSTADDRESS_IPM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="CUSTPIN_IPM" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="SHIPPING_IPM" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="DISCOUNT_IPM" Type="Decimal" Precision="19" Scale="4" />
@@ -2856,7 +2856,7 @@
           <Property Name="SLNO_JR" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="JOBNO_JR" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="CODE_JR" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="DESCRIPTION_JR" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPTION_JR" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="QTY_JR" Type="Int32" />
           <Property Name="RATE_JR" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="DISCOUNT_JR" Type="Decimal" Precision="19" Scale="4" />
@@ -2871,7 +2871,7 @@
           <Property Name="MRVNO_JRP" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="JOBDATE_JRP" Type="DateTime" Precision="0" />
           <Property Name="PRODID_JRP" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="PRODUCTNAME_JRP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PRODUCTNAME_JRP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="JOBDETAL">
           <Key>
@@ -2886,7 +2886,7 @@
           <Property Name="QTY_JD" Type="Int32" />
           <Property Name="RATE_JD" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="AMOUNT_JD" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="NOTES_JD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NOTES_JD" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="STATUS_JD" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="POSTDOCNO1_JD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="POSTDOCNO2_JD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
@@ -2896,7 +2896,7 @@
             <PropertyRef Name="JOBID_JR" />
           </Key>
           <Property Name="JOBID_JR" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="JOBDESCRIPTION_JR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="JOBDESCRIPTION_JR" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="RATE_RJ" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="MRVREFERENCEs" Relationship="ASI_MGC_FSModel.MRVREFERENCE_JOBIDREFERENCEMRVREFERENCE" FromRole="JOBIDREFERENCE" ToRole="MRVREFERENCE" />
         </EntityType>
@@ -2914,7 +2914,7 @@
           <Property Name="DOCNUMBER_JM" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="PRODID_JIM" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="PRODQTY_JM" Type="Int32" />
-          <Property Name="REMARIKS_JM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="REMARIKS_JM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="MATERIALRECEIPTMASTER" Relationship="ASI_MGC_FSModel.JOBMASTER_MATERIALRECEIPTMASTERJOBMASTER" FromRole="JOBMASTER" ToRole="MATERIALRECEIPTMASTER" />
         </EntityType>
         <EntityType Name="JVREPORT">
@@ -2926,10 +2926,10 @@
           <Property Name="GLDATE_VPR" Type="DateTime" Precision="0" />
           <Property Name="ALCODE_VPT" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="ACCODE_VPR" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="ACDESCRIPTION_VPR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ACDESCRIPTION_VPR" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DEBITAMOUNT_VPR" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CREDITAMOUNT_VPR" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="NARRATION_VPT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NARRATION_VPT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DOCNO_VPT" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="LOCATIONMASTER">
@@ -2937,7 +2937,7 @@
             <PropertyRef Name="LOCCODE_LM" />
           </Key>
           <Property Name="LOCCODE_LM" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="LOCATIONNAME" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="LOCATIONNAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="COCODE_LM" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MATERIALRECEIPTMASTER">
@@ -2947,14 +2947,14 @@
           <Property Name="MRVNO_MRV" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="MRVDATE_MRV" Type="DateTime" Precision="0" />
           <Property Name="CUSTOMERCODE_MRV" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="CUSTOMERNAME_MRV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ADDRESS1_MRV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ADDRESS2_MRV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CUSTOMERNAME_MRV" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ADDRESS1_MRV" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ADDRESS2_MRV" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="PHONE_MRV" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
           <Property Name="DOC_DATE_MRV" Type="DateTime" Precision="0" />
           <Property Name="DELE_DATE_MRV" Type="DateTime" Precision="0" />
           <Property Name="EXECODE_MRV" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="NOTES_MRV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NOTES_MRV" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="STATUS_MRV" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="PHONE2_MRV" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="JOBMASTERs" Relationship="ASI_MGC_FSModel.JOBMASTER_MATERIALRECEIPTMASTERJOBMASTER" FromRole="MATERIALRECEIPTMASTER" ToRole="JOBMASTER" />
@@ -3064,7 +3064,7 @@
           <Property Name="SLNO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MRVNO_CHD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="PCODE_CHD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="PRODUCTNAME_CHD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PRODUCTNAME_CHD" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="JOBID_CHD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="JOBDIES_CHD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="QTY_CHD" Type="Int32" />
@@ -3079,8 +3079,8 @@
           <Property Name="MRVDATE_RPT" Type="DateTime" Precision="0" />
           <Property Name="MRVDELEDATE_RPT" Type="DateTime" Precision="0" />
           <Property Name="CUSTCODE_RPT" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="CUSTNAME_RPT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CUSTADD_RPT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CUSTNAME_RPT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CUSTADD_RPT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="PHONE_RPT" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MRVREFERENCE">
@@ -3119,7 +3119,7 @@
             <PropertyRef Name="PROD_CODE_PM" />
           </Key>
           <Property Name="PROD_CODE_PM" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="DESCRIPTION_PM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPTION_PM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="CUR_QTY_PM" Type="Int32" />
           <Property Name="RATE_PM" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="SELLINGPRICE_RM" Type="Decimal" Precision="19" Scale="4" />
@@ -3136,7 +3136,7 @@
           <Property Name="SLNO_PL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GROUPCODE" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="ACCOUNTCODE_PL" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="DESCRIPTION_PL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPTION_PL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="CURMONTH_PL" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CURRENT_YEARTODATE" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
@@ -3147,7 +3147,7 @@
           <Property Name="SLNO_QREF" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="QUOTNO_QREF" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="CODE_QREF" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="DESCRIPTION_QREF" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPTION_QREF" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="QTY_QREF" Type="Int32" />
           <Property Name="RATE_QREF" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="ID_QREF" Type="Int32" />
@@ -3168,10 +3168,10 @@
             <PropertyRef Name="QUOTNO_QM" />
           </Key>
           <Property Name="QUOTNO_QM" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="CUSTNAME_QM" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="ADDRESS1_QM" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="ADDRESS2_QM" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="NOTE_QM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CUSTNAME_QM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ADDRESS1_QM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ADDRESS2_QM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NOTE_QM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DATE_QM" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="REPORT_JOBCARD">
@@ -3183,13 +3183,13 @@
           <Property Name="JOBCARDNO_JRD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="JOBDATE_JCARD" Type="DateTime" Precision="0" />
           <Property Name="PRODID_JCARD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="PRODUCTNAME_JCARD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PRODUCTNAME_JCARD" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DELEDATE_JCARD" Type="DateTime" Precision="0" />
           <Property Name="PRODQTY_JCARD" Type="Int32" />
           <Property Name="EMPCODE_JCARD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="EMPNAME_JCARD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EMPNAME_JCARD" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="JOBID_JCARD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="JOBDESCRIPTION_JCARD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="JOBDESCRIPTION_JCARD" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SALEDETAIL">
           <Key>
@@ -3214,7 +3214,7 @@
           <Property Name="CASHRVNO_SD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="INVNO_SD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="CREDITACCODE_SD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="LPONO_SD" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LPONO_SD" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DAYENDDOC_NO" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SALESALLOCATIONMASTER">
@@ -3222,7 +3222,7 @@
             <PropertyRef Name="ALCODE_SA" />
           </Key>
           <Property Name="ALCODE_SA" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="DESCRIPTION_SA" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPTION_SA" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SALESMASTER">
           <Key>
@@ -3259,7 +3259,7 @@
           <Property Name="SLNO_STOCK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DATE_STOCK" Type="DateTime" Precision="0" />
           <Property Name="PRODID_STOCK" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="PRODDESCRIPTION_STOCK" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PRODDESCRIPTION_STOCK" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="RECEIPTQTY_STOCK" Type="Int32" />
           <Property Name="RECEIPTRATE_STOCK" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="ISSUEQTY_STOCK" Type="Int32" />
@@ -3275,7 +3275,7 @@
           <Property Name="DOC_DATE_SL" Type="DateTime" Precision="0" />
           <Property Name="LEDGER_DATE_SL" Type="DateTime" Precision="0" />
           <Property Name="VOUCHERNO_SL" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="OTHERREF_SL" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="OTHERREF_SL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="PRODID_SL" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="BATCHNO_SL" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="RECEPT_QTY_SL" Type="Int32" />
@@ -3293,13 +3293,13 @@
           <Property Name="SLNO_STR" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GLDDATE_STR" Type="DateTime" Precision="0" />
           <Property Name="PROCODE_STR" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="PRODUCTDISTCRIPTION_STR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PRODUCTDISTCRIPTION_STR" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="ISSUEQTY_STR" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="ISSUERATE_STR" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="RECEIPTQTY_STR" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="RECEPTRATE_STR" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CLOSINGQTY_STR" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="PARTICULARS_STR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PARTICULARS_STR" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="UNIT_STR" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="NO_STR" Type="Int32" />
         </EntityType>
@@ -3349,7 +3349,7 @@
           <Property Name="SLN_TB" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CODE_TB" Type="Int32" />
           <Property Name="ACCODE_TB" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="DESCRIPTION_TB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPTION_TB" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="OPENING_TB" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="DEBIT_TB" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CREDIT_TB" Type="Decimal" Precision="19" Scale="4" />
@@ -3385,10 +3385,10 @@
             <PropertyRef Name="SLNO_VCD" />
           </Key>
           <Property Name="SLNO_VCD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ALLCODE_VCD" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="NARRATION_VCD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ALLCODE_VCD" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="NARRATION_VCD" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="ACCODE_VCD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="ACDESCRIPTION_VCD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ACDESCRIPTION_VCD" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DEBITAMOUNT_VCD" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CREDITAMOUNT_VCD" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="AMOUNTSTATUTS_VCD" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
@@ -3400,12 +3400,12 @@
           </Key>
           <Property Name="SLNO_VRPT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GLDATE_VRPT" Type="DateTime" Precision="0" />
-          <Property Name="ALLCODE_VRPT" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="ALLCODE_VRPT" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="BANKCODE_VRT" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="BANKAMOUNT_VRT" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ACCDESCRIPTION_VRPT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PARTICULARS_VRPT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="NOTES_VRPT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ACCDESCRIPTION_VRPT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PARTICULARS_VRPT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NOTES_VRPT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DEBITAMOUT_VRPT" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CREDITAMOUNT_VRPT" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="STATUS_VRPT" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />

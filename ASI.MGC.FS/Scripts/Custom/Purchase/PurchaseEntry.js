@@ -109,7 +109,7 @@ $(document).ready(function () {
         caption: "Product Details"
     });
     $("#btnNew").on("click", function () {
-        location.reload();
+        location.reload(true);
     });
     var searchGridCust = function (searchById, searchByName) {
         var custpostData = $("#tblCustomerSearch").jqGrid("getGridParam", "postData");
@@ -130,6 +130,29 @@ $(document).ready(function () {
         var shouldSearch = $("#txtCustNameSearch").val().length >= 3 || $("#txtCustNameSearch").val().length === 0;
         if (shouldSearch) {
             searchGridCust($("#txtCustIdSearch").val(), $("#txtCustNameSearch").val(), "3");
+        }
+    });
+    var searchGrid = function (searchById, searchByName, gridType) {
+        if (gridType === "1") {
+            var postData = $("#tblProductSearch").jqGrid("getGridParam", "postData");
+            postData["prdCode"] = searchById;
+            postData["prdName"] = searchByName;
+            $("#tblProductSearch").setGridParam({ postData: postData });
+            $("#tblProductSearch").trigger("reloadGrid", [{ page: 1 }]);
+        }
+    };
+    $("#txtPrdIdSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtPrdIdSearch").val().length >= 1 || $("#txtPrdIdSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtPrdIdSearch").val(), $("#txtPrdNameSearch").val(), "1");
+        }
+    });
+    $("#txtPrdNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtPrdNameSearch").val().length >= 3 || $("#txtPrdNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtPrdIdSearch").val(), $("#txtPrdNameSearch").val(), "1");
         }
     });
     $(window).resize(function () {

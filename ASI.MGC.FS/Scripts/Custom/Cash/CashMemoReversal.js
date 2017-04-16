@@ -55,7 +55,7 @@ function formattedDate(jsonDate) {
 };
 $(document).ready(function () {
     $("#btnNew").on("click", function () {
-        location.reload();
+        location.reload(true);
     });
     $("#cmSearchModel").on('show.bs.modal', function () {
         jQuery("#tblCMSearch").jqGrid({

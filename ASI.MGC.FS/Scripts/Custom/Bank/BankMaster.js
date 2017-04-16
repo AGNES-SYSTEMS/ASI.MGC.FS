@@ -60,7 +60,7 @@ $(document).ready(function () {
         $("#tblBankSearch").trigger("reloadGrid", [{ page: 1 }]);
     };
     $("#btnNew").on("click", function () {
-        location.reload();
+        location.reload(true);
     });
     $("#txtBankSearch").off().on("keyup", function () {
 

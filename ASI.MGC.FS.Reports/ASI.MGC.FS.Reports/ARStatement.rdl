@@ -1458,7 +1458,7 @@
         </Field>
         <Field Name="LIMITAMOUNT_ARM">
           <DataField>LIMITAMOUNT_ARM</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="GLDATE_SAC">
           <DataField>GLDATE_SAC</DataField>

@@ -425,7 +425,7 @@ $(document).ready(function () {
         $("#allocationDetailsModelform").formValidation('revalidateField', 'AccountDesc');
     });
     $("#btnNew").on("click", function () {
-        location.reload();
+        location.reload(true);
     });
     function clearModalForm() {
         $("#txtAlCode").val("");

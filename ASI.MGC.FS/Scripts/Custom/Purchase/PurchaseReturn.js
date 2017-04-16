@@ -45,7 +45,7 @@ $(document).ready(function () {
         $('#tblPrdDetails').setGridWidth(outerwidthMrv);
     });
     $("#btnNew").on("click", function () {
-        location.reload();
+        location.reload(true);
     });
     $("#CustomerSearchModel").on('show.bs.modal', function () {
         $("#tblCustomerSearch").jqGrid({
@@ -183,26 +183,33 @@ $(document).ready(function () {
             },
             multiselect: false
         });
-
-        var reloadGrid = function (filterValue) {
-            var postData = $("#tblProductSearch").jqGrid("getGridParam", "postData");
-            postData["prdName"] = filterValue;
-
-            $("#tblProductSearch").setGridParam({ postData: postData });
-            $("#tblProductSearch").trigger("reloadGrid", [{ page: 1 }]);
-            //$("#tblProductSearch").trigger("reloadGrid");
-        };
-
-        $("#prdSearch").off().on("keyup", function () {
-            var shouldSearch = $("#prdSearch").val().length >= 3 || $("#prdSearch").val().length === 0;
-            if (shouldSearch) {
-                reloadGrid($("#prdSearch").val());
-            }
-        });
     });
     $(window).resize(function () {
         var outerwidth = $('#prdGrid').width();
         $('#tblProductSearch').setGridWidth(outerwidth);
+    });
+    var searchGrid = function (searchById, searchByName, gridType) {
+        if (gridType === "1") {
+            var postData = $("#tblProductSearch").jqGrid("getGridParam", "postData");
+            postData["prdCode"] = searchById;
+            postData["prdName"] = searchByName;
+            $("#tblProductSearch").setGridParam({ postData: postData });
+            $("#tblProductSearch").trigger("reloadGrid", [{ page: 1 }]);
+        }
+    };
+    $("#txtPrdIdSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtPrdIdSearch").val().length >= 1 || $("#txtPrdIdSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtPrdIdSearch").val(), $("#txtPrdNameSearch").val(), "1");
+        }
+    });
+    $("#txtPrdNameSearch").off().on("keyup", function () {
+
+        var shouldSearch = $("#txtPrdNameSearch").val().length >= 3 || $("#txtPrdNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtPrdIdSearch").val(), $("#txtPrdNameSearch").val(), "1");
+        }
     });
     $("#btnProductSelect").on("click", function (e) {
         var id = jQuery("#tblProductSearch").jqGrid('getGridParam', 'selrow');

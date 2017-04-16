@@ -16,7 +16,7 @@
         }
     });
     $("#btnNew").on("click", function () {
-        location.reload();
+        location.reload(true);
     });
     $("#tblGeneralLedger").jqGrid({
         url: '/Finance/GetGlCodes',

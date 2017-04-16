@@ -181,155 +181,179 @@ namespace ASI.MGC.FS.Controllers
             bool success = false;
             string invNo = objSaleDetail.INVNO_SD;
             string revInvNo = "Rev" + objSaleDetail.INVNO_SD;
-            using (var transaction = _unitOfWork.BeginTransaction())
+            bool isSaleClose = false;
+            var salesByInvoice = (from saleDetail in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                                  where saleDetail.INVNO_SD.Equals(invNo) && string.IsNullOrEmpty(saleDetail.DAYENDDOC_NO)
+                                  select saleDetail).FirstOrDefault();
+            if (salesByInvoice != null)
             {
-                try
+                var dayEndData = (from glDetail in _unitOfWork.Repository<GLTRANSACTION1>().Query().Get()
+                                  where glDetail.DOCNUMBER_GLT.Equals(salesByInvoice.DAYENDDOC_NO)
+                                  select glDetail).FirstOrDefault();
+                if (dayEndData != null)
                 {
-                    // Reversing Bank Transactions
-                    var bankTransactionData = (from bankTransaction in _unitOfWork.Repository<BANKTRANSACTION>().Query().Get()
-                                               where bankTransaction.DOCNUMBER_BT.Equals(invNo)
-                                               select bankTransaction).ToList();
-                    foreach (var entry in bankTransactionData)
+                    if (dayEndData.GLDATE_GLT >= objSaleDetail.SALEDATE_SD)
                     {
-                        BANKTRANSACTION objBnk = _unitOfWork.Repository<BANKTRANSACTION>().Create();
-                        if (Convert.ToDecimal(entry.DEBITAMOUT_BT) > 0)
+                        isSaleClose = true;
+                    }
+                    else
+                    {
+                        isSaleClose = false;
+                    }
+                }
+            }
+            if (!isSaleClose)
+            {
+                using (var transaction = _unitOfWork.BeginTransaction())
+                {
+                    try
+                    {
+                        // Reversing Bank Transactions
+                        var bankTransactionData = (from bankTransaction in _unitOfWork.Repository<BANKTRANSACTION>().Query().Get()
+                                                   where bankTransaction.DOCNUMBER_BT.Equals(invNo)
+                                                   select bankTransaction).ToList();
+                        foreach (var entry in bankTransactionData)
                         {
-                            objBnk.DEBITAMOUT_BT = 0;
-                            objBnk.CREDITAMOUT_BT = entry.DEBITAMOUT_BT;
-                            objBnk.DOCDATE_BT = DateTime.Now;
-                            objBnk.GLDATE_BT = entry.GLDATE_BT;
-                            objBnk.DOCNUMBER_BT = revInvNo;
-                            objBnk.BANKCODE_BT = entry.BANKCODE_BT;
-                            objBnk.OTHERREF_BT = invNo;
-                            objBnk.STATUS_BT = "R";
-                        }
-                        if (Convert.ToDecimal(entry.CREDITAMOUT_BT) > 0)
-                        {
-                            objBnk.CREDITAMOUT_BT = 0;
-                            objBnk.DEBITAMOUT_BT = entry.CREDITAMOUT_BT;
-                            objBnk.DOCDATE_BT = DateTime.Now;
-                            objBnk.GLDATE_BT = entry.GLDATE_BT;
-                            objBnk.DOCNUMBER_BT = revInvNo;
-                            objBnk.BANKCODE_BT = entry.BANKCODE_BT;
-                            objBnk.OTHERREF_BT = invNo;
-                            objBnk.STATUS_BT = "R";
-                        }
-                        _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBnk);
-                        _unitOfWork.Save();
+                            BANKTRANSACTION objBnk = _unitOfWork.Repository<BANKTRANSACTION>().Create();
+                            if (Convert.ToDecimal(entry.DEBITAMOUT_BT) > 0)
+                            {
+                                objBnk.DEBITAMOUT_BT = 0;
+                                objBnk.CREDITAMOUT_BT = entry.DEBITAMOUT_BT;
+                                objBnk.DOCDATE_BT = DateTime.Now;
+                                objBnk.GLDATE_BT = entry.GLDATE_BT;
+                                objBnk.DOCNUMBER_BT = revInvNo;
+                                objBnk.BANKCODE_BT = entry.BANKCODE_BT;
+                                objBnk.OTHERREF_BT = invNo;
+                                objBnk.STATUS_BT = "R";
+                            }
+                            if (Convert.ToDecimal(entry.CREDITAMOUT_BT) > 0)
+                            {
+                                objBnk.CREDITAMOUT_BT = 0;
+                                objBnk.DEBITAMOUT_BT = entry.CREDITAMOUT_BT;
+                                objBnk.DOCDATE_BT = DateTime.Now;
+                                objBnk.GLDATE_BT = entry.GLDATE_BT;
+                                objBnk.DOCNUMBER_BT = revInvNo;
+                                objBnk.BANKCODE_BT = entry.BANKCODE_BT;
+                                objBnk.OTHERREF_BT = invNo;
+                                objBnk.STATUS_BT = "R";
+                            }
+                            _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBnk);
+                            _unitOfWork.Save();
 
-                        entry.STATUS_BT = "R";
-                        _unitOfWork.Repository<BANKTRANSACTION>().Update(entry);
-                        _unitOfWork.Save();
-                    }
-                    // Reversing ArApLedger Transactions
-                    var ArApLedgerData = (from ArApLedger in _unitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
-                                          where ArApLedger.DOCNUMBER_ART.Equals(invNo)
-                                          select ArApLedger).ToList();
-                    foreach (var entry in ArApLedgerData)
-                    {
-                        AR_AP_LEDGER objArAp = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
-                        if (Convert.ToDecimal(entry.DEBITAMOUNT_ART) > 0)
-                        {
-                            objArAp.DOCNUMBER_ART = revInvNo;
-                            objArAp.ARAPCODE_ART = entry.ARAPCODE_ART;
-                            objArAp.DODATE_ART = DateTime.Now;
-                            objArAp.GLDATE_ART = entry.GLDATE_ART;
-                            objArAp.DEBITAMOUNT_ART = 0;
-                            objArAp.CREDITAMOUNT_ART = entry.DEBITAMOUNT_ART;
-                            objArAp.OTHERREF_ART = invNo;
-                            objArAp.STATUS_ART = "R";
-                        }
-                        if (Convert.ToDecimal(entry.CREDITAMOUNT_ART) > 0)
-                        {
-                            objArAp.DOCNUMBER_ART = revInvNo;
-                            objArAp.ARAPCODE_ART = entry.ARAPCODE_ART;
-                            objArAp.DODATE_ART = DateTime.Now;
-                            objArAp.GLDATE_ART = entry.GLDATE_ART;
-                            objArAp.CREDITAMOUNT_ART = 0;
-                            objArAp.DEBITAMOUNT_ART = entry.CREDITAMOUNT_ART;
-                            objArAp.OTHERREF_ART = invNo;
-                            objArAp.STATUS_ART = "R";
-                        }
-                        _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArAp);
-                        _unitOfWork.Save();
-
-                        entry.STATUS_ART = "R";
-                        _unitOfWork.Repository<AR_AP_LEDGER>().Update(entry);
-                        _unitOfWork.Save();
-                    }
-                    // Reversing GL Transactions
-                    var glTransactionData = (from glTransaction in _unitOfWork.Repository<GLTRANSACTION1>().Query().Get()
-                                             where glTransaction.DOCNUMBER_GLT.Equals(invNo)
-                                             select glTransaction).ToList();
-                    foreach (var entry in glTransactionData)
-                    {
-                        GLTRANSACTION1 objGlt = _unitOfWork.Repository<GLTRANSACTION1>().Create();
-                        if (Convert.ToDecimal(entry.DEBITAMOUNT_GLT) > 0)
-                        {
-                            objGlt.DOCNUMBER_GLT = revInvNo;
-                            objGlt.GLACCODE_GLT = entry.GLACCODE_GLT;
-                            objGlt.DOCDATE_GLT = DateTime.Now;
-                            objGlt.GLDATE_GLT = entry.GLDATE_GLT;
-                            objGlt.DEBITAMOUNT_GLT = 0;
-                            objGlt.CREDITAMOUNT_GLT = entry.DEBITAMOUNT_GLT;
-                            objGlt.OTHERREF_GLT = invNo;
-                            objGlt.GLSTATUS_GLT = "R";
-                        }
-                        if (Convert.ToDecimal(entry.CREDITAMOUNT_GLT) > 0)
-                        {
-                            objGlt.DOCNUMBER_GLT = revInvNo;
-                            objGlt.GLACCODE_GLT = entry.GLACCODE_GLT;
-                            objGlt.DOCDATE_GLT = DateTime.Now;
-                            objGlt.GLDATE_GLT = entry.GLDATE_GLT;
-                            objGlt.DEBITAMOUNT_GLT = entry.CREDITAMOUNT_GLT;
-                            objGlt.CREDITAMOUNT_GLT = 0;
-                            objGlt.OTHERREF_GLT = invNo;
-                            objGlt.GLSTATUS_GLT = "R";
-                        }
-                        _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGlt);
-                        _unitOfWork.Save();
-
-                        entry.GLSTATUS_GLT = "R";
-                        _unitOfWork.Repository<GLTRANSACTION1>().Update(entry);
-                        _unitOfWork.Save();
-                    }
-                    // Clearing Stock Ledger
-                    var stockLedgerData = (from stockLedger in _unitOfWork.Repository<STOCKLEDGER>().Query().Get()
-                                           where stockLedger.VOUCHERNO_SL.Equals(invNo)
-                                           select stockLedger).ToList();
-                    foreach (var entry in stockLedgerData)
-                    {
-                        _unitOfWork.Repository<STOCKLEDGER>().Delete(entry);
-                        _unitOfWork.Save();
-                    }
-                    //Reversing Job & Sale Data
-                    var saleDetailData = (from saleDetail in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
-                                          where saleDetail.INVNO_SD.Equals(invNo)
-                                          select saleDetail).ToList();
-                    foreach (var entry in saleDetailData)
-                    {
-                        entry.STATUS_SD = "N";
-                        entry.INVNO_SD = "";
-                        var JobData = (from jobMaster in _unitOfWork.Repository<JOBMASTER>().Query().Get()
-                                       where jobMaster.JOBNO_JM.Equals(entry.JOBNO_SD)
-                                       select jobMaster).SingleOrDefault();
-                        if (JobData != null)
-                        {
-                            JobData.DELEVERNOTENO_JM = "";
-                            JobData.JOBSTATUS_JM = "N";
-                            _unitOfWork.Repository<JOBMASTER>().Update(JobData);
+                            entry.STATUS_BT = "R";
+                            _unitOfWork.Repository<BANKTRANSACTION>().Update(entry);
                             _unitOfWork.Save();
                         }
-                        _unitOfWork.Repository<SALEDETAIL>().Update(entry);
-                        _unitOfWork.Save();
+                        // Reversing ArApLedger Transactions
+                        var ArApLedgerData = (from ArApLedger in _unitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
+                                              where ArApLedger.DOCNUMBER_ART.Equals(invNo)
+                                              select ArApLedger).ToList();
+                        foreach (var entry in ArApLedgerData)
+                        {
+                            AR_AP_LEDGER objArAp = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
+                            if (Convert.ToDecimal(entry.DEBITAMOUNT_ART) > 0)
+                            {
+                                objArAp.DOCNUMBER_ART = revInvNo;
+                                objArAp.ARAPCODE_ART = entry.ARAPCODE_ART;
+                                objArAp.DODATE_ART = DateTime.Now;
+                                objArAp.GLDATE_ART = entry.GLDATE_ART;
+                                objArAp.DEBITAMOUNT_ART = 0;
+                                objArAp.CREDITAMOUNT_ART = entry.DEBITAMOUNT_ART;
+                                objArAp.OTHERREF_ART = invNo;
+                                objArAp.STATUS_ART = "R";
+                            }
+                            if (Convert.ToDecimal(entry.CREDITAMOUNT_ART) > 0)
+                            {
+                                objArAp.DOCNUMBER_ART = revInvNo;
+                                objArAp.ARAPCODE_ART = entry.ARAPCODE_ART;
+                                objArAp.DODATE_ART = DateTime.Now;
+                                objArAp.GLDATE_ART = entry.GLDATE_ART;
+                                objArAp.CREDITAMOUNT_ART = 0;
+                                objArAp.DEBITAMOUNT_ART = entry.CREDITAMOUNT_ART;
+                                objArAp.OTHERREF_ART = invNo;
+                                objArAp.STATUS_ART = "R";
+                            }
+                            _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArAp);
+                            _unitOfWork.Save();
+
+                            entry.STATUS_ART = "R";
+                            _unitOfWork.Repository<AR_AP_LEDGER>().Update(entry);
+                            _unitOfWork.Save();
+                        }
+                        // Reversing GL Transactions
+                        var glTransactionData = (from glTransaction in _unitOfWork.Repository<GLTRANSACTION1>().Query().Get()
+                                                 where glTransaction.DOCNUMBER_GLT.Equals(invNo)
+                                                 select glTransaction).ToList();
+                        foreach (var entry in glTransactionData)
+                        {
+                            GLTRANSACTION1 objGlt = _unitOfWork.Repository<GLTRANSACTION1>().Create();
+                            if (Convert.ToDecimal(entry.DEBITAMOUNT_GLT) > 0)
+                            {
+                                objGlt.DOCNUMBER_GLT = revInvNo;
+                                objGlt.GLACCODE_GLT = entry.GLACCODE_GLT;
+                                objGlt.DOCDATE_GLT = DateTime.Now;
+                                objGlt.GLDATE_GLT = entry.GLDATE_GLT;
+                                objGlt.DEBITAMOUNT_GLT = 0;
+                                objGlt.CREDITAMOUNT_GLT = entry.DEBITAMOUNT_GLT;
+                                objGlt.OTHERREF_GLT = invNo;
+                                objGlt.GLSTATUS_GLT = "R";
+                            }
+                            if (Convert.ToDecimal(entry.CREDITAMOUNT_GLT) > 0)
+                            {
+                                objGlt.DOCNUMBER_GLT = revInvNo;
+                                objGlt.GLACCODE_GLT = entry.GLACCODE_GLT;
+                                objGlt.DOCDATE_GLT = DateTime.Now;
+                                objGlt.GLDATE_GLT = entry.GLDATE_GLT;
+                                objGlt.DEBITAMOUNT_GLT = entry.CREDITAMOUNT_GLT;
+                                objGlt.CREDITAMOUNT_GLT = 0;
+                                objGlt.OTHERREF_GLT = invNo;
+                                objGlt.GLSTATUS_GLT = "R";
+                            }
+                            _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGlt);
+                            _unitOfWork.Save();
+
+                            entry.GLSTATUS_GLT = "R";
+                            _unitOfWork.Repository<GLTRANSACTION1>().Update(entry);
+                            _unitOfWork.Save();
+                        }
+                        // Clearing Stock Ledger
+                        var stockLedgerData = (from stockLedger in _unitOfWork.Repository<STOCKLEDGER>().Query().Get()
+                                               where stockLedger.VOUCHERNO_SL.Equals(invNo)
+                                               select stockLedger).ToList();
+                        foreach (var entry in stockLedgerData)
+                        {
+                            _unitOfWork.Repository<STOCKLEDGER>().Delete(entry);
+                            _unitOfWork.Save();
+                        }
+                        //Reversing Job & Sale Data
+                        var saleDetailData = (from saleDetail in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                                              where saleDetail.INVNO_SD.Equals(invNo)
+                                              select saleDetail).ToList();
+                        foreach (var entry in saleDetailData)
+                        {
+                            entry.STATUS_SD = "N";
+                            entry.INVNO_SD = "";
+                            var JobData = (from jobMaster in _unitOfWork.Repository<JOBMASTER>().Query().Get()
+                                           where jobMaster.JOBNO_JM.Equals(entry.JOBNO_SD)
+                                           select jobMaster).SingleOrDefault();
+                            if (JobData != null)
+                            {
+                                JobData.DELEVERNOTENO_JM = "";
+                                JobData.JOBSTATUS_JM = "N";
+                                _unitOfWork.Repository<JOBMASTER>().Update(JobData);
+                                _unitOfWork.Save();
+                            }
+                            _unitOfWork.Repository<SALEDETAIL>().Update(entry);
+                            _unitOfWork.Save();
+                        }
+                        success = true;
+                        transaction.Commit();
                     }
-                    success = true;
-                    transaction.Commit();
-                }
-                catch (Exception)
-                {
-                    success = false;
-                    transaction.Rollback();
+                    catch (Exception)
+                    {
+                        success = false;
+                        transaction.Rollback();
+                    }
                 }
             }
             return Json(success, JsonRequestBehavior.AllowGet);
@@ -376,14 +400,14 @@ namespace ASI.MGC.FS.Controllers
         }
         public JsonResult GetPostedInvoices(string sidx, string sord, int page, int rows, string invNo = null)
         {
-            var postedInvoicesList = (from saleDetails in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+            var postedInvoicesList = (from arLedgerDetails in _unitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
                                       join arapMaster in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                                      on saleDetails.CREDITACCODE_SD equals arapMaster.ARCODE_ARM
-                                      where saleDetails.STATUS_SD.Equals("P") && saleDetails.CASHRVNO_SD != null && string.IsNullOrEmpty(saleDetails.DAYENDDOC_NO)
-                                      select new { saleDetails.INVNO_SD, arapMaster.DESCRIPTION_ARM });
+                                      on arLedgerDetails.ARAPCODE_ART equals arapMaster.ARCODE_ARM
+                                      where arLedgerDetails.DOCNUMBER_ART.StartsWith("INV") && arLedgerDetails.STATUS_ART != "R"
+                                      select new { arLedgerDetails.DOCNUMBER_ART, arapMaster.DESCRIPTION_ARM, arLedgerDetails.GLDATE_ART });
             if (!string.IsNullOrEmpty(invNo))
             {
-                postedInvoicesList = postedInvoicesList.Where(o => o.INVNO_SD.Contains(invNo));
+                postedInvoicesList = postedInvoicesList.Where(o => o.DOCNUMBER_ART.Contains(invNo));
             }
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
@@ -391,12 +415,12 @@ namespace ASI.MGC.FS.Controllers
             int totalPages = (int)Math.Ceiling(totalRecords / (float)pageSize);
             if (sord.ToUpper() == "DESC")
             {
-                postedInvoicesList = postedInvoicesList.OrderByDescending(a => a.INVNO_SD);
+                postedInvoicesList = postedInvoicesList.OrderByDescending(a => a.GLDATE_ART);
                 postedInvoicesList = postedInvoicesList.Skip(pageIndex * pageSize).Take(pageSize);
             }
             else
             {
-                postedInvoicesList = postedInvoicesList.OrderBy(a => a.INVNO_SD);
+                postedInvoicesList = postedInvoicesList.OrderBy(a => a.GLDATE_ART);
                 postedInvoicesList = postedInvoicesList.Skip(pageIndex * pageSize).Take(pageSize);
             }
             var jsonData = new
