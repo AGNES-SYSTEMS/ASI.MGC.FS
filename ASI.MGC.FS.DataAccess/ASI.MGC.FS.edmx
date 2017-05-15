@@ -1065,7 +1065,7 @@
           <Parameter Name="ENDDATE" Type="datetime" Mode="In" />
         </Function>
         <Function Name="rpt_GLStatement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="GLCode" Type="int" Mode="In" />
+          <Parameter Name="GLCode" Type="nvarchar" Mode="In" />
           <Parameter Name="STARTDATE" Type="datetime" Mode="In" />
           <Parameter Name="ENDDATE" Type="datetime" Mode="In" />
         </Function>
@@ -1156,6 +1156,10 @@
         <Function Name="sp_DeleteSalesbyJobId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="JobId" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="sp_FindMrvDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SearchParam" Type="nvarchar" Mode="In" />
+          <Parameter Name="Type" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_GetAllocationDetailsDocNo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pageNum" Type="int" Mode="In" />
           <Parameter Name="pageSize" Type="int" Mode="In" />
@@ -1214,7 +1218,7 @@
           <Parameter Name="JOBNO" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_GetGLStatementData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="GLCode" Type="int" Mode="In" />
+          <Parameter Name="GLCode" Type="nvarchar" Mode="In" />
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
           <Parameter Name="C" Type="decimal" Mode="In" />
@@ -1474,7 +1478,7 @@
             <Parameter Name="ENDDATE" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="rpt_GLStatement" ReturnType="Collection(ASI_MGC_FSModel.rpt_GLStatement_Result)">
-            <Parameter Name="GLCode" Mode="In" Type="Int32" />
+            <Parameter Name="GLCode" Mode="In" Type="String" />
             <Parameter Name="STARTDATE" Mode="In" Type="DateTime" />
             <Parameter Name="ENDDATE" Mode="In" Type="DateTime" />
           </FunctionImport>
@@ -1591,7 +1595,7 @@
             <Parameter Name="CreditAmount" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="sp_GetGLStatementData">
-            <Parameter Name="GLCode" Mode="In" Type="Int32" />
+            <Parameter Name="GLCode" Mode="In" Type="String" />
             <Parameter Name="StartDate" Mode="In" Type="DateTime" />
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
             <Parameter Name="C" Mode="In" Type="Decimal" />
@@ -1814,6 +1818,10 @@
           <FunctionImport Name="rpt_ARStatementOutstanding" ReturnType="Collection(ASI_MGC_FSModel.rpt_ARStatementOutstanding_Result)">
             <Parameter Name="STARTDATE" Mode="In" Type="DateTime" />
             <Parameter Name="ENDDATE" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_FindMrvDetails" ReturnType="Collection(ASI_MGC_FSModel.sp_FindMrvDetails_Result)">
+            <Parameter Name="SearchParam" Mode="In" Type="String" />
+            <Parameter Name="Type" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="rpt_BankPayment_Result">
@@ -3567,6 +3575,25 @@
           <Property Type="Decimal" Name="DEBITAMOUNT_SAC" Nullable="true" Precision="19" />
           <Property Type="Decimal" Name="CREDITAMOUNT_SAC" Nullable="true" Precision="19" />
           <Property Type="Decimal" Name="BALANCE_SAC" Nullable="true" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="sp_FindMrvDetails_Result">
+          <Property Type="String" Name="JOBNO_SD" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="PRCODE_SD" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="JOBID_SD" Nullable="true" MaxLength="15" />
+          <Property Type="Int32" Name="QTY_SD" Nullable="true" />
+          <Property Type="Decimal" Name="RATE_SD" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="Amount" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="DISCOUNT_SD" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="SHIPPINGCHARGES_SD" Nullable="true" Precision="19" />
+          <Property Type="DateTime" Name="SALEDATE_SD" Nullable="true" />
+          <Property Type="String" Name="USERID_SD" Nullable="true" MaxLength="15" />
+          <Property Type="Decimal" Name="CASHTOTAL_SD" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="CREDITTOTAL_SD" Nullable="true" Precision="19" />
+          <Property Type="String" Name="CASHRVNO_SD" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="INVNO_SD" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="CREDITACCODE_SD" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="LPONO_SD" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="DAYENDDOC_NO" Nullable="true" MaxLength="15" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5465,6 +5492,29 @@
                 <ScalarProperty Name="DEBITAMOUNT_SAC" ColumnName="DEBITAMOUNT_SAC" />
                 <ScalarProperty Name="CREDITAMOUNT_SAC" ColumnName="CREDITAMOUNT_SAC" />
                 <ScalarProperty Name="BALANCE_SAC" ColumnName="BALANCE_SAC" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_FindMrvDetails" FunctionName="ASI_MGC_FSModel.Store.sp_FindMrvDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_FindMrvDetails_Result">
+                <ScalarProperty Name="JOBNO_SD" ColumnName="JOBNO_SD" />
+                <ScalarProperty Name="PRCODE_SD" ColumnName="PRCODE_SD" />
+                <ScalarProperty Name="JOBID_SD" ColumnName="JOBID_SD" />
+                <ScalarProperty Name="QTY_SD" ColumnName="QTY_SD" />
+                <ScalarProperty Name="RATE_SD" ColumnName="RATE_SD" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DISCOUNT_SD" ColumnName="DISCOUNT_SD" />
+                <ScalarProperty Name="SHIPPINGCHARGES_SD" ColumnName="SHIPPINGCHARGES_SD" />
+                <ScalarProperty Name="SALEDATE_SD" ColumnName="SALEDATE_SD" />
+                <ScalarProperty Name="USERID_SD" ColumnName="USERID_SD" />
+                <ScalarProperty Name="CASHTOTAL_SD" ColumnName="CASHTOTAL_SD" />
+                <ScalarProperty Name="CREDITTOTAL_SD" ColumnName="CREDITTOTAL_SD" />
+                <ScalarProperty Name="CASHRVNO_SD" ColumnName="CASHRVNO_SD" />
+                <ScalarProperty Name="INVNO_SD" ColumnName="INVNO_SD" />
+                <ScalarProperty Name="CREDITACCODE_SD" ColumnName="CREDITACCODE_SD" />
+                <ScalarProperty Name="LPONO_SD" ColumnName="LPONO_SD" />
+                <ScalarProperty Name="DAYENDDOC_NO" ColumnName="DAYENDDOC_NO" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

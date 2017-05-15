@@ -35,9 +35,18 @@ namespace ASI.MGC.FS.WebCommon
         {
             var currYear = DateTime.Now.Year;
             var cashSaleCount = (from lstBankTransaction in iUnitOfWork.Repository<BANKTRANSACTION>().Query().Get()
-                                 where lstBankTransaction.DOCNUMBER_BT.Contains("RCT") && lstBankTransaction.GLDATE_BT.Value.Year == currYear
+                                 where lstBankTransaction.DOCNUMBER_BT.StartsWith("RCT") && lstBankTransaction.GLDATE_BT.Value.Year == currYear
                                  select lstBankTransaction.DOCNUMBER_BT).Distinct().Count();
             int cmCount = cashSaleCount + 1 + 1000;
+            if (currYear == 2017)
+            {
+                DateTime startDate = Convert.ToDateTime("2017/01/01");
+                DateTime endDate = Convert.ToDateTime("2017/05/05");
+                var revCashSaleCount = (from lstBankTransaction in iUnitOfWork.Repository<BANKTRANSACTION>().Query().Get()
+                                     where lstBankTransaction.DOCNUMBER_BT.StartsWith("RevRCT") && (lstBankTransaction.GLDATE_BT >= startDate && lstBankTransaction.GLDATE_BT <= endDate)
+                                     select lstBankTransaction.DOCNUMBER_BT).Distinct().Count();
+                cmCount = cmCount + revCashSaleCount;
+            }
             string cashMemoCode = Convert.ToString("RCT/" + Convert.ToString(cmCount) + "/" + currYear);
             return cashMemoCode;
         }
@@ -56,7 +65,7 @@ namespace ASI.MGC.FS.WebCommon
         {
             var currYear = DateTime.Now.Year;
             var invoiceCount = (from lstArApLedger in iUnitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
-                                where lstArApLedger.DOCNUMBER_ART.Contains("INV") && lstArApLedger.GLDATE_ART.Value.Year == currYear
+                                where lstArApLedger.DOCNUMBER_ART.StartsWith("INV") && lstArApLedger.GLDATE_ART.Value.Year == currYear
                                 select lstArApLedger.DOCNUMBER_ART).Distinct().Count();
             int invCount = invoiceCount + 1 + 1000;
             string cashMemoCode = Convert.ToString("INV/" + Convert.ToString(invCount) + "/" + currYear);

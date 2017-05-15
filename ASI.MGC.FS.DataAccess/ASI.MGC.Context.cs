@@ -431,11 +431,11 @@ namespace ASI.MGC.FS.DataAccess
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_EmpWiseJobDetails_Result>("rpt_EmpWiseJobDetails", sTARTDATEParameter, eNDDATEParameter);
         }
     
-        public virtual ObjectResult<rpt_GLStatement_Result> rpt_GLStatement(Nullable<int> gLCode, Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        public virtual ObjectResult<rpt_GLStatement_Result> rpt_GLStatement(string gLCode, Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
         {
-            var gLCodeParameter = gLCode.HasValue ?
+            var gLCodeParameter = gLCode != null ?
                 new ObjectParameter("GLCode", gLCode) :
-                new ObjectParameter("GLCode", typeof(int));
+                new ObjectParameter("GLCode", typeof(string));
     
             var sTARTDATEParameter = sTARTDATE.HasValue ?
                 new ObjectParameter("STARTDATE", sTARTDATE) :
@@ -827,11 +827,11 @@ namespace ASI.MGC.FS.DataAccess
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_GetBankStatementData", bNKCodeParameter, startDateParameter, endDateParameter, cParameter, dParameter, balanceParameter, debitAmountParameter, creditAmountParameter);
         }
     
-        public virtual int sp_GetGLStatementData(Nullable<int> gLCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<decimal> c, Nullable<decimal> d, Nullable<decimal> balance, Nullable<decimal> debitAmount, Nullable<decimal> creditAmount)
+        public virtual int sp_GetGLStatementData(string gLCode, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate, Nullable<decimal> c, Nullable<decimal> d, Nullable<decimal> balance, Nullable<decimal> debitAmount, Nullable<decimal> creditAmount)
         {
-            var gLCodeParameter = gLCode.HasValue ?
+            var gLCodeParameter = gLCode != null ?
                 new ObjectParameter("GLCode", gLCode) :
-                new ObjectParameter("GLCode", typeof(int));
+                new ObjectParameter("GLCode", typeof(string));
     
             var startDateParameter = startDate.HasValue ?
                 new ObjectParameter("StartDate", startDate) :
@@ -1246,6 +1246,19 @@ namespace ASI.MGC.FS.DataAccess
                 new ObjectParameter("ENDDATE", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_ARStatementOutstanding_Result>("rpt_ARStatementOutstanding", sTARTDATEParameter, eNDDATEParameter);
+        }
+    
+        public virtual ObjectResult<sp_FindMrvDetails_Result> sp_FindMrvDetails(string searchParam, Nullable<int> type)
+        {
+            var searchParamParameter = searchParam != null ?
+                new ObjectParameter("SearchParam", searchParam) :
+                new ObjectParameter("SearchParam", typeof(string));
+    
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("Type", type) :
+                new ObjectParameter("Type", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FindMrvDetails_Result>("sp_FindMrvDetails", searchParamParameter, typeParameter);
         }
     }
 }

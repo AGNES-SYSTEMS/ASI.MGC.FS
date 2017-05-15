@@ -241,6 +241,8 @@
     <Compile Include="Models\IdentityModels.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\MRVSearchDetailsResult.cs" />
+    <Compile Include="Models\MRVSerachDetails.cs" />
     <Compile Include="Models\PurchaseModel.cs" />
     <Compile Include="Models\QuotationCustom.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1113,6 +1115,7 @@
     <Content Include="Scripts\Custom\MgcReports\StockReport.js" />
     <Content Include="Scripts\Custom\MgcReports\TrialBalance.js" />
     <Content Include="Scripts\Custom\MRV\DuplicatePrinting.js" />
+    <Content Include="Scripts\Custom\MRV\FindMrvDetails.js" />
     <Content Include="Scripts\Custom\MRV\MRVCreation.js" />
     <Content Include="Scripts\Custom\MRV\MRVSearchDetails.js" />
     <Content Include="Scripts\Custom\Purchase\PurchaseEntry.js" />
@@ -1400,6 +1403,7 @@
     <Content Include="Views\MRV\DuplicateMrvPrinting.cshtml" />
     <Content Include="Views\MgcReports\DuplicateCashMemo.cshtml" />
     <Content Include="Views\MgcReports\DuplicateInvoice.cshtml" />
+    <Content Include="Views\MRV\FindMrvDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

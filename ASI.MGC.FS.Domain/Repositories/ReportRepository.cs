@@ -294,7 +294,7 @@ namespace ASI.MGC.FS.Domain.Repositories
             return lst;
         }
 
-        public IList<rpt_GLStatement_Result> RptGlStatement(int glCode, DateTime startDate, DateTime endDate)
+        public IList<rpt_GLStatement_Result> RptGlStatement(string glCode, DateTime startDate, DateTime endDate)
         {
             List<rpt_GLStatement_Result> lst = null;
             try
@@ -597,7 +597,7 @@ namespace ASI.MGC.FS.Domain.Repositories
             }
         }
 
-        public void SpGetGlStatementData(int glCode, DateTime startDate, DateTime endDate)
+        public void SpGetGlStatementData(string glCode, DateTime startDate, DateTime endDate)
         {
             try
             {
@@ -812,6 +812,19 @@ namespace ASI.MGC.FS.Domain.Repositories
             try
             {
                 lst = _context.sp_GetPartyAllocationDocuments(partyCode).ToList();
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+            return lst;
+        }
+        public IList<sp_FindMrvDetails_Result> sp_FindMrvDetails(string searchParam, int type)
+        {
+            List<sp_FindMrvDetails_Result> lst = null;
+            try
+            {
+                lst = _context.sp_FindMrvDetails(searchParam, type).ToList();
             }
             catch (Exception)
             {

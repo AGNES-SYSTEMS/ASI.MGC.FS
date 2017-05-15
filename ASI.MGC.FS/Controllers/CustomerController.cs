@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web.Mvc;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Model;
+using ASI.MGC.FS.Models;
+using ASI.MGC.FS.Domain.Repositories;
 
 namespace ASI.MGC.FS.Controllers
 {
@@ -295,6 +297,79 @@ namespace ASI.MGC.FS.Controllers
 
             };
             return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult SearchDetailsByCustomer(int type = 0, string searchParam = null)
+        {
+            var repo = _unitOfWork.ExtRepositoryFor<ReportRepository>();
+            var searchResult = repo.sp_FindMrvDetails(searchParam, type);
+            //List<MRVSearchDetailsResult> searchResult = fn_SearchJobDetails(searchParam, type);
+            var jsonData = new
+            {
+                searchResult = searchResult
+            };
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+        private List<MRVSearchDetailsResult> fn_SearchJobDetails(string searchParam, int type = 0)
+        {
+            List<string> MrvDetails = new List<string>();
+            if (type == 1)
+            {
+                if (!string.IsNullOrEmpty(searchParam))
+                {
+                    MrvDetails = (from mrvData in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                                  where mrvData.CUSTOMERCODE_MRV.Contains(searchParam)
+                                  select mrvData.MRVNO_MRV).ToList();
+                }
+            }
+            if (type == 2)
+            {
+                if (!string.IsNullOrEmpty(searchParam))
+                {
+                    MrvDetails = (from mrvData in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                                  where mrvData.CUSTOMERNAME_MRV.Contains(searchParam)
+                                  select mrvData.MRVNO_MRV).ToList();
+                }
+            }
+            if (type == 3)
+            {
+                if (!string.IsNullOrEmpty(searchParam))
+                {
+                    MrvDetails = (from mrvData in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                                  where mrvData.PHONE_MRV.Equals(searchParam)
+                                  select mrvData.MRVNO_MRV).ToList();
+                }
+            }
+            List<MRVSearchDetailsResult> saleSearchResult = new List<MRVSearchDetailsResult>();
+            foreach (var mrv in MrvDetails)
+            {
+                var sales = (from saleData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                             where saleData.MRVNO_SD.Equals(mrv)
+                             select saleData).ToList();
+                foreach (var sale in sales)
+                {
+                    MRVSearchDetailsResult saleData = new MRVSearchDetailsResult();
+                    saleData.JOBNO_SD = sale.JOBNO_SD;
+                    saleData.PRCODE_SD = sale.PRCODE_SD;
+                    saleData.JOBID_SD = sale.JOBID_SD;
+                    saleData.QTY_SD = Convert.ToInt32(sale.QTY_SD);
+                    saleData.RATE_SD = Convert.ToDecimal(sale.RATE_SD);
+                    saleData.Amount = Convert.ToInt32(sale.QTY_SD) * Convert.ToDecimal(sale.RATE_SD);
+                    saleData.DISCOUNT_SD = Convert.ToDecimal(sale.DISCOUNT_SD);
+                    saleData.SHIPPINGCHARGES_SD = Convert.ToDecimal(sale.SHIPPINGCHARGES_SD);
+                    saleData.SALEDATE_SD = Convert.ToDateTime(sale.SALEDATE_SD);
+                    saleData.USERID_SD = sale.USERID_SD;
+                    saleData.CASHTOTAL_SD = Convert.ToDecimal(sale.CASHTOTAL_SD);
+                    saleData.CREDITTOTAL_SD = Convert.ToDecimal(sale.CREDITTOTAL_SD);
+                    saleData.CASHRVNO_SD = sale.CASHRVNO_SD;
+                    saleData.INVNO_SD = sale.INVNO_SD;
+                    saleData.CREDITACCODE_SD = sale.CREDITACCODE_SD;
+                    saleData.LPONO_SD = sale.LPONO_SD;
+                    saleData.DAYENDDOC_NO = sale.DAYENDDOC_NO;
+                    saleSearchResult.Add(saleData);
+                }
+            }
+            return saleSearchResult;
         }
     }
 }

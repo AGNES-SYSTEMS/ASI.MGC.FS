@@ -117,8 +117,14 @@ $(document).ready(function () {
             $('#txtCreditAmount').val($finalAmount);
             $("#divCreditAmount").show();
             $("#divCreditCustDetails").show();
-            $("#txtCreditCustCode").val($custCode);
-            $("#txtCreditCustName").val($custName);
+            if ($custCode !== "CASH") {
+                $("#txtCreditCustCode").val($custCode);
+                $("#txtCreditCustName").val($custName);
+            }
+            else {
+                $("#txtCreditCustCode").val("");
+                $("#txtCreditCustName").val("");
+            }
         }
     });
     $("#txtQty").on("blur", function () {

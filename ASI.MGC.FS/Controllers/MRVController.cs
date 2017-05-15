@@ -242,7 +242,10 @@ namespace ASI.MGC.FS.Controllers
         {
             return View();
         }
-
+        public ActionResult FindMrvDetails()
+        {
+            return View();
+        }
         public ActionResult SearchMrvDetails()
         {
             throw new NotImplementedException();
@@ -852,6 +855,80 @@ namespace ASI.MGC.FS.Controllers
 
             }
             return false;
+        }
+        [HttpPost]
+        public JsonResult MRVSearchDetails(string mrvNo)
+        {
+            MRVSerachDetails searchHeader = proc_DisplayJobDetails(mrvNo);
+            List<MRVSearchDetailsResult> searchResult = fn_SearchJobDetails(mrvNo);
+            var jsonData = new
+            {
+                searchHeader = searchHeader,
+                searchResult = searchResult
+            };
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+        private MRVSerachDetails proc_DisplayJobDetails(string MrvNo)
+        {
+            MRVSerachDetails searchDetails = new MRVSerachDetails();
+            if (!string.IsNullOrEmpty(MrvNo))
+            {
+                var MrvDetails = (from mrvData in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                                  where mrvData.MRVNO_MRV.Equals(MrvNo)
+                                  select mrvData).SingleOrDefault();
+                if (MrvDetails != null)
+                {
+                    searchDetails.MrvNumber = MrvDetails.MRVNO_MRV;
+                    searchDetails.CustomerCode = MrvDetails.CUSTOMERCODE_MRV;
+                    searchDetails.CustomerName = MrvDetails.CUSTOMERNAME_MRV;
+                    searchDetails.Address = MrvDetails.ADDRESS1_MRV;
+                    searchDetails.Telephone = MrvDetails.PHONE_MRV;
+                    searchDetails.JobNumber = "";
+                    searchDetails.Employee = "";
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            return searchDetails;
+        }
+        private List<MRVSearchDetailsResult> fn_SearchJobDetails(string MrvNo)
+        {
+            List<MRVSearchDetailsResult> saleSearchResult = new List<MRVSearchDetailsResult>();
+            if (!string.IsNullOrEmpty(MrvNo))
+            {
+                var sales = (from saleData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                             where saleData.MRVNO_SD.Equals(MrvNo)
+                             select saleData).ToList();
+                foreach (var sale in sales)
+                {
+                    MRVSearchDetailsResult saleData = new MRVSearchDetailsResult();
+                    saleData.JOBNO_SD = sale.JOBNO_SD;
+                    saleData.PRCODE_SD = sale.PRCODE_SD;
+                    saleData.JOBID_SD = sale.JOBID_SD;
+                    saleData.QTY_SD = Convert.ToInt32(sale.QTY_SD);
+                    saleData.RATE_SD = Convert.ToDecimal(sale.RATE_SD);
+                    saleData.Amount = Convert.ToInt32(sale.QTY_SD) * Convert.ToDecimal(sale.RATE_SD);
+                    saleData.DISCOUNT_SD = Convert.ToDecimal(sale.DISCOUNT_SD);
+                    saleData.SHIPPINGCHARGES_SD = Convert.ToDecimal(sale.SHIPPINGCHARGES_SD);
+                    saleData.SALEDATE_SD = Convert.ToDateTime(sale.SALEDATE_SD);
+                    saleData.USERID_SD = sale.USERID_SD;
+                    saleData.CASHTOTAL_SD = Convert.ToDecimal(sale.CASHTOTAL_SD);
+                    saleData.CREDITTOTAL_SD = Convert.ToDecimal(sale.CREDITTOTAL_SD);
+                    saleData.CASHRVNO_SD = sale.CASHRVNO_SD;
+                    saleData.INVNO_SD = sale.INVNO_SD;
+                    saleData.CREDITACCODE_SD = sale.CREDITACCODE_SD;
+                    saleData.LPONO_SD = sale.LPONO_SD;
+                    saleData.DAYENDDOC_NO = sale.DAYENDDOC_NO;
+                    saleSearchResult.Add(saleData);
+                }
+            }
+            else
+            {
+                return saleSearchResult;
+            }
+            return saleSearchResult;
         }
     }
 }
