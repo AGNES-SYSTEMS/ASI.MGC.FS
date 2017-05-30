@@ -365,7 +365,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Format(Fields!CUR_QTY_PM.Value, "N0")</Value>
+                              <Value>=Format(Fields!CUR_QTY_PM.Value, "N3")</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -386,6 +386,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -752,7 +753,7 @@
         </Field>
         <Field Name="CUR_QTY_PM">
           <DataField>CUR_QTY_PM</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="RATE_PM">
           <DataField>RATE_PM</DataField>

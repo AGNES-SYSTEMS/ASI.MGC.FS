@@ -21,9 +21,9 @@ namespace ASI.MGC.FS.Model
         public string OTHERREF_SL { get; set; }
         public string PRODID_SL { get; set; }
         public string BATCHNO_SL { get; set; }
-        public Nullable<int> RECEPT_QTY_SL { get; set; }
+        public Nullable<decimal> RECEPT_QTY_SL { get; set; }
         public Nullable<decimal> RECEPT_RATE_SL { get; set; }
-        public Nullable<int> ISSUE_QTY_SL { get; set; }
+        public Nullable<decimal> ISSUE_QTY_SL { get; set; }
         public Nullable<decimal> ISSUE_RATE_SL { get; set; }
         public string UNIT_SL { get; set; }
         public string STATUS_SL { get; set; }

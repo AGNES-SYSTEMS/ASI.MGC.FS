@@ -482,7 +482,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>= Format(Fields!RECEIPTQTY_STR.Value,"N0") &amp; " " &amp; Fields!UNIT_STR.Value</Value>
+                                            <Value>= Format(Fields!RECEIPTQTY_STR.Value,"N3") &amp; " " &amp; Fields!UNIT_STR.Value</Value>
                                             <Style />
                                           </TextRun>
                                         </TextRuns>
@@ -546,7 +546,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Format(Fields!ISSUEQTY_STR.Value,"N0")&amp; " " &amp; Fields!UNIT_STR.Value</Value>
+                                            <Value>=Format(Fields!ISSUEQTY_STR.Value,"N3")&amp; " " &amp; Fields!UNIT_STR.Value</Value>
                                             <Style />
                                           </TextRun>
                                         </TextRuns>

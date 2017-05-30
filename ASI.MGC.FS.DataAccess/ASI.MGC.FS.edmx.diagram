@@ -47,7 +47,6 @@
         <EntityTypeShape EntityType="ASI_MGC_FSModel.MRVREFERENCE" Width="1.5" PointX="3" PointY="2.875" />
         <EntityTypeShape EntityType="ASI_MGC_FSModel.NOGENERATOR" Width="1.5" PointX="6.75" PointY="20.5" />
         <EntityTypeShape EntityType="ASI_MGC_FSModel.PANDL_SETTINGS" Width="1.5" PointX="5.75" PointY="1.5" />
-        <EntityTypeShape EntityType="ASI_MGC_FSModel.PRODUCTMASTER" Width="1.5" PointX="0.75" PointY="8.25" />
         <EntityTypeShape EntityType="ASI_MGC_FSModel.PROFITANDLOSS_RPT" Width="1.5" PointX="19.75" PointY="8.5" />
         <EntityTypeShape EntityType="ASI_MGC_FSModel.QOTATION_REF" Width="1.5" PointX="20.75" PointY="11.5" />
         <EntityTypeShape EntityType="ASI_MGC_FSModel.QUOT_PROD_MASTER" Width="1.5" PointX="20.75" PointY="1.5" />
@@ -58,7 +57,6 @@
         <EntityTypeShape EntityType="ASI_MGC_FSModel.SALESMASTER" Width="1.5" PointX="8.75" PointY="22.5" />
         <EntityTypeShape EntityType="ASI_MGC_FSModel.SLNOGENERATOR" Width="1.5" PointX="21.75" PointY="7.5" />
         <EntityTypeShape EntityType="ASI_MGC_FSModel.STOCK_REPORT" Width="1.5" PointX="10.75" PointY="22.5" />
-        <EntityTypeShape EntityType="ASI_MGC_FSModel.STOCKLEDGER" Width="1.5" PointX="13" PointY="9.75" />
         <EntityTypeShape EntityType="ASI_MGC_FSModel.STOCKLEDGER_REPORT" Width="1.5" PointX="12.75" PointY="22.5" />
         <EntityTypeShape EntityType="ASI_MGC_FSModel.TELEPHONE_DIRECTORY" Width="1.5" PointX="17.75" PointY="22.5" />
         <EntityTypeShape EntityType="ASI_MGC_FSModel.TEMPREPORT" Width="1.5" PointX="22.75" PointY="10.5" />
@@ -75,8 +73,10 @@
         <AssociationConnector Association="ASI_MGC_FSModel.FK_MESUserLoginDetails_MESUsers" />
         <AssociationConnector Association="ASI_MGC_FSModel.FK_MESUserProfile_MESUsers" />
         <AssociationConnector Association="ASI_MGC_FSModel.FK_MESUserRoles_MESUsers" />
-        <AssociationConnector Association="ASI_MGC_FSModel.MRVREFERENCE_PRODUCTMASTERMRVREFERENCE" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.STOCKLEDGER" Width="2.125" PointX="13" PointY="9.75" />
         <AssociationConnector Association="ASI_MGC_FSModel.STOCKLEDGER_UNITMESSUREMENTSTOCKLEDGER" />
+        <EntityTypeShape EntityType="ASI_MGC_FSModel.PRODUCTMASTER" Width="2.25" PointX="24.375" PointY="1" />
+        <AssociationConnector Association="ASI_MGC_FSModel.MRVREFERENCE_PRODUCTMASTERMRVREFERENCE" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

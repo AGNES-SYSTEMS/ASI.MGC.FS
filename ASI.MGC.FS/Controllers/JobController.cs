@@ -622,5 +622,9 @@ namespace ASI.MGC.FS.Controllers
             }
             return saleSearchResult;
         }
+        public ActionResult FindJobDetails()
+        {
+            return View();
+        }
     }
 }

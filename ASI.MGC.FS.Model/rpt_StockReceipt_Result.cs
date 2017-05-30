@@ -15,7 +15,7 @@ namespace ASI.MGC.FS.Model
     {
         public Nullable<System.DateTime> DOC_DATE_SL { get; set; }
         public string VOUCHERNO_SL { get; set; }
-        public Nullable<int> RECEPT_QTY_SL { get; set; }
+        public Nullable<decimal> RECEPT_QTY_SL { get; set; }
         public Nullable<decimal> RECEPT_RATE_SL { get; set; }
         public string PRODID_SL { get; set; }
         public string DESCRIPTION_PM { get; set; }

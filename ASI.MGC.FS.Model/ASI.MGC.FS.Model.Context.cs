@@ -69,7 +69,6 @@ namespace ASI.MGC.FS.Model
         public virtual DbSet<MRVREFERENCE> MRVREFERENCEs { get; set; }
         public virtual DbSet<NOGENERATOR> NOGENERATORs { get; set; }
         public virtual DbSet<PANDL_SETTINGS> PANDL_SETTINGS { get; set; }
-        public virtual DbSet<PRODUCTMASTER> PRODUCTMASTERs { get; set; }
         public virtual DbSet<PROFITANDLOSS_RPT> PROFITANDLOSS_RPT { get; set; }
         public virtual DbSet<QOTATION_REF> QOTATION_REF { get; set; }
         public virtual DbSet<QUOT_PROD_MASTER> QUOT_PROD_MASTER { get; set; }
@@ -80,7 +79,6 @@ namespace ASI.MGC.FS.Model
         public virtual DbSet<SALESMASTER> SALESMASTERs { get; set; }
         public virtual DbSet<SLNOGENERATOR> SLNOGENERATORs { get; set; }
         public virtual DbSet<STOCK_REPORT> STOCK_REPORT { get; set; }
-        public virtual DbSet<STOCKLEDGER> STOCKLEDGERs { get; set; }
         public virtual DbSet<STOCKLEDGER_REPORT> STOCKLEDGER_REPORT { get; set; }
         public virtual DbSet<TELEPHONE_DIRECTORY> TELEPHONE_DIRECTORY { get; set; }
         public virtual DbSet<TEMPREPORT> TEMPREPORTs { get; set; }
@@ -89,6 +87,8 @@ namespace ASI.MGC.FS.Model
         public virtual DbSet<USER> USERs { get; set; }
         public virtual DbSet<VOUCHERCHILD_RPT> VOUCHERCHILD_RPT { get; set; }
         public virtual DbSet<VOUCHERMASTER_RPT> VOUCHERMASTER_RPT { get; set; }
+        public virtual DbSet<STOCKLEDGER> STOCKLEDGERs { get; set; }
+        public virtual DbSet<PRODUCTMASTER> PRODUCTMASTERs { get; set; }
     
         public virtual ObjectResult<rpt_BankPayment_Result> rpt_BankPayment(string vTYPE, string vCODE)
         {
@@ -430,11 +430,11 @@ namespace ASI.MGC.FS.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<rpt_EmpWiseJobDetails_Result>("rpt_EmpWiseJobDetails", sTARTDATEParameter, eNDDATEParameter);
         }
     
-        public virtual ObjectResult<rpt_GLStatement_Result> rpt_GLStatement(Nullable<int> gLCode, Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
+        public virtual ObjectResult<rpt_GLStatement_Result> rpt_GLStatement(string gLCode, Nullable<System.DateTime> sTARTDATE, Nullable<System.DateTime> eNDDATE)
         {
-            var gLCodeParameter = gLCode.HasValue ?
+            var gLCodeParameter = gLCode != null ?
                 new ObjectParameter("GLCode", gLCode) :
-                new ObjectParameter("GLCode", typeof(int));
+                new ObjectParameter("GLCode", typeof(string));
     
             var sTARTDATEParameter = sTARTDATE.HasValue ?
                 new ObjectParameter("STARTDATE", sTARTDATE) :

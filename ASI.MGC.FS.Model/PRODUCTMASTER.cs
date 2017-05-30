@@ -21,7 +21,7 @@ namespace ASI.MGC.FS.Model
     
         public string PROD_CODE_PM { get; set; }
         public string DESCRIPTION_PM { get; set; }
-        public Nullable<int> CUR_QTY_PM { get; set; }
+        public Nullable<decimal> CUR_QTY_PM { get; set; }
         public Nullable<decimal> RATE_PM { get; set; }
         public Nullable<decimal> SELLINGPRICE_RM { get; set; }
         public string STATUS_PM { get; set; }

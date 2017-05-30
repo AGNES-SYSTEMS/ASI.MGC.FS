@@ -299,11 +299,11 @@ $(document).ready(function () {
     });
     $("#txtRate").on("blur", function () {
         var $amount = $("#txtRate").val() * $("#txtQuantity").val();
-        $("#txtAmount").val($amount);
+        $("#txtAmount").val($amount.toFixed(2));
     });
     $("#txtQuantity").on("blur", function () {
         var $amount = $("#txtRate").val() * $("#txtQuantity").val();
-        $("#txtAmount").val($amount);
+        $("#txtAmount").val($amount.toFixed(2));
     });
     function clearModalForm() {
         $("#txtPrCode").val("");

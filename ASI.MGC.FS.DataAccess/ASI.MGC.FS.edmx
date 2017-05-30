@@ -559,7 +559,7 @@
           </Key>
           <Property Name="PROD_CODE_PM" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="DESCRIPTION_PM" Type="nvarchar" MaxLength="255" />
-          <Property Name="CUR_QTY_PM" Type="int" />
+          <Property Name="CUR_QTY_PM" Type="decimal" Precision="20" Scale="3" />
           <Property Name="RATE_PM" Type="money" />
           <Property Name="SELLINGPRICE_RM" Type="money" />
           <Property Name="STATUS_PM" Type="nvarchar" MaxLength="2" />
@@ -716,9 +716,9 @@
           <Property Name="OTHERREF_SL" Type="nvarchar" MaxLength="255" />
           <Property Name="PRODID_SL" Type="nvarchar" MaxLength="10" />
           <Property Name="BATCHNO_SL" Type="nvarchar" MaxLength="15" />
-          <Property Name="RECEPT_QTY_SL" Type="int" />
+          <Property Name="RECEPT_QTY_SL" Type="decimal" Precision="20" Scale="3" />
           <Property Name="RECEPT_RATE_SL" Type="money" />
-          <Property Name="ISSUE_QTY_SL" Type="int" />
+          <Property Name="ISSUE_QTY_SL" Type="decimal" Precision="20" Scale="3" />
           <Property Name="ISSUE_RATE_SL" Type="money" />
           <Property Name="UNIT_SL" Type="nvarchar" MaxLength="10" />
           <Property Name="STATUS_SL" Type="nvarchar" MaxLength="1" />
@@ -1751,7 +1751,6 @@
           <EntitySet Name="MRVREFERENCEs" EntityType="ASI_MGC_FSModel.MRVREFERENCE" />
           <EntitySet Name="NOGENERATORs" EntityType="ASI_MGC_FSModel.NOGENERATOR" />
           <EntitySet Name="PANDL_SETTINGS" EntityType="ASI_MGC_FSModel.PANDL_SETTINGS" />
-          <EntitySet Name="PRODUCTMASTERs" EntityType="ASI_MGC_FSModel.PRODUCTMASTER" />
           <EntitySet Name="PROFITANDLOSS_RPT" EntityType="ASI_MGC_FSModel.PROFITANDLOSS_RPT" />
           <EntitySet Name="QOTATION_REF" EntityType="ASI_MGC_FSModel.QOTATION_REF" />
           <EntitySet Name="QUOT_PROD_MASTER" EntityType="ASI_MGC_FSModel.QUOT_PROD_MASTER" />
@@ -1762,7 +1761,6 @@
           <EntitySet Name="SALESMASTERs" EntityType="ASI_MGC_FSModel.SALESMASTER" />
           <EntitySet Name="SLNOGENERATORs" EntityType="ASI_MGC_FSModel.SLNOGENERATOR" />
           <EntitySet Name="STOCK_REPORT" EntityType="ASI_MGC_FSModel.STOCK_REPORT" />
-          <EntitySet Name="STOCKLEDGERs" EntityType="ASI_MGC_FSModel.STOCKLEDGER" />
           <EntitySet Name="STOCKLEDGER_REPORT" EntityType="ASI_MGC_FSModel.STOCKLEDGER_REPORT" />
           <EntitySet Name="TELEPHONE_DIRECTORY" EntityType="ASI_MGC_FSModel.TELEPHONE_DIRECTORY" />
           <EntitySet Name="TEMPREPORTs" EntityType="ASI_MGC_FSModel.TEMPREPORT" />
@@ -1803,14 +1801,6 @@
             <End Role="MESUser" EntitySet="MESUsers" />
             <End Role="MESUserRole" EntitySet="MESUserRoles" />
           </AssociationSet>
-          <AssociationSet Name="MRVREFERENCE_PRODUCTMASTERMRVREFERENCE" Association="ASI_MGC_FSModel.MRVREFERENCE_PRODUCTMASTERMRVREFERENCE">
-            <End Role="PRODUCTMASTER" EntitySet="PRODUCTMASTERs" />
-            <End Role="MRVREFERENCE" EntitySet="MRVREFERENCEs" />
-          </AssociationSet>
-          <AssociationSet Name="STOCKLEDGER_UNITMESSUREMENTSTOCKLEDGER" Association="ASI_MGC_FSModel.STOCKLEDGER_UNITMESSUREMENTSTOCKLEDGER">
-            <End Role="UNITMESSUREMENT" EntitySet="UNITMESSUREMENTs" />
-            <End Role="STOCKLEDGER" EntitySet="STOCKLEDGERs" />
-          </AssociationSet>
           <FunctionImport Name="rpt_ARStatement2" ReturnType="Collection(ASI_MGC_FSModel.rpt_ARStatement2_Result)">
             <Parameter Name="STARTDATE" Mode="In" Type="DateTime" />
             <Parameter Name="ENDDATE" Mode="In" Type="DateTime" />
@@ -1823,6 +1813,16 @@
             <Parameter Name="SearchParam" Mode="In" Type="String" />
             <Parameter Name="Type" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="STOCKLEDGERs" EntityType="ASI_MGC_FSModel.STOCKLEDGER" />
+          <AssociationSet Name="STOCKLEDGER_UNITMESSUREMENTSTOCKLEDGER" Association="ASI_MGC_FSModel.STOCKLEDGER_UNITMESSUREMENTSTOCKLEDGER">
+            <End Role="UNITMESSUREMENT" EntitySet="UNITMESSUREMENTs" />
+            <End Role="STOCKLEDGER" EntitySet="STOCKLEDGERs" />
+          </AssociationSet>
+          <EntitySet Name="PRODUCTMASTERs" EntityType="ASI_MGC_FSModel.PRODUCTMASTER" />
+          <AssociationSet Name="MRVREFERENCE_PRODUCTMASTERMRVREFERENCE" Association="ASI_MGC_FSModel.MRVREFERENCE_PRODUCTMASTERMRVREFERENCE">
+            <End Role="PRODUCTMASTER" EntitySet="PRODUCTMASTERs" />
+            <End Role="MRVREFERENCE" EntitySet="MRVREFERENCEs" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="rpt_BankPayment_Result">
           <Property Type="String" Name="COMPANYNAME_CM" Nullable="true" MaxLength="50" />
@@ -2338,21 +2338,21 @@
         <ComplexType Name="rpt_StockReceipt_Result">
           <Property Type="DateTime" Name="DOC_DATE_SL" Nullable="true" />
           <Property Type="String" Name="VOUCHERNO_SL" Nullable="true" MaxLength="15" />
-          <Property Type="Int32" Name="RECEPT_QTY_SL" Nullable="true" />
+          <Property Type="Decimal" Name="RECEPT_QTY_SL" Nullable="true" Precision="20" Scale="3" />
           <Property Type="Decimal" Name="RECEPT_RATE_SL" Nullable="true" Precision="19" />
           <Property Type="String" Name="PRODID_SL" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="DESCRIPTION_PM" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DESCRIPTION_PM" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="UNIT_SL" Nullable="true" MaxLength="10" />
-          <Property Type="Decimal" Name="AMOUNT" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="AMOUNT" Nullable="true" Precision="38" Scale="6" />
         </ComplexType>
         <ComplexType Name="rpt_StockReport_Result">
-          <Property Type="String" Name="DESCRIPTION_PM" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="CUR_QTY_PM" Nullable="true" />
+          <Property Type="String" Name="DESCRIPTION_PM" Nullable="true" MaxLength="255" />
+          <Property Type="Decimal" Name="CUR_QTY_PM" Nullable="true" Precision="20" Scale="3" />
           <Property Type="Decimal" Name="RATE_PM" Nullable="true" Precision="19" />
           <Property Type="String" Name="PROD_CODE_PM" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="STATUS_PM" Nullable="true" MaxLength="2" />
           <Property Type="String" Name="UNIT_PR" Nullable="true" MaxLength="10" />
-          <Property Type="Decimal" Name="AMOUNT" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="AMOUNT" Nullable="true" Precision="38" Scale="6" />
         </ComplexType>
         <ComplexType Name="rpt_TrialBalance_Result">
           <Property Type="Int32" Name="CODE_TB" Nullable="true" />
@@ -3122,21 +3122,6 @@
           </Key>
           <Property Name="STOCKUPDATION_PLS" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="PRODUCTMASTER">
-          <Key>
-            <PropertyRef Name="PROD_CODE_PM" />
-          </Key>
-          <Property Name="PROD_CODE_PM" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="DESCRIPTION_PM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="CUR_QTY_PM" Type="Int32" />
-          <Property Name="RATE_PM" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="SELLINGPRICE_RM" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="STATUS_PM" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="PURCHSEUNIT_PM" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="SALESUNIT_PM" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="UNIT_PR" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="MRVREFERENCEs" Relationship="ASI_MGC_FSModel.MRVREFERENCE_PRODUCTMASTERMRVREFERENCE" FromRole="PRODUCTMASTER" ToRole="MRVREFERENCE" />
-        </EntityType>
         <EntityType Name="PROFITANDLOSS_RPT">
           <Key>
             <PropertyRef Name="SLNO_PL" />
@@ -3274,25 +3259,6 @@
           <Property Name="ISSUERATE_STOCK" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="UNIT_STOCK" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="DOCNO_STOCK" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="STOCKLEDGER">
-          <Key>
-            <PropertyRef Name="SLNO_SL" />
-          </Key>
-          <Property Name="SLNO_SL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DOC_DATE_SL" Type="DateTime" Precision="0" />
-          <Property Name="LEDGER_DATE_SL" Type="DateTime" Precision="0" />
-          <Property Name="VOUCHERNO_SL" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="OTHERREF_SL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="PRODID_SL" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="BATCHNO_SL" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="RECEPT_QTY_SL" Type="Int32" />
-          <Property Name="RECEPT_RATE_SL" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ISSUE_QTY_SL" Type="Int32" />
-          <Property Name="ISSUE_RATE_SL" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="UNIT_SL" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="STATUS_SL" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UNITMESSUREMENT" Relationship="ASI_MGC_FSModel.STOCKLEDGER_UNITMESSUREMENTSTOCKLEDGER" FromRole="STOCKLEDGER" ToRole="UNITMESSUREMENT" />
         </EntityType>
         <EntityType Name="STOCKLEDGER_REPORT">
           <Key>
@@ -3520,30 +3486,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="MRVREFERENCE_PRODUCTMASTERMRVREFERENCE">
-          <End Type="ASI_MGC_FSModel.PRODUCTMASTER" Role="PRODUCTMASTER" Multiplicity="0..1" />
-          <End Type="ASI_MGC_FSModel.MRVREFERENCE" Role="MRVREFERENCE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PRODUCTMASTER">
-              <PropertyRef Name="PROD_CODE_PM" />
-            </Principal>
-            <Dependent Role="MRVREFERENCE">
-              <PropertyRef Name="PRODID_MRR" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="STOCKLEDGER_UNITMESSUREMENTSTOCKLEDGER">
-          <End Type="ASI_MGC_FSModel.UNITMESSUREMENT" Role="UNITMESSUREMENT" Multiplicity="0..1" />
-          <End Type="ASI_MGC_FSModel.STOCKLEDGER" Role="STOCKLEDGER" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UNITMESSUREMENT">
-              <PropertyRef Name="UNIT_UM" />
-            </Principal>
-            <Dependent Role="STOCKLEDGER">
-              <PropertyRef Name="UNIT_SL" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="rpt_ARStatement2_Result">
           <Property Type="String" Name="DESCRIPTION_ARM" Nullable="true" MaxLength="40" />
           <Property Type="String" Name="POBOX_ARM" Nullable="true" MaxLength="10" />
@@ -3595,6 +3537,64 @@
           <Property Type="String" Name="LPONO_SD" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="DAYENDDOC_NO" Nullable="true" MaxLength="15" />
         </ComplexType>
+        <EntityType Name="STOCKLEDGER">
+          <Key>
+            <PropertyRef Name="SLNO_SL" />
+          </Key>
+          <Property Name="SLNO_SL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DOC_DATE_SL" Type="DateTime" Precision="0" />
+          <Property Name="LEDGER_DATE_SL" Type="DateTime" Precision="0" />
+          <Property Name="VOUCHERNO_SL" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="OTHERREF_SL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PRODID_SL" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="BATCHNO_SL" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="RECEPT_QTY_SL" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="RECEPT_RATE_SL" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ISSUE_QTY_SL" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="ISSUE_RATE_SL" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="UNIT_SL" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="STATUS_SL" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UNITMESSUREMENT" Relationship="ASI_MGC_FSModel.STOCKLEDGER_UNITMESSUREMENTSTOCKLEDGER" FromRole="STOCKLEDGER" ToRole="UNITMESSUREMENT" />
+        </EntityType>
+        <Association Name="STOCKLEDGER_UNITMESSUREMENTSTOCKLEDGER">
+          <End Type="ASI_MGC_FSModel.UNITMESSUREMENT" Role="UNITMESSUREMENT" Multiplicity="0..1" />
+          <End Type="ASI_MGC_FSModel.STOCKLEDGER" Role="STOCKLEDGER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNITMESSUREMENT">
+              <PropertyRef Name="UNIT_UM" />
+            </Principal>
+            <Dependent Role="STOCKLEDGER">
+              <PropertyRef Name="UNIT_SL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PRODUCTMASTER">
+          <Key>
+            <PropertyRef Name="PROD_CODE_PM" />
+          </Key>
+          <Property Name="PROD_CODE_PM" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPTION_PM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CUR_QTY_PM" Type="Decimal" Precision="20" Scale="3" />
+          <Property Name="RATE_PM" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SELLINGPRICE_RM" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="STATUS_PM" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="PURCHSEUNIT_PM" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SALESUNIT_PM" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="UNIT_PR" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MRVREFERENCEs" Relationship="ASI_MGC_FSModel.MRVREFERENCE_PRODUCTMASTERMRVREFERENCE" FromRole="PRODUCTMASTER" ToRole="MRVREFERENCE" />
+        </EntityType>
+        <Association Name="MRVREFERENCE_PRODUCTMASTERMRVREFERENCE">
+          <End Type="ASI_MGC_FSModel.PRODUCTMASTER" Role="PRODUCTMASTER" Multiplicity="0..1" />
+          <End Type="ASI_MGC_FSModel.MRVREFERENCE" Role="MRVREFERENCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTMASTER">
+              <PropertyRef Name="PROD_CODE_PM" />
+            </Principal>
+            <Dependent Role="MRVREFERENCE">
+              <PropertyRef Name="PRODID_MRR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5136,21 +5136,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PRODUCTMASTERs">
-            <EntityTypeMapping TypeName="ASI_MGC_FSModel.PRODUCTMASTER">
-              <MappingFragment StoreEntitySet="PRODUCTMASTER">
-                <ScalarProperty Name="UNIT_PR" ColumnName="UNIT_PR" />
-                <ScalarProperty Name="SALESUNIT_PM" ColumnName="SALESUNIT_PM" />
-                <ScalarProperty Name="PURCHSEUNIT_PM" ColumnName="PURCHSEUNIT_PM" />
-                <ScalarProperty Name="STATUS_PM" ColumnName="STATUS_PM" />
-                <ScalarProperty Name="SELLINGPRICE_RM" ColumnName="SELLINGPRICE_RM" />
-                <ScalarProperty Name="RATE_PM" ColumnName="RATE_PM" />
-                <ScalarProperty Name="CUR_QTY_PM" ColumnName="CUR_QTY_PM" />
-                <ScalarProperty Name="DESCRIPTION_PM" ColumnName="DESCRIPTION_PM" />
-                <ScalarProperty Name="PROD_CODE_PM" ColumnName="PROD_CODE_PM" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PROFITANDLOSS_RPT">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.PROFITANDLOSS_RPT">
               <MappingFragment StoreEntitySet="PROFITANDLOSS_RPT">
@@ -5296,25 +5281,6 @@
                 <ScalarProperty Name="PRODID_STOCK" ColumnName="PRODID_STOCK" />
                 <ScalarProperty Name="DATE_STOCK" ColumnName="DATE_STOCK" />
                 <ScalarProperty Name="SLNO_STOCK" ColumnName="SLNO_STOCK" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="STOCKLEDGERs">
-            <EntityTypeMapping TypeName="ASI_MGC_FSModel.STOCKLEDGER">
-              <MappingFragment StoreEntitySet="STOCKLEDGER">
-                <ScalarProperty Name="STATUS_SL" ColumnName="STATUS_SL" />
-                <ScalarProperty Name="UNIT_SL" ColumnName="UNIT_SL" />
-                <ScalarProperty Name="ISSUE_RATE_SL" ColumnName="ISSUE_RATE_SL" />
-                <ScalarProperty Name="ISSUE_QTY_SL" ColumnName="ISSUE_QTY_SL" />
-                <ScalarProperty Name="RECEPT_RATE_SL" ColumnName="RECEPT_RATE_SL" />
-                <ScalarProperty Name="RECEPT_QTY_SL" ColumnName="RECEPT_QTY_SL" />
-                <ScalarProperty Name="BATCHNO_SL" ColumnName="BATCHNO_SL" />
-                <ScalarProperty Name="PRODID_SL" ColumnName="PRODID_SL" />
-                <ScalarProperty Name="OTHERREF_SL" ColumnName="OTHERREF_SL" />
-                <ScalarProperty Name="VOUCHERNO_SL" ColumnName="VOUCHERNO_SL" />
-                <ScalarProperty Name="LEDGER_DATE_SL" ColumnName="LEDGER_DATE_SL" />
-                <ScalarProperty Name="DOC_DATE_SL" ColumnName="DOC_DATE_SL" />
-                <ScalarProperty Name="SLNO_SL" ColumnName="SLNO_SL" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5518,6 +5484,40 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="STOCKLEDGERs">
+            <EntityTypeMapping TypeName="ASI_MGC_FSModel.STOCKLEDGER">
+              <MappingFragment StoreEntitySet="STOCKLEDGER">
+                <ScalarProperty Name="STATUS_SL" ColumnName="STATUS_SL" />
+                <ScalarProperty Name="UNIT_SL" ColumnName="UNIT_SL" />
+                <ScalarProperty Name="ISSUE_RATE_SL" ColumnName="ISSUE_RATE_SL" />
+                <ScalarProperty Name="ISSUE_QTY_SL" ColumnName="ISSUE_QTY_SL" />
+                <ScalarProperty Name="RECEPT_RATE_SL" ColumnName="RECEPT_RATE_SL" />
+                <ScalarProperty Name="RECEPT_QTY_SL" ColumnName="RECEPT_QTY_SL" />
+                <ScalarProperty Name="BATCHNO_SL" ColumnName="BATCHNO_SL" />
+                <ScalarProperty Name="PRODID_SL" ColumnName="PRODID_SL" />
+                <ScalarProperty Name="OTHERREF_SL" ColumnName="OTHERREF_SL" />
+                <ScalarProperty Name="VOUCHERNO_SL" ColumnName="VOUCHERNO_SL" />
+                <ScalarProperty Name="LEDGER_DATE_SL" ColumnName="LEDGER_DATE_SL" />
+                <ScalarProperty Name="DOC_DATE_SL" ColumnName="DOC_DATE_SL" />
+                <ScalarProperty Name="SLNO_SL" ColumnName="SLNO_SL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTMASTERs">
+            <EntityTypeMapping TypeName="ASI_MGC_FSModel.PRODUCTMASTER">
+              <MappingFragment StoreEntitySet="PRODUCTMASTER">
+                <ScalarProperty Name="UNIT_PR" ColumnName="UNIT_PR" />
+                <ScalarProperty Name="SALESUNIT_PM" ColumnName="SALESUNIT_PM" />
+                <ScalarProperty Name="PURCHSEUNIT_PM" ColumnName="PURCHSEUNIT_PM" />
+                <ScalarProperty Name="STATUS_PM" ColumnName="STATUS_PM" />
+                <ScalarProperty Name="SELLINGPRICE_RM" ColumnName="SELLINGPRICE_RM" />
+                <ScalarProperty Name="RATE_PM" ColumnName="RATE_PM" />
+                <ScalarProperty Name="CUR_QTY_PM" ColumnName="CUR_QTY_PM" />
+                <ScalarProperty Name="DESCRIPTION_PM" ColumnName="DESCRIPTION_PM" />
+                <ScalarProperty Name="PROD_CODE_PM" ColumnName="PROD_CODE_PM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -795,6 +795,8 @@
     <Content Include="Content\Images\sort_both.png" />
     <Content Include="Content\Images\sort_desc.png" />
     <Content Include="Content\Images\sort_desc_disabled.png" />
+    <Content Include="Content\Images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\Images\ui-icons_555555_256x240.png" />
     <Content Include="Content\jquery-ui.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1085,6 +1087,7 @@
     <Content Include="Scripts\Custom\Invoice\InvoicePreparation.js" />
     <Content Include="Scripts\Custom\Invoice\InvoiceReversal.js" />
     <Content Include="Scripts\Custom\Invoice\PendingInvoices.js" />
+    <Content Include="Scripts\Custom\Job\FindJobDetails.js" />
     <Content Include="Scripts\Custom\Job\JobCancellation.js" />
     <Content Include="Scripts\Custom\Job\JobEntry.js" />
     <Content Include="Scripts\Custom\MgcReports\APStatement.js" />
@@ -1404,6 +1407,7 @@
     <Content Include="Views\MgcReports\DuplicateCashMemo.cshtml" />
     <Content Include="Views\MgcReports\DuplicateInvoice.cshtml" />
     <Content Include="Views\MRV\FindMrvDetails.cshtml" />
+    <Content Include="Views\Job\FindJobDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1557,9 +1561,15 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Reports\RDLC Files\CashMemo1.rdlc" />
-    <EmbeddedResource Include="Reports\RDLC Files\Invoice1.rdlc" />
-    <EmbeddedResource Include="Reports\RDLC Files\MetarialReceiptVoucher_JobDetailsSubReport.rdlc" />
+    <EmbeddedResource Include="Reports\RDLC Files\CashMemo1.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\RDLC Files\Invoice1.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\RDLC Files\MetarialReceiptVoucher_JobDetailsSubReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

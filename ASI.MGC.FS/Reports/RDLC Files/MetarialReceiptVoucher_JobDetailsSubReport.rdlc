@@ -120,7 +120,6 @@
   <DataSources>
     <DataSource Name="DataSource">
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
-      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>cf339b05-f924-4dd7-9ef4-72758d616cf3</rd:DataSourceID>
     </DataSource>
   </DataSources>

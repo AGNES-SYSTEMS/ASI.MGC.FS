@@ -365,7 +365,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Format(Fields!RECEPT_QTY_SL.Value,"N0")</Value>
+                              <Value>=Format(Fields!RECEPT_QTY_SL.Value,"N3")</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -874,7 +874,7 @@
         </Field>
         <Field Name="RECEPT_QTY_SL">
           <DataField>RECEPT_QTY_SL</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="RECEPT_RATE_SL">
           <DataField>RECEPT_RATE_SL</DataField>
