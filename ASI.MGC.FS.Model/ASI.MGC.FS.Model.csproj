@@ -394,6 +394,9 @@
     <Compile Include="sp_BMBTListTB_Result.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_FindJobDetails_Result.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="sp_FindMrvDetails_Result.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>
@@ -431,6 +434,9 @@
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_TransactionQueries_Result.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>
     <Compile Include="STOCKLEDGER.cs">

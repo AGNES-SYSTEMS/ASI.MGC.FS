@@ -14,8 +14,8 @@ namespace ASI.MGC.FS.DataAccess
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    using ASI.MGC.FS.Model;
-    
+    using Model;
+
     public partial class ASI_MGC_FSEntities : DbContext
     {
         public ASI_MGC_FSEntities()
@@ -1259,6 +1259,28 @@ namespace ASI.MGC.FS.DataAccess
                 new ObjectParameter("Type", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FindMrvDetails_Result>("sp_FindMrvDetails", searchParamParameter, typeParameter);
+        }
+    
+        public virtual ObjectResult<sp_FindJobDetails_Result> sp_FindJobDetails(string searchParam, Nullable<int> type)
+        {
+            var searchParamParameter = searchParam != null ?
+                new ObjectParameter("SearchParam", searchParam) :
+                new ObjectParameter("SearchParam", typeof(string));
+    
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("Type", type) :
+                new ObjectParameter("Type", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FindJobDetails_Result>("sp_FindJobDetails", searchParamParameter, typeParameter);
+        }
+    
+        public virtual ObjectResult<sp_TransactionQueries_Result> sp_TransactionQueries(Nullable<int> type)
+        {
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("Type", type) :
+                new ObjectParameter("Type", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_TransactionQueries_Result>("sp_TransactionQueries", typeParameter);
         }
     }
 }

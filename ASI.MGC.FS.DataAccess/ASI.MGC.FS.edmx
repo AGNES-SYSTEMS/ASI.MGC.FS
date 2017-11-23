@@ -1156,6 +1156,10 @@
         <Function Name="sp_DeleteSalesbyJobId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="JobId" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="sp_FindJobDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SearchParam" Type="nvarchar" Mode="In" />
+          <Parameter Name="Type" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_FindMrvDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SearchParam" Type="nvarchar" Mode="In" />
           <Parameter Name="Type" Type="int" Mode="In" />
@@ -1265,6 +1269,9 @@
         </Function>
         <Function Name="sp_JvDataList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="jvNo" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_TransactionQueries" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Type" Type="int" Mode="In" />
         </Function>
         <Function Name="TST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ASI_MGC_FSModelStoreContainer">
@@ -1823,6 +1830,13 @@
             <End Role="PRODUCTMASTER" EntitySet="PRODUCTMASTERs" />
             <End Role="MRVREFERENCE" EntitySet="MRVREFERENCEs" />
           </AssociationSet>
+          <FunctionImport Name="sp_FindJobDetails" ReturnType="Collection(ASI_MGC_FSModel.sp_FindJobDetails_Result)">
+            <Parameter Name="SearchParam" Mode="In" Type="String" />
+            <Parameter Name="Type" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_TransactionQueries" ReturnType="Collection(ASI_MGC_FSModel.sp_TransactionQueries_Result)">
+            <Parameter Name="Type" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="rpt_BankPayment_Result">
           <Property Type="String" Name="COMPANYNAME_CM" Nullable="true" MaxLength="50" />
@@ -3595,6 +3609,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="sp_FindJobDetails_Result">
+          <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="MRVDATE_MRV" Nullable="true" />
+          <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="DESCRIPTION_PM" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="DELEVERNOTENO_JM" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="JOBNO_JM" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="JOBSTATUS_JM" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="PHONE_MRV" Nullable="true" MaxLength="12" />
+        </ComplexType>
+        <ComplexType Name="sp_TransactionQueries_Result">
+          <Property Type="String" Name="GLCODE_LM" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="GLDESCRIPTION_LM" Nullable="true" MaxLength="255" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5518,6 +5546,28 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_FindJobDetails" FunctionName="ASI_MGC_FSModel.Store.sp_FindJobDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_FindJobDetails_Result">
+                <ScalarProperty Name="MRVNO_MRV" ColumnName="MRVNO_MRV" />
+                <ScalarProperty Name="MRVDATE_MRV" ColumnName="MRVDATE_MRV" />
+                <ScalarProperty Name="CUSTOMERNAME_MRV" ColumnName="CUSTOMERNAME_MRV" />
+                <ScalarProperty Name="DESCRIPTION_PM" ColumnName="DESCRIPTION_PM" />
+                <ScalarProperty Name="DELEVERNOTENO_JM" ColumnName="DELEVERNOTENO_JM" />
+                <ScalarProperty Name="JOBNO_JM" ColumnName="JOBNO_JM" />
+                <ScalarProperty Name="JOBSTATUS_JM" ColumnName="JOBSTATUS_JM" />
+                <ScalarProperty Name="PHONE_MRV" ColumnName="PHONE_MRV" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_TransactionQueries" FunctionName="ASI_MGC_FSModel.Store.sp_TransactionQueries">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ASI_MGC_FSModel.sp_TransactionQueries_Result">
+                <ScalarProperty Name="GLCODE_LM" ColumnName="GLCODE_LM" />
+                <ScalarProperty Name="GLDESCRIPTION_LM" ColumnName="GLDESCRIPTION_LM" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
