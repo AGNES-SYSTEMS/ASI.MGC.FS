@@ -832,5 +832,31 @@ namespace ASI.MGC.FS.Domain.Repositories
             }
             return lst;
         }
+        public IList<sp_FindJobDetails_Result> sp_FindJobDetails(string searchParam, int type)
+        {
+            List<sp_FindJobDetails_Result> lst = null;
+            try
+            {
+                lst = _context.sp_FindJobDetails(searchParam, type).ToList();
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+            return lst;
+        }
+        public IList<sp_TransactionQueries_Result> sp_TransactionQueries(int type)
+        {
+            List<sp_TransactionQueries_Result> lst = null;
+            try
+            {
+                lst = _context.sp_TransactionQueries(type).ToList();
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+            return lst;
+        }
     }
 }
