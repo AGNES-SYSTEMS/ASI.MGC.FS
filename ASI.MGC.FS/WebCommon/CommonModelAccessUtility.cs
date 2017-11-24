@@ -16,7 +16,7 @@ namespace ASI.MGC.FS.WebCommon
         {
             var currYear = DateTime.Now.Year.ToString();
             var mrvCount = (from objMrv in iUnitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
-                            //where objMrv.MRVNO_MRV.EndsWith(currYear)
+                                //where objMrv.MRVNO_MRV.EndsWith(currYear)
                             select objMrv.MRVNO_MRV).Distinct().Count();
             string mrvCode = "MRV/" + (1001 + mrvCount) + "/" + currYear;
             return mrvCode;
@@ -26,7 +26,7 @@ namespace ASI.MGC.FS.WebCommon
         {
             var currYear = DateTime.Now.Year.ToString();
             var jobCount = (from objMrv in iUnitOfWork.Repository<JOBMASTER>().Query().Get()
-                            //where objMrv.JOBNO_JM.EndsWith(currYear)
+                                //where objMrv.JOBNO_JM.EndsWith(currYear)
                             select objMrv.JOBNO_JM).Distinct().Count();
             return jobCount;
         }
@@ -43,8 +43,8 @@ namespace ASI.MGC.FS.WebCommon
                 DateTime startDate = Convert.ToDateTime("2017/01/01");
                 DateTime endDate = Convert.ToDateTime("2017/05/05");
                 var revCashSaleCount = (from lstBankTransaction in iUnitOfWork.Repository<BANKTRANSACTION>().Query().Get()
-                                     where lstBankTransaction.DOCNUMBER_BT.StartsWith("RevRCT") && (lstBankTransaction.GLDATE_BT >= startDate && lstBankTransaction.GLDATE_BT <= endDate)
-                                     select lstBankTransaction.DOCNUMBER_BT).Distinct().Count();
+                                        where lstBankTransaction.DOCNUMBER_BT.StartsWith("RevRCT") && (lstBankTransaction.GLDATE_BT >= startDate && lstBankTransaction.GLDATE_BT <= endDate)
+                                        select lstBankTransaction.DOCNUMBER_BT).Distinct().Count();
                 cmCount = cmCount + revCashSaleCount;
             }
             string cashMemoCode = Convert.ToString("RCT/" + Convert.ToString(cmCount) + "/" + currYear);
@@ -245,9 +245,9 @@ namespace ASI.MGC.FS.WebCommon
             var currentUser = (from users in iUnitOfWork.Repository<MESUser>().Query().Get()
                                where users.Email.Equals(HttpContext.Current.User.Identity.Name)
                                select users).Select(a => new
-                            {
-                                a.UserName
-                            }).FirstOrDefault();
+                               {
+                                   a.UserName
+                               }).FirstOrDefault();
             if (currentUser != null)
             {
                 currUserCode = currentUser.UserName;
@@ -342,6 +342,30 @@ namespace ASI.MGC.FS.WebCommon
             docDictionary.Add(5, "QOT");
             docDictionary.Add(6, "STJ");
             return docDictionary;
+        }
+
+        public static void Proc_ConverUnit(string Unit, double QTY, decimal RATE_Renamed, out double ConvertedQty, out string ConvetedUnit, out decimal ConvrtedRate, IUnitOfWork _unitofWork)
+        {
+            ConvertedQty = 0;
+            ConvetedUnit = "";
+            decimal a = default(decimal);
+            decimal b = default(decimal);
+            decimal UnitQty = default(decimal);
+            decimal BasicQty = default(decimal);
+            string BasicUnit = null;
+            ConvrtedRate = 0;
+            var unit = (from unitMessurement in _unitofWork.Repository<UNITMESSUREMENT>().Query().Get()
+                        where unitMessurement.UNIT_UM.Equals(Unit)
+                        select unitMessurement).SingleOrDefault();
+            if (unit != null)
+            {
+                UnitQty = Convert.ToDecimal(unit.UNITQTY_UM != null ? unit.UNITQTY_UM : 0);
+                BasicQty = Convert.ToDecimal(unit.BASICPRIMARYQTY_UM != null ? unit.BASICPRIMARYQTY_UM : 0);
+                BasicUnit = unit.BASICPRIMARYUNIT_UM != null ? unit.BASICPRIMARYUNIT_UM : "";
+                a = BasicQty / UnitQty;
+                ConvertedQty = Convert.ToDouble(QTY * Convert.ToDouble(a));
+                ConvrtedRate = RATE_Renamed / a;
+            }
         }
     }
 }
