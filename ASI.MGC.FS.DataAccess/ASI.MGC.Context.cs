@@ -1282,5 +1282,79 @@ namespace ASI.MGC.FS.DataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_TransactionQueries_Result>("sp_TransactionQueries", typeParameter);
         }
+    
+        [DbFunction("ASI_MGC_FSEntities", "fn_FinancialTableSum")]
+        public virtual IQueryable<fn_FinancialTableSum_Result> fn_FinancialTableSum(Nullable<int> type, string aCCode, Nullable<System.DateTime> sDate, Nullable<System.DateTime> fDate)
+        {
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("Type", type) :
+                new ObjectParameter("Type", typeof(int));
+    
+            var aCCodeParameter = aCCode != null ?
+                new ObjectParameter("ACCode", aCCode) :
+                new ObjectParameter("ACCode", typeof(string));
+    
+            var sDateParameter = sDate.HasValue ?
+                new ObjectParameter("SDate", sDate) :
+                new ObjectParameter("SDate", typeof(System.DateTime));
+    
+            var fDateParameter = fDate.HasValue ?
+                new ObjectParameter("FDate", fDate) :
+                new ObjectParameter("FDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fn_FinancialTableSum_Result>("[ASI_MGC_FSEntities].[fn_FinancialTableSum](@Type, @ACCode, @SDate, @FDate)", typeParameter, aCCodeParameter, sDateParameter, fDateParameter);
+        }
+    
+        public virtual ObjectResult<sp_FinancialTables_Result> sp_FinancialTables(Nullable<int> type, string aCCode, Nullable<System.DateTime> sDate, Nullable<System.DateTime> fDate)
+        {
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("Type", type) :
+                new ObjectParameter("Type", typeof(int));
+    
+            var aCCodeParameter = aCCode != null ?
+                new ObjectParameter("ACCode", aCCode) :
+                new ObjectParameter("ACCode", typeof(string));
+    
+            var sDateParameter = sDate.HasValue ?
+                new ObjectParameter("SDate", sDate) :
+                new ObjectParameter("SDate", typeof(System.DateTime));
+    
+            var fDateParameter = fDate.HasValue ?
+                new ObjectParameter("FDate", fDate) :
+                new ObjectParameter("FDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FinancialTables_Result>("sp_FinancialTables", typeParameter, aCCodeParameter, sDateParameter, fDateParameter);
+        }
+    
+        [DbFunction("ASI_MGC_FSEntities", "fn_ConvertUnit")]
+        public virtual IQueryable<fn_ConvertUnit_Result> fn_ConvertUnit(string unit, Nullable<decimal> qty, Nullable<decimal> rate)
+        {
+            var unitParameter = unit != null ?
+                new ObjectParameter("Unit", unit) :
+                new ObjectParameter("Unit", typeof(string));
+    
+            var qtyParameter = qty.HasValue ?
+                new ObjectParameter("Qty", qty) :
+                new ObjectParameter("Qty", typeof(decimal));
+    
+            var rateParameter = rate.HasValue ?
+                new ObjectParameter("Rate", rate) :
+                new ObjectParameter("Rate", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fn_ConvertUnit_Result>("[ASI_MGC_FSEntities].[fn_ConvertUnit](@Unit, @Qty, @Rate)", unitParameter, qtyParameter, rateParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> sp_StockLedger_Converstion(string pRODID, Nullable<System.DateTime> sDATE)
+        {
+            var pRODIDParameter = pRODID != null ?
+                new ObjectParameter("PRODID", pRODID) :
+                new ObjectParameter("PRODID", typeof(string));
+    
+            var sDATEParameter = sDATE.HasValue ?
+                new ObjectParameter("SDATE", sDATE) :
+                new ObjectParameter("SDATE", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("sp_StockLedger_Converstion", pRODIDParameter, sDATEParameter);
+        }
     }
 }

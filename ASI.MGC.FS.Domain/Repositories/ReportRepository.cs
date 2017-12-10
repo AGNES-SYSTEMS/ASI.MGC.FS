@@ -589,7 +589,7 @@ namespace ASI.MGC.FS.Domain.Repositories
         {
             try
             {
-                _context.sp_GetBankStatementData(bankCode, startDate, endDate,null,null,null,null,null);
+                _context.sp_GetBankStatementData(bankCode, startDate, endDate, null, null, null, null, null);
             }
             catch (Exception)
             {
@@ -601,7 +601,7 @@ namespace ASI.MGC.FS.Domain.Repositories
         {
             try
             {
-                _context.sp_GetGLStatementData(glCode, startDate, endDate,null,null,null,null,null);
+                _context.sp_GetGLStatementData(glCode, startDate, endDate, null, null, null, null, null);
             }
             catch (Exception)
             {
@@ -673,7 +673,7 @@ namespace ASI.MGC.FS.Domain.Repositories
         {
             try
             {
-                _context.sp_GetARStatementData(acCode, startDate, endDate,null,null,null,null,null);
+                _context.sp_GetARStatementData(acCode, startDate, endDate, null, null, null, null, null);
             }
             catch (Exception)
             {
@@ -684,7 +684,7 @@ namespace ASI.MGC.FS.Domain.Repositories
         {
             try
             {
-                _context.sp_GetARStatementOutStandingData(acCode, startDate, endDate,null,null,null,null,null);
+                _context.sp_GetARStatementOutStandingData(acCode, startDate, endDate, null, null, null, null, null);
             }
             catch (Exception)
             {
@@ -857,6 +857,33 @@ namespace ASI.MGC.FS.Domain.Repositories
                 //exception handling pending
             }
             return lst;
+        }
+        public IList<sp_FinancialTables_Result> sp_FinancialTables(int type, string code, DateTime sDate, DateTime fDate)
+        {
+            List<sp_FinancialTables_Result> lst = null;
+            try
+            {
+                lst = _context.sp_FinancialTables(type, code, sDate, fDate).ToList();
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+            return lst;
+        }
+        public decimal sp_StockLedger_Converstion(string code, DateTime sDate)
+        {
+            decimal ConvertedRate = default(decimal);
+            try
+            {
+                var lstConvertedRate = _context.sp_StockLedger_Converstion(code, sDate).ToList();
+                ConvertedRate = lstConvertedRate != null && lstConvertedRate.Count > 0 ? Convert.ToDecimal(lstConvertedRate[0].Value) : 0;
+            }
+            catch (Exception ex)
+            {
+                //exception handling pending
+            }
+            return ConvertedRate;
         }
     }
 }
