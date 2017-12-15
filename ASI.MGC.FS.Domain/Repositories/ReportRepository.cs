@@ -885,5 +885,19 @@ namespace ASI.MGC.FS.Domain.Repositories
             }
             return ConvertedRate;
         }
+        public decimal sp_GetStockValuation(DateTime sDate)
+        {
+            decimal stockValuation = default(decimal);
+            try
+            {
+                var lstStockValuation = _context.SP_GetStockValuation(sDate).ToList();
+                stockValuation = lstStockValuation != null && lstStockValuation.Count > 0 ? Convert.ToDecimal(lstStockValuation[0].Value) : 0;
+            }
+            catch (Exception ex)
+            {
+                //exception handling pending
+            }
+            return stockValuation;
+        }
     }
 }

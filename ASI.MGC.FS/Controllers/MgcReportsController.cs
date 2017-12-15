@@ -167,6 +167,7 @@ namespace ASI.MGC.FS.Controllers
         public JsonResult FetchPLData(FormCollection frm)
         {
             bool success = false;
+            ReportRepository repo = _unitOfWork.ExtRepositoryFor<ReportRepository>();
             using (var transaction = _unitOfWork.BeginTransaction())
             {
                 try
@@ -242,8 +243,8 @@ namespace ASI.MGC.FS.Controllers
                                 _unitOfWork.Repository<PROFITANDLOSS_RPT>().Insert(rptPLStatementObj);
                                 _unitOfWork.Save();
                             }
-                            openingBalance = fn_StockValution(startDate);
-                            uptoYear = fn_StockValution(yearStart);
+                            openingBalance = repo.sp_GetStockValuation(startDate);
+                            uptoYear = repo.sp_GetStockValuation(yearStart);
 
                             //PROFITANDLOSS_RPT rptPLStatementOpn = null;
                             var rptPLStatementOpn = _unitOfWork.Repository<PROFITANDLOSS_RPT>().Create();
@@ -346,93 +347,93 @@ namespace ASI.MGC.FS.Controllers
         }
 
         //stock calculate
-        private decimal fn_StockValution(DateTime SDate)
-        {
-            decimal functionReturnValue = default(decimal);
-            string PrCode = null;
-            string PrName = null;
-            double PrQty = 0;
-            decimal RATE_Renamed = default(decimal);
-            double totalqty = 0;
-            string Unit = null;
-            string Cunit = null;
-            DateTime CurDate = DateTime.Now;
-            double aqty = 0;
-            DateTime GLDAte = DateTime.Now;
-            //short No = 0;
-            //string Particulars = null;
-            //double ReceiptQty = 0;
-            //decimal ReceiptRate = default(decimal);
-            //double IssueQty = 0;
-            //decimal IssueRate = default(decimal);
-            //string ProId = null;
-            //string ProdDescription = null;
-            //string VarUnit = null;
-            ReportRepository repo = _unitOfWork.ExtRepositoryFor<ReportRepository>();
-            double ConvertedQty = default(double);
-            string ConvertedUnit = "";
-            decimal ConvertedRate = default(decimal);
-            var prdMasterRecords = (from productMaster in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
-                                    where productMaster.STATUS_PM.Equals("IP")
-                                    select productMaster).ToList();
-            foreach (var record in prdMasterRecords)
-            {
-                //No = 1;
-                PrCode = record.PROD_CODE_PM;
-                PrName = record.DESCRIPTION_PM;
-                totalqty = 0;
-                PrQty = 0;
-                Unit = "";
-                PrName = "";
-                totalqty = 0;
+        //private decimal fn_StockValution(DateTime SDate)
+        //{
+        //    decimal functionReturnValue = default(decimal);
+        //    string PrCode = null;
+        //    string PrName = null;
+        //    double PrQty = 0;
+        //    decimal RATE_Renamed = default(decimal);
+        //    double totalqty = 0;
+        //    string Unit = null;
+        //    string Cunit = null;
+        //    DateTime CurDate = DateTime.Now;
+        //    double aqty = 0;
+        //    DateTime GLDAte = DateTime.Now;
+        //    //short No = 0;
+        //    //string Particulars = null;
+        //    //double ReceiptQty = 0;
+        //    //decimal ReceiptRate = default(decimal);
+        //    //double IssueQty = 0;
+        //    //decimal IssueRate = default(decimal);
+        //    //string ProId = null;
+        //    //string ProdDescription = null;
+        //    //string VarUnit = null;
+        //    ReportRepository repo = _unitOfWork.ExtRepositoryFor<ReportRepository>();
+        //    double ConvertedQty = default(double);
+        //    string ConvertedUnit = "";
+        //    decimal ConvertedRate = default(decimal);
+        //    var prdMasterRecords = (from productMaster in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
+        //                            where productMaster.STATUS_PM.Equals("IP")
+        //                            select productMaster).ToList();
+        //    foreach (var record in prdMasterRecords)
+        //    {
+        //        //No = 1;
+        //        PrCode = record.PROD_CODE_PM;
+        //        PrName = record.DESCRIPTION_PM;
+        //        totalqty = 0;
+        //        PrQty = 0;
+        //        Unit = "";
+        //        PrName = "";
+        //        totalqty = 0;
 
-                //var stockLedgerSum = (from stockLedger in _unitOfWork.Repository<STOCKLEDGER>().Query().Get()
-                //                      where stockLedger.PRODID_SL.Trim() == PrCode.Trim() &&
-                //                      (DbFunctions.TruncateTime(stockLedger.LEDGER_DATE_SL) < SDate.Date)
-                //                      select stockLedger).AsEnumerable().Select(c => new { c.UNIT_SL, c.ISSUE_QTY_SL, c.RECEPT_QTY_SL })
-                //                      .GroupBy(c => new { c.UNIT_SL })
-                //                      .Select(g => new { unit = g.Key.UNIT_SL, SumQtyTotal = g.Sum(x => (x.RECEPT_QTY_SL != null ? x.RECEPT_QTY_SL : 0) - (x.ISSUE_QTY_SL != null ? x.ISSUE_QTY_SL : 0)) })
-                //                      .ToList();
-                var stockLedgerSum = repo.sp_FinancialTables(6, PrCode, DateTime.Now, DateTime.Now);
-                ConvertedRate = 0;
-                ConvertedUnit = "";
-                ConvertedQty = 0;
-                foreach (var stkSumRecord in stockLedgerSum)
-                {
-                    PrQty = stkSumRecord.Sum1 != null ? Convert.ToDouble(stkSumRecord.Sum1) : 0;
-                    Unit = stkSumRecord.Unit != null ? stkSumRecord.Unit : "";
+        //        //var stockLedgerSum = (from stockLedger in _unitOfWork.Repository<STOCKLEDGER>().Query().Get()
+        //        //                      where stockLedger.PRODID_SL.Trim() == PrCode.Trim() &&
+        //        //                      (DbFunctions.TruncateTime(stockLedger.LEDGER_DATE_SL) < SDate.Date)
+        //        //                      select stockLedger).AsEnumerable().Select(c => new { c.UNIT_SL, c.ISSUE_QTY_SL, c.RECEPT_QTY_SL })
+        //        //                      .GroupBy(c => new { c.UNIT_SL })
+        //        //                      .Select(g => new { unit = g.Key.UNIT_SL, SumQtyTotal = g.Sum(x => (x.RECEPT_QTY_SL != null ? x.RECEPT_QTY_SL : 0) - (x.ISSUE_QTY_SL != null ? x.ISSUE_QTY_SL : 0)) })
+        //        //                      .ToList();
+        //        var stockLedgerSum = repo.sp_FinancialTables(6, PrCode, DateTime.Now, DateTime.Now);
+        //        ConvertedRate = 0;
+        //        ConvertedUnit = "";
+        //        ConvertedQty = 0;
+        //        foreach (var stkSumRecord in stockLedgerSum)
+        //        {
+        //            PrQty = stkSumRecord.Sum1 != null ? Convert.ToDouble(stkSumRecord.Sum1) : 0;
+        //            Unit = stkSumRecord.Unit != null ? stkSumRecord.Unit : "";
 
-                    WebCommon.CommonModelAccessUtility.Proc_ConverUnit(Unit.Trim(), PrQty, 0, out ConvertedQty, out ConvertedUnit, out ConvertedRate, _unitOfWork);
+        //            WebCommon.CommonModelAccessUtility.Proc_ConverUnit(Unit.Trim(), PrQty, 0, out ConvertedQty, out ConvertedUnit, out ConvertedRate, _unitOfWork);
 
-                    PrQty = ConvertedQty;
-                    Unit = ConvertedUnit;
-                    CurDate = Convert.ToDateTime(SDate);
-                    totalqty = totalqty + PrQty;
-                }
-                RATE_Renamed = repo.sp_StockLedger_Converstion(PrCode.Trim(), SDate);
+        //            PrQty = ConvertedQty;
+        //            Unit = ConvertedUnit;
+        //            CurDate = Convert.ToDateTime(SDate);
+        //            totalqty = totalqty + PrQty;
+        //        }
+        //        RATE_Renamed = repo.sp_StockLedger_Converstion(PrCode.Trim(), SDate);
 
-                //var stockLedgerRecords = (from stockLedger in _unitOfWork.Repository<STOCKLEDGER>().Query().Get()
-                //                          where stockLedger.PRODID_SL.Trim() == PrCode.Trim() &&
-                //                          (DbFunctions.TruncateTime(stockLedger.LEDGER_DATE_SL) < SDate.Date) && stockLedger.RECEPT_RATE_SL > 0
-                //                          select stockLedger).ToList();
-                //RATE_Renamed = 0;
-                //ConvertedRate = 0;
-                //ConvertedUnit = "";
-                //ConvertedQty = 0;
-                //foreach (var stkRecord in stockLedgerRecords)
-                //{
-                //    RATE_Renamed = stkRecord.RECEPT_RATE_SL != null ? Convert.ToDecimal(stkRecord.RECEPT_RATE_SL) : 0;
-                //    Cunit = stkRecord.UNIT_SL != null ? stkRecord.UNIT_SL : "";
-                //    aqty = stkRecord.RECEPT_QTY_SL != null ? Convert.ToDouble(stkRecord.RECEPT_QTY_SL) : 0;
-                //    WebCommon.CommonModelAccessUtility.Proc_ConverUnit(Cunit.Trim(), aqty, RATE_Renamed, out ConvertedQty, out ConvertedUnit, out ConvertedRate, _unitOfWork);
-                //    RATE_Renamed = ConvertedRate;
-                //}
+        //        //var stockLedgerRecords = (from stockLedger in _unitOfWork.Repository<STOCKLEDGER>().Query().Get()
+        //        //                          where stockLedger.PRODID_SL.Trim() == PrCode.Trim() &&
+        //        //                          (DbFunctions.TruncateTime(stockLedger.LEDGER_DATE_SL) < SDate.Date) && stockLedger.RECEPT_RATE_SL > 0
+        //        //                          select stockLedger).ToList();
+        //        //RATE_Renamed = 0;
+        //        //ConvertedRate = 0;
+        //        //ConvertedUnit = "";
+        //        //ConvertedQty = 0;
+        //        //foreach (var stkRecord in stockLedgerRecords)
+        //        //{
+        //        //    RATE_Renamed = stkRecord.RECEPT_RATE_SL != null ? Convert.ToDecimal(stkRecord.RECEPT_RATE_SL) : 0;
+        //        //    Cunit = stkRecord.UNIT_SL != null ? stkRecord.UNIT_SL : "";
+        //        //    aqty = stkRecord.RECEPT_QTY_SL != null ? Convert.ToDouble(stkRecord.RECEPT_QTY_SL) : 0;
+        //        //    WebCommon.CommonModelAccessUtility.Proc_ConverUnit(Cunit.Trim(), aqty, RATE_Renamed, out ConvertedQty, out ConvertedUnit, out ConvertedRate, _unitOfWork);
+        //        //    RATE_Renamed = ConvertedRate;
+        //        //}
 
-                functionReturnValue = functionReturnValue + Convert.ToDecimal(totalqty) * RATE_Renamed;
-            }
+        //        functionReturnValue = functionReturnValue + Convert.ToDecimal(totalqty) * RATE_Renamed;
+        //    }
 
-            return functionReturnValue;
-        }
+        //    return functionReturnValue;
+        //}
         public void Proc_ProfitandLossGenerate(DateTime SDate, DateTime FDate)
         {
             string ACCode = null;
@@ -526,8 +527,8 @@ namespace ASI.MGC.FS.Controllers
                 //READ Opening STOCK
 
                 ACdescription = "Opening Stock";
-                Opening = fn_StockValution(SDate);
-                UptoYear = fn_StockValution(yearStart);
+                Opening = repo.sp_GetStockValuation(SDate);
+                UptoYear = repo.sp_GetStockValuation(yearStart);
                 var objOpenStockPLRpt = _unitOfWork.Repository<PROFITANDLOSS_RPT>().Create();
                 objOpenStockPLRpt.ACCOUNTCODE_PL = ACType.Trim();
                 objOpenStockPLRpt.DESCRIPTION_PL = ACdescription.Trim(); ;
@@ -540,8 +541,8 @@ namespace ASI.MGC.FS.Controllers
                 //READ Closing STOCK
                 ACdescription = "Closing Stock";
                 ACType = "Sales";
-                Opening = 0 - fn_StockValution(FDate);
-                UptoYear = 0 - fn_StockValution(FDate);
+                Opening = 0 - repo.sp_GetStockValuation(FDate);
+                UptoYear = 0 - repo.sp_GetStockValuation(FDate);
                 var objClosingStockPLRpt = _unitOfWork.Repository<PROFITANDLOSS_RPT>().Create();
                 objClosingStockPLRpt.ACCOUNTCODE_PL = ACType.Trim();
                 objClosingStockPLRpt.DESCRIPTION_PL = ACdescription.Trim(); ;
@@ -992,8 +993,8 @@ namespace ASI.MGC.FS.Controllers
                 }
                 //CLOSING STOCK ADD
 
-                Opening = fn_StockValution(FDate);
-                UptoYear = fn_StockValution(FDate);
+                Opening = repo.sp_GetStockValuation(FDate);
+                UptoYear = repo.sp_GetStockValuation(FDate);
                 var objStockBalanceSheet = _unitOfWork.Repository<BALANCESHEET>().Create();
                 objStockBalanceSheet.MAINCODE_BS = Code.Trim();
                 objStockBalanceSheet.SUBDESCRIPTION_BS = ACType.Trim();

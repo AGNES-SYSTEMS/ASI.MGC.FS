@@ -1356,5 +1356,14 @@ namespace ASI.MGC.FS.DataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("sp_StockLedger_Converstion", pRODIDParameter, sDATEParameter);
         }
+    
+        public virtual ObjectResult<Nullable<decimal>> SP_GetStockValuation(Nullable<System.DateTime> sdate)
+        {
+            var sdateParameter = sdate.HasValue ?
+                new ObjectParameter("Sdate", sdate) :
+                new ObjectParameter("Sdate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("SP_GetStockValuation", sdateParameter);
+        }
     }
 }

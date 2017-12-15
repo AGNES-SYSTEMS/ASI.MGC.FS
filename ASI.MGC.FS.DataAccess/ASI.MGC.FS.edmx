@@ -1002,6 +1002,9 @@
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="fn_StockValuation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="money">
+          <Parameter Name="Sdate" Type="datetime" Mode="In" />
+        </Function>
         <Function Name="Invoice1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="Job_Card_Format1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="Job_Card10" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -1289,6 +1292,9 @@
         <Function Name="sp_GetStockLedgerData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="SP_GetStockValuation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Sdate" Type="datetime" Mode="In" />
         </Function>
         <Function Name="sp_GetTrialBalanceData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Startdate" Type="datetime" Mode="In" />
@@ -1896,6 +1902,9 @@
           <FunctionImport Name="sp_StockLedger_Converstion" ReturnType="Collection(Decimal)">
             <Parameter Name="PRODID" Mode="In" Type="String" />
             <Parameter Name="SDATE" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GetStockValuation" ReturnType="Collection(Decimal)">
+            <Parameter Name="Sdate" Mode="In" Type="DateTime" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="rpt_BankPayment_Result">
@@ -5671,6 +5680,7 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_StockLedger_Converstion" FunctionName="ASI_MGC_FSModel.Store.sp_StockLedger_Converstion" />
+          <FunctionImportMapping FunctionImportName="SP_GetStockValuation" FunctionName="ASI_MGC_FSModel.Store.SP_GetStockValuation" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -95,9 +95,14 @@ $(document).ready(function () {
     $('#ddlPayMode').on("change", function () {
         var totalAmount = $("#txtQty").val() * $("#txtPrRate").val();
         var $finalAmount;
+        var $Vat = 0;
+        var $taxedAmount = 0;
         $("#txtPrAmount").val(totalAmount);
         if ($('#ddlPayMode').val() === "Cash") {
             $finalAmount = $("#txtShipCharge").val() * 1 + totalAmount - $("#txtDiscount").val() * 1;
+            $Vat = ($finalAmount * 5.0) / 100;
+            $taxedAmount = $finalAmount + $Vat;
+            $finalAmount = $taxedAmount;
             $("#txtCreditAmount").val("0");
             $("#txtCreditCustCode").val("");
             $("#txtCreditCustName").val("");
@@ -110,6 +115,9 @@ $(document).ready(function () {
         }
         else if ($('#ddlPayMode').val() === "Credit") {
             $finalAmount = $("#txtShipCharge").val() * 1 + totalAmount - $("#txtDiscount").val() * 1;
+            $Vat = ($finalAmount * 5.0) / 100;
+            $taxedAmount = $finalAmount + $Vat;
+            $finalAmount = $taxedAmount;
             $("#txtCashAmount").val("0");
             $("#txtCreditCustName").attr("required", "true");
             $("#txtCashAmount").removeAttr("required");
@@ -126,6 +134,7 @@ $(document).ready(function () {
                 $("#txtCreditCustName").val("");
             }
         }
+        $('#txtVAT').val($Vat);
     });
     $("#txtQty").on("blur", function () {
         if ($("#txtQty").val() === "") {
@@ -133,9 +142,14 @@ $(document).ready(function () {
         }
         var totalAmount = $("#txtQty").val() * $("#txtPrRate").val();
         var $finalAmount;
+        var $Vat = 0;
+        var $taxedAmount = 0;
         $("#txtPrAmount").val(totalAmount);
         if ($('#ddlPayMode').val() === "Cash") {
             $finalAmount = $("#txtShipCharge").val() - $("#txtDiscount").val() + totalAmount;
+            $Vat = ($finalAmount * 5.0) / 100;
+            $taxedAmount = $finalAmount + $Vat;
+            $finalAmount = $taxedAmount;
             $("#txtCreditAmount").val("0");
             $("#divCreditAmount").hide();
             $('#txtCashAmount').val($finalAmount);
@@ -143,11 +157,15 @@ $(document).ready(function () {
         }
         else if ($('#ddlPayMode').val() === "Credit") {
             $finalAmount = $("#txtShipCharge").val() - $("#txtDiscount").val() + totalAmount;
+            $Vat = ($finalAmount * 5.0) / 100;
+            $taxedAmount = $finalAmount + $Vat;
+            $finalAmount = $taxedAmount;
             $("#txtCashAmount").val("0");
             $("#divCashAmount").hide();
             $('#txtCreditAmount').val($finalAmount);
             $("#divCreditAmount").show();
         }
+        $('#txtVAT').val($Vat);
     });
     $("#txtPrRate").on("blur", function () {
         if ($("#txtPrRate").val() === "") {
@@ -155,9 +173,14 @@ $(document).ready(function () {
         }
         var totalAmount = $("#txtQty").val() * $("#txtPrRate").val();
         var $finalAmount;
+        var $Vat = 0;
+        var $taxedAmount = 0;
         $("#txtPrAmount").val(totalAmount);
         if ($('#ddlPayMode').val() === "Cash") {
             $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + totalAmount;
+            $Vat = ($finalAmount * 5.0) / 100;
+            $taxedAmount = $finalAmount + $Vat;
+            $finalAmount = $taxedAmount;
             $("#txtCreditAmount").val("0");
             $("#divCreditAmount").hide();
             $('#txtCashAmount').val($finalAmount);
@@ -165,11 +188,15 @@ $(document).ready(function () {
         }
         else if ($('#ddlPayMode').val() === "Credit") {
             $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + totalAmount;
+            $Vat = ($finalAmount * 5.0) / 100;
+            $taxedAmount = $finalAmount + $Vat;
+            $finalAmount = $taxedAmount;
             $("#txtCashAmount").val("0");
             $("#divCashAmount").hide();
             $('#txtCreditAmount').val($finalAmount);
             $("#divCreditAmount").show();
         }
+        $('#txtVAT').val($Vat);
     });
     $("#txtDiscount").on("blur", function () {
         if ($("#txtDiscount").val() === "") {
@@ -177,9 +204,14 @@ $(document).ready(function () {
         }
         var totalAmount = $("#txtQty").val() * $("#txtPrRate").val();
         var $finalAmount;
+        var $Vat = 0;
+        var $taxedAmount = 0;
         $("#txtPrAmount").val(totalAmount);
         if ($('#ddlPayMode').val() === "Cash") {
             $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + totalAmount;
+            $Vat = ($finalAmount * 5.0) / 100;
+            $taxedAmount = $finalAmount + $Vat;
+            $finalAmount = $taxedAmount;
             $("#divCreditAmount").val("0");
             $("#divCreditAmount").hide();
             $('#txtCashAmount').val($finalAmount);
@@ -187,11 +219,15 @@ $(document).ready(function () {
         }
         else if ($('#ddlPayMode').val() === "Credit") {
             $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + totalAmount;
+            $Vat = ($finalAmount * 5.0) / 100;
+            $taxedAmount = $finalAmount + $Vat;
+            $finalAmount = $taxedAmount;
             $("#divCashAmount").val("0");
             $("#divCashAmount").hide();
             $('#txtCreditAmount').val($finalAmount);
             $("#divCreditAmount").show();
         }
+        $('#txtVAT').val($Vat);
     });
     $("#txtShipCharge").on("blur", function () {
         if ($("#txtShipCharge").val() === "") {
@@ -199,9 +235,14 @@ $(document).ready(function () {
         }
         var totalAmount = $("#txtQty").val() * $("#txtPrRate").val();
         var $finalAmount;
+        var $Vat = 0;
+        var $taxedAmount = 0;
         $("#txtPrAmount").val(totalAmount);
         if ($('#ddlPayMode').val() === "Cash") {
             $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + totalAmount;
+            $Vat = ($finalAmount * 5.0) / 100;
+            $taxedAmount = $finalAmount + $Vat;
+            $finalAmount = $taxedAmount;
             $("#divCreditAmount").val("0");
             $("#divCreditAmount").hide();
             $('#txtCashAmount').val($finalAmount);
@@ -209,11 +250,15 @@ $(document).ready(function () {
         }
         else if ($('#ddlPayMode').val() === "Credit") {
             $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + totalAmount;
+            $Vat = ($finalAmount * 5.0) / 100;
+            $taxedAmount = $finalAmount + $Vat;
+            $finalAmount = $taxedAmount;
             $("#divCashAmount").val("0");
             $("#divCashAmount").hide();
             $('#txtCreditAmount').val($finalAmount);
             $("#divCreditAmount").show();
         }
+        $('#txtVAT').val($Vat);
     });
     var $mrvJobStatus = "N";
     /***** Start - Adding JQGRID Code For Searching Job Number and MRV Number****/
