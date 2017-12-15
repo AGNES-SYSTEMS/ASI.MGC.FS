@@ -180,7 +180,8 @@ namespace ASI.MGC.FS.Controllers
                 objSales.Rate = Convert.ToDouble(sale.RATE_SD);
                 objSales.Discount = Convert.ToDouble(sale.DISCOUNT_SD);
                 objSales.ShipChrg = Convert.ToDouble(sale.SHIPPINGCHARGES_SD);
-                objSales.CashAmount = (Convert.ToInt32(sale.QTY_SD) * Convert.ToDouble(sale.RATE_SD)) - Convert.ToDouble(sale.DISCOUNT_SD) + Convert.ToDouble(sale.SHIPPINGCHARGES_SD);
+                objSales.ValueAddedTax = Convert.ToDouble(sale.VAT_SD);
+                objSales.CashAmount = (Convert.ToInt32(sale.QTY_SD) * Convert.ToDouble(sale.RATE_SD)) - Convert.ToDouble(sale.DISCOUNT_SD) + Convert.ToDouble(sale.SHIPPINGCHARGES_SD) + Convert.ToDouble(sale.VAT_SD);
                 lstSales.Add(objSales);
             }
 
@@ -228,7 +229,8 @@ namespace ASI.MGC.FS.Controllers
                 objSales.Rate = Convert.ToDouble(sale.RATE_SD);
                 objSales.Discount = Convert.ToDouble(sale.DISCOUNT_SD);
                 objSales.ShipChrg = Convert.ToDouble(sale.SHIPPINGCHARGES_SD);
-                objSales.CashAmount = (Convert.ToInt32(sale.QTY_SD) * Convert.ToDouble(sale.RATE_SD)) - Convert.ToDouble(sale.DISCOUNT_SD) + Convert.ToDouble(sale.SHIPPINGCHARGES_SD);
+                objSales.ValueAddedTax = Convert.ToDouble(sale.VAT_SD);
+                objSales.CashAmount = (Convert.ToInt32(sale.QTY_SD) * Convert.ToDouble(sale.RATE_SD)) - Convert.ToDouble(sale.DISCOUNT_SD) + Convert.ToDouble(sale.SHIPPINGCHARGES_SD) + Convert.ToDouble(sale.VAT_SD);
                 lstSales.Add(objSales);
             }
 

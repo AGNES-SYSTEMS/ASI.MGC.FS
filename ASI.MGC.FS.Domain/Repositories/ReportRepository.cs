@@ -536,7 +536,7 @@ namespace ASI.MGC.FS.Domain.Repositories
             {
                 lst = _context.rpt_StockReceipt(voucherNo).ToList();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 //exception handling pending
             }

@@ -100,7 +100,7 @@ $(document).ready(function () {
         $("#txtPrAmount").val(totalAmount);
         if ($('#ddlPayMode').val() === "Cash") {
             $finalAmount = $("#txtShipCharge").val() * 1 + totalAmount - $("#txtDiscount").val() * 1;
-            $Vat = ($finalAmount * 5.0) / 100;
+            $Vat = ((totalAmount - $("#txtDiscount").val()) * 5.0) / 100;
             $taxedAmount = $finalAmount + $Vat;
             $finalAmount = $taxedAmount;
             $("#txtCreditAmount").val("0");
@@ -115,7 +115,7 @@ $(document).ready(function () {
         }
         else if ($('#ddlPayMode').val() === "Credit") {
             $finalAmount = $("#txtShipCharge").val() * 1 + totalAmount - $("#txtDiscount").val() * 1;
-            $Vat = ($finalAmount * 5.0) / 100;
+            $Vat = ((totalAmount - $("#txtDiscount").val()) * 5.0) / 100;
             $taxedAmount = $finalAmount + $Vat;
             $finalAmount = $taxedAmount;
             $("#txtCashAmount").val("0");
@@ -147,7 +147,7 @@ $(document).ready(function () {
         $("#txtPrAmount").val(totalAmount);
         if ($('#ddlPayMode').val() === "Cash") {
             $finalAmount = $("#txtShipCharge").val() - $("#txtDiscount").val() + totalAmount;
-            $Vat = ($finalAmount * 5.0) / 100;
+            $Vat = ((totalAmount - $("#txtDiscount").val()) * 5.0) / 100;
             $taxedAmount = $finalAmount + $Vat;
             $finalAmount = $taxedAmount;
             $("#txtCreditAmount").val("0");
@@ -157,7 +157,7 @@ $(document).ready(function () {
         }
         else if ($('#ddlPayMode').val() === "Credit") {
             $finalAmount = $("#txtShipCharge").val() - $("#txtDiscount").val() + totalAmount;
-            $Vat = ($finalAmount * 5.0) / 100;
+            $Vat = ((totalAmount - $("#txtDiscount").val()) * 5.0) / 100;
             $taxedAmount = $finalAmount + $Vat;
             $finalAmount = $taxedAmount;
             $("#txtCashAmount").val("0");
@@ -178,7 +178,7 @@ $(document).ready(function () {
         $("#txtPrAmount").val(totalAmount);
         if ($('#ddlPayMode').val() === "Cash") {
             $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + totalAmount;
-            $Vat = ($finalAmount * 5.0) / 100;
+            $Vat = ((totalAmount - $("#txtDiscount").val()) * 5.0) / 100;
             $taxedAmount = $finalAmount + $Vat;
             $finalAmount = $taxedAmount;
             $("#txtCreditAmount").val("0");
@@ -188,7 +188,7 @@ $(document).ready(function () {
         }
         else if ($('#ddlPayMode').val() === "Credit") {
             $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + totalAmount;
-            $Vat = ($finalAmount * 5.0) / 100;
+            $Vat = ((totalAmount - $("#txtDiscount").val()) * 5.0) / 100;
             $taxedAmount = $finalAmount + $Vat;
             $finalAmount = $taxedAmount;
             $("#txtCashAmount").val("0");
@@ -209,7 +209,7 @@ $(document).ready(function () {
         $("#txtPrAmount").val(totalAmount);
         if ($('#ddlPayMode').val() === "Cash") {
             $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + totalAmount;
-            $Vat = ($finalAmount * 5.0) / 100;
+            $Vat = ((totalAmount - $("#txtDiscount").val()) * 5.0) / 100;
             $taxedAmount = $finalAmount + $Vat;
             $finalAmount = $taxedAmount;
             $("#divCreditAmount").val("0");
@@ -219,7 +219,7 @@ $(document).ready(function () {
         }
         else if ($('#ddlPayMode').val() === "Credit") {
             $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + totalAmount;
-            $Vat = ($finalAmount * 5.0) / 100;
+            $Vat = ((totalAmount - $("#txtDiscount").val()) * 5.0) / 100;
             $taxedAmount = $finalAmount + $Vat;
             $finalAmount = $taxedAmount;
             $("#divCashAmount").val("0");
@@ -240,7 +240,7 @@ $(document).ready(function () {
         $("#txtPrAmount").val(totalAmount);
         if ($('#ddlPayMode').val() === "Cash") {
             $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + totalAmount;
-            $Vat = ($finalAmount * 5.0) / 100;
+            $Vat = ((totalAmount - $("#txtDiscount").val()) * 5.0) / 100;
             $taxedAmount = $finalAmount + $Vat;
             $finalAmount = $taxedAmount;
             $("#divCreditAmount").val("0");
@@ -250,7 +250,7 @@ $(document).ready(function () {
         }
         else if ($('#ddlPayMode').val() === "Credit") {
             $finalAmount = $("#txtShipCharge").val() * 1 - $("#txtDiscount").val() * 1 + totalAmount;
-            $Vat = ($finalAmount * 5.0) / 100;
+            $Vat = ((totalAmount - $("#txtDiscount").val()) * 5.0) / 100;
             $taxedAmount = $finalAmount + $Vat;
             $finalAmount = $taxedAmount;
             $("#divCashAmount").val("0");

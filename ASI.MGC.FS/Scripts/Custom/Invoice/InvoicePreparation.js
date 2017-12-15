@@ -46,20 +46,24 @@ function getSaleDetailByMrv() {
             var netAmount = 0;
             var totalDiscount = 0;
             var totalShipChrg = 0;
+            var totalVat = 0;
             for (var i = 0; i < sales.length; i++) {
                 arrMrvSaleDetails[i] = {
                     SLNO_SD: sales[i].SaleNo, JOBNO_SD: sales[i].JobNo, PRCODE_SD: sales[i].PrCode,
                     JOBID_SD: sales[i].SwCode, Description: sales[i].Description, QTY_SD: sales[i].Qty,
                     UNIT_SD: sales[i].Unit, RATE_SD: sales[i].Rate, CREDITTOTAL_SD: sales[i].CashAmount,
-                    DISCOUNT_SD: sales[i].Discount, SHIPPINGCHARGES_SD: sales[i].ShipChrg
+                    DISCOUNT_SD: sales[i].Discount, SHIPPINGCHARGES_SD: sales[i].ShipChrg,
+                    VAT_SD: sales[i].ValueAddedTax
                 };
                 netAmount = netAmount + arrMrvSaleDetails[i]["CREDITTOTAL_SD"];
                 totalDiscount = totalDiscount + arrMrvSaleDetails[i]["DISCOUNT_SD"];
                 totalShipChrg = totalShipChrg + arrMrvSaleDetails[i]["SHIPPINGCHARGES_SD"];
+                totalVat = totalVat + arrMrvSaleDetails[i]["VAT_SD"];
                 $("#txtTotalCreditAmount").val(netAmount);
                 $("#txtNetAmount").val(netAmount);
                 $("#txtTotalDiscount").val(totalDiscount);
                 $("#txtTotalShipCharges").val(totalShipChrg);
+                $("#txtTotalVAT").val(totalVat);
                 jQuery("#tblSaleDetails").jqGrid('addRowData', i + 1, arrMrvSaleDetails[i]);
             }
             var jsonMrvPrds = JSON.stringify(arrMrvSaleDetails);
@@ -73,13 +77,14 @@ function getSaleDetailByMrv() {
     });
 };
 var evaluateFields = function () {
-    $("#formCashMemo").formValidation('revalidateField', 'NARRATION_ART');
-    $("#formCashMemo").formValidation('revalidateField', 'ARAPCODE_ART');
-    $("#formCashMemo").formValidation('revalidateField', 'CustDetail');
-    $("#formCashMemo").formValidation('revalidateField', 'DEBITAMOUNT_ART');
-    $("#formCashMemo").formValidation('revalidateField', 'TotalCreditAmount');
-    $("#formCashMemo").formValidation('revalidateField', 'DEBITAMOUNT_ART');
-    $("#formCashMemo").formValidation('revalidateField', 'TotalShipCharges');
+    $("#formInvoicePrep").formValidation('revalidateField', 'NARRATION_ART');
+    $("#formInvoicePrep").formValidation('revalidateField', 'ARAPCODE_ART');
+    $("#formInvoicePrep").formValidation('revalidateField', 'CustDetail');
+    $("#formInvoicePrep").formValidation('revalidateField', 'DEBITAMOUNT_ART');
+    $("#formInvoicePrep").formValidation('revalidateField', 'TotalCreditAmount');
+    $("#formInvoicePrep").formValidation('revalidateField', 'TotalDiscount');
+    $("#formInvoicePrep").formValidation('revalidateField', 'TotalShipCharges');
+    $("#formInvoicePrep").formValidation('revalidateField', 'TotalVAT');
 };
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
@@ -108,7 +113,7 @@ $(document).ready(function () {
         autoheight: true,
         autowidth: true,
         styleUI: "Bootstrap",
-        colNames: ['Sale id', 'Job No', 'PR Code', 'S W Code', 'Description', 'Qty', 'Unit', 'Rate', 'Credit Amount', 'Discount', 'Ship. Chrg'],
+        colNames: ['Sale id', 'Job No', 'PR Code', 'S W Code', 'Description', 'Qty', 'Unit', 'Rate', 'Credit Amount', 'Discount', 'Ship. Chrg', 'VAT 5%'],
         colModel: [
             { name: 'SLNO_SD', index: 'SLNO_SD', width: 50, align: "center", sortable: false },
             { name: 'JOBNO_SD', index: 'JOBNO_SD', width: 80, align: "center", sortable: false },
@@ -120,8 +125,8 @@ $(document).ready(function () {
             { name: 'RATE_SD', index: 'RATE_SD', width: 80, align: "center", sortable: false },
             { name: 'CREDITTOTAL_SD', index: 'CREDITTOTAL_SD', width: 100, align: "center", sortable: false },
             { name: 'DISCOUNT_SD', index: 'DISCOUNT_SD', width: 100, align: "center", sortable: false },
-            { name: 'SHIPPINGCHARGES_SD', index: 'SHIPPINGCHARGES_SD', width: 100, align: "center", sortable: false }
-
+            { name: 'SHIPPINGCHARGES_SD', index: 'SHIPPINGCHARGES_SD', width: 100, align: "center", sortable: false },
+            { name: 'VAT_SD', index: 'VAT_SD', width: 100, align: "center", sortable: false }
         ],
         multiselect: false,
         caption: "Sale Details"

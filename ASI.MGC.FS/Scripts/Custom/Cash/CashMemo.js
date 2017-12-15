@@ -27,6 +27,7 @@ var evaluateFields = function () {
     $("#formCashMemo").formValidation('revalidateField', 'TotalShipCharges');
     $("#formCashMemo").formValidation('revalidateField', 'BankDetails');
     $("#formCashMemo").formValidation('revalidateField', 'BankAmount');
+    $("#formCashMemo").formValidation('revalidateField', 'TotalVAT');
 };
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
@@ -60,7 +61,7 @@ jQuery("#tblSaleDetails").jqGrid({
     autoheight: true,
     autowidth: true,
     styleUI: "Bootstrap",
-    colNames: ['Sale id', 'Job No', 'PR Code', 'S W Code', 'Description', 'Qty', 'Unit', 'Rate', 'Cash Amount', 'Discount', 'Ship. Chrg'],
+    colNames: ['Sale id', 'Job No', 'PR Code', 'S W Code', 'Description', 'Qty', 'Unit', 'Rate', 'Cash Amount', 'Discount', 'Ship. Chrg','VAT 5%'],
     colModel: [
         { name: 'SLNO_SD', index: 'SLNO_SD', width: 50, align: "center", sortable: false },
         { name: 'JOBNO_SD', index: 'JOBNO_SD', width: 80, align: "center", sortable: false },
@@ -72,7 +73,8 @@ jQuery("#tblSaleDetails").jqGrid({
         { name: 'RATE_SD', index: 'RATE_SD', width: 80, align: "center", sortable: false },
         { name: 'CASHTOTAL_SD', index: 'CASHTOTAL_SD', width: 100, align: "center", sortable: false },
         { name: 'DISCOUNT_SD', index: 'DISCOUNT_SD', width: 100, align: "center", sortable: false },
-        { name: 'SHIPPINGCHARGES_SD', index: 'SHIPPINGCHARGES_SD', width: 100, align: "center", sortable: false }
+        { name: 'SHIPPINGCHARGES_SD', index: 'SHIPPINGCHARGES_SD', width: 100, align: "center", sortable: false },
+        { name: 'VAT_SD', index: 'VAT_SD', width: 100, align: "center", sortable: false }
     ],
     multiselect: false,
     caption: "Sale Details"
@@ -184,21 +186,25 @@ function getSaleDetailByMRV() {
             var netAmount = 0;
             var totalDiscount = 0;
             var totalShipChrg = 0;
+            var totalVat = 0;
             for (var i = 0; i < sales.length; i++) {
                 arrMrvSaleDetails[i] = {
                     SLNO_SD: sales[i].SaleNo, JOBNO_SD: sales[i].JobNo, PRCODE_SD: sales[i].PrCode, JOBID_SD: sales[i].SwCode,
                     Description: sales[i].Description, QTY_SD: sales[i].Qty,
                     UNIT_SD: sales[i].Unit, RATE_SD: sales[i].Rate, CASHTOTAL_SD: sales[i].CashAmount,
-                    DISCOUNT_SD: sales[i].Discount, SHIPPINGCHARGES_SD: sales[i].ShipChrg
+                    DISCOUNT_SD: sales[i].Discount, SHIPPINGCHARGES_SD: sales[i].ShipChrg,
+                    VAT_SD: sales[i].ValueAddedTax
                 };
                 netAmount = netAmount + arrMrvSaleDetails[i]["CASHTOTAL_SD"];
                 totalDiscount = totalDiscount + arrMrvSaleDetails[i]["DISCOUNT_SD"];
                 totalShipChrg = totalShipChrg + arrMrvSaleDetails[i]["SHIPPINGCHARGES_SD"];
+                totalVat = totalVat + arrMrvSaleDetails[i]["VAT_SD"];
                 $("#txtTotalCashAmount").val(netAmount);
                 $("#txtNetAmount").val(netAmount);
                 $("#txtBankAmount").val(netAmount);
                 $("#txtTotalDiscount").val(totalDiscount);
                 $("#txtTotalShipCharges").val(totalShipChrg);
+                $("#txtTotalVAT").val(totalVat);
                 jQuery("#tblSaleDetails").jqGrid('addRowData', i + 1, arrMrvSaleDetails[i]);
             }
             var jsonMrvPrds = JSON.stringify(arrMrvSaleDetails);

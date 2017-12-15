@@ -191,7 +191,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblVAT" class="control-label col-md-4 small ">VAT 5%:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("VAT_SD", null, new { ID = "txtVAT", Class = "form-control", @value = "0", @readonly = "readonly", @required = "required" })
+                                    @Html.TextBoxFor(d => d.VAT_SD, null, new { ID = "txtVAT", Class = "form-control", @value = "0", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>

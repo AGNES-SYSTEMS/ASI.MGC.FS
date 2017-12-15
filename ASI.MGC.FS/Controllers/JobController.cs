@@ -313,6 +313,7 @@ namespace ASI.MGC.FS.Controllers
                         salesEntry.CREDITACCODE_SD = objSaleDetail.CREDITACCODE_SD;
                         salesEntry.USERID_SD = currentUser;
                         salesEntry.STATUS_SD = "N";
+                        salesEntry.VAT_SD = objSaleDetail.VAT_SD;
                         _unitOfWork.Repository<SALEDETAIL>().Insert(salesEntry);
                         _unitOfWork.Save();
                         JobMaster_UpdateEmpCode(form["EmpCode"], objSaleDetail.JOBNO_SD);

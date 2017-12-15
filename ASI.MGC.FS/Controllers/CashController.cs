@@ -79,6 +79,7 @@ namespace ASI.MGC.FS.Controllers
                     objInvoiceMaster.CUSTNAME_IPM = Convert.ToString(frm["CustDetail"]);
                     objInvoiceMaster.SHIPPING_IPM = Convert.ToDecimal(frm["TotalShipCharges"]);
                     objInvoiceMaster.DISCOUNT_IPM = Convert.ToDecimal(frm["TotalDiscount"]);
+                    objInvoiceMaster.VAT_IPM = Convert.ToDecimal(frm["TotalVAT"]);
                     objInvoiceMaster.INVTYPE_IPM = "CM";
                     _unitOfWork.Repository<INVMASTER>().Insert(objInvoiceMaster);
                     _unitOfWork.Save();

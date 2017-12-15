@@ -13,5 +13,6 @@
         public double CashAmount { get; set; }
         public double Discount { get; set; }
         public double ShipChrg { get; set; }
+        public double ValueAddedTax { get; set; }
     }
 }

@@ -302,6 +302,7 @@
           <Property Name="LPONO_IPM" Type="nvarchar" MaxLength="2000" />
           <Property Name="SALESFIGURE_IPM" Type="nvarchar" MaxLength="255" />
           <Property Name="INVTYPE_IPM" Type="nvarchar" MaxLength="5" />
+          <Property Name="VAT_IPM" Type="money" />
         </EntityType>
         <EntityType Name="JOB_REPORT">
           <Key>
@@ -654,6 +655,7 @@
           <Property Name="CREDITACCODE_SD" Type="nvarchar" MaxLength="15" />
           <Property Name="LPONO_SD" Type="nvarchar" MaxLength="255" />
           <Property Name="DAYENDDOC_NO" Type="nvarchar" MaxLength="15" />
+          <Property Name="VAT_SD" Type="money" />
         </EntityType>
         <EntityType Name="SALESALLOCATIONMASTER">
           <Key>
@@ -1904,7 +1906,7 @@
             <Parameter Name="SDATE" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="SP_GetStockValuation" ReturnType="Collection(Decimal)">
-            <Parameter Name="Sdate" Mode="In" Type="DateTime" />
+          <Parameter Name="Sdate" Mode="In" Type="DateTime" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="rpt_BankPayment_Result">
@@ -2939,6 +2941,7 @@
           <Property Name="LPONO_IPM" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="SALESFIGURE_IPM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="INVTYPE_IPM" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="VAT_IPM" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="JOB_REPORT">
           <Key>
@@ -3292,6 +3295,7 @@
           <Property Name="CREDITACCODE_SD" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="LPONO_SD" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DAYENDDOC_NO" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="VAT_SD" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="SALESALLOCATIONMASTER">
           <Key>
@@ -4964,6 +4968,7 @@
           <EntitySetMapping Name="INVMASTERs">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.INVMASTER">
               <MappingFragment StoreEntitySet="INVMASTER">
+                <ScalarProperty Name="VAT_IPM" ColumnName="VAT_IPM" />
                 <ScalarProperty Name="INVTYPE_IPM" ColumnName="INVTYPE_IPM" />
                 <ScalarProperty Name="SALESFIGURE_IPM" ColumnName="SALESFIGURE_IPM" />
                 <ScalarProperty Name="LPONO_IPM" ColumnName="LPONO_IPM" />
@@ -5318,6 +5323,7 @@
           <EntitySetMapping Name="SALEDETAILS">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.SALEDETAIL">
               <MappingFragment StoreEntitySet="SALEDETAILS">
+                <ScalarProperty Name="VAT_SD" ColumnName="VAT_SD" />
                 <ScalarProperty Name="DAYENDDOC_NO" ColumnName="DAYENDDOC_NO" />
                 <ScalarProperty Name="LPONO_SD" ColumnName="LPONO_SD" />
                 <ScalarProperty Name="CREDITACCODE_SD" ColumnName="CREDITACCODE_SD" />

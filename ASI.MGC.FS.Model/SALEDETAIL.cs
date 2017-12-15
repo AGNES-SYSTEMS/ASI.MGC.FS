@@ -35,5 +35,6 @@ namespace ASI.MGC.FS.Model
         public string CREDITACCODE_SD { get; set; }
         public string LPONO_SD { get; set; }
         public string DAYENDDOC_NO { get; set; }
+        public Nullable<decimal> VAT_SD { get; set; }
     }
 }

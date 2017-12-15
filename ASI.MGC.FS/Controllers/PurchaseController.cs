@@ -143,11 +143,12 @@ namespace ASI.MGC.FS.Controllers
             string currYear = DateTime.Now.Year.ToString();
             string revPurCode = "RPC/" + Convert.ToString(retCount) + "/" + currYear;
             ViewBag.RevPurCode = revPurCode;
-            return View();
+            var objPurchase = new PurchaseModel();
+            return View(objPurchase);
         }
 
         [HttpPost]
-        public JsonResult SavePurchaseReturn(FormCollection frm)
+        public JsonResult SavePurchaseReturn(PurchaseModel objPurchaseModal, FormCollection frm)
         {
             string purchaseReturnNo = "";
             string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);

@@ -105,9 +105,17 @@ namespace ASI.MGC.FS.Controllers
             return View(objBankTransaction);
         }
 
-        public ActionResult ArapMatching()
+        public ActionResult ArapMatching(string AcCode = null, string DocNo = null)
         {
             var objAllocDetails = new ARMATCHING();
+            if (!string.IsNullOrEmpty(AcCode))
+            {
+                ViewBag.AcCode = AcCode;
+            }
+            if (!string.IsNullOrEmpty(DocNo))
+            {
+                ViewBag.DocNo = DocNo;
+            }
             return View(objAllocDetails);
         }
 

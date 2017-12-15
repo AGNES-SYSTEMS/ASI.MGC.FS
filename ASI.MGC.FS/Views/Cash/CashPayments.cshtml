@@ -154,6 +154,7 @@
                         <div class="col-md-6 form-group">
                             <label class="control-label col-md-4 small "></label>
                             <div class="col-md-8 paddingLeftRight0">
+                                <input type="button" id="btnMatching" class="btn btn-success hidden" value="AR/AP Matching">
                                 <input type="submit" id="btnSubmit" class="btn btn-success" disabled="disabled" value="Save">
                                 <button type="button" id="btnNew" class="btn btn-success">New</button>
 
@@ -488,6 +489,7 @@
                 isReportOpened = true;
                 openCashPayment(data.cpNo);
                 $("#btnSubmit").hide();
+                $("#btnMatching").removeClass("hidden");
             } else {
                 toastr.error("Sorry! Something went wrong, please try again.");
             }

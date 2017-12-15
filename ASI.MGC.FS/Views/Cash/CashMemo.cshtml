@@ -121,22 +121,30 @@
                                 </fieldset>
                             </div>
                             <div class="row">
-                                <div class="col-md-4 form-group">
+                                <div class="col-md-6 form-group">
                                     <label id="lblTotalCashAmount" class="control-label col-md-4 small ">Cash Amount</label>
                                     <div class="col-md-8 paddingLeftRight0">
                                         @Html.TextBox("TotalCashAmount", null, new { ID = "txtTotalCashAmount", Class = "form-control", @readonly = "readonly", @required = "required" })
                                     </div>
                                 </div>
-                                <div class="col-md-4 form-group">
+                                <div class="col-md-6 form-group">
                                     <label id="lblTotalDiscount" class="control-label col-md-4 small ">Discount</label>
                                     <div class="col-md-8 paddingLeftRight0">
                                         @Html.TextBox("TotalDiscount", null, new { ID = "txtTotalDiscount", Class = "form-control", @readonly = "readonly", @required = "required" })
                                     </div>
                                 </div>
-                                <div class="col-md-4 form-group">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
                                     <label id="lblTotalShipCharges" class="control-label col-md-4 small ">Ship. Charges</label>
                                     <div class="col-md-8 paddingLeftRight0">
                                         @Html.TextBox("TotalShipCharges", null, new { ID = "txtTotalShipCharges", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="control-label col-md-4 small ">VAT 5%</label>
+                                    <div class="col-md-8 paddingLeftRight0">
+                                        @Html.TextBox("TotalVAT", null, new { ID = "txtTotalVAT", Class = "form-control", @readonly = "readonly", @required = "required" })
                                     </div>
                                 </div>
                             </div>

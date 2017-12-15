@@ -21,6 +21,6 @@ namespace ASI.MGC.FS.Models
         public decimal ShippingCharges { get; set; }
         [Required]
         public decimal Discount { get; set; }
-        
+        public decimal VAT { get; set; }
     }
 }

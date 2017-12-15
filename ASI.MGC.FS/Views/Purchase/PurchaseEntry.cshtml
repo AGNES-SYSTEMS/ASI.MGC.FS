@@ -121,6 +121,12 @@
                                 @Html.TextArea("Note", null, new { ID = "txtNote", Class = "form-control" })
                             </div>
                         </div>
+                        <div class="col-md-6 form-group">
+                            <label class="control-label col-md-4 small ">VAT 5%</label>
+                            <div class="col-md-8 paddingLeftRight0">
+                                @Html.TextBox("TotalVAT", null, new { ID = "txtTotalVAT", Class = "form-control", @required = "required", @readonly = "readonly" })
+                            </div>
+                        </div>
                         <input id="prdDetails" name="prdDetails" type="hidden" />
                     </div>
                     <div class="row">

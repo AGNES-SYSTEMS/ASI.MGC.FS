@@ -27,14 +27,22 @@ var delProduct = function (rowId) {
 };
 var calculateNetAmount = function () {
     var totalGridPrdAmount = 0.0;
+    var totalVAT = 0.0;
+    var netAmount = 0.0;
     for (var i = 0; i < arrPrdDetails.length; i++) {
         totalGridPrdAmount += parseFloat(arrPrdDetails[i]["Amount"]);
     }
-    var netAmount = parseFloat(totalGridPrdAmount) + parseFloat($("#txtShipChrg").val()) - parseFloat($("#txtDiscount").val());
+    var taxedAmount = parseFloat(totalGridPrdAmount) + parseFloat($("#txtShipChrg").val()) - parseFloat($("#txtDiscount").val());
+    totalVAT = ((parseFloat(totalGridPrdAmount)- parseFloat($("#txtDiscount").val())) * 5.0) / 100;
+    netAmount = taxedAmount + totalVAT;
     $("#txtNetAmount").val(netAmount);
     $("#txtTotalAmount").val(totalGridPrdAmount);
     $("#formPurchaseEntry").formValidation('revalidateField', 'NetAmount');
     $("#formPurchaseEntry").formValidation('revalidateField', 'TotalAmount');
+    if (arrPrdDetails.length > 0) {
+        $("#txtTotalVAT").val(totalVAT);
+        $("#formPurchaseEntry").formValidation('revalidateField', 'TotalVAT');
+    }
 }
 var stringifyData = function () {
     var prdDetails = $('#tblPrdDetails').jqGrid('getGridParam', 'data');
