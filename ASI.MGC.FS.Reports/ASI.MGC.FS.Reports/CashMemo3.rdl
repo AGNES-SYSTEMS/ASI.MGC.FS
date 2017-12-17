@@ -1706,7 +1706,7 @@
             </Line>
           </ReportItems>
           <KeepTogether>true</KeepTogether>
-          <Height>1.71527in</Height>
+          <Height>2in</Height>
           <Width>7.7in</Width>
           <Visibility>
             <Hidden>=iif(Globals!PageNumber=Globals!TotalPages,false,true)</Hidden>

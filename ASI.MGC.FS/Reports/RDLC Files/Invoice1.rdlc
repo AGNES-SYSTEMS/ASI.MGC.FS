@@ -731,7 +731,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Format(Fields!RATE_INVD.Value,"N2") * Fields!QTY_INVD.Value</Value>
+                                            <Value>=Format(Fields!RATE_INVD.Value * Fields!QTY_INVD.Value,"N2")</Value>
                                             <Style />
                                           </TextRun>
                                         </TextRuns>
@@ -1400,7 +1400,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>2.8in</Height>
+      <Height>3.16375in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1421,7 +1421,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox61</rd:DefaultName>
-              <Top>1.195in</Top>
+              <Top>1.5in</Top>
               <Height>0.25in</Height>
               <Width>3.58in</Width>
               <Style>
@@ -1453,7 +1453,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox62</rd:DefaultName>
-              <Top>1.555in</Top>
+              <Top>1.95in</Top>
               <Height>0.25in</Height>
               <Width>2.56in</Width>
               <ZIndex>1</ZIndex>
@@ -1486,7 +1486,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox63</rd:DefaultName>
-              <Top>1.555in</Top>
+              <Top>1.95in</Top>
               <Left>5.09in</Left>
               <Height>0.25in</Height>
               <Width>2.56in</Width>
@@ -1520,8 +1520,8 @@
               <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
               <Top>0.02786in</Top>
               <Left>6.70023in</Left>
-              <Height>0.23612in</Height>
-              <Width>0.94792in</Width>
+              <Height>0.25in</Height>
+              <Width>1in</Width>
               <ZIndex>3</ZIndex>
               <Style>
                 <Border>
@@ -1584,10 +1584,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
-              <Top>0.29175in</Top>
+              <Top>0.3in</Top>
               <Left>6.70023in</Left>
-              <Height>0.26388in</Height>
-              <Width>0.94792in</Width>
+              <Height>0.25in</Height>
+              <Width>1in</Width>
               <ZIndex>5</ZIndex>
               <Style>
                 <Border>
@@ -1618,7 +1618,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox5</rd:DefaultName>
-              <Top>0.30563in</Top>
+              <Top>0.3in</Top>
               <Left>5.70023in</Left>
               <Height>0.25in</Height>
               <Width>1in</Width>
@@ -1650,10 +1650,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
-              <Top>0.55563in</Top>
+              <Top>0.6in</Top>
               <Left>6.70023in</Left>
-              <Height>0.23612in</Height>
-              <Width>0.94792in</Width>
+              <Height>0.25in</Height>
+              <Width>1in</Width>
               <ZIndex>7</ZIndex>
               <Style>
                 <Border>
@@ -1684,7 +1684,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox5</rd:DefaultName>
-              <Top>0.55563in</Top>
+              <Top>0.6in</Top>
               <Left>5.70023in</Left>
               <Height>0.25in</Height>
               <Width>1in</Width>
@@ -1706,7 +1706,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Format(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice") + First(Fields!SHIPPING_IPM.Value, "DS_Invoice") - First(Fields!DISCOUNT_IPM.Value, "DS_Invoice"),"N2")</Value>
+                      <Value>=Format(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice") + First(Fields!SHIPPING_IPM.Value, "DS_Invoice") - First(Fields!DISCOUNT_IPM.Value, "DS_Invoice")+First(Fields!VAT_IPM.Value, "DS_Invoice"),"N2")</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1716,10 +1716,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
-              <Top>0.81952in</Top>
+              <Top>1.2in</Top>
               <Left>6.70023in</Left>
-              <Height>0.26388in</Height>
-              <Width>0.94792in</Width>
+              <Height>0.25in</Height>
+              <Width>1in</Width>
               <ZIndex>9</ZIndex>
               <Style>
                 <Border>
@@ -1750,7 +1750,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox5</rd:DefaultName>
-              <Top>0.8334in</Top>
+              <Top>1.2in</Top>
               <Left>5.70023in</Left>
               <Height>0.25in</Height>
               <Width>1in</Width>
@@ -1772,7 +1772,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="AED " &amp; CODE.changeToWords(Format(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice") + First(Fields!SHIPPING_IPM.Value, "DS_Invoice") - First(Fields!DISCOUNT_IPM.Value, "DS_Invoice"),"N2")) &amp; "ONLY"</Value>
+                      <Value>="AED " &amp; CODE.changeToWords(CODE.GetDecimal(Sum(Fields!AMOUNT_INVNO.Value, "DS_Invoice") + First(Fields!SHIPPING_IPM.Value, "DS_Invoice") - First(Fields!DISCOUNT_IPM.Value, "DS_Invoice")+First(Fields!VAT_IPM.Value, "DS_Invoice"))) &amp; "ONLY"</Value>
                       <Style>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -1784,7 +1784,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
-              <Top>0.89993in</Top>
+              <Top>1.2in</Top>
               <Left>0.0331in</Left>
               <Height>0.26in</Height>
               <Width>4.81in</Width>
@@ -1810,7 +1810,7 @@
               </Style>
             </Line>
             <Line Name="Line2">
-              <Top>1.195in</Top>
+              <Top>1.5in</Top>
               <Height>0in</Height>
               <Width>7.77in</Width>
               <ZIndex>13</ZIndex>
@@ -1820,9 +1820,75 @@
                 </Border>
               </Style>
             </Line>
+            <Textbox Name="Textbox19">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>VAT @5%:</Value>
+                      <Style>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox5</rd:DefaultName>
+              <Top>0.9in</Top>
+              <Left>5.70023in</Left>
+              <Height>0.25in</Height>
+              <Width>1in</Width>
+              <ZIndex>14</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="DOCNO_VRPT8">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Microsoft.VisualBasic.Strings.Format(First(Fields!VAT_IPM.Value, "DS_Invoice"), "N2")</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
+              <Top>0.9in</Top>
+              <Left>6.70023in</Left>
+              <Height>0.25in</Height>
+              <Width>1in</Width>
+              <ZIndex>15</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
           </ReportItems>
           <KeepTogether>true</KeepTogether>
-          <Height>1.86125in</Height>
+          <Height>2.55in</Height>
           <Width>7.77in</Width>
           <Visibility>
             <Hidden>=iif(Globals!PageNumber=Globals!TotalPages,false,true)</Hidden>
@@ -1837,7 +1903,7 @@
           <Source>Embedded</Source>
           <Value>MESFooterTransparent</Value>
           <Sizing>Fit</Sizing>
-          <Top>1.93625in</Top>
+          <Top>2.3in</Top>
           <Left>0.00917in</Left>
           <Height>0.86375in</Height>
           <Width>7.76083in</Width>
@@ -1866,6 +1932,7 @@
     <DataSource Name="DataSource">
       <Transaction>true</Transaction>
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>2585510d-a4d7-414c-8d51-397b908205b0</rd:DataSourceID>
     </DataSource>
   </DataSources>
@@ -1939,6 +2006,10 @@
         </Field>
         <Field Name="AMOUNT_INVNO">
           <DataField>AMOUNT_INVNO</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="VAT_IPM">
+          <DataField>VAT_IPM</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="JOBNO_INVD">
@@ -2186,7 +2257,10 @@ Private Shared Function translateCents(ByVal cents As [String]) As [String]
     Return cts
 End Function
 
-
+Public Shared Function GetDecimal(ByVal numb As [Decimal]) As [Decimal]
+        Dim decimalNumb As Decimal = Math.Round(numb, 2, MidpointRounding.AwayFromZero)
+        Return decimalNumb
+    End Function
 
 
 </Code>

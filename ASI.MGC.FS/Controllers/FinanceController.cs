@@ -110,7 +110,11 @@ namespace ASI.MGC.FS.Controllers
             var objAllocDetails = new ARMATCHING();
             if (!string.IsNullOrEmpty(AcCode))
             {
-                ViewBag.AcCode = AcCode;
+                var custDetails = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                                where customers.ARCODE_ARM.Equals(AcCode)
+                                select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM }).FirstOrDefault();
+                ViewBag.AcCode = custDetails.ARCODE_ARM;
+                ViewBag.AcDesc = custDetails.DESCRIPTION_ARM;
             }
             if (!string.IsNullOrEmpty(DocNo))
             {

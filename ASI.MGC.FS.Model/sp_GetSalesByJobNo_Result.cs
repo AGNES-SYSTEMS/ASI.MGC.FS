@@ -23,5 +23,6 @@ namespace ASI.MGC.FS.Model
         public decimal DISCOUNT_SD { get; set; }
         public decimal SHIPPINGCHARGES_SD { get; set; }
         public string DESCRIPTION_SD { get; set; }
+        public decimal VAT_SD { get; set; }
     }
 }

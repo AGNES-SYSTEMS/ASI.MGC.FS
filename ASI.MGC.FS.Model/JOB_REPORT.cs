@@ -23,5 +23,6 @@ namespace ASI.MGC.FS.Model
         public Nullable<decimal> DISCOUNT_JR { get; set; }
         public Nullable<decimal> SHIPPINGCHARGES_JR { get; set; }
         public string UNIT_JR { get; set; }
+        public Nullable<decimal> VAT_JR { get; set; }
     }
 }

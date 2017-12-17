@@ -343,7 +343,8 @@ namespace ASI.MGC.FS.Controllers
             Proc_ProfitandLossGenerate(SDate, FDate);
             Proc_BalanseSheet(SDate, FDate);
             //Proc_BalanceSheet(SDate, FDate);
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
         //stock calculate

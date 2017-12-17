@@ -26,6 +26,7 @@
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
                     <input id="hdnAllocDetails" name="allocDetails" type="hidden" />
+                    <input id="hdnAcCode" name="hdnAcCode" type="hidden" value="" />
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <label id="lblDocType" class="control-label col-md-4 small ">Doc Type:</label>
@@ -490,7 +491,10 @@
                 openCashReceipt(data.crNo);
                 //$('#formCashReceipt')[0].reset();
                 $("#btnSubmit").hide();
-                $("#btnMatching").removeClass("hidden");
+                var acCode = $.trim($('#hdnAcCode').val());
+                if (acCode !== "" && acCode !== undefined) {
+                    $("#btnMatching").removeClass("hidden");
+                }
             } else {
                 toastr.error("Sorry! Something went wrong, please try again.");
             }
@@ -506,7 +510,11 @@
             window.open(cashReceiptUrl);
             toastr.info("Cash Receipt is open in new window.");
         }
-
+        $("#btnMatching").on("click", function () {
+            var AcCode = $("#hdnAcCode").val();
+            var DocNo = $("#txtDocNo").val();
+            window.location.href = "/Finance/ArapMatching?AcCode=" + AcCode + "&DocNo=" + DocNo;
+        });
     </script>
 }
 

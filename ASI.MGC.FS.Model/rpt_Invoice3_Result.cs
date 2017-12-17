@@ -27,5 +27,6 @@ namespace ASI.MGC.FS.Model
         public Nullable<decimal> DISCOUNT_IPM { get; set; }
         public Nullable<decimal> SHIPPING_IPM { get; set; }
         public Nullable<decimal> AMOUNT_INVNO { get; set; }
+        public Nullable<decimal> VAT_IPM { get; set; }
     }
 }

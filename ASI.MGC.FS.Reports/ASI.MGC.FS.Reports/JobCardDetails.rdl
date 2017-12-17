@@ -20,22 +20,25 @@
               <Width>0.53125in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.80556in</Width>
+              <Width>2.6in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.88542in</Width>
+              <Width>0.7in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.88194in</Width>
+              <Width>0.7in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.85417in</Width>
+              <Width>0.8in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.98958in</Width>
+              <Width>0.9in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.85417in</Width>
+              <Width>0.8in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.75in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -294,6 +297,42 @@
                     </Textbox>
                   </CellContents>
                 </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox23">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>VAT 5%</Value>
+                              <Style>
+                                <FontFamily>Arial Black</FontFamily>
+                                <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox23</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
               </TablixCells>
             </TablixRow>
             <TablixRow>
@@ -517,12 +556,45 @@
                     </Textbox>
                   </CellContents>
                 </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox26">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=FORMAT(Fields!VAT_JR.Value,"N2")</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox26</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
               </TablixCells>
             </TablixRow>
           </TablixRows>
         </TablixBody>
         <TablixColumnHierarchy>
           <TablixMembers>
+            <TablixMember />
             <TablixMember />
             <TablixMember />
             <TablixMember />
@@ -550,7 +622,7 @@
         <Top>0.05556in</Top>
         <Left>0.02084in</Left>
         <Height>0.5in</Height>
-        <Width>7.80209in</Width>
+        <Width>7.78125in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -579,7 +651,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox27</rd:DefaultName>
         <Top>0.625in</Top>
-        <Left>4.24306in</Left>
+        <Left>3.61806in</Left>
         <Height>0.25in</Height>
         <Width>0.88194in</Width>
         <ZIndex>2</ZIndex>
@@ -611,7 +683,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox28</rd:DefaultName>
         <Top>0.625in</Top>
-        <Left>5.125in</Left>
+        <Left>4.5in</Left>
         <Height>0.25in</Height>
         <Width>0.85417in</Width>
         <ZIndex>3</ZIndex>
@@ -643,9 +715,9 @@
         </Paragraphs>
         <rd:DefaultName>Textbox29</rd:DefaultName>
         <Top>0.625in</Top>
-        <Left>5.97917in</Left>
+        <Left>5.35417in</Left>
         <Height>0.25in</Height>
-        <Width>0.98958in</Width>
+        <Width>0.91319in</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <Border>
@@ -675,10 +747,42 @@
         </Paragraphs>
         <rd:DefaultName>Textbox30</rd:DefaultName>
         <Top>0.625in</Top>
-        <Left>6.96875in</Left>
+        <Left>6.3in</Left>
         <Height>0.25in</Height>
-        <Width>0.85417in</Width>
+        <Width>0.75209in</Width>
         <ZIndex>5</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox31">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=FORMAT(Sum(Fields!VAT_JR.Value, "DS_JobCardDetails"), "N2")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox30</rd:DefaultName>
+        <Top>0.625in</Top>
+        <Left>7.04396in</Left>
+        <Height>0.25in</Height>
+        <Width>0.75209in</Width>
+        <ZIndex>6</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -693,7 +797,7 @@
     <Height>0.875in</Height>
     <Style />
   </Body>
-  <Width>7.83681in</Width>
+  <Width>7.84in</Width>
   <Page>
     <PageHeader>
       <Height>1in</Height>
@@ -1139,6 +1243,10 @@
         <Field Name="UNIT_JR">
           <DataField>UNIT_JR</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="VAT_JR">
+          <DataField>VAT_JR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Amount">
           <DataField>Amount</DataField>

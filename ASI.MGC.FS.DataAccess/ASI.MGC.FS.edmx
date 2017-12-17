@@ -317,6 +317,7 @@
           <Property Name="DISCOUNT_JR" Type="money" />
           <Property Name="SHIPPINGCHARGES_JR" Type="money" />
           <Property Name="UNIT_JR" Type="nvarchar" MaxLength="10" />
+          <Property Name="VAT_JR" Type="money" />
         </EntityType>
         <EntityType Name="JOBCARD_REPRT">
           <Key>
@@ -853,6 +854,7 @@
           <Property Name="DOCNO_VRPT" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="VOUCHER_TYPE" Type="nvarchar" MaxLength="5" />
           <Property Name="DrawerBr_VRPT" Type="nvarchar" MaxLength="250" />
+          <Property Name="VAT_VRPT" Type="money" />
         </EntityType>
         <Association Name="BANKTRANSACTION$BANKMASTERBANKTRANSACTION">
           <End Role="BANKMASTER" Type="Self.BANKMASTER" Multiplicity="0..1" />
@@ -1962,11 +1964,11 @@
           <Property Type="String" Name="INVNO_IPM" Nullable="false" MaxLength="15" />
           <Property Type="DateTime" Name="INVDATE_IPM" Nullable="true" />
           <Property Type="String" Name="CUST_CODE_IPM" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="CUSTNAME_IPM" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CUSTADDRESS_IPM" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CUSTNAME_IPM" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="CUSTADDRESS_IPM" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="CUSTPIN_IPM" Nullable="true" MaxLength="15" />
           <Property Type="String" Name="CODE_INVD" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="DESCRIPTION_INVD" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DESCRIPTION_INVD" Nullable="true" MaxLength="255" />
           <Property Type="Int32" Name="QTY_INVD" Nullable="true" />
           <Property Type="Decimal" Name="RATE_INVD" Nullable="true" Precision="19" />
           <Property Type="Decimal" Name="DISCOUNT_IPM" Nullable="true" Precision="19" />
@@ -1974,9 +1976,10 @@
           <Property Type="Decimal" Name="AMOUNT_INVNO" Nullable="true" Precision="19" />
           <Property Type="String" Name="JOBNO_INVD" Nullable="true" MaxLength="15" />
           <Property Type="String" Name="PRODID_JIM" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="DESCRIPTION_PM" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DESCRIPTION_PM" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="UNIT_INVD" Nullable="true" MaxLength="10" />
           <Property Type="Int32" Name="PRODQTY_JM" Nullable="true" />
+          <Property Type="Decimal" Name="VAT_IPM" Nullable="true" Precision="19" />
         </ComplexType>
         <ComplexType Name="rpt_CompanyDetails_Result">
           <Property Type="String" Name="COMPANYNAME_CM" Nullable="true" MaxLength="50" />
@@ -1997,13 +2000,13 @@
         <ComplexType Name="rpt_Invoice_Result">
           <Property Type="String" Name="INVNO_IPM" Nullable="false" MaxLength="15" />
           <Property Type="DateTime" Name="INVDATE_IPM" Nullable="true" />
-          <Property Type="String" Name="LPONO_IPM" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="LPONO_IPM" Nullable="true" MaxLength="2000" />
           <Property Type="String" Name="CUST_CODE_IPM" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="CUSTNAME_IPM" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CUSTADDRESS_IPM" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CUSTNAME_IPM" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="CUSTADDRESS_IPM" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="CUSTPIN_IPM" Nullable="true" MaxLength="15" />
           <Property Type="String" Name="CODE_INVD" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="DESCRIPTION_INVD" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DESCRIPTION_INVD" Nullable="true" MaxLength="255" />
           <Property Type="Int32" Name="QTY_INVD" Nullable="true" />
           <Property Type="Decimal" Name="RATE_INVD" Nullable="true" Precision="19" />
           <Property Type="Decimal" Name="DISCOUNT_IPM" Nullable="true" Precision="19" />
@@ -2012,9 +2015,10 @@
           <Property Type="String" Name="JOBNO_INVD" Nullable="true" MaxLength="15" />
           <Property Type="String" Name="DELEVERNOTENO_JM" Nullable="true" MaxLength="15" />
           <Property Type="String" Name="PRODID_JIM" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="DESCRIPTION_PM" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DESCRIPTION_PM" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="UNIT_INVD" Nullable="true" MaxLength="10" />
           <Property Type="Int32" Name="PRODQTY_JM" Nullable="true" />
+          <Property Type="Decimal" Name="VAT_IPM" Nullable="true" Precision="19" />
         </ComplexType>
         <ComplexType Name="rpt_JobCardFormat_Result">
           <Property Type="String" Name="JOBNO_JRP" Nullable="false" MaxLength="15" />
@@ -2264,17 +2268,18 @@
           <Property Type="String" Name="INVNO_IPM" Nullable="false" MaxLength="15" />
           <Property Type="DateTime" Name="INVDATE_IPM" Nullable="true" />
           <Property Type="String" Name="CUST_CODE_IPM" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="CUSTNAME_IPM" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CUSTADDRESS_IPM" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CUSTNAME_IPM" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="CUSTADDRESS_IPM" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="CUSTPIN_IPM" Nullable="true" MaxLength="15" />
           <Property Type="String" Name="CODE_INVD" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="DESCRIPTION_INVD" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DESCRIPTION_INVD" Nullable="true" MaxLength="255" />
           <Property Type="Int32" Name="QTY_INVD" Nullable="true" />
           <Property Type="Decimal" Name="RATE_INVD" Nullable="true" Precision="19" />
-          <Property Type="String" Name="LPONO_IPM" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="LPONO_IPM" Nullable="true" MaxLength="2000" />
           <Property Type="Decimal" Name="DISCOUNT_IPM" Nullable="true" Precision="19" />
           <Property Type="Decimal" Name="SHIPPING_IPM" Nullable="true" Precision="19" />
           <Property Type="Decimal" Name="AMOUNT_INVNO" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="VAT_IPM" Nullable="true" Precision="19" />
         </ComplexType>
         <ComplexType Name="rpt_InvWiseReprot_Result">
           <Property Type="String" Name="INVNO_SD" Nullable="true" MaxLength="15" />
@@ -2286,16 +2291,17 @@
         </ComplexType>
         <ComplexType Name="rpt_JobCardDetails_Result">
           <Property Type="DateTime" Name="DOCDATE_JM" Nullable="true" />
-          <Property Type="String" Name="JOBNO_JM" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="JOBNO_JM" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="EMPCODE_JM" Nullable="true" MaxLength="5" />
-          <Property Type="String" Name="EMPFNAME_EM" Nullable="true" MaxLength="30" />
-          <Property Type="String" Name="DESCRIPTION_JR" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="EMPFNAME_EM" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="DESCRIPTION_JR" Nullable="true" MaxLength="255" />
           <Property Type="Int32" Name="QTY_JR" Nullable="true" />
           <Property Type="Decimal" Name="RATE_JR" Nullable="true" Precision="19" />
           <Property Type="Decimal" Name="DISCOUNT_JR" Nullable="true" Precision="19" />
           <Property Type="Decimal" Name="SHIPPINGCHARGES_JR" Nullable="true" Precision="19" />
           <Property Type="String" Name="UNIT_JR" Nullable="true" MaxLength="10" />
           <Property Type="Decimal" Name="Amount" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="VAT_JR" Nullable="true" Precision="19" />
         </ComplexType>
         <ComplexType Name="rpt_JobWiseStatement_Result">
           <Property Type="String" Name="JOBNO_JM" Nullable="false" MaxLength="15" />
@@ -2564,7 +2570,7 @@
         </ComplexType>
         <ComplexType Name="sp_GetSalesByJobNo_Result">
           <Property Type="Int32" Name="SLNO_SD" Nullable="false" />
-          <Property Type="String" Name="JOBNO_SD" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="JOBNO_SD" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="PRCODE_SD" Nullable="true" MaxLength="15" />
           <Property Type="String" Name="JOBID_SD" Nullable="true" MaxLength="15" />
           <Property Type="Int32" Name="QTY_SD" Nullable="false" />
@@ -2572,7 +2578,8 @@
           <Property Type="Decimal" Name="AMOUNT_SD" Nullable="true" Precision="19" />
           <Property Type="Decimal" Name="DISCOUNT_SD" Nullable="false" Precision="19" />
           <Property Type="Decimal" Name="SHIPPINGCHARGES_SD" Nullable="false" Precision="19" />
-          <Property Type="String" Name="DESCRIPTION_SD" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DESCRIPTION_SD" Nullable="true" MaxLength="255" />
+          <Property Type="Decimal" Name="VAT_SD" Nullable="false" Precision="19" />
         </ComplexType>
         <ComplexType Name="sp_GetCashMemoMrvList_Result">
           <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
@@ -2956,6 +2963,7 @@
           <Property Name="DISCOUNT_JR" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="SHIPPINGCHARGES_JR" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="UNIT_JR" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="VAT_JR" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="JOBCARD_REPRT">
           <Key>
@@ -3476,6 +3484,7 @@
           <Property Name="DOCNO_VRPT" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="VOUCHER_TYPE" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="DrawerBr_VRPT" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="VAT_VRPT" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <Association Name="BANKTRANSACTION_BANKMASTERBANKTRANSACTION">
           <End Type="ASI_MGC_FSModel.BANKMASTER" Role="BANKMASTER" Multiplicity="0..1" />
@@ -3803,6 +3812,7 @@
                 <ScalarProperty Name="DESCRIPTION_PM" ColumnName="DESCRIPTION_PM" />
                 <ScalarProperty Name="UNIT_INVD" ColumnName="UNIT_INVD" />
                 <ScalarProperty Name="PRODQTY_JM" ColumnName="PRODQTY_JM" />
+                <ScalarProperty Name="VAT_IPM" ColumnName="VAT_IPM" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -3853,6 +3863,7 @@
                 <ScalarProperty Name="DESCRIPTION_PM" ColumnName="DESCRIPTION_PM" />
                 <ScalarProperty Name="UNIT_INVD" ColumnName="UNIT_INVD" />
                 <ScalarProperty Name="PRODQTY_JM" ColumnName="PRODQTY_JM" />
+                <ScalarProperty Name="VAT_IPM" ColumnName="VAT_IPM" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -4182,6 +4193,7 @@
                 <ScalarProperty Name="DISCOUNT_IPM" ColumnName="DISCOUNT_IPM" />
                 <ScalarProperty Name="SHIPPING_IPM" ColumnName="SHIPPING_IPM" />
                 <ScalarProperty Name="AMOUNT_INVNO" ColumnName="AMOUNT_INVNO" />
+                <ScalarProperty Name="VAT_IPM" ColumnName="VAT_IPM" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -4211,6 +4223,7 @@
                 <ScalarProperty Name="SHIPPINGCHARGES_JR" ColumnName="SHIPPINGCHARGES_JR" />
                 <ScalarProperty Name="UNIT_JR" ColumnName="UNIT_JR" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="VAT_JR" ColumnName="VAT_JR" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -4563,6 +4576,7 @@
                 <ScalarProperty Name="DISCOUNT_SD" ColumnName="DISCOUNT_SD" />
                 <ScalarProperty Name="SHIPPINGCHARGES_SD" ColumnName="SHIPPINGCHARGES_SD" />
                 <ScalarProperty Name="DESCRIPTION_SD" ColumnName="DESCRIPTION_SD" />
+                <ScalarProperty Name="VAT_SD" ColumnName="VAT_SD" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -4986,6 +5000,7 @@
           <EntitySetMapping Name="JOB_REPORT">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.JOB_REPORT">
               <MappingFragment StoreEntitySet="JOB_REPORT">
+                <ScalarProperty Name="VAT_JR" ColumnName="VAT_JR" />
                 <ScalarProperty Name="UNIT_JR" ColumnName="UNIT_JR" />
                 <ScalarProperty Name="SHIPPINGCHARGES_JR" ColumnName="SHIPPINGCHARGES_JR" />
                 <ScalarProperty Name="DISCOUNT_JR" ColumnName="DISCOUNT_JR" />
@@ -5519,6 +5534,7 @@
           <EntitySetMapping Name="VOUCHERMASTER_RPT">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.VOUCHERMASTER_RPT">
               <MappingFragment StoreEntitySet="VOUCHERMASTER_RPT">
+                <ScalarProperty Name="VAT_VRPT" ColumnName="VAT_VRPT" />
                 <ScalarProperty Name="DrawerBr_VRPT" ColumnName="DrawerBr_VRPT" />
                 <ScalarProperty Name="VOUCHER_TYPE" ColumnName="VOUCHER_TYPE" />
                 <ScalarProperty Name="DOCNO_VRPT" ColumnName="DOCNO_VRPT" />

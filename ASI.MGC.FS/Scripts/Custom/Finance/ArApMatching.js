@@ -1,4 +1,6 @@
 ﻿var arrAllocations = [];
+var hdnAcCode = "";
+var hdnDocNo = "";
 var allocDocSelect = function (docId) {
     if (docId) {
         var ret = jQuery("#tblallocDocSearch").jqGrid('getRowData', docId);
@@ -73,7 +75,46 @@ function editRow(id) {
         });
     }
 };
+function getDocDetails() {
+    var isCredit = false;
+    var partyCode = $('#txtPartyAccNo').val();
+    var docId = $('#txtDocNo').val();
+    var data = JSON.stringify({ partyCode: partyCode, docId: docId });
+    $.ajax({
+        url: '/Finance/GetPartyAllocationDocumentDetails',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: data,
+        type: "POST",
+        success: function (partyDetails) {
+            if (parseFloat(partyDetails.DEBITAMOUNT_ART) !== 0) {
+                var amount = parseFloat(partyDetails.DEBITAMOUNT_ART) - parseFloat(partyDetails.CREDITAMOUNT_ART) - parseFloat(partyDetails.MATCHVALUE_AR);
+                $('#txtAmount').val(amount).change();
+                $('#txtTotalDocValue').val(amount).change();
+                isCredit = false;
+            } else if (parseFloat(partyDetails.CREDITAMOUNT_ART) !== 0) {
+                var amount = parseFloat(partyDetails.CREDITAMOUNT_ART) - parseFloat(partyDetails.DEBITAMOUNT_ART) - parseFloat(partyDetails.MATCHVALUE_AR);
+                $('#txtAmount').val(amount).change();
+                $('#txtTotalDocValue').val(amount).change();
+                isCredit = true;
+            }
+            var allocDocData = $("#tblAllocationDetails").jqGrid("getGridParam", "postData");
+            allocDocData["partyId"] = partyCode;
+            allocDocData["isCredit"] = isCredit;
+            $("#tblAllocationDetails").setGridParam({ postData: allocDocData });
+            $("#tblAllocationDetails").trigger("reloadGrid", [{ page: 1 }]);
+        },
+        complete: function () {
+            $("#formArApMatching").formValidation('revalidateField', 'Amount');
+            $("#formArApMatching").formValidation('revalidateField', 'TotalDocValue');
+        },
+        error: function () {
+        }
+    });
+};
 $(document).ready(function () {
+    hdnAcCode = $.trim($('#hdnAcCode').val());
+    hdnDocNo = $.trim($('#hdnDocNo').val());
     jQuery("#tblAllocationDetails").jqGrid({
         url: '/Finance/GetArMatchAllocationDetails',
         datatype: "json",
@@ -106,7 +147,7 @@ $(document).ready(function () {
         caption: "Product Details"
     });
     $("#btnNew").on("click", function () {
-        location.reload(true);
+        location.href = "/Finance/ArapMatching";
     });
     function validatePositive(value, column) {
         if (isNaN(value) && value < 0)
@@ -118,6 +159,14 @@ $(document).ready(function () {
         var outerwidth = $('#grid').width();
         $('#tblAllocationDetails').setGridWidth(outerwidth);
     });
+    if (hdnAcCode !== "" && hdnDocNo !== "") {
+        var hdnAcDesc = $('#hdnAcDesc').val();
+        $("#txtPartyAccNo").val(hdnAcCode).change();
+        $("#txtPartyAccDetails").val(hdnAcDesc).change();
+        $("#formArApMatching").formValidation('revalidateField', 'PartyAccDetails');
+        $("#txtDocNo").val(hdnDocNo).change();
+        getDocDetails();
+    }
     $("#partyAccountSearchModel").on('show.bs.modal', function () {
         $("#tblPartyAccountSearch").jqGrid({
             url: '/Customer/GetCustomerDetailsList',
@@ -223,41 +272,7 @@ $(document).ready(function () {
         });
     });
     $("#allocDocSearchModel").on('hide.bs.modal', function () {
-        var isCredit = false;
-        var partyCode = $('#txtPartyAccNo').val();
-        var docId = $('#txtDocNo').val();
-        var data = JSON.stringify({ partyCode: partyCode, docId: docId });
-        $.ajax({
-            url: '/Finance/GetPartyAllocationDocumentDetails',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: data,
-            type: "POST",
-            success: function (partyDetails) {
-                if (parseFloat(partyDetails.DEBITAMOUNT_ART) !== 0) {
-                    var amount = parseFloat(partyDetails.DEBITAMOUNT_ART) - parseFloat(partyDetails.CREDITAMOUNT_ART) - parseFloat(partyDetails.MATCHVALUE_AR);
-                    $('#txtAmount').val(amount).change();
-                    $('#txtTotalDocValue').val(amount).change();
-                    isCredit = false;
-                } else if (parseFloat(partyDetails.CREDITAMOUNT_ART) !== 0) {
-                    var amount = parseFloat(partyDetails.CREDITAMOUNT_ART) - parseFloat(partyDetails.DEBITAMOUNT_ART) - parseFloat(partyDetails.MATCHVALUE_AR);
-                    $('#txtAmount').val(amount).change();
-                    $('#txtTotalDocValue').val(amount).change();
-                    isCredit = true;
-                }
-                var allocDocData = $("#tblAllocationDetails").jqGrid("getGridParam", "postData");
-                allocDocData["partyId"] = partyCode;
-                allocDocData["isCredit"] = isCredit;
-                $("#tblAllocationDetails").setGridParam({ postData: allocDocData });
-                $("#tblAllocationDetails").trigger("reloadGrid", [{ page: 1 }]);
-            },
-            complete: function () {
-                $("#formArApMatching").formValidation('revalidateField', 'Amount');
-                $("#formArApMatching").formValidation('revalidateField', 'TotalDocValue');
-            },
-            error: function () {
-            }
-        });
+        getDocDetails();
     });
     var searchGrid = function (searchById, searchByName, type) {
         if (type == "1") {

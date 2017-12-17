@@ -23,96 +23,99 @@
                 <div class="container">
                     @using (Ajax.BeginForm("SaveArApMatching", "Finance", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formArApMatching", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
-                    @Html.AntiForgeryToken()
-                    @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
-                    <input id="hdnAllocDetails" name="allocDetails" type="hidden" />
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Party A/C No:</label>
-                            <div class="col-md-8">
-                                <div class="input-group">
-                                    @Html.TextBox("PartyAccNo", null, new { ID = "txtPartyAccNo", Class = "form-control", @readonly = "readonly" })
-                                    <span class="input-group-btn">
-                                        <button type="button" id="btnDocTypeSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#partyAccountSearchModel">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </span>
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
+                        <input id="hdnAllocDetails" name="allocDetails" type="hidden" />
+                        <input id="hdnAcCode" name="acCodeHdn" value="@ViewBag.AcCode" type="hidden" />
+                        <input id="hdnDocNo" name="docNoHdn" value="@ViewBag.DocNo" type="hidden" />
+                        <input id="hdnAcDesc" name="AcDescHdn" value="@ViewBag.AcDesc" type="hidden" />
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Party A/C No:</label>
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBox("PartyAccNo", null, new { ID = "txtPartyAccNo", Class = "form-control", @readonly = "readonly" })
+                                        <span class="input-group-btn">
+                                            <button type="button" id="btnDocTypeSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#partyAccountSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Doc No:</label>
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(o => o.DOCCNUMBER_ARM, null, new { ID = "txtDocNo", Class = "form-control", @readonly = "readonly" })
+                                        <span class="input-group-btn">
+                                            <button type="button" id="arApDocNoTypeSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#allocDocSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Doc No:</label>
-                            <div class="col-md-8">
-                                <div class="input-group">
-                                    @Html.TextBoxFor(o=>o.DOCCNUMBER_ARM, null, new { ID = "txtDocNo", Class = "form-control", @readonly = "readonly" })
-                                    <span class="input-group-btn">
-                                        <button type="button" id="arApDocNoTypeSearch" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#allocDocSearchModel">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </span>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Party A/C Details:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("PartyAccDetails", null, new { ID = "txtPartyAccDetails", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Amount:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("Amount", null, new { ID = "txtAmount", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Party A/C Details:</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBox("PartyAccDetails", null, new { ID = "txtPartyAccDetails", Class = "form-control", @readonly = "readonly", @required = "required" })
-                            </div>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Amount:</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBox("Amount", null, new { ID = "txtAmount", Class = "form-control", @readonly = "readonly", @required = "required" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Total Doc Value:</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBox("TotalDocValue", null, new { ID = "txtTotalDocValue", Class = "form-control", @readonly = "readonly", @required = "required" })
-                            </div>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Allocated Total:</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBox("AllocatedTotal", null, new { ID = "txtAllocatedTotal", Class = "form-control", @readonly = "readonly", @required = "required" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Total Match Value:</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(o=>o.AMOUNT_ARM, null, new { ID = "txtTotalMatchValue", Class = "form-control", @readonly = "readonly", @required = "required" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-10">
-                            <fieldset>
-                                <legend>Product Details</legend>
-                                <div id="grid" class="panel-body">
-                                    <section id="unseen">
-                                        <table id="tblAllocationDetails"></table>
-                                    </section>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Total Doc Value:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("TotalDocValue", null, new { ID = "txtTotalDocValue", Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
-                            </fieldset>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small "></label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                <input type="submit" id="btnSave" class="btn btn-success col-md-3 pull-right" value="Save">
-                                <button type="button" id="btnNew" class="btn btn-success">New</button>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Allocated Total:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("AllocatedTotal", null, new { ID = "txtAllocatedTotal", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Total Match Value:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(o => o.AMOUNT_ARM, null, new { ID = "txtTotalMatchValue", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <fieldset>
+                                    <legend>Product Details</legend>
+                                    <div id="grid" class="panel-body">
+                                        <section id="unseen">
+                                            <table id="tblAllocationDetails"></table>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small "></label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="submit" id="btnSave" class="btn btn-success" value="Save">
+                                    <button type="button" id="btnNew" class="btn btn-success">New</button>
+                                </div>
+                            </div>
+                        </div>
                     }
                 </div>
             </div>

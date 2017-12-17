@@ -813,7 +813,7 @@ $(document).ready(function () {
             datatype: "json",
             height: 150,
             styleUI: "Bootstrap",
-            colNames: ['', 'Job No', 'Pr Code', 'S W Code', 'Desciption', 'Qty', 'Rate', 'Amount', 'Disc.', 'Ship. Chrge', ''],
+            colNames: ['', 'Job No', 'Pr Code', 'S W Code', 'Desciption', 'Qty', 'Rate', 'Amount', 'Disc.', 'Ship. Chrge','VAT', ''],
             colModel: [
             { key: true, name: 'SLNO_SD', index: 'SLNO_SD', hidden: true },
             { key: false, name: 'JOBNO_SD', index: 'JOBNO_SD', width: 100 },
@@ -825,6 +825,7 @@ $(document).ready(function () {
             { key: false, name: 'AMOUNT_SD', index: 'AMOUNT_SD', width: 50 },
             { key: false, name: 'DISCOUNT_SD', index: 'DISCOUNT_SD', width: 50 },
             { key: false, name: 'SHIPPINGCHARGES_SD', index: 'SHIPPINGCHARGES_SD', width: 50 },
+            { key: false, name: 'VAT_SD', index: 'VAT_SD', width: 50 },
             {
                 name: "action",
                 align: "center",
@@ -860,7 +861,7 @@ $(document).ready(function () {
             //    repeatitems: false
             //},
             //loadonce: true,
-            width: 780,
+            width: 820,
             rowNum: 20,
             multiselect: false
         });
