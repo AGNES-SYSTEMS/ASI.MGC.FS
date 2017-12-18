@@ -1,7 +1,8 @@
 ﻿$(document).ready(function () {
     $("#txtStartDate").datepicker();
     $("#txtEndDate").datepicker();
-
+    var startDate = "";
+    var endDate = "";
     var validateArguments = function () {
         if ($("#txtStartDate").val() === "" || $("#txtStartDate").val() === null) {
             return false;
@@ -13,10 +14,22 @@
 
         return true;
     }
-
-    $("#btnApply").on("click", function () {
-        toastr.error("Start Date/ End Date cannot be empty.");
+    $('#txtStartDate').on('change', function () {
+        $('#formBalanceSheet').formValidation('revalidateField', 'startDate');
     });
+    $('#txtEndDate').on('change', function () {
+        $('#formBalanceSheet').formValidation('revalidateField', 'endDate');
+    });
+    //$("#btnApply").on("click", function () {
+    //    var isValid = validateArguments();
+    //    if (isValid) {
+    //        $('#frameWrap').show();
+    //        var url = "/Reports/BalanceSheet.aspx?startDate=" + startDate + "&endDate=" + endDate;
+    //        $('#iframe').prop('src', url);
+    //    } else {
+    //        toastr.error("Start Date/ End Date cannot be empty.");
+    //    }
+    //});
 
     $('#formBalanceSheet').on('init.field.fv', function (e, data) {
         var $icon = data.element.data('fv.icon'),

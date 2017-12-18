@@ -369,14 +369,14 @@
                                             </TablixCell>
                                             <TablixCell>
                                               <CellContents>
-                                                <Textbox Name="Textbox79">
+                                                <Textbox Name="ACDESCRIPTION_BS">
                                                   <CanGrow>true</CanGrow>
                                                   <KeepTogether>true</KeepTogether>
                                                   <Paragraphs>
                                                     <Paragraph>
                                                       <TextRuns>
                                                         <TextRun>
-                                                          <Value />
+                                                          <Value>=Fields!ACDESCRIPTION_BS.Value</Value>
                                                           <Style />
                                                         </TextRun>
                                                       </TextRuns>
@@ -385,7 +385,7 @@
                                                       </Style>
                                                     </Paragraph>
                                                   </Paragraphs>
-                                                  <rd:DefaultName>Textbox79</rd:DefaultName>
+                                                  <rd:DefaultName>ACDESCRIPTION_BS</rd:DefaultName>
                                                   <Style>
                                                     <Border>
                                                       <Color>LightGrey</Color>

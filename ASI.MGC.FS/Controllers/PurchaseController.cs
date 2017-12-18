@@ -188,6 +188,23 @@ namespace ASI.MGC.FS.Controllers
                     _unitOfWork.Repository<GLTRANSACTION1>().Insert(objPurchase);
                     _unitOfWork.Save();
 
+                    if (!string.IsNullOrEmpty(frm["TotalVAT"]) && Convert.ToDecimal(frm["TotalVAT"]) > 0)
+                    {
+                        var objVATChrg = _unitOfWork.Repository<GLTRANSACTION1>().Create();
+                        objVATChrg.DOCNUMBER_GLT = Convert.ToString(frm["DocNo"]);
+                        objVATChrg.DOCDATE_GLT = Convert.ToDateTime(frm["DocDate"]);
+                        objVATChrg.GLDATE_GLT = Convert.ToDateTime(frm["PurDate"]);
+                        objVATChrg.GLACCODE_GLT = "3510";
+                        objVATChrg.CREDITAMOUNT_GLT = Convert.ToDecimal(frm["TotalVAT"]);
+                        objVATChrg.DEBITAMOUNT_GLT = 0;
+                        objVATChrg.OTHERREF_GLT = Convert.ToString(frm["Invoice"]);
+                        objVATChrg.NARRATION_GLT = Convert.ToString(frm["Note"]);
+                        objVATChrg.GLSTATUS_GLT = "P";
+                        objVATChrg.VARUSER = currentUser;
+                        _unitOfWork.Repository<GLTRANSACTION1>().Insert(objVATChrg);
+                        _unitOfWork.Save();
+                    }
+
                     foreach (var prd in lstProducts)
                     {
                         prd.VOUCHERNO_SL = Convert.ToString(frm["DocNo"]);
@@ -274,6 +291,22 @@ namespace ASI.MGC.FS.Controllers
                         objShippingChrg.GLSTATUS_GLT = "P";
                         objShippingChrg.VARUSER = currentUser;
                         _unitOfWork.Repository<GLTRANSACTION1>().Insert(objShippingChrg);
+                        _unitOfWork.Save();
+                    }
+                    if (!string.IsNullOrEmpty(frm["TotalVAT"]) && Convert.ToDecimal(frm["TotalVAT"]) > 0)
+                    {
+                        var objVATChrg = _unitOfWork.Repository<GLTRANSACTION1>().Create();
+                        objVATChrg.DOCNUMBER_GLT = Convert.ToString(frm["DocNo"]);
+                        objVATChrg.DOCDATE_GLT = Convert.ToDateTime(frm["DocDate"]);
+                        objVATChrg.GLDATE_GLT = Convert.ToDateTime(frm["PurDate"]);
+                        objVATChrg.GLACCODE_GLT = "3510";
+                        objVATChrg.CREDITAMOUNT_GLT = 0;
+                        objVATChrg.DEBITAMOUNT_GLT = Convert.ToDecimal(frm["TotalVAT"]);
+                        objVATChrg.OTHERREF_GLT = Convert.ToString(frm["Invoice"]);
+                        objVATChrg.NARRATION_GLT = Convert.ToString(frm["Note"]);
+                        objVATChrg.GLSTATUS_GLT = "P";
+                        objVATChrg.VARUSER = currentUser;
+                        _unitOfWork.Repository<GLTRANSACTION1>().Insert(objVATChrg);
                         _unitOfWork.Save();
                     }
 

@@ -832,6 +832,7 @@ namespace ASI.MGC.FS.Controllers
 
                     var objBalanceSheet = _unitOfWork.Repository<BALANCESHEET>().Create();
                     objBalanceSheet.MAINCODE_BS = Code.Trim();
+                    objBalanceSheet.ACCODE_BS = ACCode;
                     objBalanceSheet.SUBDESCRIPTION_BS = ACType.Trim();
                     objBalanceSheet.ACDESCRIPTION_BS = ACdescription.Trim();
                     objBalanceSheet.AMOUNT_BS = Opening;
@@ -860,6 +861,7 @@ namespace ASI.MGC.FS.Controllers
                 ACCode = "6000";
                 var objPLBalanceSheet = _unitOfWork.Repository<BALANCESHEET>().Create();
                 objPLBalanceSheet.MAINCODE_BS = Code.Trim();
+                objPLBalanceSheet.ACCODE_BS = ACCode;
                 objPLBalanceSheet.SUBDESCRIPTION_BS = ACType.Trim();
                 objPLBalanceSheet.ACDESCRIPTION_BS = ACdescription.Trim();
                 objPLBalanceSheet.AMOUNT_BS = Opening;
@@ -898,6 +900,7 @@ namespace ASI.MGC.FS.Controllers
                 ACCode = "9000";
                 var objARBalanceSheet = _unitOfWork.Repository<BALANCESHEET>().Create();
                 objARBalanceSheet.MAINCODE_BS = Code.Trim();
+                objARBalanceSheet.ACCODE_BS = ACCode;
                 objARBalanceSheet.SUBDESCRIPTION_BS = ACType.Trim();
                 objARBalanceSheet.ACDESCRIPTION_BS = ACdescription.Trim();
                 objARBalanceSheet.AMOUNT_BS = Opening;
@@ -935,6 +938,7 @@ namespace ASI.MGC.FS.Controllers
                 ACCode = "9500";
                 var objAPBalanceSheet = _unitOfWork.Repository<BALANCESHEET>().Create();
                 objAPBalanceSheet.MAINCODE_BS = Code.Trim();
+                objAPBalanceSheet.ACCODE_BS = ACCode;
                 objAPBalanceSheet.SUBDESCRIPTION_BS = ACType.Trim();
                 objAPBalanceSheet.ACDESCRIPTION_BS = ACdescription.Trim();
                 objAPBalanceSheet.AMOUNT_BS = Opening;
@@ -985,6 +989,7 @@ namespace ASI.MGC.FS.Controllers
                     ACType = "Current Asset";
                     var objBalanceSheet = _unitOfWork.Repository<BALANCESHEET>().Create();
                     objBalanceSheet.MAINCODE_BS = Code.Trim();
+                    objBalanceSheet.ACCODE_BS = ACCode;
                     objBalanceSheet.SUBDESCRIPTION_BS = ACType.Trim();
                     objBalanceSheet.ACDESCRIPTION_BS = ACdescription.Trim();
                     objBalanceSheet.AMOUNT_BS = Opening;
@@ -996,8 +1001,13 @@ namespace ASI.MGC.FS.Controllers
 
                 Opening = repo.sp_GetStockValuation(FDate);
                 UptoYear = repo.sp_GetStockValuation(FDate);
+                Code = "A";
+                ACType = "Current Asset";
+                ACdescription = "CLOSING STOCK";
+                ACCode = "9000";
                 var objStockBalanceSheet = _unitOfWork.Repository<BALANCESHEET>().Create();
                 objStockBalanceSheet.MAINCODE_BS = Code.Trim();
+                objStockBalanceSheet.ACCODE_BS = ACCode;
                 objStockBalanceSheet.SUBDESCRIPTION_BS = ACType.Trim();
                 objStockBalanceSheet.ACDESCRIPTION_BS = ACdescription.Trim();
                 objStockBalanceSheet.AMOUNT_BS = Opening;
