@@ -13,10 +13,11 @@ namespace ASI.MGC.FS.Controllers
     public class QuotationController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
-
+        readonly TimeZoneInfo timeZoneInfo;
         public QuotationController()
         {
             _unitOfWork = new UnitOfWork();
+            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
         }
         // GET: Quotation
         public ActionResult Index()
@@ -69,6 +70,7 @@ namespace ASI.MGC.FS.Controllers
                         objQuotationRef.RATE_QREF = Convert.ToDecimal(prd.Rate);
                         objQuotationRef.AMOUNT_QREF = Convert.ToDecimal(prd.Rate * prd.Qty);
                         objQuotationRef.ID_QREF = Convert.ToInt32(prdCount);
+                        objQuotationRef.VAT_QREF = Convert.ToDecimal(prd.VAT);
                         _unitOfWork.Repository<QOTATION_REF>().Insert(objQuotationRef);
                         _unitOfWork.Save();
                     }

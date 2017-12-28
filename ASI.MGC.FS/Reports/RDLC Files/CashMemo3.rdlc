@@ -356,14 +356,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="DESCRIPTION_INVD">
+                    <Textbox Name="DESCRIPTION_PM">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!DESCRIPTION_INVD.Value</Value>
+                              <Value>=Fields!DESCRIPTION_PM.Value</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -372,7 +372,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>DESCRIPTION_INVD</rd:DefaultName>
+                      <rd:DefaultName>DESCRIPTION_PM</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -1203,7 +1203,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=Format(Globals!ExecutionTime,"dd/MM/yyyy HH:mm")</Value>
+                  <Value>=Format(Code.FromUTC(Globals!ExecutionTime),"dd/MM/yyyy HH:mm")</Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
                   </Style>
@@ -1706,7 +1706,7 @@
             </Line>
           </ReportItems>
           <KeepTogether>true</KeepTogether>
-          <Height>1.71527in</Height>
+          <Height>2in</Height>
           <Width>7.7in</Width>
           <Visibility>
             <Hidden>=iif(Globals!PageNumber=Globals!TotalPages,false,true)</Hidden>
@@ -2062,9 +2062,10 @@ Private Shared Function translateCents(ByVal cents As [String]) As [String]
     Return cts
 End Function
 
-
-
-</Code>
+Public Shared Function FromUTC(ByVal d As Date) As Date
+        Dim tz As TimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time")
+        Return (TimeZoneInfo.ConvertTime(DateTime.Now, tz))
+    End Function</Code>
   <EmbeddedImages>
     <EmbeddedImage Name="MESFooter">
       <MIMEType>image/jpeg</MIMEType>

@@ -14,10 +14,11 @@ namespace ASI.MGC.FS.Controllers
     public class MrvController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
-
+        readonly TimeZoneInfo timeZoneInfo;
         public MrvController()
         {
             _unitOfWork = new UnitOfWork();
+            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
         }
         public ActionResult Index()
         {

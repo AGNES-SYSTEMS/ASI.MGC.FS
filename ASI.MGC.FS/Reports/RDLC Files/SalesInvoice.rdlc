@@ -1114,7 +1114,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=Format(Globals!ExecutionTime,"dd/MM/yyyy HH:mm")</Value>
+                  <Value>=Format(Code.FromUTC(Globals!ExecutionTime),"dd/MM/yyyy HH:mm")</Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
                   </Style>
@@ -1523,7 +1523,12 @@ Private Shared Function translateCents(ByVal cents As [String]) As [String]
         cts += " " &amp; engOne
     Next
     Return cts
-End Function</Code>
+End Function
+
+Public Shared Function FromUTC(ByVal d As Date) As Date
+        Dim tz As TimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time")
+        Return (TimeZoneInfo.ConvertTime(DateTime.Now, tz))
+    End Function</Code>
   <EmbeddedImages>
     <EmbeddedImage Name="MESHeader">
       <MIMEType>image/jpeg</MIMEType>

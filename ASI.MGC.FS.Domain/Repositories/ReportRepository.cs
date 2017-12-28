@@ -899,5 +899,27 @@ namespace ASI.MGC.FS.Domain.Repositories
             }
             return stockValuation;
         }
+        public void Sp_CashMemoReversal(string cashRvNo)
+        {
+            try
+            {
+                _context.SP_CashMemoReversal(cashRvNo);
+            }
+            catch (Exception ex)
+            {
+                //exception handling pending
+            }
+        }
+        public void Sp_InvoiceReversal(string invNo)
+        {
+            try
+            {
+                _context.SP_InvoiceReversal(invNo);
+            }
+            catch (Exception ex)
+            {
+                //exception handling pending
+            }
+        }
     }
 }

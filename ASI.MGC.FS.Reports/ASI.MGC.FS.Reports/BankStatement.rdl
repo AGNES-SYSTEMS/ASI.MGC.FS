@@ -941,7 +941,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=FormatDateTime(Globals!ExecutionTime, DateFormat.LongDate)</Value>
+                  <Value>=Format(Code.FromUTC(Globals!ExecutionTime),"dd/MM/yyyy HH:mm")</Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
                   </Style>
@@ -1182,6 +1182,10 @@
       <Prompt>ENDDATE</Prompt>
     </ReportParameter>
   </ReportParameters>
+  <Code>Public Shared Function FromUTC(ByVal d As Date) As Date
+        Dim tz As TimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time")
+        Return (TimeZoneInfo.ConvertTime(DateTime.Now, tz))
+    End Function</Code>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>16361842-fd81-40c0-a56a-25656a1dce0f</rd:ReportID>

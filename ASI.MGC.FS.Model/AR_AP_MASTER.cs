@@ -30,5 +30,7 @@ namespace ASI.MGC.FS.Model
         public string STATUS_ARM { get; set; }
         public Nullable<decimal> LIMITAMOUNT_ARM { get; set; }
         public Nullable<int> CREDITDAYS_ARM { get; set; }
+        public string VATNO_ARM { get; set; }
+        public string Notes_ARM { get; set; }
     }
 }

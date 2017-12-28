@@ -23,104 +23,108 @@
                 <div class="container">
                     @using (Ajax.BeginForm("SaveQuotation", "Quotation", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formQuotationEntry", @class = "form-horizontal", enctype = "multipart/form-data" }))
                     {
-                    @Html.AntiForgeryToken()
-                    @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
-                    <input type="hidden" id="hdnQuotProds" name="quotProds" />
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label id="lblMRVNo" class="control-label col-md-4 small ">Customer Code</label>
-                            <div class="col-md-8">
-                                <div class="input-group">
-                                    @Html.TextBoxFor(m => m.CUSTNAME_QM, null, new { ID = "txtCustCode", Class = "form-control", @required = "required" })
-                                    <span class="input-group-btn">
-                                        <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#CustomerSearchModel">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </span>
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
+                        <input type="hidden" id="hdnQuotProds" name="quotProds" />
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblMRVNo" class="control-label col-md-4 small ">Customer Code</label>
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.CUSTNAME_QM, null, new { ID = "txtCustCode", Class = "form-control", @required = "required" })
+                                        <span class="input-group-btn">
+                                            <button type="button" class="searchClass btn btn-default btn-md" data-toggle="modal" data-target="#CustomerSearchModel">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblDate" class="control-label col-md-4 small ">Quotation No</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(m => m.QUOTNO_QM, null, new { ID = "txtQuotationNo", @Value = ViewBag.QotNumber, Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 form-group">
-                            <label id="lblDate" class="control-label col-md-4 small ">Quotation No</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(m => m.QUOTNO_QM, null, new { ID = "txtQuotationNo", @Value = ViewBag.QotNumber, Class = "form-control", @readonly = "readonly", @required = "required" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label id="lblCustCode" class="control-label col-md-4 small ">Customer Name</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBox("CustName", null, new { ID = "txtCustName", Class = "form-control", @required = "required" })
-                            </div>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label id="lblGLDate" class="control-label col-md-4 small ">Quotation Date</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(m => m.DATE_QM, null, new { ID = "txtQuotDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @required = "required" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label id="lblCustCode" class="control-label col-md-4 small ">Primary Address</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(m => m.ADDRESS1_QM, null, new { ID = "txtAddress1", Class = "form-control", @required = "required" })
-                            </div>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label id="lblGLDate" class="control-label col-md-4 small ">Secondary Address</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(m => m.ADDRESS2_QM, null, new { ID = "txtAddress2", Class = "form-control" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label id="lblCustCode" class="control-label col-md-4 small ">Remarks</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextAreaFor(d => d.NOTE_QM, new { ID = "txtRemarks", Class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="col-md-6 form-group">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-10">
-                            <fieldset>
-                                <legend>Quotation Details</legend>
-                                <div id="grid" class="panel-body">
-                                    <section>
-                                        <button class="btn btn-primary" data-toggle="modal" data-target="#QuotProductModel">
-                                            Add Product
-                                        </button>
-                                        <table id="tblQuotDetails"></table>
-                                    </section>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustCode" class="control-label col-md-4 small ">Customer Name</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("CustName", null, new { ID = "txtCustName", Class = "form-control", @required = "required" })
                                 </div>
-                            </fieldset>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Grand Total</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBox("NetPrdAmount", null, new { ID = "txtNetPrdAmount", Class = "form-control", @readonly = "readonly", @required = "required" })
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblGLDate" class="control-label col-md-4 small ">Quotation Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(m => m.DATE_QM, null, new { ID = "txtQuotDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @required = "required" })
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small "></label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                <input type="submit" id="btnSubmit" class="btn btn-success" value="Save">
-                                <button type="button" id="btnNew" class="btn btn-success">New</button>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustCode" class="control-label col-md-4 small ">Primary Address</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(m => m.ADDRESS1_QM, null, new { ID = "txtAddress1", Class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblGLDate" class="control-label col-md-4 small ">Secondary Address</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(m => m.ADDRESS2_QM, null, new { ID = "txtAddress2", Class = "form-control" })
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblCustCode" class="control-label col-md-4 small ">Remarks</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextAreaFor(d => d.NOTE_QM, new { ID = "txtRemarks", Class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">VAT 5%</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("TotalVAT", null, new { ID = "txtTotalVAT", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <fieldset>
+                                    <legend>Quotation Details</legend>
+                                    <div id="grid" class="panel-body">
+                                        <section>
+                                            <button class="btn btn-primary" data-toggle="modal" data-target="#QuotProductModel">
+                                                Add Product
+                                            </button>
+                                            <table id="tblQuotDetails"></table>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Grand Total</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("NetPrdAmount", null, new { ID = "txtNetPrdAmount", Class = "form-control", @readonly = "readonly", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small "></label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="submit" id="btnSubmit" class="btn btn-success" value="Save">
+                                    <button type="button" id="btnNew" class="btn btn-success">New</button>
+                                </div>
+                            </div>
+                        </div>
                     }
                 </div>
             </div>
@@ -209,6 +213,12 @@
                                     <input type="text" id="txtAmount" name="Amount" class="form-control" value="0" readonly />
                                 </div>
                             </div>
+                            <div class="col-md-7 form-group">
+                                <label id="lblRate" class="control-label col-md-4 small ">VAT 5%:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    <input type="text" id="txtVAT" data-fv-notempty="true" pattern="\d{1,5}" name="VAT" class="form-control" required readonly />
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -248,20 +258,20 @@
                     </div>
                     <div class="modal-body">
                         @*<div class="row">
-                            <div class="col-lg-11 col-md-11">
-                                <div id="custGrid" class="panel-body">
-                                    <div class="col-md-12 form-group">
-                                        <div class="col-md-12 input-group paddingLeftRight0">
-                                            @Html.TextBox("searchCust", null, new { ID = "txtCustSearch", Class = "form-control" })
-                                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                <div class="col-lg-11 col-md-11">
+                                    <div id="custGrid" class="panel-body">
+                                        <div class="col-md-12 form-group">
+                                            <div class="col-md-12 input-group paddingLeftRight0">
+                                                @Html.TextBox("searchCust", null, new { ID = "txtCustSearch", Class = "form-control" })
+                                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                            </div>
                                         </div>
+                                        <br /><br />
+                                        <table id="tblCustomerSearch" style="width: 100%"></table>
+                                        <div id="custPager"></div>
                                     </div>
-                                    <br /><br />
-                                    <table id="tblCustomerSearch" style="width: 100%"></table>
-                                    <div id="custPager"></div>
                                 </div>
-                            </div>
-                        </div>*@
+                            </div>*@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div id="custGrid" class="panel-body">
@@ -418,7 +428,7 @@
             } else {
                 toastr.error("Sorry! Something went wrong, please try again.");
             }
-            
+
         }
 
         function OnFailure() {

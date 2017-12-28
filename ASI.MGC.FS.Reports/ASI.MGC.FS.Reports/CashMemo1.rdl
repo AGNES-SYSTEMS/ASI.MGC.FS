@@ -1203,7 +1203,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=Format(Globals!ExecutionTime,"dd/MM/yyyy HH:mm")</Value>
+                  <Value>=Format(Code.FromUTC(Globals!ExecutionTime),"dd/MM/yyyy HH:mm")</Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
                   </Style>
@@ -2139,7 +2139,10 @@ Public Shared Function GetDecimal(ByVal numb As [Decimal]) As [Decimal]
         Return decimalNumb
     End Function
 
-</Code>
+Public Shared Function FromUTC(ByVal d As Date) As Date
+        Dim tz As TimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time")
+        Return (TimeZoneInfo.ConvertTime(DateTime.Now, tz))
+    End Function</Code>
   <EmbeddedImages>
     <EmbeddedImage Name="MESFooter">
       <MIMEType>image/jpeg</MIMEType>

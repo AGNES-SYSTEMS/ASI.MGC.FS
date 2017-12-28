@@ -160,6 +160,7 @@ function getJobDetailByMRV() {
         type: "POST",
         success: function (jobDetails) {
             arrMrvJobDetails = [];
+            jQuery('#tblMRVJobDetails').jqGrid('clearGridData');
             for (var i = 0; i < jobDetails.JobData.length; i++) {
                 arrMrvJobDetails[i] = { JobNo: jobDetails.JobData[i].JobNo, PrdDesc: jobDetails.JobData[i].PrdCode, JobStatus: jobDetails.JobData[i].JobStatus };
                 jQuery("#tblMRVJobDetails").jqGrid('addRowData', i + 1, arrMrvJobDetails[i]);
@@ -182,6 +183,7 @@ function getSaleDetailByMRV() {
         type: "POST",
         success: function (saleDetails) {
             arrMrvSaleDetails = [];
+            jQuery('#tblSaleDetails').jqGrid('clearGridData');
             var sales = saleDetails.lstSales;
             var netAmount = 0;
             var totalDiscount = 0;

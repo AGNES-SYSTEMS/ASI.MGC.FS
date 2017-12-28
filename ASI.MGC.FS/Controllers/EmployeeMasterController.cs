@@ -10,10 +10,11 @@ namespace ASI.MGC.FS.Controllers
     public class EmployeeMasterController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
-
+        readonly TimeZoneInfo timeZoneInfo;
         public EmployeeMasterController()
         {
             _unitOfWork = new UnitOfWork();
+            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
         }
         public ActionResult Index()
         {

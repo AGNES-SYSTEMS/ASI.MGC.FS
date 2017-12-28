@@ -14,9 +14,11 @@ namespace ASI.MGC.FS.Controllers
     public class InvoiceController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
+        readonly TimeZoneInfo timeZoneInfo;
         public InvoiceController()
         {
             _unitOfWork = new UnitOfWork();
+            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
         }
         // GET: Invoice
         public ActionResult Index()
@@ -182,6 +184,7 @@ namespace ASI.MGC.FS.Controllers
             bool success = false;
             string invNo = objSaleDetail.INVNO_SD;
             string revInvNo = "Rev" + objSaleDetail.INVNO_SD;
+            ReportRepository repo = _unitOfWork.ExtRepositoryFor<ReportRepository>();
             bool isSaleClose = false;
             var salesByInvoice = (from saleDetail in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
                                   where saleDetail.INVNO_SD.Equals(invNo) && string.IsNullOrEmpty(saleDetail.DAYENDDOC_NO)
@@ -317,40 +320,41 @@ namespace ASI.MGC.FS.Controllers
                             _unitOfWork.Repository<GLTRANSACTION1>().Update(entry);
                             _unitOfWork.Save();
                         }
-                        // Clearing Stock Ledger
-                        var stockLedgerData = (from stockLedger in _unitOfWork.Repository<STOCKLEDGER>().Query().Get()
-                                               where stockLedger.VOUCHERNO_SL.Equals(invNo)
-                                               select stockLedger).ToList();
-                        foreach (var entry in stockLedgerData)
-                        {
-                            _unitOfWork.Repository<STOCKLEDGER>().Delete(entry);
-                            _unitOfWork.Save();
-                        }
-                        //Reversing Job & Sale Data
-                        var saleDetailData = (from saleDetail in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
-                                              where saleDetail.INVNO_SD.Equals(invNo)
-                                              select saleDetail).ToList();
-                        foreach (var entry in saleDetailData)
-                        {
-                            entry.STATUS_SD = "N";
-                            entry.INVNO_SD = "";
-                            var JobData = (from jobMaster in _unitOfWork.Repository<JOBMASTER>().Query().Get()
-                                           where jobMaster.JOBNO_JM.Equals(entry.JOBNO_SD)
-                                           select jobMaster).SingleOrDefault();
-                            if (JobData != null)
-                            {
-                                JobData.DELEVERNOTENO_JM = "";
-                                JobData.JOBSTATUS_JM = "N";
-                                _unitOfWork.Repository<JOBMASTER>().Update(JobData);
-                                _unitOfWork.Save();
-                            }
-                            _unitOfWork.Repository<SALEDETAIL>().Update(entry);
-                            _unitOfWork.Save();
-                        }
+                        //// Clearing Stock Ledger
+                        //var stockLedgerData = (from stockLedger in _unitOfWork.Repository<STOCKLEDGER>().Query().Get()
+                        //                       where stockLedger.VOUCHERNO_SL.Equals(invNo)
+                        //                       select stockLedger).ToList();
+                        //foreach (var entry in stockLedgerData)
+                        //{
+                        //    _unitOfWork.Repository<STOCKLEDGER>().Delete(entry);
+                        //    _unitOfWork.Save();
+                        //}
+                        ////Reversing Job & Sale Data
+                        //var saleDetailData = (from saleDetail in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                        //                      where saleDetail.INVNO_SD.Equals(invNo)
+                        //                      select saleDetail).ToList();
+                        //foreach (var entry in saleDetailData)
+                        //{
+                        //    entry.STATUS_SD = "N";
+                        //    entry.INVNO_SD = "";
+                        //    var JobData = (from jobMaster in _unitOfWork.Repository<JOBMASTER>().Query().Get()
+                        //                   where jobMaster.JOBNO_JM.Equals(entry.JOBNO_SD)
+                        //                   select jobMaster).SingleOrDefault();
+                        //    if (JobData != null)
+                        //    {
+                        //        JobData.DELEVERNOTENO_JM = "";
+                        //        JobData.JOBSTATUS_JM = "N";
+                        //        _unitOfWork.Repository<JOBMASTER>().Update(JobData);
+                        //        _unitOfWork.Save();
+                        //    }
+                        //    _unitOfWork.Repository<SALEDETAIL>().Update(entry);
+                        //    _unitOfWork.Save();
+                        //}
                         success = true;
                         transaction.Commit();
+                        repo.Sp_InvoiceReversal(invNo);
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         success = false;
                         transaction.Rollback();

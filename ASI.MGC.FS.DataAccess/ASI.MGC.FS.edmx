@@ -64,6 +64,8 @@
           <Property Name="STATUS_ARM" Type="nvarchar" MaxLength="20" />
           <Property Name="LIMITAMOUNT_ARM" Type="money" />
           <Property Name="CREDITDAYS_ARM" Type="int" />
+          <Property Name="VATNO_ARM" Type="nvarchar" MaxLength="50" />
+          <Property Name="Notes_ARM" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="ARMATCHING">
           <Key>
@@ -592,6 +594,7 @@
           <Property Name="RATE_QREF" Type="money" />
           <Property Name="ID_QREF" Type="int" />
           <Property Name="AMOUNT_QREF" Type="money" />
+          <Property Name="VAT_QREF" Type="money" />
         </EntityType>
         <EntityType Name="QUOT_PROD_MASTER">
           <Key>
@@ -1189,6 +1192,9 @@
           <Parameter Name="STARTDATE" Type="datetime" Mode="In" />
           <Parameter Name="ENDDATE" Type="datetime" Mode="In" />
         </Function>
+        <Function Name="SP_CashMemoReversal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CASHRVNO" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_DeleteSalesbyJobId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="JobId" Type="nvarchar" Mode="In" />
         </Function>
@@ -1311,6 +1317,9 @@
         <Function Name="sp_GLMGLTListTB" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="STARTDATE" Type="datetime" Mode="In" />
           <Parameter Name="ENDDATE" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="SP_InvoiceReversal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="INVNO" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_JvDataList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="jvNo" Type="nvarchar" Mode="In" />
@@ -1909,6 +1918,12 @@
           </FunctionImport>
           <FunctionImport Name="SP_GetStockValuation" ReturnType="Collection(Decimal)">
           <Parameter Name="Sdate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SP_CashMemoReversal" ReturnType="Collection(String)">
+          <Parameter Name="CASHRVNO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InvoiceReversal" ReturnType="Collection(String)">
+          <Parameter Name="INVNO" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="rpt_BankPayment_Result">
@@ -2643,6 +2658,8 @@
           <Property Name="STATUS_ARM" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="LIMITAMOUNT_ARM" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CREDITDAYS_ARM" Type="Int32" />
+          <Property Name="VATNO_ARM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Notes_ARM" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <ComplexType Name="sp_GetAllocationDetailsDocNo_Result">
           <Property Type="String" Name="DOCNUMBER_ART" Nullable="true" MaxLength="20" />
@@ -3239,6 +3256,7 @@
           <Property Name="RATE_QREF" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="ID_QREF" Type="Int32" />
           <Property Name="AMOUNT_QREF" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="VAT_QREF" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="QUOT_PROD_MASTER">
           <Key>
@@ -4641,6 +4659,8 @@
           <EntitySetMapping Name="AR_AP_MASTER">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.AR_AP_MASTER">
               <MappingFragment StoreEntitySet="AR_AP_MASTER">
+                <ScalarProperty Name="Notes_ARM" ColumnName="Notes_ARM" />
+                <ScalarProperty Name="VATNO_ARM" ColumnName="VATNO_ARM" />
                 <ScalarProperty Name="CREDITDAYS_ARM" ColumnName="CREDITDAYS_ARM" />
                 <ScalarProperty Name="LIMITAMOUNT_ARM" ColumnName="LIMITAMOUNT_ARM" />
                 <ScalarProperty Name="STATUS_ARM" ColumnName="STATUS_ARM" />
@@ -5283,6 +5303,7 @@
           <EntitySetMapping Name="QOTATION_REF">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.QOTATION_REF">
               <MappingFragment StoreEntitySet="QOTATION_REF">
+                <ScalarProperty Name="VAT_QREF" ColumnName="VAT_QREF" />
                 <ScalarProperty Name="AMOUNT_QREF" ColumnName="AMOUNT_QREF" />
                 <ScalarProperty Name="ID_QREF" ColumnName="ID_QREF" />
                 <ScalarProperty Name="RATE_QREF" ColumnName="RATE_QREF" />
@@ -5703,6 +5724,8 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_StockLedger_Converstion" FunctionName="ASI_MGC_FSModel.Store.sp_StockLedger_Converstion" />
           <FunctionImportMapping FunctionImportName="SP_GetStockValuation" FunctionName="ASI_MGC_FSModel.Store.SP_GetStockValuation" />
+          <FunctionImportMapping FunctionImportName="SP_CashMemoReversal" FunctionName="ASI_MGC_FSModel.Store.SP_CashMemoReversal" />
+          <FunctionImportMapping FunctionImportName="SP_InvoiceReversal" FunctionName="ASI_MGC_FSModel.Store.SP_InvoiceReversal" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

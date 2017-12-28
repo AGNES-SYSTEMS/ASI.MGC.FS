@@ -11,9 +11,11 @@ namespace ASI.MGC.FS.Controllers
     public class MgcReportsController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
+        readonly TimeZoneInfo timeZoneInfo;
         public MgcReportsController()
         {
             _unitOfWork = new UnitOfWork();
+            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
         }
         public ActionResult ArStatement()
         {

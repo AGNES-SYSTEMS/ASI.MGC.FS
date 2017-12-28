@@ -14,10 +14,11 @@ namespace ASI.MGC.FS.Controllers
     public class PurchaseController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
-
+        readonly TimeZoneInfo timeZoneInfo;
         public PurchaseController()
         {
             _unitOfWork = new UnitOfWork();
+            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
         }
         // GET: Purchase
         public ActionResult Index()

@@ -1,4 +1,37 @@
-﻿$(document).ready(function () {
+﻿var fetchSupplierDetails = function (custCode) {
+    var data = JSON.stringify({ custCode: custCode, custName: null });
+    $.ajax({
+        url: '/Customer/getCustomerRecord',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: data,
+        type: "POST",
+        success: function (custDetails) {
+            $('#txtCustCode').val(custDetails.ARCODE_ARM).change();
+            $('#txtCustName').val(custDetails.DESCRIPTION_ARM).change();
+            $('#txtPoBox').val(custDetails.POBOX_ARM).change();
+            $('#txtVATNo').val(custDetails.VATNO_ARM).change();
+            $('#txtAddress1').val(custDetails.ADDRESS1_ARM);
+            $('#txtAddress2').val(custDetails.ADDRESS2_ARM).change();
+            $('#txtTelephone').val(custDetails.TELEPHONE_ARM).change();
+            $('#txtFax').val(custDetails.FAX_ARM).change();
+            $('#txtEmail').val(custDetails.EMAIL_ARM).change();
+            $('#txtContactPerson').val(custDetails.CONDACTPERSON_ARM);
+            $('#txtSaleExe').val(custDetails.SALESEXE_ARM);
+            $('#txtStatus').val(custDetails.STATUS_ARM).change();
+            $('#txtReceiveable').val(custDetails.RECEIVABLETYPE_ARM).change();
+            $('#txtLimitAmount').val(custDetails.LIMITAMOUNT_ARM).change();
+            $('#txtCreditDays').val(custDetails.CREDITDAYS_ARM);
+            $('#txtNotes').val(custDetails.Notes_ARM).change();
+            $('#txtCustCode').prop("readonly", true);
+        },
+        complete: function () {
+        },
+        error: function () {
+        }
+    });
+}
+$(document).ready(function () {
     $("#txtGlDate").datepicker();
     var $custType = "AP";
     jQuery("#tblSupplierDetails").jqGrid({
@@ -10,9 +43,9 @@
         autowidth: true,
         styleUI: "Bootstrap",
         colNames: [
-            'Customer Code', 'Customer Name', 'PO Box', 'Address', 'Telephone', 'Fax', 'Email', 'Contact Person', 'Edit Actions'],
+            'Customer Code', 'Customer Name', 'PO Box', 'Address', 'Telephone', 'Fax', 'Email', 'Contact Person', 'Actions'],
         colModel: [
-            { key: true, name: 'ARCODE_ARM', index: 'ARCODE_ARM', width: 100, align: "center", sortable: false },
+            { key: true, name: 'ARCODE_ARM', index: 'ARCODE_ARM', width: 100, align: "center", sortable: true },
             { key: false, name: 'DESCRIPTION_ARM', index: 'DESCRIPTION_ARM', width: 150, align: "left", sortable: false },
             { key: false, name: 'POBOX_ARM', index: 'POBOX_ARM', width: 80, align: "center", sortable: false },
             { key: false, name: 'ADDRESS1_ARM', index: 'ADDRESS1_ARM', width: 150, align: "left", sortable: false },
@@ -21,14 +54,24 @@
             { key: false, name: 'EMAIL_ARM', index: 'EMAIL_ARM', width: 80, align: "center", sortable: false },
             { key: false, name: 'CONDACTPERSON_ARM', index: 'CONDACTPERSON_ARM', width: 150, align: "left", sortable: false },
             {
-                name: "actions",
-                width: 100,
-                formatter: "actions",
-                formatoptions: {
-                    keys: true,
-                    editOptions: {},
-                    addOptions: {},
-                    delOptions: {}
+                name: "action",
+                align: "center",
+                sortable: false,
+                title: false,
+                fixed: false,
+                width: 50,
+                search: false,
+                formatter: function (cellValue, options) {
+
+                    var markup = "<a %Href% data-toggle='modal' %Id% data-target='#SupplierMasterModel'> <i class='fa fa-pencil-square-o style='color:black'></i></a>";
+                    var replacements = {
+                        "%Href%": "href=javascript:editSupplierDetails(&apos;" + options.rowId + "&apos;)",
+                        "%Id%": "id='" + options.rowId + "'"
+                    };
+                    markup = markup.replace(/%\w+%/g, function (all) {
+                        return replacements[all];
+                    });
+                    return markup;
                 }
             }
         ],
@@ -54,28 +97,36 @@
         var outerwidth = $('#grid').width();
         $('#tblSupplierDetails').setGridWidth(outerwidth);
     });
-
-    var searchGrid = function (searchValue) {
-        debugger;
-        var postData = $("#tblSupplierDetails").jqGrid("getGridParam", "postData");
-        postData["searchValue"] = searchValue;
-
-        $("#tblSupplierDetails").setGridParam({ postData: postData });
+    var searchGridCust = function (searchById, searchByName) {
+        var custpostData = $("#tblSupplierDetails").jqGrid("getGridParam", "postData");
+        custpostData["custId"] = searchById;
+        custpostData["custName"] = searchByName;
+        $("#tblSupplierDetails").setGridParam({ postData: custpostData });
         $("#tblSupplierDetails").trigger("reloadGrid", [{ page: 1 }]);
     };
+    $("#txtCustIdSearch").off().on("keyup", function () {
 
-    $("#txtSupplierSearch").off().on("keyup", function () {
-
-        var shouldSearch = $("#txtSupplierSearch").val().length >= 3 || $("#txtSupplierSearch").val().length === 0;
+        var shouldSearch = $("#txtCustIdSearch").val().length >= 1 || $("#txtCustIdSearch").val().length === 0;
         if (shouldSearch) {
-            searchGrid($("#txtSupplierSearch").val());
+            searchGridCust($("#txtCustIdSearch").val(), $("#txtCustNameSearch").val(), "3");
         }
     });
+    $("#txtCustNameSearch").off().on("keyup", function () {
 
+        var shouldSearch = $("#txtCustNameSearch").val().length >= 3 || $("#txtCustNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGridCust($("#txtCustIdSearch").val(), $("#txtCustNameSearch").val(), "3");
+        }
+    });
     $("#SupplierMasterModel").on('hide.bs.modal', function () {
+        $('#txtCustCode').prop("readonly", false);
         $(this).find('form')[0].reset();
     });
-
+    $("#SupplierMasterModel").on('show.bs.modal', function (e) {
+        if (e.relatedTarget.id) {
+            fetchSupplierDetails(e.relatedTarget.id);
+        }
+    });
     $('#formSupplierMaster').on('init.field.fv', function (e, data) {
         var $icon = data.element.data('fv.icon'),
             options = data.fv.getOptions(),
@@ -165,6 +216,13 @@
                 validators: {
                     notEmpty: {
                         message: 'Opening Balance is required'
+                    }
+                }
+            },
+            VATNO_ARM: {
+                validators: {
+                    notEmpty: {
+                        message: 'VAT No is required'
                     }
                 }
             }

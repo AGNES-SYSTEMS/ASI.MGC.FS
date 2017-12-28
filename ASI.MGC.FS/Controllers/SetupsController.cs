@@ -4,16 +4,18 @@ using System.Web.Mvc;
 using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Model;
 using System.Net.NetworkInformation;
+using ASI.MGC.FS.WebCommon;
 
 namespace ASI.MGC.FS.Controllers
 {
     public class SetupsController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
-
+        readonly TimeZoneInfo timeZoneInfo;
         public SetupsController()
         {
             _unitOfWork = new UnitOfWork();
+            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
         }
         // GET: Setups
 
@@ -147,22 +149,80 @@ namespace ASI.MGC.FS.Controllers
             {
                 try
                 {
-                    objCustomerMaster.TYPE_ARM = "AR";
-                    _unitOfWork.Repository<AR_AP_MASTER>().Insert(objCustomerMaster);
-                    _unitOfWork.Save();
-
+                    var openingBalance = Convert.ToInt32(form["OpeningBalance"]);
                     var objCustomerLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
                     objCustomerLedger.DOCNUMBER_ART = objCustomerMaster.ARCODE_ARM;
-                    objCustomerLedger.DODATE_ART = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+                    objCustomerLedger.DODATE_ART = TimeZoneInfo.ConvertTime(DateTime.Now, timeZoneInfo);
                     objCustomerLedger.GLDATE_ART = Convert.ToDateTime(form["GLDate"]);
                     objCustomerLedger.ARAPCODE_ART = objCustomerMaster.ARCODE_ARM;
-                    objCustomerLedger.DEBITAMOUNT_ART = Convert.ToInt32(form["OpeningBalance"]);
+                    if (openingBalance >= 0)
+                    {
+                        objCustomerLedger.DEBITAMOUNT_ART = openingBalance;
+                    }
+                    else
+                    {
+                        objCustomerLedger.CREDITAMOUNT_ART = Math.Abs(openingBalance);
+                    }
                     objCustomerLedger.NARRATION_ART = "Opening Balance";
                     objCustomerLedger.OTHERREF_ART = objCustomerMaster.ARCODE_ARM;
                     objCustomerLedger.MATCHVALUE_AR = Convert.ToDecimal("0.0");
                     objCustomerLedger.STATUS_ART = "OP";
-                    _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objCustomerLedger);
-                    _unitOfWork.Save();
+                    objCustomerLedger.USER_ART = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
+
+                    var objCustomer = (from custList in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                                       where custList.ARCODE_ARM.Equals(objCustomerMaster.ARCODE_ARM)
+                                       select custList).SingleOrDefault();
+                    if (objCustomer != null)
+                    {
+                        objCustomer.ADDRESS1_ARM = objCustomerMaster.ADDRESS1_ARM;
+                        objCustomer.ADDRESS2_ARM = objCustomerMaster.ADDRESS2_ARM;
+                        objCustomer.ADDRESS3_ARM = objCustomerMaster.ADDRESS3_ARM;
+                        objCustomer.CONDACTPERSON_ARM = objCustomerMaster.CONDACTPERSON_ARM;
+                        objCustomer.CREDITDAYS_ARM = objCustomerMaster.CREDITDAYS_ARM;
+                        objCustomer.DESCRIPTION_ARM = objCustomerMaster.DESCRIPTION_ARM;
+                        objCustomer.EMAIL_ARM = objCustomerMaster.EMAIL_ARM;
+                        objCustomer.FAX_ARM = objCustomerMaster.FAX_ARM;
+                        objCustomer.LIMITAMOUNT_ARM = objCustomerMaster.LIMITAMOUNT_ARM;
+                        objCustomer.Notes_ARM = objCustomerMaster.Notes_ARM;
+                        objCustomer.POBOX_ARM = objCustomerMaster.POBOX_ARM;
+                        objCustomer.RECEIVABLETYPE_ARM = objCustomerMaster.RECEIVABLETYPE_ARM;
+                        objCustomer.SALESEXE_ARM = objCustomerMaster.SALESEXE_ARM;
+                        objCustomer.STATUS_ARM = objCustomerMaster.STATUS_ARM;
+                        objCustomer.TELEPHONE_ARM = objCustomerMaster.TELEPHONE_ARM;
+
+                        objCustomer.VATNO_ARM = objCustomerMaster.VATNO_ARM;
+                        _unitOfWork.Repository<AR_AP_MASTER>().Update(objCustomer);
+                        _unitOfWork.Save();
+
+                        var existingLedger = (from custLedger in _unitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
+                                              where custLedger.DOCNUMBER_ART.Equals(objCustomerMaster.ARCODE_ARM)
+                                              select custLedger).ToList();
+                        foreach (var record in existingLedger)
+                        {
+                            _unitOfWork.Repository<AR_AP_LEDGER>().Delete(record);
+                            _unitOfWork.Save();
+                        }
+
+                        if (openingBalance > 0)
+                        {
+                            _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objCustomerLedger);
+                            _unitOfWork.Save();
+                        }
+                    }
+                    else
+                    {
+                        objCustomerMaster.TYPE_ARM = "AR";
+                        _unitOfWork.Repository<AR_AP_MASTER>().Insert(objCustomerMaster);
+                        _unitOfWork.Save();
+
+                        if (openingBalance > 0)
+                        {
+                            _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objCustomerLedger);
+                            _unitOfWork.Save();
+                        }
+                    }
+
+
                     success = true;
                     transaction.Commit();
                 }
@@ -249,23 +309,78 @@ namespace ASI.MGC.FS.Controllers
             {
                 try
                 {
-                    objSupplierMaster.TYPE_ARM = "AP";
-                    _unitOfWork.Repository<AR_AP_MASTER>().Create();
-                    _unitOfWork.Repository<AR_AP_MASTER>().Insert(objSupplierMaster);
-                    _unitOfWork.Save();
-
+                    var openingBalance = Convert.ToInt32(form["OpeningBalance"]);
                     var objCustomerLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
                     objCustomerLedger.DOCNUMBER_ART = objSupplierMaster.ARCODE_ARM;
-                    objCustomerLedger.DODATE_ART = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+                    objCustomerLedger.DODATE_ART = TimeZoneInfo.ConvertTime(DateTime.Now, timeZoneInfo);
                     objCustomerLedger.GLDATE_ART = Convert.ToDateTime(form["GLDate"]);
                     objCustomerLedger.ARAPCODE_ART = objSupplierMaster.ARCODE_ARM;
-                    objCustomerLedger.DEBITAMOUNT_ART = Convert.ToInt32(form["OpeningBalance"]);
+                    if (openingBalance >= 0)
+                    {
+                        objCustomerLedger.CREDITAMOUNT_ART = openingBalance;
+                    }
+                    else
+                    {
+                        objCustomerLedger.DEBITAMOUNT_ART = Math.Abs(openingBalance);
+                    }
                     objCustomerLedger.NARRATION_ART = "Opening Balance";
                     objCustomerLedger.OTHERREF_ART = objSupplierMaster.ARCODE_ARM;
                     objCustomerLedger.MATCHVALUE_AR = Convert.ToDecimal("0.0");
                     objCustomerLedger.STATUS_ART = "OP";
-                    _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objCustomerLedger);
-                    _unitOfWork.Save();
+
+                    var objSupplier = (from supplierList in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                                       where supplierList.ARCODE_ARM.Equals(objSupplierMaster.ARCODE_ARM)
+                                       select supplierList).SingleOrDefault();
+                    if (objSupplier != null)
+                    {
+                        objSupplier.ADDRESS1_ARM = objSupplierMaster.ADDRESS1_ARM;
+                        objSupplier.ADDRESS2_ARM = objSupplierMaster.ADDRESS2_ARM;
+                        objSupplier.ADDRESS3_ARM = objSupplierMaster.ADDRESS3_ARM;
+                        objSupplier.CONDACTPERSON_ARM = objSupplierMaster.CONDACTPERSON_ARM;
+                        objSupplier.CREDITDAYS_ARM = objSupplierMaster.CREDITDAYS_ARM;
+                        objSupplier.DESCRIPTION_ARM = objSupplierMaster.DESCRIPTION_ARM;
+                        objSupplier.EMAIL_ARM = objSupplierMaster.EMAIL_ARM;
+                        objSupplier.FAX_ARM = objSupplierMaster.FAX_ARM;
+                        objSupplier.LIMITAMOUNT_ARM = objSupplierMaster.LIMITAMOUNT_ARM;
+                        objSupplier.Notes_ARM = objSupplierMaster.Notes_ARM;
+                        objSupplier.POBOX_ARM = objSupplierMaster.POBOX_ARM;
+                        objSupplier.RECEIVABLETYPE_ARM = objSupplierMaster.RECEIVABLETYPE_ARM;
+                        objSupplier.SALESEXE_ARM = objSupplierMaster.SALESEXE_ARM;
+                        objSupplier.STATUS_ARM = objSupplierMaster.STATUS_ARM;
+                        objSupplier.TELEPHONE_ARM = objSupplierMaster.TELEPHONE_ARM;
+
+                        objSupplier.VATNO_ARM = objSupplierMaster.VATNO_ARM;
+                        _unitOfWork.Repository<AR_AP_MASTER>().Update(objSupplier);
+                        _unitOfWork.Save();
+
+                        var existingLedger = (from custLedger in _unitOfWork.Repository<AR_AP_LEDGER>().Query().Get()
+                                              where custLedger.DOCNUMBER_ART.Equals(objSupplierMaster.ARCODE_ARM)
+                                              select custLedger).ToList();
+                        foreach (var record in existingLedger)
+                        {
+                            _unitOfWork.Repository<AR_AP_LEDGER>().Delete(record);
+                            _unitOfWork.Save();
+                        }
+
+                        if (openingBalance > 0)
+                        {
+                            _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objCustomerLedger);
+                            _unitOfWork.Save();
+                        }
+                    }
+                    else
+                    {
+                        objSupplierMaster.TYPE_ARM = "AP";
+                        _unitOfWork.Repository<AR_AP_MASTER>().Create();
+                        _unitOfWork.Repository<AR_AP_MASTER>().Insert(objSupplierMaster);
+                        _unitOfWork.Save();
+
+                        if (openingBalance > 0)
+                        {
+                            _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objCustomerLedger);
+                            _unitOfWork.Save();
+                        }
+                    }
                     success = true;
                     transaction.Commit();
                 }

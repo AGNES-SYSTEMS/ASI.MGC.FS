@@ -1364,5 +1364,23 @@ namespace ASI.MGC.FS.Model
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("SP_GetStockValuation", sdateParameter);
         }
+    
+        public virtual ObjectResult<string> SP_CashMemoReversal(string cASHRVNO)
+        {
+            var cASHRVNOParameter = cASHRVNO != null ?
+                new ObjectParameter("CASHRVNO", cASHRVNO) :
+                new ObjectParameter("CASHRVNO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_CashMemoReversal", cASHRVNOParameter);
+        }
+    
+        public virtual ObjectResult<string> SP_InvoiceReversal(string iNVNO)
+        {
+            var iNVNOParameter = iNVNO != null ?
+                new ObjectParameter("INVNO", iNVNO) :
+                new ObjectParameter("INVNO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_InvoiceReversal", iNVNOParameter);
+        }
     }
 }

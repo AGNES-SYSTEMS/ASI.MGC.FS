@@ -12,9 +12,11 @@ namespace ASI.MGC.FS.Controllers
     public class CustomerController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
+        readonly TimeZoneInfo timeZoneInfo;
         public CustomerController()
         {
             _unitOfWork = new UnitOfWork();
+            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
         }
         public ActionResult Index()
         {
@@ -206,7 +208,7 @@ namespace ASI.MGC.FS.Controllers
             return Json(lstCustName, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetCustomerRecord(string custCode, string custName)
+        public JsonResult GetCustomerRecord(string custCode, string custName = null)
         {
             AR_AP_MASTER objCustomer = null;
             if (!string.IsNullOrEmpty(custCode) && !string.IsNullOrWhiteSpace(custCode))

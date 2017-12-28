@@ -10,9 +10,11 @@ namespace ASI.MGC.FS.Controllers
     public class DocumentMasterController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
+        readonly TimeZoneInfo timeZoneInfo;
         public DocumentMasterController()
         {
             _unitOfWork = new UnitOfWork();
+            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
         }
         // GET: DocumentMaster
         public ActionResult Index()

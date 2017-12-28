@@ -14,9 +14,11 @@ namespace ASI.MGC.FS.Controllers
     public class FinanceController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
+        readonly TimeZoneInfo timeZoneInfo;
         public FinanceController()
         {
             _unitOfWork = new UnitOfWork();
+            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
         }
         // GET: Finance
         public ActionResult GlCreation()

@@ -120,6 +120,7 @@
   <DataSources>
     <DataSource Name="DataSource">
       <DataSourceReference>ASI.MGC.FS.DataSource</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>cf339b05-f924-4dd7-9ef4-72758d616cf3</rd:DataSourceID>
     </DataSource>
   </DataSources>
@@ -169,6 +170,10 @@
       <Prompt>MRVNO</Prompt>
     </ReportParameter>
   </ReportParameters>
+  <Code>Public Shared Function FromUTC(ByVal d As Date) As Date
+        Dim tz As TimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time")
+        Return (TimeZoneInfo.ConvertTime(DateTime.Now, tz))
+    End Function</Code>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>7eac3e66-4484-41ed-8ab8-aa3c8013f40e</rd:ReportID>
 </Report>

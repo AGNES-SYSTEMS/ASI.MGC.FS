@@ -22,5 +22,6 @@ namespace ASI.MGC.FS.Model
         public Nullable<decimal> RATE_QREF { get; set; }
         public Nullable<int> ID_QREF { get; set; }
         public Nullable<decimal> AMOUNT_QREF { get; set; }
+        public Nullable<decimal> VAT_QREF { get; set; }
     }
 }

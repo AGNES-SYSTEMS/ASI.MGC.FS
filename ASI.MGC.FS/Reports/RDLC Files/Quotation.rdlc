@@ -9,16 +9,19 @@
               <Width>0.73958in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.80993in</Width>
+              <Width>3in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.04771in</Width>
+              <Width>0.8in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.95834in</Width>
+              <Width>0.9in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.07986in</Width>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.8193in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -205,6 +208,42 @@
                     </Textbox>
                   </CellContents>
                 </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox4">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>VAT @ 5%</Value>
+                              <Style>
+                                <FontFamily>Arial Black</FontFamily>
+                                <FontWeight>Bold</FontWeight>
+                                <TextDecoration>Underline</TextDecoration>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox4</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
               </TablixCells>
             </TablixRow>
             <TablixRow>
@@ -362,6 +401,36 @@
                     </Textbox>
                   </CellContents>
                 </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox9">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox9</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
               </TablixCells>
             </TablixRow>
             <TablixRow>
@@ -373,19 +442,22 @@
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>0.72279in</Width>
+                            <Width>0.64282in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>3.82672in</Width>
+                            <Width>3.09676in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>1.04771in</Width>
+                            <Width>0.8in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>0.95834in</Width>
+                            <Width>0.90527in</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>1.07986in</Width>
+                            <Width>0.99473in</Width>
+                          </TablixColumn>
+                          <TablixColumn>
+                            <Width>0.8193in</Width>
                           </TablixColumn>
                         </TablixColumns>
                         <TablixRows>
@@ -401,7 +473,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>&gt;</Value>
+                                            <Value EvaluationMode="Constant">&gt;</Value>
                                             <Style>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
@@ -458,7 +530,7 @@
                               </TablixCell>
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="QTY_QREF">
+                                  <Textbox Name="Textbox33">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
@@ -469,10 +541,12 @@
                                             <Style />
                                           </TextRun>
                                         </TextRuns>
-                                        <Style />
+                                        <Style>
+                                          <TextAlign>Center</TextAlign>
+                                        </Style>
                                       </Paragraph>
                                     </Paragraphs>
-                                    <rd:DefaultName>QTY_QREF</rd:DefaultName>
+                                    <rd:DefaultName>Textbox33</rd:DefaultName>
                                     <Style>
                                       <Border>
                                         <Color>LightGrey</Color>
@@ -488,7 +562,7 @@
                               </TablixCell>
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="RATE_QREF">
+                                  <Textbox Name="Textbox34">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
@@ -504,7 +578,7 @@
                                         </Style>
                                       </Paragraph>
                                     </Paragraphs>
-                                    <rd:DefaultName>RATE_QREF</rd:DefaultName>
+                                    <rd:DefaultName>Textbox34</rd:DefaultName>
                                     <Style>
                                       <Border>
                                         <Color>LightGrey</Color>
@@ -520,7 +594,7 @@
                               </TablixCell>
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="AMOUNT_QREF">
+                                  <Textbox Name="Textbox28">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
@@ -536,7 +610,39 @@
                                         </Style>
                                       </Paragraph>
                                     </Paragraphs>
-                                    <rd:DefaultName>AMOUNT_QREF</rd:DefaultName>
+                                    <rd:DefaultName>Textbox28</rd:DefaultName>
+                                    <Style>
+                                      <Border>
+                                        <Color>LightGrey</Color>
+                                        <Style>Solid</Style>
+                                      </Border>
+                                      <PaddingLeft>2pt</PaddingLeft>
+                                      <PaddingRight>2pt</PaddingRight>
+                                      <PaddingTop>2pt</PaddingTop>
+                                      <PaddingBottom>2pt</PaddingBottom>
+                                    </Style>
+                                  </Textbox>
+                                </CellContents>
+                              </TablixCell>
+                              <TablixCell>
+                                <CellContents>
+                                  <Textbox Name="Textbox30">
+                                    <CanGrow>true</CanGrow>
+                                    <KeepTogether>true</KeepTogether>
+                                    <Paragraphs>
+                                      <Paragraph>
+                                        <TextRuns>
+                                          <TextRun>
+                                            <Value>=Format(Fields!VAT_QREF.Value,"N2")</Value>
+                                            <Style />
+                                          </TextRun>
+                                        </TextRuns>
+                                        <Style>
+                                          <TextAlign>Right</TextAlign>
+                                        </Style>
+                                      </Paragraph>
+                                    </Paragraphs>
+                                    <rd:DefaultName>Textbox30</rd:DefaultName>
                                     <Style>
                                       <Border>
                                         <Color>LightGrey</Color>
@@ -561,22 +667,13 @@
                           <TablixMember />
                           <TablixMember />
                           <TablixMember />
+                          <TablixMember />
                         </TablixMembers>
                       </TablixColumnHierarchy>
                       <TablixRowHierarchy>
                         <TablixMembers>
                           <TablixMember>
-                            <Group Name="Details1">
-                              <Filters>
-                                <Filter>
-                                  <FilterExpression>=Fields!DESCRIPTION_PM.Value</FilterExpression>
-                                  <Operator>Equal</Operator>
-                                  <FilterValues>
-                                    <FilterValue>=Fields!DESCRIPTION_PM.Value</FilterValue>
-                                  </FilterValues>
-                                </Filter>
-                              </Filters>
-                            </Group>
+                            <Group Name="Details1" />
                           </TablixMember>
                         </TablixMembers>
                       </TablixRowHierarchy>
@@ -587,9 +684,10 @@
                         </Border>
                       </Style>
                     </Tablix>
-                    <ColSpan>5</ColSpan>
+                    <ColSpan>6</ColSpan>
                   </CellContents>
                 </TablixCell>
+                <TablixCell />
                 <TablixCell />
                 <TablixCell />
                 <TablixCell />
@@ -600,6 +698,7 @@
         </TablixBody>
         <TablixColumnHierarchy>
           <TablixMembers>
+            <TablixMember />
             <TablixMember />
             <TablixMember />
             <TablixMember />
@@ -629,7 +728,7 @@
         <Top>1.29in</Top>
         <Left>0.025in</Left>
         <Height>0.75in</Height>
-        <Width>7.63542in</Width>
+        <Width>7.25888in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -958,7 +1057,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=Format(Globals!ExecutionTime,"dd/MM/yyyy HH:mm")</Value>
+                  <Value>=Format(Code.FromUTC(Globals!ExecutionTime),"dd/MM/yyyy HH:mm")</Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
                   </Style>
@@ -1194,7 +1293,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Format(Sum(Fields!AMOUNT_QREF.Value, "DS_Quotation"),"N2")</Value>
+                      <Value>=Format(Sum(Fields!AMOUNT_QREF.Value, "DS_Quotation")+Sum(Fields!VAT_QREF.Value, "DS_Quotation"),"N2")</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1226,7 +1325,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="AED " &amp; CODE.changeToWords(Sum(Fields!AMOUNT_QREF.Value, "DS_Quotation")) &amp; "ONLY"</Value>
+                      <Value>="AED " &amp; CODE.changeToWords(CODE.GetDecimal(Sum(Fields!AMOUNT_QREF.Value, "DS_Quotation")+Sum(Fields!VAT_QREF.Value, "DS_Quotation"))) &amp; "ONLY"</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1367,6 +1466,10 @@
         <Field Name="NOTE_QM">
           <DataField>NOTE_QM</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="VAT_QREF">
+          <DataField>VAT_QREF</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="AMOUNT_QREF">
           <DataField>AMOUNT_QREF</DataField>
@@ -1589,9 +1692,15 @@ Private Shared Function translateCents(ByVal cents As [String]) As [String]
     Return cts
 End Function
 
+Public Shared Function FromUTC(ByVal d As Date) As Date
+        Dim tz As TimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time")
+        Return (TimeZoneInfo.ConvertTime(DateTime.Now, tz))
+    End Function
 
-
-</Code>
+Public Shared Function GetDecimal(ByVal numb As [Decimal]) As [Decimal]
+        Dim decimalNumb As Decimal = Math.Round(numb, 2, MidpointRounding.AwayFromZero)
+        Return decimalNumb
+    End Function</Code>
   <EmbeddedImages>
     <EmbeddedImage Name="MESHeader">
       <MIMEType>image/jpeg</MIMEType>

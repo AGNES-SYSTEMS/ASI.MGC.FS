@@ -35,11 +35,15 @@ var delProduct = function (rowId) {
 };
 var calculateNetAmount = function () {
     var totalGridPrdAmount = 0.0;
+    var totalVATAmount = 0.0;
     for (var i = 0; i < quotProducts.length; i++) {
         totalGridPrdAmount += parseFloat(quotProducts[i]["Amount"]);
+        totalVATAmount += parseFloat(quotProducts[i]["VAT"]);
     }
-    $("#txtNetPrdAmount").val(totalGridPrdAmount);
+    $("#txtTotalVAT").val(totalVATAmount);
+    $("#txtNetPrdAmount").val(totalGridPrdAmount + totalVATAmount);
     $("#formQuotationEntry").formValidation('revalidateField', 'NetPrdAmount');
+    $("#formQuotationEntry").formValidation('revalidateField', 'TotalVAT');
 };
 var stringifyData = function () {
     var quotPrds = $('#tblQuotDetails').jqGrid('getGridParam', 'data');
@@ -59,15 +63,16 @@ $(document).ready(function () {
         autoheight: true,
         autowidth: true,
         styleUI: "Bootstrap",
-        colNames: ['PrCode', 'Product Description', 'Job id', 'Job Description', 'Quantity', 'Rate', 'Amount', '', ''],
+        colNames: ['PrCode', 'Product Description', 'Job id', 'Job Description', 'Quantity', 'Rate', 'Amount', 'VAT @ 5%', '', ''],
         colModel: [
             { name: 'PrCode', index: 'PrCode', width: 80, align: "center", sortable: false },
-            { name: 'PrDesc', index: 'PrDesc', width: 300, align: "left", sortable: false },
+            { name: 'PrDesc', index: 'PrDesc', width: 250, align: "left", sortable: false },
             { name: 'JobId', index: 'JobId', width: 80, align: "center", sortable: false },
-            { name: 'JobDesc', index: 'JobDesc', width: 300, align: "left", sortable: false },
+            { name: 'JobDesc', index: 'JobDesc', width: 250, align: "left", sortable: false },
             { name: 'Qty', index: 'Qty', width: 90, align: "right", sortable: false },
             { name: 'Rate', index: 'Rate', width: 100, align: "right", sortable: false },
             { name: 'Amount', index: 'Amount', width: 100, align: "right", sortable: false },
+            { name: 'VAT', index: 'VAT', width: 100, align: "right", sortable: false },
             {
                 name: "action",
                 align: "center",
@@ -146,6 +151,7 @@ $(document).ready(function () {
         $("#txtQuantity").val("");
         $("#txtRate").val("");
         $("#txtAmount").val("0");
+        $("#txtVAT").val("0");
         selectedRowId = "";
     }
     $("#btnCancel").click(function () {
@@ -162,7 +168,8 @@ $(document).ready(function () {
                     JobDesc: $("#txtJobDesc").val(),
                     Qty: $("#txtQuantity").val(),
                     Rate: $("#txtRate").val(),
-                    Amount: $("#txtAmount").val()
+                    Amount: $("#txtAmount").val(),
+                    VAT: $("#txtVAT").val()
                 }
             }
             else {
@@ -174,7 +181,8 @@ $(document).ready(function () {
                     JobDesc: $("#txtJobDesc").val(),
                     Qty: $("#txtQuantity").val(),
                     Rate: $("#txtRate").val(),
-                    Amount: $("#txtAmount").val()
+                    Amount: $("#txtAmount").val(),
+                    VAT: $("#txtVAT").val()
                 }
             };
             clearModalForm();
@@ -201,6 +209,7 @@ $(document).ready(function () {
             $("#txtQuantity").val(ret.Qty);
             $("#txtRate").val(ret.Rate);
             $("#txtAmount").val(ret.Amount);
+            $("#txtVAT").val(ret.VAT);
         }
     });
     $("#QuotProductModel").on('hide.bs.modal', function () {
@@ -211,11 +220,15 @@ $(document).ready(function () {
     });
     $("#txtQuantity").change(function () {
         var totalAmount = $("#txtQuantity").val() * $("#txtRate").val();
+        var totalAmountVat = (totalAmount * 5.0) / 100;
         $("#txtAmount").val(totalAmount);
+        $("#txtVAT").val(totalAmountVat);
     });
     $("#txtRate").change(function () {
         var totalAmount = $("#txtQuantity").val() * $("#txtRate").val();
+        var totalAmountVat = (totalAmount * 5.0) / 100;
         $("#txtAmount").val(totalAmount);
+        $("#txtVAT").val(totalAmountVat);
     });
     $('#txtCustCode').on('change', function () {
         $('#formQuotationEntry').formValidation('revalidateField', 'CUSTNAME_QM');

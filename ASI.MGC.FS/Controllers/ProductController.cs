@@ -10,10 +10,11 @@ namespace ASI.MGC.FS.Controllers
     public class ProductController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
-
+        readonly TimeZoneInfo timeZoneInfo;
         public ProductController()
         {
             _unitOfWork = new UnitOfWork();
+            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
         }
         public ActionResult Index()
         {
