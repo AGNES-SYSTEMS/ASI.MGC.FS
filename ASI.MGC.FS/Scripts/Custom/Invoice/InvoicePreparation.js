@@ -61,11 +61,11 @@ function getSaleDetailByMrv() {
                 totalDiscount = totalDiscount + arrMrvSaleDetails[i]["DISCOUNT_SD"];
                 totalShipChrg = totalShipChrg + arrMrvSaleDetails[i]["SHIPPINGCHARGES_SD"];
                 totalVat = totalVat + arrMrvSaleDetails[i]["VAT_SD"];
-                $("#txtTotalCreditAmount").val(netAmount);
-                $("#txtNetAmount").val(netAmount);
-                $("#txtTotalDiscount").val(totalDiscount);
-                $("#txtTotalShipCharges").val(totalShipChrg);
-                $("#txtTotalVAT").val(totalVat);
+                $("#txtTotalCreditAmount").val(netAmount.toFixed(2));
+                $("#txtNetAmount").val(netAmount.toFixed(2));
+                $("#txtTotalDiscount").val(totalDiscount.toFixed(2));
+                $("#txtTotalShipCharges").val(totalShipChrg.toFixed(2));
+                $("#txtTotalVAT").val(totalVat.toFixed(2));
                 jQuery("#tblSaleDetails").jqGrid('addRowData', i + 1, arrMrvSaleDetails[i]);
             }
             var jsonMrvPrds = JSON.stringify(arrMrvSaleDetails);

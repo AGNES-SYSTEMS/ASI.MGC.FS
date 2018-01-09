@@ -1640,7 +1640,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Format(First(Fields!SHIPPING_IPM.Value, "DS_Invoice"), "N2")</Value>
+                      <Value>=Format(First(Fields!VAT_IPM.Value, "DS_Invoice"), "N2")</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>

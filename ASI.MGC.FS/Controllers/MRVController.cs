@@ -395,7 +395,7 @@ namespace ASI.MGC.FS.Controllers
                                  join pmData in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
                                      on sData.PRCODE_SD equals pmData.PROD_CODE_PM
                                  where sData.INVNO_SD.Equals(docNo)
-                                 select new { sData.PRCODE_SD, sData.MRVNO_SD, sData.QTY_SD, sData.RATE_SD, sData.UNIT_SD, pmData.DESCRIPTION_PM, sData.CREDITTOTAL_SD, sData.JOBNO_SD }).ToList();
+                                 select new { sData.PRCODE_SD, sData.MRVNO_SD, sData.QTY_SD, sData.RATE_SD, sData.UNIT_SD, pmData.DESCRIPTION_PM, sData.CREDITTOTAL_SD, sData.JOBNO_SD, sData.VAT_SD }).ToList();
                 foreach (var item in procSData)
                 {
                     var invDetails = _unitOfWork.Repository<INVDETAIL>().Create();
@@ -403,7 +403,7 @@ namespace ASI.MGC.FS.Controllers
                     invDetails.DESCRIPTION_INVD = item.DESCRIPTION_PM;
                     invDetails.QTY_INVD = item.QTY_SD;
                     invDetails.RATE_INVD = item.RATE_SD;
-                    invDetails.AMOUNT_INVNO = item.CREDITTOTAL_SD;
+                    invDetails.AMOUNT_INVNO = item.CREDITTOTAL_SD - Convert.ToDecimal(item.VAT_SD);
                     invDetails.INVNO_INVD = docNo;
                     invDetails.JOBNO_INVD = item.JOBNO_SD;
                     invDetails.UNIT_INVD = item.UNIT_SD;
@@ -418,7 +418,7 @@ namespace ASI.MGC.FS.Controllers
                                         join jRefData in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
                                             on sData.JOBID_SD equals jRefData.JOBID_JR
                                         where sData.INVNO_SD.Equals(docNo)
-                                        select new { sData.JOBID_SD, sData.MRVNO_SD, sData.QTY_SD, sData.RATE_SD, sData.UNIT_SD, jRefData.JOBDESCRIPTION_JR, sData.CREDITTOTAL_SD, sData.JOBNO_SD }).ToList();
+                                        select new { sData.JOBID_SD, sData.MRVNO_SD, sData.QTY_SD, sData.RATE_SD, sData.UNIT_SD, jRefData.JOBDESCRIPTION_JR, sData.CREDITTOTAL_SD, sData.JOBNO_SD, sData.VAT_SD }).ToList();
                 foreach (var item in procJobIdRefData)
                 {
                     var invDetails = _unitOfWork.Repository<INVDETAIL>().Create();
@@ -426,7 +426,7 @@ namespace ASI.MGC.FS.Controllers
                     invDetails.DESCRIPTION_INVD = item.JOBDESCRIPTION_JR;
                     invDetails.QTY_INVD = item.QTY_SD;
                     invDetails.RATE_INVD = item.RATE_SD;
-                    invDetails.AMOUNT_INVNO = item.CREDITTOTAL_SD;
+                    invDetails.AMOUNT_INVNO = item.CREDITTOTAL_SD - Convert.ToDecimal(item.VAT_SD);
                     invDetails.INVNO_INVD = docNo;
                     invDetails.JOBNO_INVD = item.JOBNO_SD;
                     invDetails.UNIT_INVD = item.UNIT_SD;
@@ -457,6 +457,9 @@ namespace ASI.MGC.FS.Controllers
                     var shippingTotal = (from sData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
                                          where sData.INVNO_SD.Equals(docNo)
                                          select sData.SHIPPINGCHARGES_SD).Sum();
+                    var vatTotal = (from sData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                                    where sData.INVNO_SD.Equals(docNo)
+                                    select sData.VAT_SD).Sum();
                     var CustDetails = (from arMaster in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
                                        where arMaster.ARCODE_ARM.Equals(arapLedger.ARAPCODE_ART)
                                        select arMaster).SingleOrDefault();
@@ -469,6 +472,7 @@ namespace ASI.MGC.FS.Controllers
                     invMasterData.CUSTPIN_IPM = CustDetails.POBOX_ARM;
                     invMasterData.SHIPPING_IPM = shippingTotal;
                     invMasterData.DISCOUNT_IPM = discountTotal;
+                    invMasterData.VAT_IPM = vatTotal;
                     invMasterData.LPONO_IPM = LPO;
                     invMasterData.INVTYPE_IPM = "INV";
                     _unitOfWork.Repository<INVMASTER>().Insert(invMasterData);
@@ -713,7 +717,7 @@ namespace ASI.MGC.FS.Controllers
                                  join pmData in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
                                      on sData.PRCODE_SD equals pmData.PROD_CODE_PM
                                  where sData.CASHRVNO_SD.Equals(docNo)
-                                 select new { sData.PRCODE_SD, sData.MRVNO_SD, sData.QTY_SD, sData.RATE_SD, sData.UNIT_SD, pmData.DESCRIPTION_PM, sData.CASHTOTAL_SD, sData.JOBNO_SD }).ToList();
+                                 select new { sData.PRCODE_SD, sData.MRVNO_SD, sData.QTY_SD, sData.RATE_SD, sData.UNIT_SD, pmData.DESCRIPTION_PM, sData.CASHTOTAL_SD, sData.JOBNO_SD, sData.VAT_SD }).ToList();
                 foreach (var item in procSData)
                 {
                     var invDetails = _unitOfWork.Repository<INVDETAIL>().Create();
@@ -721,7 +725,7 @@ namespace ASI.MGC.FS.Controllers
                     invDetails.DESCRIPTION_INVD = item.DESCRIPTION_PM;
                     invDetails.QTY_INVD = item.QTY_SD;
                     invDetails.RATE_INVD = item.RATE_SD;
-                    invDetails.AMOUNT_INVNO = item.CASHTOTAL_SD;
+                    invDetails.AMOUNT_INVNO = item.CASHTOTAL_SD - Convert.ToDecimal(item.VAT_SD);
                     invDetails.INVNO_INVD = docNo;
                     invDetails.JOBNO_INVD = item.JOBNO_SD;
                     invDetails.UNIT_INVD = item.UNIT_SD;
@@ -736,7 +740,7 @@ namespace ASI.MGC.FS.Controllers
                                         join jRefData in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
                                             on sData.JOBID_SD equals jRefData.JOBID_JR
                                         where sData.CASHRVNO_SD.Equals(docNo)
-                                        select new { sData.JOBID_SD, sData.MRVNO_SD, sData.QTY_SD, sData.RATE_SD, sData.UNIT_SD, jRefData.JOBDESCRIPTION_JR, sData.CASHTOTAL_SD, sData.JOBNO_SD }).ToList();
+                                        select new { sData.JOBID_SD, sData.MRVNO_SD, sData.QTY_SD, sData.RATE_SD, sData.UNIT_SD, jRefData.JOBDESCRIPTION_JR, sData.CASHTOTAL_SD, sData.JOBNO_SD,sData.VAT_SD }).ToList();
                 foreach (var item in procJobIdRefData)
                 {
                     var invDetails = _unitOfWork.Repository<INVDETAIL>().Create();
@@ -744,7 +748,7 @@ namespace ASI.MGC.FS.Controllers
                     invDetails.DESCRIPTION_INVD = item.JOBDESCRIPTION_JR;
                     invDetails.QTY_INVD = item.QTY_SD;
                     invDetails.RATE_INVD = item.RATE_SD;
-                    invDetails.AMOUNT_INVNO = item.CASHTOTAL_SD;
+                    invDetails.AMOUNT_INVNO = item.CASHTOTAL_SD- Convert.ToDecimal(item.VAT_SD);
                     invDetails.INVNO_INVD = docNo;
                     invDetails.JOBNO_INVD = item.JOBNO_SD;
                     invDetails.UNIT_INVD = item.UNIT_SD;
@@ -778,7 +782,9 @@ namespace ASI.MGC.FS.Controllers
                     var shippingTotal = (from sData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
                                          where sData.CASHRVNO_SD.Equals(docNo)
                                          select sData.SHIPPINGCHARGES_SD).Sum();
-
+                    var vatTotal = (from sData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
+                                    where sData.CASHRVNO_SD.Equals(docNo)
+                                    select sData.VAT_SD).Sum();
                     var invMasterData = _unitOfWork.Repository<INVMASTER>().Create();
                     invMasterData.INVNO_IPM = docNo;
                     invMasterData.INVDATE_IPM = bnkTrans.GLDATE_BT;
@@ -787,6 +793,7 @@ namespace ASI.MGC.FS.Controllers
                     invMasterData.CUSTADDRESS_IPM = custAddress;
                     invMasterData.SHIPPING_IPM = shippingTotal;
                     invMasterData.DISCOUNT_IPM = discountTotal;
+                    invMasterData.VAT_IPM = vatTotal;
                     invMasterData.LPONO_IPM = LPO;
                     invMasterData.INVTYPE_IPM = "CM";
                     _unitOfWork.Repository<INVMASTER>().Insert(invMasterData);

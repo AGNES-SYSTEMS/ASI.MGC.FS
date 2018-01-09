@@ -2055,18 +2055,19 @@
         </ComplexType>
         <ComplexType Name="rpt_Quotation_Result">
           <Property Type="Int32" Name="ID_QREF" Nullable="true" />
-          <Property Type="String" Name="QUOTNO_QM" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="QUOTNO_QM" Nullable="false" MaxLength="20" />
           <Property Type="DateTime" Name="DATE_QM" Nullable="true" />
-          <Property Type="String" Name="CUSTNAME_QM" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="ADDRESS1_QM" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="ADDRESS2_QM" Nullable="true" MaxLength="250" />
-          <Property Type="String" Name="DESCRIPTION_PM" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CUSTNAME_QM" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ADDRESS1_QM" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ADDRESS2_QM" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="DESCRIPTION_PM" Nullable="true" MaxLength="255" />
           <Property Type="Int32" Name="QTY_QPRM" Nullable="true" />
-          <Property Type="String" Name="DESCRIPTION_QREF" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="DESCRIPTION_QREF" Nullable="true" MaxLength="255" />
           <Property Type="Int32" Name="QTY_QREF" Nullable="true" />
           <Property Type="Decimal" Name="RATE_QREF" Nullable="true" Precision="19" />
-          <Property Type="String" Name="NOTE_QM" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="NOTE_QM" Nullable="true" MaxLength="255" />
           <Property Type="Decimal" Name="AMOUNT_QREF" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="VAT_QREF" Nullable="true" Precision="19" />
         </ComplexType>
         <ComplexType Name="Cash_Payment_Voucher1_Result">
           <Property Type="String" Name="COMPANYNAME_CM" Nullable="true" MaxLength="50" />
@@ -2244,8 +2245,8 @@
           <Property Type="String" Name="JOBNO_JM" Nullable="false" MaxLength="15" />
         </ComplexType>
         <ComplexType Name="rpt_EmpSales_Result">
-          <Property Type="String" Name="MRVNO_SD" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="JOBNO_SD" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="MRVNO_SD" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="JOBNO_SD" Nullable="true" MaxLength="20" />
           <Property Type="Int32" Name="QTY_SD" Nullable="true" />
           <Property Type="Decimal" Name="RATE_SD" Nullable="true" Precision="19" />
           <Property Type="Decimal" Name="DISCOUNT_SD" Nullable="true" Precision="19" />
@@ -2254,19 +2255,21 @@
           <Property Type="Decimal" Name="CASHTOTAL_SD" Nullable="true" Precision="19" />
           <Property Type="Decimal" Name="CREDITTOTAL_SD" Nullable="true" Precision="19" />
           <Property Type="String" Name="EMPCODE_JM" Nullable="true" MaxLength="5" />
-          <Property Type="String" Name="EMPFNAME_EM" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="EMPFNAME_EM" Nullable="true" MaxLength="255" />
+          <Property Type="Decimal" Name="VAT_SD" Nullable="true" Precision="19" />
         </ComplexType>
         <ComplexType Name="rpt_EmpWiseJobDetails_Result">
-          <Property Type="String" Name="EMPFNAME_EM" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="EMPFNAME_EM" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="EMPCODE_EM" Nullable="false" MaxLength="5" />
-          <Property Type="String" Name="JOBDESCRIPTION_JR" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="JOBDESCRIPTION_JR" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="JOBID_SD" Nullable="true" MaxLength="15" />
           <Property Type="Int32" Name="QTY_SD" Nullable="true" />
           <Property Type="Decimal" Name="RATE_SD" Nullable="true" Precision="19" />
-          <Property Type="String" Name="JOBNO_JM" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="JOBNO_JM" Nullable="false" MaxLength="20" />
           <Property Type="DateTime" Name="DOCDATE_JM" Nullable="true" />
           <Property Type="Decimal" Name="CASHTOTAL_SD" Nullable="true" Precision="19" />
           <Property Type="Decimal" Name="CREDITTOTAL_SD" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="VAT_SD" Nullable="true" Precision="19" />
         </ComplexType>
         <ComplexType Name="rpt_GLStatement_Result">
           <Property Type="String" Name="GLDESCRIPTION_LM" Nullable="true" MaxLength="30" />
@@ -3912,6 +3915,7 @@
                 <ScalarProperty Name="RATE_QREF" ColumnName="RATE_QREF" />
                 <ScalarProperty Name="NOTE_QM" ColumnName="NOTE_QM" />
                 <ScalarProperty Name="AMOUNT_QREF" ColumnName="AMOUNT_QREF" />
+                <ScalarProperty Name="VAT_QREF" ColumnName="VAT_QREF" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -4160,6 +4164,7 @@
                 <ScalarProperty Name="CREDITTOTAL_SD" ColumnName="CREDITTOTAL_SD" />
                 <ScalarProperty Name="EMPCODE_JM" ColumnName="EMPCODE_JM" />
                 <ScalarProperty Name="EMPFNAME_EM" ColumnName="EMPFNAME_EM" />
+                <ScalarProperty Name="VAT_SD" ColumnName="VAT_SD" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -4176,6 +4181,7 @@
                 <ScalarProperty Name="DOCDATE_JM" ColumnName="DOCDATE_JM" />
                 <ScalarProperty Name="CASHTOTAL_SD" ColumnName="CASHTOTAL_SD" />
                 <ScalarProperty Name="CREDITTOTAL_SD" ColumnName="CREDITTOTAL_SD" />
+                <ScalarProperty Name="VAT_SD" ColumnName="VAT_SD" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

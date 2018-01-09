@@ -33,7 +33,7 @@ var calculateNetAmount = function () {
         totalGridPrdAmount += parseFloat(arrPrdDetails[i]["Amount"]);
     }
     var taxedAmount = parseFloat(totalGridPrdAmount) + parseFloat($("#txtShipChrg").val()) - parseFloat($("#txtDiscount").val());
-    totalVAT = ((parseFloat(totalGridPrdAmount)- parseFloat($("#txtDiscount").val())) * 5.0) / 100;
+    totalVAT = (((parseFloat(totalGridPrdAmount) - parseFloat($("#txtDiscount").val())) * 5.0) / 100).toFixed(2);
     netAmount = taxedAmount + totalVAT;
     $("#txtNetAmount").val(netAmount);
     $("#txtTotalAmount").val(totalGridPrdAmount);
@@ -63,14 +63,15 @@ $(document).ready(function () {
         gridview: true,
         shrinkToFit: true,
         viewrecords: true,
-        colNames: ['Product Code', 'Product Description', 'Qty', 'Unit', 'Rate', 'Amount', '', ''],
+        colNames: ['Product Code', 'Product Description', 'Qty', 'Unit', 'Rate', 'Amount','VAT @ 5%', '', ''],
         colModel: [
             { name: 'PRODID_SL', index: 'PRODID_SL', width: 100, align: "center", sortable: false },
-            { name: 'PrdDesc', index: 'PrdDesc', width: 350, align: "left", sortable: false },
+            { name: 'PrdDesc', index: 'PrdDesc', width: 300, align: "left", sortable: false },
             { name: 'RECEPT_QTY_SL', index: 'RECEPT_QTY_SL', width: 100, align: "center", sortable: false },
             { name: 'UNIT_SL', index: 'UNIT_SL', width: 100, align: "center", sortable: false },
             { name: 'RECEPT_RATE_SL', index: 'RECEPT_RATE_SL', width: 100, align: "center", sortable: false },
-            { name: 'Amount', index: 'Amount', width: 150, align: "center", sortable: false },
+            { name: 'Amount', index: 'Amount', width: 100, align: "center", sortable: false },
+            { name: 'VAT', index: 'VAT', width: 100, align: "center", sortable: false },
             {
                 name: "action",
                 align: "center",
@@ -335,7 +336,8 @@ $(document).ready(function () {
                     RECEPT_QTY_SL: $("#txtQuantity").val(),
                     RECEPT_RATE_SL: $("#txtRate").val(),
                     UNIT_SL: $("#txtUnit").val(),
-                    Amount: $("#txtAmount").val()
+                    Amount: $("#txtAmount").val(),
+                    VAT: (($("#txtAmount").val() * 5.0) / 100).toFixed(2)
                 }
             }
             else {
@@ -346,7 +348,8 @@ $(document).ready(function () {
                     RECEPT_QTY_SL: $("#txtQuantity").val(),
                     RECEPT_RATE_SL: $("#txtRate").val(),
                     UNIT_SL: $("#txtUnit").val(),
-                    Amount: $("#txtAmount").val()
+                    Amount: $("#txtAmount").val(),
+                    VAT: (($("#txtAmount").val() * 5.0) / 100).toFixed(2)
                 }
             };
             clearModalForm();

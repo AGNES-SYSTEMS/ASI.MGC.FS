@@ -46,6 +46,10 @@
       <FullPath>CashMemo.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>CashMemo1.rdl</Name>
+      <FullPath>CashMemo1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>CashMemo3.rdl</Name>
       <FullPath>CashMemo3.rdl</FullPath>
     </ProjectItem>
@@ -96,6 +100,10 @@
     <ProjectItem>
       <Name>Invoice.rdl</Name>
       <FullPath>Invoice.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Invoice1.rdl</Name>
+      <FullPath>Invoice1.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>InvoiceWiseReport.rdl</Name>
@@ -178,12 +186,8 @@
       <FullPath>TrialBalance.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>CashMemo1.rdl</Name>
-      <FullPath>CashMemo1.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>Invoice1.rdl</Name>
-      <FullPath>Invoice1.rdl</FullPath>
+      <Name>CashpaymentVoucher1.rdl</Name>
+      <FullPath>CashpaymentVoucher1.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

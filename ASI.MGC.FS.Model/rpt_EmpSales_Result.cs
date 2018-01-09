@@ -24,5 +24,6 @@ namespace ASI.MGC.FS.Model
         public Nullable<decimal> CREDITTOTAL_SD { get; set; }
         public string EMPCODE_JM { get; set; }
         public string EMPFNAME_EM { get; set; }
+        public Nullable<decimal> VAT_SD { get; set; }
     }
 }

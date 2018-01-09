@@ -23,5 +23,6 @@ namespace ASI.MGC.FS.Model
         public Nullable<System.DateTime> DOCDATE_JM { get; set; }
         public Nullable<decimal> CASHTOTAL_SD { get; set; }
         public Nullable<decimal> CREDITTOTAL_SD { get; set; }
+        public Nullable<decimal> VAT_SD { get; set; }
     }
 }

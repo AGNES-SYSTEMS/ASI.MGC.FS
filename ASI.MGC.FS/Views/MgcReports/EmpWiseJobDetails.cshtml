@@ -1,7 +1,7 @@
 ﻿@{
-    ViewBag.Title = "Employee Wise Job Details";
+    ViewBag.Title = "Employee Sales";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.currPage = "Employee Wise Job Details";
+    ViewBag.currPage = "Employee Sales";
 }
 
 <div class="container">
@@ -13,7 +13,7 @@
         </ol>
         <!-- end:breadcrumb -->
         <fieldset>
-            <legend>Employee Wise Job Details</legend>
+            <legend>Employee Sales</legend>
             <div class="row">
                 <div class="container">
                     @using (Ajax.BeginForm(null, null, null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formEmpWiseJobDetails", @class = "form-horizontal", enctype = "multipart/form-data" }))
