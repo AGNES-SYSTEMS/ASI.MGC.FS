@@ -838,8 +838,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DS_CashMemo</DataSetName>
-        <Top>1.68056in</Top>
-        <Left>0.08876in</Left>
+        <Top>2.2in</Top>
+        <Left>0.09in</Left>
         <Height>0.75in</Height>
         <Width>7.569in</Width>
         <Style>
@@ -870,9 +870,9 @@
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>0.06944in</Top>
-        <Left>3.33958in</Left>
-        <Height>0.35069in</Height>
-        <Width>1.02083in</Width>
+        <Left>2.60493in</Left>
+        <Height>0.3in</Height>
+        <Width>2.5in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -902,7 +902,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>0.33333in</Top>
+        <Top>0.58333in</Top>
         <Left>0.2843in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
@@ -934,7 +934,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
-        <Top>0.4861in</Top>
+        <Top>0.83333in</Top>
         <Left>5.80513in</Left>
         <Height>0.23612in</Height>
         <Width>1.75in</Width>
@@ -968,7 +968,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>0.4861in</Top>
+        <Top>0.83333in</Top>
         <Left>5.00304in</Left>
         <Height>0.25in</Height>
         <Width>0.85765in</Width>
@@ -1000,7 +1000,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
-        <Top>0.75in</Top>
+        <Top>1.08333in</Top>
         <Left>5.80513in</Left>
         <Height>0.26388in</Height>
         <Width>1.75in</Width>
@@ -1034,7 +1034,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>0.76387in</Top>
+        <Top>1.08333in</Top>
         <Left>5.00304in</Left>
         <Height>0.25in</Height>
         <Width>0.85765in</Width>
@@ -1068,10 +1068,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CUST_CODE_IPM</rd:DefaultName>
-        <Top>0.58333in</Top>
+        <Top>0.83in</Top>
         <Left>0.82471in</Left>
         <Height>0.25in</Height>
-        <Width>2.01042in</Width>
+        <Width>2in</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -1102,10 +1102,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CUSTNAME_IPM</rd:DefaultName>
-        <Top>0.83333in</Top>
+        <Top>1.083in</Top>
         <Left>0.82471in</Left>
         <Height>0.25in</Height>
-        <Width>2.01042in</Width>
+        <Width>2in</Width>
         <ZIndex>8</ZIndex>
         <Style>
           <Border>
@@ -1136,10 +1136,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CUSTADDRESS_IPM</rd:DefaultName>
-        <Top>1.08333in</Top>
+        <Top>1.33in</Top>
         <Left>0.82471in</Left>
         <Height>0.25in</Height>
-        <Width>2.01042in</Width>
+        <Width>2in</Width>
         <ZIndex>9</ZIndex>
         <Style>
           <Border>
@@ -1170,11 +1170,79 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CUSTPIN_IPM</rd:DefaultName>
-        <Top>1.33333in</Top>
+        <Top>1.58in</Top>
         <Left>0.82471in</Left>
         <Height>0.25in</Height>
-        <Width>2.01042in</Width>
+        <Width>2in</Width>
         <ZIndex>10</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="DOCNO_VRPT9">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>="TRN: " &amp; First(Fields!VATNO_CM.Value, "DS_CashMemo")</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>DOCNO_VRPT</rd:DefaultName>
+        <Top>0.4in</Top>
+        <Left>2.85493in</Left>
+        <Height>0.23612in</Height>
+        <Width>2in</Width>
+        <ZIndex>11</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="CUSTPIN_IPM2">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!CUSTVATNO_IPM.Value, "DS_CashMemo")</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>CUSTPIN_IPM</rd:DefaultName>
+        <Top>1.83in</Top>
+        <Left>0.82471in</Left>
+        <Height>0.25in</Height>
+        <Width>2in</Width>
+        <ZIndex>12</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1853,6 +1921,10 @@
           <DataField>CUSTNAME_IPM</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="CUSTVATNO_IPM">
+          <DataField>CUSTVATNO_IPM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="CUSTADDRESS_IPM">
           <DataField>CUSTADDRESS_IPM</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -1912,6 +1984,10 @@
         <Field Name="PRODQTY_JM">
           <DataField>PRODQTY_JM</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="VATNO_CM">
+          <DataField>VATNO_CM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>

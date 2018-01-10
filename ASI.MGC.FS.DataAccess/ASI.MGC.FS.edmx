@@ -43,6 +43,7 @@
           <Property Name="USER_ART" Type="nvarchar" MaxLength="10" />
           <Property Name="MATCHVALUE_AR" Type="money" />
           <Property Name="STATUS_ART" Type="nvarchar" MaxLength="2" />
+          <Property Name="VAT_ART" Type="money" />
         </EntityType>
         <EntityType Name="AR_AP_MASTER">
           <Key>
@@ -139,6 +140,7 @@
           <Property Name="STATUS_BT" Type="nvarchar" MaxLength="2" />
           <Property Name="USER_BT" Type="nvarchar" MaxLength="5" />
           <Property Name="MASTERSTATUS_BT" Type="nvarchar" MaxLength="1" />
+          <Property Name="VAT_BT" Type="money" />
         </EntityType>
         <EntityType Name="COMPANYMASTER">
           <Key>
@@ -160,6 +162,7 @@
           <Property Name="CURRECNCYNAME_CM" Type="nvarchar" MaxLength="30" />
           <Property Name="PERRIODMETHOD_CM" Type="nvarchar" MaxLength="10" />
           <Property Name="LOGOPATH_CM" Type="nvarchar" MaxLength="255" />
+          <Property Name="VATNO_CM" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="CUSTOMEREPORT">
           <Key>
@@ -274,6 +277,7 @@
           <Property Name="NARRATION_GLT" Type="nvarchar" MaxLength="255" />
           <Property Name="GLSTATUS_GLT" Type="nvarchar" MaxLength="2" />
           <Property Name="VARUSER" Type="nvarchar" MaxLength="15" />
+          <Property Name="VAT_GLT" Type="money" />
         </EntityType>
         <EntityType Name="INVDETAILS">
           <Key>
@@ -305,6 +309,7 @@
           <Property Name="SALESFIGURE_IPM" Type="nvarchar" MaxLength="255" />
           <Property Name="INVTYPE_IPM" Type="nvarchar" MaxLength="5" />
           <Property Name="VAT_IPM" Type="money" />
+          <Property Name="CUSTVATNO_IPM" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="JOB_REPORT">
           <Key>
@@ -616,6 +621,7 @@
           <Property Name="ADDRESS2_QM" Type="nvarchar" MaxLength="255" />
           <Property Name="NOTE_QM" Type="nvarchar" MaxLength="255" />
           <Property Name="DATE_QM" Type="datetime2" Precision="0" />
+          <Property Name="CUSTVATNO_QM" Type="money" />
         </EntityType>
         <EntityType Name="REPORT_JOBCARD">
           <Key>
@@ -858,6 +864,7 @@
           <Property Name="VOUCHER_TYPE" Type="nvarchar" MaxLength="5" />
           <Property Name="DrawerBr_VRPT" Type="nvarchar" MaxLength="250" />
           <Property Name="VAT_VRPT" Type="money" />
+          <Property Name="ACCVATNO_VRPT" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="BANKTRANSACTION$BANKMASTERBANKTRANSACTION">
           <End Role="BANKMASTER" Type="Self.BANKMASTER" Multiplicity="0..1" />
@@ -1995,10 +2002,14 @@
           <Property Type="String" Name="UNIT_INVD" Nullable="true" MaxLength="10" />
           <Property Type="Int32" Name="PRODQTY_JM" Nullable="true" />
           <Property Type="Decimal" Name="VAT_IPM" Nullable="true" Precision="19" />
+          <Property Type="String" Name="CUSTVATNO_IPM" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="VATNO_CM" Nullable="true" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="rpt_CompanyDetails_Result">
-          <Property Type="String" Name="COMPANYNAME_CM" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="ARRRESS1_CM" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="COMPANYNAME_CM" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ARRRESS1_CM" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="VATNO_CM" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TELEXNO_CM" Nullable="true" MaxLength="15" />
         </ComplexType>
         <ComplexType Name="rpt_DeliveryNote_Result">
           <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
@@ -2034,6 +2045,8 @@
           <Property Type="String" Name="UNIT_INVD" Nullable="true" MaxLength="10" />
           <Property Type="Int32" Name="PRODQTY_JM" Nullable="true" />
           <Property Type="Decimal" Name="VAT_IPM" Nullable="true" Precision="19" />
+          <Property Type="String" Name="CUSTVATNO_IPM" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="VATNO_CM" Nullable="true" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="rpt_JobCardFormat_Result">
           <Property Type="String" Name="JOBNO_JRP" Nullable="false" MaxLength="15" />
@@ -2728,6 +2741,7 @@
           <Property Name="USER_ART" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="MATCHVALUE_AR" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="STATUS_ART" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="VAT_ART" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="ARMATCHING">
           <Key>
@@ -2803,6 +2817,7 @@
           <Property Name="USER_BT" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="MASTERSTATUS_BT" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BANKMASTER" Relationship="ASI_MGC_FSModel.BANKTRANSACTION_BANKMASTERBANKTRANSACTION" FromRole="BANKTRANSACTION" ToRole="BANKMASTER" />
+          <Property Name="VAT_BT" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="COMPANYMASTER">
           <Key>
@@ -2824,6 +2839,7 @@
           <Property Name="CURRECNCYNAME_CM" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="PERRIODMETHOD_CM" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="LOGOPATH_CM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="VATNO_CM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="CUSTOMEREPORT">
           <Key>
@@ -2938,6 +2954,7 @@
           <Property Name="NARRATION_GLT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="GLSTATUS_GLT" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
           <Property Name="VARUSER" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="VAT_GLT" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="INVDETAIL">
           <Key>
@@ -2969,6 +2986,7 @@
           <Property Name="SALESFIGURE_IPM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="INVTYPE_IPM" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="VAT_IPM" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CUSTVATNO_IPM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="JOB_REPORT">
           <Key>
@@ -3281,6 +3299,7 @@
           <Property Name="ADDRESS2_QM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="NOTE_QM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DATE_QM" Type="DateTime" Precision="0" />
+          <Property Name="CUSTVATNO_QM" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="REPORT_JOBCARD">
           <Key>
@@ -3506,6 +3525,7 @@
           <Property Name="VOUCHER_TYPE" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="DrawerBr_VRPT" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="VAT_VRPT" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ACCVATNO_VRPT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="BANKTRANSACTION_BANKMASTERBANKTRANSACTION">
           <End Type="ASI_MGC_FSModel.BANKMASTER" Role="BANKMASTER" Multiplicity="0..1" />
@@ -3834,6 +3854,8 @@
                 <ScalarProperty Name="UNIT_INVD" ColumnName="UNIT_INVD" />
                 <ScalarProperty Name="PRODQTY_JM" ColumnName="PRODQTY_JM" />
                 <ScalarProperty Name="VAT_IPM" ColumnName="VAT_IPM" />
+                <ScalarProperty Name="CUSTVATNO_IPM" ColumnName="CUSTVATNO_IPM" />
+                <ScalarProperty Name="VATNO_CM" ColumnName="VATNO_CM" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -3842,6 +3864,8 @@
               <ComplexTypeMapping TypeName="ASI_MGC_FSModel.rpt_CompanyDetails_Result">
                 <ScalarProperty Name="COMPANYNAME_CM" ColumnName="COMPANYNAME_CM" />
                 <ScalarProperty Name="ARRRESS1_CM" ColumnName="ARRRESS1_CM" />
+                <ScalarProperty Name="VATNO_CM" ColumnName="VATNO_CM" />
+                <ScalarProperty Name="TELEXNO_CM" ColumnName="TELEXNO_CM" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -3885,6 +3909,8 @@
                 <ScalarProperty Name="UNIT_INVD" ColumnName="UNIT_INVD" />
                 <ScalarProperty Name="PRODQTY_JM" ColumnName="PRODQTY_JM" />
                 <ScalarProperty Name="VAT_IPM" ColumnName="VAT_IPM" />
+                <ScalarProperty Name="CUSTVATNO_IPM" ColumnName="CUSTVATNO_IPM" />
+                <ScalarProperty Name="VATNO_CM" ColumnName="VATNO_CM" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -4751,6 +4777,7 @@
           <EntitySetMapping Name="AR_AP_LEDGER">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.AR_AP_LEDGER">
               <MappingFragment StoreEntitySet="AR_AP_LEDGER">
+                <ScalarProperty Name="VAT_ART" ColumnName="VAT_ART" />
                 <ScalarProperty Name="STATUS_ART" ColumnName="STATUS_ART" />
                 <ScalarProperty Name="MATCHVALUE_AR" ColumnName="MATCHVALUE_AR" />
                 <ScalarProperty Name="USER_ART" ColumnName="USER_ART" />
@@ -4823,6 +4850,7 @@
           <EntitySetMapping Name="BANKTRANSACTIONs">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.BANKTRANSACTION">
               <MappingFragment StoreEntitySet="BANKTRANSACTION">
+                <ScalarProperty Name="VAT_BT" ColumnName="VAT_BT" />
                 <ScalarProperty Name="MASTERSTATUS_BT" ColumnName="MASTERSTATUS_BT" />
                 <ScalarProperty Name="USER_BT" ColumnName="USER_BT" />
                 <ScalarProperty Name="STATUS_BT" ColumnName="STATUS_BT" />
@@ -4847,6 +4875,7 @@
           <EntitySetMapping Name="COMPANYMASTERs">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.COMPANYMASTER">
               <MappingFragment StoreEntitySet="COMPANYMASTER">
+                <ScalarProperty Name="VATNO_CM" ColumnName="VATNO_CM" />
                 <ScalarProperty Name="LOGOPATH_CM" ColumnName="LOGOPATH_CM" />
                 <ScalarProperty Name="PERRIODMETHOD_CM" ColumnName="PERRIODMETHOD_CM" />
                 <ScalarProperty Name="CURRECNCYNAME_CM" ColumnName="CURRECNCYNAME_CM" />
@@ -4976,6 +5005,7 @@
           <EntitySetMapping Name="GLTRANSACTION1">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.GLTRANSACTION1">
               <MappingFragment StoreEntitySet="GLTRANSACTION1">
+                <ScalarProperty Name="VAT_GLT" ColumnName="VAT_GLT" />
                 <ScalarProperty Name="VARUSER" ColumnName="VARUSER" />
                 <ScalarProperty Name="GLSTATUS_GLT" ColumnName="GLSTATUS_GLT" />
                 <ScalarProperty Name="NARRATION_GLT" ColumnName="NARRATION_GLT" />
@@ -5008,6 +5038,7 @@
           <EntitySetMapping Name="INVMASTERs">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.INVMASTER">
               <MappingFragment StoreEntitySet="INVMASTER">
+                <ScalarProperty Name="CUSTVATNO_IPM" ColumnName="CUSTVATNO_IPM" />
                 <ScalarProperty Name="VAT_IPM" ColumnName="VAT_IPM" />
                 <ScalarProperty Name="INVTYPE_IPM" ColumnName="INVTYPE_IPM" />
                 <ScalarProperty Name="SALESFIGURE_IPM" ColumnName="SALESFIGURE_IPM" />
@@ -5335,6 +5366,7 @@
           <EntitySetMapping Name="QUOTATION_MASTER">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.QUOTATION_MASTER">
               <MappingFragment StoreEntitySet="QUOTATION_MASTER">
+                <ScalarProperty Name="CUSTVATNO_QM" ColumnName="CUSTVATNO_QM" />
                 <ScalarProperty Name="DATE_QM" ColumnName="DATE_QM" />
                 <ScalarProperty Name="NOTE_QM" ColumnName="NOTE_QM" />
                 <ScalarProperty Name="ADDRESS2_QM" ColumnName="ADDRESS2_QM" />
@@ -5561,6 +5593,7 @@
           <EntitySetMapping Name="VOUCHERMASTER_RPT">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.VOUCHERMASTER_RPT">
               <MappingFragment StoreEntitySet="VOUCHERMASTER_RPT">
+                <ScalarProperty Name="ACCVATNO_VRPT" ColumnName="ACCVATNO_VRPT" />
                 <ScalarProperty Name="VAT_VRPT" ColumnName="VAT_VRPT" />
                 <ScalarProperty Name="DrawerBr_VRPT" ColumnName="DrawerBr_VRPT" />
                 <ScalarProperty Name="VOUCHER_TYPE" ColumnName="VOUCHER_TYPE" />

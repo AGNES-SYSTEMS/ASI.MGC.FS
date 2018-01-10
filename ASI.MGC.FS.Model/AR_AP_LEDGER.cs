@@ -26,5 +26,6 @@ namespace ASI.MGC.FS.Model
         public string USER_ART { get; set; }
         public Nullable<decimal> MATCHVALUE_AR { get; set; }
         public string STATUS_ART { get; set; }
+        public Nullable<decimal> VAT_ART { get; set; }
     }
 }

@@ -15,5 +15,7 @@ namespace ASI.MGC.FS.Model
     {
         public string COMPANYNAME_CM { get; set; }
         public string ARRRESS1_CM { get; set; }
+        public string VATNO_CM { get; set; }
+        public string TELEXNO_CM { get; set; }
     }
 }

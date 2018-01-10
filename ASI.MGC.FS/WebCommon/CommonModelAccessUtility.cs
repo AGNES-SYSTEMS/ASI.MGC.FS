@@ -343,7 +343,21 @@ namespace ASI.MGC.FS.WebCommon
             docDictionary.Add(6, "STJ");
             return docDictionary;
         }
-
+        public static string GetCustomerVAT(string custCode, IUnitOfWork iUnitOfWork)
+        {
+            string custVATNo = null;
+            var custDetails = (from customers in iUnitOfWork.Repository<AR_AP_MASTER>().Query().Get()
+                               where customers.ARCODE_ARM.Equals(custCode)
+                               select customers).Select(a => new
+                               {
+                                   a.VATNO_ARM
+                               }).FirstOrDefault();
+            if (custDetails != null)
+            {
+                custVATNo = custDetails.VATNO_ARM;
+            }
+            return custVATNo;
+        }
         public static void Proc_ConverUnit(string Unit, double QTY, decimal RATE_Renamed, out double ConvertedQty, out string ConvetedUnit, out decimal ConvrtedRate, IUnitOfWork _unitofWork)
         {
             ConvertedQty = 0;
@@ -366,6 +380,12 @@ namespace ASI.MGC.FS.WebCommon
                 ConvertedQty = Convert.ToDouble(QTY * Convert.ToDouble(a));
                 ConvrtedRate = RATE_Renamed / a;
             }
+        }
+        public static MATERIALRECEIPTMASTER GetMrvDetails(string mrvNo, IUnitOfWork iUnitOfWork) {
+            var mrvDetails = (from mrvData in iUnitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                              where mrvData.MRVNO_MRV.Equals(mrvNo)
+                              select mrvData).SingleOrDefault();
+            return mrvDetails;
         }
     }
 }

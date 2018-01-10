@@ -826,7 +826,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DS_Invoice</DataSetName>
-        <Top>1.55556in</Top>
+        <Top>2in</Top>
         <Left>0.05347in</Left>
         <Height>0.75in</Height>
         <Width>7.68in</Width>
@@ -892,7 +892,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox4</rd:DefaultName>
-        <Top>0.17645in</Top>
+        <Top>0.42645in</Top>
         <Left>0.24375in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
@@ -926,7 +926,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CUST_CODE_IPM</rd:DefaultName>
-        <Top>0.44034in</Top>
+        <Top>0.69034in</Top>
         <Left>0.98208in</Left>
         <Height>0.25in</Height>
         <Width>1.75in</Width>
@@ -960,7 +960,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CUSTNAME_IPM</rd:DefaultName>
-        <Top>0.70424in</Top>
+        <Top>0.95424in</Top>
         <Left>0.98208in</Left>
         <Height>0.25in</Height>
         <Width>1.75in</Width>
@@ -994,7 +994,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CUSTADDRESS_IPM</rd:DefaultName>
-        <Top>0.95424in</Top>
+        <Top>1.20424in</Top>
         <Left>0.98208in</Left>
         <Height>0.25in</Height>
         <Width>1.75in</Width>
@@ -1028,7 +1028,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>CUSTPIN_IPM</rd:DefaultName>
-        <Top>1.20548in</Top>
+        <Top>1.45548in</Top>
         <Left>0.98208in</Left>
         <Height>0.25in</Height>
         <Width>1.75in</Width>
@@ -1062,7 +1062,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox9</rd:DefaultName>
-        <Top>0.30145in</Top>
+        <Top>0.67645in</Top>
         <Left>4.77375in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
@@ -1096,7 +1096,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox9</rd:DefaultName>
-        <Top>0.55145in</Top>
+        <Top>0.92645in</Top>
         <Left>4.77375in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
@@ -1130,7 +1130,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox11</rd:DefaultName>
-        <Top>0.80145in</Top>
+        <Top>1.17645in</Top>
         <Left>4.77375in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
@@ -1160,7 +1160,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>INVNO_IPM</rd:DefaultName>
-        <Top>0.30145in</Top>
+        <Top>0.67645in</Top>
         <Left>5.77375in</Left>
         <Height>0.25in</Height>
         <Width>1.9075in</Width>
@@ -1190,7 +1190,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>INVDATE_IPM</rd:DefaultName>
-        <Top>0.56534in</Top>
+        <Top>0.94034in</Top>
         <Left>5.77375in</Left>
         <Height>0.25in</Height>
         <Width>1.9075in</Width>
@@ -1220,7 +1220,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>LPONO_IPM</rd:DefaultName>
-        <Top>0.80145in</Top>
+        <Top>1.17645in</Top>
         <Left>5.77375in</Left>
         <Height>0.25in</Height>
         <Width>1.9075in</Width>
@@ -1254,7 +1254,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox11</rd:DefaultName>
-        <Top>1.05145in</Top>
+        <Top>1.42645in</Top>
         <Left>4.77375in</Left>
         <Height>0.25in</Height>
         <Width>1in</Width>
@@ -1284,11 +1284,79 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>LPONO_IPM</rd:DefaultName>
-        <Top>1.05145in</Top>
+        <Top>1.42645in</Top>
         <Left>5.77375in</Left>
         <Height>0.25in</Height>
         <Width>1.9075in</Width>
         <ZIndex>14</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="CUSTPIN_IPM2">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!CUSTVATNO_IPM.Value, "DS_Invoice")</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>CUSTPIN_IPM</rd:DefaultName>
+        <Top>1.71in</Top>
+        <Left>0.98208in</Left>
+        <Height>0.25in</Height>
+        <Width>1.75in</Width>
+        <ZIndex>15</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="INVNO_IPM2">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>="TRN: "&amp;First(Fields!VATNO_CM.Value, "DS_Invoice")</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>INVNO_IPM</rd:DefaultName>
+        <Top>0.28in</Top>
+        <Left>2.93125in</Left>
+        <Height>0.25in</Height>
+        <Width>1.9075in</Width>
+        <ZIndex>16</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1827,7 +1895,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Microsoft.VisualBasic.Strings.Format(First(Fields!VAT_IPM.Value, "DS_Invoice"), "N2")</Value>
+                      <Value>=Microsoft.VisualBasic.Strings.Format(First(Fields!SHIPPING_IPM.Value, "DS_Invoice"), "N2")</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1971,6 +2039,10 @@
           <DataField>CUSTADDRESS_IPM</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="CUSTVATNO_IPM">
+          <DataField>CUSTVATNO_IPM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="CUSTPIN_IPM">
           <DataField>CUSTPIN_IPM</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -2034,6 +2106,10 @@
         <Field Name="PRODQTY_JM">
           <DataField>PRODQTY_JM</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="VATNO_CM">
+          <DataField>VATNO_CM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>

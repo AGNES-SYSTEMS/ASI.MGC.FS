@@ -509,6 +509,9 @@ $(document).ready(function () {
                     Amount: $("#txtAmount").val(),
                     Narration: $("#txtNarration").val()
                 };
+                if ($("#txtAlCode").val().trim() === "AR" || $("#txtAlCode").val().trim() === "AP") {
+                    $('#hdnAcCode').val($("#txtAccountCode").val().trim());
+                }
             } else {
                 var arrIndex = arrAllocDetails.length;
                 arrAllocDetails[arrIndex] = {
@@ -518,6 +521,9 @@ $(document).ready(function () {
                     Amount: $("#txtAmount").val(),
                     Narration: $("#txtNarration").val()
                 };
+                if ($("#txtAlCode").val().trim() === "AR" || $("#txtAlCode").val().trim() === "AP") {
+                    $('#hdnAcCode').val($("#txtAccountCode").val().trim());
+                }
             }
             clearModalForm();
         }

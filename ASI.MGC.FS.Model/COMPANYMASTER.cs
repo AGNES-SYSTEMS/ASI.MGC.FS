@@ -30,5 +30,6 @@ namespace ASI.MGC.FS.Model
         public string CURRECNCYNAME_CM { get; set; }
         public string PERRIODMETHOD_CM { get; set; }
         public string LOGOPATH_CM { get; set; }
+        public string VATNO_CM { get; set; }
     }
 }

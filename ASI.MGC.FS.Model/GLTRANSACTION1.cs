@@ -25,5 +25,6 @@ namespace ASI.MGC.FS.Model
         public string NARRATION_GLT { get; set; }
         public string GLSTATUS_GLT { get; set; }
         public string VARUSER { get; set; }
+        public Nullable<decimal> VAT_GLT { get; set; }
     }
 }

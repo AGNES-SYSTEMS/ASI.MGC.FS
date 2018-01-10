@@ -921,5 +921,18 @@ namespace ASI.MGC.FS.Domain.Repositories
                 //exception handling pending
             }
         }
+        public IList<rpt_CompanyDetails_Result> rpt_CompanyDetails()
+        {
+            List<rpt_CompanyDetails_Result> lst = null;
+            try
+            {
+                lst = _context.rpt_CompanyDetails().ToList();
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+            return lst;
+        }
     }
 }

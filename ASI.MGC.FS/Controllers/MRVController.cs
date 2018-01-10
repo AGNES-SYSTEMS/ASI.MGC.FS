@@ -475,6 +475,7 @@ namespace ASI.MGC.FS.Controllers
                     invMasterData.VAT_IPM = vatTotal;
                     invMasterData.LPONO_IPM = LPO;
                     invMasterData.INVTYPE_IPM = "INV";
+                    invMasterData.CUSTVATNO_IPM = "TRN: " + CommonModelAccessUtility.GetCustomerVAT(CustDetails.ARCODE_ARM, _unitOfWork);
                     _unitOfWork.Repository<INVMASTER>().Insert(invMasterData);
                     _unitOfWork.Save();
                 }
@@ -740,7 +741,7 @@ namespace ASI.MGC.FS.Controllers
                                         join jRefData in _unitOfWork.Repository<JOBIDREFERENCE>().Query().Get()
                                             on sData.JOBID_SD equals jRefData.JOBID_JR
                                         where sData.CASHRVNO_SD.Equals(docNo)
-                                        select new { sData.JOBID_SD, sData.MRVNO_SD, sData.QTY_SD, sData.RATE_SD, sData.UNIT_SD, jRefData.JOBDESCRIPTION_JR, sData.CASHTOTAL_SD, sData.JOBNO_SD,sData.VAT_SD }).ToList();
+                                        select new { sData.JOBID_SD, sData.MRVNO_SD, sData.QTY_SD, sData.RATE_SD, sData.UNIT_SD, jRefData.JOBDESCRIPTION_JR, sData.CASHTOTAL_SD, sData.JOBNO_SD, sData.VAT_SD }).ToList();
                 foreach (var item in procJobIdRefData)
                 {
                     var invDetails = _unitOfWork.Repository<INVDETAIL>().Create();
@@ -748,7 +749,7 @@ namespace ASI.MGC.FS.Controllers
                     invDetails.DESCRIPTION_INVD = item.JOBDESCRIPTION_JR;
                     invDetails.QTY_INVD = item.QTY_SD;
                     invDetails.RATE_INVD = item.RATE_SD;
-                    invDetails.AMOUNT_INVNO = item.CASHTOTAL_SD- Convert.ToDecimal(item.VAT_SD);
+                    invDetails.AMOUNT_INVNO = item.CASHTOTAL_SD - Convert.ToDecimal(item.VAT_SD);
                     invDetails.INVNO_INVD = docNo;
                     invDetails.JOBNO_INVD = item.JOBNO_SD;
                     invDetails.UNIT_INVD = item.UNIT_SD;

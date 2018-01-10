@@ -46,6 +46,7 @@ namespace ASI.MGC.FS.Controllers
                     _unitOfWork.Truncate("DELEVERYNOTE_RPT");
                     var mrvNumber = Convert.ToString(objArApLedger.NARRATION_ART);
                     var invNumber = CommonModelAccessUtility.GetInvoiceCount(_unitOfWork);
+                    var invoiceMrvDetails = CommonModelAccessUtility.GetMrvDetails(mrvNumber, _unitOfWork);
                     objArApLedger.DOCNUMBER_ART = invNumber;
                     reportParams.Add(invNumber);
                     var dlnNumber = CommonModelAccessUtility.GetDeleNumberCount(_unitOfWork);
@@ -54,16 +55,23 @@ namespace ASI.MGC.FS.Controllers
                     var serializer = new JavaScriptSerializer();
                     var lstSaleDetails = serializer.Deserialize<List<SALEDETAIL>>(jsonProductDetails);
                     objArApLedger.STATUS_ART = "P";
+                    objArApLedger.VAT_ART = Convert.ToDecimal(frm["TotalVAT"]);
                     objArApLedger.USER_ART = currentUser;
                     _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArApLedger);
                     _unitOfWork.Save();
                     var objInvoiceMaster = _unitOfWork.Repository<INVMASTER>().Create();
                     objInvoiceMaster.INVNO_IPM = invNumber;
+                    objInvoiceMaster.CUST_CODE_IPM = objArApLedger.ARAPCODE_ART;
                     objInvoiceMaster.INVDATE_IPM = Convert.ToDateTime(DateTime.Now.ToShortDateString());
                     objInvoiceMaster.CUSTNAME_IPM = Convert.ToString(frm["CustDetail"]);
                     objInvoiceMaster.SHIPPING_IPM = Convert.ToDecimal(frm["TotalShipCharges"]);
                     objInvoiceMaster.DISCOUNT_IPM = Convert.ToDecimal(frm["TotalDiscount"]);
                     objInvoiceMaster.VAT_IPM = Convert.ToDecimal(frm["TotalVAT"]);
+                    if (invoiceMrvDetails != null)
+                    {
+                        objInvoiceMaster.CUSTADDRESS_IPM = invoiceMrvDetails.ADDRESS1_MRV;
+                    }
+                    objInvoiceMaster.CUSTVATNO_IPM = "TRN: "+CommonModelAccessUtility.GetCustomerVAT(objArApLedger.ARAPCODE_ART, _unitOfWork);
                     objInvoiceMaster.INVTYPE_IPM = "INV";
                     objInvoiceMaster.LPONO_IPM = _unitOfWork.Repository<MATERIALRECEIPTMASTER>().FindByID(mrvNumber).NOTES_MRV;
                     _unitOfWork.Repository<INVMASTER>().Insert(objInvoiceMaster);
@@ -90,7 +98,7 @@ namespace ASI.MGC.FS.Controllers
 
                         var objInvoiceDetail = _unitOfWork.Repository<INVDETAIL>().Create();
                         var objDeleveryNote = _unitOfWork.Repository<DELEVERYNOTE_RPT>().Create();
-                        objDeleveryNote.DLNR_DLNRPT = Convert.ToString(frm["DLNNo"]);
+                        objDeleveryNote.DLNR_DLNRPT = Convert.ToString(dlnNumber);
                         objDeleveryNote.QTY_DLNRPT = sale.QTY_SD;
                         objDeleveryNote.JOBNO_DLNRPT = sale.JOBNO_SD;
                         objDeleveryNote.DLNTYPE_DLNRPT = "CM";
@@ -124,7 +132,7 @@ namespace ASI.MGC.FS.Controllers
 
                         var objJobMaster = _unitOfWork.Repository<JOBMASTER>().FindByID(sale.JOBNO_SD);
                         objDeleveryNote.SERVICEPROID_DLNRPT = objJobMaster.PRODID_JIM;
-                        objJobMaster.DELEVERNOTENO_JM = Convert.ToString(frm["DLNNo"]);
+                        objJobMaster.DELEVERNOTENO_JM = Convert.ToString(dlnNumber);
                         objJobMaster.JOBSTATUS_JM = "P";
                         _unitOfWork.Repository<JOBMASTER>().Update(objJobMaster);
                         _unitOfWork.Save();

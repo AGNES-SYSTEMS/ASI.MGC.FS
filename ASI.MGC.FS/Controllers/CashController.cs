@@ -62,6 +62,7 @@ namespace ASI.MGC.FS.Controllers
                     var mrvNumber = Convert.ToString(frm["MRVNo"]);
                     var cashMemoNumber = CommonModelAccessUtility.GetCashSaleCount(_unitOfWork);
                     var dlnNumber = CommonModelAccessUtility.GetDeleNumberCount(_unitOfWork);
+                    var invoiceMrvDetails = CommonModelAccessUtility.GetMrvDetails(mrvNumber, _unitOfWork);
                     reportParams.Add(cashMemoNumber);
                     reportParams.Add(dlnNumber);
                     string jsonProductDetails = frm["saleDetails"];
@@ -72,6 +73,7 @@ namespace ASI.MGC.FS.Controllers
                     objBankTransaction.USER_BT = currentUser;
                     objBankTransaction.STATUS_BT = "P";
                     objBankTransaction.CREDITAMOUT_BT = 0;
+                    objBankTransaction.VAT_BT = Convert.ToDecimal(frm["TotalVAT"]);
                     _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBankTransaction);
                     _unitOfWork.Save();
 
@@ -81,6 +83,11 @@ namespace ASI.MGC.FS.Controllers
                     objInvoiceMaster.CUSTNAME_IPM = Convert.ToString(frm["CustDetail"]);
                     objInvoiceMaster.SHIPPING_IPM = Convert.ToDecimal(frm["TotalShipCharges"]);
                     objInvoiceMaster.DISCOUNT_IPM = Convert.ToDecimal(frm["TotalDiscount"]);
+                    if (invoiceMrvDetails != null)
+                    {
+                        objInvoiceMaster.CUSTADDRESS_IPM = invoiceMrvDetails.ADDRESS1_MRV;
+                    }
+                    objInvoiceMaster.CUST_CODE_IPM = "CASH";
                     objInvoiceMaster.VAT_IPM = Convert.ToDecimal(frm["TotalVAT"]);
                     objInvoiceMaster.INVTYPE_IPM = "CM";
                     _unitOfWork.Repository<INVMASTER>().Insert(objInvoiceMaster);
@@ -157,7 +164,7 @@ namespace ASI.MGC.FS.Controllers
                     success = true;
                     transaction.Commit();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     success = false;
                     transaction.Rollback();
@@ -242,7 +249,7 @@ namespace ASI.MGC.FS.Controllers
                                 objApLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
                                 objApLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
                                 objApLedger.ARAPCODE_ART = allocDetail.AccountCode;
-                                form["hdnAcCode"] = allocDetail.AccountCode;
+                                //form["hdnAcCode"] = allocDetail.AccountCode;
                                 if (Convert.ToDecimal(allocDetail.Amount) <= 0)
                                 {
                                     objApLedger.DEBITAMOUNT_ART = Math.Abs(Convert.ToDecimal(allocDetail.Amount));
@@ -276,7 +283,7 @@ namespace ASI.MGC.FS.Controllers
                                 objArLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
                                 objArLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
                                 objArLedger.ARAPCODE_ART = allocDetail.AccountCode;
-                                form["hdnAcCode"] = allocDetail.AccountCode;
+                                //form["hdnAcCode"] = allocDetail.AccountCode;
                                 if (Convert.ToDecimal(allocDetail.Amount) <= 0)
                                 {
                                     objArLedger.DEBITAMOUNT_ART = Math.Abs(Convert.ToDecimal(allocDetail.Amount));
@@ -426,7 +433,7 @@ namespace ASI.MGC.FS.Controllers
                                 objApLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
                                 objApLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
                                 objApLedger.ARAPCODE_ART = allocDetail.AccountCode;
-                                form["hdnAcCode"] = allocDetail.AccountCode;
+                                //form["hdnAcCode"] = allocDetail.AccountCode;
                                 if (Convert.ToDecimal(allocDetail.Amount) >= 0)
                                 {
                                     objApLedger.DEBITAMOUNT_ART = Convert.ToDecimal(allocDetail.Amount);
@@ -460,7 +467,7 @@ namespace ASI.MGC.FS.Controllers
                                 objArLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
                                 objArLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
                                 objArLedger.ARAPCODE_ART = allocDetail.AccountCode;
-                                form["hdnAcCode"] = allocDetail.AccountCode;
+                                //form["hdnAcCode"] = allocDetail.AccountCode;
                                 if (Convert.ToDecimal(allocDetail.Amount) >= 0)
                                 {
                                     objArLedger.DEBITAMOUNT_ART = Convert.ToDecimal(allocDetail.Amount);

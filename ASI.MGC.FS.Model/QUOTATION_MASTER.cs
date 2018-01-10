@@ -20,5 +20,6 @@ namespace ASI.MGC.FS.Model
         public string ADDRESS2_QM { get; set; }
         public string NOTE_QM { get; set; }
         public Nullable<System.DateTime> DATE_QM { get; set; }
+        public Nullable<decimal> CUSTVATNO_QM { get; set; }
     }
 }

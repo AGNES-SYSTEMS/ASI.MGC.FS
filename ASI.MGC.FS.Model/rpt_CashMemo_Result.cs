@@ -32,5 +32,7 @@ namespace ASI.MGC.FS.Model
         public string UNIT_INVD { get; set; }
         public Nullable<int> PRODQTY_JM { get; set; }
         public Nullable<decimal> VAT_IPM { get; set; }
+        public string CUSTVATNO_IPM { get; set; }
+        public string VATNO_CM { get; set; }
     }
 }

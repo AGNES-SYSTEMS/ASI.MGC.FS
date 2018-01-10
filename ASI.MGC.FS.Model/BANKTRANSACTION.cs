@@ -32,6 +32,7 @@ namespace ASI.MGC.FS.Model
         public string STATUS_BT { get; set; }
         public string USER_BT { get; set; }
         public string MASTERSTATUS_BT { get; set; }
+        public Nullable<decimal> VAT_BT { get; set; }
     
         public virtual BANKMASTER BANKMASTER { get; set; }
     }

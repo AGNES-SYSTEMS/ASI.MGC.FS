@@ -166,7 +166,7 @@ namespace ASI.MGC.FS.Controllers
                                 objApLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
                                 objApLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
                                 objApLedger.ARAPCODE_ART = allocDetail.AccountCode;
-                                form["hdnAcCode"] = allocDetail.AccountCode;
+                                //form["hdnAcCode"] = allocDetail.AccountCode;
                                 if (Convert.ToDecimal(allocDetail.Amount) <= 0)
                                 {
                                     objApLedger.DEBITAMOUNT_ART = Math.Abs(Convert.ToDecimal(allocDetail.Amount));
@@ -200,7 +200,7 @@ namespace ASI.MGC.FS.Controllers
                                 objArLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
                                 objArLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
                                 objArLedger.ARAPCODE_ART = allocDetail.AccountCode;
-                                form["hdnAcCode"] = allocDetail.AccountCode;
+                                //form["hdnAcCode"] = allocDetail.AccountCode;
                                 if (Convert.ToDecimal(allocDetail.Amount) <= 0)
                                 {
                                     objArLedger.DEBITAMOUNT_ART = Math.Abs(Convert.ToDecimal(allocDetail.Amount));
@@ -347,7 +347,7 @@ namespace ASI.MGC.FS.Controllers
                                 objApLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
                                 objApLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
                                 objApLedger.ARAPCODE_ART = allocDetail.AccountCode;
-                                form["hdnAcCode"] = allocDetail.AccountCode;
+                                //form["hdnAcCode"] = allocDetail.AccountCode;
                                 if (Convert.ToDecimal(allocDetail.Amount) >= 0)
                                 {
                                     objApLedger.DEBITAMOUNT_ART = Convert.ToDecimal(allocDetail.Amount);
@@ -381,7 +381,7 @@ namespace ASI.MGC.FS.Controllers
                                 objArLedger.DODATE_ART = objBankTransaction.DOCDATE_BT;
                                 objArLedger.GLDATE_ART = objBankTransaction.GLDATE_BT;
                                 objArLedger.ARAPCODE_ART = allocDetail.AccountCode;
-                                form["hdnAcCode"] = allocDetail.AccountCode;
+                                //form["hdnAcCode"] = allocDetail.AccountCode;
                                 if (Convert.ToDecimal(allocDetail.Amount) >= 0)
                                 {
                                     objArLedger.DEBITAMOUNT_ART = Convert.ToDecimal(allocDetail.Amount);
