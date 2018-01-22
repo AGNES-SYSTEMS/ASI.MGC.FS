@@ -54,7 +54,7 @@
                         <div class="col-md-6 form-group">
                             <label id="lblDocDate" class="control-label col-md-4 small ">Doc Date</label>
                             <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBox("DocDate", null, new { ID = "txtDocDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @required = "required" })
+                                @Html.TextBox("DocDate", null, new { ID = "txtDocDate", @Value = ViewBag.Today, Class = "form-control", @required = "required" })
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                         <div class="col-md-6 form-group">
                             <label id="lblPurDate" class="control-label col-md-4 small ">Purchase Date</label>
                             <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBox("PurDate", null, new { ID = "txtPurDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @required = "required" })
+                                @Html.TextBox("PurDate", null, new { ID = "txtPurDate", @Value = ViewBag.Today, Class = "form-control", @required = "required" })
                             </div>
                         </div>
                     </div>
@@ -367,7 +367,7 @@
     <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
     @*<script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>*@
-    <script src="@Url.Content("~/Scripts/Custom/Purchase/PurchaseEntry.js?1600")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/Purchase/PurchaseEntry.js?2500")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
         var isReportOpened = false;

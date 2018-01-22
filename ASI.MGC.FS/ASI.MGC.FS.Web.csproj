@@ -1247,6 +1247,7 @@
     <Content Include="Scripts\i18n\grid.locale-vi.js" />
     <Content Include="Reports\RDLC Files\CashMemo3.rdlc" />
     <Content Include="Reports\RDLC Files\CashpaymentVoucher1.rdlc" />
+    <Content Include="Reports\RDLC Files\MonthlyVATStatement.rdlc" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.0.min.js" />
     <Content Include="Scripts\jquery-1.11.3.js" />

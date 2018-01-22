@@ -13,11 +13,13 @@ namespace ASI.MGC.FS.Controllers
     public class QuotationController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
-        readonly TimeZoneInfo timeZoneInfo;
+        readonly TimeZoneInfo tzInfo;
+        DateTime today;
         public QuotationController()
         {
             _unitOfWork = new UnitOfWork();
-            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            tzInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            today = TimeZoneInfo.ConvertTime(DateTime.Now, tzInfo);
         }
         // GET: Quotation
         public ActionResult Index()
@@ -27,10 +29,11 @@ namespace ASI.MGC.FS.Controllers
         [MesAuthorize("DailyTransactions")]
         public ActionResult QuotationEntry()
         {
-            var currYear = DateTime.Now.Year.ToString();
+            var currYear = today.Year.ToString();
             var qotCount = 1001 + CommonModelAccessUtility.GetQuotationCount(_unitOfWork);
             var qotNumber = Convert.ToString("QOT" + "/" + qotCount + "/" + currYear);
             ViewBag.QotNumber = qotNumber;
+            ViewBag.Today = today.ToShortDateString();
             var objQuotationMaster = new QUOTATION_MASTER();
             return View(objQuotationMaster);
         }

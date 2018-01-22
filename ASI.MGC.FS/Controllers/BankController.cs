@@ -14,11 +14,13 @@ namespace ASI.MGC.FS.Controllers
     public class BankController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
-        readonly TimeZoneInfo timeZoneInfo;
+        readonly TimeZoneInfo tzInfo;
+        DateTime today;
         public BankController()
         {
             _unitOfWork = new UnitOfWork();
-            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            tzInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            today = TimeZoneInfo.ConvertTime(DateTime.Now, tzInfo);
         }
         // GET: Bank
         //public ActionResult Index()
@@ -29,12 +31,14 @@ namespace ASI.MGC.FS.Controllers
         public ActionResult BankReceipt()
         {
             var objBankTransaction = new BANKTRANSACTION();
+            @ViewBag.Today = today.ToShortDateString();
             return View(objBankTransaction);
         }
         [MesAuthorize("DailyTransactions")]
         public ActionResult BankPayment()
         {
             var objBankTransaction = new BANKTRANSACTION();
+            @ViewBag.Today = today.ToShortDateString();
             return View(objBankTransaction);
         }
         public JsonResult GetBankDetailsList(string sidx, string sord, int page, int rows, string bankName = "")
@@ -485,6 +489,7 @@ namespace ASI.MGC.FS.Controllers
             @ViewBag.CurrName = "UAE DHIRHAM";
             @ViewBag.bankModeTypes = CommonModelAccessUtility.GetBankModes();
             @ViewBag.bankStatus = CommonModelAccessUtility.GetBankStatus();
+            @ViewBag.Today = today.ToShortDateString();
             return View(objBankMaster);
         }
 
@@ -519,12 +524,12 @@ namespace ASI.MGC.FS.Controllers
                     var objBankTransaction = _unitOfWork.Repository<BANKTRANSACTION>().Create();
                     objBankTransaction.BANKCODE_BT = objBankmaster.BANKCODE_BM;
                     objBankTransaction.DOCNUMBER_BT = objBankmaster.BANKCODE_BM;
-                    objBankTransaction.DOCDATE_BT = DateTime.Now;
+                    objBankTransaction.DOCDATE_BT = today.Date;
                     objBankTransaction.GLDATE_BT = Convert.ToDateTime(frm["BankDate"]);
                     objBankTransaction.DEBITAMOUT_BT = Convert.ToDecimal(frm["OpenBalance"]);
                     objBankTransaction.CREDITAMOUT_BT = 0;
-                    objBankTransaction.CHQDATE_BT = DateTime.Now;
-                    objBankTransaction.CLEARANCEDATE_BT = DateTime.Now;
+                    objBankTransaction.CHQDATE_BT = today.Date;
+                    objBankTransaction.CLEARANCEDATE_BT = today.Date;
                     objBankTransaction.NARRATION_BT = "Opening Balance";
                     objBankTransaction.NOTE_BT = frm["Note"];
                     objBankTransaction.USER_BT = currentUser;
@@ -589,7 +594,7 @@ namespace ASI.MGC.FS.Controllers
                 {
                     bankData.Add("debitAmount", "");
                     bankData.Add("Notes", "");
-                    bankData.Add("bankDate", DateTime.Now.ToShortDateString());
+                    bankData.Add("bankDate", today.ToShortDateString());
                 }
             }
             catch (Exception)

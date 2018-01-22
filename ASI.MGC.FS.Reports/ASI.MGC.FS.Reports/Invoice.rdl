@@ -843,7 +843,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>INVOICE</Value>
+                <Value>TAX INVOICE</Value>
                 <Style>
                   <FontFamily>Arial Black</FontFamily>
                   <FontSize>12pt</FontSize>
@@ -858,9 +858,9 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Left>3.30688in</Left>
+        <Left>3.235in</Left>
         <Height>0.25in</Height>
-        <Width>1.15625in</Width>
+        <Width>1.3in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -1956,6 +1956,7 @@
             </Textbox>
           </ReportItems>
           <KeepTogether>true</KeepTogether>
+          <Top>0in</Top>
           <Height>2.3in</Height>
           <Width>7.77in</Width>
           <Visibility>

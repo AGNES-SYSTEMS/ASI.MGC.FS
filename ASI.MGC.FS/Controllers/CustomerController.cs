@@ -12,11 +12,13 @@ namespace ASI.MGC.FS.Controllers
     public class CustomerController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
-        readonly TimeZoneInfo timeZoneInfo;
+        readonly TimeZoneInfo tzInfo;
+        DateTime today;
         public CustomerController()
         {
             _unitOfWork = new UnitOfWork();
-            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            tzInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            today = TimeZoneInfo.ConvertTime(DateTime.Now, tzInfo);
         }
         public ActionResult Index()
         {

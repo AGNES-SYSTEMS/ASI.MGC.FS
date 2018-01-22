@@ -4,6 +4,11 @@
         $("#txtMRVNo").val(ret.MRVNO_MRV);
         $("#txtCustCode").val(ret.CUSTOMERCODE_MRV);
         $("#txtCustDetail").val(ret.CUSTOMERNAME_MRV);
+        if (ret.CUSTOMERVATNO_MRV !== null && ret.CUSTOMERVATNO_MRV !== "" && ret.CUSTOMERVATNO_MRV !== undefined)
+        {
+            $("#txtCustVATNo").val(ret.CUSTOMERVATNO_MRV);
+            $("#txtCustVATNo").prop("readonly","readonly");
+        }
         getJobDetailByMRV();
         getSaleDetailByMRV();
         $('#mrvSearchModel').modal('toggle');
@@ -94,12 +99,13 @@ $("#mrvSearchModel").on('show.bs.modal', function () {
         url: '/Cash/GetCashMemoMrvList',
         datatype: "json",
         styleUI: "Bootstrap",
-        colNames: ['MRV No', 'Job No', 'Customer', 'Customer Details', ''],
+        colNames: ['MRV No', 'Job No', 'Customer', 'Customer Details','Cust VATNO', ''],
         colModel: [
         { key: true, name: 'MRVNO_MRV', index: 'MRVNO_MRV', width: 150 },
         { key: false, name: 'JOBNO_SD', index: 'JOBNO_SD', width: 200 },
         { key: false, name: 'CUSTOMERCODE_MRV', index: 'CUSTOMERCODE_MRV', width: 150 },
         { key: false, name: 'CUSTOMERNAME_MRV', index: 'CUSTOMERNAME_MRV', width: 300 },
+        { key: false, name: 'CUSTOMERVATNO_MRV', index: 'CUSTOMERVATNO_MRV', hidden: true },
             {
                 name: "action",
                 align: "center",
@@ -374,4 +380,5 @@ $('#formCashMemo').on('init.field.fv', function (e, data) {
     debugger;
     // Prevent form submission
     e.preventDefault();
+    $("#btnSave").hide();
 });

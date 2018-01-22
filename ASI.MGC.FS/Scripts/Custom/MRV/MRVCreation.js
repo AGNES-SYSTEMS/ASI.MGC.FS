@@ -468,6 +468,11 @@ $(document).ready(function () {
                 $('#txtMRVAddress').val(custDetails.ADDRESS1_ARM).change();
                 $('#txtMRVTel').val(custDetails.TELEPHONE_ARM).change();
                 $('#txtMRVAddress2').val(custDetails.ADDRESS2_ARM);
+                if (custDetails.VATNO_ARM !== "" && custDetails.VATNO_ARM !== null && custDetails.VATNO_ARM !== undefined)
+                {
+                    $('#txtCustVAT').val(custDetails.VATNO_ARM);
+                    $('#txtCustVAT').prop("readonly","readonly");
+                }
             },
             complete: function () {
             },
@@ -690,6 +695,7 @@ $(document).ready(function () {
         debugger;
         // Prevent form submission
         e.preventDefault();
+        $("#btnSubmit").hide();
     });
     $("#mrvProductModelform").formValidation();
 });

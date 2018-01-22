@@ -91,6 +91,7 @@
         debugger;
         // Prevent form submission
         e.preventDefault();
+        $("#btnUnMatch").hide();
     });
     $("#formArUnMatching").formValidation('revalidateField', 'DOCCNUMBER_ARM');
 });

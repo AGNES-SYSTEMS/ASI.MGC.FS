@@ -822,5 +822,6 @@ $(document).ready(function () {
         debugger;
         // Prevent form submission
         e.preventDefault();
+        $("#btnSubmit").hide();
     });
 });

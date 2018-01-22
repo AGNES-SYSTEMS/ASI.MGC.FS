@@ -42,7 +42,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblDate" class="control-label col-md-4 small ">Date</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.DODATE_ART, null, new { ID = "txtDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @readonly = "readonly" })
+                                    @Html.TextBoxFor(m => m.DODATE_ART, null, new { ID = "txtDate", @Value = ViewBag.Today, Class = "form-control", @readonly = "readonly" })
                                 </div>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblGLDate" class="control-label col-md-4 small ">GL Date</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.GLDATE_ART, null, new { ID = "txtGLDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control" })
+                                    @Html.TextBoxFor(m => m.GLDATE_ART, null, new { ID = "txtGLDate", @Value = ViewBag.Today, Class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
@@ -231,7 +231,7 @@
     <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
     @*<script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>*@
     <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/Custom/Invoice/InvoicePreparation.js?1500")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/Invoice/InvoicePreparation.js?2500")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
 

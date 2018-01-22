@@ -18,5 +18,6 @@ namespace ASI.MGC.FS.Model
         public string CUSTOMERNAME_MRV { get; set; }
         public Nullable<System.DateTime> DOC_DATE_MRV { get; set; }
         public string JOBNO_SD { get; set; }
+        public string CUSTOMERVATNO_MRV { get; set; }
     }
 }

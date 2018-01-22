@@ -14,11 +14,13 @@ namespace ASI.MGC.FS.Controllers
     public class FinanceController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
-        readonly TimeZoneInfo timeZoneInfo;
+        readonly TimeZoneInfo tzInfo;
+        DateTime today;
         public FinanceController()
         {
             _unitOfWork = new UnitOfWork();
-            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            tzInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            today = TimeZoneInfo.ConvertTime(DateTime.Now, tzInfo);
         }
         // GET: Finance
         public ActionResult GlCreation()
@@ -27,6 +29,7 @@ namespace ASI.MGC.FS.Controllers
             ViewBag.accountsType = CommonModelAccessUtility.GetAccountsType();
             ViewBag.glType = CommonModelAccessUtility.GetGlType();
             ViewBag.balanceType = CommonModelAccessUtility.GetBalanceType();
+            ViewBag.Today = today.ToShortDateString();
             return View(objGlMaster);
         }
 
@@ -43,7 +46,7 @@ namespace ASI.MGC.FS.Controllers
                     _unitOfWork.Save();
 
                     var objGlTransaction = _unitOfWork.Repository<GLTRANSACTION1>().Create();
-                    objGlTransaction.DOCDATE_GLT = DateTime.Now;
+                    objGlTransaction.DOCDATE_GLT = today.Date;
                     objGlTransaction.GLDATE_GLT = Convert.ToDateTime(frm["GLDate"]);
                     objGlTransaction.DOCNUMBER_GLT = objGlMaster.GLCODE_LM;
                     objGlTransaction.GLACCODE_GLT = objGlMaster.GLCODE_LM;
@@ -77,11 +80,13 @@ namespace ASI.MGC.FS.Controllers
 
         public ActionResult AccountsReceivable()
         {
+            ViewBag.Today = today.ToShortDateString();
             return View();
         }
 
         public ActionResult AccountsPayable()
         {
+            ViewBag.Today = today.ToShortDateString();
             return View();
         }
 
@@ -98,12 +103,14 @@ namespace ASI.MGC.FS.Controllers
         public ActionResult PdcReceipt()
         {
             var objBankTransaction = new BANKTRANSACTION();
+            ViewBag.Today = today.ToShortDateString();
             return View(objBankTransaction);
         }
 
         public ActionResult JvCreation()
         {
             var objBankTransaction = new BANKTRANSACTION();
+            ViewBag.Today = today.ToShortDateString();
             return View(objBankTransaction);
         }
 
@@ -113,8 +120,8 @@ namespace ASI.MGC.FS.Controllers
             if (!string.IsNullOrEmpty(AcCode))
             {
                 var custDetails = (from customers in _unitOfWork.Repository<AR_AP_MASTER>().Query().Get()
-                                where customers.ARCODE_ARM.Equals(AcCode)
-                                select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM }).FirstOrDefault();
+                                   where customers.ARCODE_ARM.Equals(AcCode)
+                                   select customers).Select(a => new { a.ARCODE_ARM, a.DESCRIPTION_ARM }).FirstOrDefault();
                 ViewBag.AcCode = custDetails.ARCODE_ARM;
                 ViewBag.AcDesc = custDetails.DESCRIPTION_ARM;
             }
@@ -141,6 +148,7 @@ namespace ASI.MGC.FS.Controllers
         {
             var objDayEnd = new DayEndOperationModel();
             objDayEnd = CommonModelAccessUtility.InitializeDayEndObj(_unitOfWork);
+            ViewBag.Today = today.ToShortDateString();
             return View(objDayEnd);
         }
         [HttpPost]
@@ -735,7 +743,7 @@ namespace ASI.MGC.FS.Controllers
                 {
                     glData.Add("debitAmount", "");
                     glData.Add("creditAmount", "");
-                    glData.Add("glDate", DateTime.Now.ToShortDateString());
+                    glData.Add("glDate", today.ToShortDateString());
                 }
             }
             catch (Exception)
@@ -905,7 +913,7 @@ namespace ASI.MGC.FS.Controllers
                                   select ledgers).FirstOrDefault();
             return Json(arApLedgerList, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetArMatchAllocationDetails(string sidx, string sord, int page, int rows, string partyId, bool isCredit)
+        public JsonResult GetArMatchAllocationDetails(string sidx, string sord, int page, int rows, string partyId, bool isCredit = false)
         {
             if (!String.IsNullOrEmpty(partyId))
             {

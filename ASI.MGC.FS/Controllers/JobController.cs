@@ -14,11 +14,13 @@ namespace ASI.MGC.FS.Controllers
     public class JobController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
-        readonly TimeZoneInfo timeZoneInfo;
+        readonly TimeZoneInfo tzInfo;
+        DateTime today;
         public JobController()
         {
             _unitOfWork = new UnitOfWork();
-            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            tzInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            today = TimeZoneInfo.ConvertTime(DateTime.Now, tzInfo);
         }
         public ActionResult Index()
         {
@@ -203,6 +205,7 @@ namespace ASI.MGC.FS.Controllers
         {
             ViewBag.PayModeList = CommonModelAccessUtility.GetPaymentMethodList();
             ViewBag.SaleTypeList = CommonModelAccessUtility.GetSaleTypeList();
+            ViewBag.Today = today.ToShortDateString();
             var objSaleEntry = new SALEDETAIL();
             return View(objSaleEntry);
         }

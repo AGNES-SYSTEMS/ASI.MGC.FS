@@ -95,7 +95,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblSaleDate" class="control-label col-md-4 small ">Sale Date:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.SALEDATE_SD, null, new { ID = "txtSaleDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @required = "required" })
+                                    @Html.TextBoxFor(d => d.SALEDATE_SD, null, new { ID = "txtSaleDate", @Value = ViewBag.Today, Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
@@ -556,7 +556,7 @@
     @*<script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>*@
     @*<script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>*@
     <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/Custom/Job/JobEntry.js?1700")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/Job/JobEntry.js?2500")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
         var clearPartial = function () {

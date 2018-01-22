@@ -51,7 +51,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblMRVDate" class="control-label col-md-4 small ">Date:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.MRVDATE_MRV, null, new { ID = "txtMRVDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control datepicker", @required = "required" })
+                                    @Html.TextBoxFor(d => d.MRVDATE_MRV, null, new { ID = "txtMRVDate", @Value = ViewBag.Today, Class = "form-control datepicker", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblDocDate" class="control-label col-md-4 small ">DocDate:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.DOC_DATE_MRV, null, new { ID = "txtDocDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @readonly = "readonly", @required = "required" })
+                                    @Html.TextBoxFor(d => d.DOC_DATE_MRV, null, new { ID = "txtDocDate", @Value = ViewBag.Today, Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblDeleDate" class="control-label col-md-4 small ">DeleDate:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(d => d.DELE_DATE_MRV, null, new { ID = "txtDeleDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @required = "required" })
+                                    @Html.TextBoxFor(d => d.DELE_DATE_MRV, null, new { ID = "txtDeleDate", @Value = ViewBag.Today, Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -105,6 +105,14 @@
                                     @Html.TextBoxFor(d => d.EXECODE_MRV, null, new { ID = "txtExeCode", Class = "form-control", @Value = "GN" })
                                 </div>
                             </div>
+                            <div class="col-md-6 form-group">
+                                <label id="lblExeCode" class="control-label col-md-4 small ">Cust VAT NO:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.CUSTOMERVATNO_MRV, null, new { ID = "txtCustVAT", Class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-6 form-group">
                                 <label id="lblLpoRemarks" class="control-label col-md-4 small ">Lpo/Remarks:</label>
                                 <div class="col-md-8 paddingLeftRight0">
@@ -412,7 +420,7 @@
 <!-- end:main -->
 @section scripts
 {
-    <script src="@Url.Content("~/Scripts/Custom/MRV/MRVCreation.js?1500")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/MRV/MRVCreation.js?2500")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
         function OnSuccess(mrvNoJobList) {

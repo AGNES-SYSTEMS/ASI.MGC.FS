@@ -87,22 +87,30 @@ function getDocDetails() {
         data: data,
         type: "POST",
         success: function (partyDetails) {
-            if (parseFloat(partyDetails.DEBITAMOUNT_ART) !== 0) {
-                var amount = parseFloat(partyDetails.DEBITAMOUNT_ART) - parseFloat(partyDetails.CREDITAMOUNT_ART) - parseFloat(partyDetails.MATCHVALUE_AR);
-                $('#txtAmount').val(amount).change();
-                $('#txtTotalDocValue').val(amount).change();
-                isCredit = false;
-            } else if (parseFloat(partyDetails.CREDITAMOUNT_ART) !== 0) {
-                var amount = parseFloat(partyDetails.CREDITAMOUNT_ART) - parseFloat(partyDetails.DEBITAMOUNT_ART) - parseFloat(partyDetails.MATCHVALUE_AR);
-                $('#txtAmount').val(amount).change();
-                $('#txtTotalDocValue').val(amount).change();
-                isCredit = true;
+            var dr = partyDetails.DEBITAMOUNT_ART !== null ? parseFloat(partyDetails.DEBITAMOUNT_ART) : 0;
+            var cr = partyDetails.CREDITAMOUNT_ART !== null ? parseFloat(partyDetails.CREDITAMOUNT_ART) : 0;
+            var mt = partyDetails.MATCHVALUE_AR !== null ? parseFloat(partyDetails.MATCHVALUE_AR) : 0;
+            var arapTransactionFlag = false;
+            if (dr + cr === mt) {
+                arapTransactionFlag = false;
+            } else {
+                arapTransactionFlag = true;
             }
-            var allocDocData = $("#tblAllocationDetails").jqGrid("getGridParam", "postData");
-            allocDocData["partyId"] = partyCode;
-            allocDocData["isCredit"] = isCredit;
-            $("#tblAllocationDetails").setGridParam({ postData: allocDocData });
-            $("#tblAllocationDetails").trigger("reloadGrid", [{ page: 1 }]);
+            if (arapTransactionFlag) {
+                var amount = dr + cr - mt;
+                $('#txtAmount').val(amount).change();
+                $('#txtTotalDocValue').val(amount).change();
+                if (dr > 0) {
+                    isCredit = false;
+                } else {
+                    isCredit = true;
+                }
+                var allocDocData = $("#tblAllocationDetails").jqGrid("getGridParam", "postData");
+                allocDocData["partyId"] = partyCode;
+                allocDocData["isCredit"] = isCredit;
+                $("#tblAllocationDetails").setGridParam({ postData: allocDocData });
+                $("#tblAllocationDetails").trigger("reloadGrid", [{ page: 1 }]);
+            }
         },
         complete: function () {
             $("#formArApMatching").formValidation('revalidateField', 'Amount');
@@ -404,5 +412,6 @@ $(document).ready(function () {
         debugger;
         // Prevent form submission
         e.preventDefault();
+        $("#btnSave").hide();
     });
 });

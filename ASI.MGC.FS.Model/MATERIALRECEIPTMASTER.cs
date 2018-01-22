@@ -33,6 +33,7 @@ namespace ASI.MGC.FS.Model
         public string NOTES_MRV { get; set; }
         public string STATUS_MRV { get; set; }
         public string PHONE2_MRV { get; set; }
+        public string CUSTOMERVATNO_MRV { get; set; }
     
         public virtual ICollection<JOBMASTER> JOBMASTERs { get; set; }
         public virtual ICollection<MRVREFERENCE> MRVREFERENCEs { get; set; }

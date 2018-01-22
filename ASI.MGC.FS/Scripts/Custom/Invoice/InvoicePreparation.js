@@ -299,5 +299,6 @@ $(document).ready(function () {
         debugger;
         // Prevent form submission
         e.preventDefault();
+        $("#btnSave").hide();
     });
 });

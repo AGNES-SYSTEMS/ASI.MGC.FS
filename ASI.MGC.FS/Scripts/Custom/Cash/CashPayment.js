@@ -1,5 +1,7 @@
 ﻿var arrAllocDetails = [];
 var selectedRowId = "";
+var totalGridPrdVat = 0.0;
+var totalAmountWithVAT = 0.0;
 var payerSelect = function (payerId) {
     debugger;
     if (payerId) {
@@ -51,10 +53,19 @@ var delProduct = function (rowId) {
 };
 var calculateNetAmount = function () {
     var totalGridPrdAmount = 0.0;
+    totalGridPrdVat = 0.0;
+    totalAmountWithVAT = 0.0;
     for (var i = 0; i < arrAllocDetails.length; i++) {
         totalGridPrdAmount += parseFloat(arrAllocDetails[i]["Amount"]);
+        totalGridPrdVat += parseFloat(arrAllocDetails[i]["VAT"]);
     }
-    $("#txtAllocationTotal").val(totalGridPrdAmount);
+    if ($("#chkIncludeVAT:checked").is(":checked")) {
+        totalAmountWithVAT = totalGridPrdAmount + totalGridPrdVat;
+    } else {
+        totalAmountWithVAT = totalGridPrdAmount;
+    }
+    $("#txtAllocationTotal").val(totalAmountWithVAT);
+    $("#txtTotalVAT").val(totalGridPrdVat);
     $("#formCashPayments").formValidation('revalidateField', 'AllocationTotal');
 }
 var stringfyData = function () {
@@ -77,13 +88,14 @@ $(document).ready(function () {
         autoheight: true,
         autowidth: true,
         styleUI: "Bootstrap",
-        colNames: ['AL Code', 'Account Code', 'Account Description', 'Amount', 'Narration', '', ''],
+        colNames: ['AL Code', 'Account Code', 'Account Description', 'Amount', 'Narration', 'VAT @ 5%', '', ''],
         colModel: [
-            { name: 'AlCode', index: 'AlCode', width: 150, align: "center", sortable: false },
+            { name: 'AlCode', index: 'AlCode', width: 120, align: "center", sortable: false },
             { name: 'AccountCode', index: 'AccountCode', width: 150, align: "left", sortable: false },
-            { name: 'Description', index: 'Description', width: 300, align: "center", sortable: false },
+            { name: 'Description', index: 'Description', width: 250, align: "center", sortable: false },
             { name: 'Amount', index: 'Amount', width: 150, align: "right", sortable: false },
-            { name: 'Narration', index: 'Narration', width: 270, align: "left", sortable: false },
+            { name: 'Narration', index: 'Narration', width: 250, align: "left", sortable: false },
+            { name: 'VAT', index: 'VAT', width: 100, align: "left", sortable: false },
             {
                 name: "action",
                 align: "center",
@@ -387,6 +399,16 @@ $(document).ready(function () {
             });
         }
     });
+    $("#chkIncludeVAT").on("change", function (e) {
+        if ($("#chkIncludeVAT:checked").is(":checked")) {
+            totalAmountWithVAT = totalAmountWithVAT + totalGridPrdVat;
+            $("#hdnIncludeVAT").val("True");
+        } else {
+            totalAmountWithVAT = totalAmountWithVAT - totalGridPrdVat;
+            $("#hdnIncludeVAT").val("False");
+        }
+        $("#txtAllocationTotal").val(totalAmountWithVAT);
+    });
     $("#btnDocSelect").on("click", function (e) {
         var id = jQuery("#tblDocSearch").jqGrid('getGridParam', 'selrow');
         if (id) {
@@ -507,7 +529,8 @@ $(document).ready(function () {
                     AccountCode: $("#txtAccountCode").val(),
                     Description: $("#txtAccountDesc").val(),
                     Amount: $("#txtAmount").val(),
-                    Narration: $("#txtNarration").val()
+                    Narration: $("#txtNarration").val(),
+                    VAT: (($("#txtAmount").val() * 5.0) / 100).toFixed(2)
                 };
                 if ($("#txtAlCode").val().trim() === "AR" || $("#txtAlCode").val().trim() === "AP") {
                     $('#hdnAcCode').val($("#txtAccountCode").val().trim());
@@ -519,7 +542,8 @@ $(document).ready(function () {
                     AccountCode: $("#txtAccountCode").val(),
                     Description: $("#txtAccountDesc").val(),
                     Amount: $("#txtAmount").val(),
-                    Narration: $("#txtNarration").val()
+                    Narration: $("#txtNarration").val(),
+                    VAT: (($("#txtAmount").val() * 5.0) / 100).toFixed(2)
                 };
                 if ($("#txtAlCode").val().trim() === "AR" || $("#txtAlCode").val().trim() === "AP") {
                     $('#hdnAcCode').val($("#txtAccountCode").val().trim());
@@ -760,5 +784,6 @@ $(document).ready(function () {
         debugger;
         // Prevent form submission
         e.preventDefault();
+        $("#btnSubmit").hide();
     });
 });

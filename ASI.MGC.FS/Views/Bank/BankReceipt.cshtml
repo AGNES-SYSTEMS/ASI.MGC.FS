@@ -57,7 +57,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblDocDate" class="control-label col-md-4 small ">Doc Date:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.DOCDATE_BT, null, new { ID = "txtDocDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control datepicker", @required = "required" })
+                                    @Html.TextBoxFor(m => m.DOCDATE_BT, null, new { ID = "txtDocDate", @Value = ViewBag.Today, Class = "form-control datepicker", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -78,7 +78,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblGLDate" class="control-label col-md-4 small ">GL Date:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.GLDATE_BT, null, new { ID = "txtGLDate", @Value = DateTime.Today.Date.ToShortDateString(), Class = "form-control", @required = "required" })
+                                    @Html.TextBoxFor(m => m.GLDATE_BT, null, new { ID = "txtGLDate", @Value = ViewBag.Today, Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -135,13 +135,13 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblChequeDate" class="control-label col-md-4 small ">Cheque Date</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.CHQDATE_BT, null, new { ID = "txtChequeDate", Class = "form-control", @Value = DateTime.Today.Date.ToShortDateString(), @required = "required" })
+                                    @Html.TextBoxFor(m => m.CHQDATE_BT, null, new { ID = "txtChequeDate", Class = "form-control", @Value = ViewBag.Today, @required = "required" })
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label id="lblClearanceDate" class="control-label col-md-4 small ">Clearance Date</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(m => m.CLEARANCEDATE_BT, null, new { ID = "txtClearanceDate", Class = "form-control", @Value = DateTime.Today.Date.ToShortDateString(), @required = "required" })
+                                    @Html.TextBoxFor(m => m.CLEARANCEDATE_BT, null, new { ID = "txtClearanceDate", Class = "form-control", @Value = ViewBag.Today, @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -520,7 +520,7 @@
     <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/Custom/Bank/BankReceipt.js?1800")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/Bank/BankReceipt.js?2500")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
         var isReportOpened = false;

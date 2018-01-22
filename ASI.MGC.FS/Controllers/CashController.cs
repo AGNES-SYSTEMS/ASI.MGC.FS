@@ -15,11 +15,13 @@ namespace ASI.MGC.FS.Controllers
     public class CashController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
-        readonly TimeZoneInfo timeZoneInfo;
+        readonly TimeZoneInfo tzInfo;
+        DateTime today;
         public CashController()
         {
             _unitOfWork = new UnitOfWork();
-            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            tzInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            today = TimeZoneInfo.ConvertTime(DateTime.Now, tzInfo);
         }
         // GET: Cash
         //public ActionResult Index()
@@ -30,6 +32,7 @@ namespace ASI.MGC.FS.Controllers
         public ActionResult CashPayments()
         {
             var objBankTransaction = new BANKTRANSACTION();
+            ViewBag.Today = today.ToShortDateString();
             return View(objBankTransaction);
         }
         [MesAuthorize("DailyTransactions")]
@@ -37,6 +40,7 @@ namespace ASI.MGC.FS.Controllers
         {
             var cashMemoCode = CommonModelAccessUtility.GetCashSaleCount(_unitOfWork);
             ViewBag.cashMemoCode = cashMemoCode;
+            ViewBag.Today = today.ToShortDateString();
             ViewBag.dlnNumber = CommonModelAccessUtility.GetDeleNumberCount(_unitOfWork);
             var objBankTransaction = new BANKTRANSACTION();
             return View(objBankTransaction);
@@ -45,6 +49,7 @@ namespace ASI.MGC.FS.Controllers
         public ActionResult CashReceipt()
         {
             var objBankTransaction = new BANKTRANSACTION();
+            ViewBag.Today = today.ToShortDateString();
             return View(objBankTransaction);
         }
 
@@ -68,24 +73,46 @@ namespace ASI.MGC.FS.Controllers
                     string jsonProductDetails = frm["saleDetails"];
                     var serializer = new JavaScriptSerializer();
                     var lstSaleDetails = serializer.Deserialize<List<SALEDETAIL>>(jsonProductDetails);
-                    objBankTransaction.CHQDATE_BT = Convert.ToDateTime(DateTime.Now.ToShortDateString());
-                    objBankTransaction.CLEARANCEDATE_BT = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+                    objBankTransaction.CHQDATE_BT = Convert.ToDateTime(today.ToShortDateString());
+                    objBankTransaction.CLEARANCEDATE_BT = Convert.ToDateTime(today.ToShortDateString());
                     objBankTransaction.USER_BT = currentUser;
                     objBankTransaction.STATUS_BT = "P";
                     objBankTransaction.CREDITAMOUT_BT = 0;
                     objBankTransaction.VAT_BT = Convert.ToDecimal(frm["TotalVAT"]);
                     _unitOfWork.Repository<BANKTRANSACTION>().Insert(objBankTransaction);
                     _unitOfWork.Save();
-
+                    if (!string.IsNullOrEmpty(frm["TotalVAT"]) && Convert.ToDecimal(frm["TotalVAT"]) > 0)
+                    {
+                        var objVATChrg = _unitOfWork.Repository<GLTRANSACTION1>().Create();
+                        objVATChrg.DOCNUMBER_GLT = cashMemoNumber;
+                        objVATChrg.DOCDATE_GLT = Convert.ToDateTime(frm["DocDate"]);
+                        objVATChrg.GLDATE_GLT = today;
+                        objVATChrg.GLACCODE_GLT = "2510";
+                        objVATChrg.CREDITAMOUNT_GLT = Convert.ToDecimal(frm["TotalVAT"]);
+                        objVATChrg.DEBITAMOUNT_GLT = 0;
+                        objVATChrg.OTHERREF_GLT = objBankTransaction.NOTE_BT;
+                        objVATChrg.NARRATION_GLT = frm["CustDetail"];
+                        objVATChrg.GLSTATUS_GLT = "P";
+                        objVATChrg.VARUSER = currentUser;
+                        _unitOfWork.Repository<GLTRANSACTION1>().Insert(objVATChrg);
+                        _unitOfWork.Save();
+                    }
                     var objInvoiceMaster = _unitOfWork.Repository<INVMASTER>().Create();
                     objInvoiceMaster.INVNO_IPM = cashMemoNumber;
-                    objInvoiceMaster.INVDATE_IPM = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+                    objInvoiceMaster.INVDATE_IPM = Convert.ToDateTime(today.ToShortDateString());
                     objInvoiceMaster.CUSTNAME_IPM = Convert.ToString(frm["CustDetail"]);
                     objInvoiceMaster.SHIPPING_IPM = Convert.ToDecimal(frm["TotalShipCharges"]);
                     objInvoiceMaster.DISCOUNT_IPM = Convert.ToDecimal(frm["TotalDiscount"]);
                     if (invoiceMrvDetails != null)
                     {
                         objInvoiceMaster.CUSTADDRESS_IPM = invoiceMrvDetails.ADDRESS1_MRV;
+                        if (!string.IsNullOrEmpty(Convert.ToString(frm["CustVATNo"])) && string.IsNullOrEmpty(invoiceMrvDetails.CUSTOMERVATNO_MRV))
+                        {
+                            invoiceMrvDetails.CUSTOMERVATNO_MRV = Convert.ToString(frm["CustVATNo"]);
+                            objInvoiceMaster.CUSTVATNO_IPM = "TRN: " + Convert.ToString(frm["CustVATNo"]);
+                            _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Update(invoiceMrvDetails);
+                            _unitOfWork.Save();
+                        }
                     }
                     objInvoiceMaster.CUST_CODE_IPM = "CASH";
                     objInvoiceMaster.VAT_IPM = Convert.ToDecimal(frm["TotalVAT"]);
@@ -99,8 +126,8 @@ namespace ASI.MGC.FS.Controllers
                         {
                             UpdateSalesStatus(sale.JOBNO_SD, sale.PRCODE_SD, 2, cashMemoNumber, "P");
                             var objStockLedger = _unitOfWork.Repository<STOCKLEDGER>().Create();
-                            objStockLedger.DOC_DATE_SL = Convert.ToDateTime(DateTime.Now.ToShortDateString());
-                            objStockLedger.LEDGER_DATE_SL = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+                            objStockLedger.DOC_DATE_SL = Convert.ToDateTime(today.ToShortDateString());
+                            objStockLedger.LEDGER_DATE_SL = Convert.ToDateTime(today.ToShortDateString());
                             objStockLedger.VOUCHERNO_SL = cashMemoNumber;
                             objStockLedger.OTHERREF_SL = mrvNumber;
                             objStockLedger.PRODID_SL = sale.PRCODE_SD;
@@ -235,6 +262,23 @@ namespace ASI.MGC.FS.Controllers
                     //objVoucherMaster.VOUCHER_TYPE = "CR";
                     //_unitOfWork.Repository<VOUCHERMASTER_RPT>().Insert(objVoucherMaster);
                     //_unitOfWork.Save();
+
+                    if (Convert.ToBoolean(form["hdnIncludeVAT"]))
+                    {
+                        var objVATChrg = _unitOfWork.Repository<GLTRANSACTION1>().Create();
+                        objVATChrg.DOCNUMBER_GLT = objBankTransaction.DOCNUMBER_BT;
+                        objVATChrg.DOCDATE_GLT = objBankTransaction.DOCDATE_BT;
+                        objVATChrg.GLDATE_GLT = objBankTransaction.GLDATE_BT;
+                        objVATChrg.GLACCODE_GLT = "2510";
+                        objVATChrg.CREDITAMOUNT_GLT = 0;
+                        objVATChrg.DEBITAMOUNT_GLT = Convert.ToDecimal(form["TotalVAT"]);
+                        objVATChrg.OTHERREF_GLT = objBankTransaction.OTHERREF_BT;
+                        objVATChrg.NARRATION_GLT = objBankTransaction.NARRATION_BT;
+                        objVATChrg.GLSTATUS_GLT = "P";
+                        objVATChrg.VARUSER = currentUser;
+                        _unitOfWork.Repository<GLTRANSACTION1>().Insert(objVATChrg);
+                        _unitOfWork.Save();
+                    }
 
                     string jsonAllocDetails = form["allocDetails"];
                     var serializer = new JavaScriptSerializer();
@@ -420,6 +464,23 @@ namespace ASI.MGC.FS.Controllers
                     //_unitOfWork.Repository<VOUCHERMASTER_RPT>().Insert(objVoucherMaster);
                     //_unitOfWork.Save();
 
+                    if (Convert.ToBoolean(form["hdnIncludeVAT"]))
+                    {
+                        var objVATChrg = _unitOfWork.Repository<GLTRANSACTION1>().Create();
+                        objVATChrg.DOCNUMBER_GLT = objBankTransaction.DOCNUMBER_BT;
+                        objVATChrg.DOCDATE_GLT = objBankTransaction.DOCDATE_BT;
+                        objVATChrg.GLDATE_GLT = objBankTransaction.GLDATE_BT;
+                        objVATChrg.GLACCODE_GLT = "3510";
+                        objVATChrg.CREDITAMOUNT_GLT = 0;
+                        objVATChrg.DEBITAMOUNT_GLT = Convert.ToDecimal(form["TotalVAT"]);
+                        objVATChrg.OTHERREF_GLT = objBankTransaction.OTHERREF_BT;
+                        objVATChrg.NARRATION_GLT = objBankTransaction.NARRATION_BT;
+                        objVATChrg.GLSTATUS_GLT = "P";
+                        objVATChrg.VARUSER = currentUser;
+                        _unitOfWork.Repository<GLTRANSACTION1>().Insert(objVATChrg);
+                        _unitOfWork.Save();
+                    }
+
                     string jsonAllocDetails = form["allocDetails"];
                     var serializer = new JavaScriptSerializer();
                     var lstAllocDetails = serializer.Deserialize<List<CustomAllocationDetails>>(jsonAllocDetails);
@@ -557,7 +618,7 @@ namespace ASI.MGC.FS.Controllers
                     success = true;
                     transaction.Commit();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     success = false;
                     transaction.Rollback();
@@ -568,6 +629,7 @@ namespace ASI.MGC.FS.Controllers
         [MesAuthorize("DailyTransactions")]
         public ActionResult CashMemoReversal()
         {
+            ViewBag.Today = today.ToShortDateString();
             return View();
         }
 
@@ -690,7 +752,7 @@ namespace ASI.MGC.FS.Controllers
                         _unitOfWork.Repository<GLTRANSACTION1>().Update(entry);
                         _unitOfWork.Save();
                     }
-                    
+
                     //// Clearing Stock Ledger
                     //var stockLedgerData = (from stockLedger in _unitOfWork.Repository<STOCKLEDGER>().Query().Get()
                     //                       where stockLedger.VOUCHERNO_SL.Equals(cashReceiptNo)

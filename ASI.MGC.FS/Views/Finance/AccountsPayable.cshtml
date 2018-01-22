@@ -169,7 +169,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">GL Date</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("GLDate", null, new { ID = "txtGlDate", @Value = DateTime.Now.ToShortDateString(), Class = "form-control" })
+                                    @Html.TextBox("GLDate", null, new { ID = "txtGlDate", @Value = ViewBag.Today, Class = "form-control" })
                                 </div>
                             </div>
                         </div>
@@ -218,7 +218,7 @@
 <!-- end:main -->
 @section scripts
 {
-    <script src="@Url.Content("~/Scripts/Custom/Finance/AccountsPayable.js?1500")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/Finance/AccountsPayable.js?2500")"></script>
     <script type="text/javascript">
 
         function OnSuccess(response) {

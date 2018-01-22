@@ -33,7 +33,7 @@ var calculateNetAmount = function () {
         totalGridPrdAmount += parseFloat(arrPrdDetails[i]["Amount"]);
     }
     var taxedAmount = parseFloat(totalGridPrdAmount) + parseFloat($("#txtShipChrg").val()) - parseFloat($("#txtDiscount").val());
-    totalVAT = (((parseFloat(totalGridPrdAmount) - parseFloat($("#txtDiscount").val())) * 5.0) / 100).toFixed(2);
+    totalVAT = (((parseFloat(totalGridPrdAmount) - parseFloat($("#txtDiscount").val())) * 5.0) / 100);
     netAmount = taxedAmount + totalVAT;
     $("#txtNetAmount").val(netAmount);
     $("#txtTotalAmount").val(totalGridPrdAmount);
@@ -505,5 +505,6 @@ $(document).ready(function () {
          debugger;
          // Prevent form submission
          e.preventDefault();
+         $("#btnSubmit").hide();
      });
 });

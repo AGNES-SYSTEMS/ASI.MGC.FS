@@ -66,6 +66,10 @@
       <FullPath>CashpaymentVoucher.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>CashpaymentVoucher1.rdl</Name>
+      <FullPath>CashpaymentVoucher1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>CashReceipt.rdl</Name>
       <FullPath>CashReceipt.rdl</FullPath>
     </ProjectItem>
@@ -186,8 +190,8 @@
       <FullPath>TrialBalance.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>CashpaymentVoucher1.rdl</Name>
-      <FullPath>CashpaymentVoucher1.rdl</FullPath>
+      <Name>MonthlyVATStatement.rdl</Name>
+      <FullPath>MonthlyVATStatement.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

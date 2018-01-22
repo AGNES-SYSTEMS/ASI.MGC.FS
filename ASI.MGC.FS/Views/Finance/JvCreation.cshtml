@@ -57,7 +57,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">Doc Date:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.DOCDATE_BT, null, new { ID = "txtDocDate", @Value = DateTime.Now.ToShortDateString(), Class = "form-control", @readonly = "readonly", @required = "required" })
+                                    @Html.TextBoxFor(o => o.DOCDATE_BT, null, new { ID = "txtDocDate", @Value = ViewBag.Today, Class = "form-control", @readonly = "readonly", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                             <div class="col-md-6 form-group">
                                 <label class="control-label col-md-4 small ">GL Date:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBoxFor(o => o.GLDATE_BT, null, new { ID = "txtGlDate", @Value = DateTime.Now.ToShortDateString(), Class = "form-control", @required = "required" })
+                                    @Html.TextBoxFor(o => o.GLDATE_BT, null, new { ID = "txtGlDate", @Value = ViewBag.Today, Class = "form-control", @required = "required" })
                                 </div>
                             </div>
                         </div>
@@ -368,7 +368,7 @@
     <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/Custom/Finance/JvCreation.js?1500")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/Finance/JvCreation.js?2500")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
         function OnSuccess(data) {

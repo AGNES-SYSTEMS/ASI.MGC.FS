@@ -11,11 +11,13 @@ namespace ASI.MGC.FS.Controllers
     public class SetupsController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
-        readonly TimeZoneInfo timeZoneInfo;
+        readonly TimeZoneInfo tzInfo;
+        DateTime today;
         public SetupsController()
         {
             _unitOfWork = new UnitOfWork();
-            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            tzInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            today = TimeZoneInfo.ConvertTime(DateTime.Now, tzInfo);
         }
         // GET: Setups
 
@@ -152,7 +154,7 @@ namespace ASI.MGC.FS.Controllers
                     var openingBalance = Convert.ToInt32(form["OpeningBalance"]);
                     var objCustomerLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
                     objCustomerLedger.DOCNUMBER_ART = objCustomerMaster.ARCODE_ARM;
-                    objCustomerLedger.DODATE_ART = TimeZoneInfo.ConvertTime(DateTime.Now, timeZoneInfo);
+                    objCustomerLedger.DODATE_ART = today.Date;
                     objCustomerLedger.GLDATE_ART = Convert.ToDateTime(form["GLDate"]);
                     objCustomerLedger.ARAPCODE_ART = objCustomerMaster.ARCODE_ARM;
                     if (openingBalance >= 0)
@@ -312,7 +314,7 @@ namespace ASI.MGC.FS.Controllers
                     var openingBalance = Convert.ToInt32(form["OpeningBalance"]);
                     var objCustomerLedger = _unitOfWork.Repository<AR_AP_LEDGER>().Create();
                     objCustomerLedger.DOCNUMBER_ART = objSupplierMaster.ARCODE_ARM;
-                    objCustomerLedger.DODATE_ART = TimeZoneInfo.ConvertTime(DateTime.Now, timeZoneInfo);
+                    objCustomerLedger.DODATE_ART = today.Date;
                     objCustomerLedger.GLDATE_ART = Convert.ToDateTime(form["GLDate"]);
                     objCustomerLedger.ARAPCODE_ART = objSupplierMaster.ARCODE_ARM;
                     if (openingBalance >= 0)

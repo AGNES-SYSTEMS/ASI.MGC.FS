@@ -14,11 +14,13 @@ namespace ASI.MGC.FS.Controllers
     public class PurchaseController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
-        readonly TimeZoneInfo timeZoneInfo;
+        readonly TimeZoneInfo tzInfo;
+        DateTime today;
         public PurchaseController()
         {
             _unitOfWork = new UnitOfWork();
-            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            tzInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            today = TimeZoneInfo.ConvertTime(DateTime.Now, tzInfo);
         }
         // GET: Purchase
         public ActionResult Index()
@@ -29,7 +31,7 @@ namespace ASI.MGC.FS.Controllers
         public ActionResult PurchaseEntryOld()
         {
             int purCountCode = (1001 + CommonModelAccessUtility.GetCurrPurchaseCount(_unitOfWork));
-            string currYear = DateTime.Now.Year.ToString();
+            string currYear = today.Year.ToString();
             string purCode = "CRP/" + Convert.ToString(purCountCode) + "/" + currYear;
             ViewBag.purCode = purCode;
             var objArApLedger = new AR_AP_LEDGER();
@@ -141,9 +143,10 @@ namespace ASI.MGC.FS.Controllers
         public ActionResult PurchaseReturn()
         {
             int retCount = (1001 + CommonModelAccessUtility.GetReturnPurchaseCount(_unitOfWork));
-            string currYear = DateTime.Now.Year.ToString();
+            string currYear = today.Year.ToString();
             string revPurCode = "RPC/" + Convert.ToString(retCount) + "/" + currYear;
             ViewBag.RevPurCode = revPurCode;
+            ViewBag.Today = today.ToShortDateString();
             var objPurchase = new PurchaseModel();
             return View(objPurchase);
         }
@@ -195,7 +198,7 @@ namespace ASI.MGC.FS.Controllers
                         objVATChrg.DOCNUMBER_GLT = Convert.ToString(frm["DocNo"]);
                         objVATChrg.DOCDATE_GLT = Convert.ToDateTime(frm["DocDate"]);
                         objVATChrg.GLDATE_GLT = Convert.ToDateTime(frm["PurDate"]);
-                        objVATChrg.GLACCODE_GLT = "3510";
+                        objVATChrg.GLACCODE_GLT = "3511";
                         objVATChrg.CREDITAMOUNT_GLT = Convert.ToDecimal(frm["TotalVAT"]);
                         objVATChrg.DEBITAMOUNT_GLT = 0;
                         objVATChrg.OTHERREF_GLT = Convert.ToString(frm["Invoice"]);
@@ -231,9 +234,10 @@ namespace ASI.MGC.FS.Controllers
         public ActionResult PurchaseEntry()
         {
             int purCountCode = (1001 + CommonModelAccessUtility.GetCurrPurchaseCount(_unitOfWork));
-            string currYear = DateTime.Now.Year.ToString();
+            string currYear = today.Year.ToString();
             string purCode = "CRP/" + Convert.ToString(purCountCode) + "/" + currYear;
             ViewBag.purCode = purCode;
+            ViewBag.Today = today.ToShortDateString();
             var objPurchase = new PurchaseModel();
             return View(objPurchase);
         }

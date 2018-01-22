@@ -14,11 +14,13 @@ namespace ASI.MGC.FS.Controllers
     public class InvoiceController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
-        readonly TimeZoneInfo timeZoneInfo;
+        readonly TimeZoneInfo tzInfo;
+        DateTime today;
         public InvoiceController()
         {
             _unitOfWork = new UnitOfWork();
-            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            tzInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            today = TimeZoneInfo.ConvertTime(DateTime.Now, tzInfo);
         }
         // GET: Invoice
         public ActionResult Index()
@@ -31,6 +33,7 @@ namespace ASI.MGC.FS.Controllers
             string invoiceCode = CommonModelAccessUtility.GetInvoiceCount(_unitOfWork);
             ViewBag.invoiceCode = invoiceCode;
             ViewBag.dlnNumber = CommonModelAccessUtility.GetDeleNumberCount(_unitOfWork);
+            ViewBag.Today = today.ToShortDateString();
             var objArApLedger = new AR_AP_LEDGER();
             return View(objArApLedger);
         }
@@ -59,10 +62,26 @@ namespace ASI.MGC.FS.Controllers
                     objArApLedger.USER_ART = currentUser;
                     _unitOfWork.Repository<AR_AP_LEDGER>().Insert(objArApLedger);
                     _unitOfWork.Save();
+                    if (!string.IsNullOrEmpty(frm["TotalVAT"]) && Convert.ToDecimal(frm["TotalVAT"]) > 0)
+                    {
+                        var objVATChrg = _unitOfWork.Repository<GLTRANSACTION1>().Create();
+                        objVATChrg.DOCNUMBER_GLT = invNumber;
+                        objVATChrg.DOCDATE_GLT = Convert.ToDateTime(objArApLedger.DODATE_ART);
+                        objVATChrg.GLDATE_GLT = today.Date;
+                        objVATChrg.GLACCODE_GLT = "2510";
+                        objVATChrg.CREDITAMOUNT_GLT = Convert.ToDecimal(frm["TotalVAT"]);
+                        objVATChrg.DEBITAMOUNT_GLT = 0;
+                        objVATChrg.OTHERREF_GLT = objArApLedger.OTHERREF_ART;
+                        objVATChrg.NARRATION_GLT = objArApLedger.ARAPCODE_ART;
+                        objVATChrg.GLSTATUS_GLT = "P";
+                        objVATChrg.VARUSER = currentUser;
+                        _unitOfWork.Repository<GLTRANSACTION1>().Insert(objVATChrg);
+                        _unitOfWork.Save();
+                    }
                     var objInvoiceMaster = _unitOfWork.Repository<INVMASTER>().Create();
                     objInvoiceMaster.INVNO_IPM = invNumber;
                     objInvoiceMaster.CUST_CODE_IPM = objArApLedger.ARAPCODE_ART;
-                    objInvoiceMaster.INVDATE_IPM = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+                    objInvoiceMaster.INVDATE_IPM = today;
                     objInvoiceMaster.CUSTNAME_IPM = Convert.ToString(frm["CustDetail"]);
                     objInvoiceMaster.SHIPPING_IPM = Convert.ToDecimal(frm["TotalShipCharges"]);
                     objInvoiceMaster.DISCOUNT_IPM = Convert.ToDecimal(frm["TotalDiscount"]);
@@ -71,7 +90,7 @@ namespace ASI.MGC.FS.Controllers
                     {
                         objInvoiceMaster.CUSTADDRESS_IPM = invoiceMrvDetails.ADDRESS1_MRV;
                     }
-                    objInvoiceMaster.CUSTVATNO_IPM = "TRN: "+CommonModelAccessUtility.GetCustomerVAT(objArApLedger.ARAPCODE_ART, _unitOfWork);
+                    objInvoiceMaster.CUSTVATNO_IPM = "TRN: " + CommonModelAccessUtility.GetCustomerVAT(objArApLedger.ARAPCODE_ART, _unitOfWork);
                     objInvoiceMaster.INVTYPE_IPM = "INV";
                     objInvoiceMaster.LPONO_IPM = _unitOfWork.Repository<MATERIALRECEIPTMASTER>().FindByID(mrvNumber).NOTES_MRV;
                     _unitOfWork.Repository<INVMASTER>().Insert(objInvoiceMaster);
@@ -83,8 +102,8 @@ namespace ASI.MGC.FS.Controllers
                         {
                             UpdateSalesStatus(sale.JOBNO_SD, sale.PRCODE_SD, 2, invNumber, "P");
                             var objStockLedger = _unitOfWork.Repository<STOCKLEDGER>().Create();
-                            objStockLedger.DOC_DATE_SL = Convert.ToDateTime(DateTime.Now.ToShortDateString());
-                            objStockLedger.LEDGER_DATE_SL = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+                            objStockLedger.DOC_DATE_SL = Convert.ToDateTime(today.ToShortDateString());
+                            objStockLedger.LEDGER_DATE_SL = Convert.ToDateTime(today.ToShortDateString());
                             objStockLedger.VOUCHERNO_SL = objArApLedger.DOCNUMBER_ART;
                             objStockLedger.OTHERREF_SL = objArApLedger.NARRATION_ART;
                             objStockLedger.PRODID_SL = sale.PRCODE_SD;
@@ -231,7 +250,7 @@ namespace ASI.MGC.FS.Controllers
                             {
                                 objBnk.DEBITAMOUT_BT = 0;
                                 objBnk.CREDITAMOUT_BT = entry.DEBITAMOUT_BT;
-                                objBnk.DOCDATE_BT = DateTime.Now;
+                                objBnk.DOCDATE_BT = today;
                                 objBnk.GLDATE_BT = entry.GLDATE_BT;
                                 objBnk.DOCNUMBER_BT = revInvNo;
                                 objBnk.BANKCODE_BT = entry.BANKCODE_BT;
@@ -242,7 +261,7 @@ namespace ASI.MGC.FS.Controllers
                             {
                                 objBnk.CREDITAMOUT_BT = 0;
                                 objBnk.DEBITAMOUT_BT = entry.CREDITAMOUT_BT;
-                                objBnk.DOCDATE_BT = DateTime.Now;
+                                objBnk.DOCDATE_BT = today;
                                 objBnk.GLDATE_BT = entry.GLDATE_BT;
                                 objBnk.DOCNUMBER_BT = revInvNo;
                                 objBnk.BANKCODE_BT = entry.BANKCODE_BT;
@@ -267,7 +286,7 @@ namespace ASI.MGC.FS.Controllers
                             {
                                 objArAp.DOCNUMBER_ART = revInvNo;
                                 objArAp.ARAPCODE_ART = entry.ARAPCODE_ART;
-                                objArAp.DODATE_ART = DateTime.Now;
+                                objArAp.DODATE_ART = today;
                                 objArAp.GLDATE_ART = entry.GLDATE_ART;
                                 objArAp.DEBITAMOUNT_ART = 0;
                                 objArAp.CREDITAMOUNT_ART = entry.DEBITAMOUNT_ART;
@@ -278,7 +297,7 @@ namespace ASI.MGC.FS.Controllers
                             {
                                 objArAp.DOCNUMBER_ART = revInvNo;
                                 objArAp.ARAPCODE_ART = entry.ARAPCODE_ART;
-                                objArAp.DODATE_ART = DateTime.Now;
+                                objArAp.DODATE_ART = today;
                                 objArAp.GLDATE_ART = entry.GLDATE_ART;
                                 objArAp.CREDITAMOUNT_ART = 0;
                                 objArAp.DEBITAMOUNT_ART = entry.CREDITAMOUNT_ART;
@@ -303,7 +322,7 @@ namespace ASI.MGC.FS.Controllers
                             {
                                 objGlt.DOCNUMBER_GLT = revInvNo;
                                 objGlt.GLACCODE_GLT = entry.GLACCODE_GLT;
-                                objGlt.DOCDATE_GLT = DateTime.Now;
+                                objGlt.DOCDATE_GLT = today;
                                 objGlt.GLDATE_GLT = entry.GLDATE_GLT;
                                 objGlt.DEBITAMOUNT_GLT = 0;
                                 objGlt.CREDITAMOUNT_GLT = entry.DEBITAMOUNT_GLT;
@@ -314,7 +333,7 @@ namespace ASI.MGC.FS.Controllers
                             {
                                 objGlt.DOCNUMBER_GLT = revInvNo;
                                 objGlt.GLACCODE_GLT = entry.GLACCODE_GLT;
-                                objGlt.DOCDATE_GLT = DateTime.Now;
+                                objGlt.DOCDATE_GLT = today;
                                 objGlt.GLDATE_GLT = entry.GLDATE_GLT;
                                 objGlt.DEBITAMOUNT_GLT = entry.CREDITAMOUNT_GLT;
                                 objGlt.CREDITAMOUNT_GLT = 0;

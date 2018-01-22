@@ -1192,7 +1192,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!VATNO_CM.Value, "DS_CashMemo")</Value>
+                <Value>="TRN:" &amp;First(Fields!VATNO_CM.Value, "DS_CashMemo")</Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
                 </Style>

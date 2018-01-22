@@ -418,6 +418,7 @@
           <Property Name="NOTES_MRV" Type="nvarchar" MaxLength="255" />
           <Property Name="STATUS_MRV" Type="nvarchar" MaxLength="1" />
           <Property Name="PHONE2_MRV" Type="nvarchar" MaxLength="12" />
+          <Property Name="CUSTOMERVATNO_MRV" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="MESMachines">
           <Key>
@@ -2613,11 +2614,12 @@
           <Property Type="Decimal" Name="VAT_SD" Nullable="false" Precision="19" />
         </ComplexType>
         <ComplexType Name="sp_GetCashMemoMrvList_Result">
-          <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="CUSTOMERCODE_MRV" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CUSTOMERNAME_MRV" Nullable="true" MaxLength="255" />
           <Property Type="DateTime" Name="DOC_DATE_MRV" Nullable="true" />
-          <Property Type="String" Name="JOBNO_SD" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="JOBNO_SD" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="CUSTOMERVATNO_MRV" Nullable="true" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="sp_GetInvoicePrepMrvList1_Result">
           <Property Type="String" Name="MRVNO_MRV" Nullable="false" MaxLength="15" />
@@ -3099,6 +3101,7 @@
           <Property Name="PHONE2_MRV" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="JOBMASTERs" Relationship="ASI_MGC_FSModel.JOBMASTER_MATERIALRECEIPTMASTERJOBMASTER" FromRole="MATERIALRECEIPTMASTER" ToRole="JOBMASTER" />
           <NavigationProperty Name="MRVREFERENCEs" Relationship="ASI_MGC_FSModel.MRVREFERENCE_MATERIALRECEIPTMASTERMRVREFERENCE" FromRole="MATERIALRECEIPTMASTER" ToRole="MRVREFERENCE" />
+          <Property Name="CUSTOMERVATNO_MRV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MESMachine">
           <Key>
@@ -4638,6 +4641,7 @@
                 <ScalarProperty Name="CUSTOMERNAME_MRV" ColumnName="CUSTOMERNAME_MRV" />
                 <ScalarProperty Name="DOC_DATE_MRV" ColumnName="DOC_DATE_MRV" />
                 <ScalarProperty Name="JOBNO_SD" ColumnName="JOBNO_SD" />
+                <ScalarProperty Name="CUSTOMERVATNO_MRV" ColumnName="CUSTOMERVATNO_MRV" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -5154,6 +5158,7 @@
           <EntitySetMapping Name="MATERIALRECEIPTMASTERs">
             <EntityTypeMapping TypeName="ASI_MGC_FSModel.MATERIALRECEIPTMASTER">
               <MappingFragment StoreEntitySet="MATERIALRECEIPTMASTER">
+                <ScalarProperty Name="CUSTOMERVATNO_MRV" ColumnName="CUSTOMERVATNO_MRV" />
                 <ScalarProperty Name="PHONE2_MRV" ColumnName="PHONE2_MRV" />
                 <ScalarProperty Name="STATUS_MRV" ColumnName="STATUS_MRV" />
                 <ScalarProperty Name="NOTES_MRV" ColumnName="NOTES_MRV" />

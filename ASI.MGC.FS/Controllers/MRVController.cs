@@ -14,11 +14,13 @@ namespace ASI.MGC.FS.Controllers
     public class MrvController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
-        readonly TimeZoneInfo timeZoneInfo;
+        readonly TimeZoneInfo tzInfo;
+        DateTime today;
         public MrvController()
         {
             _unitOfWork = new UnitOfWork();
-            timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            tzInfo = TimeZoneInfo.FindSystemTimeZoneById("Arabian Standard Time");
+            today = TimeZoneInfo.ConvertTime(DateTime.Now, tzInfo);
         }
         public ActionResult Index()
         {
@@ -30,6 +32,7 @@ namespace ASI.MGC.FS.Controllers
         {
             string mrvCode = CommonModelAccessUtility.GetCurrMrvCount(_unitOfWork);
             ViewBag.MRVCode = mrvCode;
+            ViewBag.Today = today.ToShortDateString();
             var objMrv = new MATERIALRECEIPTMASTER();
             return View(objMrv);
         }
@@ -46,7 +49,7 @@ namespace ASI.MGC.FS.Controllers
                     var serializer = new JavaScriptSerializer();
                     var lstMrvProducts = serializer.Deserialize<List<MRVREFERENCE>>(jsonProductDetails);
                     objMrv.MRVNO_MRV = CommonModelAccessUtility.GetCurrMrvCount(_unitOfWork);
-                    objMrv.DOC_DATE_MRV = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+                    objMrv.DOC_DATE_MRV = Convert.ToDateTime(today.ToShortDateString());
                     objMrv.STATUS_MRV = "N";
                     _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Insert(objMrv);
                     _unitOfWork.Save();
@@ -82,7 +85,7 @@ namespace ASI.MGC.FS.Controllers
             for (int i = 0; i < prd.QTY_MRR; i++)
             {
                 var jobCount = (1001 + CommonModelAccessUtility.GetJobMasterCount(_unitOfWork));
-                string currYear = DateTime.Now.Year.ToString();
+                string currYear = today.Year.ToString();
                 string jobCode = Convert.ToString("JOB/" + Convert.ToString(jobCount) + "/" + currYear);
                 var jobMasterObj = _unitOfWork.Repository<JOBMASTER>().Create();
                 jobMasterObj.JOBNO_JM = jobCode;
