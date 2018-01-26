@@ -8,7 +8,7 @@
 };
 $(document).ready(function () {
     debugger;
-    $('#txtGLDate').datepicker();
+    $('#txtGLDate').datepicker({changeMonth: true,changeYear: true});
 
     function getGlCodeDetails() {
         var glCode = $("#txtGLCode").val();
@@ -240,5 +240,6 @@ $(document).ready(function () {
         // Prevent form submission
         e.preventDefault();
         $("#btnSave").hide();
+        $("#divSaving").show();
     });
 });

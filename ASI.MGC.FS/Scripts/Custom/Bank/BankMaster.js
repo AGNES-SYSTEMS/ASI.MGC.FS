@@ -8,7 +8,7 @@
 };
 $(document).ready(function () {
     debugger;
-    $('#txtBankDate').datepicker();
+    $('#txtBankDate').datepicker({changeMonth: true,changeYear: true});
 
     function getBankCodeDetails() {
         var bankCode = $("#txtBankCode").val();
@@ -206,5 +206,6 @@ $(document).ready(function () {
         // Prevent form submission
         e.preventDefault();
         $("#btnSave").hide();
+        $("#divSaving").show();
     });
 });

@@ -101,6 +101,7 @@
         debugger;
         // Prevent form submission
         e.preventDefault();
+        $("#divSaving").show();
     });
     $("#formDuplicatePrinting").formValidation('revalidateField', 'DocNo');
 });

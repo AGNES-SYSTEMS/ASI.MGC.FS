@@ -54,8 +54,8 @@ var delAllocDetails = function (rowId) {
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     //$("#liBankReceipt").addClass("active");
-    $('#txtDocDate').datepicker();
-    $('#txtGlDate').datepicker();
+    $('#txtDocDate').datepicker({changeMonth: true,changeYear: true});
+    $('#txtGlDate').datepicker({changeMonth: true,changeYear: true});
     jQuery("#tblAllocDetails").jqGrid({
         datatype: "local",
         data: arrAllocDetails,
@@ -610,6 +610,7 @@ $(document).ready(function () {
         // Prevent form submission
         e.preventDefault();
         $("#btnJvSave").hide();
+        $("#divSaving").show();
     });
     $("#formJvCreation").formValidation();
 });

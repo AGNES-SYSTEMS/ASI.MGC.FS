@@ -76,8 +76,8 @@ $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liCashReceipt").addClass("active");
     arrAllocDetails = [];
-    $('#txtDocDate').datepicker();
-    $('#txtGLDate').datepicker();
+    $('#txtDocDate').datepicker({changeMonth: true,changeYear: true});
+    $('#txtGLDate').datepicker({changeMonth: true,changeYear: true});
     jQuery("#tblAllocDetails").jqGrid({
         datatype: "local",
         data: arrAllocDetails,
@@ -788,5 +788,6 @@ $(document).ready(function () {
         // Prevent form submission
         e.preventDefault();
         $("#btnSubmit").hide();
+        $("#divSaving").show();
     });
 });

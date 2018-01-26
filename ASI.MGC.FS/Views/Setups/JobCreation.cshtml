@@ -28,9 +28,15 @@
                                 <br /> <br />
                                 <section>
                                     <div class="row">
-                                        <div class="col-md-12 form-group">
-                                            <div class="col-md-12 input-group paddingLeftRight0">
-                                                @Html.TextBox("searchJob", null, new { ID = "txtJobPrd", Class = "form-control" })
+                                        <div class="col-md-6 form-group ">
+                                            <div class="col-md-11 input-group">
+                                                @Html.TextBox("jobIdSearch", null, new { ID = "txtJobIdSearch", Class = "form-control", @placeholder = "Search Job ID here..." })
+                                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 form-group ">
+                                            <div class="col-md-11 input-group">
+                                                @Html.TextBox("jobNameSearch", null, new { ID = "txtJobNameSearch", Class = "form-control", @placeholder = "Search Job Name here..." })
                                                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
                                             </div>
                                         </div>
@@ -105,7 +111,7 @@
 <!-- end:main -->
 @section scripts
 {
-    <script src="@Url.Content("~/Scripts/Custom/Setups/JobCreation.js?1500")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/Setups/JobCreation.js?2500")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
 
@@ -113,13 +119,16 @@
             if (success) {
                 toastr.success("Job has been Created Successfully.");
                 $('#formJobCreation')[0].reset();
+                $('#JobDetailsModel').modal('toggle');
             } else {
                 toastr.error("Sorry! Something went wrong, please try again.");
             }
+            $("#divSaving").hide();
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
+            $("#divSaving").hide();
         }
 
     </script>

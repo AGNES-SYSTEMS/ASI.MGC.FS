@@ -531,6 +531,13 @@
       <DependentUpon>MetarialReceiptVoucher.aspx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Reports\MonthWiseVATStatement.aspx.cs">
+      <DependentUpon>MonthWiseVATStatement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\MonthWiseVATStatement.aspx.designer.cs">
+      <DependentUpon>MonthWiseVATStatement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\MrvStatement.aspx.cs">
       <DependentUpon>MrvStatement.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -669,6 +676,7 @@
     <Content Include="Content\chosen-sprite.png" />
     <Content Include="Content\chosen.css" />
     <Content Include="Content\chosen.min.css" />
+    <Content Include="Content\Custom\Jquery-ui-modified.min.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.min.css" />
     <Content Include="Content\DataTables\css\autoFill.dataTables.css" />
@@ -983,6 +991,7 @@
     <Content Include="Reports\MetarialReceiptVoucher.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\MonthWiseVATStatement.aspx" />
     <Content Include="Reports\MrvStatement.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1108,6 +1117,7 @@
     <Content Include="Scripts\Custom\MgcReports\GlStatement.js" />
     <Content Include="Scripts\Custom\MgcReports\InvoiceWiseReport.js" />
     <Content Include="Scripts\Custom\MgcReports\JobWiseStatement.js" />
+    <Content Include="Scripts\Custom\MgcReports\MonthWiseVATReport.js" />
     <Content Include="Scripts\Custom\MgcReports\MrvStatement.js" />
     <Content Include="Scripts\Custom\MgcReports\PendingMrvDetails.js" />
     <Content Include="Scripts\Custom\MgcReports\ProfitLossStatement.js" />
@@ -1411,6 +1421,7 @@
     <Content Include="Views\MgcReports\DuplicateInvoice.cshtml" />
     <Content Include="Views\MRV\FindMrvDetails.cshtml" />
     <Content Include="Views\Job\FindJobDetails.cshtml" />
+    <Content Include="Views\MgcReports\MonthWiseVATReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -5,6 +5,7 @@
 }
 @model ASI.MGC.FS.Model.BANKMASTER
 <link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+<link href="~/Content/Custom/Jquery-ui-modified.min.css" rel="stylesheet" />
 <!-- start:main -->
 <div class="container">
     <div id="main">
@@ -192,12 +193,12 @@
             } else {
                 toastr.error("Sorry! Something went wrong, please try again.");
             }
-            $("#btnSave").hide();
+            $("#divSaving").hide();
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
-            //$("#btnSave").hide();
+            $("#divSaving").hide();
         }
     </script>
 }

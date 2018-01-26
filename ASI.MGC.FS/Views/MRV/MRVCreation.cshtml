@@ -4,7 +4,9 @@
     ViewBag.currPage = "MRVoucher";
 }
 @model ASI.MGC.FS.Model.MATERIALRECEIPTMASTER
+<link href="~/Content/Custom/Jquery-ui-modified.min.css" rel="stylesheet" />
 <!-- start:main -->
+
 <div class="container">
     <div id="main">
         <!-- start:breadcrumb -->
@@ -417,6 +419,7 @@
         </div>
     </div>
 </div>
+
 <!-- end:main -->
 @section scripts
 {
@@ -431,16 +434,19 @@
                 //$("#formMRVCreation")[0].reset();
                 //$('#tblMetarials').jqGrid("clearGridData");
                 $("#btnSubmit").hide();
+                $("#divSaving").hide();
             }
             else
             {
                 toastr.error("Sorry! Something went wrong, please try again.");
+                $("#divSaving").hide();
             }
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
             $("#btnSubmit").hide();
+            $("#divSaving").hide();
         }
 
         function openMrvReport(mrvNo) {

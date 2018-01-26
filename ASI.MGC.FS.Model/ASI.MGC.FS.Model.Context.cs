@@ -1382,5 +1382,18 @@ namespace ASI.MGC.FS.Model
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SP_InvoiceReversal", iNVNOParameter);
         }
+    
+        public virtual ObjectResult<SP_GetMonthlyVATDetails_Result> SP_GetMonthlyVATDetails(Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        {
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetMonthlyVATDetails_Result>("SP_GetMonthlyVATDetails", startDateParameter, endDateParameter);
+        }
     }
 }

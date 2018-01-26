@@ -7,6 +7,7 @@
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
 <link href="~/Content/formValidation.min.css" rel="stylesheet" />
+<link href="~/Content/Custom/Jquery-ui-modified.min.css" rel="stylesheet" />
 @model ASI.MGC.FS.Model.BANKTRANSACTION
 <!-- start:main -->
 <div class="container">
@@ -380,12 +381,12 @@
             } else {
                 toastr.error("Sorry! Something went wrong, please try again.");
             }
-            
+            $("#divSaving").hide();
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
-            //$("#btnSave").hide();
+            $("#divSaving").hide();
         }
 
         function openJv(jvNo) {

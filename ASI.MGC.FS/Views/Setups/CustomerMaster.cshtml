@@ -62,155 +62,155 @@
             <div class="modal-content">
                 @using (Ajax.BeginForm("SaveCustomerMaster", "Setups", null, new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "formCustomerMaster", @class = "form-horizontal", enctype = "multipart/form-data" }))
                 {
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-hidden="true">
-                        ×
-                    </button>
-                    <h4 class="modal-title">
-                        Add Customer Details
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Customer Code</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.ARCODE_ARM, null, new { ID = "txtCustCode", Class = "form-control", @required = "required" })
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title">
+                            Add Customer Details
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Customer Code</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.ARCODE_ARM, null, new { ID = "txtCustCode", Class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Customer Name</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.DESCRIPTION_ARM, null, new { ID = "txtCustName", Class = "form-control", @required = "required" })
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Customer Name</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.DESCRIPTION_ARM, null, new { ID = "txtCustName", Class = "form-control", @required = "required" })
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">P.O.Box No</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.POBOX_ARM, null, new { ID = "txtPoBox", Class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">VAT No</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.VATNO_ARM, null, new { ID = "txtVATNo", Class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Address 1</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.ADDRESS1_ARM, null, new { ID = "txtAddress1", Class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Address 2</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.ADDRESS2_ARM, null, new { ID = "txtAddress2", Class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Telephone</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.TELEPHONE_ARM, null, new { ID = "txtTelephone", Class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Fax</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.FAX_ARM, null, new { ID = "txtFax", Class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Email</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.EMAIL_ARM, null, new { ID = "txtEmail", Class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Conatct person:</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.CONDACTPERSON_ARM, null, new { ID = "txtContactPerson", Class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Sales Exe</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.SALESEXE_ARM, null, new { ID = "txtSaleExe", Class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Status</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.STATUS_ARM, null, new { ID = "txtStatus", @Value = "Normal", Class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Receiveable Type</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.RECEIVABLETYPE_ARM, null, new { ID = "txtReceiveable", @Value = "Credit", Class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">GL Date</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("GLDate", null, new { ID = "txtGlDate", @Value = DateTime.Now.ToShortDateString(), Class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Limit Amount</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.LIMITAMOUNT_ARM, null, new { ID = "txtLimitAmount", Class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Credit Days</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.CREDITDAYS_ARM, null, new { ID = "txtCreditDays", Class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Opening Balance</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBox("OpeningBalance", null, new { ID = "txtOpenBalance", Class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label col-md-4 small ">Notes</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.TextBoxFor(d => d.Notes_ARM, null, new { ID = "txtNotes", Class = "form-control" })
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">P.O.Box No</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.POBOX_ARM, null, new { ID = "txtPoBox", Class = "form-control", @required = "required" })
-                            </div>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">VAT No</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.VATNO_ARM, null, new { ID = "txtVATNo", Class = "form-control", @required = "required" })
-                            </div>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success" disabled="disabled">
+                            Save
+                        </button>
+                        <button type="button" id="btnCancel" class="btn btn-warning">
+                            Cancel
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">
+                            Close
+                        </button>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Address 1</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.ADDRESS1_ARM, null, new { ID = "txtAddress1", Class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Address 2</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.ADDRESS2_ARM, null, new { ID = "txtAddress2", Class = "form-control" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Telephone</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.TELEPHONE_ARM, null, new { ID = "txtTelephone", Class = "form-control", @required = "required" })
-                            </div>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Fax</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.FAX_ARM, null, new { ID = "txtFax", Class = "form-control" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Email</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.EMAIL_ARM, null, new { ID = "txtEmail", Class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Conatct person:</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.CONDACTPERSON_ARM, null, new { ID = "txtContactPerson", Class = "form-control", @required = "required" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Sales Exe</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.SALESEXE_ARM, null, new { ID = "txtSaleExe", Class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Status</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.STATUS_ARM, null, new { ID = "txtStatus", @Value = "Normal", Class = "form-control", @readonly = "readonly" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Receiveable Type</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.RECEIVABLETYPE_ARM, null, new { ID = "txtReceiveable", @Value = "Credit", Class = "form-control", @readonly = "readonly" })
-                            </div>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">GL Date</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBox("GLDate", null, new { ID = "txtGlDate", @Value = DateTime.Now.ToShortDateString(), Class = "form-control", @required = "required" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Limit Amount</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.LIMITAMOUNT_ARM, null, new { ID = "txtLimitAmount", Class = "form-control", @required = "required" })
-                            </div>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Credit Days</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.CREDITDAYS_ARM, null, new { ID = "txtCreditDays", Class = "form-control", @required = "required" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Opening Balance</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBox("OpeningBalance", null, new { ID = "txtOpenBalance", Class = "form-control", @required = "required" })
-                            </div>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="control-label col-md-4 small ">Notes</label>
-                            <div class="col-md-8 paddingLeftRight0">
-                                @Html.TextBoxFor(d => d.Notes_ARM, null, new { ID = "txtNotes", Class = "form-control" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" disabled="disabled">
-                        Save
-                    </button>
-                    <button type="button" id="btnCancel" class="btn btn-warning">
-                        Cancel
-                    </button>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">
-                        Close
-                    </button>
-                </div>
                 }
             </div>
         </div>
@@ -219,7 +219,7 @@
 <!-- end:main -->
 @section scripts
 {
-    <script src="@Url.Content("~/Scripts/Custom/Setups/CustomerMaster.js?1500")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/Setups/CustomerMaster.js?2500")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
 
@@ -227,13 +227,16 @@
             if (success) {
                 toastr.success("Customer has been added Successfully.");
                 $('#formCustomerMaster')[0].reset();
+                $('#CustomerMasterModel').modal('toggle');
             } else {
                 toastr.error("Sorry! Something went wrong, please try again.");
             }
+            $("#divSaving").hide();
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
+            $("#divSaving").hide();
         }
 
     </script>

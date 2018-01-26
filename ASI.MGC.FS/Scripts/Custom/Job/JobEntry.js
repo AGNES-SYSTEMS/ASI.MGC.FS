@@ -69,7 +69,10 @@ var DeleteSalesById = function (salesId) {
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liSalesEntry").addClass("active");
-    $("#txtSaleDate").datepicker();
+    $("#txtSaleDate").datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
     $('#ddlSaleType').on("change", function () {
         if ($('#ddlSaleType').val() === "Product") {
             $("#divSowCode").hide();
@@ -973,5 +976,6 @@ $(document).ready(function () {
         debugger;
         // Prevent form submission
         e.preventDefault();
+        $("#divSaving").show();
     });
 });

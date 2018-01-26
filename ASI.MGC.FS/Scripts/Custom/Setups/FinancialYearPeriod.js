@@ -1,10 +1,23 @@
 ﻿$(document).ready(function () {
-    $("#txtNewFYFrom").datepicker();
-    $("#txtNewFYTo").datepicker();
+    $("#txtNewFYFrom").datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
+    $("#txtNewFYTo").datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
+    $("#txtStartDate").datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
+    $("#txtEndDate").datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
     $("#txtNewFYTo").change(function () {
         $('#formFinancialYear').formValidation('revalidateField', 'PERRIEDRTO_FM');
     });
-
     $("#txtNewFYFrom").change(function () {
         $('#formFinancialYear').formValidation('revalidateField', 'PERRIEDFROM_FM');
     });
@@ -57,27 +70,22 @@
         var outerwidth = $('#grid').width();
         $('#tblFinancialYearDetails').setGridWidth(outerwidth);
     });
-    var searchGrid = function (searchValue) {
-        debugger;
-        var postData = $("#tblSupplierDetails").jqGrid("getGridParam", "postData");
-        postData["searchValue"] = searchValue;
-
-        $("#tblSupplierDetails").setGridParam({ postData: postData });
-        $("#tblSupplierDetails").trigger("reloadGrid", [{ page: 1 }]);
+    var searchGrid = function (searchById, searchByName) {
+        postData = $("#tblEmpDetails").jqGrid("getGridParam", "postData");
+        postData["searchById"] = searchById;
+        postData["searchByName"] = searchByName;
+        $("#tblEmpDetails").setGridParam({ postData: postData });
+        $("#tblEmpDetails").trigger("reloadGrid", [{ page: 1 }]);
     };
-
-    $("#txtSupplierSearch").off().on("keyup", function () {
-
-        var shouldSearch = $("#txtSupplierSearch").val().length >= 3 || $("#txtSupplierSearch").val().length === 0;
-        if (shouldSearch) {
-            searchGrid($("#txtSupplierSearch").val());
-        }
+    $("#txtStartDate").off().on("change", function () {
+        searchGrid($("#txtStartDate").val(), $("#txtEndDate").val());
     });
-
+    $("#txtEndDate").off().on("change", function () {
+        searchGrid($("#txtStartDate").val(), $("#txtEndDate").val());
+    });
     $("#FinancialYearModel").on('hide.bs.modal', function () {
         $(this).find('form')[0].reset();
     });
-
     $('#formFinancialYear').on('init.field.fv', function (e, data) {
         var $icon = data.element.data('fv.icon'),
             options = data.fv.getOptions(),
@@ -128,5 +136,6 @@
         debugger;
         // Prevent form submission
         e.preventDefault();
+        $("#divSaving").show();
     });
 });

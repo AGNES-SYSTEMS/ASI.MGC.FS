@@ -8,6 +8,7 @@
 @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
 <link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
 <link href="~/Content/formValidation.min.css" rel="stylesheet" />
+<link href="~/Content/Custom/Jquery-ui-modified.min.css" rel="stylesheet" />
 <!-- start:main -->
 <div class="container">
     <div id="main">
@@ -505,19 +506,21 @@
                 isReportOpened = true;
                 openCashPayment(data.cpNo);
                 $("#btnSubmit").hide();
+                $("#divSaving").hide();
                 var acCode = $.trim($('#hdnAcCode').val());
                 if (acCode !== "" && acCode !== undefined) {
                     $("#btnMatching").removeClass("hidden");
                 }
             } else {
                 toastr.error("Sorry! Something went wrong, please try again.");
+                $("#divSaving").hide();
             }
 
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
-            //$("#btnSubmit").hide();
+            $("#divSaving").hide();
         }
 
         function openCashPayment(cpNo) {

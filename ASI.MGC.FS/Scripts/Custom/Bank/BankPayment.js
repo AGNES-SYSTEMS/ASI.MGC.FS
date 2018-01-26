@@ -67,10 +67,10 @@ $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liBankPayment").addClass("active");
     arrAllocDetails = [];
-    $('#txtDocDate').datepicker();
-    $('#txtGLDate').datepicker();
-    $('#txtChequeDate').datepicker();
-    $('#txtClearanceDate').datepicker();
+    $('#txtDocDate').datepicker({changeMonth: true,changeYear: true});
+    $('#txtGLDate').datepicker({changeMonth: true,changeYear: true});
+    $('#txtChequeDate').datepicker({changeMonth: true,changeYear: true});
+    $('#txtClearanceDate').datepicker({changeMonth: true,changeYear: true});
     jQuery("#tblAllocDetails").jqGrid({
         datatype: "local",
         data: arrAllocDetails,
@@ -823,5 +823,6 @@ $(document).ready(function () {
         // Prevent form submission
         e.preventDefault();
         $("#btnSubmit").hide();
+        $("#divSaving").show();
     });
 });

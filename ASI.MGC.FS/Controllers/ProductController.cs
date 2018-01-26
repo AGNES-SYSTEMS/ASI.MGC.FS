@@ -26,7 +26,7 @@ namespace ASI.MGC.FS.Controllers
             return View();
         }
 
-        public JsonResult GetProdsList(string sidx, string sord, int page, int rows, string status, string searchValue)
+        public JsonResult GetProdsList(string sidx, string sord, int page, int rows, string status, string searchValue, string prdCode = null, string prdName = null)
         {
             var lstProducts = (from prodList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
                                select prodList).Select(a => new
@@ -43,37 +43,63 @@ namespace ASI.MGC.FS.Controllers
                                });
             if (!string.IsNullOrEmpty(status))
             {
-                lstProducts = (from prodList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
-                               where prodList.STATUS_PM.Equals(status)
-                               select prodList).Select(a => new
-                               {
-                                   a.PROD_CODE_PM,
-                                   a.DESCRIPTION_PM,
-                                   a.CUR_QTY_PM,
-                                   a.RATE_PM,
-                                   a.SELLINGPRICE_RM,
-                                   a.PURCHSEUNIT_PM,
-                                   a.SALESUNIT_PM,
-                                   a.UNIT_PR,
-                                   a.STATUS_PM
-                               });
+                lstProducts = lstProducts.Where(o => o.STATUS_PM.Equals(status)).Select(a => new
+                {
+                    a.PROD_CODE_PM,
+                    a.DESCRIPTION_PM,
+                    a.CUR_QTY_PM,
+                    a.RATE_PM,
+                    a.SELLINGPRICE_RM,
+                    a.PURCHSEUNIT_PM,
+                    a.SALESUNIT_PM,
+                    a.UNIT_PR,
+                    a.STATUS_PM
+                });
             }
             if (!string.IsNullOrEmpty(searchValue))
             {
-                lstProducts = (from prodList in _unitOfWork.Repository<PRODUCTMASTER>().Query().Get()
-                               where prodList.STATUS_PM.Equals(status) && prodList.DESCRIPTION_PM.Contains(searchValue)
-                               select prodList).Select(a => new
-                               {
-                                   a.PROD_CODE_PM,
-                                   a.DESCRIPTION_PM,
-                                   a.CUR_QTY_PM,
-                                   a.RATE_PM,
-                                   a.SELLINGPRICE_RM,
-                                   a.PURCHSEUNIT_PM,
-                                   a.SALESUNIT_PM,
-                                   a.UNIT_PR,
-                                   a.STATUS_PM
-                               });
+                lstProducts = lstProducts.Where(o => o.DESCRIPTION_PM.Contains(searchValue)).Select(a => new
+                {
+                    a.PROD_CODE_PM,
+                    a.DESCRIPTION_PM,
+                    a.CUR_QTY_PM,
+                    a.RATE_PM,
+                    a.SELLINGPRICE_RM,
+                    a.PURCHSEUNIT_PM,
+                    a.SALESUNIT_PM,
+                    a.UNIT_PR,
+                    a.STATUS_PM
+                });
+            }
+            if (!string.IsNullOrEmpty(prdCode))
+            {
+                lstProducts = lstProducts.Where(o => o.PROD_CODE_PM.Contains(prdCode)).Select(a => new
+                {
+                    a.PROD_CODE_PM,
+                    a.DESCRIPTION_PM,
+                    a.CUR_QTY_PM,
+                    a.RATE_PM,
+                    a.SELLINGPRICE_RM,
+                    a.PURCHSEUNIT_PM,
+                    a.SALESUNIT_PM,
+                    a.UNIT_PR,
+                    a.STATUS_PM
+                });
+            }
+            if (!string.IsNullOrEmpty(prdName))
+            {
+                lstProducts = lstProducts.Where(o => o.DESCRIPTION_PM.Contains(prdName)).Select(a => new
+                {
+                    a.PROD_CODE_PM,
+                    a.DESCRIPTION_PM,
+                    a.CUR_QTY_PM,
+                    a.RATE_PM,
+                    a.SELLINGPRICE_RM,
+                    a.PURCHSEUNIT_PM,
+                    a.SALESUNIT_PM,
+                    a.UNIT_PR,
+                    a.STATUS_PM
+                });
             }
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;

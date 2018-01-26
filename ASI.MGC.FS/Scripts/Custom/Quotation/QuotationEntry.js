@@ -54,7 +54,10 @@ $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liQuotation").addClass("active");
     quotProducts = [];
-    $('#txtQuotDate').datepicker();
+    $('#txtQuotDate').datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
     jQuery("#tblQuotDetails").jqGrid({
         datatype: "local",
         data: quotProducts,
@@ -594,6 +597,7 @@ $(document).ready(function () {
         // Prevent form submission
         e.preventDefault();
         $("#btnSubmit").hide();
+        $("#divSaving").show();
     });
     $("#formQuotationEntry").formValidation();
 });

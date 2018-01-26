@@ -22,11 +22,30 @@ namespace ASI.MGC.FS.Controllers
         // GET: Setups
 
         #region Financial Year
-        public JsonResult GetAllFinancialYears(string sidx, string sord, int page, int rows)
+        public JsonResult GetAllFinancialYears(string sidx, string sord, int page, int rows, string startDate = null, string endDate = null)
         {
             var allFinancialYears = (from financialYears in _unitOfWork.Repository<FINYEARMASTER>().Query().Get()
                                      select financialYears).Select(a => new { a.PERRIEDFROM_FM, a.PERRIEDRTO_FM, a.CURRENTPERIOD_FM });
-
+            if (!string.IsNullOrEmpty(startDate))
+            {
+                allFinancialYears = allFinancialYears.Where(o => o.PERRIEDFROM_FM.Date.Equals(Convert.ToDateTime(startDate).Date)).Select(
+                    a => new
+                    {
+                        a.PERRIEDFROM_FM,
+                        a.PERRIEDRTO_FM,
+                        a.CURRENTPERIOD_FM
+                    });
+            }
+            if (!string.IsNullOrEmpty(endDate))
+            {
+                allFinancialYears = allFinancialYears.Where(o => Convert.ToDateTime(o.PERRIEDRTO_FM).Date.Equals(Convert.ToDateTime(endDate).Date)).Select(
+                    a => new
+                    {
+                        a.PERRIEDFROM_FM,
+                        a.PERRIEDRTO_FM,
+                        a.CURRENTPERIOD_FM
+                    });
+            }
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
             int totalRecords = allFinancialYears.Count();

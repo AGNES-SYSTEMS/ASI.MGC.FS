@@ -47,27 +47,37 @@
         var outerwidth = $('#grid').width();
         $('#tblJobDetails').setGridWidth(outerwidth);
     });
-    var searchGrid = function (searchValue) {
-        debugger;
-        var postData = $("#tblJobDetails").jqGrid("getGridParam", "postData");
-        postData["jobSearch"] = searchValue;
-
+    //var searchGrid = function (searchValue) {
+    //    debugger;
+    //    var postData = $("#tblJobDetails").jqGrid("getGridParam", "postData");
+    //    postData["jobSearch"] = searchValue;
+    //    $("#tblJobDetails").setGridParam({ postData: postData });
+    //    $("#tblJobDetails").trigger("reloadGrid", [{ page: 1 }]);
+    //};
+    var searchGrid = function (searchById, searchByName) {
+        postData = $("#tblJobDetails").jqGrid("getGridParam", "postData");
+        postData["jobId"] = searchById;
+        postData["jobName"] = searchByName;
         $("#tblJobDetails").setGridParam({ postData: postData });
         $("#tblJobDetails").trigger("reloadGrid", [{ page: 1 }]);
     };
+    $("#txtJobIdSearch").off().on("keyup", function () {
 
-    $("#txtJobPrd").off().on("keyup", function () {
-
-        var shouldSearch = $("#txtJobPrd").val().length >= 3 || $("#txtJobPrd").val().length === 0;
+        var shouldSearch = $("#txtJobIdSearch").val().length >= 1 || $("#txtJobIdSearch").val().length === 0;
         if (shouldSearch) {
-            searchGrid($("#txtJobPrd").val());
+            searchGrid($("#txtJobIdSearch").val(), $("#txtJobNameSearch").val());
         }
     });
+    $("#txtJobNameSearch").off().on("keyup", function () {
 
+        var shouldSearch = $("#txtJobNameSearch").val().length >= 3 || $("#txtJobNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtJobIdSearch").val(), $("#txtJobNameSearch").val());
+        }
+    });
     $("#JobDetailsModel").on('hide.bs.modal', function () {
         $(this).find('form')[0].reset();
     });
-
     $('#formJobCreation').on('init.field.fv', function (e, data) {
         var $icon = data.element.data('fv.icon'),
             options = data.fv.getOptions(),
@@ -125,5 +135,6 @@
         debugger;
         // Prevent form submission
         e.preventDefault();
+        $("#divSaving").show();
     });
 });

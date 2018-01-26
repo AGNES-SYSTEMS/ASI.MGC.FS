@@ -322,7 +322,10 @@ namespace ASI.MGC.FS.Controllers
         {
             return View();
         }
-
+        public ActionResult MonthWiseVATReport()
+        {
+            return View();
+        }
         private string GetGlMasterCode(string glCode)
         {
             var glDetails = (from genralMaster in _unitOfWork.Repository<GLMASTER>().Query().Get()

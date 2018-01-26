@@ -223,10 +223,12 @@
 
         function OnSuccess(response) {
             alert(response);
+            $("#divSaving").hide();
         }
 
         function OnFailure(response) {
             alert("Whoops! That didn't go so well did it?");
+            $("#divSaving").hide();
         }
 
     </script>

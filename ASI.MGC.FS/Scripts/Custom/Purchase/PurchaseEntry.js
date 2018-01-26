@@ -52,8 +52,14 @@ var stringifyData = function () {
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liPurchaseEntry").addClass("active");
-    $('#txtDocDate').datepicker();
-    $('#txtPurDate').datepicker();
+    $('#txtDocDate').datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
+    $('#txtPurDate').datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
     jQuery("#tblPrdDetails").jqGrid({
         datatype: "local",
         data: arrPrdDetails,
@@ -506,5 +512,6 @@ $(document).ready(function () {
          // Prevent form submission
          e.preventDefault();
          $("#btnSubmit").hide();
+         $("#divSaving").show();
      });
 });

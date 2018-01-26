@@ -32,7 +32,10 @@
     });
 }
 $(document).ready(function () {
-    $("#txtGlDate").datepicker();
+    $("#txtGlDate").datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
     var $custType = "AR";
     jQuery("#tblCustomerDetails").jqGrid({
         url: '/Customer/GetAllCustomers?custType=' + $custType,
@@ -246,5 +249,6 @@ $(document).ready(function () {
         debugger;
         // Prevent form submission
         e.preventDefault();
+        $("#divSaving").show();
     });
 });

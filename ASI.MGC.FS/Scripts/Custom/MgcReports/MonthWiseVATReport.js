@@ -19,7 +19,7 @@
         var isValid = validateArguments();
         if (isValid) {
             $('#frameWrap').show();
-            var url = "/Reports/DeliveredMrvDetails.aspx?startDate=" + startDate + "&endDate=" + endDate;
+            var url = "/Reports/MonthWiseVATStatement.aspx?startDate=" + startDate + "&endDate=" + endDate;
             $('#iframe').prop('src', url);
         } else {
             toastr.error("Start Date/ End Date cannot be empty.");
@@ -30,13 +30,7 @@
         $('#loader').hide();
     });
 
-    $("#txtStartDate").change(function () {
-        $("#formDeliveredMrvDetails").formValidation('revalidateField', 'startDate');
-    });
-    $("#txtEndDate").change(function () {
-        $("#formDeliveredMrvDetails").formValidation('revalidateField', 'endDate');
-    });
-    $('#formDeliveredMrvDetails').on('init.field.fv', function (e, data) {
+    $('#formMonthWiseVATReport').on('init.field.fv', function (e, data) {
         var $icon = data.element.data('fv.icon'),
             options = data.fv.getOptions(),
             validators = data.fv.getOptions(data.field).validators;
@@ -53,7 +47,7 @@
             validating: 'fa fa-refresh'
         },
         fields: {
-            startDate: {
+            StartDate: {
                 validators: {
                     notEmpty: {
                         message: 'The date is required'
@@ -64,7 +58,7 @@
                     }
                 }
             },
-            endDate: {
+            EndDate: {
                 validators: {
                     notEmpty: {
                         message: 'The date is required'

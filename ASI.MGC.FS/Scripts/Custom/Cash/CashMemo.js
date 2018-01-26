@@ -40,8 +40,8 @@ $(document).ready(function () {
     $("#txtNetAmount").val("");
     //$("#txtBankCode").val("");
     $("#txtBankNote").val("");
-    $('#txtDate').datepicker();
-    $('#txtGLDate').datepicker();
+    $('#txtDate').datepicker({changeMonth: true,changeYear: true});
+    $('#txtGLDate').datepicker({changeMonth: true,changeYear: true});
     jQuery("#tblMRVJobDetails").jqGrid({
         datatype: "local",
         height: 100,
@@ -381,4 +381,5 @@ $('#formCashMemo').on('init.field.fv', function (e, data) {
     // Prevent form submission
     e.preventDefault();
     $("#btnSave").hide();
+    $("#divSaving").show();
 });

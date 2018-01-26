@@ -413,5 +413,6 @@ $(document).ready(function () {
         // Prevent form submission
         e.preventDefault();
         $("#btnSave").hide();
+        $("#divSaving").show();
     });
 });

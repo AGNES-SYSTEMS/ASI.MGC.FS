@@ -7,6 +7,7 @@
 @*<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />*@
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
+<link href="~/Content/Custom/Jquery-ui-modified.min.css" rel="stylesheet" />
 <div class="container">
     <div id="main">
         <!-- start:breadcrumb -->
@@ -579,10 +580,12 @@
             } else {
                 toastr.error("Sorry! Something went wrong, please try again.");
             }
+            $("#divSaving").hide();
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
+            $("#divSaving").hide();
         }
 
     </script>

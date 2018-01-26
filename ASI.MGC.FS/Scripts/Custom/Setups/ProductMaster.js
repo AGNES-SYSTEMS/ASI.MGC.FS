@@ -55,27 +55,30 @@
         var outerwidth = $('#grid').width();
         $('#tblPrdDetails').setGridWidth(outerwidth);
     });
-    var searchGrid = function (searchValue) {
-        debugger;
+    var searchGrid = function (searchById, searchByName) {
         var postData = $("#tblPrdDetails").jqGrid("getGridParam", "postData");
-        postData["searchValue"] = searchValue;
-
+        postData["prdCode"] = searchById;
+        postData["prdName"] = searchByName;
         $("#tblPrdDetails").setGridParam({ postData: postData });
         $("#tblPrdDetails").trigger("reloadGrid", [{ page: 1 }]);
     };
+    $("#txtPrdIdSearch").off().on("keyup", function () {
 
-    $("#txtPrdSearch").off().on("keyup", function () {
-
-        var shouldSearch = $("#txtPrdSearch").val().length >= 3 || $("#txtPrdSearch").val().length === 0;
+        var shouldSearch = $("#txtPrdIdSearch").val().length >= 1 || $("#txtPrdIdSearch").val().length === 0;
         if (shouldSearch) {
-            searchGrid($("#txtPrdSearch").val());
+            searchGrid($("#txtPrdIdSearch").val(), $("#txtPrdNameSearch").val());
         }
     });
+    $("#txtPrdNameSearch").off().on("keyup", function () {
 
+        var shouldSearch = $("#txtPrdNameSearch").val().length >= 3 || $("#txtPrdNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtPrdIdSearch").val(), $("#txtPrdNameSearch").val());
+        }
+    });
     $("#ProductMasterModel").on('hide.bs.modal', function () {
         $(this).find('form')[0].reset();
     });
-
     $('#formProductMaster').on('init.field.fv', function (e, data) {
         var $icon = data.element.data('fv.icon'),
             options = data.fv.getOptions(),
@@ -179,5 +182,6 @@
         debugger;
         // Prevent form submission
         e.preventDefault();
+        $("#divSaving").show();
     });
 });

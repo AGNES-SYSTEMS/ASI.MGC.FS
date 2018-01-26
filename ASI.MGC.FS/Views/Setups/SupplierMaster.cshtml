@@ -227,12 +227,17 @@
             if (success) {
                 toastr.success("Supplier has been added Successfully.");
                 $('#formSupplierMaster')[0].reset();
+                $('#SupplierMasterModel').modal('toggle');
             }
-            else { toastr.error("Sorry! Something went wrong, please try again."); }
+            else {
+                toastr.error("Sorry! Something went wrong, please try again.");
+            }
+            $("#divSaving").hide();
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
+            $("#divSaving").hide();
         }
 
     </script>

@@ -604,6 +604,7 @@
                             <li><a href="@Href("~/MgcReports/TrialBalance")">Trial Balance</a></li>
                             <li><a href="@Href("~/MgcReports/ProfitLossStatement")">P and L Statement</a></li>
                             <li><a href="@Href("~/MgcReports/BalanceSheet")">Balance Sheet</a></li>
+                            <li><a href="@Href("~/MgcReports/MonthWiseVATReport")">Month Wise VAT Statement</a></li>
                         </ul>
                         @*secondlevel*@
                     </ul>
@@ -662,6 +663,17 @@
             </div>
         </div>
         <!-- end:footer -->
+    </div>
+    <div id="divSaving" style="margin: 0px; padding: 0px; position: fixed; right: 0px;
+    top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001;
+    opacity: .8; filter: alpha(opacity=70);display:none;">
+        <div class="Loadingcontainer">
+            <div class="Loadingbanner">
+                SAVING, Please Wait
+                <div class="Loadingbanner-left"></div>
+                <div class="Loadingbanner-right"></div>
+            </div>
+        </div>
     </div>
     <!-- end:wrapper -->
     @Scripts.Render("~/bundles/jquery")

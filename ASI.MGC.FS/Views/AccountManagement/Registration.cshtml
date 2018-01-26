@@ -169,10 +169,15 @@
             if (success) {
                 toastr.success("New User has been created Successfully.");
             }
+            else {
+                toastr.success("New User has been created Successfully.");
+            }
+            $("#divSaving").hide();
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
+            $("#divSaving").hide();
         }
 
         //$(document).ready(function () {

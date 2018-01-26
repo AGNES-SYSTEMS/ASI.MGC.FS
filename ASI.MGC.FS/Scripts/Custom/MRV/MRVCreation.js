@@ -49,8 +49,14 @@ $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liMrv").addClass("active");
     arrMetarials = [];
-    $('#txtDeleDate').datepicker();
-    $('#txtMRVDate').datepicker();
+    $('#txtDeleDate').datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
+    $('#txtMRVDate').datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
     jQuery("#tblMetarials").jqGrid({
         datatype: "local",
         data: arrMetarials,
@@ -696,6 +702,7 @@ $(document).ready(function () {
         // Prevent form submission
         e.preventDefault();
         $("#btnSubmit").hide();
+        $("#divSaving").show();
     });
     $("#mrvProductModelform").formValidation();
 });

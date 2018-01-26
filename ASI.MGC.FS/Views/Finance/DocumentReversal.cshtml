@@ -3,6 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.currPage = "Document Reversal";
 }
+<link href="~/Content/Custom/Jquery-ui-modified.min.css" rel="stylesheet" />
 <!-- start:main -->
 <div class="container">
     <div id="main">
@@ -99,12 +100,12 @@
             } else {
                 toastr.error("Sorry! Something went wrong, please try again.");
             }
-
+            $("#divSaving").hide();
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
-            //$("#btnSave").hide();
+            $("#divSaving").hide();
         }
     </script>
 }

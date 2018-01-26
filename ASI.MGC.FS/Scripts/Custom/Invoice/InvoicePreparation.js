@@ -91,7 +91,7 @@ var evaluateFields = function () {
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liInvoicePrep").addClass("active");
-    $('#txtGLDate').datepicker();
+    $('#txtGLDate').datepicker({ changeMonth: true, changeYear: true });
     jQuery("#tblMRVJobDetails").jqGrid({
         datatype: "local",
         height: 100,
@@ -300,5 +300,6 @@ $(document).ready(function () {
         // Prevent form submission
         e.preventDefault();
         $("#btnSave").hide();
+        $("#divSaving").show();
     });
 });

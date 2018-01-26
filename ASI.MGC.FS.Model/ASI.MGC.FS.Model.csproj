@@ -427,6 +427,9 @@
     <Compile Include="sp_GetInvoicePrepMrvList1_Result.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_GetMonthlyVATDetails_Result.cs">
+      <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="sp_GetPartyAllocationDocumentsCredit_Result.cs">
       <DependentUpon>ASI.MGC.FS.Model.tt</DependentUpon>
     </Compile>

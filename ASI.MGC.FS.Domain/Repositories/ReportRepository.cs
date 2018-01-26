@@ -584,7 +584,19 @@ namespace ASI.MGC.FS.Domain.Repositories
             }
             return lst;
         }
-
+        public IList<SP_GetMonthlyVATDetails_Result> SP_GetMonthlyVATDetails(DateTime startDate, DateTime endDate)
+        {
+            List<SP_GetMonthlyVATDetails_Result> lst = null;
+            try
+            {
+                lst = _context.SP_GetMonthlyVATDetails(startDate, endDate).ToList();
+            }
+            catch (Exception)
+            {
+                //exception handling pending
+            }
+            return lst;
+        }
         public void SpGetBankStatementData(string bankCode, DateTime startDate, DateTime endDate)
         {
             try

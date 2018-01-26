@@ -7,8 +7,8 @@
     }
 }
 $(document).ready(function () {
-    $("#txtStartDate").datepicker();
-    $("#txtEndDate").datepicker();
+    $("#txtStartDate").datepicker({changeMonth: true,changeYear: true});
+    $("#txtEndDate").datepicker({changeMonth: true,changeYear: true});
     var startDate = "";
     var endDate = "";
     var empCode = "";

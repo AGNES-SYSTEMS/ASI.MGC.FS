@@ -48,27 +48,30 @@
         var outerwidth = $('#grid').width();
         $('#tblItemDetails').setGridWidth(outerwidth);
     });
-    var searchGrid = function (searchValue) {
-        debugger;
+    var searchGrid = function (searchById, searchByName) {
         var postData = $("#tblItemDetails").jqGrid("getGridParam", "postData");
-        postData["searchValue"] = searchValue;
-
+        postData["prdCode"] = searchById;
+        postData["prdName"] = searchByName;
         $("#tblItemDetails").setGridParam({ postData: postData });
         $("#tblItemDetails").trigger("reloadGrid", [{ page: 1 }]);
     };
+    $("#txtPrdIdSearch").off().on("keyup", function () {
 
-    $("#txtItemSearch").off().on("keyup", function () {
-
-        var shouldSearch = $("#txtItemSearch").val().length >= 3 || $("#txtItemSearch").val().length === 0;
+        var shouldSearch = $("#txtPrdIdSearch").val().length >= 1 || $("#txtPrdIdSearch").val().length === 0;
         if (shouldSearch) {
-            searchGrid($("#txtItemSearch").val());
+            searchGrid($("#txtPrdIdSearch").val(), $("#txtPrdNameSearch").val());
         }
     });
+    $("#txtPrdNameSearch").off().on("keyup", function () {
 
+        var shouldSearch = $("#txtPrdNameSearch").val().length >= 3 || $("#txtPrdNameSearch").val().length === 0;
+        if (shouldSearch) {
+            searchGrid($("#txtPrdIdSearch").val(), $("#txtPrdNameSearch").val());
+        }
+    });
     $("#ItemMasterModel").on('hide.bs.modal', function () {
         $(this).find('form')[0].reset();
     });
-
     $('#formItemMaster').on('init.field.fv', function (e, data) {
         var $icon = data.element.data('fv.icon'),
             options = data.fv.getOptions(),
@@ -119,5 +122,6 @@
         debugger;
         // Prevent form submission
         e.preventDefault();
+        $("#divSaving").show();
     });
 });

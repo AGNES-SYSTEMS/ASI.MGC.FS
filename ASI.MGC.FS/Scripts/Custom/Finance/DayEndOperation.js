@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $("#txtDayTo").datepicker();
+    $("#txtDayTo").datepicker({changeMonth: true,changeYear: true});
     $("#btnNew").on("click", function () {
         location.reload(true);
     });
@@ -140,6 +140,7 @@
         // Prevent form submission
         e.preventDefault();
         $("#btnSave").hide();
+        $("#divSaving").show();
     });
     $("#formArUnMatching").formValidation('revalidateField', 'DOCCNUMBER_ARM');
 });

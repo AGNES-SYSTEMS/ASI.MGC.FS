@@ -32,7 +32,10 @@
     });
 }
 $(document).ready(function () {
-    $("#txtGlDate").datepicker();
+    $("#txtGlDate").datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
     var $custType = "AP";
     jQuery("#tblSupplierDetails").jqGrid({
         url: '/Customer/GetAllCustomers?custType=' + $custType,
@@ -244,6 +247,7 @@ $(document).ready(function () {
         debugger;
         // Prevent form submission
         e.preventDefault();
+        $("#divSaving").show();
     });
 
 });

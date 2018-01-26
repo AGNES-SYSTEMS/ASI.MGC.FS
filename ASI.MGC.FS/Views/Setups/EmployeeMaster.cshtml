@@ -28,9 +28,15 @@
                                 <br /> <br />
                                 <section>
                                     <div class="row">
-                                        <div class="col-md-12 form-group">
-                                            <div class="col-md-12 input-group paddingLeftRight0">
-                                                @Html.TextBox("searchEmployee", null, new { ID = "txtEmpSearch", Class = "form-control" })
+                                        <div class="col-md-6 form-group ">
+                                            <div class="col-md-11 input-group">
+                                                @Html.TextBox("empIdSearch", null, new { ID = "txtEmpIdSearch", Class = "form-control", @placeholder = "Search Emp Code here..." })
+                                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 form-group ">
+                                            <div class="col-md-11 input-group">
+                                                @Html.TextBox("empNameSearch", null, new { ID = "txtEmpNameSearch", Class = "form-control", @placeholder = "Search Emp Name here..." })
                                                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
                                             </div>
                                         </div>
@@ -161,13 +167,16 @@
             if (success) {
                 toastr.success("Employee has been added Successfully.");
                 $('#formEmployeeMaster')[0].reset();
+                $('#EmployeeMasterModel').modal('toggle');
             } else {
                 toastr.error("Sorry! Something went wrong, please try again.");
             }
+            $("#divSaving").hide();
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
+            $("#divSaving").hide();
         }
 
     </script>

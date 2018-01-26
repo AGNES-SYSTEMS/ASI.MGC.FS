@@ -28,9 +28,15 @@
                                 <br /> <br />
                                 <section>
                                     <div class="row">
-                                        <div class="col-md-12 form-group">
-                                            <div class="col-md-12 input-group paddingLeftRight0">
-                                                @Html.TextBox("searchItem", null, new { ID = "txtItemSearch", Class = "form-control" })
+                                        <div class="col-md-6 form-group ">
+                                            <div class="col-md-11 input-group">
+                                                @Html.TextBox("prdIdSearch", null, new { ID = "txtPrdIdSearch", Class = "form-control", @placeholder = "Search Item ID here..." })
+                                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 form-group ">
+                                            <div class="col-md-11 input-group">
+                                                @Html.TextBox("prdNameSearch", null, new { ID = "txtPrdNameSearch", Class = "form-control", @placeholder = "Search Item Name here..." })
                                                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
                                             </div>
                                         </div>
@@ -105,13 +111,16 @@
             if (success) {
                 toastr.success("Item has been added Successfully.");
                 $('#formItemMaster')[0].reset();
+                $('#ItemMasterModel').modal('toggle');
             } else {
                 toastr.error("Sorry! Something went wrong, please try again.");
             }
+            $("#divSaving").hide();
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
+            $("#divSaving").hide();
         }
 
     </script>

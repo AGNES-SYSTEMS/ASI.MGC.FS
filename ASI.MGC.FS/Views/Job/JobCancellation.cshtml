@@ -7,6 +7,7 @@
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/bootstrapValidator.min.css" rel="stylesheet" />
 <link href="~/Content/formValidation.min.css" rel="stylesheet" />
+<link href="~/Content/Custom/Jquery-ui-modified.min.css" rel="stylesheet" />
 <div class="container">
     <div id="main">
         <!-- start:breadcrumb -->
@@ -224,12 +225,12 @@
             } else {
                 toastr.info("Job Already Posted..You Can't Cancel this Job!!");
             }
-            
+            $("#divSaving").hide();
         }
 
         function OnFailure() {
             toastr.error("Sorry! Something went wrong, please try again.");
-            //$("#btnSave").hide();
+            $("#divSaving").hide();
         }
     </script>
 }
