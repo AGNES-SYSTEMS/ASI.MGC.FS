@@ -17,8 +17,8 @@ namespace ASI.MGC.FS.Model
         public string DOCNUMBER_ART { get; set; }
         public string ARAPCODE_ART { get; set; }
         public string DESCRIPTION_ARM { get; set; }
-        public Nullable<int> DEBITAMOUNT_ART { get; set; }
-        public Nullable<int> CREDITAMOUNT_ART { get; set; }
+        public Nullable<decimal> DEBITAMOUNT_ART { get; set; }
+        public Nullable<decimal> CREDITAMOUNT_ART { get; set; }
         public string USER_ART { get; set; }
         public string STATUS_ART { get; set; }
     }

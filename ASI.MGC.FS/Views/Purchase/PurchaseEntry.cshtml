@@ -24,6 +24,7 @@
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "Required Field", new { @class = "text-danger" })
+                        <input id="hdnIncludeVAT" name="hdnIncludeVAT" type="hidden" value="true" />
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label id="lblAPCode" class="control-label col-md-4 small ">AP Code</label>
@@ -129,6 +130,14 @@
                                 </div>
                             </div>
                             <input id="prdDetails" name="prdDetails" type="hidden" />
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label id="lblAllocation" class="control-label col-md-4 small ">Include VAT</label>
+                                <div class="col-md-8 paddingLeftRight0">
+                                    @Html.CheckBox("includeVAT", new { ID = "chkIncludeVAT", Class = "form-control", @Checked = "checked", @Value = true })
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-10 form-group">
@@ -368,7 +377,7 @@
     <script src="@Url.Content("~/Scripts/i18n/grid.locale-en.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")"></script>
     @*<script src="@Url.Content("~/Scripts/bootstrapValidator.min.js")"></script>*@
-    <script src="@Url.Content("~/Scripts/Custom/Purchase/PurchaseEntry.js?2500")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/Purchase/PurchaseEntry.js?3000")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
         var isReportOpened = false;

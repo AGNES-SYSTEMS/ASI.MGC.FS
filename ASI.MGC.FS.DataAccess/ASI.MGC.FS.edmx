@@ -2413,12 +2413,12 @@
         </ComplexType>
         <ComplexType Name="rpt_ReversedInvoice_Result">
           <Property Type="DateTime" Name="GLDATE_ART" Nullable="true" />
-          <Property Type="String" Name="DOCNUMBER_ART" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="DOCNUMBER_ART" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="ARAPCODE_ART" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="DESCRIPTION_ARM" Nullable="true" MaxLength="40" />
-          <Property Type="Int32" Name="DEBITAMOUNT_ART" Nullable="true" />
-          <Property Type="Int32" Name="CREDITAMOUNT_ART" Nullable="true" />
-          <Property Type="String" Name="USER_ART" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="DESCRIPTION_ARM" Nullable="true" MaxLength="255" />
+          <Property Type="Decimal" Name="DEBITAMOUNT_ART" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="CREDITAMOUNT_ART" Nullable="true" Precision="19" />
+          <Property Type="String" Name="USER_ART" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="STATUS_ART" Nullable="true" MaxLength="2" />
         </ComplexType>
         <ComplexType Name="rpt_SalesInvoice_Result">

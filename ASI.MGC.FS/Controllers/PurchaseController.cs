@@ -192,7 +192,7 @@ namespace ASI.MGC.FS.Controllers
                     _unitOfWork.Repository<GLTRANSACTION1>().Insert(objPurchase);
                     _unitOfWork.Save();
 
-                    if (!string.IsNullOrEmpty(frm["TotalVAT"]) && Convert.ToDecimal(frm["TotalVAT"]) > 0)
+                    if (Convert.ToBoolean(frm["hdnIncludeVAT"]) && !string.IsNullOrEmpty(frm["TotalVAT"]) && Convert.ToDecimal(frm["TotalVAT"]) > 0)
                     {
                         var objVATChrg = _unitOfWork.Repository<GLTRANSACTION1>().Create();
                         objVATChrg.DOCNUMBER_GLT = Convert.ToString(frm["DocNo"]);
@@ -298,7 +298,7 @@ namespace ASI.MGC.FS.Controllers
                         _unitOfWork.Repository<GLTRANSACTION1>().Insert(objShippingChrg);
                         _unitOfWork.Save();
                     }
-                    if (!string.IsNullOrEmpty(frm["TotalVAT"]) && Convert.ToDecimal(frm["TotalVAT"]) > 0)
+                    if (Convert.ToBoolean(frm["hdnIncludeVAT"]) && !string.IsNullOrEmpty(frm["TotalVAT"]) && Convert.ToDecimal(frm["TotalVAT"]) > 0)
                     {
                         var objVATChrg = _unitOfWork.Repository<GLTRANSACTION1>().Create();
                         objVATChrg.DOCNUMBER_GLT = Convert.ToString(frm["DocNo"]);

@@ -36,36 +36,53 @@ namespace ASI.MGC.FS.Controllers
         [HttpPost]
         public JsonResult SaveGlCreation(FormCollection frm, GLMASTER objGlMaster)
         {
-            bool success;
+            bool success = false;
             string currentUser = CommonModelAccessUtility.GetCurrentUser(_unitOfWork);
             using (var transaction = _unitOfWork.BeginTransaction())
             {
                 try
                 {
-                    _unitOfWork.Repository<GLMASTER>().Insert(objGlMaster);
-                    _unitOfWork.Save();
-
-                    var objGlTransaction = _unitOfWork.Repository<GLTRANSACTION1>().Create();
-                    objGlTransaction.DOCDATE_GLT = today.Date;
-                    objGlTransaction.GLDATE_GLT = Convert.ToDateTime(frm["GLDate"]);
-                    objGlTransaction.DOCNUMBER_GLT = objGlMaster.GLCODE_LM;
-                    objGlTransaction.GLACCODE_GLT = objGlMaster.GLCODE_LM;
-                    objGlTransaction.OTHERREF_GLT = objGlMaster.GLCODE_LM;
-                    objGlTransaction.VARUSER = currentUser;
-                    if (Convert.ToInt32(frm["BalanceType"]) == 1)
+                    var glCode = (from glDetails in _unitOfWork.Repository<GLMASTER>().Query().Get()
+                                  where glDetails.GLCODE_LM.Equals(objGlMaster.GLCODE_LM)
+                                  select glDetails).SingleOrDefault();
+                    if (glCode != null)
                     {
-                        objGlTransaction.CREDITAMOUNT_GLT = Convert.ToDecimal(frm["OpenBalance"]);
-                        objGlTransaction.DEBITAMOUNT_GLT = 0;
+                        glCode.GLDESCRIPTION_LM = objGlMaster.GLDESCRIPTION_LM;
+                        glCode.GTYPE_LM = objGlMaster.GTYPE_LM;
+                        glCode.LOCATIONCODE_LM = objGlMaster.LOCATIONCODE_LM;
+                        glCode.MAINCODE_LM = objGlMaster.MAINCODE_LM;
+                        glCode.NOTES_LM = objGlMaster.NOTES_LM;
+                        glCode.SUBCODE_LM = objGlMaster.SUBCODE_LM;
+                        _unitOfWork.Repository<GLMASTER>().Update(glCode);
+                        _unitOfWork.Save();
                     }
                     else
                     {
-                        objGlTransaction.CREDITAMOUNT_GLT = 0;
-                        objGlTransaction.DEBITAMOUNT_GLT = Convert.ToDecimal(frm["OpenBalance"]);
+                        _unitOfWork.Repository<GLMASTER>().Insert(objGlMaster);
+                        _unitOfWork.Save();
+
+                        var objGlTransaction = _unitOfWork.Repository<GLTRANSACTION1>().Create();
+                        objGlTransaction.DOCDATE_GLT = today.Date;
+                        objGlTransaction.GLDATE_GLT = Convert.ToDateTime(frm["GLDate"]);
+                        objGlTransaction.DOCNUMBER_GLT = objGlMaster.GLCODE_LM;
+                        objGlTransaction.GLACCODE_GLT = objGlMaster.GLCODE_LM;
+                        objGlTransaction.OTHERREF_GLT = objGlMaster.GLCODE_LM;
+                        objGlTransaction.VARUSER = currentUser;
+                        if (Convert.ToInt32(frm["BalanceType"]) == 1)
+                        {
+                            objGlTransaction.CREDITAMOUNT_GLT = Convert.ToDecimal(frm["OpenBalance"]);
+                            objGlTransaction.DEBITAMOUNT_GLT = 0;
+                        }
+                        else
+                        {
+                            objGlTransaction.CREDITAMOUNT_GLT = 0;
+                            objGlTransaction.DEBITAMOUNT_GLT = Convert.ToDecimal(frm["OpenBalance"]);
+                        }
+                        objGlTransaction.NARRATION_GLT = "Opening Balance";
+                        objGlTransaction.GLSTATUS_GLT = "OP";
+                        _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGlTransaction);
+                        _unitOfWork.Save();
                     }
-                    objGlTransaction.NARRATION_GLT = "Opening Balance";
-                    objGlTransaction.GLSTATUS_GLT = "OP";
-                    _unitOfWork.Repository<GLTRANSACTION1>().Insert(objGlTransaction);
-                    _unitOfWork.Save();
                     success = true;
                     transaction.Commit();
                 }

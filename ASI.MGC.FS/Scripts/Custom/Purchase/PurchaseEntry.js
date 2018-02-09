@@ -1,5 +1,7 @@
 ﻿var arrPrdDetails = [];
 var selectedRowId = "";
+var totalVAT = 0.0;
+var netAmount = 0.0;
 var customerSelect = function (custId) {
     if (custId) {
         var ret = jQuery("#tblCustomerSearch").jqGrid('getRowData', custId);
@@ -27,20 +29,27 @@ var delProduct = function (rowId) {
 };
 var calculateNetAmount = function () {
     var totalGridPrdAmount = 0.0;
-    var totalVAT = 0.0;
-    var netAmount = 0.0;
+    totalVAT = 0.0;
+    netAmount = 0.0;
     for (var i = 0; i < arrPrdDetails.length; i++) {
         totalGridPrdAmount += parseFloat(arrPrdDetails[i]["Amount"]);
     }
     var taxedAmount = parseFloat(totalGridPrdAmount) + parseFloat($("#txtShipChrg").val()) - parseFloat($("#txtDiscount").val());
     totalVAT = (((parseFloat(totalGridPrdAmount) - parseFloat($("#txtDiscount").val())) * 5.0) / 100);
-    netAmount = taxedAmount + totalVAT;
-    $("#txtNetAmount").val(netAmount);
-    $("#txtTotalAmount").val(totalGridPrdAmount);
+    if ($("#chkIncludeVAT:checked").is(":checked")) {
+        netAmount = taxedAmount + totalVAT;
+    } else {
+        netAmount = taxedAmount;
+    }
+    $("#txtNetAmount").val(netAmount.toFixed(2));
+    $("#txtTotalAmount").val(totalGridPrdAmount.toFixed(2));
     $("#formPurchaseEntry").formValidation('revalidateField', 'NetAmount');
     $("#formPurchaseEntry").formValidation('revalidateField', 'TotalAmount');
     if (arrPrdDetails.length > 0) {
-        $("#txtTotalVAT").val(totalVAT);
+        $("#txtTotalVAT").val(totalVAT.toFixed(2));
+        $("#formPurchaseEntry").formValidation('revalidateField', 'TotalVAT');
+    } else {
+        $("#txtTotalVAT").val("");
         $("#formPurchaseEntry").formValidation('revalidateField', 'TotalVAT');
     }
 }
@@ -69,7 +78,7 @@ $(document).ready(function () {
         gridview: true,
         shrinkToFit: true,
         viewrecords: true,
-        colNames: ['Product Code', 'Product Description', 'Qty', 'Unit', 'Rate', 'Amount','VAT @ 5%', '', ''],
+        colNames: ['Product Code', 'Product Description', 'Qty', 'Unit', 'Rate', 'Amount', 'VAT @ 5%', '', ''],
         colModel: [
             { name: 'PRODID_SL', index: 'PRODID_SL', width: 100, align: "center", sortable: false },
             { name: 'PrdDesc', index: 'PrdDesc', width: 300, align: "left", sortable: false },
@@ -125,6 +134,17 @@ $(document).ready(function () {
     });
     $("#btnNew").on("click", function () {
         location.reload(true);
+    });
+    $("#chkIncludeVAT").on("change", function (e) {
+        if ($("#chkIncludeVAT:checked").is(":checked")) {
+            netAmount = netAmount + totalVAT;
+            $("#hdnIncludeVAT").val("True");
+        } else {
+            netAmount = netAmount - totalVAT;
+            $("#hdnIncludeVAT").val("False");
+        }
+        $("#txtNetAmount").val(netAmount.toFixed(2));
+        $("#formPurchaseEntry").formValidation('revalidateField', 'NetAmount');
     });
     var searchGridCust = function (searchById, searchByName) {
         var custpostData = $("#tblCustomerSearch").jqGrid("getGridParam", "postData");

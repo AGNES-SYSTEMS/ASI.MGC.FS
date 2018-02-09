@@ -1,5 +1,7 @@
 ﻿var arrAllocDetails = [];
 var selectedRowId = "";
+var totalGridPrdVat = 0.0;
+var totalAmountWithVAT = 0.0;
 var receiverSelect = function (receiverId) {
     debugger;
     if (receiverId) {
@@ -62,8 +64,8 @@ var calculateNetAmount = function () {
     } else {
         totalAmountWithVAT = totalGridPrdAmount;
     }
-    $("#txtAllocationTotal").val(totalAmountWithVAT);
-    $("#txtTotalVAT").val(totalGridPrdVat);
+    $("#txtAllocationTotal").val(totalAmountWithVAT.toFixed(2));
+    $("#txtTotalVAT").val(totalGridPrdVat.toFixed(2));
     $("#formCashReceipt").formValidation('revalidateField', 'AllocationTotal');
 };
 var stringfyData = function () {
@@ -405,7 +407,9 @@ $(document).ready(function () {
             totalAmountWithVAT = totalAmountWithVAT - totalGridPrdVat;
             $("#hdnIncludeVAT").val("False");
         }
-        $("#txtAllocationTotal").val(totalAmountWithVAT);
+        $("#txtAllocationTotal").val(totalAmountWithVAT.toFixed(2));
+        $("#formCashReceipt").formValidation('revalidateField', 'DEBITAMOUT_BT');
+        $("#formCashReceipt").formValidation('revalidateField', 'AllocationTotal');
     });
     $("#btnDocSelect").on("click", function (e) {
         var id = jQuery("#tblDocSearch").jqGrid('getGridParam', 'selrow');
@@ -740,7 +744,7 @@ $(document).ready(function () {
                     }
                 }
             },
-            CREDITAMOUT_BT: {
+            DEBITAMOUT_BT: {
                 validators: {
                     notEmpty: {
                         message: 'Credit Amount is required'
@@ -764,7 +768,7 @@ $(document).ready(function () {
                         message: 'Allocation Total is required'
                     },
                     identical: {
-                        field: 'CREDITAMOUT_BT',
+                        field: 'DEBITAMOUT_BT',
                         message: 'Allocation Total must equel to Amount'
                     }
                 }

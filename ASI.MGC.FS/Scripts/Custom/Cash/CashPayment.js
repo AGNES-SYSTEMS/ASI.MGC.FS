@@ -64,8 +64,8 @@ var calculateNetAmount = function () {
     } else {
         totalAmountWithVAT = totalGridPrdAmount;
     }
-    $("#txtAllocationTotal").val(totalAmountWithVAT);
-    $("#txtTotalVAT").val(totalGridPrdVat);
+    $("#txtAllocationTotal").val(totalAmountWithVAT.toFixed(2));
+    $("#txtTotalVAT").val(totalGridPrdVat.toFixed(2));
     $("#formCashPayments").formValidation('revalidateField', 'AllocationTotal');
 }
 var stringfyData = function () {
@@ -407,7 +407,9 @@ $(document).ready(function () {
             totalAmountWithVAT = totalAmountWithVAT - totalGridPrdVat;
             $("#hdnIncludeVAT").val("False");
         }
-        $("#txtAllocationTotal").val(totalAmountWithVAT);
+        $("#txtAllocationTotal").val(totalAmountWithVAT.toFixed(2));
+        $("#formCashPayments").formValidation('revalidateField', 'DEBITAMOUT_BT');
+        $("#formCashPayments").formValidation('revalidateField', 'AllocationTotal');
     });
     $("#btnDocSelect").on("click", function (e) {
         var id = jQuery("#tblDocSearch").jqGrid('getGridParam', 'selrow');

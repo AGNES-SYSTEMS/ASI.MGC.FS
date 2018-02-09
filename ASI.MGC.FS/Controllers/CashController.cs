@@ -85,8 +85,8 @@ namespace ASI.MGC.FS.Controllers
                     {
                         var objVATChrg = _unitOfWork.Repository<GLTRANSACTION1>().Create();
                         objVATChrg.DOCNUMBER_GLT = cashMemoNumber;
-                        objVATChrg.DOCDATE_GLT = Convert.ToDateTime(frm["DocDate"]);
-                        objVATChrg.GLDATE_GLT = today;
+                        objVATChrg.DOCDATE_GLT = objBankTransaction.DOCDATE_BT;
+                        objVATChrg.GLDATE_GLT = today.Date;
                         objVATChrg.GLACCODE_GLT = "2510";
                         objVATChrg.CREDITAMOUNT_GLT = Convert.ToDecimal(frm["TotalVAT"]);
                         objVATChrg.DEBITAMOUNT_GLT = 0;
@@ -270,8 +270,8 @@ namespace ASI.MGC.FS.Controllers
                         objVATChrg.DOCDATE_GLT = objBankTransaction.DOCDATE_BT;
                         objVATChrg.GLDATE_GLT = objBankTransaction.GLDATE_BT;
                         objVATChrg.GLACCODE_GLT = "2510";
-                        objVATChrg.CREDITAMOUNT_GLT = 0;
-                        objVATChrg.DEBITAMOUNT_GLT = Convert.ToDecimal(form["TotalVAT"]);
+                        objVATChrg.CREDITAMOUNT_GLT = Convert.ToDecimal(form["TotalVAT"]);
+                        objVATChrg.DEBITAMOUNT_GLT = 0;
                         objVATChrg.OTHERREF_GLT = objBankTransaction.OTHERREF_BT;
                         objVATChrg.NARRATION_GLT = objBankTransaction.NARRATION_BT;
                         objVATChrg.GLSTATUS_GLT = "P";

@@ -1,5 +1,7 @@
 ﻿var arrPrdDetails = [];
 var selectedRowId = "";
+var totalVAT = 0.0;
+var netAmount = 0.0;
 var customerSelect = function (custId) {
     if (custId) {
         var ret = jQuery("#tblCustomerSearch").jqGrid('getRowData', custId);
@@ -27,8 +29,8 @@ var delProduct = function (rowId) {
 };
 var calculateNetAmount = function () {
     var totalGridPrdAmount = 0.0;
-    var totalVAT = 0.0;
-    var netAmount = 0.0;
+    totalVAT = 0.0;
+    netAmount = 0.0;
     for (var i = 0; i < arrPrdDetails.length; i++) {
         totalGridPrdAmount += parseFloat(arrPrdDetails[i]["Amount"]);
     }
@@ -39,12 +41,22 @@ var calculateNetAmount = function () {
     }
     var taxedAmount = parseFloat(totalGridPrdAmount) + parseFloat($("#txtShipChrg").val()) - parseFloat($("#txtDiscount").val());
     totalVAT = ((parseFloat(totalGridPrdAmount) - parseFloat($("#txtDiscount").val())) * 5.0) / 100;
-    netAmount = taxedAmount + totalVAT;
-    $("#txtTotalVAT").val(totalVAT);
-    $("#txtNetAmount").val(netAmount);
+    if ($("#chkIncludeVAT:checked").is(":checked")) {
+        netAmount = taxedAmount + totalVAT;
+    } else {
+        netAmount = taxedAmount;
+    }
+    $("#txtNetAmount").val(netAmount.toFixed(2));
     $("#txtTotalAmount").val(totalGridPrdAmount);
     $("#formPurchaseReturn").formValidation('revalidateField', 'NetAmount');
     $("#formPurchaseReturn").formValidation('revalidateField', 'TotalAmount');
+    if (arrPrdDetails.length > 0) {
+        $("#txtTotalVAT").val(totalVAT.toFixed(2));
+        $("#formPurchaseReturn").formValidation('revalidateField', 'TotalVAT');
+    } else {
+        $("#txtTotalVAT").val("");
+        $("#formPurchaseReturn").formValidation('revalidateField', 'TotalVAT');
+    }
 }
 var stringifyData = function () {
     var prdDetails = $('#tblPrdDetails').jqGrid('getGridParam', 'data');
@@ -126,6 +138,17 @@ $(document).ready(function () {
     });
     $("#btnNew").on("click", function () {
         location.reload(true);
+    });
+    $("#chkIncludeVAT").on("change", function (e) {
+        if ($("#chkIncludeVAT:checked").is(":checked")) {
+            netAmount = netAmount + totalVAT;
+            $("#hdnIncludeVAT").val("True");
+        } else {
+            netAmount = netAmount - totalVAT;
+            $("#hdnIncludeVAT").val("False");
+        }
+        $("#txtNetAmount").val(netAmount.toFixed(2));
+        $("#formPurchaseReturn").formValidation('revalidateField', 'NetAmount');
     });
     var searchGridCust = function (searchById, searchByName) {
         var custpostData = $("#tblCustomerSearch").jqGrid("getGridParam", "postData");
