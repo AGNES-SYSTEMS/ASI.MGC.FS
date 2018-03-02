@@ -691,8 +691,15 @@
             var toggleWidth = $(".nav-side-menu").width() === 0 ? "270px" : "0";
             $('.nav-side-menu').animate({ width: toggleWidth });
         });
-
-
+        function getQueryStringByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
     </script>
 </body>
 </html>

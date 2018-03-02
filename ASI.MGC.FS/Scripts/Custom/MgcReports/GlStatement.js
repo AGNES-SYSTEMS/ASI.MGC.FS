@@ -7,8 +7,8 @@
     }
 };
 $(document).ready(function () {
-    $("#txtStartDate").datepicker({changeMonth: true,changeYear: true});
-    $("#txtEndDate").datepicker({changeMonth: true,changeYear: true});
+    $("#txtStartDate").datepicker({ changeMonth: true, changeYear: true });
+    $("#txtEndDate").datepicker({ changeMonth: true, changeYear: true });
     var startDate = "";
     var endDate = "";
     var glCode = "";
@@ -102,7 +102,14 @@ $(document).ready(function () {
         var isValid = validateArguments();
         if (isValid) {
             $('#frameWrap').show();
-            var url = "/Reports/GLStatement.aspx?startDate=" + startDate + "&endDate=" + endDate + "&glCode=" + glCode;
+            var url = "";
+            var isExportMode = getQueryStringByName("isExportMode", document.location.href);
+            if (isExportMode !== null && isExportMode !== "") {
+                url = "/Reports/GLStatement.aspx?startDate=" + startDate + "&endDate=" + endDate + "&glCode=" + glCode + "&isExportMode=" + isExportMode;
+            } else {
+                url = "/Reports/GLStatement.aspx?startDate=" + startDate + "&endDate=" + endDate + "&glCode=" + glCode;
+            }
+
             $('#iframe').prop('src', url);
         } else {
             toastr.error("Start Date/ End Date cannot be empty.");

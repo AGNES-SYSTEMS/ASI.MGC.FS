@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
-    $("#txtStartDate").datepicker({changeMonth: true,changeYear: true});
-    $("#txtEndDate").datepicker({changeMonth: true,changeYear: true});
+    $("#txtStartDate").datepicker({ changeMonth: true, changeYear: true });
+    $("#txtEndDate").datepicker({ changeMonth: true, changeYear: true });
     var startDate = "";
     var endDate = "";
     var validateArguments = function () {
@@ -20,16 +20,22 @@
     $('#txtEndDate').on('change', function () {
         $('#formBalanceSheet').formValidation('revalidateField', 'endDate');
     });
-    //$("#btnApply").on("click", function () {
-    //    var isValid = validateArguments();
-    //    if (isValid) {
-    //        $('#frameWrap').show();
-    //        var url = "/Reports/BalanceSheet.aspx?startDate=" + startDate + "&endDate=" + endDate;
-    //        $('#iframe').prop('src', url);
-    //    } else {
-    //        toastr.error("Start Date/ End Date cannot be empty.");
-    //    }
-    //});
+    $("#btnApply").on("click", function () {
+        var isValid = validateArguments();
+        if (isValid) {
+            $('#frameWrap').show();
+            var url = "";
+            var isExportMode = getQueryStringByName("isExportMode", document.location.href);
+            if (isExportMode !== null && isExportMode !== "") {
+                url = "/Reports/BalanceSheet.aspx?startDate=" + startDate + "&endDate=" + endDate + "&isExportMode=" + isExportMode;
+            } else {
+                url = "/Reports/BalanceSheet.aspx?startDate=" + startDate + "&endDate=" + endDate;
+            }
+            $('#iframe').prop('src', url);
+        } else {
+            toastr.error("Start Date/ End Date cannot be empty.");
+        }
+    });
 
     $('#formBalanceSheet').on('init.field.fv', function (e, data) {
         var $icon = data.element.data('fv.icon'),

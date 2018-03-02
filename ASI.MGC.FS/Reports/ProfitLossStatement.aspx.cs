@@ -31,12 +31,15 @@ namespace ASI.MGC.FS.Reports
                 ReportViewer1.DataBind();
                 ReportViewer1.LocalReport.Refresh();
                 Response.Clear();
-                byte[] bytes = ReportViewer1.LocalReport.Render("PDF");
-                var fileNamewithType = "inline;filename=ProfitLoassStatement.pdf";
-                Response.AddHeader("Content-Disposition", fileNamewithType);
-                Response.ContentType = "application/pdf";
-                Response.BinaryWrite(bytes);
-                Response.End();
+                if (Request.QueryString["isExportMode"] != "1")
+                {
+                    byte[] bytes = ReportViewer1.LocalReport.Render("PDF");
+                    var fileNamewithType = "inline;filename=ProfitLoassStatement.pdf";
+                    Response.AddHeader("Content-Disposition", fileNamewithType);
+                    Response.ContentType = "application/pdf";
+                    Response.BinaryWrite(bytes);
+                    Response.End();
+                }
             }
         }
     }
