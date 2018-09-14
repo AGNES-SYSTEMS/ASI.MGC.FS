@@ -78,8 +78,8 @@ $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     $("#liCashPayments").addClass("active");
     arrAllocDetails = [];
-    $('#txtDocDate').datepicker({changeMonth: true,changeYear: true});
-    $('#txtGLDate').datepicker({changeMonth: true,changeYear: true});
+    $('#txtDocDate').datepicker({ changeMonth: true, changeYear: true });
+    $('#txtGLDate').datepicker({ changeMonth: true, changeYear: true });
     jQuery("#tblAllocDetails").jqGrid({
         datatype: "local",
         data: arrAllocDetails,
@@ -89,9 +89,10 @@ $(document).ready(function () {
         autoheight: true,
         autowidth: true,
         styleUI: "Bootstrap",
-        colNames: ['AL Code', 'Account Code', 'Account Description', 'Amount', 'Narration', 'VAT @ 5%', '', ''],
+        colNames: ['AL Code', '', 'Account Code', 'Account Description', 'Amount', 'Narration', 'VAT @ 5%', '', ''],
         colModel: [
             { name: 'AlCode', index: 'AlCode', width: 120, align: "center", sortable: false },
+            { name: 'AlDescription', index: 'AlDescription', width: 320, align: "center", sortable: false, hidden: true },
             { name: 'AccountCode', index: 'AccountCode', width: 150, align: "left", sortable: false },
             { name: 'Description', index: 'Description', width: 250, align: "center", sortable: false },
             { name: 'Amount', index: 'Amount', width: 150, align: "right", sortable: false },
@@ -507,8 +508,8 @@ $(document).ready(function () {
             var rowId = e.relatedTarget.id;
             var ret = $('#tblAllocDetails').jqGrid('getRowData', rowId);
             $("#txtAlCode").val(ret.AlCode);
-            $("#txtAlDesc").val(ret.AccountCode);
-            $("#txtAccountCode").val(ret.Description);
+            $("#txtAlDesc").val(ret.AlDescription);
+            $("#txtAccountCode").val(ret.AccountCode);
             $("#txtAccountDesc").val(ret.Description);
             $("#txtAmount").val(ret.Amount);
             $("#txtNarration").val(ret.Narration);
@@ -529,6 +530,7 @@ $(document).ready(function () {
             if (selectedRowId) {
                 arrAllocDetails[parseInt(selectedRowId) - 1] = {
                     AlCode: $("#txtAlCode").val(),
+                    AlDescription: $("#txtAlDesc").val(),
                     AccountCode: $("#txtAccountCode").val(),
                     Description: $("#txtAccountDesc").val(),
                     Amount: $("#txtAmount").val(),
@@ -542,6 +544,7 @@ $(document).ready(function () {
                 var arrIndex = arrAllocDetails.length;
                 arrAllocDetails[arrIndex] = {
                     AlCode: $("#txtAlCode").val(),
+                    AlDescription: $("#txtAlDesc").val(),
                     AccountCode: $("#txtAccountCode").val(),
                     Description: $("#txtAccountDesc").val(),
                     Amount: $("#txtAmount").val(),

@@ -37,6 +37,11 @@ var calculateNetAmount = function () {
     $("#formJvCreation").formValidation('revalidateField', 'TotalCreditAmount');
     $("#formJvCreation").formValidation('revalidateField', 'TotalDebitAmount');
     $("#formJvCreation").formValidation('revalidateField', 'Difference');
+    if (creditAmount === debitAmount && difference === 0.0) {
+        $("#btnJvSave").prop("disabled", false);
+    } else {
+        $("#btnJvSave").prop("disabled", true);
+    }
 }
 var stringifyData = function () {
     var allocDetails = $('#tblAllocDetails').jqGrid('getGridParam', 'data');
@@ -54,8 +59,8 @@ var delAllocDetails = function (rowId) {
 $(document).ready(function () {
     $("#quickLinks").children("li.active").removeClass("active");
     //$("#liBankReceipt").addClass("active");
-    $('#txtDocDate').datepicker({changeMonth: true,changeYear: true});
-    $('#txtGlDate').datepicker({changeMonth: true,changeYear: true});
+    $('#txtDocDate').datepicker({ changeMonth: true, changeYear: true });
+    $('#txtGlDate').datepicker({ changeMonth: true, changeYear: true });
     jQuery("#tblAllocDetails").jqGrid({
         datatype: "local",
         data: arrAllocDetails,
@@ -544,7 +549,7 @@ $(document).ready(function () {
                 }
             },
             TotalCreditAmount: {
-                validators: {
+                number: {
                     notEmpty: {
                         message: 'Document Details is required'
                     },
@@ -564,7 +569,7 @@ $(document).ready(function () {
                     notEmpty: {
                         message: 'Document Details is required'
                     },
-                    integer: {
+                    number: {
                         message: 'The value is not an integer',
                     },
                     greaterThan: {
