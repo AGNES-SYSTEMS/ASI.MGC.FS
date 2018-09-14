@@ -33,7 +33,7 @@
                             <div class="col-md-6 form-group">
                                 <label id="lblDocNo" class="control-label col-md-4 small ">Document Number:</label>
                                 <div class="col-md-8 paddingLeftRight0">
-                                    @Html.TextBox("DocNo", null, new { ID = "txtDocNo", Class = "form-control", @required = "required" })
+                                    @Html.TextBox("DocNo", null, new { ID = "txtDocNo", Class = "form-control", @required = "required", @value = ViewBag.DocNo })
                                 </div>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
     <script src="@Url.Content("~/Scripts/Custom/MRV/DuplicatePrinting.js?2500")"></script>
     <script src="@Url.Content("~/Scripts/common.js")"></script>
     <script type="text/javascript">
-
+        $("#ddlDocType").val(@ViewBag.selectedDocType);
         function OnSuccess(response) {
             if (response.isInvalid) {
                 toastr.error("Invalid Document Number");

@@ -7,6 +7,8 @@ namespace ASI.MGC.FS.Models
 {
     public class MRVSearchDetailsResult
     {
+        public string MRVNO_SD { get; set; }
+        public DateTime MRVDate { get; set; }
         public string JOBNO_SD { get; set; }
         public string PRCODE_SD { get; set; }
         public string JOBID_SD { get; set; }

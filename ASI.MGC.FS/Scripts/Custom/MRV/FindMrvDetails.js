@@ -2,14 +2,31 @@
     jQuery("#tblMrvSearchDetails").jqGrid({
         datatype: "local",
         height: 175,
-        width: 1050,
+        width: 1080,
         shrinkToFit: false,
         styleUI: "Bootstrap",
-        colNames: ['Job No', 'Product Code', 'SOW Code', 'QTY', 'Rate', 'Amount', 'Discount', 'Shipping Charges', 'Sales Date', 'User Id', 'Cash Total', 'Credit Total', 'CashRV No', 'INV No', 'Credit AcCode', 'Lpo No', 'DayEndDocNo', ''],
+        colNames: ['MRV No', 'MRV Date', 'Job No', 'Product Code', 'SOW Code', 'QTY', 'Rate', 'Amount', 'Discount', 'Shipping Charges', 'Sales Date', 'User Id', 'Cash Total', 'Credit Total', 'CashRV No', 'INV No', 'Credit AcCode', 'Lpo No', 'DayEndDocNo'],
         colModel: [
-            { name: 'JOBNO_SD', index: 'JOBNO_SD', width: 150, align: "center", sortable: false },
-            { name: 'PRCODE_SD', index: 'PRCODE_SD', width: 150, align: "center", sortable: false },
-            { name: 'JOBID_SD', index: 'JOBID_SD', width: 150, align: "center", sortable: false },
+            {
+                name: 'MRVNO_SD', index: 'MRVNO_SD', width: 110, align: "center", sortable: false, formatter: function (cellValue, options) {
+                    if (cellValue !== null && cellValue !== undefined) {
+                        var markup = "<a %Href% target='_blank'>" + cellValue + "</a>";
+                        var replacements = {
+                            "%Href%": "href=/MRV/DuplicateMrvPrinting?code=" + cellValue
+                        };
+                        markup = markup.replace(/%\w+%/g, function (all) {
+                            return replacements[all];
+                        });
+                        return markup;
+                    } else {
+                        return "";
+                    }
+                }
+            },
+            { name: 'MRVDate', index: 'MRVDate', width: 110, align: "center", sortable: false, formatter: 'date', formatoptions: { newformat: 'm/d/Y' } },
+            { name: 'JOBNO_SD', index: 'JOBNO_SD', width: 110, align: "center", sortable: false },
+            { name: 'PRCODE_SD', index: 'PRCODE_SD', width: 110, align: "center", sortable: false },
+            { name: 'JOBID_SD', index: 'JOBID_SD', width: 100, align: "center", sortable: false },
             { name: 'QTY_SD', index: 'QTY_SD', width: 50, align: "center", sortable: false },
             { name: 'RATE_SD', index: 'RATE_SD', width: 80, align: "center", sortable: false },
             { name: 'Amount', index: 'Amount', width: 80, align: "center", sortable: false },
@@ -19,32 +36,41 @@
             { name: 'USERID_SD', index: 'USERID_SD', width: 50, align: "center", sortable: false },
             { name: 'CASHTOTAL_SD', index: 'CASHTOTAL_SD', width: 80, align: "center", sortable: false },
             { name: 'CREDITTOTAL_SD', index: 'CREDITTOTAL_SD', width: 80, align: "center", sortable: false },
-            { name: 'CASHRVNO_SD', index: 'CASHRVNO_SD', width: 150, align: "center", sortable: false },
-            { name: 'INVNO_SD', index: 'INVNO_SD', width: 150, align: "center", sortable: false },
+            {
+                name: 'CASHRVNO_SD', index: 'CASHRVNO_SD', width: 120, align: "center", sortable: false, formatter: function (cellValue, options) {
+                    if (cellValue !== null && cellValue !== undefined) {
+                        var markup = "<a %Href% target='_blank'>" + cellValue + "</a>";
+                        var replacements = {
+                            "%Href%": "href=/MRV/DuplicateMrvPrinting?code=" + cellValue
+                        };
+                        markup = markup.replace(/%\w+%/g, function (all) {
+                            return replacements[all];
+                        });
+                        return markup;
+                    } else {
+                        return "";
+                    }
+                }
+            },
+            {
+                name: 'INVNO_SD', index: 'INVNO_SD', width: 120, align: "center", sortable: false, formatter: function (cellValue, options) {
+                    if (cellValue !== null && cellValue !== undefined) {
+                        var markup = "<a %Href% target='_blank'>" + cellValue + "</a>";
+                        var replacements = {
+                            "%Href%": "href=/MRV/DuplicateMrvPrinting?code=" + cellValue
+                        };
+                        markup = markup.replace(/%\w+%/g, function (all) {
+                            return replacements[all];
+                        });
+                        return markup;
+                    } else {
+                        return "";
+                    }
+                }
+            },
             { name: 'CREDITACCODE_SD', index: 'CREDITACCODE_SD', width: 100, align: "center", sortable: false },
             { name: 'LPONO_SD', index: 'LPONO_SD', width: 100, align: "center", sortable: false },
-            { name: 'DAYENDDOC_NO', index: 'DAYENDDOC_NO', width: 100, align: "center", sortable: false},
-            {
-                name: "action",
-                align: "center",
-                sortable: false,
-                title: false,
-                fixed: false,
-                width: 50,
-                search: false,
-                formatter: function (cellValue, options) {
-
-                    var markup = "<a %Href% data-toggle='modal' %Id% data-target='#mrvProductModel'> <i class='fa fa-pencil-square-o style='color:black'></i></a>";
-                    var replacements = {
-                        "%Href%": "href=javascript:editProduct(&apos;" + options.rowId + "&apos;);",
-                        "%Id%": "id='" + options.rowId + "'"
-                    };
-                    markup = markup.replace(/%\w+%/g, function (all) {
-                        return replacements[all];
-                    });
-                    return markup;
-                }
-            }
+            { name: 'DAYENDDOC_NO', index: 'DAYENDDOC_NO', width: 100, align: "center", sortable: false }
         ],
         multiselect: false,
         caption: "Materials Details"

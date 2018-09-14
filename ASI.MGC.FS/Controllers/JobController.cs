@@ -598,9 +598,15 @@ namespace ASI.MGC.FS.Controllers
                 var sales = (from saleData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
                              where saleData.JOBNO_SD.Equals(JobNo)
                              select saleData).ToList();
+                var jobs = (from JmData in _unitOfWork.Repository<JOBMASTER>().Query().Get()
+                            where JmData.JOBNO_JM.Equals(JobNo)
+                            select JmData);
                 foreach (var sale in sales)
                 {
                     MRVSearchDetailsResult saleData = new MRVSearchDetailsResult();
+                    var mrvData = jobs.Where(x => x.JOBNO_JM.Equals(sale.JOBNO_SD)).FirstOrDefault();
+                    saleData.MRVNO_SD = mrvData.MRVNO_JM;
+                    saleData.MRVDate = Convert.ToDateTime(mrvData.DOCDATE_JM);
                     saleData.JOBNO_SD = sale.JOBNO_SD;
                     saleData.PRCODE_SD = sale.PRCODE_SD;
                     saleData.JOBID_SD = sale.JOBID_SD;
@@ -619,6 +625,17 @@ namespace ASI.MGC.FS.Controllers
                     saleData.LPONO_SD = sale.LPONO_SD;
                     saleData.DAYENDDOC_NO = sale.DAYENDDOC_NO;
                     saleSearchResult.Add(saleData);
+                }
+                if (sales.Count == 0)
+                {
+                    foreach (var job in jobs)
+                    {
+                        MRVSearchDetailsResult saleData = new MRVSearchDetailsResult();
+                        saleData.MRVNO_SD = job.MRVNO_JM;
+                        saleData.MRVDate = Convert.ToDateTime(job.DOCDATE_JM);
+                        saleData.JOBNO_SD = job.JOBNO_JM;
+                        saleSearchResult.Add(saleData);
+                    }
                 }
             }
             else

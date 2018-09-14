@@ -256,9 +256,12 @@ namespace ASI.MGC.FS.Controllers
         {
             throw new NotImplementedException();
         }
-        public ActionResult DuplicateMrvPrinting()
+        public ActionResult DuplicateMrvPrinting(string code = null)
         {
-            ViewBag.DocType = CommonModelAccessUtility.GetDocTypesForPrint(_unitOfWork);
+            ViewBag.DocNo = !string.IsNullOrEmpty(code) ? code : "";
+            var types = CommonModelAccessUtility.GetDocTypesForPrint(_unitOfWork);
+            ViewBag.DocType = types;
+            ViewBag.selectedDocType = !string.IsNullOrEmpty(code) ? types.Where(o => o.Value.Equals(code.Split('/')[0])).FirstOrDefault().Key : 0;
             return View();
         }
         [HttpPost]
@@ -915,27 +918,43 @@ namespace ASI.MGC.FS.Controllers
                 var sales = (from saleData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
                              where saleData.MRVNO_SD.Equals(MrvNo)
                              select saleData).ToList();
-                foreach (var sale in sales)
+                var jobs = (from JmData in _unitOfWork.Repository<JOBMASTER>().Query().Get()
+                            where JmData.MRVNO_JM.Equals(MrvNo)
+                            select JmData);
+                foreach (var job in jobs)
                 {
                     MRVSearchDetailsResult saleData = new MRVSearchDetailsResult();
-                    saleData.JOBNO_SD = sale.JOBNO_SD;
-                    saleData.PRCODE_SD = sale.PRCODE_SD;
-                    saleData.JOBID_SD = sale.JOBID_SD;
-                    saleData.QTY_SD = Convert.ToInt32(sale.QTY_SD);
-                    saleData.RATE_SD = Convert.ToDecimal(sale.RATE_SD);
-                    saleData.Amount = Convert.ToInt32(sale.QTY_SD) * Convert.ToDecimal(sale.RATE_SD);
-                    saleData.DISCOUNT_SD = Convert.ToDecimal(sale.DISCOUNT_SD);
-                    saleData.SHIPPINGCHARGES_SD = Convert.ToDecimal(sale.SHIPPINGCHARGES_SD);
-                    saleData.SALEDATE_SD = Convert.ToDateTime(sale.SALEDATE_SD);
-                    saleData.USERID_SD = sale.USERID_SD;
-                    saleData.CASHTOTAL_SD = Convert.ToDecimal(sale.CASHTOTAL_SD);
-                    saleData.CREDITTOTAL_SD = Convert.ToDecimal(sale.CREDITTOTAL_SD);
-                    saleData.CASHRVNO_SD = sale.CASHRVNO_SD;
-                    saleData.INVNO_SD = sale.INVNO_SD;
-                    saleData.CREDITACCODE_SD = sale.CREDITACCODE_SD;
-                    saleData.LPONO_SD = sale.LPONO_SD;
-                    saleData.DAYENDDOC_NO = sale.DAYENDDOC_NO;
-                    saleSearchResult.Add(saleData);
+                    var sale = sales.Where(x => x.JOBNO_SD.Equals(job.JOBNO_JM)).FirstOrDefault();
+                    if (sale != null)
+                    {
+                        saleData.MRVNO_SD = job.MRVNO_JM;
+                        saleData.MRVDate = Convert.ToDateTime(job.DOCDATE_JM);
+                        saleData.JOBNO_SD = sale.JOBNO_SD;
+                        saleData.PRCODE_SD = sale.PRCODE_SD;
+                        saleData.JOBID_SD = sale.JOBID_SD;
+                        saleData.QTY_SD = Convert.ToInt32(sale.QTY_SD);
+                        saleData.RATE_SD = Convert.ToDecimal(sale.RATE_SD);
+                        saleData.Amount = Convert.ToInt32(sale.QTY_SD) * Convert.ToDecimal(sale.RATE_SD);
+                        saleData.DISCOUNT_SD = Convert.ToDecimal(sale.DISCOUNT_SD);
+                        saleData.SHIPPINGCHARGES_SD = Convert.ToDecimal(sale.SHIPPINGCHARGES_SD);
+                        saleData.SALEDATE_SD = Convert.ToDateTime(sale.SALEDATE_SD);
+                        saleData.USERID_SD = sale.USERID_SD;
+                        saleData.CASHTOTAL_SD = Convert.ToDecimal(sale.CASHTOTAL_SD);
+                        saleData.CREDITTOTAL_SD = Convert.ToDecimal(sale.CREDITTOTAL_SD);
+                        saleData.CASHRVNO_SD = sale.CASHRVNO_SD;
+                        saleData.INVNO_SD = sale.INVNO_SD;
+                        saleData.CREDITACCODE_SD = sale.CREDITACCODE_SD;
+                        saleData.LPONO_SD = sale.LPONO_SD;
+                        saleData.DAYENDDOC_NO = sale.DAYENDDOC_NO;
+                        saleSearchResult.Add(saleData);
+                    }
+                    else
+                    {
+                        saleData.MRVNO_SD = job.MRVNO_JM;
+                        saleData.MRVDate = Convert.ToDateTime(job.DOCDATE_JM);
+                        saleData.JOBNO_SD = job.JOBNO_JM;
+                        saleSearchResult.Add(saleData);
+                    }
                 }
             }
             else

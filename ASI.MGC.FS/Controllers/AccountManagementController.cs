@@ -47,6 +47,7 @@ namespace ASI.MGC.FS.Controllers
             {
                 if (IsValid(model.Email, model.Password))
                 {
+                    Session.Timeout = 180;
                     FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
                     return RedirectToAction("Index", "Home");
                 }

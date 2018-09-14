@@ -419,7 +419,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!PRODQTY_JM.Value</Value>
+                              <Value>=CountDistinct(Fields!JOBNO_INVD.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -438,6 +438,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1956,7 +1957,6 @@
             </Textbox>
           </ReportItems>
           <KeepTogether>true</KeepTogether>
-          <Top>0in</Top>
           <Height>2.55in</Height>
           <Width>7.77in</Width>
           <Visibility>

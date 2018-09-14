@@ -84,6 +84,7 @@ $(document).ready(function () {
         datatype: "local",
         data: arrAllocDetails,
         height: 150,
+        rowNum: 1000,
         shrinkToFit: true,
         autoheight: true,
         autowidth: true,

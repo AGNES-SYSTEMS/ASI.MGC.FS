@@ -16,6 +16,10 @@
 
         }
     });
+
+    if ($("#txtDocNo").val() !== "" && $("#txtDocNo").val() !== undefined) {
+        //$("#formDuplicatePrinting").submit();
+    }
     //var docNumber = "";
     //var validateArguments = function () {
     //    $('#formVoucherPrinting').formValidation();

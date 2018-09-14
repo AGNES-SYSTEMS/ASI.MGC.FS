@@ -427,7 +427,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!PRODQTY_JM.Value</Value>
+                              <Value>=CountDistinct(Fields!JOBNO_INVD.Value)</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -855,7 +855,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>CASH MEMO</Value>
+                <Value>TAX INVOICE</Value>
                 <Style>
                   <FontFamily>Arial Black</FontFamily>
                   <FontWeight>Bold</FontWeight>
@@ -870,9 +870,9 @@
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>0.06944in</Top>
-        <Left>3.33958in</Left>
-        <Height>0.35069in</Height>
-        <Width>1.02083in</Width>
+        <Left>3.24063in</Left>
+        <Height>0.35in</Height>
+        <Width>1.22in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -956,7 +956,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Receipt No:</Value>
+                <Value>Invoice No:</Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
                 </Style>
