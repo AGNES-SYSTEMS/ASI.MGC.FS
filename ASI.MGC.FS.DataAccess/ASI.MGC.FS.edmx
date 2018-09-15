@@ -854,11 +854,11 @@
           <Property Name="BANKAMOUNT_VRT" Type="money" />
           <Property Name="ACCDESCRIPTION_VRPT" Type="nvarchar" MaxLength="255" />
           <Property Name="PARTICULARS_VRPT" Type="nvarchar" MaxLength="255" />
-          <Property Name="NOTES_VRPT" Type="nvarchar" MaxLength="255" />
+          <Property Name="NOTES_VRPT" Type="nvarchar" MaxLength="2500" />
           <Property Name="DEBITAMOUT_VRPT" Type="money" />
           <Property Name="CREDITAMOUNT_VRPT" Type="money" />
           <Property Name="STATUS_VRPT" Type="nvarchar" MaxLength="2" />
-          <Property Name="CHQNO_VRPT" Type="nvarchar" MaxLength="15" />
+          <Property Name="CHQNO_VRPT" Type="nvarchar" MaxLength="50" />
           <Property Name="CHQDATE_VRPT" Type="datetime2" Precision="0" />
           <Property Name="USER_VRPT" Type="nvarchar" MaxLength="15" />
           <Property Name="DOCNO_VRPT" Type="nvarchar" MaxLength="15" Nullable="false" />
@@ -3525,11 +3525,11 @@
           <Property Name="BANKAMOUNT_VRT" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="ACCDESCRIPTION_VRPT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="PARTICULARS_VRPT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="NOTES_VRPT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NOTES_VRPT" Type="String" MaxLength="2500" FixedLength="false" Unicode="true" />
           <Property Name="DEBITAMOUT_VRPT" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CREDITAMOUNT_VRPT" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="STATUS_VRPT" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="CHQNO_VRPT" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="CHQNO_VRPT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CHQDATE_VRPT" Type="DateTime" Precision="0" />
           <Property Name="USER_VRPT" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="DOCNO_VRPT" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
@@ -3667,7 +3667,7 @@
           <Property Type="Decimal" Name="BALANCE_SAC" Nullable="true" Precision="19" />
         </ComplexType>
         <ComplexType Name="sp_FindMrvDetails_Result">
-          <Property Type="String" Name="JOBNO_SD" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="JOBNO_SD" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="PRCODE_SD" Nullable="true" MaxLength="15" />
           <Property Type="String" Name="JOBID_SD" Nullable="true" MaxLength="15" />
           <Property Type="Int32" Name="QTY_SD" Nullable="true" />
@@ -3684,6 +3684,8 @@
           <Property Type="String" Name="CREDITACCODE_SD" Nullable="true" MaxLength="15" />
           <Property Type="String" Name="LPONO_SD" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="DAYENDDOC_NO" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="MRVNO_SD" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="MRVDate" Nullable="true" />
         </ComplexType>
         <EntityType Name="STOCKLEDGER">
           <Key>
@@ -5695,6 +5697,8 @@
                 <ScalarProperty Name="CREDITACCODE_SD" ColumnName="CREDITACCODE_SD" />
                 <ScalarProperty Name="LPONO_SD" ColumnName="LPONO_SD" />
                 <ScalarProperty Name="DAYENDDOC_NO" ColumnName="DAYENDDOC_NO" />
+                <ScalarProperty Name="MRVNO_SD" ColumnName="MRVNO_SD" />
+                <ScalarProperty Name="MRVDate" ColumnName="MRVDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

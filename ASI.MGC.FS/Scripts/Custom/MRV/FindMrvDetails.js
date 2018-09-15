@@ -3,6 +3,7 @@
         datatype: "local",
         height: 175,
         width: 1080,
+        rowNum: 1000,
         shrinkToFit: false,
         styleUI: "Bootstrap",
         colNames: ['MRV No', 'MRV Date', 'Job No', 'Product Code', 'SOW Code', 'QTY', 'Rate', 'Amount', 'Discount', 'Shipping Charges', 'Sales Date', 'User Id', 'Cash Total', 'Credit Total', 'CashRV No', 'INV No', 'Credit AcCode', 'Lpo No', 'DayEndDocNo'],

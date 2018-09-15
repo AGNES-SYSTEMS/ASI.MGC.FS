@@ -45,17 +45,17 @@ namespace ASI.MGC.FS.Controllers
             if (!string.IsNullOrEmpty(custId))
             {
                 custList = custList.Where(o => o.ARCODE_ARM.Contains(custId)).Select(a => new
-                                {
-                                    a.ARCODE_ARM,
-                                    a.DESCRIPTION_ARM,
-                                    a.ADDRESS1_ARM,
-                                    a.POBOX_ARM,
-                                    a.TELEPHONE_ARM,
-                                    a.FAX_ARM,
-                                    a.EMAIL_ARM,
-                                    a.CONDACTPERSON_ARM
+                {
+                    a.ARCODE_ARM,
+                    a.DESCRIPTION_ARM,
+                    a.ADDRESS1_ARM,
+                    a.POBOX_ARM,
+                    a.TELEPHONE_ARM,
+                    a.FAX_ARM,
+                    a.EMAIL_ARM,
+                    a.CONDACTPERSON_ARM
 
-                                });
+                });
             }
             if (!string.IsNullOrEmpty(custName))
             {
@@ -305,11 +305,13 @@ namespace ASI.MGC.FS.Controllers
         [HttpPost]
         public JsonResult SearchDetailsByCustomer(int type = 0, string searchParam = null)
         {
+            MRVSerachDetails searchHeader = proc_DisplayJobDetails(searchParam, type);
             var repo = _unitOfWork.ExtRepositoryFor<ReportRepository>();
             var searchResult = repo.sp_FindMrvDetails(searchParam, type);
             //List<MRVSearchDetailsResult> searchResult = fn_SearchJobDetails(searchParam, type);
             var jsonData = new
             {
+                searchHeader = searchHeader,
                 searchResult = searchResult
             };
             return Json(jsonData, JsonRequestBehavior.AllowGet);
@@ -374,6 +376,75 @@ namespace ASI.MGC.FS.Controllers
                 }
             }
             return saleSearchResult;
+        }
+        private MRVSerachDetails proc_DisplayJobDetails(string searchParam, int type = 0)
+        {
+            MRVSerachDetails searchDetails = new MRVSerachDetails();
+            if (!string.IsNullOrEmpty(searchParam))
+            {
+                if (type == 1)
+                {
+                    var MrvDetails = (from mrvData in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                                      where mrvData.CUSTOMERCODE_MRV.Contains(searchParam)
+                                      select mrvData).OrderByDescending(o => o.MRVDATE_MRV).FirstOrDefault();
+                    if (MrvDetails != null)
+                    {
+                        searchDetails.MrvNumber = "";// MrvDetails.MRVNO_MRV;
+                        searchDetails.CustomerCode = MrvDetails.CUSTOMERCODE_MRV;
+                        searchDetails.CustomerName = MrvDetails.CUSTOMERNAME_MRV;
+                        searchDetails.Address = MrvDetails.ADDRESS1_MRV;
+                        searchDetails.Telephone = MrvDetails.PHONE_MRV;
+                        searchDetails.JobNumber = "";
+                        searchDetails.Employee = "";
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else if (type == 2)
+                {
+                    var MrvDetails = (from mrvData in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                                      where mrvData.CUSTOMERNAME_MRV.Contains(searchParam)
+                                      select mrvData).OrderByDescending(o=>o.MRVDATE_MRV).FirstOrDefault();
+                    if (MrvDetails != null)
+                    {
+                        searchDetails.MrvNumber = "";//MrvDetails.MRVNO_MRV;
+                        searchDetails.CustomerCode = MrvDetails.CUSTOMERCODE_MRV;
+                        searchDetails.CustomerName = MrvDetails.CUSTOMERNAME_MRV;
+                        searchDetails.Address = MrvDetails.ADDRESS1_MRV;
+                        searchDetails.Telephone = MrvDetails.PHONE_MRV;
+                        searchDetails.JobNumber = "";
+                        searchDetails.Employee = "";
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else if (type == 3)
+                {
+
+                    var MrvDetails = (from mrvData in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                                      where mrvData.PHONE_MRV.Contains(searchParam)
+                                      select mrvData).OrderByDescending(o => o.MRVDATE_MRV).FirstOrDefault();
+                    if (MrvDetails != null)
+                    {
+                        searchDetails.MrvNumber = "";//MrvDetails.MRVNO_MRV;
+                        searchDetails.CustomerCode = MrvDetails.CUSTOMERCODE_MRV;
+                        searchDetails.CustomerName = MrvDetails.CUSTOMERNAME_MRV;
+                        searchDetails.Address = MrvDetails.ADDRESS1_MRV;
+                        searchDetails.Telephone = MrvDetails.PHONE_MRV;
+                        searchDetails.JobNumber = "";
+                        searchDetails.Employee = "";
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+            return searchDetails;
         }
     }
 }
