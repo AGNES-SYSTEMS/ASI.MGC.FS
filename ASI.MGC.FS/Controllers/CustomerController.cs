@@ -6,6 +6,7 @@ using ASI.MGC.FS.Domain;
 using ASI.MGC.FS.Model;
 using ASI.MGC.FS.Models;
 using ASI.MGC.FS.Domain.Repositories;
+using System.Web.Script.Serialization;
 
 namespace ASI.MGC.FS.Controllers
 {
@@ -308,6 +309,9 @@ namespace ASI.MGC.FS.Controllers
             MRVSerachDetails searchHeader = proc_DisplayJobDetails(searchParam, type);
             var repo = _unitOfWork.ExtRepositoryFor<ReportRepository>();
             var searchResult = repo.sp_FindMrvDetails(searchParam, type);
+            //var serializer = new JavaScriptSerializer();
+            //serializer.MaxJsonLength = int.MaxValue;
+            //var serializedSearchResult = serializer.Serialize(searchResult);
             //List<MRVSearchDetailsResult> searchResult = fn_SearchJobDetails(searchParam, type);
             var jsonData = new
             {

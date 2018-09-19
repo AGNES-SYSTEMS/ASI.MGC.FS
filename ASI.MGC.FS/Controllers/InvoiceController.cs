@@ -57,6 +57,7 @@ namespace ASI.MGC.FS.Controllers
                     string jsonProductDetails = frm["saleDetail"];
                     var serializer = new JavaScriptSerializer();
                     var lstSaleDetails = serializer.Deserialize<List<SALEDETAIL>>(jsonProductDetails);
+                    objArApLedger.MATCHVALUE_AR = 0;
                     objArApLedger.STATUS_ART = "P";
                     objArApLedger.VAT_ART = Convert.ToDecimal(frm["TotalVAT"]);
                     objArApLedger.USER_ART = currentUser;
@@ -288,6 +289,7 @@ namespace ASI.MGC.FS.Controllers
                                 objArAp.ARAPCODE_ART = entry.ARAPCODE_ART;
                                 objArAp.DODATE_ART = today;
                                 objArAp.GLDATE_ART = entry.GLDATE_ART;
+                                objArAp.MATCHVALUE_AR = 0;
                                 objArAp.DEBITAMOUNT_ART = 0;
                                 objArAp.CREDITAMOUNT_ART = entry.DEBITAMOUNT_ART;
                                 objArAp.OTHERREF_ART = invNo;

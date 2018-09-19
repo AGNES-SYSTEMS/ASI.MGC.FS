@@ -3,7 +3,7 @@
         datatype: "local",
         height: 175,
         width: 1080,
-        rowNum: 1000,
+        rowNum: 2000,
         shrinkToFit: false,
         styleUI: "Bootstrap",
         colNames: ['MRV No', 'MRV Date', 'Job No', 'Product Code', 'SOW Code', 'QTY', 'Rate', 'Amount', 'Discount', 'Shipping Charges', 'Sales Date', 'User Id', 'Cash Total', 'Credit Total', 'CashRV No', 'INV No', 'Credit AcCode', 'Lpo No', 'DayEndDocNo'],
@@ -81,6 +81,7 @@
         var jobNo = $('#txtJobNo').val();
         if (jobNo !== "" && jobNo !== undefined) {
             var data = JSON.stringify({ jobNo: jobNo });
+            $("#divSaving").show();
             $.ajax({
                 url: '/Job/JobSearchDetails',
                 contentType: "application/json; charset=utf-8",
@@ -103,6 +104,7 @@
                     }
                 },
                 complete: function () {
+                    $("#divSaving").hide();
                 },
                 error: function () {
                     toastr.error("Sorry! Something went wrong, please try again.");
@@ -117,6 +119,7 @@
         var mrvNo = $('#txtMrvNo').val();
         if (mrvNo !== "" && mrvNo !== undefined) {
             var data = JSON.stringify({ mrvNo: mrvNo });
+            $("#divSaving").show();
             $.ajax({
                 url: '/MRV/MRVSearchDetails',
                 contentType: "application/json; charset=utf-8",
@@ -139,6 +142,7 @@
                     }
                 },
                 complete: function () {
+                    $("#divSaving").hide();
                 },
                 error: function () {
                     toastr.error("Sorry! Something went wrong, please try again.");
@@ -153,6 +157,7 @@
         var searchParam = $('#txtCustCode').val();
         if (searchParam !== "" && searchParam !== undefined) {
             var data = JSON.stringify({ type: 1, searchParam: searchParam });
+            $("#divSaving").show();
             $.ajax({
                 url: '/Customer/SearchDetailsByCustomer',
                 contentType: "application/json; charset=utf-8",
@@ -175,6 +180,7 @@
                     }
                 },
                 complete: function () {
+                    $("#divSaving").hide();
                 },
                 error: function () {
                     toastr.error("Sorry! Something went wrong, please try again.");
@@ -189,6 +195,7 @@
         var searchParam = $('#txtCustName').val();
         if (searchParam !== "" && searchParam !== undefined) {
             var data = JSON.stringify({ type: 2, searchParam: searchParam });
+            $("#divSaving").show();
             $.ajax({
                 url: '/Customer/SearchDetailsByCustomer',
                 contentType: "application/json; charset=utf-8",
@@ -211,6 +218,7 @@
                     }
                 },
                 complete: function () {
+                    $("#divSaving").hide();
                 },
                 error: function () {
                     toastr.error("Sorry! Something went wrong, please try again.");
@@ -223,6 +231,7 @@
     $("#btnTelephoneNoSearch").on("click", function (e) {
         $("#tblMrvSearchDetails").jqGrid("clearGridData", true).trigger("reloadGrid");
         var searchParam = $('#txtTelephoneNo').val();
+        $("#divSaving").show();
         if (searchParam !== "" && searchParam !== undefined) {
             var data = JSON.stringify({ type: 3, searchParam: searchParam });
             $.ajax({
@@ -247,6 +256,7 @@
                     }
                 },
                 complete: function () {
+                    $("#divSaving").hide();
                 },
                 error: function () {
                     toastr.error("Sorry! Something went wrong, please try again.");

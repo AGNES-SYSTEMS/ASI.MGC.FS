@@ -21,14 +21,17 @@ var processAllocDetail = function (id, isRestored) {
         for (i = 0; i < arrAllocations.length; i++) {
             if (arrAllocations[i]["id"] === id) {
                 var ret = jQuery("#tblAllocationDetails").jqGrid('getRowData', id);
-                arrAllocations[i]["AMOUNT_ARM"] = $("#" + id + "_Match_Amount").val();
+                var actualMatchValue = parseFloat(ret.Balance_Amount) - parseFloat($("#" + id + "_Match_Amount").val()) < 1 ? parseFloat(ret.Balance_Amount) : parseFloat($("#" + id + "_Match_Amount").val());
+                arrAllocations[i]["AMOUNT_ARM"] = actualMatchValue;
                 $("#hdnAllocDetails").val(JSON.stringify(arrAllocations));
                 return;
             }
         }
         var ret = jQuery("#tblAllocationDetails").jqGrid('getRowData', id);
+        var actualMatchValue = parseFloat(ret.Balance_Amount) - parseFloat($("#" + id + "_Match_Amount").val()) < 1 ? parseFloat(ret.Balance_Amount) : parseFloat($("#" + id + "_Match_Amount").val());
+        arrAllocations[i]["AMOUNT_ARM"] = actualMatchValue;
         var index = arrAllocations.length;
-        arrAllocations[index] = { id: id, DOCCNUMBER_ARM: ret.DocNo, AMOUNT_ARM: $("#" + id + "_Match_Amount").val() };
+        arrAllocations[index] = { id: id, DOCCNUMBER_ARM: ret.DocNo, AMOUNT_ARM: actualMatchValue };
     }
 };
 var partySelect = function (partyId) {

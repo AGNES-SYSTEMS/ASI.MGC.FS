@@ -171,6 +171,7 @@ namespace ASI.MGC.FS.Controllers
                     objArApLedger.GLDATE_ART = Convert.ToDateTime(frm["PurDate"]);
                     objArApLedger.OTHERREF_ART = Convert.ToString(frm["Invoice"]);
                     objArApLedger.NARRATION_ART = Convert.ToString(frm["Note"]);
+                    objArApLedger.MATCHVALUE_AR = 0;
                     objArApLedger.CREDITAMOUNT_ART = 0;
                     objArApLedger.DEBITAMOUNT_ART = Convert.ToDecimal(frm["NetAmount"]);
                     objArApLedger.USER_ART = currentUser;
@@ -262,6 +263,7 @@ namespace ASI.MGC.FS.Controllers
                     objArApLedger.OTHERREF_ART = Convert.ToString(frm["Invoice"]);
                     objArApLedger.NARRATION_ART = Convert.ToString(frm["Note"]);
                     objArApLedger.DEBITAMOUNT_ART = 0;
+                    objArApLedger.MATCHVALUE_AR = 0;
                     objArApLedger.CREDITAMOUNT_ART = Convert.ToDecimal(frm["NetAmount"]);
                     objArApLedger.USER_ART = currentUser;
                     objArApLedger.STATUS_ART = "P";

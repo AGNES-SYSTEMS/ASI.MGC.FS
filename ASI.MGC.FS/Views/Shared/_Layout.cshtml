@@ -608,7 +608,68 @@
                         </ul>
                         @*secondlevel*@
                     </ul>
-
+                    @*Start-Export Mode Reports*@
+                    <li data-toggle="collapse" data-target="#reportExp" class="collapsed">
+                        <a href="#"><i class="fa fa-file-text-o fa-lg"></i> Reports (Exportable) <span class="arrow"></span></a>
+                    </li>
+                    <ul class="sub-menu collapse" id="reportExp">
+                        @*secondlevel*@
+                        <li data-toggle="collapse" data-target="#ReportsMrvExp" class="collapsed">
+                            <a href="#">MRV Details <span class="arrow"></span></a>
+                        </li>
+                        <ul class="sub-menu collapse second-level-childs" id="ReportsMrvExp">
+                            <li><a href="@Href("~/MgcReports/PendingMrvDetails?isExportMode=1")">Pending Mrv Details</a></li>
+                            <li><a href="@Href("~/MgcReports/DeliveredMrvDetails?isExportMode=1")">Delivered Mrv Details</a></li>
+                            <li data-toggle="collapse" data-target="#customReportsExp" class="collapsed">
+                                <a href="#">Custom Reports<span class="arrow"></span></a>
+                            </li>
+                            <ul class="sub-menu collapse third-level-childs" id="customReportsExp">
+                                <li><a href="@Href("~/MgcReports/JobWiseStatement?isExportMode=1")">Job Wise Report</a></li>
+                                <li><a href="@Href("~/MgcReports/PurchaseRegister?isExportMode=1")">Purchase Report</a></li>
+                                <li><a href="@Href("~/MgcReports/DeliveryDetails?isExportMode=1")">Delivery Note Details</a></li>
+                                <li><a href="@Href("~/MgcReports/InvoiceWiseReport?isExportMode=1")">Invoice Wise Delivery Report</a></li>
+                                <li><a href="@Href("~/MgcReports/CashMemoWiseReport?isExportMode=1")">CashMemo Wise Report</a></li>
+                                <li><a href="@Href("~/MgcReports/CancelledJobs?isExportMode=1")">Cancelled Jobs Details</a></li>
+                                <li><a href="@Href("~/MgcReports/ReversedInvoice?isExportMode=1")">Reversed Invoice Statement</a></li>
+                                <li><a href="@Href("~/MgcReports/CashMemoReverse?isExportMode=1")">Reversed RV Statement</a></li>
+                            </ul>
+                        </ul>
+                        <li data-toggle="collapse" data-target="#ReportsSalesExp" class="collapsed">
+                            <a href="#">Sales Report <span class="arrow"></span></a>
+                        </li>
+                        <ul class="sub-menu collapse second-level-childs" id="ReportsSalesExp">
+                            <li><a href="@Href("~/MgcReports/EmpWiseJobDetails?isExportMode=1")">General Report</a></li>
+                            <li><a href="@Href("~/MgcReports/EmpSales?isExportMode=1")">Empwise Report</a></li>
+                        </ul>
+                        <li data-toggle="collapse" data-target="#ReportsStockExp" class="collapsed">
+                            <a href="#">Stock Report <span class="arrow"></span></a>
+                        </li>
+                        <ul class="sub-menu collapse second-level-childs" id="ReportsStockExp">
+                            <li><a href="@Href("~/MgcReports/ServiceItems?isExportMode=1")">Service Items</a></li>
+                            <li><a href="@Href("~/MgcReports/StockReport?isExportMode=1")">Inventory Items</a></li>
+                            <li><a href="@Href("~/MgcReports/StockLedgerReport?isExportMode=1")">Stock Ledger</a></li>
+                        </ul>
+                        @*secondlevel*@
+                        @*<li><a href="#">AR/AP Summary</a></li>*@
+                        <li><a href="@Href("~/MgcReports/ArStatement?isExportMode=1")">Customer Statement</a></li>
+                        <li><a href="@Href("~/MgcReports/ArStatementOutstanding?isExportMode=1")">Customer Statement OutStanding</a></li>
+                        <li><a href="@Href("~/MgcReports/ApStatement?isExportMode=1")">Supplier Statement</a></li>
+                        <li><a href="@Href("~/MgcReports/ApStatementOutstanding?isExportMode=1")">Supplier Statement OutStanding</a></li>
+                        @*secondlevel*@
+                        <li data-toggle="collapse" data-target="#ReportFinanceExp" class="collapsed">
+                            <a href="#">Finance<span class="arrow"></span></a>
+                        </li>
+                        <ul class="sub-menu collapse second-level-childs" id="ReportFinanceExp">
+                            <li><a href="@Href("~/MgcReports/BankStatement?isExportMode=1")">Bank Statement</a></li>
+                            <li><a href="@Href("~/MgcReports/GlStatement?isExportMode=1")">GL Statement</a></li>
+                            <li><a href="@Href("~/MgcReports/TrialBalance?isExportMode=1")">Trial Balance</a></li>
+                            <li><a href="@Href("~/MgcReports/ProfitLossStatement?isExportMode=1")">P and L Statement</a></li>
+                            <li><a href="@Href("~/MgcReports/BalanceSheet?isExportMode=1")">Balance Sheet</a></li>
+                            <li><a href="@Href("~/MgcReports/MonthWiseVATReport?isExportMode=1")">Month Wise VAT Statement</a></li>
+                        </ul>
+                        @*secondlevel*@
+                    </ul>
+                    @*End-Export Mode Reports*@
                     @*REPORT section*@
                     <li data-toggle="collapse" data-target="#search" class="collapsed">
                         <a href="#"><i class="fa fa-search fa-lg"></i>Search<span class="arrow"></span></a>
