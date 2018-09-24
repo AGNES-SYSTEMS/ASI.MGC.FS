@@ -929,7 +929,11 @@ namespace ASI.MGC.FS.Controllers
                         var sale = sales.Where(x => x.JOBNO_SD.Equals(job.JOBNO_JM)).FirstOrDefault();
                         if (sale != null)
                         {
+                            var mrvRecordData = (from mrvRecord in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                                                 where mrvRecord.MRVNO_MRV.Equals(job.MRVNO_JM)
+                                                 select mrvRecord).FirstOrDefault();
                             saleData.MRVNO_SD = job.MRVNO_JM;
+                            saleData.MRVCustomerName = mrvRecordData.CUSTOMERNAME_MRV;
                             saleData.MRVDate = Convert.ToDateTime(job.DOCDATE_JM);
                             saleData.JOBNO_SD = sale.JOBNO_SD;
                             saleData.PRCODE_SD = sale.PRCODE_SD;
@@ -952,7 +956,11 @@ namespace ASI.MGC.FS.Controllers
                         }
                         else
                         {
+                            var mrvRecordData = (from mrvRecord in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                                                 where mrvRecord.MRVNO_MRV.Equals(job.MRVNO_JM)
+                                                 select mrvRecord).FirstOrDefault();
                             saleData.MRVNO_SD = job.MRVNO_JM;
+                            saleData.MRVCustomerName = mrvRecordData.CUSTOMERNAME_MRV;
                             saleData.MRVDate = Convert.ToDateTime(job.DOCDATE_JM);
                             saleData.JOBNO_SD = job.JOBNO_JM;
                             saleSearchResult.Add(saleData);
@@ -960,7 +968,11 @@ namespace ASI.MGC.FS.Controllers
                     }
                     else
                     {
+                        var mrvRecordData = (from mrvRecord in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                                             where mrvRecord.MRVNO_MRV.Equals(job.MRVNO_JM)
+                                             select mrvRecord).FirstOrDefault();
                         saleData.MRVNO_SD = job.MRVNO_JM;
+                        saleData.MRVCustomerName = mrvRecordData.CUSTOMERNAME_MRV;
                         saleData.MRVDate = Convert.ToDateTime(job.DOCDATE_JM);
                         saleData.JOBNO_SD = job.JOBNO_JM;
                         saleSearchResult.Add(saleData);

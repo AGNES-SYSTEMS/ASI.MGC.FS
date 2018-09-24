@@ -322,14 +322,14 @@ namespace ASI.MGC.FS.Controllers
         }
         private List<MRVSearchDetailsResult> fn_SearchJobDetails(string searchParam, int type = 0)
         {
-            List<string> MrvDetails = new List<string>();
+            List<MATERIALRECEIPTMASTER> MrvDetails = new List<MATERIALRECEIPTMASTER>();
             if (type == 1)
             {
                 if (!string.IsNullOrEmpty(searchParam))
                 {
                     MrvDetails = (from mrvData in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
                                   where mrvData.CUSTOMERCODE_MRV.Contains(searchParam)
-                                  select mrvData.MRVNO_MRV).ToList();
+                                  select mrvData).ToList();
                 }
             }
             if (type == 2)
@@ -338,7 +338,7 @@ namespace ASI.MGC.FS.Controllers
                 {
                     MrvDetails = (from mrvData in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
                                   where mrvData.CUSTOMERNAME_MRV.Contains(searchParam)
-                                  select mrvData.MRVNO_MRV).ToList();
+                                  select mrvData).ToList();
                 }
             }
             if (type == 3)
@@ -347,18 +347,21 @@ namespace ASI.MGC.FS.Controllers
                 {
                     MrvDetails = (from mrvData in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
                                   where mrvData.PHONE_MRV.Equals(searchParam)
-                                  select mrvData.MRVNO_MRV).ToList();
+                                  select mrvData).ToList();
                 }
             }
             List<MRVSearchDetailsResult> saleSearchResult = new List<MRVSearchDetailsResult>();
             foreach (var mrv in MrvDetails)
             {
                 var sales = (from saleData in _unitOfWork.Repository<SALEDETAIL>().Query().Get()
-                             where saleData.MRVNO_SD.Equals(mrv)
+                             where saleData.MRVNO_SD.Equals(mrv.MRVNO_MRV)
                              select saleData).ToList();
                 foreach (var sale in sales)
                 {
                     MRVSearchDetailsResult saleData = new MRVSearchDetailsResult();
+                    saleData.MRVNO_SD = mrv.MRVNO_MRV;
+                    saleData.MRVDate = Convert.ToDateTime(mrv.MRVDATE_MRV);
+                    saleData.MRVCustomerName = mrv.CUSTOMERNAME_MRV;
                     saleData.JOBNO_SD = sale.JOBNO_SD;
                     saleData.PRCODE_SD = sale.PRCODE_SD;
                     saleData.JOBID_SD = sale.JOBID_SD;

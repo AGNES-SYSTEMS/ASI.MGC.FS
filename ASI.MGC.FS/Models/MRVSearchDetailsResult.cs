@@ -9,6 +9,7 @@ namespace ASI.MGC.FS.Models
     {
         public string MRVNO_SD { get; set; }
         public DateTime MRVDate { get; set; }
+        public string MRVCustomerName { get; set; }
         public string JOBNO_SD { get; set; }
         public string PRCODE_SD { get; set; }
         public string JOBID_SD { get; set; }

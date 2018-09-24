@@ -605,8 +605,12 @@ namespace ASI.MGC.FS.Controllers
                 {
                     MRVSearchDetailsResult saleData = new MRVSearchDetailsResult();
                     var mrvData = jobs.Where(x => x.JOBNO_JM.Equals(sale.JOBNO_SD)).FirstOrDefault();
+                    var mrvRecordData = (from mrvRecord in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                                         where mrvRecord.MRVNO_MRV.Equals(mrvData.MRVNO_JM)
+                                         select mrvRecord).FirstOrDefault();
                     saleData.MRVNO_SD = mrvData.MRVNO_JM;
                     saleData.MRVDate = Convert.ToDateTime(mrvData.DOCDATE_JM);
+                    saleData.MRVCustomerName = mrvRecordData.CUSTOMERNAME_MRV;
                     saleData.JOBNO_SD = sale.JOBNO_SD;
                     saleData.PRCODE_SD = sale.PRCODE_SD;
                     saleData.JOBID_SD = sale.JOBID_SD;
@@ -631,7 +635,11 @@ namespace ASI.MGC.FS.Controllers
                     foreach (var job in jobs)
                     {
                         MRVSearchDetailsResult saleData = new MRVSearchDetailsResult();
+                        var mrvRecordData = (from mrvRecord in _unitOfWork.Repository<MATERIALRECEIPTMASTER>().Query().Get()
+                                             where mrvRecord.MRVNO_MRV.Equals(job.MRVNO_JM)
+                                             select mrvRecord).FirstOrDefault();
                         saleData.MRVNO_SD = job.MRVNO_JM;
+                        saleData.MRVCustomerName = mrvRecordData.CUSTOMERNAME_MRV;
                         saleData.MRVDate = Convert.ToDateTime(job.DOCDATE_JM);
                         saleData.JOBNO_SD = job.JOBNO_JM;
                         saleSearchResult.Add(saleData);
